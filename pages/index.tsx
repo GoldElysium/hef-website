@@ -1,7 +1,7 @@
 import Navbar from '../components/Navbar';
-import Hero from "../components/Hero";
-import Card from "../components/Card";
-import Footer from "../components/Footer";
+import Hero from '../components/Hero';
+import Card from '../components/Card';
+import Footer from '../components/Footer';
 
 export default function Home() {
 	return (
@@ -14,20 +14,20 @@ export default function Home() {
 					<div>
 						<h1 className="text-2xl text-red-500 font-bold border-b-2 border-red-200 text-center sm:text-left">Featured projects</h1>
 						<div className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2">
-							<Card/>
-							<Card/>
-							<Card/>
+							<Card img="/img/logo.png" title="HoloRes" description="A fun Hololive community! We have concerts, arts, festivals, and more!" button="Join!" url="#"/>
+							<Card img="/img/logo.png" title="HoloRes" description="A fun Hololive community! We have concerts, arts, festivals, and more!" button="Join!" url="#"/>
+							<Card img="/img/logo.png" title="HoloRes" description="A fun Hololive community! We have concerts, arts, festivals, and more!" button="Join!" url="#"/>
 						</div>
 					</div>
 					<div className="mt-10">
 						<h1 className="text-2xl text-red-500 font-bold border-b-2 border-red-200 text-center sm:text-left">EN Servers</h1>
 						<div className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2">
-							<Card/>
-							<Card/>
-							<Card/>
-							<Card/>
-							<Card/>
-							<Card/>
+							<Card img="/img/logo.png" title="HoloRes" description="A fun Hololive community! We have concerts, arts, festivals, and more!" button="Join!" url="#"/>
+							<Card img="/img/logo.png" title="HoloRes" description="A fun Hololive community! We have concerts, arts, festivals, and more!" button="Join!" url="#"/>
+							<Card img="/img/logo.png" title="HoloRes" description="A fun Hololive community! We have concerts, arts, festivals, and more!" button="Join!" url="#"/>
+							<Card img="/img/logo.png" title="HoloRes" description="A fun Hololive community! We have concerts, arts, festivals, and more!" button="Join!" url="#"/>
+							<Card img="/img/logo.png" title="HoloRes" description="A fun Hololive community! We have concerts, arts, festivals, and more!" button="Join!" url="#"/>
+							<Card img="/img/logo.png" title="HoloRes" description="A fun Hololive community! We have concerts, arts, festivals, and more!" button="Join!" url="#"/>
 						</div>
 					</div>
 				</div>
@@ -35,5 +35,5 @@ export default function Home() {
 
 			<Footer/>
 		</div>
-	)
+	);
 }

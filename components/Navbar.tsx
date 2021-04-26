@@ -1,9 +1,9 @@
-import Link from "next/link";
-import { MenuIcon } from "@heroicons/react/solid";
-import { Menu, Transition } from "@headlessui/react";
-import { useState, Fragment } from "react";
-import {ClipboardListIcon, HomeIcon} from "@heroicons/react/outline";
-import Head from "next/head";
+import Link from 'next/link';
+import { MenuIcon } from '@heroicons/react/solid';
+import { Menu, Transition } from '@headlessui/react';
+import { useState, Fragment } from 'react';
+import { ClipboardListIcon, HomeIcon } from '@heroicons/react/outline';
+import Head from 'next/head';
 
 export default function Navbar() {
 	const [menuOpen, setMenuOpen] = useState(false);
@@ -26,7 +26,7 @@ export default function Navbar() {
 				<div className="sm:hidden">
 					<Menu as="div">
 						<Menu.Button>
-							<MenuIcon onClick={() => {setMenuOpen(!menuOpen)}} className="h-10 w-10 text-white sm:hidden"/>
+							<MenuIcon onClick={() => {setMenuOpen(!menuOpen);}} className="h-10 w-10 text-white sm:hidden"/>
 						</Menu.Button>
 						<Transition
 							show={menuOpen}
@@ -70,5 +70,5 @@ export default function Navbar() {
 				</div>
 			</div>
 		</div>
-	)
+	);
 }
