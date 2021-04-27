@@ -1,9 +1,9 @@
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
-import Header from '../components/Header';
-import Card from '../components/Card';
+import Navbar from '../../components/Navbar';
+import Footer from '../../components/Footer';
+import Header from '../../components/Header';
+import Card from '../../components/Card';
 
 export default function Projects() {
 	const router = useRouter();
@@ -23,51 +23,51 @@ export default function Projects() {
 	}, [query]);
 
 	return (
-		<div className="flex flex-col items-center">
+		<div className="flex flex-col h-full min-h-screen bg-red-50">
 			<Navbar/>
 
 			<Header title="Projects" description="A list of all the projects organized by Hololive EN Fan servers!"/>
-			<div className="my-16 w-full flex flex-col items-center">
-				<div className="max-w-4xl mx-4">
-					<div>
-						<div className="flex justify-between border-b-2 border-red-200">
-							<h1 className="text-2xl text-red-500 font-bold text-center sm:text-left">Ongoing
-								projects</h1>
-						</div>
-						<div className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2">
-							<Card img="/img/logo.png" title="HoloRes"
-							      description="A fun Hololive community! We have concerts, arts, festivals, and more!"
-							      button="Join!" url="#"/>
-							<Card img="/img/logo.png" title="HoloRes"
-							      description="A fun Hololive community! We have concerts, arts, festivals, and more!"
-							      button="Join!" url="#"/>
-							<Card img="/img/logo.png" title="HoloRes"
-							      description="A fun Hololive community! We have concerts, arts, festivals, and more!"
-							      button="Join!" url="#"/>
-						</div>
-					</div>
-					<div className="mt-10">
-						<h1 className="text-2xl text-red-500 font-bold border-b-2 border-red-200 text-center sm:text-left">Past
+			<div className="flex-grow">
+				<div className="my-16 w-full flex flex-col items-center">
+					<div className="max-w-4xl mx-4">
+						<div>
+							<h1 className="text-2xl text-red-500 font-bold border-b-2 border-red-200 text-center sm:text-left">Ongoing
 							projects</h1>
-						<div className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2">
-							<Card img="/img/logo.png" title="HoloRes"
+							<div className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2">
+								<Card img="/img/logo.png" title="HoloRes"
 							      description="A fun Hololive community! We have concerts, arts, festivals, and more!"
 							      button="Join!" url="#"/>
-							<Card img="/img/logo.png" title="HoloRes"
+								<Card img="/img/logo.png" title="HoloRes"
 							      description="A fun Hololive community! We have concerts, arts, festivals, and more!"
 							      button="Join!" url="#"/>
-							<Card img="/img/logo.png" title="HoloRes"
+								<Card img="/img/logo.png" title="HoloRes"
 							      description="A fun Hololive community! We have concerts, arts, festivals, and more!"
 							      button="Join!" url="#"/>
-							<Card img="/img/logo.png" title="HoloRes"
+							</div>
+						</div>
+						<div className="mt-10">
+							<h1 className="text-2xl text-red-500 font-bold border-b-2 border-red-200 text-center sm:text-left">Past
+							projects</h1>
+							<div className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2">
+								<Card img="/img/logo.png" title="HoloRes"
 							      description="A fun Hololive community! We have concerts, arts, festivals, and more!"
 							      button="Join!" url="#"/>
-							<Card img="/img/logo.png" title="HoloRes"
+								<Card img="/img/logo.png" title="HoloRes"
 							      description="A fun Hololive community! We have concerts, arts, festivals, and more!"
 							      button="Join!" url="#"/>
-							<Card img="/img/logo.png" title="HoloRes"
+								<Card img="/img/logo.png" title="HoloRes"
 							      description="A fun Hololive community! We have concerts, arts, festivals, and more!"
 							      button="Join!" url="#"/>
+								<Card img="/img/logo.png" title="HoloRes"
+							      description="A fun Hololive community! We have concerts, arts, festivals, and more!"
+							      button="Join!" url="#"/>
+								<Card img="/img/logo.png" title="HoloRes"
+							      description="A fun Hololive community! We have concerts, arts, festivals, and more!"
+							      button="Join!" url="#"/>
+								<Card img="/img/logo.png" title="HoloRes"
+							      description="A fun Hololive community! We have concerts, arts, festivals, and more!"
+							      button="Join!" url="#"/>
+							</div>
 						</div>
 					</div>
 				</div>
