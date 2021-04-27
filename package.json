@@ -1,7 +1,6 @@
 {
   "name": "hefs-website",
-  "version": "0.1.0",
-  "private": true,
+  "version": "1.0.0",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -34,5 +33,16 @@
     "postcss": "8.2.13",
     "tailwindcss": "2.1.2",
     "typescript": "4.2.4"
-  }
+  },
+  "description": "Hololive EN Fan Server website",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GoldElysium/hefs-website.git"
+  },
+  "author": "GoldElysium",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/GoldElysium/hefs-website/issues"
+  },
+  "homepage": "https://github.com/GoldElysium/hefs-website#readme"
 }
