@@ -6,7 +6,8 @@ import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 
 export default function ProjectPage() {
-	const [currentIndex, setCurrentIndex] = useState(0);
+	const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
+	const [currentSubmissionIndex, setCurrentSubmissionIndex] = useState(0);
 	const [media, setMedia] = useState([
 		{
 			type: 'video',
@@ -19,11 +20,21 @@ export default function ProjectPage() {
 	]);
 
 	function CurrentGalleryItem() {
-		if (media[currentIndex].type === 'video') {
-			return <ReactPlayer width="100%" height="100%" url={media[currentIndex].src} controls light/>;
+		if (media[currentMediaIndex].type === 'video') {
+			return <ReactPlayer width="100%" height="100%" url={media[currentMediaIndex].src} controls light/>;
 		}
-		if (media[currentIndex].type === 'image') {
-			return <img className="w-full h-full" src={media[currentIndex].src} alt=""/>;
+		if (media[currentMediaIndex].type === 'image') {
+			return <img className="w-full h-full" src={media[currentMediaIndex].src} alt=""/>;
+		}
+		return <p>Invalid media</p>;
+	}
+
+	function CurrentSubmissionItem() {
+		if (media[currentSubmissionIndex].type === 'video') {
+			return <ReactPlayer width="100%" height="100%" url={media[currentSubmissionIndex].src} controls light/>;
+		}
+		if (media[currentSubmissionIndex].type === 'image') {
+			return <img className="w-full h-full" src={media[currentSubmissionIndex].src} alt=""/>;
 		}
 		return <p>Invalid media</p>;
 	}
@@ -51,6 +62,29 @@ export default function ProjectPage() {
 							</p>
 						</div>
 						<div>
+							<h1 className="text-2xl text-red-500 font-bold border-b-2 border-red-200 text-center sm:text-left my-3">Submission</h1>
+							<div className="flex flex-col items-center pt-2">
+								<div className="w-full h-52 sm:w-8/12 sm:h-96">
+									<CurrentSubmissionItem/>
+								</div>
+								<div className="flex mt-2 font-bold items-center justify-center text-center">
+									<ChevronLeftIcon
+										className={currentSubmissionIndex > 0 ? 'text-black h-8 w-8 cursor-pointer' : 'text-red-300 h-8 w-8'}
+										onClick={() => {
+											if (currentSubmissionIndex > 0) setCurrentSubmissionIndex(currentSubmissionIndex - 1);
+										}}
+									/>
+									{currentSubmissionIndex + 1}/{media.length}
+									<ChevronRightIcon
+										className={currentSubmissionIndex + 1 < media.length ? 'text-black h-8 w-8 cursor-pointer' : 'text-red-300 h-8 w-8'}
+										onClick={() => {
+											if (currentSubmissionIndex + 1 < media.length) setCurrentSubmissionIndex(currentSubmissionIndex + 1);
+										}}
+									/>
+								</div>
+							</div>
+						</div>
+						<div>
 							<h1 className="text-2xl text-red-500 font-bold border-b-2 border-red-200 text-center sm:text-left my-3">Gallery</h1>
 							<div className="flex flex-col items-center pt-2">
 								<div className="w-full h-52 sm:w-8/12 sm:h-96">
@@ -58,16 +92,16 @@ export default function ProjectPage() {
 								</div>
 								<div className="flex mt-2 font-bold items-center justify-center text-center">
 									<ChevronLeftIcon
-										className={currentIndex > 0 ? 'text-black h-8 w-8 cursor-pointer' : 'text-red-300 h-8 w-8'}
+										className={currentMediaIndex > 0 ? 'text-black h-8 w-8 cursor-pointer' : 'text-red-300 h-8 w-8'}
 										onClick={() => {
-											if (currentIndex > 0) setCurrentIndex(currentIndex - 1);
+											if (currentMediaIndex > 0) setCurrentMediaIndex(currentMediaIndex - 1);
 										}}
 									/>
-									{currentIndex + 1}/{media.length}
+									{currentMediaIndex + 1}/{media.length}
 									<ChevronRightIcon
-										className={currentIndex + 1 < media.length ? 'text-black h-8 w-8 cursor-pointer' : 'text-red-300 h-8 w-8'}
+										className={currentMediaIndex + 1 < media.length ? 'text-black h-8 w-8 cursor-pointer' : 'text-red-300 h-8 w-8'}
 										onClick={() => {
-											if (currentIndex + 1 < media.length) setCurrentIndex(currentIndex + 1);
+											if (currentMediaIndex + 1 < media.length) setCurrentMediaIndex(currentMediaIndex + 1);
 										}}
 									/>
 								</div>

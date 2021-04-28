@@ -16,18 +16,23 @@ export default function DashboardNavbar() {
 			</Head>
 
 			<div>
-				<Link href="/">
+				<Link href="/dashboard">
 					<a>
 						<img className="h-20" src="/img/logo_banner.png" alt="Logo"/>
 					</a>
 				</Link>
 			</div>
 
-			<div>
+			<div className="flex items-center">
+				<div className="flex items-center text-white text-lg hover:text-red-100">
+					<Link href="/">
+						<a>Home</a>
+					</Link>
+				</div>
 				<Menu as="div">
 					<Menu.Button>
 						{/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
-						<div onClick={() => {setMenuOpen(!menuOpen);}} className="h-10 w-16 text-white font-bold mr-8 text-right">
+						<div onClick={() => {setMenuOpen(!menuOpen);}} className="text-white font-bold mr-8 ml-12 text-right">
 							{session?.user?.name ?? 'Error'}
 						</div>
 					</Menu.Button>
