@@ -2,12 +2,14 @@
 import mongoose, { Schema, Document, Model } from 'mongoose';
 import { nanoid } from 'nanoid';
 
-export interface IGuild extends Document {
+export interface IGuild {
 	name: string,
 	description: string,
 	invite: string,
 	debutDate: Date,
 }
+
+interface IGuildDocument extends IGuild, Document {}
 
 const SettingSchema: Schema = new Schema({
 	_id: { type: String, default: nanoid() },
@@ -20,8 +22,8 @@ const SettingSchema: Schema = new Schema({
 // eslint-disable-next-line import/no-mutable-exports
 let model;
 try {
-	model = mongoose.model<IGuild>('Guild');
+	model = mongoose.model<IGuildDocument>('Guild');
 } catch {
-	model = mongoose.model<IGuild>('Guild', SettingSchema, 'guilds');
+	model = mongoose.model<IGuildDocument>('Guild', SettingSchema, 'guilds');
 }
-export default <Model<IGuild>>model;
+export default <Model<IGuildDocument>>model;

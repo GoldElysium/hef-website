@@ -6,21 +6,31 @@ interface IMedia {
 	src: string
 }
 
+interface ISubmission {
+	type: 'image' | 'video' |'text',
+	src: string,
+}
+
 interface ILink {
 	name: string,
 	link: string,
 }
 
-export interface IProject extends Document {
+export interface IProject {
 	_id: number,
 	status: 'ongoing' | 'past',
 	guild: string,
 	media?: IMedia[],
+	submissions?: ISubmission[],
 	title: string,
 	shortDescription: string,
 	description: string,
 	links?: ILink[],
 	date: Date,
+}
+
+interface IProjectDocument extends IProject, Document {
+	_id: number,
 }
 
 interface ICounter extends Document {
@@ -45,6 +55,11 @@ const MediaSchema: Schema = new Schema({
 	src: { type: String, required: true },
 });
 
+const SubmissionSchema: Schema = new Schema({
+	type: { type: String, enum: ['image', 'video', 'text'], required: true },
+	src: { type: String, required: true },
+});
+
 const LinkSchema: Schema = new Schema({
 	name: { type: String, required: true },
 	link: { type: String, required: true },
@@ -55,6 +70,7 @@ const ProjectSchema: Schema = new Schema({
 	status: { type: String, required: true, enum: ['ongoing', 'past'] },
 	guild: { type: String, required: true },
 	media: { type: [MediaSchema], default: undefined },
+	submissions: { type: [SubmissionSchema], default: undefined },
 	title: { type: String, required: true },
 	shortDescription: { type: String, required: true },
 	description: { type: String, required: true },
@@ -76,8 +92,8 @@ ProjectSchema.pre('save', (next) => {
 // eslint-disable-next-line import/no-mutable-exports
 let model;
 try {
-	model = mongoose.model<IProject>('Project');
+	model = mongoose.model<IProjectDocument>('Project');
 } catch {
-	model = mongoose.model<IProject>('Project', ProjectSchema, 'projects');
+	model = mongoose.model<IProjectDocument>('Project', ProjectSchema, 'projects');
 }
-export default <Model<IProject>>model;
+export default <Model<IProjectDocument>>model;

@@ -9,7 +9,6 @@
   "dependencies": {
     "@headlessui/react": "1.1.1",
     "@heroicons/react": "1.0.1",
-    "axios": "0.21.1",
     "mongoose": "5.12.6",
     "nanoid": "3.1.22",
     "next": "10.2.0",

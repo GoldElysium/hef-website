@@ -31,7 +31,14 @@ const options = {
 				.catch((e) => {
 					throw e;
 				});
-			if (!whitelistDoc) return false;
+			if (!whitelistDoc) {
+				const newDoc = new Setting({
+					_id: 'whitelist',
+					value: [],
+				});
+				newDoc.save();
+				return false;
+			}
 
 			const whitelist: string[] = whitelistDoc.value;
 			return whitelist.includes(profile.id);

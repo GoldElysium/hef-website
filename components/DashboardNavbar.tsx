@@ -50,7 +50,7 @@ export default function DashboardNavbar() {
 							<div className="px-2 py-1">
 								<Menu.Item>
 									{/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
-									<div className="flex rounded-md items-center w-full" onClick={() => signOut()}>
+									<div className="flex rounded-md items-center w-full cursor-pointer" onClick={() => signOut({ callbackUrl: '/' })}>
 										<LogoutIcon className="h-6 w-6 text-red-500 mr-2" />
 										Logout
 									</div>
