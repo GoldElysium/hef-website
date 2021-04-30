@@ -4,9 +4,7 @@ import Error from 'next/error';
 import { CheckIcon, ReplyIcon } from '@heroicons/react/solid';
 import DateTimePicker from '@material-ui/lab/DateTimePicker';
 import { createMuiTheme, Snackbar, TextField, ThemeProvider } from '@material-ui/core';
-// @ts-expect-error Type not found
 import AdapterDateFns from '@material-ui/lab/AdapterDateFns';
-// @ts-expect-error Type not found
 import LocalizationProvider from '@material-ui/lab/LocalizationProvider';
 import { CalendarIcon, ClockIcon } from '@heroicons/react/outline';
 import { Alert } from '@material-ui/lab';
