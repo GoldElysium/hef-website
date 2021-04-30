@@ -1,23 +1,23 @@
 // Packages
 import mongoose, { Schema, Document, Model } from 'mongoose';
 
-interface IMedia {
+export interface IMedia {
 	type: 'image' | 'video',
 	src: string
 }
 
-interface ISubmission {
+export interface ISubmission {
 	type: 'image' | 'video' |'text',
 	src: string,
 }
 
-interface ILink {
+export interface ILink {
 	name: string,
 	link: string,
 }
 
 export interface IProject {
-	_id: number,
+	_id?: number,
 	status: 'ongoing' | 'past',
 	guild: string,
 	media?: IMedia[],

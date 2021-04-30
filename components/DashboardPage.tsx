@@ -5,16 +5,18 @@ import DashboardNavbar from './DashboardNavbar';
 import DashboardCard from './DashboardCard';
 import Footer from './Footer';
 import { IGuild } from '../models/Guild';
-import { IProject } from '../models/Project';
 
 export default function DashboardPage() {
 	const [guilds, setGuilds] = useState<IGuild[]>([]);
-	const [projects, setProjects] = useState<IProject[]>([]);
+
+	const [projects, setProjects] = useState<JSX.Element[]>([]);
+	const [pastProjects, setPastProjects] = useState<JSX.Element[]>([]);
 
 	const [whitelist, setWhitelist] = useState<string[]>([]);
 	const [editedWhitelist, setEditedWhitelist] = useState<string[]>([]);
 	const [whitelistHtml, setWhitelistHtml] = useState<JSX.Element[] | JSX.Element>([]);
 
+	// Whitelist setting
 	useEffect(() => {
 		fetch('/api/admin/setting?s=whitelist', {
 			method: 'GET',
@@ -34,14 +36,23 @@ export default function DashboardPage() {
 		setEditedWhitelist((prevState) => [...prevState, '']);
 	}
 
-	function removeWhitelistUser(index: number) {
-		const newWhitelist = [...editedWhitelist];
-		newWhitelist.splice(index, 1);
-		setEditedWhitelist(newWhitelist);
-	}
-
 	function saveWhitelist() {
-
+		fetch('/api/admin/setting', {
+			method: 'PATCH',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json;charset=UTF-8',
+			},
+			body: JSON.stringify({
+				setting: 'whitelist',
+				value: editedWhitelist,
+			}),
+		})
+			.then((response) => response.json())
+			.then((data) => {
+				setWhitelist(data.value);
+				setEditedWhitelist(data.value);
+			});
 	}
 
 	// eslint-disable-next-line consistent-return
@@ -52,9 +63,15 @@ export default function DashboardPage() {
 			setEditedWhitelist(newWhitelist);
 		}
 
+		function removeWhitelistUser(index: number) {
+			const newWhitelist = [...editedWhitelist];
+			newWhitelist.splice(index, 1);
+			setEditedWhitelist(newWhitelist);
+		}
+
 		if (editedWhitelist.length === 0) return setWhitelistHtml(<p>None</p>);
 		const newHtml = editedWhitelist.map((user, index) => (
-			<div className="flex items-center">
+			<div className="flex items-center mt-2" key={user}>
 				<input type="text" value={user} key={index} className="border-2 rounded-md px-1" placeholder="User ID"
 				       onChange={(event) => updateWhitelistUser(event, index)}/>
 				<TrashIcon className="w-6 h-6 ml-4 hover:text-gray-500 cursor-pointer" onClick={() => removeWhitelistUser(index)} />
@@ -62,6 +79,24 @@ export default function DashboardPage() {
 		));
 		setWhitelistHtml(newHtml);
 	}, [editedWhitelist]);
+
+	// Guilds
+	useEffect(() => {
+		fetch('/api/guilds', {
+			method: 'GET',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json;charset=UTF-8',
+			},
+		})
+			.then((response) => response.json())
+			.then((data) => {
+				const guildHtml = data.map((guild: IGuild) => (
+					<DashboardCard key={guild._id} img={guild.image} title={guild.name} description={guild.description} button="Edit" url={`/dashboard/guild/${guild._id}`}/>
+				));
+				setGuilds(guildHtml);
+			});
+	}, []);
 
 
 	return (
@@ -80,7 +115,7 @@ export default function DashboardPage() {
 							</div>
 							<div
 								className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center items-center">
-								<DashboardCard img="/img/logo.png" title="HEFS" description="" button="Edit" url="#"/>
+								{guilds.length > 0 ? guilds : <div className="font-bold text-2xl mt-4">None</div>}
 							</div>
 						</div>
 
