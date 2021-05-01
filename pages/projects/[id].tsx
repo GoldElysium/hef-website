@@ -95,7 +95,7 @@ export default function ProjectPage() {
 		<div className="flex flex-col h-full min-h-screen bg-red-50">
 			<Navbar/>
 
-			<Header title={`Project ${doc._id ?? 'unknown'}`} description={doc.shortDescription ?? ''}/>
+			<Header title={doc.title ?? 'unknown'} description={doc.shortDescription ?? ''}/>
 
 			<div className="flex-grow">
 				<div className="my-16 w-full flex flex-col items-center">
