@@ -13,11 +13,13 @@ export default function Card({ img, title, description, button, url, internal }:
 	return (
 		<div className="mt-4 sm:w-1/3">
 			<div
-				className="bg-white p-8 h-full border-b-4 border-red-500 rounded-lg flex flex-col items-center sm:mx-2 sm:p-3 md:p-8">
+				className="bg-white p-8 h-full border-b-4 border-red-500 rounded-lg flex flex-col justify-between items-center sm:mx-2 sm:p-3 md:p-8">
 				{/* eslint-disable-next-line jsx-a11y/img-redundant-alt */}
-				{img && <img className="h-32 rounded-full" src={img} alt="Image alt"/>}
-				<h2 className="font-bold text-xl mt-3">{title}</h2>
-				<p className="text-center mt-2">{description}</p>
+				<div className="flex flex-col items-center">
+					{img && <img className="h-32 rounded-full" src={img} alt=""/>}
+					<h2 className="font-bold text-xl mt-3 text-center">{title}</h2>
+					<p className="text-center mt-2">{description}</p>
+				</div>
 				{internal ?
 					<Link href={url}>
 						<div
