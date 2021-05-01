@@ -21,6 +21,7 @@ try {
 } catch (e) {}
 
 const options = {
+	database: process.env.NEXTAUTH_DB,
 	providers: [
 		Providers.Discord({
 			clientId: process.env.DISCORD_CLIENT_ID,
