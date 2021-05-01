@@ -66,7 +66,7 @@ const LinkSchema: Schema = new Schema({
 });
 
 const ProjectSchema: Schema = new Schema({
-	id: { type: Number },
+	_id: { type: Number },
 	status: { type: String, required: true, enum: ['ongoing', 'past'] },
 	guild: { type: String, required: true },
 	media: { type: [MediaSchema], default: undefined },
@@ -78,12 +78,12 @@ const ProjectSchema: Schema = new Schema({
 	date: { type: Date, default: new Date() },
 });
 
-ProjectSchema.pre('save', (next) => {
+// eslint-disable-next-line func-names
+ProjectSchema.pre('save', function (next) {
 	const doc = this;
 	CounterModel.findByIdAndUpdate({ _id: 'projectCounter' }, { $inc: { seq: 1 } }, { new: true, upsert: true }, (error: mongoose.Error, counter: ICounter) => { // eslint-disable-line consistent-return
 		if (error)
 			return next(error);
-		// @ts-expect-error doc possibly undefined
 		doc._id = counter.seq;
 		next();
 	});

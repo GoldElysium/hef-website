@@ -11,11 +11,14 @@ interface DiscordProfile extends DefaultProfile {
 	discriminator: string,
 }
 
-mongoose.connect(<string>process.env.MONGOOSEURL, {
-	useNewUrlParser: true,
-	useUnifiedTopology: true,
-	useFindAndModify: false,
-});
+try {
+	mongoose.connect(<string>process.env.MONGOOSEURL, {
+		useNewUrlParser: true,
+		useUnifiedTopology: true,
+		useFindAndModify: false,
+	});
+// eslint-disable-next-line no-empty
+} catch (e) {}
 
 const options = {
 	providers: [

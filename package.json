@@ -20,7 +20,9 @@
     "next-auth": "3.19.3",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "react-player": "2.9.0"
+    "react-markdown": "^6.0.1",
+    "react-player": "2.9.0",
+    "rich-markdown-editor": "^11.7.0"
   },
   "devDependencies": {
     "@ijsto/eslint-config": "3.0.1",

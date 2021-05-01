@@ -5,16 +5,19 @@ import DashboardNavbar from './DashboardNavbar';
 import DashboardCard from './DashboardCard';
 import Footer from './Footer';
 import { IGuild } from '../models/Guild';
+import { IProject } from '../models/Project';
 
 export default function DashboardPage() {
 	const [guilds, setGuilds] = useState<IGuild[]>([]);
 
+	/* eslint-disable no-undef */
 	const [projects, setProjects] = useState<JSX.Element[]>([]);
 	const [pastProjects, setPastProjects] = useState<JSX.Element[]>([]);
 
 	const [whitelist, setWhitelist] = useState<string[]>([]);
 	const [editedWhitelist, setEditedWhitelist] = useState<string[]>([]);
 	const [whitelistHtml, setWhitelistHtml] = useState<JSX.Element[] | JSX.Element>([]);
+	/* eslint-enable */
 
 	// Whitelist setting
 	useEffect(() => {
@@ -98,6 +101,31 @@ export default function DashboardPage() {
 			});
 	}, []);
 
+	// Projects
+	useEffect(() => {
+		fetch('/api/projects', {
+			method: 'GET',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json;charset=UTF-8',
+			},
+		})
+			.then((response) => response.json())
+			.then((data) => {
+				const ongoing = data.filter((project: IProject) => project.status === 'ongoing');
+				const ongoingHtml = ongoing.map((project: IProject) => (
+					<DashboardCard key={project._id} title={project.title} description={project.shortDescription} button="Edit" url={`/dashboard/project/${project._id}`}/>
+				));
+
+				const past = data.filter((project: IProject) => project.status === 'past');
+				const pastHtml = past.map((project: IProject) => (
+					<DashboardCard key={project._id} title={project.title} description={project.shortDescription} button="Edit" url={`/dashboard/project/${project._id}`}/>
+				));
+
+				setProjects(ongoingHtml);
+				setPastProjects(pastHtml);
+			});
+	}, []);
 
 	return (
 		<div className="flex flex-col h-full min-h-screen bg-red-50">
@@ -128,7 +156,7 @@ export default function DashboardPage() {
 							</div>
 							<div
 								className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center items-center">
-								<DashboardCard img="/img/logo.png" title="HEFS" description="" button="Edit" url="#"/>
+								{projects.length > 0 ? projects : <div className="font-bold text-2xl mt-4">None</div>}
 							</div>
 						</div>
 
@@ -137,7 +165,7 @@ export default function DashboardPage() {
 								projects</h1>
 							<div
 								className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center items-center">
-								<DashboardCard img="/img/logo.png" title="HEFS" description="" button="Edit" url="#"/>
+								{pastProjects.length > 0 ? pastProjects : <div className="font-bold text-2xl mt-4">None</div>}
 							</div>
 						</div>
 						<div className="mt-4">

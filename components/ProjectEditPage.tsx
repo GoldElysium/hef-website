@@ -5,6 +5,7 @@ import { CheckIcon, PlusIcon, ReplyIcon } from '@heroicons/react/solid';
 import { Snackbar } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { TrashIcon } from '@heroicons/react/outline';
+import RichMarkdownEditor from 'rich-markdown-editor';
 import DashboardNavbar from './DashboardNavbar';
 import Footer from './Footer';
 import { ILink, IMedia, IProject, ISubmission } from '../models/Project';
@@ -27,11 +28,13 @@ export default function ProjectEditPage() {
 	const [submissions, setSubmissions] = useState<ISubmission[]>([]);
 	const [links, setLinks] = useState<ILink[]>([]);
 
+	/* eslint-disable no-undef */
 	const [mediaHtml, setMediaHtml] = useState<JSX.Element[]>([]);
 	const [submissionsHtml, setSubmissionsHtml] = useState<JSX.Element[]>([]);
 	const [linksHtml, setLinksHtml] = useState<JSX.Element[]>([]);
 
 	const [guilds, setGuilds] = useState<JSX.Element[]>([]);
+	/* eslint-enable */
 
 	const [message, setMessage] = useState<IMessage | null>(null);
 
@@ -52,7 +55,6 @@ export default function ProjectEditPage() {
 	const [errorCode, setErrorCode] = useState<boolean | number>(false);
 
 	// Init
-
 	useEffect(() => {
 		// eslint-disable-next-line consistent-return
 		async function run() {
@@ -69,6 +71,14 @@ export default function ProjectEditPage() {
 				const json: IProject = await res.json();
 
 				setOriginalDoc(json);
+
+				setTitle(json.title);
+				setShortDescription(json.shortDescription);
+				setDescription(json.description);
+				setGuild(json.guild);
+				setMedia(json.media ?? []);
+				setSubmissions(json.submissions ?? []);
+				setLinks(json.links ?? []);
 			}
 		}
 
@@ -97,6 +107,7 @@ export default function ProjectEditPage() {
 				<option key={mapGuild._id} value={mapGuild._id}>{mapGuild.name}</option>
 			));
 			setGuilds(html);
+			setGuild(json[0]._id ?? '');
 		}
 
 		run();
@@ -121,6 +132,13 @@ export default function ProjectEditPage() {
 	}, [description, shortDescription, status, title, media, links, submissions, originalDoc]);
 
 	function resetForm() {
+		setStatus(originalDoc.status);
+		setTitle(originalDoc.title);
+		setShortDescription(originalDoc.shortDescription);
+		setDescription(originalDoc.description);
+		setMedia(originalDoc.media ?? []);
+		setLinks(originalDoc.links ?? []);
+		setSubmissions(originalDoc.submissions ?? []);
 	}
 
 	function saveForm(event: FormEvent<HTMLFormElement>) {
@@ -136,7 +154,7 @@ export default function ProjectEditPage() {
 						'Accept': 'application/json',
 						'Content-Type': 'application/json;charset=UTF-8',
 					},
-					body: JSON.stringify({} as IProject),
+					body: JSON.stringify({ status, guild, media, submissions, title, shortDescription, description, links } as IProject),
 				});
 			} else {
 				res = await fetch(`/api/projects/${router.query.id}`, {
@@ -145,7 +163,7 @@ export default function ProjectEditPage() {
 						'Accept': 'application/json',
 						'Content-Type': 'application/json;charset=UTF-8',
 					},
-					body: JSON.stringify({ id: router.query.id, update: {} as IProject }),
+					body: JSON.stringify({ id: router.query.id, update: { status, guild, media, submissions, title, shortDescription, description, links } as IProject }),
 				});
 			}
 
@@ -194,7 +212,7 @@ export default function ProjectEditPage() {
 		}
 
 		const html = links.map((link, index) => (
-			<div className="flex mt-2" key={link.name}>
+			<div className="flex mt-2" key={`link-${index}`}>
 				<input required
 				       value={link.name}
 				       onChange={(event) => updateName(index, event.currentTarget.value)}
@@ -215,19 +233,92 @@ export default function ProjectEditPage() {
 	}, [links]);
 
 	function addMedia() {
-
+		setMedia((prevState) => [...prevState, { type: 'image', src: '' }]);
 	}
 
 	useEffect(() => {
+		function updateType(index: number, type: string) {
+			const newMedia = [...media];
+			newMedia[index].type = type as IMedia['type'];
+			setMedia(newMedia);
+		}
 
+		function updateSrc(index: number, src: string) {
+			const newMedia = [...media];
+			newMedia[index].src = src;
+			setMedia(newMedia);
+		}
+
+		function removeMedia(index: number) {
+			const newMedia = [...media];
+			newMedia.splice(index, 1);
+			setMedia(newMedia);
+		}
+
+		const html = media.map((currentMedia, index) => (
+			<div className="flex mt-2" key={`media-${index}`}>
+				<select value={currentMedia.type} onChange={(event) => updateType(index, event.currentTarget.value)}
+				        className="border border-red-300 rounded-md px-1 ml-2">
+					<option value="image">Image</option>
+					<option value="video">Video</option>
+				</select>
+				<input required
+				       value={currentMedia.src}
+				       onChange={(event) => updateSrc(index, event.currentTarget.value)}
+				       placeholder="Link"
+				       type="url"
+				       autoCapitalize="words"
+				       className="border border-red-300 rounded-md px-1 ml-2 w-96"/>
+				<TrashIcon className="w-6 h-6 ml-2 cursor-pointer" onClick={() => removeMedia(index)}/>
+			</div>
+		));
+
+		setMediaHtml(html);
 	}, [media]);
 
 	function addSubmission() {
-
+		setSubmissions((prevState) => [...prevState, { type: 'image', src: '' }]);
 	}
 
 	useEffect(() => {
+		function updateType(index: number, type: string) {
+			const newSubmissions = [...submissions];
+			newSubmissions[index].type = type as ISubmission['type'];
+			setSubmissions(newSubmissions);
+		}
 
+		function updateSrc(index: number, src: string) {
+			const newSubmissions = [...submissions];
+			newSubmissions[index].src = src;
+			setSubmissions(newSubmissions);
+		}
+
+		function removeMedia(index: number) {
+			const newSubmissions = [...submissions];
+			newSubmissions.splice(index, 1);
+			setSubmissions(newSubmissions);
+		}
+
+		const html = submissions.map((submission, index) => (
+			<div className="flex mt-2" key={`media-${index}`}>
+				<select value={submission.type} onChange={(event) => updateType(index, event.currentTarget.value)}
+				        className="border border-red-300 rounded-md px-1 ml-2">
+					<option value="image">Image</option>
+					<option value="video">Video</option>
+					<option value="text">Text</option>
+				</select>
+				<input required
+				       value={submission.src}
+				       onChange={(event) => updateSrc(index, event.currentTarget.value)}
+				       placeholder="Link"
+				       type="url"
+				       autoCapitalize="words"
+				       className="border border-red-300 rounded-md px-1 ml-2 w-96"/>
+				<TrashIcon className="w-6 h-6 ml-2 cursor-pointer" onClick={() => removeMedia(index)}/>
+			</div>
+		));
+
+		setSubmissionsHtml(html);
 	}, [submissions]);
 
 	if (errorCode) {
@@ -277,12 +368,16 @@ export default function ProjectEditPage() {
 								</div>
 								<div className="flex flex-col mt-2">
 									<label htmlFor="description" className="font-bold">Description</label>
-									<input required
+									<div className="flex flex-col justify-start border border-red-300 bg-white max-h-32 rounded-md">
+										<RichMarkdownEditor onChange={setDescription} id="description"
+										                    defaultValue="# Welcome
+
+Just an easy to use **Markdown** editor with `slash commands`"
+									                    className="rounded-md px-1 w-full overflow-auto"/>
+									</div>
+									<textarea required
 									       value={description}
-									       onChange={(event) => setDescription(event.currentTarget.value)}
-									       id="description"
-									       autoCapitalize="on"
-									       className="border border-red-300 rounded-md px-1"/>
+									       className="hidden"/>
 								</div>
 								<div className="flex flex-col mt-2">
 									<label htmlFor="guild" className="font-bold">Organizer</label>
@@ -310,7 +405,8 @@ export default function ProjectEditPage() {
 								<div className="flex flex-col mt-2">
 									<div className="flex items-center">
 										<label htmlFor="status" className="font-bold">Links</label>
-										<PlusIcon className="w-6 h-6 mt-1 hover:text-gray-500 cursor-pointer" onClick={addLink}/>
+										<PlusIcon className="w-6 h-6 mt-1 hover:text-gray-500 cursor-pointer"
+										          onClick={addLink}/>
 									</div>
 									{linksHtml}
 								</div>
@@ -320,12 +416,17 @@ export default function ProjectEditPage() {
 									<h2 className="text-xl font-bold text-center sm:text-left text-red-500 mt-4">Media</h2>
 									<PlusIcon className="w-8 h-8 mt-2 text-red-500 cursor-pointer" onClick={addMedia}/>
 								</div>
-
+								<div>
+									{mediaHtml}
+								</div>
 							</div>
 							<div>
 								<div className="flex justify-between">
 									<h2 className="text-xl font-bold text-center sm:text-left text-red-500 mt-4">Submissions</h2>
-									<PlusIcon className="w-8 h-8 mt-2 text-red-500 cursor-pointer"/>
+									<PlusIcon className="w-8 h-8 mt-2 text-red-500 cursor-pointer" onClick={addSubmission}/>
+								</div>
+								<div>
+									{submissionsHtml}
 								</div>
 							</div>
 						</form>
