@@ -12,6 +12,7 @@ export default function Navbar() {
 		<div className="flex w-full bg-red-500 h-20 px-4 sm:px-8 justify-between items-center">
 			<Head>
 				<title>Hololive EN Fan Website</title>
+				<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "5896757c09e04949bf74e7c34efd419a"}' />
 			</Head>
 
 			<div>
