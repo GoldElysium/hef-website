@@ -5,7 +5,6 @@ import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 import Card from '../../components/Card';
 import { IProject } from '../../models/Project';
-import DashboardCard from '../../components/DashboardCard';
 
 export default function Projects() {
 	const router = useRouter();

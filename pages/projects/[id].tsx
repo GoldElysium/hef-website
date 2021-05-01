@@ -64,6 +64,7 @@ export default function ProjectPage() {
 						'Accept': '*/*',
 					},
 				});
+				// eslint-disable-next-line consistent-return
 				if (!res.ok) return <p>Error</p>;
 
 				setSubmissionText(await res.text());
@@ -101,11 +102,11 @@ export default function ProjectPage() {
 					<div className="max-w-4xl w-full mx-4">
 						<div>
 							<h1 className="text-2xl text-red-500 font-bold border-b-2 border-red-200 text-center sm:text-left mb-3">Description</h1>
-							<ReactMarkdown>
+							<ReactMarkdown className="px-4 sm:px-0">
 								{doc.description}
 							</ReactMarkdown>
 						</div>
-						{((doc.media?.length ?? 0) > 0) && <div>
+						{((doc.media?.length ?? 0) > 0) && <div className="mt-4">
 							<h1 className="text-2xl text-red-500 font-bold border-b-2 border-red-200 text-center sm:text-left my-3">Gallery</h1>
 							<div className="flex flex-col items-center pt-2">
 								<div className="w-full h-52 sm:w-8/12 sm:h-96">
@@ -128,7 +129,7 @@ export default function ProjectPage() {
 								</div>
 							</div>
 						</div>}
-						{((doc.submissions?.length ?? 0) > 0) && <div>
+						{((doc.submissions?.length ?? 0) > 0) && <div className="mt-4">
 							<h1 className="text-2xl text-red-500 font-bold border-b-2 border-red-200 text-center sm:text-left my-3">Submissions</h1>
 							<div className="flex flex-col items-center pt-2">
 								<div className="w-full h-52 sm:w-8/12 sm:h-96">
@@ -151,9 +152,9 @@ export default function ProjectPage() {
 								</div>
 							</div>
 						</div>}
-						{((doc.links?.length ?? 0) > 0) && <div>
+						{((doc.links?.length ?? 0) > 0) && <div className="mt-4">
 							<h1 className="text-2xl text-red-500 font-bold border-b-2 border-red-200 text-center sm:text-left mb-3">Links</h1>
-							<div className="flex">
+							<div className="flex px-4 sm:px-0">
 								{doc.links && doc.links.map((link) => (
 									<div
 										className="rounded-3xl bg-red-500 text-white font-bold w-20 h-10 flex items-center justify-center mt-4 content-end hover:text-red-200 mr-4">

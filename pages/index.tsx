@@ -4,7 +4,6 @@ import Hero from '../components/Hero';
 import Card from '../components/Card';
 import Footer from '../components/Footer';
 import { IGuild } from '../models/Guild';
-import DashboardCard from '../components/DashboardCard';
 import { IProject } from '../models/Project';
 
 export default function Home() {
@@ -63,13 +62,13 @@ export default function Home() {
 					<div className="max-w-4xl w-full mx-4">
 						<div>
 							<h1 className="text-2xl text-red-500 font-bold border-b-2 border-red-200 text-center sm:text-left">Featured projects</h1>
-							<div className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center items-center">
+							<div className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center">
 								{featuredProjects.length > 0 ? featuredProjects : <div className="font-bold text-2xl mt-4">None</div>}
 							</div>
 						</div>
 						<div className="mt-10">
 							<h1 className="text-2xl text-red-500 font-bold border-b-2 border-red-200 text-center sm:text-left">EN Servers</h1>
-							<div className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center items-center">
+							<div className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center">
 								{guilds.length > 0 ? guilds : <div className="font-bold text-2xl mt-4">None</div>}
 							</div>
 						</div>
