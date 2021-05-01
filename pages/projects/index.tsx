@@ -59,7 +59,7 @@ export default function Projects() {
 		<div className="flex flex-col h-full min-h-screen bg-red-50">
 			<Navbar/>
 
-			<Header title="Projects" description="A place to chat with other fans of Hololive English!  If you want to hang out, you've come to the right place."/>
+			<Header title="Projects" description="A list of all the projects organized by Hololive EN Fan servers!"/>
 			<div className="flex-grow">
 				<div className="my-16 w-full flex flex-col items-center">
 					<div className="max-w-4xl w-full mx-4">
