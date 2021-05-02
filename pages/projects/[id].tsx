@@ -155,8 +155,8 @@ export default function ProjectPage() {
 						{((doc.links?.length ?? 0) > 0) && <div className="mt-4">
 							<h1 className="text-2xl text-red-500 font-bold border-b-2 border-red-200 text-center sm:text-left mb-3">Links</h1>
 							<div className="flex px-4 sm:px-0">
-								{doc.links && doc.links.map((link) => (
-									<div
+								{doc.links && doc.links.map((link, index) => (
+									<div key={`link-${index}`}
 										className="rounded-3xl bg-red-500 text-white font-bold w-20 h-10 flex items-center justify-center mt-4 content-end hover:text-red-200 mr-4">
 										<a href={link.link} target="_blank" rel="noreferrer">{link.name}</a>
 									</div>

@@ -29,7 +29,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
 		project.save((err) => {
 			if (err) {
-				console.error(err);
 				res.status(500).end();
 			} else res.status(201).json(project);
 		});

@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { FormEvent, useEffect, useRef, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import Error from 'next/error';
 import { CheckIcon, ReplyIcon, XIcon } from '@heroicons/react/solid';
 import DateTimePicker from '@material-ui/lab/DateTimePicker';
@@ -8,7 +8,6 @@ import AdapterDateFns from '@material-ui/lab/AdapterDateFns';
 import LocalizationProvider from '@material-ui/lab/LocalizationProvider';
 import { CalendarIcon, ClockIcon, TrashIcon } from '@heroicons/react/outline';
 import { Alert } from '@material-ui/lab';
-import { Dialog } from '@headlessui/react';
 import { IGuild } from '../models/Guild';
 import DashboardNavbar from './DashboardNavbar';
 import Footer from './Footer';
@@ -53,8 +52,6 @@ export default function GuildEditPage() {
 	const [changed, setChanged] = useState(false);
 
 	const [errorCode, setErrorCode] = useState<boolean | number>(false);
-
-	const cancelButton = useRef(null);
 
 	useEffect(() => {
 		// eslint-disable-next-line consistent-return
