@@ -31,7 +31,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 			if (err) {
 				console.error(err);
 				res.status(500).end();
-			} else res.status(200).json(project);
+			} else res.status(201).json(project);
 		});
 	} else res.status(404).end();
 };

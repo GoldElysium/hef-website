@@ -29,7 +29,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
 		guild.save((err) => {
 			if (err) res.status(500).end();
-			else res.status(200).json(guild);
+			else res.status(201).json(guild);
 		});
 	} else res.status(404).end();
 };

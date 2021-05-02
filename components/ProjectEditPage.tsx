@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { FormEvent, useEffect, useState } from 'react';
 import Error from 'next/error';
-import { CheckIcon, PlusIcon, ReplyIcon } from '@heroicons/react/solid';
+import { CheckIcon, PlusIcon, ReplyIcon, XIcon } from '@heroicons/react/solid';
 import { Snackbar } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { TrashIcon } from '@heroicons/react/outline';
@@ -37,6 +37,7 @@ export default function ProjectEditPage() {
 	/* eslint-enable */
 
 	const [message, setMessage] = useState<IMessage | null>(null);
+	const [removeDialogOpen, setRemoveDialogOpen] = useState(false);
 
 	const [originalDoc, setOriginalDoc] = useState<IProject>({
 		status: 'ongoing',
@@ -163,7 +164,7 @@ export default function ProjectEditPage() {
 						'Accept': 'application/json',
 						'Content-Type': 'application/json;charset=UTF-8',
 					},
-					body: JSON.stringify({ id: router.query.id, update: { status, guild, media, submissions, title, shortDescription, description, links } as IProject }),
+					body: JSON.stringify({ status, guild, media, submissions, title, shortDescription, description, links } as IProject),
 				});
 			}
 
@@ -175,6 +176,8 @@ export default function ProjectEditPage() {
 			const json: IProject = await res.json();
 
 			setOriginalDoc(json);
+			setChanged(false);
+			window.onbeforeunload = () => null;
 			setMessage({
 				severity: 'success',
 				text: 'Saved succesfully',
@@ -185,6 +188,25 @@ export default function ProjectEditPage() {
 		}
 
 		run();
+	}
+
+	// eslint-disable-next-line consistent-return
+	async function removeProject() {
+		const res = await fetch(`/api/projects/${router.query.id}`, {
+			method: 'DELETE',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json;charset=UTF-8',
+			},
+		});
+
+		if (!res.ok) return setMessage({
+			severity: 'error',
+			text: 'Something went wrong, please try again.',
+		});
+
+		setMessage({ severity: 'success', text: 'Deleted successfully' });
+		router.push('/dashboard');
 	}
 
 	// Information functions
@@ -337,13 +359,27 @@ export default function ProjectEditPage() {
 							<div
 								className="flex border-b-2 border-red-200 justify-between items-center text-red-500 mb-4">
 								<h1 className="text-2xl font-bold text-center sm:text-left">Project</h1>
-								<div className="flex">
-									{(router.query.id !== 'new' && changed) &&
-									<ReplyIcon className="w-8 h-8 mt-2 hover:text-red-700 cursor-pointer"
-											   onClick={() => resetForm()}/>}
-									{/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
-									<button type="submit"><CheckIcon
-										className="w-8 h-8 mt-2 ml-4 hover:text-red-700 cursor-pointer"/></button>
+								<div className="flex items-center">
+									{removeDialogOpen ?
+										<>
+											<p className="font-bold text-xl">Are you sure?</p>
+											<XIcon onClick={() => setRemoveDialogOpen(false)}
+											       className="w-8 h-8 mt-2 ml-4 hover:text-red-700 cursor-pointer" />
+											<CheckIcon onClick={removeProject}
+											           className="w-8 h-8 mt-2 ml-4 hover:text-red-700 cursor-pointer"/>
+										</>
+										:
+										<>
+											{(router.query.id !== 'new' && changed) &&
+											<ReplyIcon className="w-8 h-8 mt-2 hover:text-red-700 cursor-pointer"
+													   onClick={() => resetForm()}/>}
+											{/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
+											<button type="submit"><CheckIcon
+												className="w-8 h-8 mt-2 ml-4 hover:text-red-700 cursor-pointer"/></button>
+											{router.query.id !== 'new' &&
+											<TrashIcon className="w-8 h-8 mt-2 ml-4 hover:text-red-700 cursor-pointer"
+													   onClick={() => setRemoveDialogOpen(true)}/>}
+										</>}
 								</div>
 							</div>
 							<div>

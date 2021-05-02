@@ -1,13 +1,22 @@
 import Link from 'next/link';
 import { LogoutIcon } from '@heroicons/react/solid';
 import { Menu, Transition } from '@headlessui/react';
-import { useState, Fragment } from 'react';
+import { useState, Fragment, useEffect } from 'react';
 import Head from 'next/head';
-import { signOut, useSession } from 'next-auth/client';
+import { getSession, signOut } from 'next-auth/client';
 
 export default function DashboardNavbar() {
 	const [menuOpen, setMenuOpen] = useState(false);
-	const [session] = useSession();
+	const [name, setName] = useState('');
+
+	useEffect(() => {
+		async function run() {
+			const session = await getSession();
+			if (session) setName(session.user?.name ?? '');
+		}
+
+		run();
+	}, []);
 
 	return (
 		<div className="flex w-full bg-red-500 h-20 px-4 sm:px-8 justify-between items-center">
@@ -33,7 +42,7 @@ export default function DashboardNavbar() {
 					<Menu.Button>
 						{/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
 						<div onClick={() => {setMenuOpen(!menuOpen);}} className="text-white font-bold mr-8 ml-12 text-right">
-							{session?.user?.name ?? 'Error'}
+							{name ?? 'Error'}
 						</div>
 					</Menu.Button>
 					<Transition

@@ -28,9 +28,21 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 		const session = await getSession({ req });
 		if (!session) return res.status(401).end();
 
-		Project.findByIdAndUpdate(req.body.id, req.body.update, { returnOriginal: false })
+		Project.findByIdAndUpdate(req.query.id, req.body, { returnOriginal: false })
 			.then((doc) => {
 				res.status(200).json(doc);
+			})
+			.catch((e) => {
+				res.status(500).end();
+				throw e;
+			});
+	} else if (req.method === 'DELETE') {
+		const session = await getSession({ req });
+		if (!session) return res.status(401).end();
+
+		Project.findByIdAndDelete(req.query.id)
+			.then(() => {
+				res.status(204).end();
 			})
 			.catch((e) => {
 				res.status(500).end();

@@ -27,9 +27,21 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 		const session = await getSession({ req });
 		if (!session) return res.status(401).end();
 
-		Guild.findByIdAndUpdate(req.body.id, req.body.update, { returnOriginal: false })
+		Guild.findByIdAndUpdate(req.query.id, req.body, { returnOriginal: false })
 			.then((doc) => {
 				res.status(200).json(doc);
+			})
+			.catch((e) => {
+				res.status(500).end();
+				throw e;
+			});
+	} else if (req.method === 'DELETE') {
+		const session = await getSession({ req });
+		if (!session) return res.status(401).end();
+
+		Guild.findByIdAndDelete(req.query.id)
+			.then(() => {
+				res.status(204).end();
 			})
 			.catch((e) => {
 				res.status(500).end();

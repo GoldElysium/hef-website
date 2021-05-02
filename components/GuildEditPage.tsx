@@ -1,13 +1,14 @@
 import { useRouter } from 'next/router';
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useEffect, useRef, useState } from 'react';
 import Error from 'next/error';
-import { CheckIcon, ReplyIcon } from '@heroicons/react/solid';
+import { CheckIcon, ReplyIcon, XIcon } from '@heroicons/react/solid';
 import DateTimePicker from '@material-ui/lab/DateTimePicker';
 import { createMuiTheme, Snackbar, TextField, ThemeProvider } from '@material-ui/core';
 import AdapterDateFns from '@material-ui/lab/AdapterDateFns';
 import LocalizationProvider from '@material-ui/lab/LocalizationProvider';
-import { CalendarIcon, ClockIcon } from '@heroicons/react/outline';
+import { CalendarIcon, ClockIcon, TrashIcon } from '@heroicons/react/outline';
 import { Alert } from '@material-ui/lab';
+import { Dialog } from '@headlessui/react';
 import { IGuild } from '../models/Guild';
 import DashboardNavbar from './DashboardNavbar';
 import Footer from './Footer';
@@ -35,9 +36,10 @@ export default function GuildEditPage() {
 	const [image, setImage] = useState('');
 	const [description, setDescription] = useState('');
 	const [invite, setInvite] = useState('');
-	const [debutDate, setDebutDate] = useState<Date|null>(null);
+	const [debutDate, setDebutDate] = useState<Date | null>(null);
 
 	const [message, setMessage] = useState<IMessage | null>(null);
+	const [removeDialogOpen, setRemoveDialogOpen] = useState(false);
 
 	const [originalDoc, setOriginalDoc] = useState<IGuild>({
 		name: '',
@@ -51,6 +53,8 @@ export default function GuildEditPage() {
 	const [changed, setChanged] = useState(false);
 
 	const [errorCode, setErrorCode] = useState<boolean | number>(false);
+
+	const cancelButton = useRef(null);
 
 	useEffect(() => {
 		// eslint-disable-next-line consistent-return
@@ -105,6 +109,7 @@ export default function GuildEditPage() {
 
 	function saveForm(event: FormEvent<HTMLFormElement>) {
 		event.preventDefault();
+
 		// eslint-disable-next-line consistent-return
 		async function run() {
 			let res;
@@ -124,7 +129,7 @@ export default function GuildEditPage() {
 						'Accept': 'application/json',
 						'Content-Type': 'application/json;charset=UTF-8',
 					},
-					body: JSON.stringify({ id: router.query.id, update: { name, image, description, invite, debutDate } as IGuild } ),
+					body: JSON.stringify({ name, image, description, invite, debutDate } as IGuild),
 				});
 			}
 
@@ -136,11 +141,8 @@ export default function GuildEditPage() {
 			const json: IGuild = await res.json();
 
 			setOriginalDoc(json);
-			setName(json.name);
-			setImage(json.image);
-			setDescription(json.description);
-			setInvite(json.invite);
-			setDebutDate(json.debutDate);
+			setChanged(false);
+			window.onbeforeunload = () => null;
 			setMessage({
 				severity: 'success',
 				text: 'Saved succesfully',
@@ -149,7 +151,27 @@ export default function GuildEditPage() {
 			if (router.query.id === 'new')
 				router.push(`/dashboard/guild/${json._id}`);
 		}
+
 		run();
+	}
+
+	// eslint-disable-next-line consistent-return
+	async function removeGuild() {
+		const res = await fetch(`/api/guilds/${router.query.id}`, {
+			method: 'DELETE',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json;charset=UTF-8',
+			},
+		});
+
+		if (!res.ok) return setMessage({
+			severity: 'error',
+			text: 'Something went wrong, please try again.',
+		});
+
+		setMessage({ severity: 'success', text: 'Deleted successfully' });
+		router.push('/dashboard');
 	}
 
 	if (errorCode) {
@@ -168,13 +190,27 @@ export default function GuildEditPage() {
 							<div
 								className="flex border-b-2 border-red-200 justify-between items-center text-red-500 mb-4">
 								<h1 className="text-2xl font-bold text-left">Server</h1>
-								<div className="flex">
-									{(router.query.id !== 'new' && changed) &&
-									<ReplyIcon className="w-8 h-8 mt-2 hover:text-red-700 cursor-pointer"
-											   onClick={() => resetForm()}/>}
-									{/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
-									<button type="submit"><CheckIcon
-										className="w-8 h-8 mt-2 ml-4 hover:text-red-700 cursor-pointer"/></button>
+								<div className="flex items-center">
+									{removeDialogOpen ?
+										<>
+											<p className="font-bold text-xl">Are you sure?</p>
+											<XIcon onClick={() => setRemoveDialogOpen(false)}
+											       className="w-8 h-8 mt-2 ml-4 hover:text-red-700 cursor-pointer" />
+											<CheckIcon onClick={removeGuild}
+												className="w-8 h-8 mt-2 ml-4 hover:text-red-700 cursor-pointer"/>
+										</>
+										:
+										<>
+											{(router.query.id !== 'new' && changed) &&
+											<ReplyIcon className="w-8 h-8 mt-2 hover:text-red-700 cursor-pointer"
+												   onClick={() => resetForm()}/>}
+											{/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
+											<button type="submit"><CheckIcon
+												className="w-8 h-8 mt-2 ml-4 hover:text-red-700 cursor-pointer"/></button>
+											{router.query.id !== 'new' &&
+											<TrashIcon className="w-8 h-8 mt-2 ml-4 hover:text-red-700 cursor-pointer"
+										           onClick={() => setRemoveDialogOpen(true)}/>}
+										</>}
 								</div>
 							</div>
 							<div className="flex flex-col">
