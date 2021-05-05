@@ -13,7 +13,7 @@
     "@heroicons/react": "1.0.1",
     "@material-ui/core": "5.0.0-alpha.32",
     "@material-ui/lab": "5.0.0-alpha.32",
-    "date-fns": "2.21.1",
+    "date-fns": "2.21.2",
     "mongodb": "3.6.6",
     "mongoose": "5.12.7",
     "nanoid": "3.1.22",
