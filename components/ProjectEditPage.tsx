@@ -1,6 +1,5 @@
 import { useRouter } from 'next/router';
 import { FormEvent, useEffect, useState } from 'react';
-import Error from 'next/error';
 import { CheckIcon, PlusIcon, ReplyIcon, XIcon } from '@heroicons/react/solid';
 import { Snackbar } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
@@ -16,14 +15,18 @@ interface IMessage {
 	severity: 'error' | 'info' | 'success' | 'warning',
 }
 
-export default function ProjectEditPage() {
+interface IProps {
+	doc?: IProject
+}
+
+export default function ProjectEditPage({ doc }: IProps) {
 	const router = useRouter();
 
 	const [status, setStatus] = useState('ongoing');
 	const [title, setTitle] = useState('');
 	const [guild, setGuild] = useState('');
 	const [shortDescription, setShortDescription] = useState('');
-	const [description, setDescription] = useState('');
+	const [description, setDescription] = useState(doc?.description ?? '');
 	const [media, setMedia] = useState<IMedia[]>([]);
 	const [submissions, setSubmissions] = useState<ISubmission[]>([]);
 	const [links, setLinks] = useState<ILink[]>([]);
@@ -53,38 +56,20 @@ export default function ProjectEditPage() {
 
 	const [changed, setChanged] = useState(false);
 
-	const [errorCode, setErrorCode] = useState<boolean | number>(false);
-
 	// Init
 	useEffect(() => {
-		// eslint-disable-next-line consistent-return
-		async function run() {
-			if (router.query.id && router.query.id !== 'new') {
-				const res = await fetch(`/api/projects/${router.query.id}`, {
-					method: 'GET',
-					headers: {
-						'Accept': 'application/json',
-						'Content-Type': 'application/json;charset=UTF-8',
-					},
-				});
-				if (!res.ok) return setErrorCode(res.status);
+		if (doc) {
+			setOriginalDoc(doc);
 
-				const json: IProject = await res.json();
-
-				setOriginalDoc(json);
-
-				setTitle(json.title);
-				setShortDescription(json.shortDescription);
-				setDescription(json.description);
-				setGuild(json.guild);
-				setMedia(json.media ?? []);
-				setSubmissions(json.submissions ?? []);
-				setLinks(json.links ?? []);
-			}
+			setTitle(doc.title);
+			setShortDescription(doc.shortDescription);
+			setDescription(doc.description);
+			setGuild(doc.guild);
+			setMedia(doc.media ?? []);
+			setSubmissions(doc.submissions ?? []);
+			setLinks(doc.links ?? []);
 		}
-
-		run();
-	}, [router.query]);
+	}, [doc]);
 
 	// Form
 	useEffect(() => {
@@ -343,10 +328,6 @@ export default function ProjectEditPage() {
 		setSubmissionsHtml(html);
 	}, [submissions]);
 
-	if (errorCode) {
-		return <Error statusCode={errorCode as number}/>;
-	}
-
 	return (
 		<div className="flex flex-col h-full min-h-screen bg-red-50">
 			<DashboardNavbar/>
@@ -406,9 +387,7 @@ export default function ProjectEditPage() {
 									<label htmlFor="description" className="font-bold">Description</label>
 									<div className="flex flex-col justify-start border border-red-300 bg-white max-h-32 rounded-md">
 										<RichMarkdownEditor onChange={setDescription} id="description"
-										                    defaultValue="# Welcome
-
-Just an easy to use **Markdown** editor with `slash commands`"
+										                    defaultValue={description !== '' ? description : '# Welcome\n\nJust an easy to use **Markdown** editor with `slash commands`'}
 									                    className="rounded-md px-1 w-full overflow-auto"/>
 									</div>
 									<textarea required
