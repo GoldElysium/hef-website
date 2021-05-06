@@ -1,51 +1,35 @@
 import { signIn, useSession } from 'next-auth/client';
-import { useEffect } from 'react';
-import { GetServerSideProps } from 'next';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import ProjectEditPage from '../../../components/ProjectEditPage';
-import Project, { IProject } from '../../../models/Project';
+import { IProject } from '../../../models/Project';
 
-interface IProps {
-	doc?: string
-}
 
-export default function GuildEdit({ doc }: IProps) {
+export default function GuildEdit() {
 	const [session, loading] = useSession();
+	const [doc, setDoc] = useState<IProject|null>(null);
+	const router = useRouter();
 
 	useEffect(() => { // eslint-disable-line consistent-return
 		if (!loading && !session) signIn('discord');
 	}, [session, loading]);
 
+	useEffect(() => {
+		async function run() {
+			if (session && router.query.id !== 'new') {
+				const res = await fetch(`/api/projects/${router.query.id}`);
+				const data = await res.json() as IProject;
+				setDoc(data);
+			}
+		}
+		run();
+	}, [router.query.id, session]);
+
+	if (!doc && router.query.id !== 'new') return <div>Loading...</div>;
+
 	return (
 		<>
-			{session ? <ProjectEditPage doc={doc ? JSON.parse(doc) as IProject : undefined} /> : <></>}
+			{session ? <ProjectEditPage doc={router.query.id !== 'new' ? doc as IProject : undefined} /> : <></>}
 		</>
 	);
 }
-export const getServerSideProps: GetServerSideProps = async (context) => {
-	if (context.params?.id && context.params?.id !== 'new') {
-		const doc = await Project.findById(context.params.id).lean().exec()
-			.catch(() => {
-				return {
-					props: {
-						doc: null,
-					},
-				};
-			});
-
-		if (!doc) return {
-			notFound: true,
-		};
-
-		return {
-			props: {
-				doc: JSON.stringify(doc),
-			},
-		};
-	}
-	return {
-		props: {
-			doc: null,
-		},
-	};
-
-};

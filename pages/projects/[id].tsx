@@ -20,7 +20,6 @@ export default function ProjectPage() {
 
 	const [errorCode, setErrorCode] = useState<boolean | number>(false);
 
-
 	useEffect(() => {
 		// eslint-disable-next-line consistent-return
 		async function run() {
