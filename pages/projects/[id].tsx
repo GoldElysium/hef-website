@@ -47,7 +47,7 @@ export default function ProjectPage() {
 			return <ReactPlayer width="100%" height="100%" url={doc.media[currentMediaIndex].src} controls light/>;
 		}
 		if (doc.media[currentMediaIndex].type === 'image') {
-			return <img className="w-full h-full" src={doc.media[currentMediaIndex].src} alt=""/>;
+			return <img className="w-full h-full object-none" src={doc.media[currentMediaIndex].src} alt=""/>;
 		}
 		return <p>Invalid media</p>;
 	}
@@ -78,10 +78,10 @@ export default function ProjectPage() {
 			return <ReactPlayer width="100%" height="100%" url={ doc.submissions[currentSubmissionIndex].src} controls light/>;
 		}
 		if (doc.submissions[currentSubmissionIndex].type === 'image') {
-			return <img className="w-full h-full" src={doc.submissions[currentSubmissionIndex].src} alt=""/>;
+			return <img className="w-full h-full object-none" src={doc.submissions[currentSubmissionIndex].src} alt=""/>;
 		}
 		if (doc.submissions[currentSubmissionIndex].type === 'text') {
-			return <p className="w-full h-full">{submissionText}</p>;
+			return <p className="w-full h-full overflow-auto">{submissionText}</p>;
 		}
 		return <p>Invalid media</p>;
 	}
