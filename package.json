@@ -27,7 +27,7 @@
     "styled-components": "5.3.0"
   },
   "devDependencies": {
-    "@ijsto/eslint-config": "3.0.1",
+    "@ijsto/eslint-config": "3.0.2",
     "@types/react": "17.0.4",
     "@typescript-eslint/eslint-plugin": "4.22.0",
     "@typescript-eslint/parser": "4.22.0",
