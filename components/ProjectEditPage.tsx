@@ -385,7 +385,7 @@ export default function ProjectEditPage({ doc }: IProps) {
 								</div>
 								<div className="flex flex-col mt-2">
 									<label htmlFor="description" className="font-bold">Description</label>
-									<div className="flex flex-col justify-start border border-red-300 bg-white max-h-32 rounded-md">
+									<div className="flex flex-col justify-start border border-red-300 bg-white max-h-64 rounded-md">
 										<RichMarkdownEditor onChange={setDescription} id="description"
 										                    defaultValue={description !== '' ? description : '# Welcome\n\nJust an easy to use **Markdown** editor with `slash commands`'}
 									                    className="rounded-md px-1 w-full overflow-auto"/>

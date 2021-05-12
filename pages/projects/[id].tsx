@@ -98,7 +98,7 @@ export default function ProjectPage() {
 
 			<div className="flex-grow">
 				<div className="my-16 w-full flex flex-col items-center">
-					<div className="max-w-4xl w-full mx-4">
+					<div className="max-w-4xl w-full mx-4 break-words md:break-normal">
 						<div>
 							<h1 className="text-2xl text-red-500 font-bold border-b-2 border-red-200 text-center sm:text-left mb-3">Description</h1>
 							<ReactMarkdown className="px-4 sm:px-0">
