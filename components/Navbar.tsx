@@ -18,7 +18,7 @@ export default function Navbar() {
 			<div>
 				<Link href="/">
 					<a>
-						<img className="h-20" src="/img/logo_banner.png" alt="Logo"/>
+						<img className="h-20 hidden" src="/img/logo_banner.png" alt="Logo"/>
 					</a>
 				</Link>
 			</div>
