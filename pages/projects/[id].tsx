@@ -81,7 +81,7 @@ export default function ProjectPage() {
 			return <img className="w-full h-full object-none" src={doc.submissions[currentSubmissionIndex].src} alt=""/>;
 		}
 		if (doc.submissions[currentSubmissionIndex].type === 'text') {
-			return <p className="w-full h-full overflow-auto">{submissionText}</p>;
+			return <p className="w-full h-full overflow-auto whitespace-pre-line">{submissionText}</p>;
 		}
 		return <p>Invalid media</p>;
 	}
