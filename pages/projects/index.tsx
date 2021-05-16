@@ -55,7 +55,7 @@ export default function Projects() {
 	}, []);
 
 	return (
-		<div className="flex flex-col h-full min-h-screen bg-red-50">
+		<div className="flex flex-col h-full min-h-screen bg-red-50 dark:bg-red-900">
 			<Navbar/>
 
 			<Header title="Projects" description="A list of all the projects organized by Hololive EN Fan servers!"/>

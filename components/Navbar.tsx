@@ -4,12 +4,13 @@ import { Menu, Transition } from '@headlessui/react';
 import { useState, Fragment } from 'react';
 import { ClipboardListIcon, HomeIcon } from '@heroicons/react/outline';
 import Head from 'next/head';
+import DarkModeToggle from './DarkModeToggle'
 
 export default function Navbar() {
 	const [menuOpen, setMenuOpen] = useState(false);
 
 	return (
-		<div className="flex w-full bg-red-500 h-20 px-4 sm:px-8 justify-between items-center">
+		<div className="flex w-full bg-red-500 h-20 px-4 sm:px-8 justify-end items-center">
 			<Head>
 				<title>Hololive EN Fan Website</title>
 				<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "5896757c09e04949bf74e7c34efd419a"}' />
@@ -64,12 +65,16 @@ export default function Navbar() {
 					</Menu>
 				</div>
 
-				<div className="hidden sm:block flex items-center text-white text-lg hover:text-red-100">
+				<div className="hidden sm:block flex items-center text-white text-lg  space-x-4">
+					<Link href="/">
+						<a className="hover:text-red-100">Frontpage</a>
+					</Link>
 					<Link href="/projects">
-						<a>Projects</a>
+						<a className="hover:text-red-100">Projects</a>
 					</Link>
 				</div>
 			</div>
+			<DarkModeToggle/>
 		</div>
 	);
 }
