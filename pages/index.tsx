@@ -23,7 +23,7 @@ export default function Home() {
 			.then((response) => response.json())
 			.then((data) => {
 				const guildHtml = data.map((guild: IGuild) => (
-					<Card img={guild.image} title={guild.name} description={guild.description} button="Join!" url={`https://discord.gg/${guild.invite}`}/>
+					<Card key={guild._id} img={guild.image} title={guild.name} description={guild.description} button="Join!" url={`https://discord.gg/${guild.invite}`}/>
 				));
 				setGuilds(guildHtml);
 			});
@@ -41,11 +41,11 @@ export default function Home() {
 			.then((data) => {
 				let projectHtml = [];
 				if (data.length <= 3) projectHtml = data.map((project: IProject) => (
-					<Card title={project.title} description={project.shortDescription} button="View" url={`/projects/${project._id}`} internal/>
+					<Card key={project._id} title={project.title} description={project.shortDescription} button="View" url={`/projects/${project._id}`} internal/>
 				));
 				// eslint-disable-next-line no-plusplus
 				else for (let i = 0; i < 3; i++) {
-					projectHtml.push(<Card title={data[i].title} description={data[i].shortDescription} button="View" url={`/projects/${data[i]._id}`} internal/>);
+					projectHtml.push(<Card key={data[i]._id} title={data[i].title} description={data[i].shortDescription} button="View" url={`/projects/${data[i]._id}`} internal/>);
 				}
 				setFeaturedProjects(projectHtml);
 			});
