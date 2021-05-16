@@ -1,7 +1,7 @@
 import '../styles/globals.css';
 import { AppProps } from 'next/app';
 import { useEffect, useState } from 'react'
-import { DarkModeContext } from './DarkModeContext'
+import { DarkModeContext } from '../contexts/DarkModeContext'
 
 function MyApp({ Component, pageProps }: AppProps) {
 	const [darkMode, setDarkMode] = useState(false)
