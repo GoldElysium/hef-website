@@ -41,7 +41,7 @@ export default function ProjectPage() {
 
 		run();
 	}, [router.query]);
-
+	
 	function CurrentGalleryItem() {
 		if (!doc.media) return <></>;
 		if (doc.media[currentMediaIndex].type === 'video') {
@@ -123,131 +123,138 @@ export default function ProjectPage() {
 		return <Error statusCode={errorCode as number} />;
 	}
 
+	let theme = '';
+	if (doc.guild === '8O2KtsEhpru3rnQudlV5p') {
+		theme = 'theme-ina';
+	};
+
 	return (
-		<div className="flex flex-col h-full min-h-screen bg-skin-background-1 dark:bg-skin-dark-background-1">
-			<Navbar />
+		<div className={theme}>
+			<div className="flex flex-col h-full min-h-screen bg-skin-background-1 dark:bg-skin-dark-background-1">
+				<Navbar />
 
-			<Header
-				title={doc.title ?? 'unknown'}
-				description={doc.shortDescription ?? ''}
-			/>
+				<Header
+					title={doc.title ?? 'unknown'}
+					description={doc.shortDescription ?? ''}
+				/>
 
-			<div className="flex-grow">
-				<div className="my-16 w-full flex flex-col items-center">
-					<div className="max-w-4xl w-full mx-4 break-words md:break-normal">
-						<div>
-							<TextHeader text="Description" />
-							<ReactMarkdown className="px-4 sm:px-0 text-black dark:text-white dark:text-opacity-80">
-								{doc.description}
-							</ReactMarkdown>
-						</div>
-						{(doc.media?.length ?? 0) > 0 && (
-							<div className="mt-4">
-								<TextHeader text="Gallery" />
-								<div className="flex flex-col items-center pt-2">
-									<div className="w-full h-52 sm:w-8/12 sm:h-96">
-										<CurrentGalleryItem />
-									</div>
-									<div className="flex mt-2 font-bold items-center justify-center text-center">
-										<ChevronLeftIcon
-											className={
-												currentMediaIndex > 0
-													? 'h-8 w-8 cursor-pointer text-black dark:text-white'
-													: 'h-8 w-8 text-skin-primary-1 text-opacity-30 dark:text-skin-dark-primary-1 dark:text-opacity-30'
-											}
-											onClick={() => {
-												if (currentMediaIndex > 0)
-													setCurrentMediaIndex(currentMediaIndex - 1);
-											}}
-										/>
-										<span className="text-black dark:text-white">
-											{currentMediaIndex + 1}/{doc.media ? doc.media.length : 0}
-										</span>
-										<ChevronRightIcon
-											className={
-												currentMediaIndex + 1 <
-												(doc.media ? doc.media.length : 0)
-													? 'h-8 w-8 cursor-pointer text-black dark:text-white'
-													: 'h-8 w-8 text-skin-primary-1 text-opacity-30 dark:text-skin-dark-primary-1 dark:text-opacity-30'
-											}
-											onClick={() => {
-												if (
+				<div className="flex-grow">
+					<div className="my-16 w-full flex flex-col items-center">
+						<div className="max-w-4xl w-full mx-4 break-words md:break-normal">
+							<div>
+								<TextHeader text="Description" />
+								<ReactMarkdown className="px-4 sm:px-0 text-black dark:text-white dark:text-opacity-80">
+									{doc.description}
+								</ReactMarkdown>
+							</div>
+							{(doc.media?.length ?? 0) > 0 && (
+								<div className="mt-4">
+									<TextHeader text="Gallery" />
+									<div className="flex flex-col items-center pt-2">
+										<div className="w-full h-52 sm:w-8/12 sm:h-96">
+											<CurrentGalleryItem />
+										</div>
+										<div className="flex mt-2 font-bold items-center justify-center text-center">
+											<ChevronLeftIcon
+												className={
+													currentMediaIndex > 0
+														? 'h-8 w-8 cursor-pointer text-black dark:text-white'
+														: 'h-8 w-8 text-skin-primary-1 text-opacity-30 dark:text-skin-dark-primary-1 dark:text-opacity-30'
+												}
+												onClick={() => {
+													if (currentMediaIndex > 0)
+														setCurrentMediaIndex(currentMediaIndex - 1);
+												}}
+											/>
+											<span className="text-black dark:text-white">
+												{currentMediaIndex + 1}/{doc.media ? doc.media.length : 0}
+											</span>
+											<ChevronRightIcon
+												className={
 													currentMediaIndex + 1 <
 													(doc.media ? doc.media.length : 0)
-												)
-													setCurrentMediaIndex(currentMediaIndex + 1);
-											}}
-										/>
+														? 'h-8 w-8 cursor-pointer text-black dark:text-white'
+														: 'h-8 w-8 text-skin-primary-1 text-opacity-30 dark:text-skin-dark-primary-1 dark:text-opacity-30'
+												}
+												onClick={() => {
+													if (
+														currentMediaIndex + 1 <
+														(doc.media ? doc.media.length : 0)
+													)
+														setCurrentMediaIndex(currentMediaIndex + 1);
+												}}
+											/>
+										</div>
 									</div>
 								</div>
-							</div>
-						)}
-						{(doc.submissions?.length ?? 0) > 0 && (
-							<div className="mt-4">
-								<TextHeader text="Submissions" />
-								<div className="flex flex-col items-center pt-2">
-									<div className="w-full h-52 sm:w-8/12 sm:h-96">
-										<CurrentSubmissionItem />
-									</div>
-									<div className="flex mt-2 font-bold items-center justify-center text-center">
-										<ChevronLeftIcon
-											className={
-												currentSubmissionIndex > 0
-													? 'h-8 w-8 cursor-pointer text-black dark:text-white'
-													: 'h-8 w-8 text-skin-primary-1 text-opacity-30 dark:text-skin-dark-primary-1 dark:text-opacity-30'
-											}
-											onClick={() => {
-												if (currentSubmissionIndex > 0)
-													setCurrentSubmissionIndex(currentSubmissionIndex - 1);
-											}}
-										/>
-										<span className="text-black dark:text-white">
-											{currentSubmissionIndex + 1}/
-											{doc.submissions?.length ?? 0}
-										</span>
-										<ChevronRightIcon
-											className={
-												currentSubmissionIndex + 1 <
-												(doc.submissions?.length ?? 0)
-													? 'h-8 w-8 cursor-pointer text-black dark:text-white'
-													: 'h-8 w-8 text-skin-primary-1 text-opacity-30 dark:text-skin-dark-primary-1 dark:text-opacity-30'
-											}
-											onClick={() => {
-												if (
+							)}
+							{(doc.submissions?.length ?? 0) > 0 && (
+								<div className="mt-4">
+									<TextHeader text="Submissions" />
+									<div className="flex flex-col items-center pt-2">
+										<div className="w-full h-52 sm:w-8/12 sm:h-96">
+											<CurrentSubmissionItem />
+										</div>
+										<div className="flex mt-2 font-bold items-center justify-center text-center">
+											<ChevronLeftIcon
+												className={
+													currentSubmissionIndex > 0
+														? 'h-8 w-8 cursor-pointer text-black dark:text-white'
+														: 'h-8 w-8 text-skin-primary-1 text-opacity-30 dark:text-skin-dark-primary-1 dark:text-opacity-30'
+												}
+												onClick={() => {
+													if (currentSubmissionIndex > 0)
+														setCurrentSubmissionIndex(currentSubmissionIndex - 1);
+												}}
+											/>
+											<span className="text-black dark:text-white">
+												{currentSubmissionIndex + 1}/
+												{doc.submissions?.length ?? 0}
+											</span>
+											<ChevronRightIcon
+												className={
 													currentSubmissionIndex + 1 <
 													(doc.submissions?.length ?? 0)
-												)
-													setCurrentSubmissionIndex(currentSubmissionIndex + 1);
-											}}
-										/>
+														? 'h-8 w-8 cursor-pointer text-black dark:text-white'
+														: 'h-8 w-8 text-skin-primary-1 text-opacity-30 dark:text-skin-dark-primary-1 dark:text-opacity-30'
+												}
+												onClick={() => {
+													if (
+														currentSubmissionIndex + 1 <
+														(doc.submissions?.length ?? 0)
+													)
+														setCurrentSubmissionIndex(currentSubmissionIndex + 1);
+												}}
+											/>
+										</div>
 									</div>
 								</div>
-							</div>
-						)}
-						{(doc.links?.length ?? 0) > 0 && (
-							<div className="mt-4">
-								<TextHeader text="Links" />
-								<div className="flex px-4 sm:px-0">
-									{doc.links &&
-										doc.links.map((link, index) => (
-											<div
-												key={`link-${index}`}
-												className="rounded-3xl font-bold w-20 h-10 flex items-center justify-center mt-4 content-end mr-4
-												bg-skin-secondary-1 dark:bg-skin-dark-secondary-1 text-white hover:text-opacity-70"
-											>
-												<a href={link.link} target="_blank" rel="noreferrer">
-													{link.name}
-												</a>
-											</div>
-										))}
+							)}
+							{(doc.links?.length ?? 0) > 0 && (
+								<div className="mt-4">
+									<TextHeader text="Links" />
+									<div className="flex px-4 sm:px-0">
+										{doc.links &&
+											doc.links.map((link, index) => (
+												<div
+													key={`link-${index}`}
+													className="rounded-3xl font-bold w-20 h-10 flex items-center justify-center mt-4 content-end mr-4
+													bg-skin-secondary-1 dark:bg-skin-dark-secondary-1 text-white hover:text-opacity-70"
+												>
+													<a href={link.link} target="_blank" rel="noreferrer">
+														{link.name}
+													</a>
+												</div>
+											))}
+									</div>
 								</div>
-							</div>
-						)}
+							)}
+						</div>
 					</div>
 				</div>
-			</div>
 
-			<Footer />
+				<Footer />
+			</div>
 		</div>
 	);
 }

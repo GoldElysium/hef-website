@@ -16,6 +16,36 @@
     --color-dark-primary-1: 207, 23, 23;
     --color-dark-secondary-1: 255, 85, 0;
   }
+
+  .theme-ina {
+    --color-background-1: 238, 233, 246;
+    --color-background-2: 87, 80, 104;
+    --color-card: 255, 255, 255;
+    --color-primary-1: 87, 80, 104;
+    --color-secondary-1: 242, 154, 48;
+
+    --color-dark-background-1: 19, 18, 23;
+    --color-dark-background-2: 38, 36, 45;
+    --color-dark-card: 48, 44, 58;
+    --color-dark-primary-1: 106,98, 127;
+    --color-dark-secondary-1: 230, 133, 15;
+  }
+
+  .theme-calli {
+    /* Duplicate values from above when implementing */
+  }
+
+  .theme-gura {
+    /* Duplicate values from above when implementing */
+  }
+
+  .theme-kiara {
+    /* Duplicate values from above when implementing */
+  }
+
+  .theme-ame {
+    /* Duplicate values from above when implementing */
+  }
 }
 
 @layer components {
