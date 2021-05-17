@@ -11,7 +11,7 @@ export default function DarkModeToggle() {
 							onChange={() => toggleDarkMode()}
 							checked={darkMode}
 						/>
-						<span className="slider round" />
+						<span className={darkMode ? 'slider round bg-skin-dark-primary-1' : 'slider round bg-skin-background-1'} />
 					</label>
 					<img
 						src="/img/nightMode.svg"

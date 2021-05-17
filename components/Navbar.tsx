@@ -28,7 +28,7 @@ export default function Navbar() {
 				<div className="sm:hidden">
 					<Menu as="div">
 						<Menu.Button>
-							<MenuIcon onClick={() => {setMenuOpen(!menuOpen);}} className="h-10 w-10 text-white sm:hidden"/>
+							<MenuIcon onClick={() => {setMenuOpen(!menuOpen);}} className="h-10 w-10 -mb-1 text-white sm:hidden"/>
 						</Menu.Button>
 						<Transition
 							show={menuOpen}
@@ -40,7 +40,7 @@ export default function Navbar() {
 							leaveFrom="transform opacity-100 scale-100"
 							leaveTo="transform opacity-0 scale-95"
 						>
-							<Menu.Items static className="absolute right-0 w-32 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none mr-2">
+							<Menu.Items static className="absolute right-2 top-16 w-32 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none mr-2">
 								<div className="px-2 py-1">
 									<Menu.Item>
 										<Link href="/">
