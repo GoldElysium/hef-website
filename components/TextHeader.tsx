@@ -1,5 +1,5 @@
 interface IProps {
-	text: string;
+	text: string,
 }
 
 export default function TextHeader({ text }: IProps) {
