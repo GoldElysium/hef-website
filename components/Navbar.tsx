@@ -4,13 +4,13 @@ import { Menu, Transition } from '@headlessui/react';
 import { useState, Fragment } from 'react';
 import { ClipboardListIcon, HomeIcon } from '@heroicons/react/outline';
 import Head from 'next/head';
-import DarkModeToggle from './DarkModeToggle'
+import DarkModeToggle from './DarkModeToggle';
 
 export default function Navbar() {
 	const [menuOpen, setMenuOpen] = useState(false);
 
 	return (
-		<div className="flex w-full bg-red-500 h-20 px-4 sm:px-8 justify-end items-center">
+		<div className="flex w-full h-20 px-4 sm:px-8 justify-end items-center bg-skin-background-2 dark:bg-skin-dark-background-2">
 			<Head>
 				<title>Hololive EN Fan Website</title>
 				<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "5896757c09e04949bf74e7c34efd419a"}' />
@@ -45,7 +45,7 @@ export default function Navbar() {
 									<Menu.Item>
 										<Link href="/">
 											<a type="button" className="flex rounded-md items-center w-full">
-												<HomeIcon className="h-6 w-6 text-red-500 mr-2" />
+												<HomeIcon className="h-6 w-6 text-skin-primary-1 mr-2" />
 												Home
 											</a>
 										</Link>
@@ -54,7 +54,7 @@ export default function Navbar() {
 									<Menu.Item>
 										<Link href="/projects">
 											<a type="button" className="flex rounded-md items-center w-full mt-1">
-												<ClipboardListIcon className="h-6 w-6 text-red-500 mr-2" />
+												<ClipboardListIcon className="h-6 w-6 text-skin-primary-1 mr-2" />
 												Projects
 											</a>
 										</Link>
@@ -65,16 +65,16 @@ export default function Navbar() {
 					</Menu>
 				</div>
 
-				<div className="hidden sm:block flex items-center text-white text-lg  space-x-4">
+				<div className="hidden sm:block flex items-center text-lg space-x-4">
 					<Link href="/">
-						<a className="hover:text-red-100">Frontpage</a>
+						<a className="text-white font-semibold hover:text-opacity-80">Home</a>
 					</Link>
 					<Link href="/projects">
-						<a className="hover:text-red-100">Projects</a>
+						<a className="text-white font-semibold hover:text-opacity-80">Projects</a>
 					</Link>
 				</div>
 			</div>
-			<DarkModeToggle/>
+			<DarkModeToggle />
 		</div>
 	);
 }

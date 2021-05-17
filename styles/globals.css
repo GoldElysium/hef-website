@@ -2,6 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  :root {
+    --color-background-1: 253, 236, 236;
+    --color-background-2: 239, 68, 68;
+    --color-card: 255, 255, 255;
+    --color-primary-1: 239, 68, 68;
+    --color-secondary-1: 255, 136, 26;
+
+    --color-dark-background-1: 22, 18, 18;
+    --color-dark-background-2: 36, 30, 30;
+    --color-dark-card: 50, 41, 41;
+    --color-dark-primary-1: 207, 23, 23;
+    --color-dark-secondary-1: 255, 85, 0;
+  }
+}
+
 @layer components {
   /* CSS for DarkModeToggle */
   /* The switch - the box around the slider */

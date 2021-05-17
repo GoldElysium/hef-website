@@ -23,7 +23,14 @@ export default function Home() {
 			.then((response) => response.json())
 			.then((data) => {
 				const guildHtml = data.map((guild: IGuild) => (
-					<Card key={guild._id} img={guild.image} title={guild.name} description={guild.description} button="Join!" url={`https://discord.gg/${guild.invite}`}/>
+					<Card
+						key={guild._id}
+						img={guild.image}
+						title={guild.name}
+						description={guild.description}
+						button="Join!"
+						url={`https://discord.gg/${guild.invite}`}
+					/>
 				));
 				setGuilds(guildHtml);
 			});
@@ -40,43 +47,75 @@ export default function Home() {
 			.then((response) => response.json())
 			.then((data) => {
 				let projectHtml = [];
-				if (data.length <= 3) projectHtml = data.map((project: IProject) => (
-					<Card key={project._id} title={project.title} description={project.shortDescription} button="View" url={`/projects/${project._id}`} internal/>
-				));
+				if (data.length <= 3)
+					projectHtml = data.map((project: IProject) => (
+						<Card
+							key={project._id}
+							title={project.title}
+							description={project.shortDescription}
+							button="View"
+							url={`/projects/${project._id}`}
+							internal
+						/>
+					));
 				// eslint-disable-next-line no-plusplus
 				else for (let i = 0; i < 3; i++) {
-					projectHtml.push(<Card key={data[i]._id} title={data[i].title} description={data[i].shortDescription} button="View" url={`/projects/${data[i]._id}`} internal/>);
+					projectHtml.push(
+						<Card
+							key={data[i]._id}
+							title={data[i].title}
+							description={data[i].shortDescription}
+							button="View"
+							url={`/projects/${data[i]._id}`}
+							internal
+						/>
+					);
 				}
 				setFeaturedProjects(projectHtml);
 			});
 	}, []);
 
-
 	return (
-		<div className="flex flex-col h-full min-h-screen bg-red-50 dark:bg-red-900">
-			<Navbar/>
-			<Hero/>
-
+		<div className="flex flex-col h-full min-h-screen bg-skin-background-1 dark:bg-skin-dark-background-1">
+			<Navbar />
+			<Hero />
 			<div className="flex-grow">
 				<div className="my-16 w-full flex flex-col items-center">
 					<div className="max-w-4xl w-full mx-4">
 						<div>
-							<h1 className="text-2xl text-red-500 font-bold border-b-2 border-red-200 text-center sm:text-left">Featured projects</h1>
+							<h1
+								className="text-2xl font-bold border-b-2 text-center sm:text-left
+								text-skin-primary-1 border-skin-primary-1 border-opacity-30 dark:text-skin-dark-primary-1 dark:border-skin-dark-primary-1 dark:border-opacity-50"
+							>
+								Featured projects
+							</h1>
 							<div className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center">
-								{featuredProjects.length > 0 ? featuredProjects : <div className="font-bold text-2xl mt-4">None</div>}
+								{featuredProjects.length > 0 ? (
+									featuredProjects
+								) : (
+									<div className="font-bold text-2xl mt-4">None</div>
+								)}
 							</div>
 						</div>
 						<div className="mt-10">
-							<h1 className="text-2xl text-red-500 font-bold border-b-2 border-red-200 text-center sm:text-left">EN Servers</h1>
+							<h1
+								className="text-2xl font-bold border-b-2 text-center sm:text-left
+								text-skin-primary-1 border-skin-primary-1 border-opacity-30 dark:text-skin-dark-primary-1 dark:border-skin-dark-primary-1 dark:border-opacity-50"
+							>
+								EN Servers
+							</h1>
 							<div className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center">
-								{guilds.length > 0 ? guilds : <div className="font-bold text-2xl mt-4">None</div>}
+								{guilds.length > 0 ? (
+									guilds
+								) : (
+									<div className="font-bold text-2xl mt-4">None</div>
+								)}
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-
-			<Footer/>
+			<Footer />
 		</div>
 	);
 }
