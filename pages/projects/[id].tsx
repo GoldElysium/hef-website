@@ -7,6 +7,7 @@ import ReactMarkdown from 'react-markdown';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
+import TextHeader from '../../components/TextHeader';
 import { IProject } from '../../models/Project';
 
 export default function ProjectPage() {
@@ -115,7 +116,7 @@ export default function ProjectPage() {
 				</p>
 			);
 		}
-		return <p>Invalid media</p>;
+		return <p className="text-black dark:text-white dark:text-opacity-80">Invalid media</p>;
 	}
 
 	if (errorCode) {
@@ -135,24 +136,14 @@ export default function ProjectPage() {
 				<div className="my-16 w-full flex flex-col items-center">
 					<div className="max-w-4xl w-full mx-4 break-words md:break-normal">
 						<div>
-							<h1
-								className="text-2xl font-bold border-b-2 text-center sm:text-left mb-3
-								text-skin-primary-1 dark:text-skin-dark-primary-1 border-skin-primary-1 dark:border-skin-dark-primary-1 border-opacity-40 dark:border-opacity-40"
-							>
-								Description
-							</h1>
+							<TextHeader text="Description" />
 							<ReactMarkdown className="px-4 sm:px-0 text-black dark:text-white dark:text-opacity-80">
 								{doc.description}
 							</ReactMarkdown>
 						</div>
 						{(doc.media?.length ?? 0) > 0 && (
 							<div className="mt-4">
-								<h1
-									className="text-2xl font-bold border-b-2 text-center sm:text-left my-3
-								text-skin-primary-1 dark:text-skin-dark-primary-1 border-skin-primary-1 dark:border-skin-dark-primary-1 border-opacity-40 dark:border-opacity-40"
-								>
-									Gallery
-								</h1>
+								<TextHeader text="Gallery" />
 								<div className="flex flex-col items-center pt-2">
 									<div className="w-full h-52 sm:w-8/12 sm:h-96">
 										<CurrentGalleryItem />
@@ -193,12 +184,7 @@ export default function ProjectPage() {
 						)}
 						{(doc.submissions?.length ?? 0) > 0 && (
 							<div className="mt-4">
-								<h1
-									className="text-2xl font-bold border-b-2 text-center sm:text-left
-									text-skin-primary-1 dark:text-skin-dark-primary-1 border-skin-primary-1 border-opacity-40 dark:border-skin-dark-primary-1 dark:border-opacity-40"
-								>
-									Submissions
-								</h1>
+								<TextHeader text="Submissions" />
 								<div className="flex flex-col items-center pt-2">
 									<div className="w-full h-52 sm:w-8/12 sm:h-96">
 										<CurrentSubmissionItem />
@@ -240,12 +226,7 @@ export default function ProjectPage() {
 						)}
 						{(doc.links?.length ?? 0) > 0 && (
 							<div className="mt-4">
-								<h1
-									className="text-2xl font-bold border-b-2 text-center sm:text-left
-									text-skin-primary-1 dark:text-skin-dark-primary-1 border-skin-primary-1 border-opacity-40 dark:border-skin-dark-primary-1 dark:border-opacity-40"
-								>
-									Links
-								</h1>
+								<TextHeader text="Links" />
 								<div className="flex px-4 sm:px-0">
 									{doc.links &&
 										doc.links.map((link, index) => (

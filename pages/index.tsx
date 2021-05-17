@@ -3,6 +3,7 @@ import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
 import Card from '../components/Card';
 import Footer from '../components/Footer';
+import TextHeader from '../components/TextHeader';
 import { IGuild } from '../models/Guild';
 import { IProject } from '../models/Project';
 
@@ -83,32 +84,22 @@ export default function Home() {
 				<div className="my-16 w-full flex flex-col items-center">
 					<div className="max-w-4xl w-full mx-4">
 						<div>
-							<h1
-								className="text-2xl font-bold border-b-2 text-center sm:text-left
-								text-skin-primary-1 border-skin-primary-1 border-opacity-30 dark:text-skin-dark-primary-1 dark:border-skin-dark-primary-1 dark:border-opacity-50"
-							>
-								Featured projects
-							</h1>
+							<TextHeader text="Featured projects" />
 							<div className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center">
 								{featuredProjects.length > 0 ? (
 									featuredProjects
 								) : (
-									<div className="font-bold text-2xl mt-4">None</div>
+									<div className="font-bold text-2xl mt-4 text-black dark:text-white">None</div>
 								)}
 							</div>
 						</div>
 						<div className="mt-10">
-							<h1
-								className="text-2xl font-bold border-b-2 text-center sm:text-left
-								text-skin-primary-1 border-skin-primary-1 border-opacity-30 dark:text-skin-dark-primary-1 dark:border-skin-dark-primary-1 dark:border-opacity-50"
-							>
-								EN Servers
-							</h1>
+							<TextHeader text="EN Servers" />
 							<div className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center">
 								{guilds.length > 0 ? (
 									guilds
 								) : (
-									<div className="font-bold text-2xl mt-4">None</div>
+									<div className="font-bold text-2xl mt-4 text-black dark:text-white">None</div>
 								)}
 							</div>
 						</div>

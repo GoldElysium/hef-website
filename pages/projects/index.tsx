@@ -4,6 +4,7 @@ import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 import Card from '../../components/Card';
+import TextHeader from '../../components/TextHeader';
 import { IProject } from '../../models/Project';
 
 export default function Projects() {
@@ -63,23 +64,13 @@ export default function Projects() {
 				<div className="my-16 w-full flex flex-col items-center">
 					<div className="max-w-4xl w-full mx-4">
 						<div>
-							<h1 
-								className="text-2xl font-bold border-b-2 text-center sm:text-left
-								text-skin-primary-1 dark:text-skin-dark-primary-1 border-skin-primary-1 border-opacity-40 dark:border-skin-dark-primary-1 dark:border-opacity-40"
-							>
-								Ongoing projects
-							</h1>
+							<TextHeader text="Ongoing projects" />
 							<div className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center items-center">
 								{projects.length > 0 ? projects : <div className="font-bold text-2xl mt-4 text-black dark:text-white">None</div>}
 							</div>
 						</div>
 						<div className="mt-10">
-							<h1 
-								className="text-2xl font-bold border-b-2 text-center sm:text-left
-								text-skin-primary-1 dark:text-skin-dark-primary-1 border-skin-primary-1 border-opacity-40 dark:border-skin-dark-primary-1 dark:border-opacity-40"
-							>
-								Past projects
-							</h1>
+							<TextHeader text="Past projects" />
 							<div className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center items-center">
 								{pastProjects.length > 0 ? pastProjects : <div className="font-bold text-2xl mt-4 text-black dark:text-white">None</div>}
 							</div>
