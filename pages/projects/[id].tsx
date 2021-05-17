@@ -123,13 +123,13 @@ export default function ProjectPage() {
 		return <Error statusCode={errorCode as number} />;
 	}
 
-	let theme = '';
-	if (doc.guild === '8O2KtsEhpru3rnQudlV5p') {
-		theme = 'theme-ina';
-	};
+	// let theme = '';
+	// if (doc.guild === '8O2KtsEhpru3rnQudlV5p') {
+	// 	theme = 'theme-ina';
+	// };
 
 	return (
-		<div className={theme}>
+		<div className="theme-ina">
 			<div className="flex flex-col h-full min-h-screen bg-skin-background-1 dark:bg-skin-dark-background-1">
 				<Navbar />
 
