@@ -6,11 +6,6 @@ export interface IMedia {
 	src: string
 }
 
-export interface ISubmission {
-	type: 'image' | 'video' |'text',
-	src: string,
-}
-
 export interface ILink {
 	name: string,
 	link: string,
@@ -21,7 +16,6 @@ export interface IProject {
 	status: 'ongoing' | 'past',
 	guild: string,
 	media?: IMedia[],
-	submissions?: ISubmission[],
 	title: string,
 	shortDescription: string,
 	description: string,
@@ -55,11 +49,6 @@ const MediaSchema: Schema = new Schema({
 	src: { type: String, required: true },
 });
 
-const SubmissionSchema: Schema = new Schema({
-	type: { type: String, enum: ['image', 'video', 'text'], required: true },
-	src: { type: String, required: true },
-});
-
 const LinkSchema: Schema = new Schema({
 	name: { type: String, required: true },
 	link: { type: String, required: true },
@@ -70,7 +59,6 @@ const ProjectSchema: Schema = new Schema({
 	status: { type: String, required: true, enum: ['ongoing', 'past'] },
 	guild: { type: String, required: true },
 	media: { type: [MediaSchema], default: undefined },
-	submissions: { type: [SubmissionSchema], default: undefined },
 	title: { type: String, required: true },
 	shortDescription: { type: String, required: true },
 	description: { type: String, required: true },
