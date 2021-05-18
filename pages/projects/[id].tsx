@@ -8,20 +8,20 @@ import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 import { IProject } from '../../models/Project';
+import { ISubmission } from "../../models/Submission";
 
 export default function ProjectPage() {
 	const router = useRouter();
 
 	const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
 	const [currentSubmissionIndex, setCurrentSubmissionIndex] = useState(0);
-	const [submissionText, setSubmissionText] = useState('Loading...');
 
 	const [doc, setDoc] = useState<IProject>({} as IProject);
+	const [submissions, setSubmissions] = useState<ISubmission[]>([])
 
 	const [errorCode, setErrorCode] = useState<boolean | number>(false);
 
 	useEffect(() => {
-		// eslint-disable-next-line consistent-return
 		async function run() {
 			if (!router.query.id) return;
 			const res = await fetch(`/api/projects/${router.query.id}`, {
@@ -34,8 +34,20 @@ export default function ProjectPage() {
 			// eslint-disable-next-line consistent-return
 			if (!res.ok) return setErrorCode(res.status);
 
+			const submissionsRes = await fetch(`/api/submissions/${router.query.id}`, {
+				method: 'GET',
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json;charset=UTF-8',
+				},
+			});
+			// eslint-disable-next-line consistent-return
+			if (!submissionsRes.ok) return setErrorCode(submissionsRes.status);
+
 			const json: IProject = await res.json();
 			setDoc(json);
+			const submissionsJson: ISubmission[] = await submissionsRes.json();
+			setSubmissions(submissionsJson);
 		}
 
 		run();
@@ -52,38 +64,16 @@ export default function ProjectPage() {
 		return <p>Invalid media</p>;
 	}
 
-	useEffect(() => {
-		// TODO: Use new submission system
-		// eslint-disable-next-line consistent-return
-		async function load() {
-			if (!doc.submissions || !(doc.submissions.length > 0)) return;
-			setSubmissionText('Loading...');
-			if (doc.submissions[currentSubmissionIndex].type === 'text') {
-				const res = await fetch(doc.submissions[currentSubmissionIndex].src, {
-					headers: {
-						'Accept': '*/*',
-					},
-				});
-				// eslint-disable-next-line consistent-return
-				if (!res.ok) return <p>Error</p>;
-
-				setSubmissionText(await res.text());
-			}
-		}
-		load();
-	}, [currentSubmissionIndex, doc.submissions]);
-
 	function CurrentSubmissionItem() {
-		// TODO: Use new submission system
-		if (!doc.submissions) return <></>;
-		if (doc.submissions[currentSubmissionIndex].type === 'video') {
-			return <ReactPlayer width="100%" height="100%" url={ doc.submissions[currentSubmissionIndex].src} controls light/>;
+		if (!submissions) return <></>;
+		if (submissions[currentSubmissionIndex].type === 'video') {
+			return <ReactPlayer width="100%" height="100%" url={submissions[currentSubmissionIndex].src} controls light/>;
 		}
-		if (doc.submissions[currentSubmissionIndex].type === 'image') {
-			return <img className="w-full h-full object-none" src={doc.submissions[currentSubmissionIndex].src} alt=""/>;
+		if (submissions[currentSubmissionIndex].type === 'image') {
+			return <img className="w-full h-full object-none" src={submissions[currentSubmissionIndex].src} alt=""/>;
 		}
-		if (doc.submissions[currentSubmissionIndex].type === 'text') {
-			return <p className="w-full h-full overflow-auto whitespace-pre-line">{submissionText}</p>;
+		if (submissions[currentSubmissionIndex].type === 'text') {
+			return <p className="w-full h-full overflow-auto whitespace-pre-line">{submissions[currentSubmissionIndex].message}</p>;
 		}
 		return <p>Invalid media</p>;
 	}
@@ -131,7 +121,7 @@ export default function ProjectPage() {
 							</div>
 						</div>}
 						{/* TODO: Move submissions to separate tab */}
-						{((doc.submissions?.length ?? 0) > 0) && <div className="mt-4">
+						{((submissions?.length ?? 0) > 0) && <div className="mt-4">
 							<h1 className="text-2xl text-red-500 font-bold border-b-2 border-red-200 text-center sm:text-left my-3">Submissions</h1>
 							<div className="flex flex-col items-center pt-2">
 								<div className="w-full h-52 sm:w-8/12 sm:h-96">
@@ -144,11 +134,11 @@ export default function ProjectPage() {
 											if (currentSubmissionIndex > 0) setCurrentSubmissionIndex(currentSubmissionIndex - 1);
 										}}
 									/>
-									{currentSubmissionIndex + 1}/{doc.submissions?.length ?? 0}
+									{currentSubmissionIndex + 1}/{submissions?.length ?? 0}
 									<ChevronRightIcon
-										className={currentSubmissionIndex + 1 < (doc.submissions?.length ?? 0) ? 'text-black h-8 w-8 cursor-pointer' : 'text-red-300 h-8 w-8'}
+										className={currentSubmissionIndex + 1 < (submissions?.length ?? 0) ? 'text-black h-8 w-8 cursor-pointer' : 'text-red-300 h-8 w-8'}
 										onClick={() => {
-											if (currentSubmissionIndex + 1 < (doc.submissions?.length ?? 0)) setCurrentSubmissionIndex(currentSubmissionIndex + 1);
+											if (currentSubmissionIndex + 1 < (submissions?.length ?? 0)) setCurrentSubmissionIndex(currentSubmissionIndex + 1);
 										}}
 									/>
 								</div>
