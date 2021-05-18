@@ -33,13 +33,13 @@ export default function ProjectEditPage({ doc }: IProps) {
 	const [guild, setGuild] = useState('');
 	const [shortDescription, setShortDescription] = useState('');
 	const [description, setDescription] = useState(doc?.description ?? '');
-	const [media, setMedia] = useState<IMedia[]>([]);
+	const [gallery, setGallery] = useState<IMedia[]>([]);
 	const [submissions, setSubmissions] = useState<ISubmission[]>([]);
 	const [links, setLinks] = useState<ILink[]>([]);
 	const [descriptionSet, setDescriptionSet] = useState(false);
 
 	/* eslint-disable no-undef */
-	const [mediaHtml, setMediaHtml] = useState<JSX.Element[]>([]);
+	const [galleryHtml, setGalleryHtml] = useState<JSX.Element[]>([]);
 	const [submissionsHtml, setSubmissionsHtml] = useState<JSX.Element[]>([]);
 	const [linksHtml, setLinksHtml] = useState<JSX.Element[]>([]);
 
@@ -138,7 +138,7 @@ export default function ProjectEditPage({ doc }: IProps) {
 			&& title === originalDoc.title
 			&& shortDescription === originalDoc.shortDescription
 			&& description === originalDoc.description
-			&& media === originalDoc.media
+			&& gallery === originalDoc.media
 			&& links === originalDoc.links
 			&& submissions === originalSubmissions
 		) {
@@ -156,7 +156,7 @@ export default function ProjectEditPage({ doc }: IProps) {
 		setTitle(originalDoc.title);
 		setShortDescription(originalDoc.shortDescription);
 		setDescription(originalDoc.description);
-		setMedia(originalDoc.media ?? []);
+		setGallery(originalDoc.media ?? []);
 		setLinks(originalDoc.links ?? []);
 		setSubmissions(originalSubmissions ?? []);
 	}
@@ -286,27 +286,27 @@ export default function ProjectEditPage({ doc }: IProps) {
 		setLinksHtml(html);
 	}, [links]);
 
-	function addMedia() {
-		setMedia((prevState) => [...prevState, { type: 'image', src: '' }]);
+	function addGalleryItem() {
+		setGallery((prevState) => [...prevState, { type: 'image', src: '' }]);
 	}
 
 	useEffect(() => {
 		function updateType(index: number, type: string) {
-			const newMedia = [...media];
-			newMedia[index].type = type as IMedia['type'];
-			setMedia(newMedia);
+			const newGallery = [...gallery];
+			newGallery[index].type = type as IMedia['type'];
+			setGallery(newGallery);
 		}
 
 		function updateSrc(index: number, src: string) {
-			const newMedia = [...media];
-			newMedia[index].src = src;
-			setMedia(newMedia);
+			const newGallery = [...gallery];
+			newGallery[index].src = src;
+			setGallery(newGallery);
 		}
 
 		function removeMedia(index: number) {
-			const newMedia = [...media];
-			newMedia.splice(index, 1);
-			setMedia(newMedia);
+			const newGallery = [...gallery];
+			newGallery.splice(index, 1);
+			setGallery(newGallery);
 		}
 
 		const html = media.map((currentMedia, index) => (
@@ -319,7 +319,9 @@ export default function ProjectEditPage({ doc }: IProps) {
 				>
 					<option value="image">Image</option>
 					<option value="video">Video</option>
+					<option value="text">Text</option>
 				</select>
+				{/* TODO: Change to textarea input when text and other logic  */}
 				<input
 					required
 					value={currentMedia.src}
@@ -333,8 +335,8 @@ export default function ProjectEditPage({ doc }: IProps) {
 			</div>
 		));
 
-		setMediaHtml(html);
-	}, [media]);
+		setGalleryHtml(html);
+	}, [gallery]);
 
 	function addSubmission() {
 		setSubmissions((prevState) => [...prevState, { type: 'image', src: '' }] as ISubmission[]);
@@ -526,7 +528,7 @@ export default function ProjectEditPage({ doc }: IProps) {
 									<PlusIcon className="w-8 h-8 mt-2 text-red-500 cursor-pointer" onClick={addMedia} />
 								</div>
 								<div>
-									{mediaHtml}
+									{galleryHtml}
 								</div>
 							</div>
 							{/* TODO: Move submissions to separate tab */}
