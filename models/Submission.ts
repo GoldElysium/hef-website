@@ -1,13 +1,15 @@
 // Packages
 import mongoose, { Schema, Document, Model } from 'mongoose';
 
-export interface ISubmission extends Document {
+export interface ISubmission {
 	project: number,
 	author?: string,
 	type: 'image' | 'video' | 'text',
 	src?: string,
 	message?: string,
 }
+
+interface ISubmissionDocument extends Document,ISubmission {}
 
 const SubmissionSchema: Schema = new Schema({
 	project: { type: Number, required: true },
@@ -20,8 +22,8 @@ const SubmissionSchema: Schema = new Schema({
 // eslint-disable-next-line import/no-mutable-exports
 let model;
 try {
-	model = mongoose.model<ISubmission>('Submission');
+	model = mongoose.model<ISubmissionDocument>('Submission');
 } catch {
-	model = mongoose.model<ISubmission>('Submission', SubmissionSchema, 'submissions');
+	model = mongoose.model<ISubmissionDocument>('Submission', SubmissionSchema, 'submissions');
 }
-export default <Model<ISubmission>>model;
+export default <Model<ISubmissionDocument>>model;

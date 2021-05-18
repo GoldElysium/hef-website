@@ -53,6 +53,7 @@ export default function ProjectPage() {
 	}
 
 	useEffect(() => {
+		// TODO: Use new submission system
 		// eslint-disable-next-line consistent-return
 		async function load() {
 			if (!doc.submissions || !(doc.submissions.length > 0)) return;
@@ -73,6 +74,7 @@ export default function ProjectPage() {
 	}, [currentSubmissionIndex, doc.submissions]);
 
 	function CurrentSubmissionItem() {
+		// TODO: Use new submission system
 		if (!doc.submissions) return <></>;
 		if (doc.submissions[currentSubmissionIndex].type === 'video') {
 			return <ReactPlayer width="100%" height="100%" url={ doc.submissions[currentSubmissionIndex].src} controls light/>;
@@ -128,6 +130,7 @@ export default function ProjectPage() {
 								</div>
 							</div>
 						</div>}
+						{/* TODO: Move submissions to separate tab */}
 						{((doc.submissions?.length ?? 0) > 0) && <div className="mt-4">
 							<h1 className="text-2xl text-red-500 font-bold border-b-2 border-red-200 text-center sm:text-left my-3">Submissions</h1>
 							<div className="flex flex-col items-center pt-2">
