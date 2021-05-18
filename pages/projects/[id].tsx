@@ -199,14 +199,14 @@ export default function ProjectPage() {
 							)}
 							{/* TODO: Move submissions to separate tab */}
 							{((submissions?.length ?? 0) > 0) && (
-							<div className="mt-4">
-								<TextHeader text="Submissions" />
-								<div className="flex flex-col items-center pt-2">
-									<div className="w-full max-h-[540px] overflow-auto">
-										<Submissions />
+								<div className="mt-4">
+									<TextHeader text="Submissions" />
+									<div className="flex flex-col items-center pt-2">
+										<div className="w-full max-h-[540px] overflow-auto">
+											<Submissions />
+										</div>
 									</div>
 								</div>
-							</div>
 							)}
 							{(doc.links?.length ?? 0) > 0 && (
 								<div className="mt-4">

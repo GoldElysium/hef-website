@@ -12,6 +12,7 @@ export default function Projects() {
 	const { query } = router;
 
 	/* eslint-disable no-unused-vars */
+	/* eslint-dsable @typescript-eslint/no-unused-vars */
 	const [filter, setFilter] = useState([] as string[]);
 	const [filterMenuOpen, setFilterMenuOpen] = useState(false);
 
