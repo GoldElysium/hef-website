@@ -81,7 +81,7 @@ export default function ProjectPage() {
 		const submissionElements: JSX.Element[] = [];
 		submissions.forEach((submission, index) => {
 			const author = (submission.author)
-				? <h6 className="text-xl left-0 top-0 w-1/2">From: <span className="font-medium">{submission?.author}</span></h6>
+				? <h6 className="text-xl left-0 top-0 w-1/2">From: <span className="font-medium">{submission.author}</span></h6>
 				: <div className="left-0 top-0 w-1/2"></div>;
 			submissionElements.push(
 				<div className="w-full max-h-full" key={`submission-${index}`}>
