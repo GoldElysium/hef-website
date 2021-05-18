@@ -75,13 +75,26 @@ export default function ProjectPage() {
 
 	function SubmissionItem(submission: ISubmission) {
 		if (submission.type === 'video') {
-			return <ReactPlayer width="100%" height="100%" url={ submission.src} controls light className="mb-6 mt-6"/>;
+			return (
+				<ReactPlayer 
+					width="100%" 
+					height="100%" 
+					url={ submission.src} 
+					controls 
+					light 
+					className="mb-4 mt-4"
+				/>
+			);
 		}
 		if (submission.type === 'image') {
 			return <img className="w-full h-full object-none" src={ submission.src} alt="" loading="lazy" />;
 		}
 		if (submission.type === 'text') {
-			return <p className="m-6 whitespace-pre-line">{submission.message}</p>;
+			return (
+				<p className="m-4 w-full h-full overflow-auto whitespace-pre-line text-black dark:text-white dark:text-opacity-80">
+					{submission.message}
+				</p>
+			);
 		}
 		return <p>Invalid media</p>;
 	}
@@ -94,13 +107,13 @@ export default function ProjectPage() {
 				: <div className="left-0 top-0 w-1/2"></div>;
 			submissionElements.push(
 				<div className="w-full max-h-full" key={`submission-${index}`}>
-					<div className="w-full flex">
+					<div className="w-full mt-4 flex dark:text-gray-200 dark:text-opacity-80">
 						{author}
 						<h6 className="text-xl top-0 right-0 w-1/2 text-right">{`#${index+1}`}</h6>
 					</div>
 					<div className="w-full mt-3">
 						<SubmissionItem {...submission} />
-						<hr/>
+						<hr className="border-t-1 border-dashed border-gray-400" />
 					</div>
 				</div>
 			);
@@ -108,7 +121,7 @@ export default function ProjectPage() {
 
 		return (
 		    <div className="w-full h-full flex justify-center">
-			    <div className="sm:w-8/12 h-full">
+			    <div className="sm:w-10/12 md:w-8/12 h-full">
 				    {submissionElements}
 			    </div>
 		    </div>
@@ -134,58 +147,84 @@ export default function ProjectPage() {
 					description={doc.shortDescription ?? ''}
 				/>
 
-			<div className="flex-grow">
-				<div className="my-16 w-full flex flex-col items-center">
-					<div className="max-w-4xl w-full mx-4 break-words md:break-normal">
-						<div>
-							<h1 className="text-2xl text-red-500 font-bold border-b-2 border-red-200 text-center sm:text-left mb-3">Description</h1>
-							<ReactMarkdown className="px-4 sm:px-0">
-								{doc.description}
-							</ReactMarkdown>
-						</div>
-						{((doc.media?.length ?? 0) > 0) && <div className="mt-4">
-							<h1 className="text-2xl text-red-500 font-bold border-b-2 border-red-200 text-center sm:text-left my-3">Gallery</h1>
-							<div className="flex flex-col items-center pt-2">
-								<div className="w-full h-52 sm:w-8/12 sm:h-96">
-									<CurrentGalleryItem/>
-								</div>
-								<div className="flex mt-2 font-bold items-center justify-center text-center">
-									<ChevronLeftIcon
-										className={currentMediaIndex > 0 ? 'text-black h-8 w-8 cursor-pointer' : 'text-red-300 h-8 w-8'}
-										onClick={() => {
-											if (currentMediaIndex > 0) setCurrentMediaIndex(currentMediaIndex - 1);
-										}}
-									/>
-									{currentMediaIndex + 1}/{doc.media ? doc.media.length : 0}
-									<ChevronRightIcon
-										className={currentMediaIndex + 1 < (doc.media ? doc.media.length : 0) ? 'text-black h-8 w-8 cursor-pointer' : 'text-red-300 h-8 w-8'}
-										onClick={() => {
-											if (currentMediaIndex + 1 < (doc.media ? doc.media.length : 0)) setCurrentMediaIndex(currentMediaIndex + 1);
-										}}
-									/>
-								</div>
+				<div className="flex-grow">
+					<div className="my-16 w-full flex flex-col items-center">
+						<div className="max-w-4xl w-full mx-4 break-words md:break-normal">
+							<div>
+								<TextHeader text="Description" />
+								<ReactMarkdown className="px-4 sm:px-0 text-black dark:text-white dark:text-opacity-80">
+									{doc.description}
+								</ReactMarkdown>
 							</div>
-						</div>}
+							{(doc.media?.length ?? 0) > 0 && (
+								<div className="mt-4">
+									<TextHeader text="Gallery" />
+									<div className="flex flex-col items-center pt-2">
+										<div className="w-full h-52 sm:w-8/12 sm:h-96">
+											<CurrentGalleryItem />
+										</div>
+										<div className="flex mt-2 font-bold items-center justify-center text-center">
+											<ChevronLeftIcon
+												className={
+													currentMediaIndex > 0
+														? 'h-8 w-8 cursor-pointer text-black dark:text-white'
+														: 'h-8 w-8 text-skin-primary-1 text-opacity-30 dark:text-skin-dark-primary-1 dark:text-opacity-30'
+												}
+												onClick={() => {
+													if (currentMediaIndex > 0)
+														setCurrentMediaIndex(currentMediaIndex - 1);
+												}}
+											/>
+											<span className="text-black dark:text-white">
+												{currentMediaIndex + 1}/{doc.media ? doc.media.length : 0}
+											</span>
+											<ChevronRightIcon
+												className={
+													currentMediaIndex + 1 <
+													(doc.media ? doc.media.length : 0)
+														? 'h-8 w-8 cursor-pointer text-black dark:text-white'
+														: 'h-8 w-8 text-skin-primary-1 text-opacity-30 dark:text-skin-dark-primary-1 dark:text-opacity-30'
+												}
+												onClick={() => {
+													if (
+														currentMediaIndex + 1 <
+														(doc.media ? doc.media.length : 0)
+													)
+														setCurrentMediaIndex(currentMediaIndex + 1);
+												}}
+											/>
+										</div>
+									</div>
+								</div>
+							)}
 						{/* TODO: Move submissions to separate tab */}
 						{((submissions?.length ?? 0) > 0) && <div className="mt-4">
-							<h1 className="text-2xl text-red-500 font-bold border-b-2 border-red-200 text-center sm:text-left my-3">Submissions</h1>
+						<TextHeader text="Submissions" />
 							<div className="flex flex-col items-center pt-2">
-								<div className="w-full max-h-[960px] overflow-auto">
+								<div className="w-full max-h-[540px] overflow-auto">
 									<Submissions />
 								</div>
 							</div>
 						</div>}
-						{((doc.links?.length ?? 0) > 0) && <div className="mt-4">
-							<h1 className="text-2xl text-red-500 font-bold border-b-2 border-red-200 text-center sm:text-left mb-3">Links</h1>
-							<div className="flex px-4 sm:px-0">
-								{doc.links && doc.links.map((link, index) => (
-									<div key={`link-${index}`}
-										className="rounded-3xl bg-red-500 text-white font-bold w-20 h-10 flex items-center justify-center mt-4 content-end hover:text-red-200 mr-4">
-										<a href={link.link} target="_blank" rel="noreferrer">{link.name}</a>
+						{(doc.links?.length ?? 0) > 0 && (
+								<div className="mt-4">
+									<TextHeader text="Links" />
+									<div className="flex px-4 sm:px-0">
+										{doc.links &&
+											doc.links.map((link, index) => (
+												<div
+													key={`link-${index}`}
+													className="rounded-3xl font-bold w-20 h-10 flex items-center justify-center mt-4 content-end mr-4
+													bg-skin-secondary-1 dark:bg-skin-dark-secondary-1 text-white hover:text-opacity-70"
+												>
+													<a href={link.link} target="_blank" rel="noreferrer">
+														{link.name}
+													</a>
+												</div>
+											))}
 									</div>
-								))}
-							</div>
-						</div>}
+								</div>
+							)}
 					</div>
 				</div>
 			</div>
