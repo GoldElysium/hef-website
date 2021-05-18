@@ -2,14 +2,60 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  :root {
+    --color-background-1: 253, 236, 236;
+    --color-background-2: 239, 68, 68;
+    --color-card: 255, 255, 255;
+    --color-primary-1: 239, 68, 68;
+    --color-secondary-1: 255, 136, 26;
+
+    --color-dark-background-1: 22, 18, 18;
+    --color-dark-background-2: 36, 30, 30;
+    --color-dark-card: 50, 41, 41;
+    --color-dark-primary-1: 207, 23, 23;
+    --color-dark-secondary-1: 255, 85, 0;
+  }
+
+  .theme-ina {
+    --color-background-1: 238, 233, 246;
+    --color-background-2: 87, 80, 104;
+    --color-card: 255, 255, 255;
+    --color-primary-1: 87, 80, 104;
+    --color-secondary-1: 242, 154, 48;
+
+    --color-dark-background-1: 19, 18, 23;
+    --color-dark-background-2: 38, 36, 45;
+    --color-dark-card: 48, 44, 58;
+    --color-dark-primary-1: 106,98, 127;
+    --color-dark-secondary-1: 230, 133, 15;
+  }
+
+  .theme-calli {
+    /* Duplicate values from above when implementing */
+  }
+
+  .theme-gura {
+    /* Duplicate values from above when implementing */
+  }
+
+  .theme-kiara {
+    /* Duplicate values from above when implementing */
+  }
+
+  .theme-ame {
+    /* Duplicate values from above when implementing */
+  }
+}
+
 @layer components {
   /* CSS for DarkModeToggle */
   /* The switch - the box around the slider */
   .switch {
     position: relative;
     display: inline-block;
-    width: 60px;
-    height: 34px;
+    width: 56px;
+    height: 32px;
   }
 
   /* Hide default HTML checkbox */
@@ -27,7 +73,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #ccc;
+    /* background-color: #ccc; */
     -webkit-transition: .4s;
     transition: .4s;
   }
@@ -35,27 +81,28 @@
   .slider:before {
     position: absolute;
     content: "";
-    height: 26px;
-    width: 26px;
-    left: 4px;
+    height: 24px;
+    width: 24px;
+    left: 5px;
     bottom: 4px;
     background-color: white;
+    box-shadow: 0 0 4px #999;
     -webkit-transition: .4s;
     transition: .4s;
   }
 
-  input:checked + .slider {
+  /* input:checked + .slider {
     background-color: #2196F3;
-  }
+  } */
 
   input:focus + .slider {
     box-shadow: 0 0 1px #2196F3;
   }
 
   input:checked + .slider:before {
-    -webkit-transform: translateX(26px);
-    -ms-transform: translateX(26px);
-    transform: translateX(26px);
+    -webkit-transform: translateX(22px);
+    -ms-transform: translateX(22px);
+    transform: translateX(22px);
   }
 
   /* Rounded sliders */

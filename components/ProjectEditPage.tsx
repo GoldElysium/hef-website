@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { FormEvent, useEffect, useState } from 'react';
+import {FormEvent, useEffect, useRef, useState} from 'react';
 import { CheckIcon, PlusIcon, ReplyIcon, XIcon } from '@heroicons/react/solid';
 import { Snackbar } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
@@ -22,6 +22,7 @@ interface IProps {
 
 export default function ProjectEditPage({ doc }: IProps) {
 	const router = useRouter();
+	const editorRef = useRef<RichMarkdownEditor|null>(null);
 
 	const [status, setStatus] = useState('ongoing');
 	const [title, setTitle] = useState('');
@@ -31,6 +32,7 @@ export default function ProjectEditPage({ doc }: IProps) {
 	const [media, setMedia] = useState<IMedia[]>([]);
 	const [submissions, setSubmissions] = useState<ISubmission[]>([]);
 	const [links, setLinks] = useState<ILink[]>([]);
+	const [descriptionSet, setDescriptionSet] = useState(false);
 
 	/* eslint-disable no-undef */
 	const [mediaHtml, setMediaHtml] = useState<JSX.Element[]>([]);
@@ -77,6 +79,16 @@ export default function ProjectEditPage({ doc }: IProps) {
 		}
 		run();
 	}, [doc]);
+
+	useEffect(() => {
+		if(!descriptionSet && editorRef.current) {
+			setDescriptionSet(true);
+			if(description !== '') {
+				const newState = editorRef.current.createState(description);
+				editorRef.current.view.updateState(newState);
+			}
+		}
+	}, [editorRef, description, descriptionSet]);
 
 	// Form
 	useEffect(() => {
@@ -394,8 +406,8 @@ export default function ProjectEditPage({ doc }: IProps) {
 								<div className="flex flex-col mt-2">
 									<label htmlFor="description" className="font-bold">Description</label>
 									<div className="flex flex-col justify-start border border-red-300 bg-white max-h-64 rounded-md">
-										<RichMarkdownEditor onChange={setDescription} id="description"
-										                    defaultValue={description !== '' ? description : '# Welcome\n\nJust an easy to use **Markdown** editor with `slash commands`'}
+										<RichMarkdownEditor onChange={setDescription} id="description" ref={editorRef}
+										                    defaultValue={'# Welcome\n\nJust an easy to use **Markdown** editor with `slash commands`'}
 									                    className="rounded-md px-1 w-full overflow-auto"/>
 									</div>
 									<textarea required

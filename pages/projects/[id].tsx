@@ -7,6 +7,7 @@ import ReactMarkdown from 'react-markdown';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
+import TextHeader from '../../components/TextHeader';
 import { IProject } from '../../models/Project';
 import { ISubmission } from "../../models/Submission";
 
@@ -27,7 +28,7 @@ export default function ProjectPage() {
 			const res = await fetch(`/api/projects/${router.query.id}`, {
 				method: 'GET',
 				headers: {
-					'Accept': 'application/json',
+					Accept: 'application/json',
 					'Content-Type': 'application/json;charset=UTF-8',
 				},
 			});
@@ -52,11 +53,19 @@ export default function ProjectPage() {
 
 		run();
 	}, [router.query]);
-
+	
 	function CurrentGalleryItem() {
 		if (!doc.media) return <></>;
 		if (doc.media[currentMediaIndex].type === 'video') {
-			return <ReactPlayer width="100%" height="100%" url={doc.media[currentMediaIndex].src} controls light/>;
+			return (
+				<ReactPlayer
+					width="100%"
+					height="100%"
+					url={doc.media[currentMediaIndex].src}
+					controls
+					light
+				/>
+			);
 		}
 		if (doc.media[currentMediaIndex].type === 'image') {
 			return <img className="w-full h-full object-none" src={doc.media[currentMediaIndex].src} alt="" loading="lazy" />;
@@ -107,14 +116,23 @@ export default function ProjectPage() {
 	}
 
 	if (errorCode) {
-		return <Error statusCode={errorCode as number}/>;
+		return <Error statusCode={errorCode as number} />;
 	}
 
-	return (
-		<div className="flex flex-col h-full min-h-screen bg-red-50">
-			<Navbar/>
+	// let theme = '';
+	// if (doc.guild === '8O2KtsEhpru3rnQudlV5p') {
+	// 	theme = 'theme-ina';
+	// };
 
-			<Header title={doc.title ?? 'unknown'} description={doc.shortDescription ?? ''}/>
+	return (
+		<div className="theme-ina">
+			<div className="flex flex-col h-full min-h-screen bg-skin-background-1 dark:bg-skin-dark-background-1">
+				<Navbar />
+
+				<Header
+					title={doc.title ?? 'unknown'}
+					description={doc.shortDescription ?? ''}
+				/>
 
 			<div className="flex-grow">
 				<div className="my-16 w-full flex flex-col items-center">
@@ -172,7 +190,8 @@ export default function ProjectPage() {
 				</div>
 			</div>
 
-			<Footer/>
+				<Footer />
+			</div>
 		</div>
 	);
 }
