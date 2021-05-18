@@ -1,10 +1,10 @@
-import { DarkModeContext } from '../contexts/DarkModeContext'
+import { DarkModeContext } from '../contexts/DarkModeContext';
 
 export default function DarkModeToggle() {
 
 	return (
 		<DarkModeContext.Consumer>
-			{({darkMode, toggleDarkMode}) => (
+			{({ darkMode, toggleDarkMode }) => (
 				<div className="flex flex-nowrap align-middle items-center">
 					<label className="switch ml-6">
 						<input type="checkbox" onChange={() => toggleDarkMode()} checked={darkMode}/>
@@ -14,5 +14,5 @@ export default function DarkModeToggle() {
 				</div>
 			)}
 		</DarkModeContext.Consumer>
-	)
+	);
 }

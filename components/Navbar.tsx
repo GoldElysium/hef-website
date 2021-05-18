@@ -4,7 +4,7 @@ import { Menu, Transition } from '@headlessui/react';
 import { useState, Fragment } from 'react';
 import { ClipboardListIcon, HomeIcon } from '@heroicons/react/outline';
 import Head from 'next/head';
-import DarkModeToggle from './DarkModeToggle'
+import DarkModeToggle from './DarkModeToggle';
 
 export default function Navbar() {
 	const [menuOpen, setMenuOpen] = useState(false);
