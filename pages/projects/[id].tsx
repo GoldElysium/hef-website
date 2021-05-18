@@ -17,7 +17,7 @@ export default function ProjectPage() {
 	const [currentSubmissionIndex, setCurrentSubmissionIndex] = useState(0);
 
 	const [doc, setDoc] = useState<IProject>({} as IProject);
-	const [submissions, setSubmissions] = useState<ISubmission[]>([])
+	const [submissions, setSubmissions] = useState<ISubmission[]>([]);
 
 	const [errorCode, setErrorCode] = useState<boolean | number>(false);
 
@@ -59,23 +59,49 @@ export default function ProjectPage() {
 			return <ReactPlayer width="100%" height="100%" url={doc.media[currentMediaIndex].src} controls light/>;
 		}
 		if (doc.media[currentMediaIndex].type === 'image') {
-			return <img className="w-full h-full object-none" src={doc.media[currentMediaIndex].src} alt=""/>;
+			return <img className="w-full h-full object-none" src={doc.media[currentMediaIndex].src} alt="" loading="lazy" />;
 		}
 		return <p>Invalid media</p>;
 	}
 
-	function CurrentSubmissionItem() {
-		if (!submissions) return <></>;
-		if (submissions[currentSubmissionIndex].type === 'video') {
-			return <ReactPlayer width="100%" height="100%" url={submissions[currentSubmissionIndex].src} controls light/>;
+	function SubmissionItem(submission: ISubmission) {
+		if (submission.type === 'video') {
+			return <ReactPlayer width="100%" height="100%" url={ submission.src} controls light className="mb-6 mt-6"/>;
 		}
-		if (submissions[currentSubmissionIndex].type === 'image') {
-			return <img className="w-full h-full object-none" src={submissions[currentSubmissionIndex].src} alt=""/>;
+		if (submission.type === 'image') {
+			return <img className="w-full h-full object-none" src={ submission.src} alt="" loading="lazy" />;
 		}
-		if (submissions[currentSubmissionIndex].type === 'text') {
-			return <p className="w-full h-full overflow-auto whitespace-pre-line">{submissions[currentSubmissionIndex].message}</p>;
+		if (submission.type === 'text') {
+			return <p className="m-6 whitespace-pre-line">{submission.message}</p>;
 		}
 		return <p>Invalid media</p>;
+	}
+
+	function Submissions() {
+		const submissionElements: JSX.Element[] = [];
+		submissions.forEach((submission, index) => {
+			const author = (submission.author)
+				? <h6 className="text-xl left-0 top-0 w-1/2">From: <span className="font-medium">{submission?.author}</span></h6>
+				: <div className="left-0 top-0 w-1/2"></div>;
+			submissionElements.push(
+				<div className="w-full max-h-full" key={`submission-${index}`}>
+					<div className="w-full flex">
+						{author}
+						<h6 className="text-xl top-0 right-0 w-1/2 text-right">{`#${index+1}`}</h6>
+					</div>
+					<div className="w-full mt-3">
+						<SubmissionItem {...submission} />
+						<hr/>
+					</div>
+				</div>
+			);
+		})
+
+		return <div className="w-full h-full flex justify-center">
+			<div className="sm:w-8/12 h-full">
+				{submissionElements}
+			</div>
+		</div>;
 	}
 
 	if (errorCode) {
@@ -124,23 +150,8 @@ export default function ProjectPage() {
 						{((submissions?.length ?? 0) > 0) && <div className="mt-4">
 							<h1 className="text-2xl text-red-500 font-bold border-b-2 border-red-200 text-center sm:text-left my-3">Submissions</h1>
 							<div className="flex flex-col items-center pt-2">
-								<div className="w-full h-52 sm:w-8/12 sm:h-96">
-									<CurrentSubmissionItem/>
-								</div>
-								<div className="flex mt-2 font-bold items-center justify-center text-center">
-									<ChevronLeftIcon
-										className={currentSubmissionIndex > 0 ? 'text-black h-8 w-8 cursor-pointer' : 'text-red-300 h-8 w-8'}
-										onClick={() => {
-											if (currentSubmissionIndex > 0) setCurrentSubmissionIndex(currentSubmissionIndex - 1);
-										}}
-									/>
-									{currentSubmissionIndex + 1}/{submissions?.length ?? 0}
-									<ChevronRightIcon
-										className={currentSubmissionIndex + 1 < (submissions?.length ?? 0) ? 'text-black h-8 w-8 cursor-pointer' : 'text-red-300 h-8 w-8'}
-										onClick={() => {
-											if (currentSubmissionIndex + 1 < (submissions?.length ?? 0)) setCurrentSubmissionIndex(currentSubmissionIndex + 1);
-										}}
-									/>
+								<div className="w-full max-h-96 max-h-[960px] overflow-auto">
+									<Submissions />
 								</div>
 							</div>
 						</div>}
