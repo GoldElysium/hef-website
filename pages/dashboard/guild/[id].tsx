@@ -5,7 +5,7 @@ import GuildEditPage from '../../../components/GuildEditPage';
 export default function GuildEdit() {
 	const [session, loading] = useSession();
 
-	useEffect(() => { // eslint-disable-line consistent-return
+	useEffect(() => {
 		if (!loading && !session) signIn('discord');
 	}, [session, loading]);
 

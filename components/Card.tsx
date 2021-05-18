@@ -17,7 +17,6 @@ export default function Card({ img, title, description, button, url, internal }:
 			 bg-skin-card dark:bg-skin-dark-card border-skin-primary-1 dark:border-skin-dark-primary-1"
 			>
 				<div className="flex flex-col items-center">
-					{/* eslint-disable-next-line jsx-a11y/img-redundant-alt */}
 					{img && <img className="h-32 rounded-full" src={img} alt="" />}
 					<h2 className="font-bold text-xl mt-3 text-center text-black dark:text-white">
 						{title}

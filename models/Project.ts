@@ -77,7 +77,6 @@ ProjectSchema.pre('save', function (next) {
 	});
 });
 
-// eslint-disable-next-line import/no-mutable-exports
 let model;
 try {
 	model = mongoose.model<IProjectDocument>('Project');

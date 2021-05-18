@@ -15,7 +15,6 @@ export default function ProjectPage() {
 	const router = useRouter();
 
 	const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
-	const [currentSubmissionIndex, setCurrentSubmissionIndex] = useState(0);
 
 	const [doc, setDoc] = useState<IProject>({} as IProject);
 	const [submissions, setSubmissions] = useState<ISubmission[]>([]);
@@ -32,7 +31,6 @@ export default function ProjectPage() {
 					'Content-Type': 'application/json;charset=UTF-8',
 				},
 			});
-			// eslint-disable-next-line consistent-return
 			if (!res.ok) return setErrorCode(res.status);
 
 			const submissionsRes = await fetch(`/api/submissions/${router.query.id}`, {
@@ -42,7 +40,6 @@ export default function ProjectPage() {
 					'Content-Type': 'application/json;charset=UTF-8',
 				},
 			});
-			// eslint-disable-next-line consistent-return
 			if (!submissionsRes.ok) return setErrorCode(submissionsRes.status);
 
 			const json: IProject = await res.json();
@@ -197,16 +194,16 @@ export default function ProjectPage() {
 									</div>
 								</div>
 							)}
-						{/* TODO: Move submissions to separate tab */}
-						{((submissions?.length ?? 0) > 0) && <div className="mt-4">
-						<TextHeader text="Submissions" />
-							<div className="flex flex-col items-center pt-2">
-								<div className="w-full max-h-[540px] overflow-auto">
-									<Submissions />
+							{/* TODO: Move submissions to separate tab */}
+							{((submissions?.length ?? 0) > 0) && <div className="mt-4">
+							<TextHeader text="Submissions" />
+								<div className="flex flex-col items-center pt-2">
+									<div className="w-full max-h-[540px] overflow-auto">
+										<Submissions />
+									</div>
 								</div>
-							</div>
-						</div>}
-						{(doc.links?.length ?? 0) > 0 && (
+							</div>}
+							{(doc.links?.length ?? 0) > 0 && (
 								<div className="mt-4">
 									<TextHeader text="Links" />
 									<div className="flex px-4 sm:px-0">
@@ -225,9 +222,9 @@ export default function ProjectPage() {
 									</div>
 								</div>
 							)}
+						</div>
 					</div>
 				</div>
-			</div>
 
 				<Footer />
 			</div>

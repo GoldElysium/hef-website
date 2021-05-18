@@ -19,7 +19,6 @@ const SubmissionSchema: Schema = new Schema({
 	message: { type: String }
 });
 
-// eslint-disable-next-line import/no-mutable-exports
 let model;
 try {
 	model = mongoose.model<ISubmissionDocument>('Submission');

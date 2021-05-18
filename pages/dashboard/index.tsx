@@ -5,7 +5,7 @@ import DashboardPage from '../../components/DashboardPage';
 export default function Dashboard() {
 	const [session, loading] = useSession();
 
-	useEffect(() => { // eslint-disable-line consistent-return
+	useEffect(() => {
 		if (!loading && !session) signIn('discord');
 	}, [session, loading]);
 
