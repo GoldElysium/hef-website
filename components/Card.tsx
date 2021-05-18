@@ -11,7 +11,7 @@ interface IProps {
 
 export default function Card({ img, title, description, button, url, internal }: IProps) {
 	return (
-		<div className="sm:w-1/3">
+		<div className="mt-4 sm:w-1/3">
 			<div
 				className="p-8 h-full border-b-4 rounded-lg flex flex-col justify-between items-center sm:mx-2 sm:p-3 md:p-8
 			 bg-skin-card dark:bg-skin-dark-card border-skin-primary-1 dark:border-skin-dark-primary-1"
