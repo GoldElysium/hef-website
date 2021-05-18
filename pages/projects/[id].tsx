@@ -9,6 +9,7 @@ import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 import TextHeader from '../../components/TextHeader';
 import { IProject } from '../../models/Project';
+import 'github-markdown-css';
 
 export default function ProjectPage() {
 	const router = useRouter();
@@ -143,9 +144,11 @@ export default function ProjectPage() {
 						<div className="max-w-4xl w-full mx-4 break-words md:break-normal">
 							<div>
 								<TextHeader text="Description" />
-								<ReactMarkdown className="px-4 sm:px-0 text-black dark:text-white dark:text-opacity-80">
-									{doc.description}
-								</ReactMarkdown>
+								<div className="markdown-body">
+									<ReactMarkdown className="px-4 sm:px-0 text-black dark:text-white dark:text-opacity-80">
+										{doc.description}
+									</ReactMarkdown>
+								</div>
 							</div>
 							{(doc.media?.length ?? 0) > 0 && (
 								<div className="mt-4">
