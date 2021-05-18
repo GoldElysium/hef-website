@@ -4,6 +4,7 @@ import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 import Card from '../../components/Card';
+import TextHeader from '../../components/TextHeader';
 import { IProject } from '../../models/Project';
 
 export default function Projects() {
@@ -55,7 +56,7 @@ export default function Projects() {
 	}, []);
 
 	return (
-		<div className="flex flex-col h-full min-h-screen bg-red-50 dark:bg-red-900">
+		<div className="flex flex-col h-full min-h-screen bg-skin-background-1 dark:bg-skin-dark-background-1">
 			<Navbar/>
 
 			<Header title="Projects" description="A list of all the projects organized by Hololive EN Fan servers!"/>
@@ -63,17 +64,15 @@ export default function Projects() {
 				<div className="my-16 w-full flex flex-col items-center">
 					<div className="max-w-4xl w-full mx-4">
 						<div>
-							<h1 className="text-2xl text-red-500 font-bold border-b-2 border-red-200 text-center sm:text-left">Ongoing
-							projects</h1>
+							<TextHeader text="Ongoing projects" />
 							<div className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center items-center">
-								{projects.length > 0 ? projects : <div className="font-bold text-2xl mt-4">None</div>}
+								{projects.length > 0 ? projects : <div className="font-bold text-2xl mt-4 text-black dark:text-white">None</div>}
 							</div>
 						</div>
 						<div className="mt-10">
-							<h1 className="text-2xl text-red-500 font-bold border-b-2 border-red-200 text-center sm:text-left">Past
-							projects</h1>
+							<TextHeader text="Past projects" />
 							<div className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center items-center">
-								{pastProjects.length > 0 ? pastProjects : <div className="font-bold text-2xl mt-4">None</div>}
+								{pastProjects.length > 0 ? pastProjects : <div className="font-bold text-2xl mt-4 text-black dark:text-white">None</div>}
 							</div>
 						</div>
 					</div>
