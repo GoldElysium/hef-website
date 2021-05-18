@@ -31,6 +31,7 @@ export default function ProjectPage() {
 					'Content-Type': 'application/json;charset=UTF-8',
 				},
 			});
+			// eslint-disable-next-line consistent-return
 			if (!res.ok) return setErrorCode(res.status);
 
 			const submissionsRes = await fetch(`/api/submissions/${router.query.id}`, {
@@ -40,6 +41,7 @@ export default function ProjectPage() {
 					'Content-Type': 'application/json;charset=UTF-8',
 				},
 			});
+			// eslint-disable-next-line consistent-return
 			if (!submissionsRes.ok) return setErrorCode(submissionsRes.status);
 
 			const json: IProject = await res.json();
@@ -97,6 +99,7 @@ export default function ProjectPage() {
 	}
 
 	function Submissions() {
+		// eslint-disable-next-line no-undef
 		const submissionElements: JSX.Element[] = [];
 		submissions.forEach((submission, index) => {
 			const author = (submission.author)
@@ -195,14 +198,16 @@ export default function ProjectPage() {
 								</div>
 							)}
 							{/* TODO: Move submissions to separate tab */}
-							{((submissions?.length ?? 0) > 0) && <div className="mt-4">
-							<TextHeader text="Submissions" />
+							{((submissions?.length ?? 0) > 0) && (
+							<div className="mt-4">
+								<TextHeader text="Submissions" />
 								<div className="flex flex-col items-center pt-2">
 									<div className="w-full max-h-[540px] overflow-auto">
 										<Submissions />
 									</div>
 								</div>
-							</div>}
+							</div>
+							)}
 							{(doc.links?.length ?? 0) > 0 && (
 								<div className="mt-4">
 									<TextHeader text="Links" />

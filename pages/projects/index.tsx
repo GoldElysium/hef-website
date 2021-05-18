@@ -11,11 +11,13 @@ export default function Projects() {
 	const router = useRouter();
 	const { query } = router;
 
+	/* eslint-disable no-unused-vars */
 	const [filter, setFilter] = useState([] as string[]);
 	const [filterMenuOpen, setFilterMenuOpen] = useState(false);
 
 	const [pastFilter, setPastFilter] = useState([] as string[]);
 	const [pastFilterMenuOpen, setPastFilterMenuOpen] = useState(false);
+	/* eslint-enable */
 
 	/* eslint-disable no-undef */
 	const [projects, setProjects] = useState<JSX.Element[]>([]);

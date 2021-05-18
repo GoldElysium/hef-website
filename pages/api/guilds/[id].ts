@@ -1,6 +1,6 @@
 import { getSession } from 'next-auth/client';
-import type { NextApiRequest, NextApiResponse } from 'next';
 import mongoose from 'mongoose';
+import type { NextApiRequest, NextApiResponse } from 'next';
 import Guild from '../../../models/Guild';
 
 try {
