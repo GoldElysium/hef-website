@@ -95,13 +95,15 @@ export default function ProjectPage() {
 					</div>
 				</div>
 			);
-		})
+		});
 
-		return <div className="w-full h-full flex justify-center">
-			<div className="sm:w-8/12 h-full">
-				{submissionElements}
-			</div>
-		</div>;
+		return (
+		    <div className="w-full h-full flex justify-center">
+			    <div className="sm:w-8/12 h-full">
+				    {submissionElements}
+			    </div>
+		    </div>
+		);
 	}
 
 	if (errorCode) {
@@ -150,7 +152,7 @@ export default function ProjectPage() {
 						{((submissions?.length ?? 0) > 0) && <div className="mt-4">
 							<h1 className="text-2xl text-red-500 font-bold border-b-2 border-red-200 text-center sm:text-left my-3">Submissions</h1>
 							<div className="flex flex-col items-center pt-2">
-								<div className="w-full max-h-96 max-h-[960px] overflow-auto">
+								<div className="w-full max-h-[960px] overflow-auto">
 									<Submissions />
 								</div>
 							</div>
