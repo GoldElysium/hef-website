@@ -31,6 +31,14 @@
     --color-dark-secondary-1: 230, 133, 15;
   }
 
+  .theme-ina .markdown-body a {
+    color:rgb(126, 8, 166);
+  }
+
+  .dark .theme-ina .markdown-body a {
+    color:rgb(230, 133, 15);
+  }
+
   .theme-calli {
     /* Duplicate values from above when implementing */
   }
