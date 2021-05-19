@@ -88,7 +88,7 @@ export default function ProjectPage() {
 		}
 		if (submission.type === 'image') {
 			return (
-				<div className="w-full h-full flex justify-center">
+				<div className="w-full h-full max-h-[750px] flex justify-center">
 					<img 
 						className="w-10/12 object-contain mb-4" 
 						src={submission.src} alt="" 
