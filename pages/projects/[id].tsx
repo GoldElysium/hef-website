@@ -87,7 +87,15 @@ export default function ProjectPage() {
 			);
 		}
 		if (submission.type === 'image') {
-			return <img className="w-full h-full object-contain" src={submission.src} alt="" loading="lazy" />;
+			return (
+				<div className="w-full h-full max-h-[750px] flex justify-center">
+					<img 
+						className="w-10/12 object-contain mb-4" 
+						src={submission.src} alt="" 
+						loading="lazy"
+					/>
+				</div>
+			);
 		}
 		if (submission.type === 'text') {
 			return (
@@ -104,13 +112,13 @@ export default function ProjectPage() {
 		const submissionElements: JSX.Element[] = [];
 		submissions.forEach((submission, index) => {
 			const author = (submission.author)
-				? <h6 className="text-xl left-0 top-0 w-1/2">From: <span className="font-medium">{submission.author}</span></h6>
-				: <div className="left-0 top-0 w-1/2" />;
+				? <h6 className="text-xl left-0 top-0 w-2/3">From: <span className="font-medium">{submission.author}</span></h6>
+				: <div className="left-0 top-0 w-2/3" />;
 			submissionElements.push(
 				<div className="w-full max-h-full" key={`submission-${index}`}>
 					<div className="w-full mt-4 flex dark:text-gray-200 dark:text-opacity-80">
 						{author}
-						<h6 className="text-xl top-0 right-0 w-1/2 text-right">{`#${index+1}`}</h6>
+						<h6 className="text-xl top-0 right-0 w-1/3 text-right">{`#${index+1}`}</h6>
 					</div>
 					<div className="w-full mt-3">
 						<SubmissionItem {...submission} />
@@ -122,7 +130,7 @@ export default function ProjectPage() {
 
 		return (
 		    <div className="w-full h-full flex justify-center">
-			    <div className="sm:w-10/12 md:w-8/12 h-full">
+			    <div className="sm:w-11/12 md:w-10/12 h-full">
 				    {submissionElements}
 			    </div>
 		    </div>
@@ -200,7 +208,7 @@ export default function ProjectPage() {
 								<div className="mt-4">
 									<TextHeader text="Submissions" />
 									<div className="flex flex-col items-center pt-2">
-										<div className="w-full max-h-[540px] overflow-auto">
+										<div className="w-full max-h-[800px] overflow-auto">
 											<Submissions />
 										</div>
 									</div>
