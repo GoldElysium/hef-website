@@ -7,4 +7,4 @@ check_run() {
   echo "$changed_files" | grep -E --quiet "$1" && eval "$2"
 }
 
-check_run package-lock.json npm i
+check_run package-lock.json "npm i"
