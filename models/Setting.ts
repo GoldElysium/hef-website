@@ -11,7 +11,6 @@ const SettingSchema: Schema = new Schema({
 	value: { type: Schema.Types.Mixed },
 });
 
-// eslint-disable-next-line import/no-mutable-exports
 let model;
 try {
 	model = mongoose.model<ISetting>('Setting');

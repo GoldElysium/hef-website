@@ -7,7 +7,8 @@ import { TrashIcon } from '@heroicons/react/outline';
 import RichMarkdownEditor from 'rich-markdown-editor';
 import DashboardNavbar from './DashboardNavbar';
 import Footer from './Footer';
-import { ILink, IMedia, IProject, ISubmission } from '../models/Project';
+import { ILink, IMedia, IProject } from '../models/Project';
+import Submission, {ISubmission} from "../models/Submission";
 import { IGuild } from '../models/Guild';
 
 interface IMessage {
@@ -48,29 +49,35 @@ export default function ProjectEditPage({ doc }: IProps) {
 		status: 'ongoing',
 		guild: '',
 		media: [],
-		submissions: [],
 		title: '',
 		shortDescription: '',
 		description: '',
 		// @ts-expect-error Must be date
 		date: undefined,
 	});
+	const [originalSubmissions, setOriginalSubmissions] = useState<ISubmission[]>([]); 
 
 	const [changed, setChanged] = useState(false);
 
 	// Init
 	useEffect(() => {
-		if (doc) {
-			setOriginalDoc(doc);
+		async function run () {
+			if (doc) {
+				setOriginalDoc(doc);
 
-			setTitle(doc.title);
-			setShortDescription(doc.shortDescription);
-			setDescription(doc.description);
-			setGuild(doc.guild);
-			setMedia(doc.media ?? []);
-			setSubmissions(doc.submissions ?? []);
-			setLinks(doc.links ?? []);
+				const newSubmissions: ISubmission[] = await Submission.find({project: doc._id}).lean().exec();
+				setOriginalSubmissions(newSubmissions);
+
+				setTitle(doc.title);
+				setShortDescription(doc.shortDescription);
+				setDescription(doc.description);
+				setGuild(doc.guild);
+				setMedia(doc.media ?? []);
+				setSubmissions(newSubmissions);
+				setLinks(doc.links ?? []);
+			}
 		}
+		run();
 	}, [doc]);
 
 	useEffect(() => {
@@ -119,7 +126,7 @@ export default function ProjectEditPage({ doc }: IProps) {
 			&& description === originalDoc.description
 			&& media === originalDoc.media
 			&& links === originalDoc.links
-			&& submissions === originalDoc.submissions
+			&& submissions === originalSubmissions
 		) {
 			window.onbeforeunload = () => null;
 			setChanged(false);
@@ -127,7 +134,7 @@ export default function ProjectEditPage({ doc }: IProps) {
 			window.onbeforeunload = () => 'show';
 			setChanged(true);
 		}
-	}, [description, shortDescription, status, title, media, links, submissions, originalDoc]);
+	}, [description, shortDescription, status, title, media, links, submissions, originalDoc, originalSubmissions]);
 
 	function resetForm() {
 		setStatus(originalDoc.status);
@@ -136,7 +143,7 @@ export default function ProjectEditPage({ doc }: IProps) {
 		setDescription(originalDoc.description);
 		setMedia(originalDoc.media ?? []);
 		setLinks(originalDoc.links ?? []);
-		setSubmissions(originalDoc.submissions ?? []);
+		setSubmissions(originalSubmissions ?? []);
 	}
 
 	function saveForm(event: FormEvent<HTMLFormElement>) {
@@ -145,6 +152,7 @@ export default function ProjectEditPage({ doc }: IProps) {
 		// eslint-disable-next-line consistent-return
 		async function run() {
 			let res;
+			// TODO: Create a new API call to update submissions
 			if (router.query.id === 'new') {
 				res = await fetch('/api/projects', {
 					method: 'POST',
@@ -152,7 +160,7 @@ export default function ProjectEditPage({ doc }: IProps) {
 						'Accept': 'application/json',
 						'Content-Type': 'application/json;charset=UTF-8',
 					},
-					body: JSON.stringify({ status, guild, media, submissions, title, shortDescription, description, links } as IProject),
+					body: JSON.stringify({ status, guild, media, title, shortDescription, description, links } as IProject),
 				});
 			} else {
 				res = await fetch(`/api/projects/${router.query.id}`, {
@@ -161,7 +169,7 @@ export default function ProjectEditPage({ doc }: IProps) {
 						'Accept': 'application/json',
 						'Content-Type': 'application/json;charset=UTF-8',
 					},
-					body: JSON.stringify({ status, guild, media, submissions, title, shortDescription, description, links } as IProject),
+					body: JSON.stringify({ status, guild, media, title, shortDescription, description, links } as IProject),
 				});
 			}
 
@@ -296,7 +304,7 @@ export default function ProjectEditPage({ doc }: IProps) {
 	}, [media]);
 
 	function addSubmission() {
-		setSubmissions((prevState) => [...prevState, { type: 'image', src: '' }]);
+		setSubmissions((prevState) => [...prevState, { type: 'image', src: '' }] as ISubmission[]);
 	}
 
 	useEffect(() => {
@@ -447,6 +455,7 @@ export default function ProjectEditPage({ doc }: IProps) {
 									{mediaHtml}
 								</div>
 							</div>
+							{/* TODO: Move submissions to separate tab */}
 							<div>
 								<div className="flex justify-between">
 									<h2 className="text-xl font-bold text-center sm:text-left text-red-500 mt-4">Submissions</h2>

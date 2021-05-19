@@ -1,6 +1,6 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/client';
 import mongoose from 'mongoose';
+import type { NextApiRequest, NextApiResponse } from 'next';
 import Project from '../../../models/Project';
 
 try {

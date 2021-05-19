@@ -9,21 +9,20 @@ import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 import TextHeader from '../../components/TextHeader';
 import { IProject } from '../../models/Project';
+import { ISubmission } from "../../models/Submission";
 import 'github-markdown-css';
 
 export default function ProjectPage() {
 	const router = useRouter();
 
 	const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
-	const [currentSubmissionIndex, setCurrentSubmissionIndex] = useState(0);
-	const [submissionText, setSubmissionText] = useState('Loading...');
 
 	const [doc, setDoc] = useState<IProject>({} as IProject);
+	const [submissions, setSubmissions] = useState<ISubmission[]>([]);
 
 	const [errorCode, setErrorCode] = useState<boolean | number>(false);
 
 	useEffect(() => {
-		// eslint-disable-next-line consistent-return
 		async function run() {
 			if (!router.query.id) return;
 			const res = await fetch(`/api/projects/${router.query.id}`, {
@@ -36,8 +35,20 @@ export default function ProjectPage() {
 			// eslint-disable-next-line consistent-return
 			if (!res.ok) return setErrorCode(res.status);
 
+			const submissionsRes = await fetch(`/api/submissions/${router.query.id}`, {
+				method: 'GET',
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json;charset=UTF-8',
+				},
+			});
+			// eslint-disable-next-line consistent-return
+			if (!submissionsRes.ok) return setErrorCode(submissionsRes.status);
+
 			const json: IProject = await res.json();
 			setDoc(json);
+			const submissionsJson: ISubmission[] = await submissionsRes.json();
+			setSubmissions(submissionsJson);
 		}
 
 		run();
@@ -57,67 +68,65 @@ export default function ProjectPage() {
 			);
 		}
 		if (doc.media[currentMediaIndex].type === 'image') {
+			return <img className="w-full h-full object-none" src={doc.media[currentMediaIndex].src} alt="" loading="lazy" />;
+		}
+		return <p>Invalid media</p>;
+	}
+
+	function SubmissionItem(submission: ISubmission) {
+		if (submission.type === 'video') {
 			return (
-				<img
-					className="w-full h-full object-none"
-					src={doc.media[currentMediaIndex].src}
-					alt=""
+				<ReactPlayer 
+					width="100%" 
+					height="100%" 
+					url={ submission.src} 
+					controls 
+					light 
+					className="mb-4 mt-4"
 				/>
+			);
+		}
+		if (submission.type === 'image') {
+			return <img className="w-full h-full object-none" src={ submission.src} alt="" loading="lazy" />;
+		}
+		if (submission.type === 'text') {
+			return (
+				<p className="m-4 w-full h-full overflow-auto whitespace-pre-line text-black dark:text-white dark:text-opacity-80">
+					{submission.message}
+				</p>
 			);
 		}
 		return <p>Invalid media</p>;
 	}
 
-	useEffect(() => {
-		// eslint-disable-next-line consistent-return
-		async function load() {
-			if (!doc.submissions || !(doc.submissions.length > 0)) return;
-			setSubmissionText('Loading...');
-			if (doc.submissions[currentSubmissionIndex].type === 'text') {
-				const res = await fetch(doc.submissions[currentSubmissionIndex].src, {
-					headers: {
-						Accept: '*/*',
-					},
-				});
-				// eslint-disable-next-line consistent-return
-				if (!res.ok) return <p>Error</p>;
+	function Submissions() {
+		// eslint-disable-next-line no-undef
+		const submissionElements: JSX.Element[] = [];
+		submissions.forEach((submission, index) => {
+			const author = (submission.author)
+				? <h6 className="text-xl left-0 top-0 w-1/2">From: <span className="font-medium">{submission.author}</span></h6>
+				: <div className="left-0 top-0 w-1/2"></div>;
+			submissionElements.push(
+				<div className="w-full max-h-full" key={`submission-${index}`}>
+					<div className="w-full mt-4 flex dark:text-gray-200 dark:text-opacity-80">
+						{author}
+						<h6 className="text-xl top-0 right-0 w-1/2 text-right">{`#${index+1}`}</h6>
+					</div>
+					<div className="w-full mt-3">
+						<SubmissionItem {...submission} />
+						<hr className="border-t-1 border-dashed border-gray-400" />
+					</div>
+				</div>
+			);
+		});
 
-				setSubmissionText(await res.text());
-			}
-		}
-		load();
-	}, [currentSubmissionIndex, doc.submissions]);
-
-	function CurrentSubmissionItem() {
-		if (!doc.submissions) return <></>;
-		if (doc.submissions[currentSubmissionIndex].type === 'video') {
-			return (
-				<ReactPlayer
-					width="100%"
-					height="100%"
-					url={doc.submissions[currentSubmissionIndex].src}
-					controls
-					light
-				/>
-			);
-		}
-		if (doc.submissions[currentSubmissionIndex].type === 'image') {
-			return (
-				<img
-					className="w-full h-full object-none"
-					src={doc.submissions[currentSubmissionIndex].src}
-					alt=""
-				/>
-			);
-		}
-		if (doc.submissions[currentSubmissionIndex].type === 'text') {
-			return (
-				<p className="w-full h-full overflow-auto whitespace-pre-line text-black dark:text-white dark:text-opacity-80">
-					{submissionText}
-				</p>
-			);
-		}
-		return <p className="text-black dark:text-white dark:text-opacity-80">Invalid media</p>;
+		return (
+		    <div className="w-full h-full flex justify-center">
+			    <div className="sm:w-10/12 md:w-8/12 h-full">
+				    {submissionElements}
+			    </div>
+		    </div>
+		);
 	}
 
 	if (errorCode) {
@@ -191,44 +200,13 @@ export default function ProjectPage() {
 									</div>
 								</div>
 							)}
-							{(doc.submissions?.length ?? 0) > 0 && (
+							{/* TODO: Move submissions to separate tab */}
+							{((submissions?.length ?? 0) > 0) && (
 								<div className="mt-4">
 									<TextHeader text="Submissions" />
 									<div className="flex flex-col items-center pt-2">
-										<div className="w-full h-52 sm:w-8/12 sm:h-96">
-											<CurrentSubmissionItem />
-										</div>
-										<div className="flex mt-2 font-bold items-center justify-center text-center">
-											<ChevronLeftIcon
-												className={
-													currentSubmissionIndex > 0
-														? 'h-8 w-8 cursor-pointer text-black dark:text-white'
-														: 'h-8 w-8 text-skin-primary-1 text-opacity-30 dark:text-skin-dark-primary-1 dark:text-opacity-30'
-												}
-												onClick={() => {
-													if (currentSubmissionIndex > 0)
-														setCurrentSubmissionIndex(currentSubmissionIndex - 1);
-												}}
-											/>
-											<span className="text-black dark:text-white">
-												{currentSubmissionIndex + 1}/
-												{doc.submissions?.length ?? 0}
-											</span>
-											<ChevronRightIcon
-												className={
-													currentSubmissionIndex + 1 <
-													(doc.submissions?.length ?? 0)
-														? 'h-8 w-8 cursor-pointer text-black dark:text-white'
-														: 'h-8 w-8 text-skin-primary-1 text-opacity-30 dark:text-skin-dark-primary-1 dark:text-opacity-30'
-												}
-												onClick={() => {
-													if (
-														currentSubmissionIndex + 1 <
-														(doc.submissions?.length ?? 0)
-													)
-														setCurrentSubmissionIndex(currentSubmissionIndex + 1);
-												}}
-											/>
+										<div className="w-full max-h-[540px] overflow-auto">
+											<Submissions />
 										</div>
 									</div>
 								</div>

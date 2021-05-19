@@ -24,7 +24,6 @@ const SettingSchema: Schema = new Schema({
 	debutDate: { type: Date, required: true },
 });
 
-// eslint-disable-next-line import/no-mutable-exports
 let model;
 try {
 	model = mongoose.model<IGuildDocument>('Guild');
