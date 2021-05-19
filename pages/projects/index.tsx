@@ -68,13 +68,13 @@ export default function Projects() {
 					<div className="max-w-4xl w-full mx-4">
 						<div>
 							<TextHeader text="Ongoing projects" />
-							<div className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center items-center">
+							<div className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center">
 								{projects.length > 0 ? projects : <div className="font-bold text-2xl mt-4 text-black dark:text-white">None</div>}
 							</div>
 						</div>
 						<div className="mt-10">
 							<TextHeader text="Past projects" />
-							<div className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center items-center">
+							<div className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center">
 								{pastProjects.length > 0 ? pastProjects : <div className="font-bold text-2xl mt-4 text-black dark:text-white">None</div>}
 							</div>
 						</div>
