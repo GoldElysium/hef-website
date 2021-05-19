@@ -99,7 +99,7 @@ export default function ProjectPage() {
 		}
 		if (submission.type === 'text') {
 			return (
-				<p className="m-4 w-full h-full overflow-auto whitespace-pre-line text-black dark:text-white dark:text-opacity-80">
+				<p className="m-4 w-auto h-full overflow-auto whitespace-pre-line text-black dark:text-white dark:text-opacity-80">
 					{submission.message}
 				</p>
 			);
