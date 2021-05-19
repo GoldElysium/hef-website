@@ -79,7 +79,7 @@ export default function ProjectPage() {
 				<ReactPlayer 
 					width="100%" 
 					height="100%" 
-					url={ submission.src} 
+					url={submission.src}
 					controls 
 					light 
 					className="mb-4 mt-4"
@@ -87,7 +87,7 @@ export default function ProjectPage() {
 			);
 		}
 		if (submission.type === 'image') {
-			return <img className="w-full h-full object-none" src={ submission.src} alt="" loading="lazy" />;
+			return <img className="w-full h-full object-contain" src={submission.src} alt="" loading="lazy" />;
 		}
 		if (submission.type === 'text') {
 			return (
@@ -105,7 +105,7 @@ export default function ProjectPage() {
 		submissions.forEach((submission, index) => {
 			const author = (submission.author)
 				? <h6 className="text-xl left-0 top-0 w-1/2">From: <span className="font-medium">{submission.author}</span></h6>
-				: <div className="left-0 top-0 w-1/2"></div>;
+				: <div className="left-0 top-0 w-1/2" />;
 			submissionElements.push(
 				<div className="w-full max-h-full" key={`submission-${index}`}>
 					<div className="w-full mt-4 flex dark:text-gray-200 dark:text-opacity-80">
@@ -132,11 +132,6 @@ export default function ProjectPage() {
 	if (errorCode) {
 		return <Error statusCode={errorCode as number} />;
 	}
-
-	// let theme = '';
-	// if (doc.guild === '8O2KtsEhpru3rnQudlV5p') {
-	// 	theme = 'theme-ina';
-	// };
 
 	return (
 		<div className="theme-ina">
