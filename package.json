@@ -5,7 +5,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "prepare": "husky install && node .husky/link.js",
+    "prepare": "npx husky install && node .husky/link.js",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
     "lint:report": "eslint --output-file eslint_report.json --format json ."
