@@ -1,7 +1,8 @@
 import Link from 'next/link';
 
 interface IProps {
-	img: string|undefined,
+	// eslint-disable-next-line react/require-default-props
+	img?: string,
 	title: string,
 	description: string,
 	button: string,

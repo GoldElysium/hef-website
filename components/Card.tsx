@@ -1,12 +1,14 @@
 import Link from 'next/link';
 
 interface IProps {
-	img: string|undefined,
+	/* eslint-disable react/require-default-props */
+	img?: string,
 	title: string,
 	description: string,
 	button: string,
 	url: string,
-	internal: boolean|undefined,
+	internal?: boolean,
+	/* eslint-enable */
 }
 
 export default function Card({
