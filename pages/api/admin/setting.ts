@@ -6,7 +6,7 @@ import Setting from '../../../models/Setting';
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	const session = await getSession({ req });
 	if (!session) return res.status(401).end();
-	
+
 	if (req.method === 'GET') {
 		if (!req.query.s) return res.status(400).end();
 		const doc = await Setting.findById(req.query.s).lean().exec()
@@ -19,7 +19,12 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 		res.status(200).json(doc);
 	} if (req.method === 'PATCH') {
 		if (!req.body.setting || !req.body.value) return res.status(400).end();
-		Setting.findByIdAndUpdate(req.body.setting, { value: req.body.value }, { returnOriginal: false })
+		Setting.findByIdAndUpdate(req.body.setting,
+			{
+				value: req.body.value,
+			}, {
+				returnOriginal: false,
+			})
 			.then((doc) => {
 				res.status(200).json(doc);
 			})

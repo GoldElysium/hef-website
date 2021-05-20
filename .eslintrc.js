@@ -1,23 +1,31 @@
 module.exports = {
 	extends: [
+		'next',
 		'airbnb-typescript',
-		'@ijsto',
 	],
 	parserOptions: {
 		project: './tsconfig.json',
 	},
-	parser: '@typescript-eslint/parser',
-	plugins: ['@typescript-eslint'],
 	rules: {
-		'no-tabs': 0,
-		indent: 0,
-		'sort-keys': 0,
-		'prettier/prettier': [0, {
+		'no-tabs': 'off',
+		indent: 'off',
+		'sort-keys': 'off',
+		'prettier/prettier': ['off', {
 			useTabs: false
 		}],
-		'@typescript-eslint/indent': [2, 'tab'],
-		'react/jsx-filename-extension': [1, {'extensions': ['.js', '.jsx', '.tsx']}],
-		'import/extensions': 0,
-		'import/no-unresolved': 0,
+		'@typescript-eslint/indent': ['error', 'tab'],
+		'react/jsx-indent': ['error', 'tab'],
+		'react/jsx-indent-props': ['error', 'tab'],
+		'react/react-in-jsx-scope': 'off',
+		'no-underscore-dangle': 'off', // Mongoose uses _id
+		'no-plusplus': ['error', {
+			'allowForLoopAfterthoughts': true,
+		}],
+		'jsx-a11y/label-has-associated-control': 'off',
+		'jsx-a11y/anchor-is-valid': [ 'error', {
+			'components': [ 'Link' ],
+			'specialLink': [ 'hrefLeft', 'hrefRight' ],
+			'aspects': [ 'invalidHref', 'preferButton' ]
+		}]
 	}
 }

@@ -70,8 +70,7 @@ const ProjectSchema: Schema = new Schema({
 ProjectSchema.pre('save', function (next) {
 	const doc = this;
 	CounterModel.findByIdAndUpdate({ _id: 'projectCounter' }, { $inc: { seq: 1 } }, { new: true, upsert: true }, (error: mongoose.Error, counter: ICounter) => { // eslint-disable-line consistent-return
-		if (error)
-			return next(error);
+		if (error) { return next(error); }
 		doc._id = counter.seq;
 		next();
 	});

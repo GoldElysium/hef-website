@@ -1,15 +1,17 @@
 import Link from 'next/link';
 
 interface IProps {
-	img?: string,
+	img: string|undefined,
 	title: string,
 	description: string,
 	button: string,
 	url: string,
-	internal?: boolean,
+	internal: boolean|undefined,
 }
 
-export default function Card({ img, title, description, button, url, internal }: IProps) {
+export default function Card({
+	img, title, description, button, url, internal,
+}: IProps) {
 	return (
 		<div className="mt-4 sm:w-1/3">
 			<div
@@ -26,7 +28,7 @@ export default function Card({ img, title, description, button, url, internal }:
 					</p>
 				</div>
 				{internal ? (
-					<Link href={url}>
+					<Link href={url} passHref>
 						<div
 							className="rounded-3xl font-bold w-20 h-10 flex items-center justify-center mt-4 content-end cursor-pointer
 							bg-skin-secondary-1 dark:bg-skin-dark-secondary-1 text-white hover:text-opacity-70"

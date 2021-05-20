@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 import ProjectEditPage from '../../../components/ProjectEditPage';
 import { IProject } from '../../../models/Project';
 
-
 export default function GuildEdit() {
 	const [session, loading] = useSession();
 	const [doc, setDoc] = useState<IProject|null>(null);

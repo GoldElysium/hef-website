@@ -1,7 +1,10 @@
 // Packages
-import mongoose, { Schema, Document, Model } from 'mongoose';
+import mongoose, {
+	Schema, Document, Model, Types,
+} from 'mongoose';
 
 export interface ISubmission {
+	_id: Types.ObjectId,
 	project: number,
 	author?: string,
 	type: 'image' | 'video' | 'text',
@@ -9,14 +12,16 @@ export interface ISubmission {
 	message?: string,
 }
 
-interface ISubmissionDocument extends Document,ISubmission {}
+interface ISubmissionDocument extends Document, ISubmission {
+	_id: Types.ObjectId,
+}
 
 const SubmissionSchema: Schema = new Schema({
 	project: { type: Number, required: true },
 	author: { type: String },
 	type: { type: String, enum: ['image', 'video', 'text'] },
 	src: { type: String },
-	message: { type: String }
+	message: { type: String },
 });
 
 let model;
