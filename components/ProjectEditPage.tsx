@@ -1,6 +1,10 @@
 import { useRouter } from 'next/router';
-import {FormEvent, useEffect, useRef, useState} from 'react';
-import { CheckIcon, PlusIcon, ReplyIcon, XIcon } from '@heroicons/react/solid';
+import {
+	FormEvent, useEffect, useRef, useState,
+} from 'react';
+import {
+	CheckIcon, PlusIcon, ReplyIcon, XIcon,
+} from '@heroicons/react/solid';
 import { Snackbar } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { TrashIcon } from '@heroicons/react/outline';
@@ -8,7 +12,7 @@ import RichMarkdownEditor from 'rich-markdown-editor';
 import DashboardNavbar from './DashboardNavbar';
 import Footer from './Footer';
 import { ILink, IMedia, IProject } from '../models/Project';
-import Submission, {ISubmission} from "../models/Submission";
+import { ISubmission } from '../models/Submission';
 import { IGuild } from '../models/Guild';
 
 interface IMessage {
@@ -17,7 +21,7 @@ interface IMessage {
 }
 
 interface IProps {
-	doc?: IProject
+	doc: IProject|undefined
 }
 
 export default function ProjectEditPage({ doc }: IProps) {
@@ -55,17 +59,25 @@ export default function ProjectEditPage({ doc }: IProps) {
 		// @ts-expect-error Must be date
 		date: undefined,
 	});
-	const [originalSubmissions, setOriginalSubmissions] = useState<ISubmission[]>([]); 
+	const [originalSubmissions, setOriginalSubmissions] = useState<ISubmission[]>([]);
 
 	const [changed, setChanged] = useState(false);
 
 	// Init
 	useEffect(() => {
-		async function run () {
+		async function run() {
 			if (doc) {
 				setOriginalDoc(doc);
 
-				const newSubmissions: ISubmission[] = await Submission.find({project: doc._id}).lean().exec();
+				const res = await fetch(`/api/submissions/${router.query.id}`, {
+					method: 'GET',
+					headers: {
+						Accept: 'application/json',
+						'Content-Type': 'application/json;charset=UTF-8',
+					},
+				});
+
+				const newSubmissions: ISubmission[] = await res.json();
 				setOriginalSubmissions(newSubmissions);
 
 				setTitle(doc.title);
@@ -78,12 +90,12 @@ export default function ProjectEditPage({ doc }: IProps) {
 			}
 		}
 		run();
-	}, [doc]);
+	}, [doc, router.query.id]);
 
 	useEffect(() => {
-		if(!descriptionSet && editorRef.current) {
+		if (!descriptionSet && editorRef.current) {
 			setDescriptionSet(true);
-			if(description !== '') {
+			if (description !== '') {
 				const newState = editorRef.current.createState(description);
 				editorRef.current.view.updateState(newState);
 			}
@@ -97,14 +109,16 @@ export default function ProjectEditPage({ doc }: IProps) {
 			const res = await fetch('/api/guilds', {
 				method: 'GET',
 				headers: {
-					'Accept': 'application/json',
+					Accept: 'application/json',
 					'Content-Type': 'application/json;charset=UTF-8',
 				},
 			});
-			if (!res.ok) return setMessage({
-				severity: 'error',
-				text: 'Something went wrong during guild fetching',
-			});
+			if (!res.ok) {
+				return setMessage({
+					severity: 'error',
+					text: 'Something went wrong during guild fetching',
+				});
+			}
 
 			const json: IGuild[] = await res.json();
 
@@ -134,6 +148,7 @@ export default function ProjectEditPage({ doc }: IProps) {
 			window.onbeforeunload = () => 'show';
 			setChanged(true);
 		}
+		// eslint-disable-next-line max-len
 	}, [description, shortDescription, status, title, media, links, submissions, originalDoc, originalSubmissions]);
 
 	function resetForm() {
@@ -157,26 +172,32 @@ export default function ProjectEditPage({ doc }: IProps) {
 				res = await fetch('/api/projects', {
 					method: 'POST',
 					headers: {
-						'Accept': 'application/json',
+						Accept: 'application/json',
 						'Content-Type': 'application/json;charset=UTF-8',
 					},
-					body: JSON.stringify({ status, guild, media, title, shortDescription, description, links } as IProject),
+					body: JSON.stringify({
+						status, guild, media, title, shortDescription, description, links,
+					} as IProject),
 				});
 			} else {
 				res = await fetch(`/api/projects/${router.query.id}`, {
 					method: 'PATCH',
 					headers: {
-						'Accept': 'application/json',
+						Accept: 'application/json',
 						'Content-Type': 'application/json;charset=UTF-8',
 					},
-					body: JSON.stringify({ status, guild, media, title, shortDescription, description, links } as IProject),
+					body: JSON.stringify({
+						status, guild, media, title, shortDescription, description, links,
+					} as IProject),
 				});
 			}
 
-			if (!res.ok) return setMessage({
-				severity: 'error',
-				text: 'Something went wrong, please try again.',
-			});
+			if (!res.ok) {
+				return setMessage({
+					severity: 'error',
+					text: 'Something went wrong, please try again.',
+				});
+			}
 
 			const json: IProject = await res.json();
 
@@ -188,8 +209,7 @@ export default function ProjectEditPage({ doc }: IProps) {
 				text: 'Saved succesfully',
 			});
 
-			if (router.query.id === 'new')
-				router.push(`/dashboard/project/${json._id}`);
+			if (router.query.id === 'new') { router.push(`/dashboard/project/${json._id}`); }
 		}
 
 		run();
@@ -200,15 +220,17 @@ export default function ProjectEditPage({ doc }: IProps) {
 		const res = await fetch(`/api/projects/${router.query.id}`, {
 			method: 'DELETE',
 			headers: {
-				'Accept': 'application/json',
+				Accept: 'application/json',
 				'Content-Type': 'application/json;charset=UTF-8',
 			},
 		});
 
-		if (!res.ok) return setMessage({
-			severity: 'error',
-			text: 'Something went wrong, please try again.',
-		});
+		if (!res.ok) {
+			return setMessage({
+				severity: 'error',
+				text: 'Something went wrong, please try again.',
+			});
+		}
 
 		setMessage({ severity: 'success', text: 'Deleted successfully' });
 		router.push('/dashboard');
@@ -239,21 +261,26 @@ export default function ProjectEditPage({ doc }: IProps) {
 		}
 
 		const html = links.map((link, index) => (
+			// eslint-disable-next-line react/no-array-index-key
 			<div className="flex mt-2" key={`link-${index}`}>
-				<input required
-				       value={link.name}
-				       onChange={(event) => updateName(index, event.currentTarget.value)}
-				       placeholder="Name"
-				       autoCapitalize="words"
-				       className="border border-red-300 rounded-md px-1"/>
-				<input required
-				       value={link.link}
-				       onChange={(event) => updateLink(index, event.currentTarget.value)}
-				       placeholder="Link"
-				       type="url"
-				       autoCapitalize="words"
-				       className="border border-red-300 rounded-md px-1 ml-2"/>
-				<TrashIcon className="w-6 h-6 ml-2 cursor-pointer" onClick={() => removeLink(index)}/>
+				<input
+					required
+					value={link.name}
+					onChange={(event) => updateName(index, event.currentTarget.value)}
+					placeholder="Name"
+					autoCapitalize="words"
+					className="border border-red-300 rounded-md px-1"
+				/>
+				<input
+					required
+					value={link.link}
+					onChange={(event) => updateLink(index, event.currentTarget.value)}
+					placeholder="Link"
+					type="url"
+					autoCapitalize="words"
+					className="border border-red-300 rounded-md px-1 ml-2"
+				/>
+				<TrashIcon className="w-6 h-6 ml-2 cursor-pointer" onClick={() => removeLink(index)} />
 			</div>
 		));
 		setLinksHtml(html);
@@ -283,20 +310,26 @@ export default function ProjectEditPage({ doc }: IProps) {
 		}
 
 		const html = media.map((currentMedia, index) => (
+			// eslint-disable-next-line react/no-array-index-key
 			<div className="flex mt-2" key={`media-${index}`}>
-				<select value={currentMedia.type} onChange={(event) => updateType(index, event.currentTarget.value)}
-				        className="border border-red-300 rounded-md px-1 ml-2">
+				<select
+					value={currentMedia.type}
+					onChange={(event) => updateType(index, event.currentTarget.value)}
+					className="border border-red-300 rounded-md px-1 ml-2"
+				>
 					<option value="image">Image</option>
 					<option value="video">Video</option>
 				</select>
-				<input required
-				       value={currentMedia.src}
-				       onChange={(event) => updateSrc(index, event.currentTarget.value)}
-				       placeholder="Link"
-				       type="url"
-				       autoCapitalize="words"
-				       className="border border-red-300 rounded-md px-1 ml-2 w-96"/>
-				<TrashIcon className="w-6 h-6 ml-2 cursor-pointer" onClick={() => removeMedia(index)}/>
+				<input
+					required
+					value={currentMedia.src}
+					onChange={(event) => updateSrc(index, event.currentTarget.value)}
+					placeholder="Link"
+					type="url"
+					autoCapitalize="words"
+					className="border border-red-300 rounded-md px-1 ml-2 w-96"
+				/>
+				<TrashIcon className="w-6 h-6 ml-2 cursor-pointer" onClick={() => removeMedia(index)} />
 			</div>
 		));
 
@@ -327,21 +360,27 @@ export default function ProjectEditPage({ doc }: IProps) {
 		}
 
 		const html = submissions.map((submission, index) => (
+			// eslint-disable-next-line react/no-array-index-key
 			<div className="flex mt-2" key={`media-${index}`}>
-				<select value={submission.type} onChange={(event) => updateType(index, event.currentTarget.value)}
-				        className="border border-red-300 rounded-md px-1 ml-2">
+				<select
+					value={submission.type}
+					onChange={(event) => updateType(index, event.currentTarget.value)}
+					className="border border-red-300 rounded-md px-1 ml-2"
+				>
 					<option value="image">Image</option>
 					<option value="video">Video</option>
 					<option value="text">Text</option>
 				</select>
-				<input required
-				       value={submission.src}
-				       onChange={(event) => updateSrc(index, event.currentTarget.value)}
-				       placeholder="Link"
-				       type="url"
-				       autoCapitalize="words"
-				       className="border border-red-300 rounded-md px-1 ml-2 w-96"/>
-				<TrashIcon className="w-6 h-6 ml-2 cursor-pointer" onClick={() => removeMedia(index)}/>
+				<input
+					required
+					value={submission.src}
+					onChange={(event) => updateSrc(index, event.currentTarget.value)}
+					placeholder="Link"
+					type="url"
+					autoCapitalize="words"
+					className="border border-red-300 rounded-md px-1 ml-2 w-96"
+				/>
+				<TrashIcon className="w-6 h-6 ml-2 cursor-pointer" onClick={() => removeMedia(index)} />
 			</div>
 		));
 
@@ -350,7 +389,7 @@ export default function ProjectEditPage({ doc }: IProps) {
 
 	return (
 		<div className="flex flex-col h-full min-h-screen bg-red-50">
-			<DashboardNavbar/>
+			<DashboardNavbar />
 
 			{/* TODO: Rewrite in Formik? */}
 			<div className="flex-grow">
@@ -358,81 +397,114 @@ export default function ProjectEditPage({ doc }: IProps) {
 					<div className="max-w-4xl w-full sm:mx-4 px-4 sm:px-0">
 						<form onSubmit={saveForm}>
 							<div
-								className="flex border-b-2 border-red-200 justify-between items-center text-red-500 mb-4">
+								className="flex border-b-2 border-red-200 justify-between items-center text-red-500 mb-4"
+							>
 								<h1 className="text-2xl font-bold text-center sm:text-left">Project</h1>
 								<div className="flex items-center">
-									{removeDialogOpen ?
-										<>
-											<p className="font-bold text-xl">Are you sure?</p>
-											<XIcon onClick={() => setRemoveDialogOpen(false)}
-											       className="w-8 h-8 mt-2 ml-4 hover:text-red-700 cursor-pointer" />
-											<CheckIcon onClick={removeProject}
-											           className="w-8 h-8 mt-2 ml-4 hover:text-red-700 cursor-pointer"/>
-										</>
-										:
-										<>
-											{(router.query.id !== 'new' && changed) &&
-											<ReplyIcon className="w-8 h-8 mt-2 hover:text-red-700 cursor-pointer"
-													   onClick={() => resetForm()}/>}
-											{/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
-											<button type="submit"><CheckIcon
-												className="w-8 h-8 mt-2 ml-4 hover:text-red-700 cursor-pointer"/></button>
-											{router.query.id !== 'new' &&
-											<TrashIcon className="w-8 h-8 mt-2 ml-4 hover:text-red-700 cursor-pointer"
-													   onClick={() => setRemoveDialogOpen(true)}/>}
-										</>}
+									{removeDialogOpen
+										? (
+											<>
+												<p className="font-bold text-xl">Are you sure?</p>
+												<XIcon
+													onClick={() => setRemoveDialogOpen(false)}
+													className="w-8 h-8 mt-2 ml-4 hover:text-red-700 cursor-pointer"
+												/>
+												<CheckIcon
+													onClick={removeProject}
+													className="w-8 h-8 mt-2 ml-4 hover:text-red-700 cursor-pointer"
+												/>
+											</>
+										)
+										: (
+											<>
+												{(router.query.id !== 'new' && changed)
+											&& (
+												<ReplyIcon
+													className="w-8 h-8 mt-2 hover:text-red-700 cursor-pointer"
+													onClick={() => resetForm()}
+												/>
+											)}
+												{/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
+												<button type="submit">
+													<CheckIcon
+														className="w-8 h-8 mt-2 ml-4 hover:text-red-700 cursor-pointer"
+													/>
+												</button>
+												{router.query.id !== 'new'
+											&& (
+												<TrashIcon
+													className="w-8 h-8 mt-2 ml-4 hover:text-red-700 cursor-pointer"
+													onClick={() => setRemoveDialogOpen(true)}
+												/>
+											)}
+											</>
+										)}
 								</div>
 							</div>
 							<div>
 								<h2 className="text-xl font-bold text-center sm:text-left ml-auto sm:ml-0 text-red-500">Information</h2>
 								<div className="flex flex-col">
 									<label htmlFor="title" className="font-bold">Project title</label>
-									<input required
-									       value={title}
-									       onChange={(event) => setTitle(event.currentTarget.value)}
-									       id="title"
-									       autoCapitalize="words"
-									       className="border border-red-300 rounded-md px-1"/>
+									<input
+										required
+										value={title}
+										onChange={(event) => setTitle(event.currentTarget.value)}
+										id="title"
+										autoCapitalize="words"
+										className="border border-red-300 rounded-md px-1"
+									/>
 								</div>
 								<div className="flex flex-col mt-2">
 									<label htmlFor="shortDescription" className="font-bold">Short description</label>
-									<input required
-									       value={shortDescription}
-									       onChange={(event) => setShortDescription(event.currentTarget.value)}
-									       id="shortDescription"
-									       autoCapitalize="on"
-									       className="border border-red-300 rounded-md px-1"/>
+									<input
+										required
+										value={shortDescription}
+										onChange={(event) => setShortDescription(event.currentTarget.value)}
+										id="shortDescription"
+										autoCapitalize="on"
+										className="border border-red-300 rounded-md px-1"
+									/>
 								</div>
 								<div className="flex flex-col mt-2">
 									<label htmlFor="description" className="font-bold">Description</label>
 									<div className="flex flex-col justify-start border border-red-300 bg-white max-h-64 rounded-md">
-										<RichMarkdownEditor onChange={setDescription} id="description" ref={editorRef}
-										                    defaultValue={'# Welcome\n\nJust an easy to use **Markdown** editor with `slash commands`'}
-									                    className="rounded-md px-1 w-full overflow-auto"/>
+										<RichMarkdownEditor
+											onChange={setDescription}
+											id="description"
+											ref={editorRef}
+											defaultValue={'# Welcome\n\nJust an easy to use **Markdown** editor with `slash commands`'}
+											className="rounded-md px-1 w-full overflow-auto"
+										/>
 									</div>
-									<textarea required
-									       value={description}
-									       className="hidden"/>
+									<textarea
+										required
+										value={description}
+										className="hidden"
+									/>
 								</div>
 								<div className="flex flex-col mt-2">
 									<label htmlFor="guild" className="font-bold">Organizer</label>
-									<select required
-									        value={guild}
-									        onChange={(event) => setGuild(event.currentTarget.value)}
-									        id="guild"
-									        autoCapitalize="on"
-									        className="border border-red-300 rounded-md px-1">
+									<select
+										required
+										value={guild}
+										onChange={(event) => setGuild(event.currentTarget.value)}
+										id="guild"
+										autoCapitalize="on"
+										className="border border-red-300 rounded-md px-1"
+									>
 										{guilds}
 									</select>
 								</div>
 								<div className="flex flex-col mt-2">
 									<label htmlFor="status" className="font-bold">Status</label>
-									<select required
-									        value={status}
-									        onChange={(event) => setStatus(event.currentTarget.value)}
-									        id="status"
-									        autoCapitalize="on"
-									        className="border border-red-300 rounded-md px-1">
+									<select
+										required
+										value={status}
+										onChange={(event) => setStatus(event.currentTarget.value)}
+										id="status"
+										autoCapitalize="on"
+										className="border border-red-300 rounded-md px-1"
+									>
 										<option value="ongoing">Ongoing</option>
 										<option value="past">Past</option>
 									</select>
@@ -440,8 +512,10 @@ export default function ProjectEditPage({ doc }: IProps) {
 								<div className="flex flex-col mt-2">
 									<div className="flex items-center">
 										<label htmlFor="status" className="font-bold">Links</label>
-										<PlusIcon className="w-6 h-6 mt-1 hover:text-gray-500 cursor-pointer"
-										          onClick={addLink}/>
+										<PlusIcon
+											className="w-6 h-6 mt-1 hover:text-gray-500 cursor-pointer"
+											onClick={addLink}
+										/>
 									</div>
 									{linksHtml}
 								</div>
@@ -449,7 +523,7 @@ export default function ProjectEditPage({ doc }: IProps) {
 							<div>
 								<div className="flex justify-between">
 									<h2 className="text-xl font-bold text-center sm:text-left text-red-500 mt-4">Media</h2>
-									<PlusIcon className="w-8 h-8 mt-2 text-red-500 cursor-pointer" onClick={addMedia}/>
+									<PlusIcon className="w-8 h-8 mt-2 text-red-500 cursor-pointer" onClick={addMedia} />
 								</div>
 								<div>
 									{mediaHtml}
@@ -459,7 +533,7 @@ export default function ProjectEditPage({ doc }: IProps) {
 							<div>
 								<div className="flex justify-between">
 									<h2 className="text-xl font-bold text-center sm:text-left text-red-500 mt-4">Submissions</h2>
-									<PlusIcon className="w-8 h-8 mt-2 text-red-500 cursor-pointer" onClick={addSubmission}/>
+									<PlusIcon className="w-8 h-8 mt-2 text-red-500 cursor-pointer" onClick={addSubmission} />
 								</div>
 								<div>
 									{submissionsHtml}
@@ -470,15 +544,19 @@ export default function ProjectEditPage({ doc }: IProps) {
 				</div>
 			</div>
 
-			<Snackbar open={message !== null} onClose={() => setMessage(null)}
-			          autoHideDuration={6000}
-			          anchorOrigin={{ vertical: 'top', horizontal: 'right' }} className="mt-16">
+			<Snackbar
+				open={message !== null}
+				onClose={() => setMessage(null)}
+				autoHideDuration={6000}
+				anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+				className="mt-16"
+			>
 				<Alert onClose={() => setMessage(null)} elevation={8} variant="filled" severity={message?.severity}>
 					{message?.text}
 				</Alert>
 			</Snackbar>
 
-			<Footer/>
+			<Footer />
 		</div>
 	);
 }

@@ -9,8 +9,12 @@ import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 import TextHeader from '../../components/TextHeader';
 import { IProject } from '../../models/Project';
-import { ISubmission } from "../../models/Submission";
+import { ISubmission } from '../../models/Submission';
 import 'github-markdown-css';
+
+interface SubmissionItemProps {
+	submission: ISubmission,
+}
 
 export default function ProjectPage() {
 	const router = useRouter();
@@ -38,7 +42,7 @@ export default function ProjectPage() {
 			const submissionsRes = await fetch(`/api/submissions/${router.query.id}`, {
 				method: 'GET',
 				headers: {
-					'Accept': 'application/json',
+					Accept: 'application/json',
 					'Content-Type': 'application/json;charset=UTF-8',
 				},
 			});
@@ -53,7 +57,7 @@ export default function ProjectPage() {
 
 		run();
 	}, [router.query]);
-	
+
 	function CurrentGalleryItem() {
 		if (!doc.media) return <></>;
 		if (doc.media[currentMediaIndex].type === 'video') {
@@ -73,31 +77,33 @@ export default function ProjectPage() {
 		return <p>Invalid media</p>;
 	}
 
-	function SubmissionItem(submission: ISubmission) {
-		if (submission.type === 'video') {
+	function SubmissionItem({ submission }: SubmissionItemProps) {
+		const { type } = submission;
+		if (type === 'video') {
 			return (
-				<ReactPlayer 
-					width="100%" 
-					height="100%" 
+				<ReactPlayer
+					width="100%"
+					height="100%"
 					url={submission.src}
-					controls 
-					light 
+					controls
+					light
 					className="mb-4 mt-4"
 				/>
 			);
 		}
-		if (submission.type === 'image') {
+		if (type === 'image') {
 			return (
 				<div className="w-full h-full max-h-[750px] flex justify-center">
-					<img 
-						className="w-10/12 object-contain mb-4" 
-						src={submission.src} alt="" 
+					<img
+						className="w-10/12 object-contain mb-4"
+						src={submission.src}
+						alt=""
 						loading="lazy"
 					/>
 				</div>
 			);
 		}
-		if (submission.type === 'text') {
+		if (type === 'text') {
 			return (
 				<p className="m-4 w-auto h-full overflow-auto whitespace-pre-line text-black dark:text-white dark:text-opacity-80">
 					{submission.message}
@@ -112,28 +118,33 @@ export default function ProjectPage() {
 		const submissionElements: JSX.Element[] = [];
 		submissions.forEach((submission, index) => {
 			const author = (submission.author)
-				? <h6 className="text-xl left-0 top-0 w-2/3">From: <span className="font-medium">{submission.author}</span></h6>
+				? (
+					<h6 className="text-xl left-0 top-0 w-2/3">
+						From:
+						<span className="font-medium">{submission.author}</span>
+					</h6>
+				)
 				: <div className="left-0 top-0 w-2/3" />;
 			submissionElements.push(
-				<div className="w-full max-h-full" key={`submission-${index}`}>
+				<div className="w-full max-h-full" key={submission._id as unknown as string}>
 					<div className="w-full mt-4 flex dark:text-gray-200 dark:text-opacity-80">
 						{author}
-						<h6 className="text-xl top-0 right-0 w-1/3 text-right">{`#${index+1}`}</h6>
+						<h6 className="text-xl top-0 right-0 w-1/3 text-right">{`#${index + 1}`}</h6>
 					</div>
 					<div className="w-full mt-3">
-						<SubmissionItem {...submission} />
+						<SubmissionItem submission={submission} />
 						<hr className="border-t-1 border-dashed border-gray-400" />
 					</div>
-				</div>
+				</div>,
 			);
 		});
 
 		return (
-		    <div className="w-full h-full flex justify-center">
-			    <div className="sm:w-11/12 md:w-10/12 h-full">
-				    {submissionElements}
-			    </div>
-		    </div>
+			<div className="w-full h-full flex justify-center">
+				<div className="sm:w-11/12 md:w-10/12 h-full">
+					{submissionElements}
+				</div>
+			</div>
 		);
 	}
 
@@ -177,26 +188,28 @@ export default function ProjectPage() {
 														: 'h-8 w-8 text-skin-primary-1 text-opacity-30 dark:text-skin-dark-primary-1 dark:text-opacity-30'
 												}
 												onClick={() => {
-													if (currentMediaIndex > 0)
+													if (currentMediaIndex > 0) {
 														setCurrentMediaIndex(currentMediaIndex - 1);
+													}
 												}}
 											/>
 											<span className="text-black dark:text-white">
-												{currentMediaIndex + 1}/{doc.media ? doc.media.length : 0}
+												{currentMediaIndex + 1}
+												/
+												{doc.media ? doc.media.length : 0}
 											</span>
 											<ChevronRightIcon
 												className={
-													currentMediaIndex + 1 <
-													(doc.media ? doc.media.length : 0)
+													currentMediaIndex + 1
+													< (doc.media ? doc.media.length : 0)
 														? 'h-8 w-8 cursor-pointer text-black dark:text-white'
 														: 'h-8 w-8 text-skin-primary-1 text-opacity-30 dark:text-skin-dark-primary-1 dark:text-opacity-30'
 												}
 												onClick={() => {
 													if (
-														currentMediaIndex + 1 <
-														(doc.media ? doc.media.length : 0)
-													)
-														setCurrentMediaIndex(currentMediaIndex + 1);
+														currentMediaIndex + 1
+														< (doc.media ? doc.media.length : 0)
+													) { setCurrentMediaIndex(currentMediaIndex + 1); }
 												}}
 											/>
 										</div>
@@ -218,10 +231,10 @@ export default function ProjectPage() {
 								<div className="mt-4">
 									<TextHeader text="Links" />
 									<div className="flex px-4 sm:px-0">
-										{doc.links &&
-											doc.links.map((link, index) => (
+										{doc.links
+											&& doc.links.map((link, index) => (
 												<div
-													key={`link-${index}`}
+													key={`link-${index}` /* eslint-disable-line react/no-array-index-key */}
 													className="rounded-3xl font-bold w-20 h-10 flex items-center justify-center mt-4 content-end mr-4
 													bg-skin-secondary-1 dark:bg-skin-dark-secondary-1 text-white hover:text-opacity-70"
 												>

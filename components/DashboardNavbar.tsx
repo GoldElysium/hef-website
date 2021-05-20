@@ -27,7 +27,7 @@ export default function DashboardNavbar() {
 			<div>
 				<Link href="/dashboard">
 					<a>
-						<img className="h-20" src="/img/logo_banner.png" alt="Logo"/>
+						<img className="h-20" src="/img/logo_banner.png" alt="Logo" />
 					</a>
 				</Link>
 			</div>
@@ -40,8 +40,12 @@ export default function DashboardNavbar() {
 				</div>
 				<Menu as="div">
 					<Menu.Button>
+						{/* eslint-disable-next-line max-len */}
 						{/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
-						<div onClick={() => {setMenuOpen(!menuOpen);}} className="text-white font-bold mr-8 ml-12 text-right">
+						<div
+							onClick={() => { setMenuOpen(!menuOpen); }}
+							className="text-white font-bold mr-8 ml-12 text-right"
+						>
 							{name ?? 'Error'}
 						</div>
 					</Menu.Button>
@@ -58,6 +62,7 @@ export default function DashboardNavbar() {
 						<Menu.Items static className="absolute right-0 w-32 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none mr-2">
 							<div className="px-2 py-1">
 								<Menu.Item>
+									{/* eslint-disable-next-line max-len */}
 									{/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
 									<div className="flex rounded-md items-center w-full cursor-pointer" onClick={() => signOut({ callbackUrl: '/' })}>
 										<LogoutIcon className="h-6 w-6 text-red-500 mr-2" />

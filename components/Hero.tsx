@@ -8,7 +8,7 @@ export default function Hero() {
 					</h1>
 					<p className="text-white text-opacity-80">
 						A place to chat with other fans of Hololive English! If you want to
-						hang out, you've come to the right place.
+						hang out, you&lsquo;ve come to the right place.
 					</p>
 				</div>
 				<div

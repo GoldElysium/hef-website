@@ -17,7 +17,7 @@ export default function Home() {
 		fetch('/api/guilds', {
 			method: 'GET',
 			headers: {
-				'Accept': 'application/json',
+				Accept: 'application/json',
 				'Content-Type': 'application/json;charset=UTF-8',
 			},
 		})
@@ -41,14 +41,14 @@ export default function Home() {
 		fetch('/api/projects', {
 			method: 'GET',
 			headers: {
-				'Accept': 'application/json',
+				Accept: 'application/json',
 				'Content-Type': 'application/json;charset=UTF-8',
 			},
 		})
 			.then((response) => response.json())
 			.then((data) => {
 				let projectHtml = [];
-				if (data.length <= 3)
+				if (data.length <= 3) {
 					projectHtml = data.map((project: IProject) => (
 						<Card
 							key={project._id}
@@ -59,18 +59,19 @@ export default function Home() {
 							internal
 						/>
 					));
-				// eslint-disable-next-line no-plusplus
-				else for (let i = 0; i < 3; i++) {
-					projectHtml.push(
-						<Card
-							key={data[i]._id}
-							title={data[i].title}
-							description={data[i].shortDescription}
-							button="View"
-							url={`/projects/${data[i]._id}`}
-							internal
-						/>
-					);
+				} else {
+					for (let i = 0; i < 3; i++) {
+						projectHtml.push(
+							<Card
+								key={data[i]._id}
+								title={data[i].title}
+								description={data[i].shortDescription}
+								button="View"
+								url={`/projects/${data[i]._id}`}
+								internal
+							/>,
+						);
+					}
 				}
 				setFeaturedProjects(projectHtml);
 			});

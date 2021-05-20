@@ -32,12 +32,11 @@ export default function Projects() {
 		}
 	}, [query]);
 
-
 	useEffect(() => {
 		fetch('/api/projects', {
 			method: 'GET',
 			headers: {
-				'Accept': 'application/json',
+				Accept: 'application/json',
 				'Content-Type': 'application/json;charset=UTF-8',
 			},
 		})
@@ -45,12 +44,12 @@ export default function Projects() {
 			.then((data) => {
 				const ongoing = data.filter((project: IProject) => project.status === 'ongoing');
 				const ongoingHtml = ongoing.map((project: IProject) => (
-					<Card key={project._id} title={project.title} description={project.shortDescription} button="View" url={`/projects/${project._id}`} internal/>
+					<Card key={project._id} title={project.title} description={project.shortDescription} button="View" url={`/projects/${project._id}`} internal />
 				));
 
 				const past = data.filter((project: IProject) => project.status === 'past');
 				const pastHtml = past.map((project: IProject) => (
-					<Card key={project._id} title={project.title} description={project.shortDescription} button="View" url={`/projects/${project._id}`} internal/>
+					<Card key={project._id} title={project.title} description={project.shortDescription} button="View" url={`/projects/${project._id}`} internal />
 				));
 
 				setProjects(ongoingHtml);
@@ -60,9 +59,9 @@ export default function Projects() {
 
 	return (
 		<div className="flex flex-col h-full min-h-screen bg-skin-background-1 dark:bg-skin-dark-background-1">
-			<Navbar/>
+			<Navbar />
 
-			<Header title="Projects" description="A list of all the projects organized by Hololive EN Fan servers!"/>
+			<Header title="Projects" description="A list of all the projects organized by Hololive EN Fan servers!" />
 			<div className="flex-grow">
 				<div className="my-16 w-full flex flex-col items-center">
 					<div className="max-w-4xl w-full mx-4">
@@ -82,7 +81,7 @@ export default function Projects() {
 				</div>
 			</div>
 
-			<Footer/>
+			<Footer />
 		</div>
 	);
 }

@@ -13,13 +13,13 @@ export default function Navbar() {
 		<div className="flex w-full h-20 px-4 sm:px-8 justify-end items-center bg-skin-background-2 dark:bg-skin-dark-background-2">
 			<Head>
 				<title>Hololive EN Fan Website</title>
-				<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "5896757c09e04949bf74e7c34efd419a"}' />
+				<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "5896757c09e04949bf74e7c34efd419a"}' />
 			</Head>
 
 			<div>
 				<Link href="/">
 					<a>
-						<img className="h-20 hidden" src="/img/logo_banner.png" alt="Logo"/>
+						<img className="h-20 hidden" src="/img/logo_banner.png" alt="Logo" />
 					</a>
 				</Link>
 			</div>
@@ -28,7 +28,7 @@ export default function Navbar() {
 				<div className="sm:hidden">
 					<Menu as="div">
 						<Menu.Button>
-							<MenuIcon onClick={() => {setMenuOpen(!menuOpen);}} className="h-10 w-10 -mb-1 text-white sm:hidden"/>
+							<MenuIcon onClick={() => { setMenuOpen(!menuOpen); }} className="h-10 w-10 -mb-1 text-white sm:hidden" />
 						</Menu.Button>
 						<Transition
 							show={menuOpen}
