@@ -12,10 +12,6 @@ import { IProject } from '../../models/Project';
 import { ISubmission } from '../../models/Submission';
 import 'github-markdown-css';
 
-interface SubmissionItemProps {
-	submission: ISubmission,
-}
-
 export default function ProjectPage() {
 	const router = useRouter();
 
@@ -82,62 +78,54 @@ export default function ProjectPage() {
 		return <p>Invalid media</p>;
 	}
 
-	function SubmissionItem({ submission }: SubmissionItemProps) {
-		const { type } = submission;
-		if (type === 'video') {
-			return (
-				<ReactPlayer
-					width="100%"
-					height="100%"
-					url={submission.src}
-					controls
-					light
-					className="mb-4 mt-4"
-				/>
-			);
-		}
-		if (type === 'image') {
-			return (
-				<div className="w-full h-full max-h-[750px] flex justify-center">
-					<img
-						className="w-10/12 object-contain mb-4"
-						src={submission.src}
-						alt=""
-						loading="lazy"
-					/>
-				</div>
-			);
-		}
-		if (type === 'text') {
-			return (
-				<p className="m-4 w-auto h-full overflow-auto whitespace-pre-line text-black dark:text-white dark:text-opacity-80">
-					{submission.message}
-				</p>
-			);
-		}
-		return <p>Invalid media</p>;
-	}
-
 	function Submissions() {
 		// eslint-disable-next-line no-undef
 		const submissionElements: JSX.Element[] = [];
 		submissions.forEach((submission, index) => {
-			const author = (submission.author)
-				? (
-					<h6 className="text-xl left-0 top-0 w-2/3">
-						From:
-						<span className="font-medium">{submission.author}</span>
-					</h6>
-				)
-				: <div className="left-0 top-0 w-2/3" />;
 			submissionElements.push(
-				<div className="w-full max-h-full" key={submission._id as unknown as string}>
-					<div className="w-full mt-4 flex dark:text-gray-200 dark:text-opacity-80">
-						{author}
-						<h6 className="text-xl top-0 right-0 w-1/3 text-right">{`#${index + 1}`}</h6>
+				<div className="w-full max-h-full text-black dark:text-white" key={submission._id as unknown as string}>
+					<div className="w-full flex mt-4 h-14">
+						{submission.srcIcon && (
+							<div className="w-14 h-14 ml-4">
+								<img className="object-cover rounded-full" src={submission.srcIcon} alt="author icon" />
+							</div>
+						)}
+						{submission.author && (
+							<div className="text-lg mt-3 ml-4">
+								From:
+								{' '}
+								<span className="font-bold">{submission.author}</span>
+							</div>
+						)}
+						<div className="flex-grow" />
+						<p className="text-xl mt-3 mr-4">{`#${index + 1}`}</p>
 					</div>
 					<div className="w-full mt-3">
-						<SubmissionItem submission={submission} />
+						{submission.type === 'video' && (
+							<ReactPlayer
+								width="100%"
+								height="100%"
+								url={submission.src}
+								controls
+								light
+								className="mb-4 mt-4"
+							/>
+						)}
+						{submission.type === 'image' && (
+							<div className="mt-4 mb-2 w-full h-full max-h-[750px] flex justify-center">
+								<img
+									className="w-10/12 object-contain mb-4"
+									src={submission.src}
+									alt=""
+									loading="lazy"
+								/>
+							</div>
+						)}
+						{submission.message && (
+							<p className="mx-4 mb-4 w-auto h-full overflow-auto whitespace-pre-line dark:text-gray-300">
+								{submission.message}
+							</p>
+						)}
 						<hr className="border-t-1 border-dashed border-gray-400" />
 					</div>
 				</div>,
@@ -230,7 +218,7 @@ export default function ProjectPage() {
 								<div className="mt-4">
 									<TextHeader text="Submissions" />
 									<div className="flex flex-col items-center pt-2">
-										<div className="w-full max-h-[800px] overflow-auto">
+										<div className="w-full overflow-auto">
 											<Submissions />
 										</div>
 									</div>
