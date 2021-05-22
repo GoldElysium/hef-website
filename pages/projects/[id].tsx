@@ -66,14 +66,9 @@ export default function ProjectPage() {
 					light
 				/>
 			);
-		} if (doc.media[currentMediaIndex].type === 'image') {
-			return <img className="w-full h-full object-none" src={doc.media[currentMediaIndex].src} alt="" loading="lazy" />;
-		} if (doc.media[currentMediaIndex].type === 'text') {
-			return (
-				<p className="m-4 w-auto h-full overflow-auto whitespace-pre-line text-black dark:text-white dark:text-opacity-80">
-					{doc.media[currentMediaIndex].message}
-				</p>
-			);
+		}
+		if (doc.media[currentMediaIndex].type === 'image') {
+			return <img className="w-full h-full object-contain" src={doc.media[currentMediaIndex].src} alt="" loading="lazy" />;
 		}
 		return <p>Invalid media</p>;
 	}
@@ -86,9 +81,7 @@ export default function ProjectPage() {
 				<div className="w-full max-h-full text-black dark:text-white" key={submission._id as unknown as string}>
 					<div className="w-full flex mt-4 h-14">
 						{submission.srcIcon && (
-							<div className="w-14 h-14 ml-4">
-								<img className="object-cover rounded-full" src={submission.srcIcon} alt="author icon" />
-							</div>
+							<img className="object-cover w-14 h-14 rounded-full" src={submission.srcIcon} alt="author icon" />
 						)}
 						{submission.author && (
 							<div className="text-lg mt-3 ml-4">
