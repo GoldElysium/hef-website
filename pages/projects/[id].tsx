@@ -175,7 +175,7 @@ export default function ProjectPage() {
 								<div className="markdown-body">
 									<ReactMarkdown className="px-4 sm:px-0 text-black dark:text-white dark:text-opacity-80">
 										{
-											doc.description
+											doc.description && doc.description
 												.replace(/(\\\n```)/gim, '\n```')
 												.replace(/(```\n\\)|(```\n\n\\)/gim, '```\n')
 										}
