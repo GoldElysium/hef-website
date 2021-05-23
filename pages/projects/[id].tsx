@@ -70,9 +70,14 @@ export default function ProjectPage() {
 					light
 				/>
 			);
-		}
-		if (doc.media[currentMediaIndex].type === 'image') {
+		} if (doc.media[currentMediaIndex].type === 'image') {
 			return <img className="w-full h-full object-none" src={doc.media[currentMediaIndex].src} alt="" loading="lazy" />;
+		} if (doc.media[currentMediaIndex].type === 'text') {
+			return (
+				<p className="m-4 w-auto h-full overflow-auto whitespace-pre-line text-black dark:text-white dark:text-opacity-80">
+					{doc.media[currentMediaIndex].message}
+				</p>
+			);
 		}
 		return <p>Invalid media</p>;
 	}

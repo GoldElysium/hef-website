@@ -60,7 +60,7 @@ const ProjectSchema: Schema = new Schema({
 	_id: { type: Number },
 	status: { type: String, required: true, enum: ['ongoing', 'past'] },
 	guild: { type: String, required: true },
-	media: { type: [MediaSchema], default: undefined },
+	media: { type: [GallerySchema], default: undefined },
 	title: { type: String, required: true },
 	shortDescription: { type: String, required: true },
 	description: { type: String, required: true },
