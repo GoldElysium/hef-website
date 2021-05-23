@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { ObjectId } from 'mongoose';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/client';
 import Submission, { ISubmission } from '../../../models/Submission';
@@ -14,10 +14,10 @@ try {
 
 // eslint-disable-next-line consistent-return
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-	if (req.method === 'PATCH') {
-		const session = await getSession({ req });
-		if (!session) return res.status(401).end();
+	const session = await getSession({ req });
+	if (!session) return res.status(401).end();
 
+	if (req.method === 'PATCH') {
 		const submissions: ISubmission[] = req.body;
 
 		// eslint-disable-next-line consistent-return
@@ -32,12 +32,27 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 					return newDoc;
 				});
 			} else {
-				return Submission.findByIdAndUpdate(submission._id, submission, {
+				return await Submission.findByIdAndUpdate(submission._id, submission, {
 					returnOriginal: false,
+				}).catch((e) => {
+					res.status(500).end();
+					throw e;
 				});
 			}
 		}));
 
 		return res.status(200).json(updatedSubmissions);
+	} if (req.method === 'DELETE') {
+		const ids: ObjectId[] = req.body;
+
+		await Promise.all(ids.map(async (id) => {
+			await Submission.findByIdAndDelete(id).exec()
+				.catch((e) => {
+					res.status(500).end();
+					throw e;
+				});
+		}));
+
+		return res.status(204).end();
 	} res.status(404).end();
 };

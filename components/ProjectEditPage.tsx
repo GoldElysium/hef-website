@@ -35,6 +35,7 @@ export default function ProjectEditPage({ doc }: IProps) {
 	const [description, setDescription] = useState(doc?.description ?? '');
 	const [gallery, setGallery] = useState<IMedia[]>([]);
 	const [submissions, setSubmissions] = useState<ISubmission[]>([]);
+	const [submissionsToDelete, setSubmissionsToDelete] = useState<string[]>([]);
 	const [links, setLinks] = useState<ILink[]>([]);
 	const [descriptionSet, setDescriptionSet] = useState(false);
 
@@ -159,6 +160,7 @@ export default function ProjectEditPage({ doc }: IProps) {
 		setGallery(originalDoc.media ?? []);
 		setLinks(originalDoc.links ?? []);
 		setSubmissions(originalSubmissions ?? []);
+		setSubmissionsToDelete([]);
 	}
 
 	function saveForm(event: FormEvent<HTMLFormElement>) {
@@ -167,7 +169,6 @@ export default function ProjectEditPage({ doc }: IProps) {
 		// eslint-disable-next-line consistent-return
 		async function run() {
 			let res;
-			// TODO: Create a new API call to update submissions
 			if (router.query.id === 'new') {
 				res = await fetch('/api/projects', {
 					method: 'POST',
@@ -220,6 +221,24 @@ export default function ProjectEditPage({ doc }: IProps) {
 					severity: 'error',
 					text: 'Something went wrong, please try again.',
 				});
+			}
+
+			if (submissionsToDelete.length > 0) {
+				const removeSubmissionsRes = await fetch('/api/submissions', {
+					method: 'DELETE',
+					headers: {
+						Accept: 'application/json',
+						'Content-Type': 'application/json;charset=UTF-8',
+					},
+					body: JSON.stringify(submissionsToDelete),
+				});
+
+				if (!removeSubmissionsRes.ok) {
+					return setErrorMessage({
+						severity: 'error',
+						text: 'Something went wrong, please try again.',
+					});
+				}
 			}
 
 			const submissionsJson: ISubmission[] = await submissionsRes.json();
@@ -412,8 +431,14 @@ export default function ProjectEditPage({ doc }: IProps) {
 			setSubmissions(newSubmissions);
 		}
 
-		function removeMedia(index: number) {
+		function removeSubmissions(index: number) {
 			const newSubmissions = [...submissions];
+			if (newSubmissions[index]._id) {
+				const newSubmissionsToDelete = [...submissionsToDelete];
+				newSubmissionsToDelete.push(newSubmissions[index]._id as unknown as string);
+				setSubmissionsToDelete(newSubmissionsToDelete);
+			}
+
 			newSubmissions.splice(index, 1);
 			setSubmissions(newSubmissions);
 		}
@@ -453,7 +478,7 @@ export default function ProjectEditPage({ doc }: IProps) {
 							/>
 						)
 				}
-				<TrashIcon className="w-6 h-6 ml-2 cursor-pointer" onClick={() => removeMedia(index)} />
+				<TrashIcon className="w-6 h-6 ml-2 cursor-pointer" onClick={() => removeSubmissions(index)} />
 			</div>
 		));
 
