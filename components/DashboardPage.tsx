@@ -149,9 +149,7 @@ export default function DashboardPage() {
 									<a className="ml-auto sm:ml-0"><PlusIcon className="w-8 h-8 mt-2 hover:text-red-700 cursor-pointer" /></a>
 								</Link>
 							</div>
-							<div
-								className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center items-center"
-							>
+							<div className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center">
 								{guilds.length > 0 ? guilds : <div className="font-bold text-2xl mt-4">None</div>}
 							</div>
 						</div>
@@ -163,9 +161,7 @@ export default function DashboardPage() {
 									<a className="ml-auto sm:ml-0"><PlusIcon className="w-8 h-8 mt-2 hover:text-red-700 cursor-pointer" /></a>
 								</Link>
 							</div>
-							<div
-								className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center items-center"
-							>
+							<div className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center">
 								{projects.length > 0 ? projects : <div className="font-bold text-2xl mt-4">None</div>}
 							</div>
 						</div>
@@ -175,17 +171,13 @@ export default function DashboardPage() {
 								Past
 								projects
 							</h1>
-							<div
-								className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center items-center"
-							>
+							<div className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center">
 								{pastProjects.length > 0 ? pastProjects : <div className="font-bold text-2xl mt-4">None</div>}
 							</div>
 						</div>
 						<div className="mt-4">
 							<h1 className="text-2xl text-red-500 font-bold border-b-2 border-red-200 text-center sm:text-left">Settings</h1>
-							<div
-								className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center items-center"
-							>
+							<div className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center">
 								<div className="mt-4 sm:w-1/3">
 									<div
 										className="bg-white p-8 h-full border-b-4 border-red-500 rounded-lg flex flex-col items-center sm:mx-2 sm:p-3 md:p-8"

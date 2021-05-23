@@ -1,0 +1,9 @@
+# If not matching any pattern, give ownership to this person
+*       @GoldElysium
+
+# Explicitly set @GoldElysium as owner of TypeScript files
+*.ts    @GoldElysium
+*.tsx   @GoldElysium
+
+# Owner of CSS related files
+styles/* @JackCrescend

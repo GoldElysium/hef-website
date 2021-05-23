@@ -2,8 +2,9 @@
 import mongoose, { Schema, Document, Model } from 'mongoose';
 
 export interface IMedia {
-	type: 'image' | 'video',
-	src: string
+	type: 'image' | 'video' | 'text',
+	src?: string,
+	message?: string,
 }
 
 export interface ILink {
@@ -44,9 +45,10 @@ try {
 	CounterModel = mongoose.model<ICounter>('Counter', CounterSchema, 'counters');
 }
 
-const MediaSchema: Schema = new Schema({
-	type: { type: String, enum: ['image', 'video'], required: true },
-	src: { type: String, required: true },
+const GallerySchema: Schema = new Schema({
+	type: { type: String, enum: ['image', 'video', 'text'], required: true },
+	src: { type: String },
+	message: { type: String },
 });
 
 const LinkSchema: Schema = new Schema({
@@ -58,7 +60,7 @@ const ProjectSchema: Schema = new Schema({
 	_id: { type: Number },
 	status: { type: String, required: true, enum: ['ongoing', 'past'] },
 	guild: { type: String, required: true },
-	media: { type: [MediaSchema], default: undefined },
+	media: { type: [GallerySchema], default: undefined },
 	title: { type: String, required: true },
 	shortDescription: { type: String, required: true },
 	description: { type: String, required: true },

@@ -15,7 +15,7 @@ import { ILink, IMedia, IProject } from '../models/Project';
 import { ISubmission } from '../models/Submission';
 import { IGuild } from '../models/Guild';
 
-interface IMessage {
+interface IErrorMessage {
 	text: string,
 	severity: 'error' | 'info' | 'success' | 'warning',
 }
@@ -33,20 +33,21 @@ export default function ProjectEditPage({ doc }: IProps) {
 	const [guild, setGuild] = useState('');
 	const [shortDescription, setShortDescription] = useState('');
 	const [description, setDescription] = useState(doc?.description ?? '');
-	const [media, setMedia] = useState<IMedia[]>([]);
+	const [gallery, setGallery] = useState<IMedia[]>([]);
 	const [submissions, setSubmissions] = useState<ISubmission[]>([]);
+	const [submissionsToDelete, setSubmissionsToDelete] = useState<string[]>([]);
 	const [links, setLinks] = useState<ILink[]>([]);
 	const [descriptionSet, setDescriptionSet] = useState(false);
 
 	/* eslint-disable no-undef */
-	const [mediaHtml, setMediaHtml] = useState<JSX.Element[]>([]);
+	const [galleryHtml, setGalleryHtml] = useState<JSX.Element[]>([]);
 	const [submissionsHtml, setSubmissionsHtml] = useState<JSX.Element[]>([]);
 	const [linksHtml, setLinksHtml] = useState<JSX.Element[]>([]);
 
 	const [guilds, setGuilds] = useState<JSX.Element[]>([]);
 	/* eslint-enable */
 
-	const [message, setMessage] = useState<IMessage | null>(null);
+	const [errorMessage, setErrorMessage] = useState<IErrorMessage | null>(null);
 	const [removeDialogOpen, setRemoveDialogOpen] = useState(false);
 
 	const [originalDoc, setOriginalDoc] = useState<IProject>({
@@ -84,7 +85,7 @@ export default function ProjectEditPage({ doc }: IProps) {
 				setShortDescription(doc.shortDescription);
 				setDescription(doc.description);
 				setGuild(doc.guild);
-				setMedia(doc.media ?? []);
+				setGallery(doc.media ?? []);
 				setSubmissions(newSubmissions);
 				setLinks(doc.links ?? []);
 			}
@@ -114,7 +115,7 @@ export default function ProjectEditPage({ doc }: IProps) {
 				},
 			});
 			if (!res.ok) {
-				return setMessage({
+				return setErrorMessage({
 					severity: 'error',
 					text: 'Something went wrong during guild fetching',
 				});
@@ -138,7 +139,7 @@ export default function ProjectEditPage({ doc }: IProps) {
 			&& title === originalDoc.title
 			&& shortDescription === originalDoc.shortDescription
 			&& description === originalDoc.description
-			&& media === originalDoc.media
+			&& gallery === originalDoc.media
 			&& links === originalDoc.links
 			&& submissions === originalSubmissions
 		) {
@@ -149,16 +150,17 @@ export default function ProjectEditPage({ doc }: IProps) {
 			setChanged(true);
 		}
 		// eslint-disable-next-line max-len
-	}, [description, shortDescription, status, title, media, links, submissions, originalDoc, originalSubmissions]);
+	}, [description, shortDescription, status, title, gallery, links, submissions, originalDoc, originalSubmissions]);
 
 	function resetForm() {
 		setStatus(originalDoc.status);
 		setTitle(originalDoc.title);
 		setShortDescription(originalDoc.shortDescription);
 		setDescription(originalDoc.description);
-		setMedia(originalDoc.media ?? []);
+		setGallery(originalDoc.media ?? []);
 		setLinks(originalDoc.links ?? []);
 		setSubmissions(originalSubmissions ?? []);
+		setSubmissionsToDelete([]);
 	}
 
 	function saveForm(event: FormEvent<HTMLFormElement>) {
@@ -167,7 +169,6 @@ export default function ProjectEditPage({ doc }: IProps) {
 		// eslint-disable-next-line consistent-return
 		async function run() {
 			let res;
-			// TODO: Create a new API call to update submissions
 			if (router.query.id === 'new') {
 				res = await fetch('/api/projects', {
 					method: 'POST',
@@ -176,7 +177,7 @@ export default function ProjectEditPage({ doc }: IProps) {
 						'Content-Type': 'application/json;charset=UTF-8',
 					},
 					body: JSON.stringify({
-						status, guild, media, title, shortDescription, description, links,
+						status, guild, media: gallery, title, shortDescription, description, links,
 					} as IProject),
 				});
 			} else {
@@ -187,13 +188,13 @@ export default function ProjectEditPage({ doc }: IProps) {
 						'Content-Type': 'application/json;charset=UTF-8',
 					},
 					body: JSON.stringify({
-						status, guild, media, title, shortDescription, description, links,
+						status, guild, media: gallery, title, shortDescription, description, links,
 					} as IProject),
 				});
 			}
 
 			if (!res.ok) {
-				return setMessage({
+				return setErrorMessage({
 					severity: 'error',
 					text: 'Something went wrong, please try again.',
 				});
@@ -201,15 +202,57 @@ export default function ProjectEditPage({ doc }: IProps) {
 
 			const json: IProject = await res.json();
 
+			const newSubmissions = await submissions.map((submission) => ({
+				...submission,
+				project: json._id,
+			}));
+
+			const submissionsRes = await fetch('/api/submissions', {
+				method: 'PATCH',
+				headers: {
+					Accept: 'application/json',
+					'Content-Type': 'application/json;charset=UTF-8',
+				},
+				body: JSON.stringify(newSubmissions),
+			});
+
+			if (!submissionsRes.ok) {
+				return setErrorMessage({
+					severity: 'error',
+					text: 'Something went wrong, please try again.',
+				});
+			}
+
+			if (submissionsToDelete.length > 0) {
+				const removeSubmissionsRes = await fetch('/api/submissions', {
+					method: 'DELETE',
+					headers: {
+						Accept: 'application/json',
+						'Content-Type': 'application/json;charset=UTF-8',
+					},
+					body: JSON.stringify(submissionsToDelete),
+				});
+
+				if (!removeSubmissionsRes.ok) {
+					return setErrorMessage({
+						severity: 'error',
+						text: 'Something went wrong, please try again.',
+					});
+				}
+			}
+
+			const submissionsJson: ISubmission[] = await submissionsRes.json();
+
 			setOriginalDoc(json);
+			setSubmissions(submissionsJson);
 			setChanged(false);
 			window.onbeforeunload = () => null;
-			setMessage({
+			setErrorMessage({
 				severity: 'success',
 				text: 'Saved succesfully',
 			});
 
-			if (router.query.id === 'new') { router.push(`/dashboard/project/${json._id}`); }
+			if (router.query.id === 'new') router.push(`/dashboard/project/${json._id}`);
 		}
 
 		run();
@@ -226,13 +269,13 @@ export default function ProjectEditPage({ doc }: IProps) {
 		});
 
 		if (!res.ok) {
-			return setMessage({
+			return setErrorMessage({
 				severity: 'error',
 				text: 'Something went wrong, please try again.',
 			});
 		}
 
-		setMessage({ severity: 'success', text: 'Deleted successfully' });
+		setErrorMessage({ severity: 'success', text: 'Deleted successfully' });
 		router.push('/dashboard');
 	}
 
@@ -286,30 +329,40 @@ export default function ProjectEditPage({ doc }: IProps) {
 		setLinksHtml(html);
 	}, [links]);
 
-	function addMedia() {
-		setMedia((prevState) => [...prevState, { type: 'image', src: '' }]);
+	function addGalleryItem() {
+		setGallery((prevState) => [...prevState, { type: 'image', src: '' }]);
 	}
 
 	useEffect(() => {
 		function updateType(index: number, type: string) {
-			const newMedia = [...media];
-			newMedia[index].type = type as IMedia['type'];
-			setMedia(newMedia);
+			const newGallery = [...gallery];
+			newGallery[index].type = type as IMedia['type'];
+
+			if (newGallery[index].type === 'text') newGallery[index].src = undefined;
+			else newGallery[index].message = undefined;
+
+			setGallery(newGallery);
 		}
 
 		function updateSrc(index: number, src: string) {
-			const newMedia = [...media];
-			newMedia[index].src = src;
-			setMedia(newMedia);
+			const newGallery = [...gallery];
+			newGallery[index].src = src;
+			setGallery(newGallery);
+		}
+
+		function updateMessage(index: number, message: string) {
+			const newGallery = [...gallery];
+			newGallery[index].message = message;
+			setGallery(newGallery);
 		}
 
 		function removeMedia(index: number) {
-			const newMedia = [...media];
-			newMedia.splice(index, 1);
-			setMedia(newMedia);
+			const newGallery = [...gallery];
+			newGallery.splice(index, 1);
+			setGallery(newGallery);
 		}
 
-		const html = media.map((currentMedia, index) => (
+		const html = gallery.map((currentMedia, index) => (
 			// eslint-disable-next-line react/no-array-index-key
 			<div className="flex mt-2" key={`media-${index}`}>
 				<select
@@ -319,22 +372,37 @@ export default function ProjectEditPage({ doc }: IProps) {
 				>
 					<option value="image">Image</option>
 					<option value="video">Video</option>
+					<option value="text">Text</option>
 				</select>
-				<input
-					required
-					value={currentMedia.src}
-					onChange={(event) => updateSrc(index, event.currentTarget.value)}
-					placeholder="Link"
-					type="url"
-					autoCapitalize="words"
-					className="border border-red-300 rounded-md px-1 ml-2 w-96"
-				/>
+				{
+					currentMedia.type === 'text'
+						? (
+							<textarea
+								required
+								value={currentMedia.message}
+								onChange={(event) => updateMessage(index, event.currentTarget.value)}
+								placeholder="Message"
+								autoCapitalize="words"
+								className="border border-red-300 rounded-md px-1 ml-2 w-96"
+							/>
+						)
+						: (
+							<input
+								required
+								value={currentMedia.src}
+								onChange={(event) => updateSrc(index, event.currentTarget.value)}
+								placeholder="Link"
+								type="url"
+								className="border border-red-300 rounded-md px-1 ml-2 w-96"
+							/>
+						)
+				}
 				<TrashIcon className="w-6 h-6 ml-2 cursor-pointer" onClick={() => removeMedia(index)} />
 			</div>
 		));
 
-		setMediaHtml(html);
-	}, [media]);
+		setGalleryHtml(html);
+	}, [gallery]);
 
 	function addSubmission() {
 		setSubmissions((prevState) => [...prevState, { type: 'image', src: '' }] as ISubmission[]);
@@ -344,6 +412,10 @@ export default function ProjectEditPage({ doc }: IProps) {
 		function updateType(index: number, type: string) {
 			const newSubmissions = [...submissions];
 			newSubmissions[index].type = type as ISubmission['type'];
+
+			if (newSubmissions[index].type === 'text') newSubmissions[index].src = undefined;
+			else newSubmissions[index].message = undefined;
+
 			setSubmissions(newSubmissions);
 		}
 
@@ -353,8 +425,20 @@ export default function ProjectEditPage({ doc }: IProps) {
 			setSubmissions(newSubmissions);
 		}
 
-		function removeMedia(index: number) {
+		function updateMessage(index: number, message: string) {
 			const newSubmissions = [...submissions];
+			newSubmissions[index].message = message;
+			setSubmissions(newSubmissions);
+		}
+
+		function removeSubmissions(index: number) {
+			const newSubmissions = [...submissions];
+			if (newSubmissions[index]._id) {
+				const newSubmissionsToDelete = [...submissionsToDelete];
+				newSubmissionsToDelete.push(newSubmissions[index]._id as unknown as string);
+				setSubmissionsToDelete(newSubmissionsToDelete);
+			}
+
 			newSubmissions.splice(index, 1);
 			setSubmissions(newSubmissions);
 		}
@@ -371,16 +455,30 @@ export default function ProjectEditPage({ doc }: IProps) {
 					<option value="video">Video</option>
 					<option value="text">Text</option>
 				</select>
-				<input
-					required
-					value={submission.src}
-					onChange={(event) => updateSrc(index, event.currentTarget.value)}
-					placeholder="Link"
-					type="url"
-					autoCapitalize="words"
-					className="border border-red-300 rounded-md px-1 ml-2 w-96"
-				/>
-				<TrashIcon className="w-6 h-6 ml-2 cursor-pointer" onClick={() => removeMedia(index)} />
+				{
+					submission.type === 'text'
+						? (
+							<textarea
+								required
+								value={submission.message}
+								onChange={(event) => updateMessage(index, event.currentTarget.value)}
+								placeholder="Message"
+								autoCapitalize="words"
+								className="border border-red-300 rounded-md px-1 ml-2 w-96"
+							/>
+						)
+						: (
+							<input
+								required
+								value={submission.src}
+								onChange={(event) => updateSrc(index, event.currentTarget.value)}
+								placeholder="Link"
+								type="url"
+								className="border border-red-300 rounded-md px-1 ml-2 w-96"
+							/>
+						)
+				}
+				<TrashIcon className="w-6 h-6 ml-2 cursor-pointer" onClick={() => removeSubmissions(index)} />
 			</div>
 		));
 
@@ -391,7 +489,7 @@ export default function ProjectEditPage({ doc }: IProps) {
 		<div className="flex flex-col h-full min-h-screen bg-red-50">
 			<DashboardNavbar />
 
-			{/* TODO: Rewrite in Formik? */}
+			{/* Rewrite in Formik? */}
 			<div className="flex-grow">
 				<div className="my-16 w-full flex flex-col items-center">
 					<div className="max-w-4xl w-full sm:mx-4 px-4 sm:px-0">
@@ -523,10 +621,10 @@ export default function ProjectEditPage({ doc }: IProps) {
 							<div>
 								<div className="flex justify-between">
 									<h2 className="text-xl font-bold text-center sm:text-left text-red-500 mt-4">Media</h2>
-									<PlusIcon className="w-8 h-8 mt-2 text-red-500 cursor-pointer" onClick={addMedia} />
+									<PlusIcon className="w-8 h-8 mt-2 text-red-500 cursor-pointer" onClick={addGalleryItem} />
 								</div>
 								<div>
-									{mediaHtml}
+									{galleryHtml}
 								</div>
 							</div>
 							{/* TODO: Move submissions to separate tab */}
@@ -545,14 +643,14 @@ export default function ProjectEditPage({ doc }: IProps) {
 			</div>
 
 			<Snackbar
-				open={message !== null}
-				onClose={() => setMessage(null)}
+				open={errorMessage !== null}
+				onClose={() => setErrorMessage(null)}
 				autoHideDuration={6000}
 				anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
 				className="mt-16"
 			>
-				<Alert onClose={() => setMessage(null)} elevation={8} variant="filled" severity={message?.severity}>
-					{message?.text}
+				<Alert onClose={() => setErrorMessage(null)} elevation={8} variant="filled" severity={errorMessage?.severity}>
+					{errorMessage?.text}
 				</Alert>
 			</Snackbar>
 
