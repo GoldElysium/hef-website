@@ -40,7 +40,7 @@
     "@commitlint/cli": "12.1.4",
     "@commitlint/config-conventional": "12.1.4",
     "@ijsto/eslint-config": "4.1.6",
-    "@types/react": "17.0.6",
+    "@types/react": "17.0.7",
     "@typescript-eslint/eslint-plugin": "4.25.0",
     "@typescript-eslint/parser": "4.25.0",
     "autoprefixer": "10.2.5",
