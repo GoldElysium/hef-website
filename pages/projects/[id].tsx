@@ -1,11 +1,10 @@
 import ReactPlayer from 'react-player';
-import {
-	useEffect, useState, useRef, useCallback,
-} from 'react';
+import { useEffect, useState } from 'react';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/outline';
 import Error from 'next/error';
 import { useRouter } from 'next/router';
 import ReactMarkdown from 'react-markdown';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
@@ -57,17 +56,10 @@ export default function ProjectPage() {
 		run();
 	}, [router.query]);
 
-	const observer = useRef<IntersectionObserver>();
-	const lastSubmissionElementRef = useCallback((node) => {
-		if (observer.current) observer.current.disconnect();
-		observer.current = new IntersectionObserver((entries) => {
-			if (entries[0].isIntersecting && shownSubmissions.length < allSubmissions.length) {
-				const newSubLength = shownSubmissions.length + SUBMISSIONS_PER_LOAD;
-				setShownSubmissions(allSubmissions.slice(0, newSubLength));
-			}
-		});
-		if (node) observer.current.observe(node);
-	}, [allSubmissions, shownSubmissions]);
+	const loadMoreSubmissions = () => {
+		const newSubLength = shownSubmissions.length + SUBMISSIONS_PER_LOAD;
+		setShownSubmissions(allSubmissions.slice(0, newSubLength));
+	};
 
 	function CurrentGalleryItem() {
 		if (!doc.media) return <></>;
@@ -93,7 +85,6 @@ export default function ProjectPage() {
 		shownSubmissions.forEach((submission, index) => {
 			submissionElements.push(
 				<div className="w-full max-h-full text-black dark:text-white" key={submission._id as unknown as string}>
-					{index === shownSubmissions.length - 1 && <div ref={lastSubmissionElementRef} />}
 					<div className="w-full flex mt-4 h-14">
 						{submission.srcIcon && (
 							<img className="object-cover w-14 h-14 rounded-full" src={submission.srcIcon} alt="author icon" />
@@ -246,7 +237,15 @@ export default function ProjectPage() {
 									<TextHeader text="Submissions" />
 									<div className="flex flex-col items-center pt-2">
 										<div className="w-full overflow-auto">
-											<Submissions />
+											<InfiniteScroll
+												dataLength={shownSubmissions.length}
+												next={loadMoreSubmissions}
+												hasMore={shownSubmissions.length < allSubmissions.length}
+												loader={<p className="text-black dark:text-white text-center mt-4">Loading...</p>}
+												scrollThreshold="500px"
+											>
+												<Submissions />
+											</InfiniteScroll>
 										</div>
 									</div>
 								</div>
