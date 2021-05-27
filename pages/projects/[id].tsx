@@ -144,8 +144,13 @@ export default function ProjectPage() {
 		return <Error statusCode={errorCode as number} />;
 	}
 
+	let themeStyle = 'theme-ina';
+	if (router.query.id === '3') {
+		themeStyle = 'theme-gura';
+	}
+
 	return (
-		<div className="theme-ina">
+		<div className={themeStyle}>
 			<div className="flex flex-col h-full min-h-screen bg-skin-background-1 dark:bg-skin-dark-background-1">
 				<Navbar />
 

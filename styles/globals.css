@@ -44,7 +44,25 @@
   }
 
   .theme-gura {
-    /* Duplicate values from above when implementing */
+    --color-background-1: 240, 246, 250;
+    --color-background-2: 52, 116, 158;
+    --color-card: 255, 255, 255;
+    --color-primary-1: 43, 158, 166;
+    --color-secondary-1: 200, 79, 83;
+
+    --color-dark-background-1: 5, 11, 15;
+    --color-dark-background-2: 10, 22, 31;
+    --color-dark-card: 15, 33, 46;
+    --color-dark-primary-1: 9, 138, 149;
+    --color-dark-secondary-1: 217, 48, 54;
+  }
+
+  .theme-gura .markdown-body a {
+    color:rgb(52, 116, 158);
+  }
+
+  .dark .theme-gura .markdown-body a {
+    color:rgb(9, 138, 149);
   }
 
   .theme-kiara {
