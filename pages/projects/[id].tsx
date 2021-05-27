@@ -1,5 +1,7 @@
 import ReactPlayer from 'react-player';
-import { useEffect, useState } from 'react';
+import {
+	useEffect, useState, useRef, useCallback,
+} from 'react';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/outline';
 import Error from 'next/error';
 import { useRouter } from 'next/router';
@@ -12,14 +14,14 @@ import { IProject } from '../../models/Project';
 import { ISubmission } from '../../models/Submission';
 import 'github-markdown-css';
 
+const SUBMISSIONS_PER_LOAD = 10;
+
 export default function ProjectPage() {
 	const router = useRouter();
-
 	const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
-
 	const [doc, setDoc] = useState<IProject>({} as IProject);
-	const [submissions, setSubmissions] = useState<ISubmission[]>([]);
-
+	const [allSubmissions, setAllSubmissions] = useState<ISubmission[]>([]);
+	const [shownSubmissions, setShownSubmissions] = useState<ISubmission[]>([]);
 	const [errorCode, setErrorCode] = useState<boolean | number>(false);
 
 	useEffect(() => {
@@ -48,11 +50,24 @@ export default function ProjectPage() {
 			const json: IProject = await res.json();
 			setDoc(json);
 			const submissionsJson: ISubmission[] = await submissionsRes.json();
-			setSubmissions(submissionsJson);
+			setAllSubmissions(submissionsJson);
+			setShownSubmissions(submissionsJson.slice(0, SUBMISSIONS_PER_LOAD));
 		}
 
 		run();
 	}, [router.query]);
+
+	const observer = useRef();
+	const lastSubmissionElementRef = useCallback((node) => {
+		if (observer.current) observer.current.disconnect();
+		observer.current = new IntersectionObserver((entries) => {
+			if (entries[0].isIntersecting && shownSubmissions.length < allSubmissions.length) {
+				const newSubLength = shownSubmissions.length + SUBMISSIONS_PER_LOAD;
+				setShownSubmissions(allSubmissions.slice(0, newSubLength));
+			}
+		});
+		if (node) observer.current.observe(node);
+	}, [allSubmissions, shownSubmissions]);
 
 	function CurrentGalleryItem() {
 		if (!doc.media) return <></>;
@@ -66,8 +81,7 @@ export default function ProjectPage() {
 					light
 				/>
 			);
-		}
-		if (doc.media[currentMediaIndex].type === 'image') {
+		} if (doc.media[currentMediaIndex].type === 'image') {
 			return <img className="w-full h-full object-contain" src={doc.media[currentMediaIndex].src} alt="" loading="lazy" />;
 		}
 		return <p>Invalid media</p>;
@@ -76,9 +90,10 @@ export default function ProjectPage() {
 	function Submissions() {
 		// eslint-disable-next-line no-undef
 		const submissionElements: JSX.Element[] = [];
-		submissions.forEach((submission, index) => {
+		shownSubmissions.forEach((submission, index) => {
 			submissionElements.push(
 				<div className="w-full max-h-full text-black dark:text-white" key={submission._id as unknown as string}>
+					{index === shownSubmissions.length - 1 && <div ref={lastSubmissionElementRef} />}
 					<div className="w-full flex mt-4 h-14">
 						{submission.srcIcon && (
 							<img className="object-cover w-14 h-14 rounded-full" src={submission.srcIcon} alt="author icon" />
@@ -226,7 +241,7 @@ export default function ProjectPage() {
 								</div>
 							)}
 							{/* TODO: Move submissions to separate tab */}
-							{((submissions?.length ?? 0) > 0) && (
+							{((shownSubmissions?.length ?? 0) > 0) && (
 								<div className="mt-4">
 									<TextHeader text="Submissions" />
 									<div className="flex flex-col items-center pt-2">
