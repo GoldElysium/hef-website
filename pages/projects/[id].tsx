@@ -57,7 +57,7 @@ export default function ProjectPage() {
 		run();
 	}, [router.query]);
 
-	const observer = useRef();
+	const observer = useRef<IntersectionObserver>();
 	const lastSubmissionElementRef = useCallback((node) => {
 		if (observer.current) observer.current.disconnect();
 		observer.current = new IntersectionObserver((entries) => {
