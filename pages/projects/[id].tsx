@@ -4,6 +4,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/outline';
 import Error from 'next/error';
 import { useRouter } from 'next/router';
 import ReactMarkdown from 'react-markdown';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
@@ -12,18 +13,14 @@ import { IProject } from '../../models/Project';
 import { ISubmission } from '../../models/Submission';
 import 'github-markdown-css';
 
-interface SubmissionItemProps {
-	submission: ISubmission,
-}
+const SUBMISSIONS_PER_LOAD = 10;
 
 export default function ProjectPage() {
 	const router = useRouter();
-
 	const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
-
 	const [doc, setDoc] = useState<IProject>({} as IProject);
-	const [submissions, setSubmissions] = useState<ISubmission[]>([]);
-
+	const [allSubmissions, setAllSubmissions] = useState<ISubmission[]>([]);
+	const [shownSubmissions, setShownSubmissions] = useState<ISubmission[]>([]);
 	const [errorCode, setErrorCode] = useState<boolean | number>(false);
 
 	useEffect(() => {
@@ -52,11 +49,17 @@ export default function ProjectPage() {
 			const json: IProject = await res.json();
 			setDoc(json);
 			const submissionsJson: ISubmission[] = await submissionsRes.json();
-			setSubmissions(submissionsJson);
+			setAllSubmissions(submissionsJson);
+			setShownSubmissions(submissionsJson.slice(0, SUBMISSIONS_PER_LOAD));
 		}
 
 		run();
 	}, [router.query]);
+
+	const loadMoreSubmissions = () => {
+		const newSubLength = shownSubmissions.length + SUBMISSIONS_PER_LOAD;
+		setShownSubmissions(allSubmissions.slice(0, newSubLength));
+	};
 
 	function CurrentGalleryItem() {
 		if (!doc.media) return <></>;
@@ -71,49 +74,7 @@ export default function ProjectPage() {
 				/>
 			);
 		} if (doc.media[currentMediaIndex].type === 'image') {
-			return <img className="w-full h-full object-none" src={doc.media[currentMediaIndex].src} alt="" loading="lazy" />;
-		} if (doc.media[currentMediaIndex].type === 'text') {
-			return (
-				<p className="m-4 w-auto h-full overflow-auto whitespace-pre-line text-black dark:text-white dark:text-opacity-80">
-					{doc.media[currentMediaIndex].message}
-				</p>
-			);
-		}
-		return <p>Invalid media</p>;
-	}
-
-	function SubmissionItem({ submission }: SubmissionItemProps) {
-		const { type } = submission;
-		if (type === 'video') {
-			return (
-				<ReactPlayer
-					width="100%"
-					height="100%"
-					url={submission.src}
-					controls
-					light
-					className="mb-4 mt-4"
-				/>
-			);
-		}
-		if (type === 'image') {
-			return (
-				<div className="w-full h-full max-h-[750px] flex justify-center">
-					<img
-						className="w-10/12 object-contain mb-4"
-						src={submission.src}
-						alt=""
-						loading="lazy"
-					/>
-				</div>
-			);
-		}
-		if (type === 'text') {
-			return (
-				<p className="m-4 w-auto h-full overflow-auto whitespace-pre-line text-black dark:text-white dark:text-opacity-80">
-					{submission.message}
-				</p>
-			);
+			return <img className="w-full h-full object-contain" src={doc.media[currentMediaIndex].src} alt="" loading="lazy" />;
 		}
 		return <p>Invalid media</p>;
 	}
@@ -121,23 +82,49 @@ export default function ProjectPage() {
 	function Submissions() {
 		// eslint-disable-next-line no-undef
 		const submissionElements: JSX.Element[] = [];
-		submissions.forEach((submission, index) => {
-			const author = (submission.author)
-				? (
-					<h6 className="text-xl left-0 top-0 w-2/3">
-						From:
-						<span className="font-medium">{submission.author}</span>
-					</h6>
-				)
-				: <div className="left-0 top-0 w-2/3" />;
+		shownSubmissions.forEach((submission, index) => {
 			submissionElements.push(
-				<div className="w-full max-h-full" key={submission._id as unknown as string}>
-					<div className="w-full mt-4 flex dark:text-gray-200 dark:text-opacity-80">
-						{author}
-						<h6 className="text-xl top-0 right-0 w-1/3 text-right">{`#${index + 1}`}</h6>
+				<div className="w-full max-h-full text-black dark:text-white" key={submission._id as unknown as string}>
+					<div className="w-full flex mt-4 h-14">
+						{submission.srcIcon && (
+							<img className="object-cover w-14 h-14 rounded-full" src={submission.srcIcon} alt="author icon" />
+						)}
+						{submission.author && (
+							<div className="text-lg mt-3 ml-4">
+								From:
+								{' '}
+								<span className="font-bold">{submission.author}</span>
+							</div>
+						)}
+						<div className="flex-grow" />
+						<p className="text-xl mt-3 mr-4">{`#${index + 1}`}</p>
 					</div>
 					<div className="w-full mt-3">
-						<SubmissionItem submission={submission} />
+						{submission.type === 'video' && (
+							<ReactPlayer
+								width="100%"
+								height="100%"
+								url={submission.src}
+								controls
+								light
+								className="mb-4 mt-4"
+							/>
+						)}
+						{submission.type === 'image' && (
+							<div className="mt-4 mb-2 w-full h-full max-h-[750px] flex justify-center">
+								<img
+									className="w-10/12 object-contain mb-4"
+									src={submission.src}
+									alt=""
+									loading="lazy"
+								/>
+							</div>
+						)}
+						{submission.message && (
+							<p className="mx-4 mb-4 w-auto h-full overflow-auto whitespace-pre-line dark:text-gray-300">
+								{submission.message}
+							</p>
+						)}
 						<hr className="border-t-1 border-dashed border-gray-400" />
 					</div>
 				</div>,
@@ -225,26 +212,15 @@ export default function ProjectPage() {
 									</div>
 								</div>
 							)}
-							{/* TODO: Move submissions to separate tab */}
-							{((submissions?.length ?? 0) > 0) && (
-								<div className="mt-4">
-									<TextHeader text="Submissions" />
-									<div className="flex flex-col items-center pt-2">
-										<div className="w-full max-h-[800px] overflow-auto">
-											<Submissions />
-										</div>
-									</div>
-								</div>
-							)}
 							{(doc.links?.length ?? 0) > 0 && (
 								<div className="mt-4">
 									<TextHeader text="Links" />
-									<div className="flex px-4 sm:px-0">
+									<div className="flex justify-center space-x-6 px-4 sm:px-0">
 										{doc.links
 											&& doc.links.map((link, index) => (
 												<div
 													key={`link-${index}` /* eslint-disable-line react/no-array-index-key */}
-													className="rounded-3xl font-bold w-20 h-10 flex items-center justify-center mt-4 content-end mr-4
+													className="rounded-3xl font-bold w-[6rem] h-10 flex items-center justify-center mt-4 content-end
 													bg-skin-secondary-1 dark:bg-skin-dark-secondary-1 text-white hover:text-opacity-70"
 												>
 													<a href={link.link} target="_blank" rel="noreferrer">
@@ -252,6 +228,25 @@ export default function ProjectPage() {
 													</a>
 												</div>
 											))}
+									</div>
+								</div>
+							)}
+							{/* TODO: Move submissions to separate tab */}
+							{((shownSubmissions?.length ?? 0) > 0) && (
+								<div className="mt-4">
+									<TextHeader text="Submissions" />
+									<div className="flex flex-col items-center pt-2">
+										<div className="w-full overflow-auto">
+											<InfiniteScroll
+												dataLength={shownSubmissions.length}
+												next={loadMoreSubmissions}
+												hasMore={shownSubmissions.length < allSubmissions.length}
+												loader={<p className="text-black dark:text-white text-center mt-4">Loading...</p>}
+												scrollThreshold="500px"
+											>
+												<Submissions />
+											</InfiniteScroll>
+										</div>
 									</div>
 								</div>
 							)}

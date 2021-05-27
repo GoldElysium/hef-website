@@ -7,6 +7,7 @@ export interface ISubmission {
 	_id: Types.ObjectId,
 	project: number,
 	author?: string,
+	srcIcon?: string,
 	type: 'image' | 'video' | 'text',
 	src?: string,
 	message?: string,
