@@ -74,7 +74,7 @@ export default function ProjectPage() {
 				/>
 			);
 		} if (doc.media[currentMediaIndex].type === 'image') {
-			return <img className="w-full h-full object-contain" src={doc.media[currentMediaIndex].src} alt="" loading="lazy" />;
+			return <img className="max-w-full max-h-full object-contain" src={doc.media[currentMediaIndex].src} alt="" loading="lazy" />;
 		}
 		return <p>Invalid media</p>;
 	}
@@ -113,7 +113,7 @@ export default function ProjectPage() {
 						{submission.type === 'image' && (
 							<div className="mt-4 mb-2 w-full h-full max-h-[750px] flex justify-center">
 								<img
-									className="w-10/12 object-contain mb-4"
+									className="max-w-10/12 object-contain mb-4"
 									src={submission.src}
 									alt=""
 									loading="lazy"
@@ -144,8 +144,13 @@ export default function ProjectPage() {
 		return <Error statusCode={errorCode as number} />;
 	}
 
+	let themeStyle = 'theme-ina';
+	if (router.query.id === '3') {
+		themeStyle = 'theme-gura';
+	}
+
 	return (
-		<div className="theme-ina">
+		<div className={themeStyle}>
 			<div className="flex flex-col h-full min-h-screen bg-skin-background-1 dark:bg-skin-dark-background-1">
 				<Navbar />
 

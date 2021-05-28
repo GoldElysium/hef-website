@@ -48,8 +48,11 @@ export default function Home() {
 			.then((response) => response.json())
 			.then((data) => {
 				let projectHtml = [];
-				if (data.length <= 3) {
-					projectHtml = data.map((project: IProject) => (
+
+				projectHtml = data
+					.filter((project: IProject) => project.status === 'ongoing')
+					.slice(0, 3)
+					.map((project: IProject) => (
 						<Card
 							key={project._id}
 							title={project.title}
@@ -59,20 +62,7 @@ export default function Home() {
 							internal
 						/>
 					));
-				} else {
-					for (let i = 0; i < 3; i++) {
-						projectHtml.push(
-							<Card
-								key={data[i]._id}
-								title={data[i].title}
-								description={data[i].shortDescription}
-								button="View"
-								url={`/projects/${data[i]._id}`}
-								internal
-							/>,
-						);
-					}
-				}
+
 				setFeaturedProjects(projectHtml);
 			});
 	}, []);
