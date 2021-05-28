@@ -51,6 +51,7 @@ export default function Home() {
 
 				projectHtml = data
 					.filter((project: IProject) => project.status === 'ongoing')
+					.slice(0, 3)
 					.map((project: IProject) => (
 						<Card
 							key={project._id}
@@ -74,7 +75,7 @@ export default function Home() {
 				<div className="my-16 w-full flex flex-col items-center">
 					<div className="max-w-4xl w-full mx-4">
 						<div>
-							<TextHeader text="Ongoing projects" />
+							<TextHeader text="Featured projects" />
 							<div className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center">
 								{featuredProjects.length > 0 ? (
 									featuredProjects
