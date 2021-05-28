@@ -22,7 +22,7 @@
     "@heroicons/react": "1.0.1",
     "@material-ui/core": "5.0.0-alpha.34",
     "@material-ui/lab": "5.0.0-alpha.34",
-    "date-fns": "2.21.3",
+    "date-fns": "2.22.0",
     "github-markdown-css": "4.0.0",
     "mongodb": "3.6.9",
     "mongoose": "5.12.11",
