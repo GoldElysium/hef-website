@@ -48,8 +48,10 @@ export default function Home() {
 			.then((response) => response.json())
 			.then((data) => {
 				let projectHtml = [];
-				if (data.length <= 3) {
-					projectHtml = data.map((project: IProject) => (
+
+				projectHtml = data
+					.filter((project: IProject) => project.status === 'ongoing')
+					.map((project: IProject) => (
 						<Card
 							key={project._id}
 							title={project.title}
@@ -59,20 +61,7 @@ export default function Home() {
 							internal
 						/>
 					));
-				} else {
-					for (let i = 0; i < 3; i++) {
-						projectHtml.push(
-							<Card
-								key={data[i]._id}
-								title={data[i].title}
-								description={data[i].shortDescription}
-								button="View"
-								url={`/projects/${data[i]._id}`}
-								internal
-							/>,
-						);
-					}
-				}
+
 				setFeaturedProjects(projectHtml);
 			});
 	}, []);
@@ -85,7 +74,7 @@ export default function Home() {
 				<div className="my-16 w-full flex flex-col items-center">
 					<div className="max-w-4xl w-full mx-4">
 						<div>
-							<TextHeader text="Featured projects" />
+							<TextHeader text="Ongoing projects" />
 							<div className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center">
 								{featuredProjects.length > 0 ? (
 									featuredProjects
