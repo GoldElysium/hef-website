@@ -20,6 +20,7 @@ interface ISubmissionDocument extends Document, ISubmission {
 const SubmissionSchema: Schema = new Schema({
 	project: { type: Number, required: true },
 	author: { type: String },
+	srcIcon: { type: String },
 	type: { type: String, enum: ['image', 'video', 'text'] },
 	src: { type: String },
 	message: { type: String },
