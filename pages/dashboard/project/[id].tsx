@@ -6,7 +6,7 @@ import { IProject } from '../../../models/Project';
 
 export default function GuildEdit() {
 	const [session, loading] = useSession();
-	const [doc, setDoc] = useState<IProject|null>(null);
+	const [doc, setDoc] = useState<IProject | null>(null);
 	const router = useRouter();
 
 	useEffect(() => { // eslint-disable-line consistent-return
