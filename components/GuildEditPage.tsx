@@ -4,8 +4,9 @@ import Error from 'next/error';
 import { CheckIcon, ReplyIcon, XIcon } from '@heroicons/react/solid';
 import DateTimePicker from '@material-ui/lab/DateTimePicker';
 import {
-	createMuiTheme, Snackbar, TextField, ThemeProvider,
+	Snackbar, TextField, ThemeProvider,
 } from '@material-ui/core';
+import { createTheme } from '@material-ui/core/styles';
 import AdapterDateFns from '@material-ui/lab/AdapterDateFns';
 import LocalizationProvider from '@material-ui/lab/LocalizationProvider';
 import { CalendarIcon, ClockIcon, TrashIcon } from '@heroicons/react/outline';
@@ -14,7 +15,7 @@ import { IGuild } from '../models/Guild';
 import DashboardNavbar from './DashboardNavbar';
 import Footer from './Footer';
 
-const muiTheme = createMuiTheme({
+const muiTheme = createTheme({
 	palette: {
 		primary: {
 			light: '#F87171',
