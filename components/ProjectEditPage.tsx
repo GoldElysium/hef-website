@@ -21,12 +21,12 @@ interface IErrorMessage {
 }
 
 interface IProps {
-	doc: IProject|undefined
+	doc: IProject | undefined
 }
 
 export default function ProjectEditPage({ doc }: IProps) {
 	const router = useRouter();
-	const editorRef = useRef<RichMarkdownEditor|null>(null);
+	const editorRef = useRef<RichMarkdownEditor | null>(null);
 
 	const [status, setStatus] = useState('ongoing');
 	const [title, setTitle] = useState('');
