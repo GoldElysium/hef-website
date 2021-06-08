@@ -34,7 +34,7 @@
     "react-infinite-scroll-component": "6.1.0",
     "react-markdown": "6.0.2",
     "react-player": "2.9.0",
-    "rich-markdown-editor": "11.9.1",
+    "rich-markdown-editor": "11.10.0",
     "styled-components": "5.3.0"
   },
   "devDependencies": {
