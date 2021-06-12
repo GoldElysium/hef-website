@@ -11,8 +11,7 @@ import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 import TextHeader from '../../components/TextHeader';
-import Links from '../../components/project/Links';
-import Project, { IProject } from '../../models/Project';
+import Project, { ILink, IProject } from '../../models/Project';
 import Submission, { ISubmission } from '../../models/Submission';
 import 'github-markdown-css';
 
@@ -194,7 +193,25 @@ export default function ProjectPage({ doc, allSubmissions }: IProps) {
 									</div>
 								</div>
 							)}
-							<Links links={doc.links} />
+							{(doc.links?.length ?? 0) > 0 && (
+								<div className="mt-4">
+									<TextHeader text="Links" />
+									<div className="flex justify-center space-x-6 px-4 sm:px-0">
+										{doc.links
+											&& doc.links.map((link: ILink, index: number) => (
+												<div
+													key={`link-${index}` /* eslint-disable-line react/no-array-index-key */}
+													className="rounded-3xl font-bold w-[6rem] h-10 flex items-center justify-center mt-4 content-end
+													bg-skin-secondary-1 dark:bg-skin-dark-secondary-1 text-white hover:text-opacity-70"
+												>
+													<a href={link.link} target="_blank" rel="noreferrer">
+														{link.name}
+													</a>
+												</div>
+											))}
+									</div>
+								</div>
+							)}
 							{/* TODO: Move submissions to separate tab */}
 							{((shownSubmissions?.length ?? 0) > 0) && (
 								<div className="mt-4">
