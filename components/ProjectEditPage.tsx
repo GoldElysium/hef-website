@@ -413,7 +413,6 @@ export default function ProjectEditPage({ doc }: IProps) {
 			newSubmissions[index].type = type as ISubmission['type'];
 
 			if (newSubmissions[index].type === 'text') newSubmissions[index].src = undefined;
-			else newSubmissions[index].message = undefined;
 
 			setSubmissions(newSubmissions);
 		}
