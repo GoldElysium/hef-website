@@ -77,7 +77,16 @@ export default function ProjectEditPage({ doc }: IProps) {
 					},
 				});
 
-				const newSubmissions: ISubmission[] = await res.json();
+				const responseSubmissions: ISubmission[] = await res.json();
+				const newSubmissions = responseSubmissions.map((submission) => {
+					if (!submission.type) {
+						return {
+							...submission,
+							type: 'text' as ISubmission['type'],
+						};
+					}
+					return submission;
+				});
 				setOriginalSubmissions(newSubmissions);
 
 				setTitle(doc.title);
