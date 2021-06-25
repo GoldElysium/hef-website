@@ -5,8 +5,7 @@ import {
 import {
 	CheckIcon, PlusIcon, ReplyIcon, XIcon,
 } from '@heroicons/react/solid';
-import { Snackbar } from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
+import { Snackbar, Alert } from '@material-ui/core';
 import { TrashIcon } from '@heroicons/react/outline';
 import RichMarkdownEditor from 'rich-markdown-editor';
 import DashboardNavbar from './DashboardNavbar';
@@ -202,7 +201,7 @@ export default function ProjectEditPage({ doc }: IProps) {
 
 			const json: IProject = await res.json();
 
-			const newSubmissions = await submissions.map((submission) => ({
+			const newSubmissions = submissions.map((submission) => ({
 				...submission,
 				project: json._id,
 			}));
@@ -483,6 +482,7 @@ export default function ProjectEditPage({ doc }: IProps) {
 		));
 
 		setSubmissionsHtml(html);
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [submissions]);
 
 	return (
@@ -577,6 +577,7 @@ export default function ProjectEditPage({ doc }: IProps) {
 									<textarea
 										required
 										value={description}
+										onChange={() => {}}
 										className="hidden"
 									/>
 								</div>
