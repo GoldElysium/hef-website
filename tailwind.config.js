@@ -26,6 +26,9 @@ module.exports = {
 				'10/12': '83.333333%',
 				'11/12': '91.666667%',
 			},
+			gridTemplateColumns: {
+				'submissionGrid': '100px auto',
+			},
 			textColor: {
 				skin: {
 					'primary-1': withOpacity('--color-primary-1'),
