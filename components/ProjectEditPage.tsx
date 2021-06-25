@@ -486,7 +486,7 @@ export default function ProjectEditPage({ doc }: IProps) {
 						className="border border-red-300 rounded-md px-1 ml-2 w-96"
 					/>
 
-					{submission.type !== 'text' ? (
+					{(submission.type === 'video' || submission.type === 'image') ? (
 						<>
 							<span>
 								{submission.type === 'video' ? 'Video ' : 'Image '}
@@ -505,7 +505,7 @@ export default function ProjectEditPage({ doc }: IProps) {
 						: ''}
 
 					<span>Message:</span>
-					{submission.type === 'text' ? (
+					{(!submission.type || submission.type === 'text') ? (
 						<textarea
 							required
 							value={submission.message}
