@@ -466,8 +466,9 @@ export default function ProjectEditPage({ doc }: IProps) {
 			// eslint-disable-next-line react/no-array-index-key
 			<div className="flex mt-2" key={`media-${index}`}>
 				<div className="grid grid-cols-submissionGrid gap-2 mt-4">
-					<span>Type:</span>
+					<label htmlFor={`submissionType-${index}`}>Type:</label>
 					<select
+						id={`submissionType-${index}`}
 						value={submission.type}
 						onChange={(event) => updateType(index, event.currentTarget.value)}
 						className="border border-red-300 rounded-md px-1 ml-2"
@@ -477,16 +478,18 @@ export default function ProjectEditPage({ doc }: IProps) {
 						<option value="video">Video</option>
 					</select>
 
-					<span>Author:</span>
+					<label htmlFor={`submissionAuthor-${index}`}>Author:</label>
 					<input
+						id={`submissionAuthor-${index}`}
 						value={submission.author}
 						onChange={(event) => updateAuthor(index, event.currentTarget.value)}
 						placeholder="Name"
 						className="border border-red-300 rounded-md px-1 ml-2 w-96"
 					/>
 
-					<span>Avatar link:</span>
+					<label htmlFor={`submissionSrcIcon-${index}`}>Avatar link:</label>
 					<input
+						id={`submissionSrcIcon-${index}`}
 						value={submission.srcIcon}
 						onChange={(event) => updateSrcIcon(index, event.currentTarget.value)}
 						placeholder="Link"
@@ -496,12 +499,13 @@ export default function ProjectEditPage({ doc }: IProps) {
 
 					{(submission.type === 'video' || submission.type === 'image') ? (
 						<>
-							<span>
+							<label htmlFor={`submissionSrc-${index}`}>
 								{submission.type === 'video' ? 'Video ' : 'Image '}
 								link:
-							</span>
+							</label>
 							<input
 								required
+								id={`submissionSrc-${index}`}
 								value={submission.src}
 								onChange={(event) => updateSrc(index, event.currentTarget.value)}
 								placeholder="Link"
@@ -512,10 +516,11 @@ export default function ProjectEditPage({ doc }: IProps) {
 					)
 						: ''}
 
-					<span>Message:</span>
+					<label htmlFor={`submissionMessage-${index}`}>Message:</label>
 					{(!submission.type || submission.type === 'text') ? (
 						<textarea
 							required
+							id={`submissionMessage-${index}`}
 							value={submission.message}
 							onChange={(event) => updateMessage(index, event.currentTarget.value)}
 							placeholder="Message"
@@ -525,6 +530,7 @@ export default function ProjectEditPage({ doc }: IProps) {
 					)
 						: (
 							<textarea
+								id={`submissionMessage-${index}`}
 								value={submission.message}
 								onChange={(event) => updateMessage(index, event.currentTarget.value)}
 								placeholder="Message"
