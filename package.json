@@ -57,7 +57,7 @@
     "lint-staged": "11.0.0",
     "postcss": "8.3.5",
     "tailwindcss": "2.2.4",
-    "typescript": "4.3.3"
+    "typescript": "4.3.4"
   },
   "description": "Hololive EN Fan Server website",
   "repository": {
