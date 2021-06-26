@@ -5,8 +5,7 @@ import {
 import {
 	CheckIcon, PlusIcon, ReplyIcon, XIcon,
 } from '@heroicons/react/solid';
-import { Snackbar } from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
+import { Snackbar, Alert } from '@material-ui/core';
 import { TrashIcon } from '@heroicons/react/outline';
 import RichMarkdownEditor from 'rich-markdown-editor';
 import DashboardNavbar from './DashboardNavbar';
@@ -78,7 +77,16 @@ export default function ProjectEditPage({ doc }: IProps) {
 					},
 				});
 
-				const newSubmissions: ISubmission[] = await res.json();
+				const responseSubmissions: ISubmission[] = await res.json();
+				const newSubmissions = responseSubmissions.map((submission) => {
+					if (!submission.type) {
+						return {
+							...submission,
+							type: 'text' as ISubmission['type'],
+						};
+					}
+					return submission;
+				});
 				setOriginalSubmissions(newSubmissions);
 
 				setTitle(doc.title);
@@ -202,7 +210,7 @@ export default function ProjectEditPage({ doc }: IProps) {
 
 			const json: IProject = await res.json();
 
-			const newSubmissions = await submissions.map((submission) => ({
+			const newSubmissions = submissions.map((submission) => ({
 				...submission,
 				project: json._id,
 			}));
@@ -405,7 +413,7 @@ export default function ProjectEditPage({ doc }: IProps) {
 	}, [gallery]);
 
 	function addSubmission() {
-		setSubmissions((prevState) => [...prevState, { type: 'image', src: '' }] as ISubmission[]);
+		setSubmissions((prevState) => [...prevState, { type: 'text', message: '' }] as ISubmission[]);
 	}
 
 	useEffect(() => {
@@ -414,7 +422,6 @@ export default function ProjectEditPage({ doc }: IProps) {
 			newSubmissions[index].type = type as ISubmission['type'];
 
 			if (newSubmissions[index].type === 'text') newSubmissions[index].src = undefined;
-			else newSubmissions[index].message = undefined;
 
 			setSubmissions(newSubmissions);
 		}
@@ -428,6 +435,18 @@ export default function ProjectEditPage({ doc }: IProps) {
 		function updateMessage(index: number, message: string) {
 			const newSubmissions = [...submissions];
 			newSubmissions[index].message = message;
+			setSubmissions(newSubmissions);
+		}
+
+		function updateAuthor(index: number, author: string) {
+			const newSubmissions = [...submissions];
+			newSubmissions[index].author = author;
+			setSubmissions(newSubmissions);
+		}
+
+		function updateSrcIcon(index: number, srcIcon: string) {
+			const newSubmissions = [...submissions];
+			newSubmissions[index].srcIcon = srcIcon;
 			setSubmissions(newSubmissions);
 		}
 
@@ -446,43 +465,86 @@ export default function ProjectEditPage({ doc }: IProps) {
 		const html = submissions.map((submission, index) => (
 			// eslint-disable-next-line react/no-array-index-key
 			<div className="flex mt-2" key={`media-${index}`}>
-				<select
-					value={submission.type}
-					onChange={(event) => updateType(index, event.currentTarget.value)}
-					className="border border-red-300 rounded-md px-1 ml-2"
-				>
-					<option value="image">Image</option>
-					<option value="video">Video</option>
-					<option value="text">Text</option>
-				</select>
-				{
-					submission.type === 'text'
-						? (
-							<textarea
-								required
-								value={submission.message}
-								onChange={(event) => updateMessage(index, event.currentTarget.value)}
-								placeholder="Message"
-								autoCapitalize="words"
-								className="border border-red-300 rounded-md px-1 ml-2 w-96"
-							/>
-						)
-						: (
+				<div className="grid grid-cols-submissionGrid gap-2 mt-4">
+					<label htmlFor={`submissionType-${index}`}>Type:</label>
+					<select
+						id={`submissionType-${index}`}
+						value={submission.type}
+						onChange={(event) => updateType(index, event.currentTarget.value)}
+						className="border border-red-300 rounded-md px-1 ml-2"
+					>
+						<option value="text">Text</option>
+						<option value="image">Image</option>
+						<option value="video">Video</option>
+					</select>
+
+					<label htmlFor={`submissionAuthor-${index}`}>Author:</label>
+					<input
+						id={`submissionAuthor-${index}`}
+						value={submission.author}
+						onChange={(event) => updateAuthor(index, event.currentTarget.value)}
+						placeholder="Name"
+						className="border border-red-300 rounded-md px-1 ml-2 w-96"
+					/>
+
+					<label htmlFor={`submissionSrcIcon-${index}`}>Avatar link:</label>
+					<input
+						id={`submissionSrcIcon-${index}`}
+						value={submission.srcIcon}
+						onChange={(event) => updateSrcIcon(index, event.currentTarget.value)}
+						placeholder="Link"
+						type="url"
+						className="border border-red-300 rounded-md px-1 ml-2 w-96"
+					/>
+
+					{(submission.type === 'video' || submission.type === 'image') ? (
+						<>
+							<label htmlFor={`submissionSrc-${index}`}>
+								{submission.type === 'video' ? 'Video ' : 'Image '}
+								link:
+							</label>
 							<input
 								required
+								id={`submissionSrc-${index}`}
 								value={submission.src}
 								onChange={(event) => updateSrc(index, event.currentTarget.value)}
 								placeholder="Link"
 								type="url"
 								className="border border-red-300 rounded-md px-1 ml-2 w-96"
 							/>
-						)
-				}
-				<TrashIcon className="w-6 h-6 ml-2 cursor-pointer" onClick={() => removeSubmissions(index)} />
+						</>
+					)
+						: ''}
+
+					<label htmlFor={`submissionMessage-${index}`}>Message:</label>
+					{(!submission.type || submission.type === 'text') ? (
+						<textarea
+							required
+							id={`submissionMessage-${index}`}
+							value={submission.message}
+							onChange={(event) => updateMessage(index, event.currentTarget.value)}
+							placeholder="Message"
+							autoCapitalize="words"
+							className="border border-red-300 rounded-md px-1 ml-2 w-96"
+						/>
+					)
+						: (
+							<textarea
+								id={`submissionMessage-${index}`}
+								value={submission.message}
+								onChange={(event) => updateMessage(index, event.currentTarget.value)}
+								placeholder="Message"
+								autoCapitalize="words"
+								className="border border-red-300 rounded-md px-1 ml-2 w-96"
+							/>
+						)}
+				</div>
+				<TrashIcon className="w-6 h-6 ml-2 mt-4 cursor-pointer" onClick={() => removeSubmissions(index)} />
 			</div>
 		));
 
 		setSubmissionsHtml(html);
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [submissions]);
 
 	return (
@@ -577,6 +639,7 @@ export default function ProjectEditPage({ doc }: IProps) {
 									<textarea
 										required
 										value={description}
+										onChange={() => {}}
 										className="hidden"
 									/>
 								</div>
