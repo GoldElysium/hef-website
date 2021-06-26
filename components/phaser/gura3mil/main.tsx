@@ -84,11 +84,6 @@ class Main extends Phaser.Scene {
 				child: this.sizer,
 				mask: false,
 			},
-			slider: {
-				thumb: this.add.rectangle(0, 0, 30, 50, 0xFEFEFE, 75).setOrigin(1, 0),
-				track: this.add.rectangle(0, 0, 30, 50, 0xF0F0F0).setAlpha(0.5).setOrigin(1, 0),
-				input: 'click',
-			},
 			scroller: {
 				slidingDeceleration: 7500,
 			},
@@ -105,7 +100,6 @@ class Main extends Phaser.Scene {
 					this.panel.layout();
 				}
 			}).setAlpha(0);
-		this.panel.getElement('slider').setDepth(5);
 
 		// this.counter = this.ui.text(this.width - 35, this.height - 15, '', 42, null, {
 		// 	align: 'right',

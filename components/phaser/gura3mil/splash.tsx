@@ -19,6 +19,8 @@ class Splash extends Phaser.Scene {
 
 	public gura?: Phaser.GameObjects.Video;
 
+	public title!: Phaser.GameObjects.Image;
+
 	public container: any;
 
 	init({ subCount }: { subCount: number }) {
@@ -33,19 +35,20 @@ class Splash extends Phaser.Scene {
 	preload() {
 		this.load.image('bg', '/assets/gura3mil/bg.webp');
 		this.load.video('gura', '/assets/gura3mil/gura.webm', undefined, true, true);
+		this.load.image('title', '/assets/gura3mil/title.webp');
+
+		const i = this.ui.clamp(Math.floor((this.subCount - 2900000) / 20000) - 1, 0, 4);
+		this.key = `bamboo${i}`;
+		this.load.image(this.key, [
+			'/assets/gura3mil/bamboo1.webp',
+			'/assets/gura3mil/bamboo2.webp',
+			'/assets/gura3mil/bamboo3.webp',
+			'/assets/gura3mil/bamboo4.webp',
+		][i]);
 
 		// @ts-expect-error Missing type
 		this.load.rexAwait(async (resolve) => {
 			await this.googleFonts.configure();
-
-			const i = this.ui.clamp(Math.floor((this.subCount - 2900000) / 20000) - 1, 0, 4);
-			this.key = `bamboo${i}`;
-			this.load.image(this.key, [
-				'/assets/gura3mil/bamboo1.webp',
-				'/assets/gura3mil/bamboo2.webp',
-				'/assets/gura3mil/bamboo3.webp',
-				'/assets/gura3mil/bamboo4.webp',
-			][i]);
 			resolve();
 		});
 	}
@@ -55,6 +58,10 @@ class Splash extends Phaser.Scene {
 			.setOrigin(0.5, 0.5)
 			.setDisplaySize(this.width, this.height)
 			.setScale(1.2);
+		this.title = this.add.image(this.width / 2, -550, 'title')
+			.setOrigin(0.5, 0)
+			.setDepth(6)
+			.setScale(0.95);
 		this.bamboo = this.add.image(this.width / 2, this.height - 5, this.key as string)
 			.setOrigin(0.5, 1)
 			.setDepth(1)
@@ -93,6 +100,23 @@ class Splash extends Phaser.Scene {
 				alpha: 1,
 				offset: '-=1000',
 			})
+			.add({
+				targets: this.title,
+				ease: 'Sine.easeInOut',
+				duration: 1500,
+				y: '+=600',
+				offset: '-=500',
+			})
+			.once('complete', () => {
+				this.tweens.add({
+					targets: this.title,
+					ease: 'Sine.easeInOut',
+					duration: 1500,
+					y: this.title.y + 20,
+					yoyo: true,
+					loop: -1,
+				});
+			})
 			.play();
 
 		this.input.once('pointerup', async () => {
@@ -117,6 +141,14 @@ class Splash extends Phaser.Scene {
 					duration: 1000,
 					alpha: 0,
 					offset: '-=1000',
+				})
+				.add({
+					targets: this.title,
+					ease: 'Sine.easeInOut',
+					duration: 2000,
+					y: '-=250',
+					scale: 0.8,
+					offset: '-=2000',
 				});
 
 			timeline.once('start', async () => {
