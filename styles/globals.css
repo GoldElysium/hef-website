@@ -144,3 +144,17 @@
 .markdown-body code {
   color: #000;
 }
+
+.phaser-container {
+  position: relative;
+}
+
+.canvas-fullscreen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-top: unset !important;
+  z-index: 5;
+  width: 100% !important;
+  height: auto !important;
+}
