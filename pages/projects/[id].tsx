@@ -13,6 +13,7 @@ import Header from '../../components/Header';
 import TextHeader from '../../components/TextHeader';
 import Project, { ILink, IProject } from '../../models/Project';
 import Submission, { ISubmission } from '../../models/Submission';
+import Phaser from '../../components/project/Phaser';
 import 'github-markdown-css';
 
 const SUBMISSIONS_PER_LOAD = 10;
@@ -121,7 +122,7 @@ export default function ProjectPage({ doc, allSubmissions }: IProps) {
 	} */
 
 	let themeStyle = 'theme-ina';
-	if (router.query.id === '3') {
+	if (router.query.id === '3' || router.query.id === '4') {
 		themeStyle = 'theme-gura';
 	}
 
@@ -231,6 +232,7 @@ export default function ProjectPage({ doc, allSubmissions }: IProps) {
 									</div>
 								</div>
 							)}
+							{router.query.id === '4' && (<Phaser scene="gura3mil" />)}
 						</div>
 					</div>
 				</div>
