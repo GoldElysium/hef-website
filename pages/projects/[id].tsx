@@ -1,65 +1,41 @@
 import ReactPlayer from 'react-player';
 import { useEffect, useState } from 'react';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/outline';
-import Error from 'next/error';
 import { useRouter } from 'next/router';
 import ReactMarkdown from 'react-markdown';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { GetServerSideProps } from 'next';
+import mongoose from 'mongoose';
+import safeJsonStringify from 'safe-json-stringify';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 import TextHeader from '../../components/TextHeader';
-import { IProject } from '../../models/Project';
-import { ISubmission } from '../../models/Submission';
+import Project, { ILink, IProject } from '../../models/Project';
+import Submission, { ISubmission } from '../../models/Submission';
 import 'github-markdown-css';
 
 const SUBMISSIONS_PER_LOAD = 10;
 
-export default function ProjectPage() {
+interface IProps {
+	doc: IProject,
+	allSubmissions: ISubmission[]
+}
+
+// eslint-disable-next-line max-len
+export default function ProjectPage({ doc, allSubmissions }: IProps) {
 	const router = useRouter();
 	const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
-	const [doc, setDoc] = useState<IProject>({} as IProject);
-	const [allSubmissions, setAllSubmissions] = useState<ISubmission[]>([]);
 	const [shownSubmissions, setShownSubmissions] = useState<ISubmission[]>([]);
-	const [errorCode, setErrorCode] = useState<boolean | number>(false);
-
-	useEffect(() => {
-		async function run() {
-			if (!router.query.id) return;
-			const res = await fetch(`/api/projects/${router.query.id}`, {
-				method: 'GET',
-				headers: {
-					Accept: 'application/json',
-					'Content-Type': 'application/json;charset=UTF-8',
-				},
-			});
-			// eslint-disable-next-line consistent-return
-			if (!res.ok) return setErrorCode(res.status);
-
-			const submissionsRes = await fetch(`/api/submissions/${router.query.id}`, {
-				method: 'GET',
-				headers: {
-					Accept: 'application/json',
-					'Content-Type': 'application/json;charset=UTF-8',
-				},
-			});
-			// eslint-disable-next-line consistent-return
-			if (!submissionsRes.ok) return setErrorCode(submissionsRes.status);
-
-			const json: IProject = await res.json();
-			setDoc(json);
-			const submissionsJson: ISubmission[] = await submissionsRes.json();
-			setAllSubmissions(submissionsJson);
-			setShownSubmissions(submissionsJson.slice(0, SUBMISSIONS_PER_LOAD));
-		}
-
-		run();
-	}, [router.query]);
 
 	const loadMoreSubmissions = () => {
 		const newSubLength = shownSubmissions.length + SUBMISSIONS_PER_LOAD;
 		setShownSubmissions(allSubmissions.slice(0, newSubLength));
 	};
+
+	useEffect(() => {
+		setShownSubmissions(allSubmissions.slice(0, SUBMISSIONS_PER_LOAD));
+	}, [allSubmissions]);
 
 	function CurrentGalleryItem() {
 		if (!doc.media) return <></>;
@@ -140,9 +116,9 @@ export default function ProjectPage() {
 		);
 	}
 
-	if (errorCode) {
+	/* if (errorCode) {
 		return <Error statusCode={errorCode as number} />;
-	}
+	} */
 
 	let themeStyle = 'theme-ina';
 	if (router.query.id === '3') {
@@ -222,7 +198,7 @@ export default function ProjectPage() {
 									<TextHeader text="Links" />
 									<div className="flex justify-center space-x-6 px-4 sm:px-0">
 										{doc.links
-											&& doc.links.map((link, index) => (
+											&& doc.links.map((link: ILink, index: number) => (
 												<div
 													key={`link-${index}` /* eslint-disable-line react/no-array-index-key */}
 													className="rounded-3xl font-bold w-[6rem] h-10 flex items-center justify-center mt-4 content-end
@@ -264,3 +240,42 @@ export default function ProjectPage() {
 		</div>
 	);
 }
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+	try {
+		mongoose.connect(process.env.MONGOOSEURL as string, {
+			useNewUrlParser: true,
+			useUnifiedTopology: true,
+			useFindAndModify: false,
+		});
+		// eslint-disable-next-line no-empty
+	} catch (e) {}
+
+	const project = await Project.findById(context.params?.id).lean().exec()
+		.catch((e) => {
+			throw e;
+		});
+
+	if (!project) {
+		return {
+			notFound: true,
+		};
+	}
+
+	const projectData: IProject = await JSON.parse(safeJsonStringify(project));
+
+	const submissions: ISubmission[] = await Submission.find({
+		project: Number.parseInt(context.params?.id as string, 10),
+	}).lean().exec().catch((e) => {
+		throw e;
+	});
+
+	const projectSubmissions: ISubmission[] = await JSON.parse(safeJsonStringify(submissions));
+
+	return {
+		props: {
+			doc: projectData,
+			allSubmissions: projectSubmissions,
+		},
+	};
+};

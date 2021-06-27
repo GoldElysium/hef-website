@@ -22,6 +22,7 @@ export interface IProject {
 	description: string,
 	links?: ILink[],
 	date: Date,
+	flags?: string[],
 }
 
 interface IProjectDocument extends IProject, Document {
@@ -66,6 +67,7 @@ const ProjectSchema: Schema = new Schema({
 	description: { type: String, required: true },
 	links: { type: [LinkSchema], default: undefined },
 	date: { type: Date, default: new Date() },
+	flags: { type: [String], default: undefined },
 });
 
 // eslint-disable-next-line func-names
