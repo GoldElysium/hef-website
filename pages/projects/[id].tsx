@@ -1,5 +1,5 @@
 import ReactPlayer from 'react-player';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/outline';
 import { useRouter } from 'next/router';
 import ReactMarkdown from 'react-markdown';
@@ -32,6 +32,10 @@ export default function ProjectPage({ doc, allSubmissions }: IProps) {
 		const newSubLength = shownSubmissions.length + SUBMISSIONS_PER_LOAD;
 		setShownSubmissions(allSubmissions.slice(0, newSubLength));
 	};
+
+	useEffect(() => {
+		setShownSubmissions(allSubmissions.slice(0, SUBMISSIONS_PER_LOAD));
+	}, [allSubmissions]);
 
 	function CurrentGalleryItem() {
 		if (!doc.media) return <></>;
