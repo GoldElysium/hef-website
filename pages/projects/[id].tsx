@@ -232,7 +232,7 @@ export default function ProjectPage({ doc, allSubmissions }: IProps) {
 									</div>
 								</div>
 							)}
-							{router.query.id === '4' && (<Phaser scene="gura3mil" />)}
+							{router.query.id === '4' && (<Phaser scene="gura3mil" data={{ submissions: allSubmissions }} />)}
 						</div>
 					</div>
 				</div>

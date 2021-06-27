@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 // eslint-disable-next-line max-len
 interface IProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
@@ -6,11 +7,14 @@ interface IProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivEle
 	config?: Phaser.Types.Core.GameConfig;
 	width?: number;
 	height?: number;
+	data?: any;
 }
 
 const Links = ({
-	id, scene, config = {}, width, height,
+	id, scene, config = {}, width, height, data = {},
 }: IProps) => {
+	const router = useRouter();
+
 	useEffect(() => {
 		const fixedConfig = {
 			...config,
@@ -33,7 +37,7 @@ const Links = ({
 					default: break;
 				}
 			}
-			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+
 			const game = new Phaser.Game({
 				type: Phaser.WEBGL,
 				parent: id ?? 'game',
@@ -46,6 +50,13 @@ const Links = ({
 				scene,
 				...(fixedConfig),
 			});
+			game.registry.set('data', data);
+
+			const handler = () => {
+				game.destroy(true);
+				router.events.off('routeChangeStart', handler);
+			};
+			router.events.on('routeChangeStart', handler);
 		})();
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
@@ -58,6 +69,7 @@ Links.defaultProps = {
 	width: 1920,
 	height: 1080,
 	scene: undefined,
+	data: undefined,
 };
 
 export default Links;
