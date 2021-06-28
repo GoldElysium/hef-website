@@ -42,7 +42,7 @@ const Links = ({
 				type: Phaser.WEBGL,
 				parent: id ?? 'game',
 				scale: {
-					width: width ?? 1920,
+					width: width ?? 2474,
 					height: height ?? 1080,
 					mode: Phaser.Scale.FIT,
 					autoCenter: Phaser.Scale.CENTER_BOTH,
@@ -50,6 +50,7 @@ const Links = ({
 				scene,
 				...(fixedConfig),
 			});
+			if (!game.device.os.desktop) game.scale.setGameSize(1920, 1080);
 			game.registry.set('data', data);
 
 			const handler = () => {
@@ -61,13 +62,13 @@ const Links = ({
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	return <div id={id ?? 'game'} className="phaser-container max-w-6xl w-full" />;
+	return <div id={id ?? 'game'} className="phaser-container w-full" />;
 };
 
 Links.defaultProps = {
 	config: undefined,
-	width: 1920,
-	height: 1080,
+	width: undefined,
+	height: undefined,
 	scene: undefined,
 	data: undefined,
 };

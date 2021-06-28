@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import Router from 'next/router';
 
 class Splash extends Phaser.Scene {
 	public width!: number;
@@ -13,7 +14,7 @@ class Splash extends Phaser.Scene {
 
 	public key?: string;
 
-	public bg?: Phaser.GameObjects.Image;
+	public bg!: any;
 
 	public bamboo?: Phaser.GameObjects.Image;
 
@@ -22,6 +23,8 @@ class Splash extends Phaser.Scene {
 	public title!: Phaser.GameObjects.Image;
 
 	public container: any;
+
+	public back!: Phaser.GameObjects.Image;
 
 	init({ subCount }: { subCount: number }) {
 		const { width, height } = this.game.canvas;
@@ -36,6 +39,7 @@ class Splash extends Phaser.Scene {
 		this.load.image('bg', '/assets/gura3mil/bg.webp');
 		this.load.video('gura', '/assets/gura3mil/gura.webm', undefined, true, true);
 		this.load.image('title', '/assets/gura3mil/title.webp');
+		this.load.image('back', '/assets/gura3mil/back.webp');
 
 		const i = this.ui.clamp(Math.floor((this.subCount - 2900000) / 20000) - 1, 0, 4);
 		this.key = `bamboo${i}`;
@@ -48,11 +52,49 @@ class Splash extends Phaser.Scene {
 	}
 
 	async create() {
-		this.bg = this.add.image(this.width / 2, this.height / 2, 'bg')
-			.setOrigin(0.5, 0.5)
-			.setDisplaySize(this.width, this.height)
-			.setAlpha(0)
-			.setScale(0.7);
+		this.back = this.add.image(5, 0, 'back')
+			.setOrigin(0, 0)
+			.setDepth(5)
+			.setScale(0.75)
+			.setInteractive({ pixelPerfect: true, cursor: 'pointer' })
+			.once('pointerup', () => Router.push('/'));
+
+		if (this.game.device.os.desktop) {
+			// @ts-expect-error
+			this.bg = this.rexUI.add.sizer({
+				orientation: 0,
+				height: this.height,
+				width: this.width,
+				x: this.width / 2,
+				y: this.height / 2,
+				anchor: {
+					x: '50%',
+					y: '50%',
+				},
+			});
+
+			Array(3).fill(0).forEach((_, i) => {
+				this.bg.add(
+					this.add.image(0, 0, 'bg')
+						.setOrigin(0.5, 0.5)
+						.setDisplaySize(this.width, this.height)
+						.setAlpha(0)
+						.setScale(0.7),
+					{
+						align: ['left', 'center', 'right'][i],
+					},
+				);
+			});
+
+			this.bg.layout();
+		} else {
+			this.bg = this.add.image(this.width / 2, this.height / 2, 'bg')
+				.setOrigin(0.5, 0.5)
+				.setDisplaySize(this.width, this.height)
+				.setAlpha(0)
+				.setScale(0.7);
+		}
+
 		this.title = this.add.image(this.width / 2, -550, 'title')
 			.setOrigin(0.5, 0)
 			.setDepth(6)
@@ -82,7 +124,7 @@ class Splash extends Phaser.Scene {
 				zoom: 1,
 			})
 			.add({
-				targets: [this.container, this.bg],
+				targets: [this.container, ...(this?.bg?.children ?? [this.bg])],
 				ease: 'Sine.easeInOut',
 				duration: 500,
 				alpha: 1,

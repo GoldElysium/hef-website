@@ -40,8 +40,6 @@ export default class UI extends Phaser.Plugins.ScenePlugin {
 			// Watch for fullscreen and always lock to landscape
 			this.game.scale.on('enterfullscreen', () => {
 				if (!this.scene.game.device.os.desktop) {
-					// eslint-disable-next-line no-empty
-					try { this.game.scale.lockOrientation(Phaser.Scale.LANDSCAPE); } catch {}
 					// @ts-expect-error
 					try { ScreenOrientation.lock('landscape'); } catch {} // eslint-disable-line no-empty
 					// eslint-disable-next-line no-empty
@@ -53,8 +51,6 @@ export default class UI extends Phaser.Plugins.ScenePlugin {
 
 				canvas.classList.add('canvas-fullscreen');
 			}).on('leavefullscreen', () => {
-				// eslint-disable-next-line no-empty
-				try { this.game.scale.lockOrientation('default'); } catch {}
 				// @ts-expect-error
 				try { ScreenOrientation.unlock(); } catch {} // eslint-disable-line no-empty
 				// eslint-disable-next-line no-empty

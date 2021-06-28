@@ -122,8 +122,14 @@ export default function ProjectPage({ doc, allSubmissions }: IProps) {
 	} */
 
 	let themeStyle = 'theme-ina';
-	if (router.query.id === '3' || router.query.id === '6') {
+	let hideContent = false;
+	if (router.query.id === '3') {
 		themeStyle = 'theme-gura';
+	}
+
+	if (router.query.id === '6') {
+		themeStyle = 'theme-gura';
+		hideContent = true;
 	}
 
 	return (
@@ -131,74 +137,76 @@ export default function ProjectPage({ doc, allSubmissions }: IProps) {
 			<div className="flex flex-col h-full min-h-screen bg-skin-background-1 dark:bg-skin-dark-background-1">
 				<Navbar />
 
-				<Header
-					title={doc.title ?? 'unknown'}
-					description={doc.shortDescription ?? ''}
-				/>
+				{!hideContent && (
+					<>
+						<Header
+							title={doc.title ?? 'unknown'}
+							description={doc.shortDescription ?? ''}
+						/>
 
-				<div className="flex-grow">
-					<div className="my-16 w-full flex flex-col items-center">
-						<div className="max-w-4xl w-full mx-4 break-words md:break-normal">
-							<div>
-								<TextHeader text="Description" />
-								<div className="markdown-body">
-									<ReactMarkdown className="px-4 sm:px-0 text-black dark:text-white dark:text-opacity-80">
-										{
-											doc.description && doc.description
-												.replace(/(\\\n```)/gim, '\n```')
-												.replace(/(```\n\\)|(```\n\n\\)/gim, '```\n')
-										}
-									</ReactMarkdown>
-								</div>
-							</div>
-							{(doc.media?.length ?? 0) > 0 && (
-								<div className="mt-4">
-									<TextHeader text="Gallery" />
-									<div className="flex flex-col items-center pt-2">
-										<div className="w-full h-52 sm:w-8/12 sm:h-96">
-											<CurrentGalleryItem />
-										</div>
-										<div className="flex mt-2 font-bold items-center justify-center text-center">
-											<ChevronLeftIcon
-												className={
-													currentMediaIndex > 0
-														? 'h-8 w-8 cursor-pointer text-black dark:text-white'
-														: 'h-8 w-8 text-skin-primary-1 text-opacity-30 dark:text-skin-dark-primary-1 dark:text-opacity-30'
+						<div className="flex-grow">
+							<div className="my-16 w-full flex flex-col items-center">
+								<div className="max-w-4xl w-full mx-4 break-words md:break-normal">
+									<div>
+										<TextHeader text="Description" />
+										<div className="markdown-body">
+											<ReactMarkdown className="px-4 sm:px-0 text-black dark:text-white dark:text-opacity-80">
+												{
+													doc.description && doc.description
+														.replace(/(\\\n```)/gim, '\n```')
+														.replace(/(```\n\\)|(```\n\n\\)/gim, '```\n')
 												}
-												onClick={() => {
-													if (currentMediaIndex > 0) {
-														setCurrentMediaIndex(currentMediaIndex - 1);
-													}
-												}}
-											/>
-											<span className="text-black dark:text-white">
-												{currentMediaIndex + 1}
-												/
-												{doc.media ? doc.media.length : 0}
-											</span>
-											<ChevronRightIcon
-												className={
-													currentMediaIndex + 1
-													< (doc.media ? doc.media.length : 0)
-														? 'h-8 w-8 cursor-pointer text-black dark:text-white'
-														: 'h-8 w-8 text-skin-primary-1 text-opacity-30 dark:text-skin-dark-primary-1 dark:text-opacity-30'
-												}
-												onClick={() => {
-													if (
-														currentMediaIndex + 1
-														< (doc.media ? doc.media.length : 0)
-													) { setCurrentMediaIndex(currentMediaIndex + 1); }
-												}}
-											/>
+											</ReactMarkdown>
 										</div>
 									</div>
-								</div>
-							)}
-							{(doc.links?.length ?? 0) > 0 && (
-								<div className="mt-4">
-									<TextHeader text="Links" />
-									<div className="flex justify-center space-x-6 px-4 sm:px-0">
-										{doc.links
+									{(doc.media?.length ?? 0) > 0 && (
+										<div className="mt-4">
+											<TextHeader text="Gallery" />
+											<div className="flex flex-col items-center pt-2">
+												<div className="w-full h-52 sm:w-8/12 sm:h-96">
+													<CurrentGalleryItem />
+												</div>
+												<div className="flex mt-2 font-bold items-center justify-center text-center">
+													<ChevronLeftIcon
+														className={
+															currentMediaIndex > 0
+																? 'h-8 w-8 cursor-pointer text-black dark:text-white'
+																: 'h-8 w-8 text-skin-primary-1 text-opacity-30 dark:text-skin-dark-primary-1 dark:text-opacity-30'
+														}
+														onClick={() => {
+															if (currentMediaIndex > 0) {
+																setCurrentMediaIndex(currentMediaIndex - 1);
+															}
+														}}
+													/>
+													<span className="text-black dark:text-white">
+														{currentMediaIndex + 1}
+														/
+														{doc.media ? doc.media.length : 0}
+													</span>
+													<ChevronRightIcon
+														className={
+															currentMediaIndex + 1
+													< (doc.media ? doc.media.length : 0)
+																? 'h-8 w-8 cursor-pointer text-black dark:text-white'
+																: 'h-8 w-8 text-skin-primary-1 text-opacity-30 dark:text-skin-dark-primary-1 dark:text-opacity-30'
+														}
+														onClick={() => {
+															if (
+																currentMediaIndex + 1
+														< (doc.media ? doc.media.length : 0)
+															) { setCurrentMediaIndex(currentMediaIndex + 1); }
+														}}
+													/>
+												</div>
+											</div>
+										</div>
+									)}
+									{(doc.links?.length ?? 0) > 0 && (
+										<div className="mt-4">
+											<TextHeader text="Links" />
+											<div className="flex justify-center space-x-6 px-4 sm:px-0">
+												{doc.links
 											&& doc.links.map((link: ILink, index: number) => (
 												<div
 													key={`link-${index}` /* eslint-disable-line react/no-array-index-key */}
@@ -210,32 +218,34 @@ export default function ProjectPage({ doc, allSubmissions }: IProps) {
 													</a>
 												</div>
 											))}
-									</div>
-								</div>
-							)}
-							{/* TODO: Move submissions to separate tab */}
-							{((shownSubmissions?.length ?? 0) > 0) && (
-								<div className="mt-4">
-									<TextHeader text="Submissions" />
-									<div className="flex flex-col items-center pt-2">
-										<div className="w-full overflow-auto">
-											<InfiniteScroll
-												dataLength={shownSubmissions.length}
-												next={loadMoreSubmissions}
-												hasMore={shownSubmissions.length < allSubmissions.length}
-												loader={<p className="text-black dark:text-white text-center mt-4">Loading...</p>}
-												scrollThreshold="500px"
-											>
-												<Submissions />
-											</InfiniteScroll>
+											</div>
 										</div>
-									</div>
+									)}
+									{/* TODO: Move submissions to separate tab */}
+									{((shownSubmissions?.length ?? 0) > 0) && (
+										<div className="mt-4">
+											<TextHeader text="Submissions" />
+											<div className="flex flex-col items-center pt-2">
+												<div className="w-full overflow-auto">
+													<InfiniteScroll
+														dataLength={shownSubmissions.length}
+														next={loadMoreSubmissions}
+														hasMore={shownSubmissions.length < allSubmissions.length}
+														loader={<p className="text-black dark:text-white text-center mt-4">Loading...</p>}
+														scrollThreshold="500px"
+													>
+														<Submissions />
+													</InfiniteScroll>
+												</div>
+											</div>
+										</div>
+									)}
 								</div>
-							)}
-							{router.query.id === '6' && (<Phaser scene="gura3mil" data={{ submissions: allSubmissions }} />)}
+							</div>
 						</div>
-					</div>
-				</div>
+					</>
+				)}
+				{router.query.id === '6' && (<Phaser scene="gura3mil" data={{ submissions: allSubmissions }} />)}
 
 				<Footer />
 			</div>

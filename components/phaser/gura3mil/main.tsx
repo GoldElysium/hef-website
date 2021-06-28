@@ -4,7 +4,15 @@ import { ISubmission } from '../../../models/Submission';
 const BASE_WIDTH = 2280;
 const BASE_HEIGHT = 1620;
 const PAPERS = ['blue', 'purple', 'orange', 'white', 'red'];
-const PAPER_POS = [
+const PAPER_POS_DESKTOP = [
+	[545, 320],
+	[975, 320],
+	[1435, 212],
+	[1955, 280],
+	[2345, 280],
+];
+
+const PAPER_POS_NONDESKTOP = [
 	[410, 320],
 	[905, 320],
 	[1435, 212],
@@ -52,8 +60,6 @@ class Main extends Phaser.Scene {
 		this.load.image('purple', '/assets/gura3mil/papers/purple.webp');
 		this.load.image('red', '/assets/gura3mil/papers/red.webp');
 		this.load.image('white', '/assets/gura3mil/papers/white.webp');
-
-		this.load.image('back', '/assets/gura3mil/back.webp');
 	}
 
 	create() {
@@ -93,23 +99,7 @@ class Main extends Phaser.Scene {
 			clamplChildOY: true,
 		})
 			.layout()
-			.on('scroll', ({ t }: { t: number }) => {
-				// this.setValues();
-				if (t >= 0.75) {
-					if (this.sizer.getElement('items').length >= 20) return;
-					this.sizer.add(this.generatePage(this.ui.shuffle(['HELLO WORLDADDDDD', 'HELLO WORLD', 'HELLO WORLD', 'HELLO WORLD', null])).container, {
-						align: 'left',
-					});
-					this.panel.layout();
-				}
-			}).setAlpha(0);
-
-		// this.counter = this.ui.text(this.width - 35, this.height - 15, '', 42, null, {
-		// 	align: 'right',
-		// 	fontFamily: 'Gloria Hallelujah',
-		// 	color: '#fefefe',
-		// }, true).setDepth(5).setOrigin(1, 1);
-		// this.setValues();
+			.setAlpha(0);
 
 		this.back = this.add.image(5, 0, 'back')
 			.setOrigin(0, 0)
@@ -159,14 +149,46 @@ class Main extends Phaser.Scene {
 	}
 
 	generatePage(messages: string[] = []) {
-		const bg = this.add.image(0, 0, 'zoomed1')
-			.setOrigin(0, 0)
-			.setDisplaySize(this.width, this.height);
+		let bg: any;
+		let paperPos: number[][];
+
+		if (this.game.device.os.desktop) {
+			paperPos = PAPER_POS_DESKTOP;
+			bg = this.rexUI.add.sizer({
+				orientation: 0,
+				height: this.height,
+				width: this.width,
+				x: this.width / 2,
+				y: this.height / 2,
+				anchor: {
+					x: '50%',
+					y: '50%',
+				},
+			});
+
+			Array(3).fill(0).forEach((_, i) => {
+				bg.add(
+					this.add.image(0, 0, 'zoomed1')
+						.setOrigin(0, 0)
+						.setDisplaySize(2150, 1080),
+					{
+						align: ['left', 'center', 'right'][i],
+					},
+				);
+			});
+
+			bg.layout();
+		} else {
+			paperPos = PAPER_POS_NONDESKTOP;
+			bg = this.add.image(0, 0, 'zoomed1')
+				.setOrigin(0, 0)
+				.setDisplaySize(1920, 1080);
+		}
 
 		// @ts-expect-error
 		const placed = this.add.rexContainerLite(0, 0, this.width, this.height);
 		const papers = this.ui.shuffle(PAPERS);
-		PAPER_POS.forEach((c, i) => {
+		paperPos.forEach((c, i) => {
 			if (messages[i] === undefined || messages[i] === null) return;
 
 			const x = c[0] * ((this.width / BASE_WIDTH) * 0.7895);
