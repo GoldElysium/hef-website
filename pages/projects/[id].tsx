@@ -122,7 +122,7 @@ export default function ProjectPage({ doc, allSubmissions }: IProps) {
 	} */
 
 	let themeStyle = 'theme-ina';
-	if (router.query.id === '3' || router.query.id === '4') {
+	if (router.query.id === '3' || router.query.id === '6') {
 		themeStyle = 'theme-gura';
 	}
 
@@ -232,7 +232,7 @@ export default function ProjectPage({ doc, allSubmissions }: IProps) {
 									</div>
 								</div>
 							)}
-							{router.query.id === '4' && (<Phaser scene="gura3mil" data={{ submissions: allSubmissions }} />)}
+							{router.query.id === '6' && (<Phaser scene="gura3mil" data={{ submissions: allSubmissions }} />)}
 						</div>
 					</div>
 				</div>

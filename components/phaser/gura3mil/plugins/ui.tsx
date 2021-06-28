@@ -103,4 +103,12 @@ export default class UI extends Phaser.Plugins.ScenePlugin {
 
 		return a;
 	}
+
+	// eslint-disable-next-line class-methods-use-this
+	convertTo2D(array = [], row = 2) {
+		const newArr = [];
+		while (array.length) newArr.push(array.splice(0, row));
+
+		return newArr;
+	}
 }

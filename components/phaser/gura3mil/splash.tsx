@@ -45,19 +45,13 @@ class Splash extends Phaser.Scene {
 			'/assets/gura3mil/bamboo3.webp',
 			'/assets/gura3mil/bamboo4.webp',
 		][i]);
-
-		// @ts-expect-error Missing type
-		this.load.rexAwait(async (resolve) => {
-			await this.googleFonts.configure();
-			resolve();
-		});
 	}
 
 	async create() {
 		this.bg = this.add.image(this.width / 2, this.height / 2, 'bg')
 			.setOrigin(0.5, 0.5)
 			.setDisplaySize(this.width, this.height)
-			.setScale(1.2);
+			.setAlpha(0);
 		this.title = this.add.image(this.width / 2, -550, 'title')
 			.setOrigin(0.5, 0)
 			.setDepth(6)
@@ -78,7 +72,6 @@ class Splash extends Phaser.Scene {
 			.addMultiple([this.bamboo, this.gura])
 			.setAlpha(0);
 
-		this.cameras.main.setZoom(0.8);
 		this.tweens.createTimeline()
 			.add({
 				targets: this.cameras.main,
@@ -90,11 +83,11 @@ class Splash extends Phaser.Scene {
 				targets: this.bg,
 				ease: 'Sine.easeInOut',
 				duration: 1000,
-				scale: 1,
+				scale: 0.7,
 				offset: '-=1000',
 			})
 			.add({
-				targets: this.container,
+				targets: [this.container, this.bg],
 				ease: 'Sine.easeInOut',
 				duration: 500,
 				alpha: 1,
@@ -104,7 +97,7 @@ class Splash extends Phaser.Scene {
 				targets: this.title,
 				ease: 'Sine.easeInOut',
 				duration: 1500,
-				y: '+=600',
+				y: '+=560',
 				offset: '-=500',
 			})
 			.once('complete', () => {
@@ -129,7 +122,7 @@ class Splash extends Phaser.Scene {
 					zoom: 1.8,
 				})
 				.add({
-					targets: this.container,
+					targets: [this.container, this.bg],
 					ease: 'Sine.easeInOut',
 					duration: 2000,
 					y: '-=250',
@@ -146,7 +139,7 @@ class Splash extends Phaser.Scene {
 					targets: this.title,
 					ease: 'Sine.easeInOut',
 					duration: 2000,
-					y: '-=250',
+					y: '-=300',
 					scale: 0.8,
 					offset: '-=2000',
 				});

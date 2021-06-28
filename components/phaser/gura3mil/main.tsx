@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { ISubmission } from '../../../models/Submission';
 
 const BASE_WIDTH = 2280;
 const BASE_HEIGHT = 1620;
@@ -56,6 +57,8 @@ class Main extends Phaser.Scene {
 	}
 
 	create() {
+		const submissions = this.ui.convertTo2D((this.registry.values?.data!.submissions as ISubmission[]).map((s) => `${s.message}\n\n${s.author}`), 5);
+
 		this.sizer = this.rexUI.add.sizer({
 			orientation: 'y',
 			space: {
@@ -63,13 +66,10 @@ class Main extends Phaser.Scene {
 				bottom: this.height / 2,
 				left: -(this.width / 2),
 			},
-		})
-			.add(this.generatePage(['HELLO WORLDADDDDDDD', 'HELLO WORLD', 'HELLO WORLD', 'HELLO WORLD', 'HELLO WORLD']).container, {
-				align: 'left',
-			})
-			.add(this.generatePage(['HELLO WORLDADDDDD', 'HELLO WORLD', 'HELLO WORLD', 'HELLO WORLD', 'HELLO WORLD']).container, {
-				align: 'left',
-			});
+		});
+		submissions.forEach((sr: string[]) => this.sizer.add(this.generatePage(sr).container, {
+			align: 'left',
+		}));
 
 		this.panel = this.rexUI.add.scrollablePanel({
 			x: 0,
