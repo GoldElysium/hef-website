@@ -62,7 +62,7 @@ const Links = ({
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	return <div id={id ?? 'game'} className="phaser-container h-screen" />;
+	return <div id={id ?? 'game'} className="phaser-container h-screen flex items-center justify-center" />;
 };
 
 Links.defaultProps = {

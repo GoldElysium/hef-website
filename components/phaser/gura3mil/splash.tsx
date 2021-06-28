@@ -87,11 +87,15 @@ class Splash extends Phaser.Scene {
 
 			this.bg.layout();
 		} else {
-			this.bg = this.add.image(this.width / 2, this.height / 2, 'bg')
-				.setOrigin(0.5, 0.5)
-				.setDisplaySize(this.width, this.height)
-				.setAlpha(0)
-				.setScale(0.7);
+			this.bg = {
+				children: [
+					this.add.image(this.width / 2, this.height / 2, 'bg')
+						.setOrigin(0.5, 0.5)
+						.setDisplaySize(this.width, this.height)
+						.setAlpha(0)
+						.setScale(0.7),
+				],
+			};
 		}
 
 		this.title = this.add.image(this.width / 2, -550, 'title')
@@ -123,7 +127,7 @@ class Splash extends Phaser.Scene {
 				zoom: 1,
 			})
 			.add({
-				targets: [this.container, ...(this?.bg?.children ?? [this.bg])],
+				targets: [this.container, ...this.bg.children],
 				ease: 'Sine.easeInOut',
 				duration: 500,
 				alpha: 1,
@@ -158,7 +162,7 @@ class Splash extends Phaser.Scene {
 					zoom: 1.8,
 				})
 				.add({
-					targets: [this.container, this.bg],
+					targets: [this.container, ...this.bg.children],
 					ease: 'Sine.easeInOut',
 					duration: 2000,
 					y: '-=250',
