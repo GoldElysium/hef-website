@@ -116,10 +116,6 @@ export default function ProjectPage({ doc, allSubmissions }: IProps) {
 		);
 	}
 
-	/* if (errorCode) {
-		return <Error statusCode={errorCode as number} />;
-	} */
-
 	let themeStyle = 'theme-ina';
 	if (router.query.id === '3') {
 		themeStyle = 'theme-gura';
@@ -128,12 +124,16 @@ export default function ProjectPage({ doc, allSubmissions }: IProps) {
 	return (
 		<div className={themeStyle}>
 			<div className="flex flex-col h-full min-h-screen bg-skin-background-1 dark:bg-skin-dark-background-1">
-				<Navbar />
+				{!doc.flags?.includes('disableNavbar') && <Navbar />}
 
-				<Header
-					title={doc.title ?? 'unknown'}
-					description={doc.shortDescription ?? ''}
-				/>
+				{
+					!doc.flags?.includes('disableHeader') && (
+						<Header
+							title={doc.title ?? 'unknown'}
+							description={doc.shortDescription ?? ''}
+						/>
+					)
+				}
 
 				<div className="flex-grow">
 					<div className="my-16 w-full flex flex-col items-center">
@@ -235,7 +235,7 @@ export default function ProjectPage({ doc, allSubmissions }: IProps) {
 					</div>
 				</div>
 
-				<Footer />
+				{!doc.flags?.includes('disableFooter') && <Footer />}
 			</div>
 		</div>
 	);
