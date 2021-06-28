@@ -43,7 +43,7 @@ const Links = ({
 				parent: id ?? 'game',
 				scale: {
 					width: width ?? 2474,
-					height: height ?? 1080,
+					height: height ?? 1200,
 					mode: Phaser.Scale.FIT,
 					autoCenter: Phaser.Scale.CENTER_BOTH,
 				},
@@ -62,7 +62,7 @@ const Links = ({
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	return <div id={id ?? 'game'} className="phaser-container w-full" />;
+	return <div id={id ?? 'game'} className="phaser-container h-screen" />;
 };
 
 Links.defaultProps = {

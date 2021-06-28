@@ -68,7 +68,7 @@ class Splash extends Phaser.Scene {
 				x: this.width / 2,
 				y: this.height / 2,
 				anchor: {
-					x: '50%',
+					x: '48%',
 					y: '50%',
 				},
 			});
@@ -77,9 +77,8 @@ class Splash extends Phaser.Scene {
 				this.bg.add(
 					this.add.image(0, 0, 'bg')
 						.setOrigin(0.5, 0.5)
-						.setDisplaySize(this.width, this.height)
 						.setAlpha(0)
-						.setScale(0.7),
+						.setScale(0.78),
 					{
 						align: ['left', 'center', 'right'][i],
 					},

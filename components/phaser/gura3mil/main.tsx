@@ -170,7 +170,7 @@ class Main extends Phaser.Scene {
 				bg.add(
 					this.add.image(0, 0, 'zoomed1')
 						.setOrigin(0, 0)
-						.setDisplaySize(2150, 1080),
+						.setDisplaySize(2150, this.height),
 					{
 						align: ['left', 'center', 'right'][i],
 					},
