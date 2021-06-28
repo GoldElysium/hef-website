@@ -12,6 +12,7 @@ import ContainerLitePlugin from 'phaser3-rex-plugins/plugins/containerlite-plugi
 import PerspectiveImagePlugin from 'phaser3-rex-plugins/plugins/perspectiveimage-plugin';
 // @ts-expect-error Missing types
 import AwaitLoaderPlugin from 'phaser3-rex-plugins/plugins/awaitloader-plugin';
+import Router from 'next/router';
 import GoogleFontsPlugin from './plugins/gfonts';
 import UIPl from './plugins/ui';
 
@@ -38,14 +39,15 @@ class Index extends Phaser.Scene {
 	public bgmControl?: Phaser.GameObjects.Image;
 
 	init() {
-		const { width, height } = this.game.canvas;
+		if (!this.ui) return Router.reload();
 
+		const { width, height } = this.game.canvas;
 		this.width = width;
 		this.height = height;
 
 		this.scene.add('main', Main);
 		this.scene.add('splash', Splash);
-		this.scene.bringToTop(this);
+		return this.scene.bringToTop(this);
 	}
 
 	preload() {
@@ -120,7 +122,7 @@ export const plugins = {
 	{
 		key: 'GoogleFontsPlugin',
 		plugin: GoogleFontsPlugin,
-		mapping: 'googleFonts',
+		start: true,
 	},
 	{
 		key: 'rexPerspectiveImagePlugin',
