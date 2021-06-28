@@ -66,8 +66,11 @@ class Main extends Phaser.Scene {
 				bottom: this.height / 2,
 				left: -(this.width / 2),
 			},
+		}).add(this.generatePage(submissions[0]).container, {
+			align: 'left',
 		});
-		submissions.forEach((sr: string[]) => this.sizer.add(this.generatePage(sr).container, {
+
+		submissions.slice(1).forEach((sr: string[]) => this.sizer.add(this.generatePage(sr).container, {
 			align: 'left',
 		}));
 
