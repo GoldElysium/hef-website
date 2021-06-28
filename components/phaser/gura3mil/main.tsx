@@ -57,7 +57,7 @@ class Main extends Phaser.Scene {
 	}
 
 	create() {
-		const submissions = this.ui.convertTo2D((this.registry.values?.data!.submissions as ISubmission[]).map((s) => `${s.message}\n\n${s.author}`), 5);
+		const submissions = this.ui.convertTo2D(((this.registry.values?.data?.submissions ?? []) as ISubmission[]).map((s) => `${s.message}\n\n${s.author}`), 5);
 
 		this.sizer = this.rexUI.add.sizer({
 			orientation: 'y',
