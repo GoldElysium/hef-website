@@ -51,7 +51,8 @@ class Splash extends Phaser.Scene {
 		this.bg = this.add.image(this.width / 2, this.height / 2, 'bg')
 			.setOrigin(0.5, 0.5)
 			.setDisplaySize(this.width, this.height)
-			.setAlpha(0);
+			.setAlpha(0)
+			.setScale(0.7);
 		this.title = this.add.image(this.width / 2, -550, 'title')
 			.setOrigin(0.5, 0)
 			.setDepth(6)
@@ -72,33 +73,27 @@ class Splash extends Phaser.Scene {
 			.addMultiple([this.bamboo, this.gura])
 			.setAlpha(0);
 
+		this.cameras.main.setZoom(1.2);
 		this.tweens.createTimeline()
 			.add({
 				targets: this.cameras.main,
 				ease: 'Sine.easeInOut',
-				duration: 1000,
+				duration: 1500,
 				zoom: 1,
-			})
-			.add({
-				targets: this.bg,
-				ease: 'Sine.easeInOut',
-				duration: 1000,
-				scale: 0.7,
-				offset: '-=1000',
 			})
 			.add({
 				targets: [this.container, this.bg],
 				ease: 'Sine.easeInOut',
 				duration: 500,
 				alpha: 1,
-				offset: '-=1000',
+				offset: '-=1500',
 			})
 			.add({
 				targets: this.title,
 				ease: 'Sine.easeInOut',
 				duration: 1500,
 				y: '+=560',
-				offset: '-=500',
+				offset: '-=1000',
 			})
 			.once('complete', () => {
 				this.tweens.add({
