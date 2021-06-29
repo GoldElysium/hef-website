@@ -206,12 +206,12 @@ class Main extends Phaser.Scene {
 				.setOrigin(0.5, 0)
 				.setInteractive({ pixelPerfect: true, cursor: 'pointer' })
 				.on('pointerup', () => this.showPaper(paper, message));
-			const author = this.ui.text(x, y + image.displayHeight - 50, message?.author, 32, 170)
+			const author = this.ui.text(x, y + image.displayHeight - 50, message.author, 32, 170)
 				.setOrigin(0.5, 0.5);
 			const objects = [image, author];
 
 			if (message.type === 'text') {
-				const text = this.ui.text(x, y + 100, message?.message, 32, 170, {
+				const text = this.ui.text(x, y + 100, message.message, 32, 170, {
 					maxLines: 15,
 				}).setOrigin(0.5, 0);
 				objects.push(text);
