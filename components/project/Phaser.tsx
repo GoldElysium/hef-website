@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import Head from 'next/head';
 
 // eslint-disable-next-line max-len
 interface IProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
@@ -11,9 +12,11 @@ interface IProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivEle
 }
 
 const Links = ({
-	id, scene, config = {}, width, height, data = {},
+	id, scene, config = {}, width, height, data = {}, title,
 }: IProps) => {
 	const router = useRouter();
+	const [isMobile, setMobile] = useState(false);
+	const [hideText, setHide] = useState(false);
 
 	useEffect(() => {
 		const fixedConfig = {
@@ -42,7 +45,7 @@ const Links = ({
 				type: Phaser.WEBGL,
 				parent: id ?? 'game',
 				scale: {
-					width: width ?? 2474,
+					width: width ?? 2480,
 					height: height ?? 1200,
 					mode: Phaser.Scale.FIT,
 					autoCenter: Phaser.Scale.CENTER_BOTH,
@@ -50,7 +53,19 @@ const Links = ({
 				scene,
 				...(fixedConfig),
 			});
-			if (!game.device.os.desktop) game.scale.setGameSize(1920, 1080);
+			if (!game.device.os.desktop) {
+				game.scale.setGameSize(1920, 1080);
+				setMobile(true);
+				setHide(game.scale.isLandscape);
+
+				game.scale.on('orientationchange', (o: string) => {
+					if (o === Phaser.Scale.PORTRAIT) {
+						setHide(false);
+					} else if (o === Phaser.Scale.LANDSCAPE) {
+						setHide(true);
+					}
+				});
+			}
 			game.registry.set('data', data);
 
 			const handler = () => {
@@ -62,7 +77,18 @@ const Links = ({
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	return <div id={id ?? 'game'} className="phaser-container h-screen flex items-center justify-center" />;
+	return (
+		<>
+			{title && (
+				<Head>
+					<title>{title}</title>
+				</Head>
+			)}
+
+			{isMobile && !hideText && <p className="text-center">Tap the canvas to fullscreen</p>}
+			<div id={id ?? 'game'} className="w-screen h-screen overflow-hidden" />
+		</>
+	);
 };
 
 Links.defaultProps = {
