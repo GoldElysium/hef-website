@@ -55,16 +55,6 @@ class Main extends Phaser.Scene {
 		this.input.setTopOnly(false);
 	}
 
-	preload() {
-		this.load.image('zoomed1', '/assets/gura3mil/zoomedin1.webp');
-
-		this.load.image('blue', '/assets/gura3mil/papers/blue.webp');
-		this.load.image('orange', '/assets/gura3mil/papers/orange.webp');
-		this.load.image('purple', '/assets/gura3mil/papers/purple.webp');
-		this.load.image('red', '/assets/gura3mil/papers/red.webp');
-		this.load.image('white', '/assets/gura3mil/papers/white.webp');
-	}
-
 	create() {
 		const submissions = this.ui.convertTo2D(this.registry.get('data')?.submissions ?? [], 5);
 

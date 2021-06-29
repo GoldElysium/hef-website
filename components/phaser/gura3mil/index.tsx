@@ -58,11 +58,26 @@ class Index extends Phaser.Scene {
 		const loading = this.ui.text(this.width / 2, this.height / 2, 'Loading...', 32, undefined, {
 			color: '#FEFEFE',
 		}).setOrigin(0.5, 0.5);
-		this.load.audio('bgm', '/assets/gura3mil/bgm.mp3');
 		this.load.image('info', '/assets/gura3mil/info.webp');
 		this.load.image('pause', '/assets/gura3mil/pause.webp');
 		this.load.image('play', '/assets/gura3mil/play.webp');
 		this.load.image('close', '/assets/gura3mil/close.webp');
+		this.load.image('title', '/assets/gura3mil/title.webp');
+		this.load.image('back', '/assets/gura3mil/back.webp');
+		this.load.image('home', '/assets/gura3mil/home.webp');
+
+		this.load.image('zoomed1', '/assets/gura3mil/zoomedin1.webp');
+		this.load.image('bg', '/assets/gura3mil/bg.webp');
+
+		this.load.image('blue', '/assets/gura3mil/papers/blue.webp');
+		this.load.image('orange', '/assets/gura3mil/papers/orange.webp');
+		this.load.image('purple', '/assets/gura3mil/papers/purple.webp');
+		this.load.image('red', '/assets/gura3mil/papers/red.webp');
+		this.load.image('white', '/assets/gura3mil/papers/white.webp');
+
+		this.load.video('gura', '/assets/gura3mil/gura.webm', undefined, true, true);
+
+		this.load.audio('bgm', '/assets/gura3mil/bgm.mp3');
 
 		this.load.audio('paperslide1', '/assets/gura3mil/sfx/paperslide1.mp3');
 		this.load.audio('paperslide2', '/assets/gura3mil/sfx/paperslide2.mp3');
@@ -81,6 +96,16 @@ class Index extends Phaser.Scene {
 			this.info = res.data;
 			this.subCount = parseInt(this.info.subscriber_count, 10);
 			this.registry.set('subCount', this.subCount);
+
+			const i = this.ui.clamp(Math.floor((this.subCount - 2900000) / 20000) - 1, 0, 4);
+			const key = `bamboo${i}`;
+			this.load.image(key, [
+				'/assets/gura3mil/bamboo1.webp',
+				'/assets/gura3mil/bamboo2.webp',
+				'/assets/gura3mil/bamboo3.webp',
+				'/assets/gura3mil/bamboo4.webp',
+				'/assets/gura3mil/bamboo5.webp',
+			][i]);
 
 			resolve();
 		});

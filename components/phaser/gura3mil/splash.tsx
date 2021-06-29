@@ -32,24 +32,9 @@ class Splash extends Phaser.Scene {
 		this.height = height;
 
 		this.cameras.main.setBackgroundColor('#010007');
-	}
-
-	preload() {
-		this.load.image('bg', '/assets/gura3mil/bg.webp');
-		this.load.video('gura', '/assets/gura3mil/gura.webm', undefined, true, true);
-		this.load.image('title', '/assets/gura3mil/title.webp');
-		this.load.image('back', '/assets/gura3mil/back.webp');
-		this.load.image('home', '/assets/gura3mil/home.webp');
 
 		const i = this.ui.clamp(Math.floor((this.registry.get('subCount') - 2900000) / 20000) - 1, 0, 4);
 		this.key = `bamboo${i}`;
-		this.load.image(this.key, [
-			'/assets/gura3mil/bamboo1.webp',
-			'/assets/gura3mil/bamboo2.webp',
-			'/assets/gura3mil/bamboo3.webp',
-			'/assets/gura3mil/bamboo4.webp',
-			'/assets/gura3mil/bamboo5.webp',
-		][i]);
 	}
 
 	async create() {
