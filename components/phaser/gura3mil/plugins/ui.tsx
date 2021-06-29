@@ -14,7 +14,7 @@ export default class UI extends Phaser.Plugins.ScenePlugin {
 		return this.scene.add[useBBCode ? 'rexBBCodeText' : 'text'](x, y, text, {
 			fontSize: `${size}px`,
 			fontWeight: 'bold',
-			fontFamily: 'Patrick Hand',
+			fontFamily: '"Patrick Hand", Arial, sans-serif',
 			align: 'center',
 			color: 'black',
 			wordWrap: {
@@ -38,33 +38,30 @@ export default class UI extends Phaser.Plugins.ScenePlugin {
 	ensureOrientation() {
 		try {
 			// Watch for fullscreen and always lock to landscape
-			this.game.scale.on('enterfullscreen', () => {
-				if (!this.scene.game.device.os.desktop) {
-					// @ts-expect-error
-					try { ScreenOrientation.lock('landscape'); } catch {} // eslint-disable-line no-empty
-					// eslint-disable-next-line no-empty
-					try { window.screen.orientation.lock('landscape'); } catch {}
-				}
-
-				const { canvas } = this.game;
-				if (!canvas) return;
-
-				canvas.classList.add('canvas-fullscreen');
-			}).on('leavefullscreen', () => {
-				// @ts-expect-error
-				try { ScreenOrientation.unlock(); } catch {} // eslint-disable-line no-empty
-				// eslint-disable-next-line no-empty
-				try { window.screen.orientation.unlock(); } catch {}
-
-				const { canvas } = this.game;
-				if (!canvas) return;
-
-				canvas.classList.remove('canvas-fullscreen');
-			});
+			this.game.scale.on('enterfullscreen', () => this.lock()).on('leavefullscreen', () => this.unlock());
 			// Force fullscreen
 			this.game.scale.startFullscreen();
 		} catch {
 			console.warn('Cannot lock orientation');
+		}
+	}
+
+	lock() {
+		if (!this.scene.game.device.os.desktop) {
+			// @ts-expect-error
+			try { ScreenOrientation.lock('landscape'); } catch {} // eslint-disable-line no-empty
+			// eslint-disable-next-line no-empty
+			try { window.screen.orientation.lock('landscape'); } catch {}
+		}
+	}
+
+	// eslint-disable-next-line class-methods-use-this
+	unlock() {
+		if (!this.scene.game.device.os.desktop) {
+			// @ts-expect-error
+			try { ScreenOrientation.unlock(); } catch {} // eslint-disable-line no-empty
+			// eslint-disable-next-line no-empty
+			try { window.screen.orientation.unlock(); } catch {}
 		}
 	}
 
@@ -103,7 +100,8 @@ export default class UI extends Phaser.Plugins.ScenePlugin {
 	// eslint-disable-next-line class-methods-use-this
 	convertTo2D(array = [], row = 2) {
 		const newArr = [];
-		while (array.length) newArr.push(array.splice(0, row));
+		const dupe = [...array];
+		while (dupe.length) newArr.push(dupe.splice(0, row));
 
 		return newArr;
 	}

@@ -41,15 +41,18 @@ class Main extends Phaser.Scene {
 
 	public tempData: any;
 
+	public isShowingFull = false;
+
 	init(data: any) {
 		const { width, height } = this.game.canvas;
 
 		this.width = width;
 		this.height = height;
 		this.pages = [];
-		this.tempData = data;
+		this.data.set(data, null);
 
 		this.scene.moveAbove('splash');
+		// this.input.setTopOnly(false);
 	}
 
 	preload() {
@@ -63,7 +66,7 @@ class Main extends Phaser.Scene {
 	}
 
 	create() {
-		const submissions = this.ui.convertTo2D(((this.registry.values?.data?.submissions ?? []) as ISubmission[]).map((s) => `${s.message}\n\n${s.author}`), 5);
+		const submissions = this.ui.convertTo2D(this.registry.get('data')?.submissions ?? [], 5);
 
 		this.sizer = this.rexUI.add.sizer({
 			orientation: 'y',
@@ -76,9 +79,11 @@ class Main extends Phaser.Scene {
 			align: 'left',
 		});
 
-		submissions.slice(1).forEach((sr: string[]) => this.sizer.add(this.generatePage(sr).container, {
-			align: 'left',
-		}));
+		submissions
+			.slice(1)
+			.forEach((sr: ISubmission[]) => this.sizer.add(this.generatePage(sr).container, {
+				align: 'left',
+			}));
 
 		this.panel = this.rexUI.add.scrollablePanel({
 			x: 0,
@@ -115,7 +120,7 @@ class Main extends Phaser.Scene {
 					},
 					ease: 'Sine.easeInOut',
 					duration: 500,
-				}).once('complete', () => this.scene.start('splash', this.tempData));
+				}).once('complete', () => this.scene.start('splash'));
 			});
 
 		this.tweens.add({
@@ -148,7 +153,7 @@ class Main extends Phaser.Scene {
 		this.counter.setText(`[size=60]${this.ui.getPage(t, each, total)}[/size] [color=#afafaf]/ ${total}[/color]`);
 	}
 
-	generatePage(messages: string[] = []) {
+	generatePage(messages: ISubmission[] = []) {
 		let bg: any;
 		let paperPos: number[][];
 
@@ -189,18 +194,36 @@ class Main extends Phaser.Scene {
 		const placed = this.add.rexContainerLite(0, 0, this.width, this.height);
 		const papers = this.ui.shuffle(PAPERS);
 		paperPos.forEach((c, i) => {
-			if (messages[i] === undefined || messages[i] === null) return;
+			const message = messages[i];
+			if (message === undefined || message === null) return;
 
 			const x = c[0] * ((this.width / BASE_WIDTH) * 0.7895);
 			const y = c[1] * ((this.height / BASE_HEIGHT) * 0.9);
+			const paper = papers[i];
 
-			const image = this.add.image(x, y, papers[i])
-				.setScale(0.65)
-				.setOrigin(0.5, 0);
-			const text = this.ui.text(x, y + 250, messages[i], 32, 170).setOrigin(0.5, 0.5);
+			const image = this.add.image(x, y, paper)
+				.setScale(0.7)
+				.setOrigin(0.5, 0)
+				.setInteractive({ pixelPerfect: true, cursor: 'pointer' })
+				.on('pointerup', () => this.showPaper(paper, message));
+			const author = this.ui.text(x, y + image.displayHeight - 50, message?.author, 32, 170)
+				.setOrigin(0.5, 0.5);
+			const objects = [image, author];
+
+			if (message.type === 'text') {
+				const text = this.ui.text(x, y + 300, message?.message, 32, 170).setOrigin(0.5, 0.5);
+				objects.push(text);
+			} else if (message.type === 'image') {
+				const img = this.add.image(x, y + 100, `submission-image-${message.author}-thumb`)
+					.setScale(0.45)
+					.setOrigin(0.5, 0);
+				objects.push(img);
+			}
+
 			// @ts-expect-error
-			const cont = this.add.rexContainerLite(x, y, image.width, image.height).setOrigin(0.5, 0);
-			cont.addMultiple([image, text]);
+			const cont = this.add.rexContainerLite(x, y, image.width, image.height, objects)
+				.setOrigin(0.5, 0)
+				.setDepth(10);
 
 			const timeline = this.tweens.createTimeline({
 				loop: -1,
@@ -253,6 +276,17 @@ class Main extends Phaser.Scene {
 			papers: placed,
 			container,
 		};
+	}
+
+	showPaper(paper: string, submission: ISubmission) {
+		if (this.isShowingFull) return;
+		this.isShowingFull = true;
+
+		this.scene.launch('fullPaper', {
+			paper, submission,
+		}).get('fullPaper').events.once('shutdown', () => {
+			this.isShowingFull = false;
+		});
 	}
 }
 

@@ -13,11 +13,14 @@ import PerspectiveImagePlugin from 'phaser3-rex-plugins/plugins/perspectiveimage
 // @ts-expect-error Missing types
 import AwaitLoaderPlugin from 'phaser3-rex-plugins/plugins/awaitloader-plugin';
 import Router from 'next/router';
+import { Plugin as NineSlicePlugin } from 'phaser3-nineslice';
+import { ISubmission } from '../../../models/Submission';
 import GoogleFontsPlugin from './plugins/gfonts';
 import UIPl from './plugins/ui';
 
 import Main from './main';
 import Splash from './splash';
+import FullPaper from './fullPaper';
 
 class Index extends Phaser.Scene {
 	public bgmPlaying = false;
@@ -47,23 +50,43 @@ class Index extends Phaser.Scene {
 
 		this.scene.add('main', Main);
 		this.scene.add('splash', Splash);
+		this.scene.add('fullPaper', FullPaper);
 		return this.scene.bringToTop(this);
 	}
 
 	preload() {
+		const loading = this.ui.text(this.width / 2, this.height / 2, 'Loading...', 32, undefined, {
+			color: '#FEFEFE',
+		}).setOrigin(0.5, 0.5);
 		this.load.audio('bgm', '/assets/gura3mil/bgm.mp3');
 		this.load.image('info', '/assets/gura3mil/info.webp');
 		this.load.image('pause', '/assets/gura3mil/pause.webp');
 		this.load.image('play', '/assets/gura3mil/play.webp');
+
+		this.load.audio('paperslide1', '/assets/gura3mil/sfx/paperslide1.mp3');
+		this.load.audio('paperslide2', '/assets/gura3mil/sfx/paperslide2.mp3');
+		this.load.audio('paperslide3', '/assets/gura3mil/sfx/paperslide3.mp3');
+
+		(this.registry.values?.data?.submissions ?? [])
+			.filter((s: ISubmission) => s.type === 'image')
+			.forEach((s: ISubmission) => {
+				this.load.image(`submission-image-${s.author}-thumb`, s.srcIcon ?? s.src);
+				if (s.src) {
+					this.load.image(`submission-image-${s.author}`, s.src);
+				}
+			});
 
 		// @ts-expect-error
 		this.load.rexAwait(async (resolve) => {
 			const res = await axios.get('https://holodex.net/api/v2/channels/UCoSrY_IQQVpmIRZ9Xf-y93g');
 			this.info = res.data;
 			this.subCount = parseInt(this.info.subscriber_count, 10);
+			this.registry.set('subCount', this.subCount);
 
 			resolve();
 		});
+
+		this.load.once('complete', () => loading.destroy());
 	}
 
 	create() {
@@ -88,7 +111,7 @@ class Index extends Phaser.Scene {
 			}
 		});
 
-		this.scene.launch('splash', { subCount: this.subCount });
+		this.scene.launch('splash');
 
 		this.sound.once('unlocked', () => {
 			try {
@@ -114,39 +137,44 @@ class Index extends Phaser.Scene {
 
 export default Index;
 export const plugins = {
-	global: [{
-		key: 'rexContainerLitePlugin',
-		plugin: ContainerLitePlugin,
-		start: true,
-	},
-	{
-		key: 'GoogleFontsPlugin',
-		plugin: GoogleFontsPlugin,
-		start: true,
-	},
-	{
-		key: 'rexPerspectiveImagePlugin',
-		plugin: PerspectiveImagePlugin,
-		start: true,
-	},
-	{
-		key: 'rexAwaitLoader',
-		plugin: AwaitLoaderPlugin,
-		start: true,
-	},
-	{
-		key: 'rexBBCodeTextPlugin',
-		plugin: BBCodeTextPlugin,
-		start: true,
-	}],
-	scene: [{
-		key: 'rexUI',
-		plugin: UIPlugin,
-		mapping: 'rexUI',
-	},
-	{
-		key: 'UI',
-		plugin: UIPl,
-		mapping: 'ui',
-	}],
+	global: [
+		{
+			key: 'rexContainerLitePlugin',
+			plugin: ContainerLitePlugin,
+			start: true,
+		},
+		{
+			key: 'GoogleFontsPlugin',
+			plugin: GoogleFontsPlugin,
+			start: true,
+		},
+		{
+			key: 'rexPerspectiveImagePlugin',
+			plugin: PerspectiveImagePlugin,
+			start: true,
+		},
+		{
+			key: 'rexAwaitLoader',
+			plugin: AwaitLoaderPlugin,
+			start: true,
+		},
+		{
+			key: 'rexBBCodeTextPlugin',
+			plugin: BBCodeTextPlugin,
+			start: true,
+		},
+		NineSlicePlugin.DefaultCfg,
+	],
+	scene: [
+		{
+			key: 'rexUI',
+			plugin: UIPlugin,
+			mapping: 'rexUI',
+		},
+		{
+			key: 'UI',
+			plugin: UIPl,
+			mapping: 'ui',
+		},
+	],
 };

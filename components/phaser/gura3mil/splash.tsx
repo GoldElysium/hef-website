@@ -26,11 +26,10 @@ class Splash extends Phaser.Scene {
 
 	public back!: Phaser.GameObjects.Image;
 
-	init({ subCount }: { subCount: number }) {
+	init() {
 		const { width, height } = this.game.canvas;
 		this.width = width;
 		this.height = height;
-		this.subCount = subCount;
 
 		this.cameras.main.setBackgroundColor('#010007');
 	}
@@ -41,13 +40,14 @@ class Splash extends Phaser.Scene {
 		this.load.image('title', '/assets/gura3mil/title.webp');
 		this.load.image('back', '/assets/gura3mil/back.webp');
 
-		const i = this.ui.clamp(Math.floor((this.subCount - 2900000) / 20000) - 1, 0, 4);
+		const i = this.ui.clamp(Math.floor((this.registry.get('subCount') - 2900000) / 20000) - 1, 0, 4);
 		this.key = `bamboo${i}`;
 		this.load.image(this.key, [
 			'/assets/gura3mil/bamboo1.webp',
 			'/assets/gura3mil/bamboo2.webp',
 			'/assets/gura3mil/bamboo3.webp',
 			'/assets/gura3mil/bamboo4.webp',
+			'/assets/gura3mil/bamboo5.webp',
 		][i]);
 	}
 
@@ -57,7 +57,10 @@ class Splash extends Phaser.Scene {
 			.setDepth(5)
 			.setScale(0.75)
 			.setInteractive({ pixelPerfect: true, cursor: 'pointer' })
-			.once('pointerup', () => Router.push('/'));
+			.once('pointerup', () => {
+				this.game.scale.stopFullscreen();
+				Router.push('/');
+			});
 
 		if (this.game.device.os.desktop) {
 			// @ts-expect-error
@@ -186,8 +189,9 @@ class Splash extends Phaser.Scene {
 
 			timeline.once('start', async () => {
 				await this.ui.sleep();
+				this.input.setDefaultCursor('auto');
 				this.scene.bringToTop('main');
-				this.scene.launch('main', { subCount: this.subCount });
+				this.scene.launch('main');
 				this.tweens.add({
 					targets: this.gura,
 					ease: 'Sine.easeInOut',
@@ -198,6 +202,8 @@ class Splash extends Phaser.Scene {
 				this.scene.stop('splash');
 			}).play();
 		});
+
+		this.input.setDefaultCursor('pointer');
 	}
 }
 
