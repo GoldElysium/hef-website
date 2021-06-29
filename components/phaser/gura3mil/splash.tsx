@@ -39,6 +39,7 @@ class Splash extends Phaser.Scene {
 		this.load.video('gura', '/assets/gura3mil/gura.webm', undefined, true, true);
 		this.load.image('title', '/assets/gura3mil/title.webp');
 		this.load.image('back', '/assets/gura3mil/back.webp');
+		this.load.image('home', '/assets/gura3mil/home.webp');
 
 		const i = this.ui.clamp(Math.floor((this.registry.get('subCount') - 2900000) / 20000) - 1, 0, 4);
 		this.key = `bamboo${i}`;
@@ -52,13 +53,14 @@ class Splash extends Phaser.Scene {
 	}
 
 	async create() {
-		this.back = this.add.image(5, 0, 'back')
+		this.back = this.add.image(5, 0, 'home')
 			.setOrigin(0, 0)
 			.setDepth(5)
 			.setScale(0.75)
 			.setInteractive({ pixelPerfect: true, cursor: 'pointer' })
 			.once('pointerup', () => {
 				this.game.scale.stopFullscreen();
+				this.game.destroy(true);
 				Router.push('/');
 			});
 

@@ -52,7 +52,7 @@ class Main extends Phaser.Scene {
 		this.data.set(data, null);
 
 		this.scene.moveAbove('splash');
-		// this.input.setTopOnly(false);
+		this.input.setTopOnly(false);
 	}
 
 	preload() {
@@ -211,7 +211,9 @@ class Main extends Phaser.Scene {
 			const objects = [image, author];
 
 			if (message.type === 'text') {
-				const text = this.ui.text(x, y + 300, message?.message, 32, 170).setOrigin(0.5, 0.5);
+				const text = this.ui.text(x, y + 100, message?.message, 32, 170, {
+					maxLines: 15,
+				}).setOrigin(0.5, 0);
 				objects.push(text);
 			} else if (message.type === 'image') {
 				const img = this.add.image(x, y + 100, `submission-image-${message.author}-thumb`)

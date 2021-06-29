@@ -2,6 +2,7 @@ import ReactPlayer from 'react-player';
 import { useEffect, useState } from 'react';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/outline';
 import { useRouter } from 'next/router';
+import Head from 'next/head';
 import ReactMarkdown from 'react-markdown';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { GetServerSideProps } from 'next';
@@ -118,7 +119,16 @@ export default function ProjectPage({ doc, allSubmissions }: IProps) {
 	}
 
 	if (doc.flags?.includes('gura3mil')) {
-		return <Phaser scene="gura3mil" data={{ submissions: allSubmissions }} title="GuraTanabata" />;
+		return (
+			<div className="bg-gray-700">
+				{/* Head below is a direct copy from the Navbar component */}
+				<Head>
+					<title>Hololive EN Fan Website</title>
+					<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "5896757c09e04949bf74e7c34efd419a"}' />
+				</Head>
+				<Phaser scene="gura3mil" data={{ submissions: allSubmissions }} />
+			</div>
+		);
 	}
 
 	let themeStyle = 'theme-ina';

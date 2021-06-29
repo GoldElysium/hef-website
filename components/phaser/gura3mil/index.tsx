@@ -62,6 +62,7 @@ class Index extends Phaser.Scene {
 		this.load.image('info', '/assets/gura3mil/info.webp');
 		this.load.image('pause', '/assets/gura3mil/pause.webp');
 		this.load.image('play', '/assets/gura3mil/play.webp');
+		this.load.image('close', '/assets/gura3mil/close.webp');
 
 		this.load.audio('paperslide1', '/assets/gura3mil/sfx/paperslide1.mp3');
 		this.load.audio('paperslide2', '/assets/gura3mil/sfx/paperslide2.mp3');
@@ -71,9 +72,7 @@ class Index extends Phaser.Scene {
 			.filter((s: ISubmission) => s.type === 'image')
 			.forEach((s: ISubmission) => {
 				this.load.image(`submission-image-${s.author}-thumb`, s.srcIcon ?? s.src);
-				if (s.src) {
-					this.load.image(`submission-image-${s.author}`, s.src);
-				}
+				this.load.image(`submission-image-${s.author}`, s.src ?? s.srcIcon);
 			});
 
 		// @ts-expect-error

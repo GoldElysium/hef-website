@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import Head from 'next/head';
 
 // eslint-disable-next-line max-len
 interface IProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
@@ -12,7 +11,7 @@ interface IProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivEle
 }
 
 const Links = ({
-	id, scene, config = {}, width, height, data = {}, title,
+	id, scene, config = {}, width, height, data = {},
 }: IProps) => {
 	const router = useRouter();
 	const [isMobile, setMobile] = useState(false);
@@ -79,12 +78,6 @@ const Links = ({
 
 	return (
 		<>
-			{title && (
-				<Head>
-					<title>{title}</title>
-				</Head>
-			)}
-
 			{isMobile && !hideText && <p className="text-center">Tap the canvas to fullscreen</p>}
 			<div id={id ?? 'game'} className="w-screen h-screen overflow-hidden" />
 		</>
