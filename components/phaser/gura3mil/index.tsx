@@ -55,6 +55,20 @@ class Index extends Phaser.Scene {
 		this.scene.add('splash', Splash);
 		this.scene.add('fullPaper', FullPaper);
 		this.scene.add('info', Info);
+
+		if (
+			this.game.device.browser.safari
+			|| this.game.device.browser.ie
+			|| (this.game.device.os.iOS && this.game.device.os.iOSVersion < 14.4)
+		) this.registry.set('useFallback', true);
+		else this.registry.set('useFallback', false);
+
+		if (this.game.device.video.webm && this.game.device.video.vp9) {
+			this.registry.set('canPlayWebm', true);
+		} else {
+			this.registry.set('canPlayWebm', false);
+		}
+
 		return this.scene.bringToTop(this);
 	}
 
@@ -63,31 +77,18 @@ class Index extends Phaser.Scene {
 			color: '#FEFEFE',
 		}).setOrigin(0.5, 0.5);
 
-		this.load.image('info', '/assets/gura3mil/info.webp');
-		this.load.image('pause', '/assets/gura3mil/pause.webp');
-		this.load.image('play', '/assets/gura3mil/play.webp');
-		this.load.image('close', '/assets/gura3mil/close.webp');
-		this.load.image('title', '/assets/gura3mil/title.webp');
-		this.load.image('back', '/assets/gura3mil/back.webp');
-		this.load.image('home', '/assets/gura3mil/home.webp');
-
-		this.load.image('zoomed1', '/assets/gura3mil/zoomedin1.webp');
-		this.load.image('bg', '/assets/gura3mil/bg.webp');
-		this.load.image('infoBG', '/assets/gura3mil/infoBackground.webp');
-
-		this.load.image('blue', '/assets/gura3mil/papers/blue.webp');
-		this.load.image('orange', '/assets/gura3mil/papers/orange.webp');
-		this.load.image('purple', '/assets/gura3mil/papers/purple.webp');
-		this.load.image('red', '/assets/gura3mil/papers/red.webp');
-		this.load.image('white', '/assets/gura3mil/papers/white.webp');
-
-		this.load.video('gura', '/assets/gura3mil/gura.webm', undefined, true, true);
-
 		this.load.audio('bgm', '/assets/gura3mil/bgm.mp3');
 
 		this.load.audio('paperslide1', '/assets/gura3mil/sfx/paperslide1.mp3');
 		this.load.audio('paperslide2', '/assets/gura3mil/sfx/paperslide2.mp3');
 		this.load.audio('paperslide3', '/assets/gura3mil/sfx/paperslide3.mp3');
+
+		if (this.registry.get('canPlayWebm')) this.load.video('gura', '/assets/gura3mil/gura.webm', undefined, true, true);
+		else {
+			for (let i = 1; i <= 38; i++) {
+				this.load.image(`gura-frame${i}`, `/assets/gura3mil/fallback/frames/final-${i.toString().padStart(4, '0')}.png`);
+			}
+		}
 
 		(this.registry.values?.data?.submissions ?? [])
 			.filter((s: ISubmission) => s.type === 'image')
@@ -104,14 +105,9 @@ class Index extends Phaser.Scene {
 			this.registry.set('subCount', this.subCount);
 
 			const i = this.ui.clamp(Math.floor((this.subCount - 2900000) / 20000) - 1, 0, 4);
-			const key = `bamboo${i}`;
-			this.load.image(key, [
-				'/assets/gura3mil/bamboo1.webp',
-				'/assets/gura3mil/bamboo2.webp',
-				'/assets/gura3mil/bamboo3.webp',
-				'/assets/gura3mil/bamboo4.webp',
-				'/assets/gura3mil/bamboo5.webp',
-			][i]);
+
+			if (!this.registry.get('useFallback')) this.loadDefault(i);
+			else this.loadFallback(i);
 
 			resolve();
 		});
@@ -120,6 +116,15 @@ class Index extends Phaser.Scene {
 	}
 
 	create() {
+		if (!this.registry.get('canPlayWebm')) {
+			this.anims.create({
+				key: 'gura',
+				frames: Array(38).fill(0).map((_, i) => ({ key: `gura-frame${i + 1}` })),
+				frameRate: 12,
+				repeat: -1,
+			});
+		}
+
 		this.infoButton = this.add.image(10, this.height, 'info')
 			.setOrigin(0, 1)
 			.setDepth(5)
@@ -135,7 +140,7 @@ class Index extends Phaser.Scene {
 			.on('pointerup', () => this.toggleBGM());
 
 		this.input.on('pointerup', async () => {
-			if (!this.sys.game.device.os.desktop) {
+			if (!this.game.device.os.desktop) {
 				this.ui.ensureOrientation();
 			}
 		});
@@ -144,7 +149,7 @@ class Index extends Phaser.Scene {
 
 		this.sound.once('unlocked', () => {
 			try {
-				this.bgm = SoundFade.fadeIn(this, 'bgm', 500, 0.05, 0).setLoop(true);
+				this.bgm = SoundFade.fadeIn(this, 'bgm', 500, 0.2, 0).setLoop(true);
 				this.toggleBGM();
 				// eslint-disable-next-line no-empty
 			} catch {}
@@ -168,6 +173,62 @@ class Index extends Phaser.Scene {
 		this.showingInfo = true;
 
 		return this.scene.launch('info').get('info').events.once('shutdown', () => { this.showingInfo = false; });
+	}
+
+	loadDefault(index: number) {
+		this.load.image('info', '/assets/gura3mil/info.webp');
+		this.load.image('pause', '/assets/gura3mil/pause.webp');
+		this.load.image('play', '/assets/gura3mil/play.webp');
+		this.load.image('close', '/assets/gura3mil/close.webp');
+		this.load.image('title', '/assets/gura3mil/title.webp');
+		this.load.image('back', '/assets/gura3mil/back.webp');
+		this.load.image('home', '/assets/gura3mil/home.webp');
+
+		this.load.image('zoomed1', '/assets/gura3mil/zoomedin1.webp');
+		this.load.image('bg', '/assets/gura3mil/bg.webp');
+		this.load.image('infoBG', '/assets/gura3mil/infoBackground.webp');
+
+		this.load.image('blue', '/assets/gura3mil/papers/blue.webp');
+		this.load.image('orange', '/assets/gura3mil/papers/orange.webp');
+		this.load.image('purple', '/assets/gura3mil/papers/purple.webp');
+		this.load.image('red', '/assets/gura3mil/papers/red.webp');
+		this.load.image('white', '/assets/gura3mil/papers/white.webp');
+
+		this.load.image('bamboo', [
+			'/assets/gura3mil/bamboo1.webp',
+			'/assets/gura3mil/bamboo2.webp',
+			'/assets/gura3mil/bamboo3.webp',
+			'/assets/gura3mil/bamboo4.webp',
+			'/assets/gura3mil/bamboo5.webp',
+		][index]);
+	}
+
+	loadFallback(index: number) {
+		this.load.image('info', '/assets/gura3mil/fallback/info.png');
+		this.load.image('pause', '/assets/gura3mil/fallback/pause.png');
+		this.load.image('play', '/assets/gura3mil/fallback/play.png');
+		this.load.image('close', '/assets/gura3mil/fallback/close.png');
+		this.load.image('title', '/assets/gura3mil/fallback/title.png');
+		this.load.image('back', '/assets/gura3mil/fallback/back.png');
+		this.load.image('home', '/assets/gura3mil/fallback/home.png');
+
+		this.load.image('zoomed1', '/assets/gura3mil/fallback/zoomedin1.jpg');
+		this.load.image('bg', '/assets/gura3mil/fallback/bg.jpg');
+		this.load.image('infoBG', '/assets/gura3mil/fallback/infoBackground.png');
+
+		this.load.image('blue', '/assets/gura3mil/fallback/papers/blue.png');
+		this.load.image('orange', '/assets/gura3mil/fallback/papers/orange.png');
+		this.load.image('purple', '/assets/gura3mil/fallback/papers/purple.png');
+		this.load.image('red', '/assets/gura3mil/fallback/papers/red.png');
+		this.load.image('white', '/assets/gura3mil/fallback/papers/white.png');
+
+		this.load.image('bamboo', [
+			'/assets/gura3mil/fallback/bamboo1.png',
+			'/assets/gura3mil/fallback/bamboo2.png',
+			'/assets/gura3mil/fallback/bamboo3.png',
+			'/assets/gura3mil/fallback/bamboo4.png',
+			'/assets/gura3mil/fallback/bamboo5.png',
+		][index]);
 	}
 }
 

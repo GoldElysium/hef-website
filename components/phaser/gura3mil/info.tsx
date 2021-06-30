@@ -38,6 +38,8 @@ export default class Info extends Phaser.Scene {
 
 	public finished = false;
 
+	public overlay!: Phaser.GameObjects.Graphics;
+
 	init() {
 		const { width, height } = this.game.canvas;
 		this.width = width;
@@ -48,8 +50,16 @@ export default class Info extends Phaser.Scene {
 	create() {
 		this.closeArea = this.add.rectangle(0, 0, this.width, this.height, 0x0e0e0e, 0.4)
 			.setOrigin(0, 0)
+			.setAlpha(0)
 			.setInteractive({ cursor: 'pointer' })
 			.on('pointerup', () => this.close());
+
+		this.tweens.add({
+			targets: this.closeArea,
+			ease: 'Sine.easeInOut',
+			alpha: 1,
+			duration: 500,
+		});
 
 		this.bg = this.add.image(this.width / 2, this.height * 2, 'infoBG')
 			.setOrigin(0.5, 1)
@@ -80,14 +90,29 @@ export default class Info extends Phaser.Scene {
 			width: this.bg.displayWidth - 800,
 			height: 450,
 			text,
+			space: {
+				text: {
+					bottom: 100,
+				},
+			},
 			content: INFO_TEXT,
 		}).setAlpha(0).layout();
+
+		const textBounds = this.textArea.getBounds();
+		const height = 180;
+		this.overlay = this.add.graphics({
+			x: textBounds.left - 10,
+			y: textBounds.bottom - height,
+		})
+			.fillGradientStyle(0, 0, 0x070202, 0x070202, 0, 0, 0.2, 0.2)
+			.fillRect(0, 0, this.textArea.width + 10, height)
+			.setAlpha(0);
 
 		// @ts-expect-error
 		this.container = this.add.rexContainerLite(
 			0, 0,
 			this.width, this.height,
-			[this.bg, this.textArea],
+			[this.bg, this.textArea, this.overlay],
 		);
 
 		this.container.tweenChild({
@@ -97,7 +122,7 @@ export default class Info extends Phaser.Scene {
 			duration: 500,
 		}).once('complete', () => {
 			this.container.tweenChild({
-				targets: this.textArea,
+				targets: [this.textArea, this.overlay],
 				ease: 'Sine.easeInOut',
 				alpha: 1,
 				duration: 150,
@@ -117,8 +142,15 @@ export default class Info extends Phaser.Scene {
 
 	close() {
 		if (!this.finished) return;
+		this.tweens.add({
+			targets: this.closeArea,
+			ease: 'Sine.easeInOut',
+			alpha: 0,
+			duration: 500,
+		});
+
 		this.container.tweenChild({
-			targets: this.textArea,
+			targets: [this.textArea, this.overlay],
 			ease: 'Sine.easeInOut',
 			alpha: 0,
 			duration: 100,

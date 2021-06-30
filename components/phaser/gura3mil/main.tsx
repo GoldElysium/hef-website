@@ -133,16 +133,7 @@ class Main extends Phaser.Scene {
 			});
 		});
 
-		this.registry.values?.data?.setBackgroundImage('/assets/gura3mil/zoomedin1.webp');
-	}
-
-	setValues() {
-		const { t } = this.panel;
-
-		const total = this.sizer.children.length;
-		const each = 1 / total;
-
-		this.counter.setText(`[size=60]${this.ui.getPage(t, each, total)}[/size] [color=#afafaf]/ ${total}[/color]`);
+		this.registry.values?.data?.setBackgroundImage(!this.registry.get('useFallback') ? '/assets/gura3mil/zoomedin1.webp' : '/assets/gura3mil/fallback/zoomedin1.jpg');
 	}
 
 	generatePage(messages: ISubmission[] = []) {
@@ -206,7 +197,7 @@ class Main extends Phaser.Scene {
 			const objects = [image, author];
 
 			if (message.type === 'text') {
-				const text = this.ui.text(x, y + 100, message.message as string, 32, 170, {
+				const text = this.ui.text(x, y + 200, message.message as string, 32, 170, {
 					maxLines: 15,
 				}).setOrigin(0.5, 0);
 				objects.push(text);

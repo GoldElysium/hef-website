@@ -12,13 +12,11 @@ class Splash extends Phaser.Scene {
 
 	public subCount!: number;
 
-	public key?: string;
-
 	public bg!: any;
 
 	public bamboo?: Phaser.GameObjects.Image;
 
-	public gura?: Phaser.GameObjects.Video;
+	public gura?: Phaser.GameObjects.Video | Phaser.GameObjects.Sprite;
 
 	public title!: Phaser.GameObjects.Image;
 
@@ -32,9 +30,6 @@ class Splash extends Phaser.Scene {
 		this.height = height;
 
 		this.cameras.main.setBackgroundColor('#010007');
-
-		const i = this.ui.clamp(Math.floor((this.registry.get('subCount') - 2900000) / 20000) - 1, 0, 4);
-		this.key = `bamboo${i}`;
 	}
 
 	async create() {
@@ -49,7 +44,7 @@ class Splash extends Phaser.Scene {
 				Router.push('/');
 			});
 
-		this.registry.values?.data?.setBackgroundImage('/assets/gura3mil/bg.webp');
+		this.registry.values?.data?.setBackgroundImage(!this.registry.get('useFallback') ? '/assets/gura3mil/bg.webp' : '/assets/gura3mil/fallback/bg.jpg');
 
 		if (this.game.device.os.desktop) {
 			// @ts-expect-error
@@ -94,16 +89,26 @@ class Splash extends Phaser.Scene {
 			.setOrigin(0.5, 0)
 			.setDepth(6)
 			.setScale(0.95);
-		this.bamboo = this.add.image(this.width / 2, this.height - 5, this.key as string)
+		this.bamboo = this.add.image(this.width / 2, this.height - 5, 'bamboo')
 			.setOrigin(0.5, 1)
 			.setDepth(1)
 			.setScale(0.82);
-		this.gura = this.add.video(this.width / 1.84, this.height + 2, 'gura')
-			.setOrigin(1, 1)
-			.setScale(0.3)
-			.setDepth(1)
-			.setTint(0x446b18, 0xffffff, 0x446b18, 0xf7f3a5)
-			.play(true);
+
+		if (!this.registry.get('canPlayWebm')) {
+			this.gura = this.add.sprite(this.width / 1.85, this.height + 2, 'gura-frame1')
+				.setOrigin(1, 1)
+				.setScale(0.3)
+				.setDepth(1)
+				.setTint(0x446b18, 0xffffff, 0x446b18, 0xf7f3a5)
+				.play('gura');
+		} else {
+			this.gura = this.add.video(this.width / 1.84, this.height + 2, 'gura')
+				.setOrigin(1, 1)
+				.setScale(0.3)
+				.setDepth(1)
+				.setTint(0x446b18, 0xffffff, 0x446b18, 0xf7f3a5)
+				.play(true);
+		}
 
 		// @ts-expect-error
 		this.container = this.add.rexContainerLite(0, 0, this.width, this.height)
