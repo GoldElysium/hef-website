@@ -62,6 +62,7 @@ class Index extends Phaser.Scene {
 		const loading = this.ui.text(this.width / 2, this.height / 2, 'Loading...', 32, undefined, {
 			color: '#FEFEFE',
 		}).setOrigin(0.5, 0.5);
+
 		this.load.image('info', '/assets/gura3mil/info.webp');
 		this.load.image('pause', '/assets/gura3mil/pause.webp');
 		this.load.image('play', '/assets/gura3mil/play.webp');
@@ -72,7 +73,7 @@ class Index extends Phaser.Scene {
 
 		this.load.image('zoomed1', '/assets/gura3mil/zoomedin1.webp');
 		this.load.image('bg', '/assets/gura3mil/bg.webp');
-		this.load.image('infoBG', '/assets/gura3mil/infoBg.webp');
+		this.load.image('infoBG', '/assets/gura3mil/infoBackground.webp');
 
 		this.load.image('blue', '/assets/gura3mil/papers/blue.webp');
 		this.load.image('orange', '/assets/gura3mil/papers/orange.webp');
