@@ -14,7 +14,7 @@ export default class UI extends Phaser.Plugins.ScenePlugin {
 		return this.scene.add[useBBCode ? 'rexBBCodeText' : 'text'](x, y, text, {
 			fontSize: `${size}px`,
 			fontWeight: 'bold',
-			fontFamily: '"Patrick Hand", Arial, sans-serif',
+			fontFamily: '"Caveat Brush", "Patrick Hand", Arial, sans-serif',
 			align: 'center',
 			color: 'black',
 			wordWrap: {

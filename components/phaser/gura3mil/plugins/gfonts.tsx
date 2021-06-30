@@ -12,7 +12,7 @@ class GoogleFontsPlugin extends Phaser.Plugins.BasePlugin {
 			// eslint-disable-next-line no-undef
 			WebFont.load({
 				google: {
-					families: ['Patrick Hand'],
+					families: ['Patrick Hand', 'Caveat Brush'],
 				},
 				active: done as () => void,
 			});

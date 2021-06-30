@@ -144,8 +144,8 @@ class Splash extends Phaser.Scene {
 			})
 			.play();
 
-		this.input.once('pointerup', async () => {
-			// if (this.subCount < 3000000) return;
+		this.input.on('pointerup', async () => {
+			if (this.registry.get('subCount') < 3000000) return (this.scene.get('default') as import('./').default).toggleInfo();
 			const timeline = this.tweens.createTimeline()
 				.add({
 					targets: this.cameras.main,
@@ -176,7 +176,7 @@ class Splash extends Phaser.Scene {
 					offset: '-=2000',
 				});
 
-			timeline.once('start', async () => {
+			return timeline.once('start', async () => {
 				await this.ui.sleep();
 				this.input.setDefaultCursor('auto');
 				this.scene.bringToTop('main');

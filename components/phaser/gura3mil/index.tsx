@@ -21,6 +21,7 @@ import UIPl from './plugins/ui';
 import Main from './main';
 import Splash from './splash';
 import FullPaper from './fullPaper';
+import Info from './info';
 
 class Index extends Phaser.Scene {
 	public bgmPlaying = false;
@@ -41,6 +42,8 @@ class Index extends Phaser.Scene {
 
 	public bgmControl?: Phaser.GameObjects.Image;
 
+	public showingInfo = false;
+
 	init() {
 		if (!this.ui) return Router.reload();
 
@@ -51,6 +54,7 @@ class Index extends Phaser.Scene {
 		this.scene.add('main', Main);
 		this.scene.add('splash', Splash);
 		this.scene.add('fullPaper', FullPaper);
+		this.scene.add('info', Info);
 		return this.scene.bringToTop(this);
 	}
 
@@ -68,6 +72,7 @@ class Index extends Phaser.Scene {
 
 		this.load.image('zoomed1', '/assets/gura3mil/zoomedin1.webp');
 		this.load.image('bg', '/assets/gura3mil/bg.webp');
+		this.load.image('infoBG', '/assets/gura3mil/infoBg.webp');
 
 		this.load.image('blue', '/assets/gura3mil/papers/blue.webp');
 		this.load.image('orange', '/assets/gura3mil/papers/orange.webp');
@@ -119,9 +124,8 @@ class Index extends Phaser.Scene {
 			.setDepth(5)
 			.setScale(0.8)
 			.setInteractive({ pixelPerfect: true, cursor: 'pointer' })
-			.once('pointerup', () => {
-				// TODO: info popup
-			});
+			.on('pointerup', () => this.toggleInfo());
+
 		this.bgmControl = this.add.image(this.infoButton.width - 10, this.height, 'play')
 			.setOrigin(0, 1)
 			.setDepth(5)
@@ -156,6 +160,13 @@ class Index extends Phaser.Scene {
 			this.bgmControl?.setTexture('play');
 			this.bgm?.pause();
 		}
+	}
+
+	toggleInfo() {
+		if (this.showingInfo) return (this.scene.get('info') as import('./info').default).close();
+		this.showingInfo = true;
+
+		return this.scene.launch('info').get('info').events.once('shutdown', () => { this.showingInfo = false; });
 	}
 }
 
