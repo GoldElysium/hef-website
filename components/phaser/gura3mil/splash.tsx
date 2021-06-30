@@ -49,6 +49,8 @@ class Splash extends Phaser.Scene {
 				Router.push('/');
 			});
 
+		this.registry.values?.data?.setBackgroundImage('/assets/gura3mil/bg.webp');
+
 		if (this.game.device.os.desktop) {
 			// @ts-expect-error
 			this.bg = this.rexUI.add.sizer({
