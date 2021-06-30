@@ -132,6 +132,8 @@ class Main extends Phaser.Scene {
 				}
 			});
 		});
+
+		this.registry.values?.data?.setBackgroundImage('/assets/gura3mil/zoomedin1.webp');
 	}
 
 	setValues() {

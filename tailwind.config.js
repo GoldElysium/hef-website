@@ -59,6 +59,9 @@ module.exports = {
 					'dark-primary-1': withOpacity('--color-dark-primary-1'),
 					'dark-secondary-1': withOpacity('--color-dark-secondary-1'),
 				}
+			},
+			zIndex: {
+				'-1': '-1',
 			}
 		},
 	},
