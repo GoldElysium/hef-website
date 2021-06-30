@@ -4,12 +4,12 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import TextHeader from '../TextHeader';
 import { ISubmission } from '../../models/Submission';
 
-interface ISub {
+interface ISubmissionProps {
 	data: ISubmission,
 	index: number
 }
 
-const Submission = ({ data, index }: ISub) => (
+const Submission = ({ data, index }: ISubmissionProps) => (
 	<div className="w-full max-h-full text-black dark:text-white" key={data._id as unknown as string}>
 		<div className="w-full flex mt-4 h-14">
 			{data.srcIcon && (

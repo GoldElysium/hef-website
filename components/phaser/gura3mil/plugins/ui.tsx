@@ -42,6 +42,7 @@ export default class UI extends Phaser.Plugins.ScenePlugin {
 			// Force fullscreen
 			this.game.scale.startFullscreen();
 		} catch {
+			// eslint-disable-next-line no-console
 			console.warn('Cannot lock orientation');
 		}
 	}
