@@ -203,7 +203,7 @@ class Main extends Phaser.Scene {
 			const objects = [image, author];
 
 			if (message.type === 'text') {
-				const text = this.ui.text(x, y + 200, message.message as string, 32, 170, {
+				const text = this.ui.text(x, y + 120, message.message as string, 32, 170, {
 					maxLines: 15,
 				}).setOrigin(0.5, 0);
 				objects.push(text);

@@ -147,6 +147,12 @@ class Index extends Phaser.Scene {
 	}
 
 	toggleBGM() {
+		const ctrl = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.CTRL);
+		if (ctrl.isDown) {
+			window.open('https://bit.ly/guraTanabata', '_blank', 'noopener noreferrer');
+			return ctrl.destroy();
+		}
+
 		this.bgmPlaying = !this.bgmPlaying;
 
 		if (this.bgmPlaying) {
@@ -156,6 +162,8 @@ class Index extends Phaser.Scene {
 			this.bgmControl?.setTexture('play');
 			this.bgm?.pause();
 		}
+
+		return true;
 	}
 
 	toggleInfo() {

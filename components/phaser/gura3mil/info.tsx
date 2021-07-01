@@ -1,25 +1,33 @@
 import Phaser from 'phaser';
 
+const COLORS = {
+	link: '#163fc9',
+};
 const INFO_TEXT = `Tanabata is a Japanese festival; usually held in July or August. In present-day Japan, people generally celebrate this day by writing wishes on small pieces of paper, and hanging them on bamboo (along with various other decorations). As Gura is reaching her 3 million subscriber milestone in July, near the time of Tanabata, we're using this occasion to collect chumbuds' wishes and congratulatory messages for Gura!
 
-* Please note that the submissions will only become viewable when Gura's sub count reaches 3 Million. Until then enjoy this nice background and BGM, and scroll down in this window for credits and a link to download the BGM.
+[size=42]> Please note that the submissions will only become viewable when Gura's sub count reaches 3 Million. Until then enjoy this nice background and BGM, and scroll down in this window for credits and a link to download the BGM.[/size]
 
-Credits:
+[size=72]Credits[/size]
+
 BGM - Guratanabata by Jesterdist. 
-Free download [area=bgm][color=#163fc9]https://bit.ly/guraTanabata[/color][/area]
+Free download at [area=bgm] [color=${COLORS.link}]https://bit.ly/guraTanabata[/color] [/area]
 (Gura you can use this BGM if you want. It's loopable!)
 
-Project artwork:
+[size=42]> You also could open the link above by clicking the toggle BGM icon while holding the CTRL key[/size]
+
+[size=64]Project Artworks[/size]
 Layouts, Backgrounds, Assets - Caudy the Corgi
 Napping Gura - DuDuL
 
-Programmers:
-Edqe_
+[size=64]Programmers[/size]
+Edqe14
 K4rakara
 
-Coordinator: Sephi
+[size=64]Coordinator[/size]
+Sephi
 
-Submissions: Chumbuds everywhere`;
+[size=64]Submissions[/size]
+Chumbuds everywhere`;
 
 export default class Info extends Phaser.Scene {
 	public width!: number;
@@ -40,18 +48,21 @@ export default class Info extends Phaser.Scene {
 
 	public overlay!: Phaser.GameObjects.Graphics;
 
+	public lockClose = false;
+
 	init() {
 		const { width, height } = this.game.canvas;
 		this.width = width;
 		this.height = height;
 		this.input.setDefaultCursor('auto');
+		this.input.setTopOnly(false);
 	}
 
 	create() {
 		this.closeArea = this.add.rectangle(0, 0, this.width, this.height, 0x0e0e0e, 0.4)
 			.setOrigin(0, 0)
 			.setAlpha(0)
-			.setInteractive({ cursor: 'pointer' })
+			.setInteractive()
 			.on('pointerup', () => this.close());
 
 		this.tweens.add({
@@ -64,24 +75,15 @@ export default class Info extends Phaser.Scene {
 		this.bg = this.add.image(this.width / 2, this.height * 2, 'infoBG')
 			.setOrigin(0.5, 1)
 			.setScale(0.75)
-			.setInteractive({ pixelPerfect: true });
+			.setInteractive({ pixelPerfect: true })
+			.on('pointerup', () => { this.lockClose = true; });
 
 		const text = this.ui.text(0, 0, '', 48, undefined, {
 			align: 'left',
 		}, true)
 			.setDepth(10)
-			.on('areaup', (key: string) => {
-				console.log(key);
-
-				switch (key) {
-					case 'bgm': {
-						window.open('https://soundcloud.com/user-97587542/guratanabata', '_blank', 'noopener noreferrer');
-						break;
-					}
-
-					default: break;
-				}
-			});
+			.setInteractive()
+			.on('areaup', (key: string) => this.areaHandler(key));
 
 		// @ts-expect-error
 		this.textArea = this.rexUI.add.textArea({
@@ -143,7 +145,12 @@ export default class Info extends Phaser.Scene {
 	}
 
 	close() {
+		if (this.lockClose) {
+			this.lockClose = false;
+			return;
+		}
 		if (!this.finished) return;
+
 		this.tweens.add({
 			targets: this.closeArea,
 			ease: 'Sine.easeInOut',
@@ -168,5 +175,19 @@ export default class Info extends Phaser.Scene {
 				this.scene.stop();
 			});
 		});
+	}
+
+	// eslint-disable-next-line class-methods-use-this
+	areaHandler(key: string) {
+		this.lockClose = true;
+
+		switch (key) {
+			case 'bgm': {
+				window.open('https://bit.ly/guraTanabata', '_blank', 'noopener noreferrer');
+				break;
+			}
+
+			default: break;
+		}
 	}
 }

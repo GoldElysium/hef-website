@@ -17,10 +17,17 @@ export default class UI extends Phaser.Plugins.ScenePlugin {
 			fontFamily: '"Caveat Brush", "Patrick Hand", Arial, sans-serif',
 			align: 'center',
 			color: 'black',
-			wordWrap: {
-				width: maxWidth,
-				useAdvancedWrap: true,
-			},
+			...(!useBBCode ? {
+				wordWrap: {
+					width: maxWidth,
+					useAdvancedWrap: true,
+				},
+			} : {
+				wrap: {
+					mode: 1,
+					width: maxWidth,
+				},
+			}),
 			...style,
 		});
 	}
