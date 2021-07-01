@@ -150,7 +150,8 @@ class Splash extends Phaser.Scene {
 			.play();
 
 		this.input.on('pointerup', async () => {
-			if (this.registry.get('subCount') < 3000000) return (this.scene.get('default') as import('./').default).toggleInfo();
+			// eslint-disable-next-line max-len
+			// if (this.registry.get('subCount') < 3000000) return (this.scene.get('default') as import('./').default).toggleInfo();
 			const timeline = this.tweens.createTimeline()
 				.add({
 					targets: this.cameras.main,
