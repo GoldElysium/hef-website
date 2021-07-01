@@ -20,6 +20,11 @@ const PAPER_POS_NONDESKTOP = [
 	[2478, 280],
 ];
 
+const BG_KEYS = [
+	'zoomed1',
+	'zoomed2',
+];
+
 class Main extends Phaser.Scene {
 	public width!: number;
 
@@ -140,6 +145,7 @@ class Main extends Phaser.Scene {
 		let bg: any;
 		let paperPos: number[][];
 
+		const bgKey = BG_KEYS[Math.floor(Math.random() * BG_KEYS.length)];
 		if (this.game.device.os.desktop) {
 			paperPos = PAPER_POS_DESKTOP;
 			bg = this.rexUI.add.sizer({
@@ -156,7 +162,7 @@ class Main extends Phaser.Scene {
 
 			Array(3).fill(0).forEach((_, i) => {
 				bg.add(
-					this.add.image(0, 0, 'zoomed1')
+					this.add.image(0, 0, bgKey)
 						.setOrigin(0, 0)
 						.setDisplaySize(2150, this.height),
 					{
@@ -168,9 +174,9 @@ class Main extends Phaser.Scene {
 			bg.layout();
 		} else {
 			paperPos = PAPER_POS_NONDESKTOP;
-			bg = this.add.image(0, 0, 'zoomed1')
+			bg = this.add.image(0, 0, bgKey)
 				.setOrigin(0, 0)
-				.setDisplaySize(1920, 1080);
+				.setDisplaySize(this.width, this.height);
 		}
 
 		// @ts-expect-error

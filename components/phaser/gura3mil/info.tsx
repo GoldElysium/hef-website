@@ -6,7 +6,7 @@ const INFO_TEXT = `Tanabata is a Japanese festival; usually held in July or Augu
 
 Credits:
 BGM - Guratanabata by Jesterdist. 
-Free download [color=#163fc9]https://soundcloud.com/user-97587542/guratanabata[/color]
+Free download [area=bgm][color=#163fc9]https://bit.ly/guraTanabata[/color][/area]
 (Gura you can use this BGM if you want. It's loopable!)
 
 Project artwork:
@@ -69,8 +69,10 @@ export default class Info extends Phaser.Scene {
 		const text = this.ui.text(0, 0, '', 48, undefined, {
 			align: 'left',
 		}, true)
-			.setDepth(5)
-			.on('areadown', (key: string) => {
+			.setDepth(10)
+			.on('areaup', (key: string) => {
+				console.log(key);
+
 				switch (key) {
 					case 'bgm': {
 						window.open('https://soundcloud.com/user-97587542/guratanabata', '_blank', 'noopener noreferrer');

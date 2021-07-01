@@ -3,14 +3,6 @@ import axios from 'axios';
 // @ts-expect-error Missing types
 import SoundFade from 'phaser3-rex-plugins/plugins/soundfade';
 // @ts-expect-error Missing types
-import BBCodeTextPlugin from 'phaser3-rex-plugins/plugins/bbcodetext-plugin';
-// @ts-expect-error Missing types
-import UIPlugin from 'phaser3-rex-plugins/templates/ui/ui-plugin';
-// @ts-expect-error Missing types
-import ContainerLitePlugin from 'phaser3-rex-plugins/plugins/containerlite-plugin';
-// @ts-expect-error Missing types
-import PerspectiveImagePlugin from 'phaser3-rex-plugins/plugins/perspectiveimage-plugin';
-// @ts-expect-error Missing types
 import AwaitLoaderPlugin from 'phaser3-rex-plugins/plugins/awaitloader-plugin';
 import Router from 'next/router';
 import { Plugin as NineSlicePlugin } from 'phaser3-nineslice';
@@ -51,11 +43,6 @@ class Index extends Phaser.Scene {
 		this.width = width;
 		this.height = height;
 
-		this.scene.add('main', Main);
-		this.scene.add('splash', Splash);
-		this.scene.add('fullPaper', FullPaper);
-		this.scene.add('info', Info);
-
 		if (
 			this.game.device.browser.safari
 			|| this.game.device.browser.ie
@@ -69,7 +56,7 @@ class Index extends Phaser.Scene {
 			this.registry.set('canPlayWebm', false);
 		}
 
-		return this.scene.bringToTop(this);
+		return true;
 	}
 
 	preload() {
@@ -77,6 +64,7 @@ class Index extends Phaser.Scene {
 			color: '#FEFEFE',
 		}).setOrigin(0.5, 0.5);
 
+		this.loadPlugins();
 		this.load.audio('bgm', '/assets/gura3mil/bgm.mp3');
 
 		this.load.audio('paperslide1', '/assets/gura3mil/sfx/paperslide1.mp3');
@@ -116,6 +104,8 @@ class Index extends Phaser.Scene {
 	}
 
 	create() {
+		this.addScenes();
+
 		if (!this.registry.get('canPlayWebm')) {
 			this.anims.create({
 				key: 'gura',
@@ -185,6 +175,7 @@ class Index extends Phaser.Scene {
 		this.load.image('home', '/assets/gura3mil/home.webp');
 
 		this.load.image('zoomed1', '/assets/gura3mil/zoomedin1.webp');
+		this.load.image('zoomed2', '/assets/gura3mil/zoomedin2.webp');
 		this.load.image('bg', '/assets/gura3mil/bg.webp');
 		this.load.image('infoBG', '/assets/gura3mil/infoBackground.webp');
 
@@ -213,6 +204,7 @@ class Index extends Phaser.Scene {
 		this.load.image('home', '/assets/gura3mil/fallback/home.png');
 
 		this.load.image('zoomed1', '/assets/gura3mil/fallback/zoomedin1.jpg');
+		this.load.image('zoomed2', '/assets/gura3mil/fallback/zoomedin2.jpg');
 		this.load.image('bg', '/assets/gura3mil/fallback/bg.jpg');
 		this.load.image('infoBG', '/assets/gura3mil/fallback/infoBackground.png');
 
@@ -230,24 +222,28 @@ class Index extends Phaser.Scene {
 			'/assets/gura3mil/fallback/bamboo5.png',
 		][index]);
 	}
+
+	addScenes() {
+		this.scene.add('main', Main);
+		this.scene.add('splash', Splash);
+		this.scene.add('fullPaper', FullPaper);
+		this.scene.add('info', Info);
+		this.scene.bringToTop(this);
+	}
+
+	loadPlugins() {
+		this.load.scenePlugin('rexuiplugin', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexuiplugin.min.js', 'rexUI', 'rexUI');
+		this.load.plugin('rexcontainerliteplugin', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexcontainerliteplugin.min.js', true);
+		this.load.plugin('rexbbcodetextplugin', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexbbcodetextplugin.min.js', true);
+	}
 }
 
 export default Index;
 export const plugins = {
 	global: [
 		{
-			key: 'rexContainerLitePlugin',
-			plugin: ContainerLitePlugin,
-			start: true,
-		},
-		{
 			key: 'GoogleFontsPlugin',
 			plugin: GoogleFontsPlugin,
-			start: true,
-		},
-		{
-			key: 'rexPerspectiveImagePlugin',
-			plugin: PerspectiveImagePlugin,
 			start: true,
 		},
 		{
@@ -255,19 +251,9 @@ export const plugins = {
 			plugin: AwaitLoaderPlugin,
 			start: true,
 		},
-		{
-			key: 'rexBBCodeTextPlugin',
-			plugin: BBCodeTextPlugin,
-			start: true,
-		},
 		NineSlicePlugin.DefaultCfg,
 	],
 	scene: [
-		{
-			key: 'rexUI',
-			plugin: UIPlugin,
-			mapping: 'rexUI',
-		},
 		{
 			key: 'UI',
 			plugin: UIPl,
