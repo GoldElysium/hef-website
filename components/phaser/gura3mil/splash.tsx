@@ -95,21 +95,19 @@ class Splash extends Phaser.Scene {
 			.setDepth(1)
 			.setScale(0.82);
 
+		const pos: [number, number] = [this.width / 1.85, this.height + 2];
 		if (!this.registry.get('canPlayWebm')) {
-			this.gura = this.add.sprite(this.width / 1.85, this.height + 2, 'gura-frame1')
-				.setOrigin(1, 1)
-				.setScale(0.3)
-				.setDepth(1)
-				.setTint(0x446b18, 0xffffff, 0x446b18, 0xf7f3a5)
+			this.gura = this.add.sprite(...pos, 'gura-frame1')
 				.play('gura');
 		} else {
-			this.gura = this.add.video(this.width / 1.84, this.height + 2, 'gura')
-				.setOrigin(1, 1)
-				.setScale(0.3)
-				.setDepth(1)
-				.setTint(0x446b18, 0xffffff, 0x446b18, 0xf7f3a5)
+			this.gura = this.add.video(...pos, 'gura')
 				.play(true);
 		}
+
+		this.gura.setOrigin(1, 1)
+			.setScale(0.3)
+			.setDepth(1)
+			.setTint(0x446b18, 0xffffff, 0x446b18, 0xf7f3a5);
 
 		// @ts-expect-error
 		this.container = this.add.rexContainerLite(0, 0, this.width, this.height)

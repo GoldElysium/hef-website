@@ -99,7 +99,15 @@ class Main extends Phaser.Scene {
 			.setAlpha(0)
 			.on('scroll', ({ t }: { t: number }) => {
 				if (t >= 0.8) {
-					if (submissions.length <= 0) return this.panel.removeAllListeners('scroll');
+					if (submissions.length <= 0) {
+						this.sizer.add(this.generateFooter(), {
+							align: 'left',
+						});
+						this.panel.layout();
+
+						return this.panel.removeAllListeners('scroll');
+					}
+
 					this.sizer.add(this.generatePage(submissions.shift()), {
 						align: 'left',
 					});
@@ -287,6 +295,66 @@ class Main extends Phaser.Scene {
 		}).get('fullPaper').events.once('shutdown', () => {
 			this.isShowingFull = false;
 		});
+	}
+
+	generateFooter() {
+		let bg: any;
+
+		const bgKey = 'zoomed1';
+		if (this.game.device.os.desktop) {
+			bg = this.rexUI.add.sizer({
+				orientation: 0,
+				height: this.height,
+				width: this.width,
+				x: this.width / 2,
+				y: this.height / 2,
+				anchor: {
+					x: '50%',
+					y: '50%',
+				},
+			});
+
+			Array(3).fill(0).forEach((_, i) => {
+				bg.add(
+					this.add.image(0, 0, bgKey)
+						.setOrigin(0, 0)
+						.setDisplaySize(2150, this.height),
+					{
+						align: ['left', 'center', 'right'][i],
+					},
+				);
+			});
+
+			bg.layout();
+		} else {
+			bg = this.add.image(0, 0, bgKey)
+				.setOrigin(0, 0)
+				.setDisplaySize(this.width, this.height);
+		}
+
+		let gura;
+		const pos: [number, number] = [this.width / 1.95, this.height + 200];
+		if (!this.registry.get('canPlayWebm')) {
+			gura = this.add.sprite(...pos, 'gura-frame1')
+				.play('gura');
+		} else {
+			gura = this.add.video(...pos, 'gura')
+				.play(true);
+		}
+
+		gura.setOrigin(1, 1)
+			.setScale(0.82)
+			.setDepth(1)
+			.setTint(0x446b18, 0xffffff, 0x446b18, 0xf7f3a5);
+
+		// @ts-expect-error
+		const container = this.add.rexContainerLite(
+			0, 0,
+			this.width, this.height,
+			[bg, gura, this.ui.text(this.width / 2, this.height / 2, 'FOOTER INDEV', 128).setOrigin(0.5, 0.5)],
+		);
+
+		return container;
 	}
 }
 
