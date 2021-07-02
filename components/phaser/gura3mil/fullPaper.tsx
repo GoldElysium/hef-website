@@ -68,7 +68,7 @@ export default class FullPaper extends Phaser.Scene {
 		).setOrigin(0, 0);
 
 		this.author = this.ui.text(
-			bgBounds.left + 100, this.height - 150,
+			bgBounds.left + 100, this.height - 120,
 			submission.author as string,
 			48, 850, {
 				align: 'left',
@@ -77,15 +77,15 @@ export default class FullPaper extends Phaser.Scene {
 
 		if (submission.type === 'image') {
 			const key = `submission-image-${submission.author}`;
-			const height = 800;
-			const width = 875;
+			const height = 850;
+			const width = 900;
 
-			const start = bgBounds.left + 1100;
-			const end = bgBounds.right - 500;
+			const start = bgBounds.left + 400;
+			const end = bgBounds.right - 400;
 
 			this.image = this.add.image(
 				start + ((end - start) / 2),
-				this.height / 2,
+				this.height / 2 - 20,
 				key,
 			).setOrigin(0.5, 0.5);
 
@@ -95,9 +95,7 @@ export default class FullPaper extends Phaser.Scene {
 			const args: [number, number] = (calculatedWidth > calculatedHeight
 				? [width, calculatedHeight]
 				: [calculatedWidth, height]);
-			this.image.setDisplaySize(
-				...args,
-			);
+			this.image.setDisplaySize(...args);
 		}
 
 		this.tweens.add({
