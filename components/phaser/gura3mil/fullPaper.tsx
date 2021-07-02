@@ -65,7 +65,7 @@ export default class FullPaper extends Phaser.Scene {
 			{
 				align: 'left',
 			},
-		).setOrigin(0, 0);
+		).setOrigin(0, 0) as Phaser.GameObjects.Text;
 
 		this.author = this.ui.text(
 			bgBounds.left + 100, this.height - 120,
@@ -73,7 +73,7 @@ export default class FullPaper extends Phaser.Scene {
 			48, 850, {
 				align: 'left',
 			},
-		).setOrigin(0, 1);
+		).setOrigin(0, 1) as Phaser.GameObjects.Text;
 
 		if (submission.type === 'image') {
 			const key = `submission-image-${submission.author}`;
