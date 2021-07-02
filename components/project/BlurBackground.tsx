@@ -7,8 +7,8 @@ interface IState {
 }
 
 export default class BlurBackground extends React.Component<{}, IState> {
-	constructor() {
-		super({});
+	constructor(_: any) {
+		super(_);
 		this.state = {
 			currentImage: null,
 			targetImage: null,
