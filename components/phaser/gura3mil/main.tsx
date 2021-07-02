@@ -146,7 +146,7 @@ class Main extends Phaser.Scene {
 			});
 		});
 
-		this.registry.values?.data?.setBackgroundImage(!this.registry.get('useFallback') ? '/assets/gura3mil/zoomedin1.webp' : '/assets/gura3mil/fallback/zoomedin1.jpg');
+		this.registry.get('setBackgroundImage')(!this.registry.get('useFallback') ? '/assets/gura3mil/zoomedin1.webp' : '/assets/gura3mil/fallback/zoomedin1.jpg');
 	}
 
 	generatePage(messages?: ISubmission[]) {
