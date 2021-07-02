@@ -41,7 +41,7 @@ const Links = ({
 			}
 
 			const game = new Phaser.Game({
-				type: Phaser.WEBGL,
+				type: Phaser.AUTO,
 				parent: id ?? 'game',
 				scale: {
 					width: width ?? 2480,
