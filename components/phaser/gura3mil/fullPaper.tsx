@@ -87,7 +87,10 @@ export default class FullPaper extends Phaser.Scene {
 				start + ((end - start) / 2),
 				this.height / 2 - 20,
 				key,
-			).setOrigin(0.5, 0.5);
+			)
+				.setOrigin(0.5, 0.5)
+				.setInteractive({ cursor: 'pointer' })
+				.on('pointerup', () => window.open(this.registry.get('submissionURLs')[key], '_blank', 'noopener noreferrer'));
 
 			const calculatedWidth = this.image.width * (height / this.image.height);
 			const calculatedHeight = this.image.height * (width / this.image.width);

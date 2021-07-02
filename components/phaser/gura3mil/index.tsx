@@ -78,12 +78,17 @@ class Index extends Phaser.Scene {
 			}
 		}
 
+		const urls: Record<string, string> = {};
 		(this.registry.values?.data?.submissions ?? [])
 			.filter((s: ISubmission) => s.type === 'image')
 			.forEach((s: ISubmission) => {
-				this.load.image(`submission-image-${s.author}-thumb`, s.srcIcon ?? s.src);
-				this.load.image(`submission-image-${s.author}`, s.src ?? s.srcIcon);
+				const key = `submission-image-${s.author}`;
+
+				this.load.image(`${key}-thumb`, s.srcIcon);
+				this.load.image(key, s.src ?? s.srcIcon);
+				urls[key] = (s.src ?? s.srcIcon) as string;
 			});
+		this.registry.set('submissionURLs', urls);
 
 		// @ts-expect-error
 		this.load.rexAwait(async (resolve) => {
