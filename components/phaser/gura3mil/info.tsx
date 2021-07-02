@@ -50,6 +50,8 @@ export default class Info extends Phaser.Scene {
 
 	public lockClose = false;
 
+	public rexUI!: import('phaser3-rex-plugins/templates/ui/ui-plugin.js').default;
+
 	init() {
 		const { width, height } = this.game.canvas;
 		this.width = width;
@@ -85,7 +87,6 @@ export default class Info extends Phaser.Scene {
 			.setInteractive()
 			.on('areaup', (key: string) => this.areaHandler(key));
 
-		// @ts-expect-error
 		this.textArea = this.rexUI.add.textArea({
 			anchor: {
 				centerX: '50%',

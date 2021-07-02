@@ -35,7 +35,7 @@ class Main extends Phaser.Scene {
 
 	public sizer: any;
 
-	public rexUI: any;
+	public rexUI!: import('phaser3-rex-plugins/templates/ui/ui-plugin.js').default;
 
 	public panel: any;
 

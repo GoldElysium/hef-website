@@ -24,6 +24,8 @@ class Splash extends Phaser.Scene {
 
 	public back!: Phaser.GameObjects.Image;
 
+	public rexUI!: import('phaser3-rex-plugins/templates/ui/ui-plugin.js').default;
+
 	init() {
 		const { width, height } = this.game.canvas;
 		this.width = width;
@@ -47,7 +49,6 @@ class Splash extends Phaser.Scene {
 		this.registry.values?.data?.setBackgroundImage(!this.registry.get('useFallback') ? '/assets/gura3mil/bg.webp' : '/assets/gura3mil/fallback/bg.jpg');
 
 		if (this.game.device.os.desktop) {
-			// @ts-expect-error
 			this.bg = this.rexUI.add.sizer({
 				orientation: 0,
 				height: this.height,
