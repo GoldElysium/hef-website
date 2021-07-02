@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import BBCode from 'phaser3-rex-plugins/plugins/bbcodetext';
 
 export default class UI extends Phaser.Plugins.ScenePlugin {
 	text(
@@ -9,7 +10,7 @@ export default class UI extends Phaser.Plugins.ScenePlugin {
 		maxWidth?: number,
 		style = {},
 		useBBCode = false,
-	) {
+	): Phaser.GameObjects.Text | BBCode {
 		// @ts-expect-error Missing type
 		return this.scene.add[useBBCode ? 'rexBBCodeText' : 'text'](x, y, text, {
 			fontSize: `${size}px`,
