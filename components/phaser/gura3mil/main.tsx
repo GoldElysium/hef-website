@@ -23,6 +23,7 @@ const PAPER_POS_NONDESKTOP = [
 const BG_KEYS = [
 	'zoomed1',
 	'zoomed2',
+	'zoomed3',
 ];
 
 class Main extends Phaser.Scene {

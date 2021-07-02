@@ -184,6 +184,8 @@ class Index extends Phaser.Scene {
 
 		this.load.image('zoomed1', '/assets/gura3mil/zoomedin1.webp');
 		this.load.image('zoomed2', '/assets/gura3mil/zoomedin2.webp');
+		this.load.image('zoomed3', '/assets/gura3mil/zoomedin3.webp');
+
 		this.load.image('bg', '/assets/gura3mil/bg.webp');
 		this.load.image('infoBG', '/assets/gura3mil/infoBackground.webp');
 
@@ -213,6 +215,8 @@ class Index extends Phaser.Scene {
 
 		this.load.image('zoomed1', '/assets/gura3mil/fallback/zoomedin1.jpg');
 		this.load.image('zoomed2', '/assets/gura3mil/fallback/zoomedin2.jpg');
+		this.load.image('zoomed3', '/assets/gura3mil/fallback/zoomedin3.jpg');
+
 		this.load.image('bg', '/assets/gura3mil/fallback/bg.jpg');
 		this.load.image('infoBG', '/assets/gura3mil/fallback/infoBackground.png');
 
