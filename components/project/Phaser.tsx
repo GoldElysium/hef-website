@@ -50,6 +50,9 @@ const Links = ({
 					autoCenter: Phaser.Scale.CENTER_BOTH,
 				},
 				scene,
+				banner: {
+					hidePhaser: true,
+				},
 				...(fixedConfig),
 			});
 			if (!game.device.os.desktop) {
