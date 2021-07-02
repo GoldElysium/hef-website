@@ -62,7 +62,7 @@ class Main extends Phaser.Scene {
 	}
 
 	create() {
-		const submissions = this.ui.convertTo2D(this.registry.get('data')?.submissions ?? [], 5);
+		const submissions = this.ui.convertTo2D(this.ui.shuffle(this.registry.get('data')?.submissions ?? []), 5);
 
 		this.sizer = this.rexUI.add.sizer({
 			orientation: 'y',
@@ -71,12 +71,12 @@ class Main extends Phaser.Scene {
 				bottom: this.height / 2,
 				left: -(this.width / 2),
 			},
-		}).add(this.generatePage(submissions[0]).container, {
+		}).add(this.generatePage(submissions.shift()).container, {
 			align: 'left',
 		});
 
 		submissions
-			.slice(1)
+			.splice(0, 2)
 			.forEach((sr: ISubmission[]) => this.sizer.add(this.generatePage(sr).container, {
 				align: 'left',
 			}));
@@ -100,7 +100,18 @@ class Main extends Phaser.Scene {
 			clamplChildOY: true,
 		})
 			.layout()
-			.setAlpha(0);
+			.setAlpha(0)
+			.on('scroll', ({ t }: { t: number }) => {
+				if (t >= 0.8) {
+					if (submissions.length <= 0) return this.panel.removeAllListeners('scroll');
+					this.sizer.add(this.generatePage(submissions.shift()).container, {
+						align: 'left',
+					});
+					this.panel.layout();
+				}
+
+				return true;
+			});
 
 		this.back = this.add.image(5, 0, 'back')
 			.setOrigin(0, 0)

@@ -106,7 +106,7 @@ export default class UI extends Phaser.Plugins.ScenePlugin {
 	}
 
 	// eslint-disable-next-line class-methods-use-this
-	convertTo2D(array = [], row = 2) {
+	convertTo2D(array: any[] = [], row = 2) {
 		const newArr = [];
 		const dupe = [...array];
 		while (dupe.length) newArr.push(dupe.splice(0, row));
