@@ -61,8 +61,8 @@ class Main extends Phaser.Scene {
 		this.input.setTopOnly(false);
 	}
 
-	create() {
-		const submissions = this.ui.convertTo2D(this.ui.shuffle(this.registry.get('data')?.submissions ?? []), 5);
+	async create() {
+		const submissions = [...this.registry.get('submissions')];
 
 		this.sizer = this.rexUI.add.sizer({
 			orientation: 'y',
@@ -71,15 +71,11 @@ class Main extends Phaser.Scene {
 				bottom: this.height / 2,
 				left: -(this.width / 2),
 			},
-		}).add(this.generatePage(submissions.shift()).container, {
+		}).add(this.generatePage(submissions.shift()), {
+			align: 'left',
+		}).add(this.generatePage(submissions.shift()), {
 			align: 'left',
 		});
-
-		submissions
-			.splice(0, 2)
-			.forEach((sr: ISubmission[]) => this.sizer.add(this.generatePage(sr).container, {
-				align: 'left',
-			}));
 
 		this.panel = this.rexUI.add.scrollablePanel({
 			x: 0,
@@ -104,7 +100,7 @@ class Main extends Phaser.Scene {
 			.on('scroll', ({ t }: { t: number }) => {
 				if (t >= 0.8) {
 					if (submissions.length <= 0) return this.panel.removeAllListeners('scroll');
-					this.sizer.add(this.generatePage(submissions.shift()).container, {
+					this.sizer.add(this.generatePage(submissions.shift()), {
 						align: 'left',
 					});
 					this.panel.layout();
@@ -153,7 +149,9 @@ class Main extends Phaser.Scene {
 		this.registry.values?.data?.setBackgroundImage(!this.registry.get('useFallback') ? '/assets/gura3mil/zoomedin1.webp' : '/assets/gura3mil/fallback/zoomedin1.jpg');
 	}
 
-	generatePage(messages: ISubmission[] = []) {
+	generatePage(messages?: ISubmission[]) {
+		if (!messages) return false;
+
 		let bg: any;
 		let paperPos: number[][];
 
@@ -277,11 +275,7 @@ class Main extends Phaser.Scene {
 			[bg, placed],
 		);
 
-		return {
-			background: bg,
-			papers: placed,
-			container,
-		};
+		return container;
 	}
 
 	showPaper(paper: string, submission: ISubmission) {

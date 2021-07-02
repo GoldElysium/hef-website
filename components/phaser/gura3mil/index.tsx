@@ -79,7 +79,7 @@ class Index extends Phaser.Scene {
 		}
 
 		const urls: Record<string, string> = {};
-		(this.registry.values?.data?.submissions ?? [])
+		(this.registry.get('submissions') ?? [])
 			.filter((s: ISubmission) => s.type === 'image')
 			.forEach((s: ISubmission) => {
 				const key = `submission-image-${s.author}`;
@@ -110,6 +110,9 @@ class Index extends Phaser.Scene {
 
 	create() {
 		this.addScenes();
+
+		const formatted = this.ui.convertTo2D(this.ui.shuffle(this.registry.get('submissions') ?? []), 5);
+		this.registry.set('submissions', formatted);
 
 		if (!this.registry.get('canPlayWebm')) {
 			this.anims.create({

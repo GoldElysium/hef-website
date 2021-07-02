@@ -68,7 +68,7 @@ const Links = ({
 					}
 				});
 			}
-			game.registry.set('data', data);
+			game.registry.set(data, undefined);
 
 			const handler = () => {
 				game.destroy(true);
