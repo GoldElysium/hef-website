@@ -6,6 +6,7 @@ import SoundFade from 'phaser3-rex-plugins/plugins/soundfade';
 import AwaitLoaderPlugin from 'phaser3-rex-plugins/plugins/awaitloader-plugin';
 import Router from 'next/router';
 import { Plugin as NineSlicePlugin } from 'phaser3-nineslice';
+import cheerio from 'cheerio';
 import { ISubmission } from '../../../models/Submission';
 import GoogleFontsPlugin from './plugins/gfonts';
 import UIPl from './plugins/ui';
@@ -88,9 +89,9 @@ class Index extends Phaser.Scene {
 
 		// @ts-expect-error
 		this.load.rexAwait(async (resolve) => {
-			const res = await axios.get('https://holodex.net/api/v2/channels/UCoSrY_IQQVpmIRZ9Xf-y93g');
-			this.info = res.data;
-			this.subCount = parseInt(this.info.subscriber_count ?? '3000000', 10);
+			const res = await axios.get('/fakeApi/guraSubs');
+			const $ = cheerio.load(res.data);
+			this.subCount = parseInt($.text($('body')) ?? '3000000', 10);
 			this.registry.set('subCount', this.subCount);
 			this.registry.set('showSubmissions', this.subCount >= 3000000);
 
