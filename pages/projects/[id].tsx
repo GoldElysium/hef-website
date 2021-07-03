@@ -4,12 +4,12 @@ import {
 } from 'react';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/outline';
 import { useRouter } from 'next/router';
-import Head from 'next/head';
 import ReactMarkdown from 'react-markdown';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { GetServerSideProps } from 'next';
 import mongoose from 'mongoose';
 import safeJsonStringify from 'safe-json-stringify';
+import Head from '../../components/Head';
 import BlurBackground from '../../components/project/BlurBackground';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
@@ -126,11 +126,7 @@ export default function ProjectPage({ doc, allSubmissions }: IProps) {
 	if (doc.flags?.includes('gura3mil')) {
 		return (
 			<>
-				{/* Head below is a direct copy from the Navbar component */}
-				<Head>
-					<title>Hololive EN Fan Website</title>
-					<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "5896757c09e04949bf74e7c34efd419a"}' />
-				</Head>
+				<Head color="#34749E" title={doc.title} description={doc.shortDescription} keywords={['guratanabata']} />
 				<BlurBackground ref={(bg) => { (ref as any).current = bg; }} />
 				<Phaser
 					scene="gura3mil"
@@ -149,82 +145,90 @@ export default function ProjectPage({ doc, allSubmissions }: IProps) {
 	}
 
 	return (
-		<div className={themeStyle}>
-			<div className="flex flex-col h-full min-h-screen bg-skin-background-1 dark:bg-skin-dark-background-1">
-				{!doc.flags?.includes('disableNavbar') && <Navbar />}
+		<>
+			<Head
+				title={doc.title}
+				description={doc.shortDescription}
+				url={`https://holoen.fans${router.pathname.replace(/\[id\]/gi, router.query.id as string)}`}
+				keywords={[doc.title.toLowerCase()]}
+			/>
 
-				{
-					!doc.flags?.includes('disableHeader') && (
-						<Header
-							title={doc.title ?? 'unknown'}
-							description={doc.shortDescription ?? ''}
-						/>
-					)
-				}
+			<div className={themeStyle}>
+				<div className="flex flex-col h-full min-h-screen bg-skin-background-1 dark:bg-skin-dark-background-1">
+					{!doc.flags?.includes('disableNavbar') && <Navbar disableHead />}
 
-				<div className="flex-grow">
-					<div className="my-16 w-full flex flex-col items-center">
-						<div className="max-w-4xl w-full mx-4 break-words md:break-normal">
-							<div>
-								<TextHeader text="Description" />
-								<div className="markdown-body">
-									<ReactMarkdown className="px-4 sm:px-0 text-black dark:text-white dark:text-opacity-80">
-										{
-											doc.description && doc.description
-												.replace(/(\\\n```)/gim, '\n```')
-												.replace(/(```\n\\)|(```\n\n\\)/gim, '```\n')
-										}
-									</ReactMarkdown>
-								</div>
-							</div>
-							{(doc.media?.length ?? 0) > 0 && (
-								<div className="mt-4">
-									<TextHeader text="Gallery" />
-									<div className="flex flex-col items-center pt-2">
-										<div className="w-full h-52 sm:w-8/12 sm:h-96">
-											<CurrentGalleryItem />
-										</div>
-										<div className="flex mt-2 font-bold items-center justify-center text-center">
-											<ChevronLeftIcon
-												className={
-													currentMediaIndex > 0
-														? 'h-8 w-8 cursor-pointer text-black dark:text-white'
-														: 'h-8 w-8 text-skin-primary-1 text-opacity-30 dark:text-skin-dark-primary-1 dark:text-opacity-30'
-												}
-												onClick={() => {
-													if (currentMediaIndex > 0) {
-														setCurrentMediaIndex(currentMediaIndex - 1);
-													}
-												}}
-											/>
-											<span className="text-black dark:text-white">
-												{currentMediaIndex + 1}
-												/
-												{doc.media ? doc.media.length : 0}
-											</span>
-											<ChevronRightIcon
-												className={
-													currentMediaIndex + 1
-													< (doc.media ? doc.media.length : 0)
-														? 'h-8 w-8 cursor-pointer text-black dark:text-white'
-														: 'h-8 w-8 text-skin-primary-1 text-opacity-30 dark:text-skin-dark-primary-1 dark:text-opacity-30'
-												}
-												onClick={() => {
-													if (
-														currentMediaIndex + 1
-														< (doc.media ? doc.media.length : 0)
-													) { setCurrentMediaIndex(currentMediaIndex + 1); }
-												}}
-											/>
-										</div>
+					{
+						!doc.flags?.includes('disableHeader') && (
+							<Header
+								title={doc.title ?? 'unknown'}
+								description={doc.shortDescription ?? ''}
+							/>
+						)
+					}
+
+					<div className="flex-grow">
+						<div className="my-16 w-full flex flex-col items-center">
+							<div className="max-w-4xl w-full mx-4 break-words md:break-normal">
+								<div>
+									<TextHeader text="Description" />
+									<div className="markdown-body">
+										<ReactMarkdown className="px-4 sm:px-0 text-black dark:text-white dark:text-opacity-80">
+											{
+												doc.description && doc.description
+													.replace(/(\\\n```)/gim, '\n```')
+													.replace(/(```\n\\)|(```\n\n\\)/gim, '```\n')
+											}
+										</ReactMarkdown>
 									</div>
 								</div>
-							)}
-							{(doc.links?.length ?? 0) > 0 && (
-								<div className="mt-4">
-									<TextHeader text="Links" />
-									<div className="flex justify-center space-x-6 px-4 sm:px-0">
-										{doc.links
+								{(doc.media?.length ?? 0) > 0 && (
+									<div className="mt-4">
+										<TextHeader text="Gallery" />
+										<div className="flex flex-col items-center pt-2">
+											<div className="w-full h-52 sm:w-8/12 sm:h-96">
+												<CurrentGalleryItem />
+											</div>
+											<div className="flex mt-2 font-bold items-center justify-center text-center">
+												<ChevronLeftIcon
+													className={
+														currentMediaIndex > 0
+															? 'h-8 w-8 cursor-pointer text-black dark:text-white'
+															: 'h-8 w-8 text-skin-primary-1 text-opacity-30 dark:text-skin-dark-primary-1 dark:text-opacity-30'
+													}
+													onClick={() => {
+														if (currentMediaIndex > 0) {
+															setCurrentMediaIndex(currentMediaIndex - 1);
+														}
+													}}
+												/>
+												<span className="text-black dark:text-white">
+													{currentMediaIndex + 1}
+													/
+													{doc.media ? doc.media.length : 0}
+												</span>
+												<ChevronRightIcon
+													className={
+														currentMediaIndex + 1
+													< (doc.media ? doc.media.length : 0)
+															? 'h-8 w-8 cursor-pointer text-black dark:text-white'
+															: 'h-8 w-8 text-skin-primary-1 text-opacity-30 dark:text-skin-dark-primary-1 dark:text-opacity-30'
+													}
+													onClick={() => {
+														if (
+															currentMediaIndex + 1
+														< (doc.media ? doc.media.length : 0)
+														) { setCurrentMediaIndex(currentMediaIndex + 1); }
+													}}
+												/>
+											</div>
+										</div>
+									</div>
+								)}
+								{(doc.links?.length ?? 0) > 0 && (
+									<div className="mt-4">
+										<TextHeader text="Links" />
+										<div className="flex justify-center space-x-6 px-4 sm:px-0">
+											{doc.links
 											&& doc.links.map((link: ILink, index: number) => (
 												<div
 													key={`link-${index}` /* eslint-disable-line react/no-array-index-key */}
@@ -236,35 +240,36 @@ export default function ProjectPage({ doc, allSubmissions }: IProps) {
 													</a>
 												</div>
 											))}
-									</div>
-								</div>
-							)}
-							{/* TODO: Move submissions to separate tab */}
-							{((shownSubmissions?.length ?? 0) > 0) && (
-								<div className="mt-4">
-									<TextHeader text="Submissions" />
-									<div className="flex flex-col items-center pt-2">
-										<div className="w-full overflow-auto">
-											<InfiniteScroll
-												dataLength={shownSubmissions.length}
-												next={loadMoreSubmissions}
-												hasMore={shownSubmissions.length < allSubmissions.length}
-												loader={<p className="text-black dark:text-white text-center mt-4">Loading...</p>}
-												scrollThreshold="500px"
-											>
-												<Submissions />
-											</InfiniteScroll>
 										</div>
 									</div>
-								</div>
-							)}
+								)}
+								{/* TODO: Move submissions to separate tab */}
+								{((shownSubmissions?.length ?? 0) > 0) && (
+									<div className="mt-4">
+										<TextHeader text="Submissions" />
+										<div className="flex flex-col items-center pt-2">
+											<div className="w-full overflow-auto">
+												<InfiniteScroll
+													dataLength={shownSubmissions.length}
+													next={loadMoreSubmissions}
+													hasMore={shownSubmissions.length < allSubmissions.length}
+													loader={<p className="text-black dark:text-white text-center mt-4">Loading...</p>}
+													scrollThreshold="500px"
+												>
+													<Submissions />
+												</InfiniteScroll>
+											</div>
+										</div>
+									</div>
+								)}
+							</div>
 						</div>
 					</div>
-				</div>
 
-				{!doc.flags?.includes('disableFooter') && <Footer />}
+					{!doc.flags?.includes('disableFooter') && <Footer />}
+				</div>
 			</div>
-		</div>
+		</>
 	);
 }
 
