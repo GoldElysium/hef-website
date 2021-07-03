@@ -86,24 +86,26 @@ class Index extends Phaser.Scene {
 			}
 		}
 
-		const urls: Record<string, string> = {};
-		(this.registry.get('submissions') ?? [])
-			.filter((s: ISubmission) => s.type === 'image')
-			.forEach((s: ISubmission) => {
-				const key = `submission-image-${s.author}`;
-
-				this.load.image(`${key}-thumb`, s.srcIcon);
-				this.load.image(key, s.src ?? s.srcIcon);
-				urls[key] = (s.src ?? s.srcIcon) as string;
-			});
-		this.registry.set('submissionURLs', urls);
-
 		// @ts-expect-error
 		this.load.rexAwait(async (resolve) => {
 			const res = await axios.get('https://holodex.net/api/v2/channels/UCoSrY_IQQVpmIRZ9Xf-y93g');
 			this.info = res.data;
 			this.subCount = parseInt(this.info.subscriber_count ?? '3000000', 10);
 			this.registry.set('subCount', this.subCount);
+
+			if (this.subCount >= 3000000) {
+				const urls: Record<string, string> = {};
+				(this.registry.get('submissions') ?? [])
+					.filter((s: ISubmission) => s.type === 'image')
+					.forEach((s: ISubmission) => {
+						const key = `submission-image-${s.author}`;
+
+						this.load.image(`${key}-thumb`, s.srcIcon);
+						this.load.image(key, s.src ?? s.srcIcon);
+						urls[key] = (s.src ?? s.srcIcon) as string;
+					});
+				this.registry.set('submissionURLs', urls);
+			}
 
 			const i = this.ui.clamp(Math.floor((this.subCount - 2900000) / 20000) - 1, 0, 4);
 
