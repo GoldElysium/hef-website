@@ -144,3 +144,15 @@
 .markdown-body code {
   color: #000;
 }
+
+.blur-background-target {
+  animation-name: blur-background-target-animation;
+  animation-duration: 500ms;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes blur-background-target-animation {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+

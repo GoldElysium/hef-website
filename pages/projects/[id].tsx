@@ -1,15 +1,20 @@
 import ReactPlayer from 'react-player';
-import { useEffect, useState } from 'react';
+import {
+	createRef, useEffect, useMemo, useState,
+} from 'react';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/outline';
 import { useRouter } from 'next/router';
+import Head from 'next/head';
 import ReactMarkdown from 'react-markdown';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { GetServerSideProps } from 'next';
 import mongoose from 'mongoose';
 import safeJsonStringify from 'safe-json-stringify';
+import BlurBackground from '../../components/project/BlurBackground';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
+import Phaser from '../../components/project/Phaser';
 import TextHeader from '../../components/TextHeader';
 import Project, { ILink, IProject } from '../../models/Project';
 import Submission, { ISubmission } from '../../models/Submission';
@@ -27,6 +32,8 @@ export default function ProjectPage({ doc, allSubmissions }: IProps) {
 	const router = useRouter();
 	const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
 	const [shownSubmissions, setShownSubmissions] = useState<ISubmission[]>([]);
+
+	const ref = useMemo(() => createRef<BlurBackground>(), []);
 
 	const loadMoreSubmissions = () => {
 		const newSubLength = shownSubmissions.length + SUBMISSIONS_PER_LOAD;
@@ -113,6 +120,26 @@ export default function ProjectPage({ doc, allSubmissions }: IProps) {
 					{submissionElements}
 				</div>
 			</div>
+		);
+	}
+
+	if (doc.flags?.includes('gura3mil')) {
+		return (
+			<>
+				{/* Head below is a direct copy from the Navbar component */}
+				<Head>
+					<title>Hololive EN Fan Website</title>
+					<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "5896757c09e04949bf74e7c34efd419a"}' />
+				</Head>
+				<BlurBackground ref={(bg) => { (ref as any).current = bg; }} />
+				<Phaser
+					scene="gura3mil"
+					data={{
+						setBackgroundImage: (to: string) => ref.current?.setBackgroundImage(to),
+						submissions: allSubmissions,
+					}}
+				/>
+			</>
 		);
 	}
 
