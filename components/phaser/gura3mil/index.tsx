@@ -92,8 +92,7 @@ class Index extends Phaser.Scene {
 			this.info = res.data;
 			this.subCount = parseInt(this.info.subscriber_count ?? '3000000', 10);
 			this.registry.set('subCount', this.subCount);
-			// this.registry.set('showSubmissions', this.subCount >= 3000000);
-			this.registry.set('showSubmissions', true);
+			this.registry.set('showSubmissions', this.subCount >= 3000000);
 
 			if (this.registry.get('showSubmissions')) {
 				const urls: Record<string, string> = {};
