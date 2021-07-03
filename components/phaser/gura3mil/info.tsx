@@ -52,6 +52,8 @@ export default class Info extends Phaser.Scene {
 
 	public rexUI!: import('phaser3-rex-plugins/templates/ui/ui-plugin.js').default;
 
+	public down!: Phaser.GameObjects.Image;
+
 	init() {
 		const { width, height } = this.game.canvas;
 		this.width = width;
@@ -90,7 +92,7 @@ export default class Info extends Phaser.Scene {
 		this.textArea = this.rexUI.add.textArea({
 			anchor: {
 				centerX: '50%',
-				centerY: '63%',
+				centerY: this.game.device.os.desktop ? '63%' : '57%',
 			},
 			width: this.bg.displayWidth - 800,
 			height: 450,
@@ -113,11 +115,17 @@ export default class Info extends Phaser.Scene {
 			.fillRect(0, 0, this.textArea.width + 10, height)
 			.setAlpha(0);
 
+		this.down = this.add.image(this.width / 2, this.height - 180, 'down')
+			.setOrigin(0.5, 0)
+			.setScale(0.75)
+			.setTint(0)
+			.setAlpha(0);
+
 		// @ts-expect-error
 		this.container = this.add.rexContainerLite(
 			0, 0,
 			this.width, this.height,
-			[this.bg, this.textArea, this.overlay],
+			[this.bg, this.textArea, this.overlay, this.down],
 		);
 
 		this.container.tweenChild({
@@ -127,7 +135,7 @@ export default class Info extends Phaser.Scene {
 			duration: 500,
 		}).once('complete', () => {
 			this.container.tweenChild({
-				targets: [this.textArea, this.overlay],
+				targets: [this.textArea, this.overlay, this.down],
 				ease: 'Sine.easeInOut',
 				alpha: 1,
 				duration: 150,
@@ -160,7 +168,7 @@ export default class Info extends Phaser.Scene {
 		});
 
 		this.container.tweenChild({
-			targets: [this.textArea, this.overlay],
+			targets: [this.textArea, this.overlay, this.down],
 			ease: 'Sine.easeInOut',
 			alpha: 0,
 			duration: 100,
@@ -172,7 +180,7 @@ export default class Info extends Phaser.Scene {
 				duration: 400,
 			}).once('complete', () => {
 				this.finished = false;
-				this.input.setDefaultCursor('pointer');
+				this.input.setDefaultCursor('auto');
 				this.scene.stop();
 			});
 		});

@@ -26,6 +26,8 @@ class Splash extends Phaser.Scene {
 
 	public rexUI!: import('phaser3-rex-plugins/templates/ui/ui-plugin.js').default;
 
+	public started = false;
+
 	init() {
 		const { width, height } = this.game.canvas;
 		this.width = width;
@@ -41,6 +43,7 @@ class Splash extends Phaser.Scene {
 			.setScale(0.75)
 			.setInteractive({ pixelPerfect: true, cursor: 'pointer' })
 			.once('pointerup', () => {
+				(this.scene.get('default') as import('./').default).exiting = true;
 				this.game.scale.stopFullscreen();
 				this.game.destroy(true);
 				Router.push('/');
@@ -149,8 +152,10 @@ class Splash extends Phaser.Scene {
 			.play();
 
 		this.input.on('pointerup', async () => {
-			// eslint-disable-next-line max-len
-			// if (this.registry.get('subCount') < 3000000) return (this.scene.get('default') as import('./').default).toggleInfo();
+			if (this.started) return false;
+			if (this.registry.get('subCount') < 3000000) return (this.scene.get('default') as import('./').default).toggleInfo();
+			this.started = true;
+
 			const timeline = this.tweens.createTimeline()
 				.add({
 					targets: this.cameras.main,
@@ -193,7 +198,7 @@ class Splash extends Phaser.Scene {
 					duration: 1000,
 				});
 				await this.ui.sleep();
-				this.scene.stop('splash');
+				this.scene.stop('splash').get('main').events.once('shutdown', () => { this.started = false; });
 			}).play();
 		});
 

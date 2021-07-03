@@ -36,6 +36,8 @@ class Index extends Phaser.Scene {
 
 	public showingInfo = false;
 
+	public exiting = false;
+
 	init() {
 		if (!this.ui) return Router.reload();
 
@@ -55,6 +57,12 @@ class Index extends Phaser.Scene {
 		} else {
 			this.registry.set('canPlayWebm', false);
 		}
+
+		this.input.on('pointerup', async () => {
+			if (!this.game.device.os.desktop && !this.exiting) {
+				this.ui.ensureOrientation();
+			}
+		});
 
 		return true;
 	}
@@ -94,7 +102,7 @@ class Index extends Phaser.Scene {
 		this.load.rexAwait(async (resolve) => {
 			const res = await axios.get('https://holodex.net/api/v2/channels/UCoSrY_IQQVpmIRZ9Xf-y93g');
 			this.info = res.data;
-			this.subCount = parseInt(this.info.subscriber_count, 10);
+			this.subCount = parseInt(this.info.subscriber_count ?? '3000000', 10);
 			this.registry.set('subCount', this.subCount);
 
 			const i = this.ui.clamp(Math.floor((this.subCount - 2900000) / 20000) - 1, 0, 4);
@@ -136,12 +144,6 @@ class Index extends Phaser.Scene {
 			.setScale(0.8)
 			.setInteractive({ pixelPerfect: true, cursor: 'pointer' })
 			.on('pointerup', () => this.toggleBGM());
-
-		this.input.on('pointerup', async () => {
-			if (!this.game.device.os.desktop) {
-				this.ui.ensureOrientation();
-			}
-		});
 
 		this.scene.launch('splash');
 
@@ -189,6 +191,7 @@ class Index extends Phaser.Scene {
 		this.load.image('title', '/assets/gura3mil/title.webp');
 		this.load.image('back', '/assets/gura3mil/back.webp');
 		this.load.image('home', '/assets/gura3mil/home.webp');
+		this.load.image('down', '/assets/gura3mil/down.webp');
 
 		this.load.image('zoomed1', '/assets/gura3mil/zoomedin1.webp');
 		this.load.image('zoomed2', '/assets/gura3mil/zoomedin2.webp');
@@ -196,6 +199,7 @@ class Index extends Phaser.Scene {
 
 		this.load.image('bg', '/assets/gura3mil/bg.webp');
 		this.load.image('infoBG', '/assets/gura3mil/infoBackground.webp');
+		this.load.image('footer', '/assets/gura3mil/footer.webp');
 
 		this.load.image('blue', '/assets/gura3mil/papers/blue.webp');
 		this.load.image('orange', '/assets/gura3mil/papers/orange.webp');
@@ -220,6 +224,7 @@ class Index extends Phaser.Scene {
 		this.load.image('title', '/assets/gura3mil/fallback/title.png');
 		this.load.image('back', '/assets/gura3mil/fallback/back.png');
 		this.load.image('home', '/assets/gura3mil/fallback/home.png');
+		this.load.image('down', '/assets/gura3mil/fallback/down.png');
 
 		this.load.image('zoomed1', '/assets/gura3mil/fallback/zoomedin1.jpg');
 		this.load.image('zoomed2', '/assets/gura3mil/fallback/zoomedin2.jpg');
@@ -227,6 +232,7 @@ class Index extends Phaser.Scene {
 
 		this.load.image('bg', '/assets/gura3mil/fallback/bg.jpg');
 		this.load.image('infoBG', '/assets/gura3mil/fallback/infoBackground.png');
+		this.load.image('footer', '/assets/gura3mil/fallback/footer.jpg');
 
 		this.load.image('blue', '/assets/gura3mil/fallback/papers/blue.png');
 		this.load.image('orange', '/assets/gura3mil/fallback/papers/orange.png');

@@ -26,6 +26,10 @@ const BG_KEYS = [
 	'zoomed3',
 ];
 
+const FOOTER_MESSAGE = `[shadow]You've reached the bottom of the submissions! We hope you enjoyed reading the notes, and looking at the art.
+
+3 Million subscribers is one heck of an achievement, and we're glad we could make you something to commemorate your achievement.[/shadow]`;
+
 class Main extends Phaser.Scene {
 	public width!: number;
 
@@ -49,6 +53,10 @@ class Main extends Phaser.Scene {
 
 	public isShowingFull = false;
 
+	public down!: Phaser.GameObjects.Image;
+
+	public end = false;
+
 	init(data: any) {
 		const { width, height } = this.game.canvas;
 
@@ -62,7 +70,14 @@ class Main extends Phaser.Scene {
 	}
 
 	async create() {
+		this.end = false;
 		const submissions = [...this.registry.get('submissions')];
+
+		this.down = this.add.image(this.width - 50, this.height - 50, 'down')
+			.setOrigin(1, 1)
+			.setDepth(5)
+			.setTintFill(0x41910f)
+			.setAlpha(0);
 
 		this.sizer = this.rexUI.add.sizer({
 			orientation: 'y',
@@ -71,11 +86,12 @@ class Main extends Phaser.Scene {
 				bottom: this.height / 2,
 				left: -(this.width / 2),
 			},
-		}).add(this.generatePage(submissions.shift()), {
-			align: 'left',
-		}).add(this.generatePage(submissions.shift()), {
-			align: 'left',
-		});
+		})
+			.add(this.generatePage(submissions.shift()), {
+				align: 'left',
+			}).add(this.generatePage(submissions.shift()), {
+				align: 'left',
+			});
 
 		this.panel = this.rexUI.add.scrollablePanel({
 			x: 0,
@@ -98,14 +114,39 @@ class Main extends Phaser.Scene {
 			.layout()
 			.setAlpha(0)
 			.on('scroll', ({ t }: { t: number }) => {
+				if (t >= 1) {
+					return this.tweens.add({
+						targets: this.down,
+						ease: 'Sine.easeInOut',
+						duration: 300,
+						alpha: 0,
+					});
+				}
+
+				if (this.down.alpha <= 0) {
+					return this.tweens.add({
+						targets: this.down,
+						ease: 'Sine.easeInOut',
+						duration: 300,
+						alpha: 1,
+					});
+				}
+
+				if (this.end) return true;
 				if (t >= 0.8) {
 					if (submissions.length <= 0) {
 						this.sizer.add(this.generateFooter(), {
 							align: 'left',
+							...(!this.game.device.os.desktop && ({
+								padding: {
+									top: -(this.height / 2),
+									bottom: this.height / 2,
+								},
+							})),
 						});
 						this.panel.layout();
-
-						return this.panel.removeAllListeners('scroll');
+						this.end = true;
+						return true;
 					}
 
 					this.sizer.add(this.generatePage(submissions.shift()), {
@@ -121,21 +162,13 @@ class Main extends Phaser.Scene {
 			.setOrigin(0, 0)
 			.setDepth(5)
 			.setScale(0.75)
+			.setAlpha(0)
 			.setInteractive({ pixelPerfect: true, cursor: 'pointer' })
-			.once('pointerup', () => {
-				this.tweens.add({
-					targets: [this.panel, this.counter, this.back],
-					alpha: {
-						from: 1,
-						to: 0,
-					},
-					ease: 'Sine.easeInOut',
-					duration: 500,
-				}).once('complete', () => this.scene.start('splash'));
-			});
+			.once('pointerup', () => this.close());
 
+		// Fade in
 		this.tweens.add({
-			targets: [this.panel, this.counter, this.back],
+			targets: [this.panel, this.back, this.down],
 			alpha: {
 				from: 0,
 				to: 1,
@@ -153,6 +186,20 @@ class Main extends Phaser.Scene {
 				}
 			});
 		});
+
+		// Down arrow animation
+		this.tweens.createTimeline({ loop: -1, loopDelay: 500 })
+			.add({
+				targets: this.down,
+				ease: 'Sine.easeInOut',
+				y: this.down.y - 50,
+				duration: 1000,
+			}).add({
+				targets: this.down,
+				ease: 'Sine.easeOut',
+				y: this.down.y,
+				duration: 600,
+			}).play();
 
 		this.registry.get('setBackgroundImage')(!this.registry.get('useFallback') ? '/assets/gura3mil/zoomedin1.webp' : '/assets/gura3mil/fallback/zoomedin1.jpg');
 	}
@@ -300,11 +347,11 @@ class Main extends Phaser.Scene {
 	generateFooter() {
 		let bg: any;
 
-		const bgKey = 'zoomed1';
+		const bgKey = 'footer';
 		if (this.game.device.os.desktop) {
 			bg = this.rexUI.add.sizer({
 				orientation: 0,
-				height: this.height,
+				height: this.height * 2,
 				width: this.width,
 				x: this.width / 2,
 				y: this.height / 2,
@@ -318,7 +365,7 @@ class Main extends Phaser.Scene {
 				bg.add(
 					this.add.image(0, 0, bgKey)
 						.setOrigin(0, 0)
-						.setDisplaySize(2150, this.height),
+						.setDisplaySize(2150, this.height * 2),
 					{
 						align: ['left', 'center', 'right'][i],
 					},
@@ -328,12 +375,37 @@ class Main extends Phaser.Scene {
 			bg.layout();
 		} else {
 			bg = this.add.image(0, 0, bgKey)
-				.setOrigin(0, 0)
-				.setDisplaySize(this.width, this.height);
+				.setOrigin(0, 0);
+			bg.setDisplaySize(this.width, this.height * 2);
 		}
 
+		const textY = this.game.device.os.desktop ? 120 : 500;
+		const text = this.ui.text(this.width / 2, textY, FOOTER_MESSAGE, 52, this.width - 400, {
+			color: '#fefefe',
+			shadow: {
+				offsetY: 2,
+				color: '#0e0e0e',
+				blur: 15,
+			},
+		}, true).setOrigin(0.5, 0);
+
+		const textBigPos: [number, number] = this.game.device.os.desktop
+			? [this.width / 1.58, this.height / 1.4]
+			: [this.width / 1.6, this.height * 1.2];
+		const textBigSize = this.game.device.os.desktop ? 120 : 100;
+		const textBigWrapWidth = this.game.device.os.desktop ? 1500 : 1200;
+		const textBig = this.ui.text(...textBigPos, "[shadow]Happy 3 Million, Same-chan, and here's to the next milestone.[/shadow]", textBigSize, textBigWrapWidth, {
+			color: '#fefefe',
+			shadow: {
+				offsetY: 2,
+				color: '#0e0e0e',
+				blur: 15,
+			},
+			align: 'right',
+		}, true).setOrigin(0.5, 0);
+
 		let gura;
-		const pos: [number, number] = [this.width / 1.95, this.height + 200];
+		const pos: [number, number] = [this.width / 1.72, this.height * 1.72];
 		if (!this.registry.get('canPlayWebm')) {
 			gura = this.add.sprite(...pos, 'gura-frame1')
 				.play('gura');
@@ -343,18 +415,33 @@ class Main extends Phaser.Scene {
 		}
 
 		gura.setOrigin(1, 1)
-			.setScale(0.82)
 			.setDepth(1)
 			.setTint(0x446b18, 0xffffff, 0x446b18, 0xf7f3a5);
+
+		if (!this.game.device.os.desktop) {
+			gura.setScale(0.9).setPosition(gura.x + 80, gura.y + 560);
+		}
 
 		// @ts-expect-error
 		const container = this.add.rexContainerLite(
 			0, 0,
-			this.width, this.height,
-			[bg, gura, this.ui.text(this.width / 2, this.height / 2, 'FOOTER INDEV', 128).setOrigin(0.5, 0.5)],
+			this.width, this.height * 2,
+			[bg, gura, text, textBig],
 		);
 
 		return container;
+	}
+
+	close() {
+		this.tweens.add({
+			targets: [this.panel, this.counter, this.back],
+			alpha: {
+				from: 1,
+				to: 0,
+			},
+			ease: 'Sine.easeInOut',
+			duration: 500,
+		}).once('complete', () => this.scene.start('splash'));
 	}
 }
 
