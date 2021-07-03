@@ -114,7 +114,7 @@ class Main extends Phaser.Scene {
 			.layout()
 			.setAlpha(0)
 			.on('scroll', ({ t }: { t: number }) => {
-				if (t >= 1) {
+				if (t === 1) {
 					return this.tweens.add({
 						targets: this.down,
 						ease: 'Sine.easeInOut',
