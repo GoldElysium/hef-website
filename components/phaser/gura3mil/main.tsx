@@ -123,7 +123,7 @@ class Main extends Phaser.Scene {
 					});
 				}
 
-				if (this.down.alpha <= 0) {
+				if (this.down.alpha === 0) {
 					return this.tweens.add({
 						targets: this.down,
 						ease: 'Sine.easeInOut',
@@ -134,7 +134,7 @@ class Main extends Phaser.Scene {
 
 				if (this.end) return true;
 				if (t >= 0.8) {
-					if (submissions.length <= 0) {
+					if (submissions.length === 0) {
 						this.sizer.add(this.generateFooter(), {
 							align: 'left',
 							...(!this.game.device.os.desktop && ({
