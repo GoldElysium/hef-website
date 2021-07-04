@@ -3,18 +3,19 @@ import { MenuIcon } from '@heroicons/react/solid';
 import { Menu, Transition } from '@headlessui/react';
 import { useState, Fragment } from 'react';
 import { ClipboardListIcon, HomeIcon } from '@heroicons/react/outline';
-import Head from 'next/head';
+import Head from './Head';
 import DarkModeToggle from './DarkModeToggle';
 
-export default function Navbar() {
+interface IProps {
+	disableHead?: boolean;
+}
+
+export default function Navbar({ disableHead }: IProps) {
 	const [menuOpen, setMenuOpen] = useState(false);
 
 	return (
 		<div className="flex w-full h-20 px-4 sm:px-8 justify-end items-center bg-skin-background-2 dark:bg-skin-dark-background-2">
-			<Head>
-				<title>Hololive EN Fan Website</title>
-				<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "5896757c09e04949bf74e7c34efd419a"}' />
-			</Head>
+			{!disableHead && <Head />}
 
 			<div>
 				<Link href="/">
@@ -78,3 +79,7 @@ export default function Navbar() {
 		</div>
 	);
 }
+
+Navbar.defaultProps = {
+	disableHead: false,
+};
