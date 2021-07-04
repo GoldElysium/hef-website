@@ -39,6 +39,10 @@ class Index extends Phaser.Scene {
 
 	public exiting = false;
 
+	public progressBar!: Phaser.GameObjects.Rectangle;
+
+	public progressText!: Phaser.GameObjects.Text;
+
 	init() {
 		if (!this.ui) return Router.reload();
 
@@ -72,6 +76,17 @@ class Index extends Phaser.Scene {
 		const loading = this.ui.text(this.width / 2, this.height / 2, 'Loading...', 32, undefined, {
 			color: '#FEFEFE',
 		}).setOrigin(0.5, 0.5);
+
+		this.progressBar = this.add.rectangle(0, this.height, 0, 48, 0xfeffff)
+			.setOrigin(0, 1)
+			.setAlpha(0.8);
+		this.progressText = this.ui.text(20, this.height - 5, '0%', 38)
+			.setOrigin(1, 1) as Phaser.GameObjects.Text;
+
+		this.load.on('progress', (p: number) => {
+			this.progressBar.setSize(this.width * p, this.progressBar.height);
+			this.progressText.setText(`${Math.floor(p * 100)}%`).setPosition(this.width * p - 5, this.progressText.y);
+		});
 
 		this.loadPlugins();
 		this.load.audio('bgm', '/assets/gura3mil/bgm.mp3');
@@ -121,6 +136,8 @@ class Index extends Phaser.Scene {
 	}
 
 	create() {
+		this.progressBar.destroy();
+		this.progressText.destroy();
 		this.addScenes();
 
 		const formatted = this.ui.convertTo2D(this.ui.shuffle(this.registry.get('submissions') ?? []), 5);
