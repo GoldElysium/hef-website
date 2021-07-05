@@ -9,6 +9,7 @@ export interface IGuild {
 	image: string,
 	invite: string,
 	debutDate: Date,
+	color?: string,
 }
 
 interface IGuildDocument extends IGuild, Document {
@@ -22,6 +23,7 @@ const SettingSchema: Schema = new Schema({
 	description: { type: String, required: true },
 	invite: { type: String, required: true },
 	debutDate: { type: Date, required: true },
+	color: { type: String },
 });
 
 let model;
