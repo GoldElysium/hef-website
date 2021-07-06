@@ -6,7 +6,7 @@ This repository holds the website for [holoen.fans](https://holoen.fans), which 
 
 ## Stack
 
-* [Next.JS](https://nextjs.org) ([React](https://reactjs.org/))
+* [Next.JS](https://nextjs.org) [React](https://reactjs.org/)
 * [MongoDB](http://mongodb.com/)
 * [Tailwind CSS](https://tailwindcss.com/)
 
