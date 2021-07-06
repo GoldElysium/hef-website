@@ -22,6 +22,19 @@ import 'github-markdown-css';
 
 const SUBMISSIONS_PER_LOAD = 10;
 
+// ID's for both production and development databases
+const ID_TO_STYLE_MAP = new Map<string, string>();
+ID_TO_STYLE_MAP.set('CGeclp7hLj-lpprbhKxX5', 'theme-calli');
+ID_TO_STYLE_MAP.set('hirD8XHurcDYFoNQOFh7p', 'theme-calli');
+ID_TO_STYLE_MAP.set('jnTqYPtoPDKlvXKuBcHuo', 'theme-kiara');
+ID_TO_STYLE_MAP.set('J9600ROFekClHLwtzquhd', 'theme-kiara');
+ID_TO_STYLE_MAP.set('rZNhEJYuseKIKkeSaUSD6', 'theme-ina');
+ID_TO_STYLE_MAP.set('rWykVp0wwqJfqVOiiwuHC', 'theme-ina');
+ID_TO_STYLE_MAP.set('BSq6epH_Y1ffq0j1ZWOLT', 'theme-gura');
+ID_TO_STYLE_MAP.set('0RdYs2xMNnjmHpIX3CvH6', 'theme-gura');
+ID_TO_STYLE_MAP.set('mnFswH44ZCTyQiC8LPgRH', 'theme-ame');
+ID_TO_STYLE_MAP.set('pnJc6y2SRMbNunt1vOUkR', 'theme-ame');
+
 interface IProps {
 	doc: IProject,
 	allSubmissions: ISubmission[]
@@ -34,6 +47,8 @@ export default function ProjectPage({ doc, allSubmissions }: IProps) {
 	const [shownSubmissions, setShownSubmissions] = useState<ISubmission[]>([]);
 
 	const ref = useMemo(() => createRef<BlurBackground>(), []);
+
+	const themeStyle = ID_TO_STYLE_MAP.get(doc.guild);
 
 	const loadMoreSubmissions = () => {
 		const newSubLength = shownSubmissions.length + SUBMISSIONS_PER_LOAD;
@@ -137,11 +152,6 @@ export default function ProjectPage({ doc, allSubmissions }: IProps) {
 				/>
 			</>
 		);
-	}
-
-	let themeStyle = 'theme-ina';
-	if (router.query.id === '3') {
-		themeStyle = 'theme-gura';
 	}
 
 	return (
