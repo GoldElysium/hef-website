@@ -5,10 +5,17 @@
 This repository holds the website for [holoen.fans](https://holoen.fans), which was started by the [Hololive EN Fan Discord](https://discord.gg/holoenfans).
 
 ## Stack
+
 * [Next.JS](https://nextjs.org) ([React](https://reactjs.org/))
 * [MongoDB](http://mongodb.com/)
 * [Tailwind CSS](https://tailwindcss.com/)
 
+## Contributing
+
+* Have NodeJS installed(obviously) and clone this repo
+* Copy `.env.example` to `.env.local` and fill all the values
+* You can now start coding! Start the dev server by running `npm run dev`.
+* After you've made your changes, please run ESLint(`npm run lint:fix`) and make sure your commits abide by the Conventional Commits rule as described in `CONTRIBUTING.md`. You can do this automatically by using the git hooks in this repo using husky.
 
 ## Contributors ✨
 
