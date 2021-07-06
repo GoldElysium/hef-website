@@ -12,10 +12,10 @@ This repository holds the website for [holoen.fans](https://holoen.fans), which 
 
 ## Contributing
 
-* Have NodeJS installed(obviously) and clone this repo
-* Copy `.env.example` to `.env.local` and fill all the values
-* You can now start coding! Start the dev server by running `npm run dev`.
-* After you've made your changes, please run ESLint(`npm run lint:fix`) and make sure your commits abide by the Conventional Commits rule as described in `CONTRIBUTING.md`. You can do this automatically by using the git hooks in this repo using husky.
+* Have NodeJS installed *(obviously)* and clone this repo.
+* Copy `.env.example` to `.env.local` and fill all the values.
+* Now, you can now start coding! Start the dev server by running `npm run dev`.
+* After you've made your changes, please run ESLint by running `npm run lint:fix` and make sure your commits abide by the Conventional Commits rule as described in [`CONTRIBUTING.md`](https://github.com/GoldElysium/hefs-website/blob/master/CONTRIBUTING.md). You can do this automatically by using the git hooks in this repo using [Husky](https://github.com/typicode/husky).
 
 ## Contributors ✨
 
