@@ -113,7 +113,25 @@
   }
 
   .theme-ame {
-    /* Duplicate values from above when implementing */
+    --color-background-1: 255, 247, 235;
+    --color-background-2: 164, 92, 70;
+    --color-card: 255, 255, 255;
+    --color-primary-1: 132, 67, 57;
+    --color-secondary-1: 18, 130, 161;
+
+    --color-dark-background-1: 21, 13, 10;
+    --color-dark-background-2: 54, 33, 23;
+    --color-dark-card: 54, 33, 23;
+    --color-dark-primary-1: 251, 224, 181;
+    --color-dark-secondary-1: 0, 146, 204;
+  }
+
+  .theme-ame .markdown-body a {
+    color:rgb(18, 130, 161);
+  }
+
+  .dark .theme-ame .markdown-body a {
+    color:rgb(0, 146, 204);
   }
 }
 
