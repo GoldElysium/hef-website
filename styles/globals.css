@@ -47,7 +47,25 @@
   }
 
   .theme-calli {
-    /* Duplicate values from above when implementing */
+    --color-background-1: 252, 233, 238;
+    --color-background-2: 155, 75, 108;
+    --color-card: 255, 255, 255;
+    --color-primary-1: 112, 82, 122;
+    --color-secondary-1: 178, 5, 59;
+
+    --color-dark-background-1: 27, 9, 18;
+    --color-dark-background-2: 68, 13, 38;
+    --color-dark-card: 48, 10, 25;
+    --color-dark-primary-1: 245, 163, 223;
+    --color-dark-secondary-1: 219, 10, 70;
+  }
+
+  .theme-calli .markdown-body a {
+    color:rgb(178, 5, 59);
+  }
+
+  .dark .theme-calli .markdown-body a {
+    color:rgb(219, 10, 70);
   }
 
   .theme-gura {
