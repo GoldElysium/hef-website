@@ -135,7 +135,9 @@ export default function ProjectEditPage({ doc }: IProps) {
 				<option key={mapGuild._id} value={mapGuild._id}>{mapGuild.name}</option>
 			));
 			setGuilds(html);
-			setGuild(json[0]._id ?? '');
+			if (router.query.id === 'new') {
+				setGuild(json[0]._id ?? '');
+			}
 		}
 
 		run();
