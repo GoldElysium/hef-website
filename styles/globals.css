@@ -25,21 +25,21 @@
   }
 
   .theme-ina {
-    --color-background-1: 238, 233, 246;
-    --color-background-2: 87, 80, 104;
+    --color-background-1: 247, 243, 251;
+    --color-background-2: 79, 68, 95;
     --color-card: 255, 255, 255;
-    --color-primary-1: 87, 80, 104;
+    --color-primary-1: 160, 70, 152;
     --color-secondary-1: 242, 154, 48;
 
     --color-dark-background-1: 19, 18, 23;
-    --color-dark-background-2: 38, 36, 45;
+    --color-dark-background-2: 49, 39, 60;
     --color-dark-card: 48, 44, 58;
-    --color-dark-primary-1: 106,98, 127;
+    --color-dark-primary-1: 171, 110, 160;
     --color-dark-secondary-1: 230, 133, 15;
   }
 
   .theme-ina .markdown-body a {
-    color:rgb(126, 8, 166);
+    color:rgb(160, 70, 152);
   }
 
   .dark .theme-ina .markdown-body a {
