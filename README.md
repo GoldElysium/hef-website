@@ -1,16 +1,24 @@
-# Hololive EN Fan website
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors-)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
+<!-- markdownlint-disable -->
+<img src="https://holoen.fans/img/logo.png" alt="Logo" width="250" />
+<!-- markdownlint-restore -->
+
+# Hololive EN Fan Website
+
+[![All Contributors](https://img.shields.io/github/all-contributors/GoldElysium/hefs-website?style=flat-square)](#contributors-)
+[![License](https://img.shields.io/github/license/GoldElysium/hefs-website?style=flat-square)](https://github.com/GoldElysium/hefs-website/blob/master/LICENSE)
+[![Issues](https://img.shields.io/github/issues/GoldElysium/hefs-website?style=flat-square)](https://github.com/GoldElysium/hefs-website/issues)
+[![Stargazers](https://img.shields.io/github/stars/GoldElysium/hefs-website?style=flat-square)](https://github.com/GoldElysium/hefs-website/stargazers)
+[![Website Status](https://img.shields.io/website?style=flat-square&url=https%3A%2F%2Fholoen.fans)](https://holoen.fans)
+
 This repository holds the website for [holoen.fans](https://holoen.fans), which was started by the [Hololive EN Fan Discord](https://discord.gg/holoenfans).
 
-## Stack
+## Stack 📚
 
 * [Next.JS](https://nextjs.org)
 * [MongoDB](http://mongodb.com/)
 * [Tailwind CSS](https://tailwindcss.com/)
 
-## Contributing
+## Contributing ✏
 
 * Have NodeJS installed *(obviously)* and clone this repo.
 * Copy `.env.example` to `.env.local` and fill all the values.
