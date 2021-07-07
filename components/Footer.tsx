@@ -7,7 +7,7 @@ export default function Footer() {
 				Made with&nbsp;
 				<HeartIcon className="w-4 h-4 text-white" />
 &nbsp;by&nbsp;
-				<a href="https://github.com/GoldElysium" target="_blank" className="underline" rel="noreferrer">GoldElysium</a>
+				<a href="https://github.com/GoldElysium/hefs-website#contributors-" target="_blank" className="underline" rel="noreferrer">fans</a>
 			</p>
 		</div>
 	);
