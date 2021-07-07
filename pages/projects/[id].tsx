@@ -19,6 +19,7 @@ import TextHeader from '../../components/TextHeader';
 import Project, { ILink, IProject } from '../../models/Project';
 import Submission, { ISubmission } from '../../models/Submission';
 import 'github-markdown-css';
+import Guild, { IGuild } from '../../models/Guild';
 
 const SUBMISSIONS_PER_LOAD = 10;
 
@@ -37,11 +38,12 @@ ID_TO_STYLE_MAP.set('pnJc6y2SRMbNunt1vOUkR', 'theme-ame');
 
 interface IProps {
 	doc: IProject,
-	allSubmissions: ISubmission[]
+	allSubmissions: ISubmission[],
+	guild: IGuild,
 }
 
 // eslint-disable-next-line max-len
-export default function ProjectPage({ doc, allSubmissions }: IProps) {
+export default function ProjectPage({ doc, allSubmissions, guild }: IProps) {
 	const router = useRouter();
 	const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
 	const [shownSubmissions, setShownSubmissions] = useState<ISubmission[]>([]);
@@ -141,7 +143,13 @@ export default function ProjectPage({ doc, allSubmissions }: IProps) {
 	if (doc.flags?.includes('gura3mil')) {
 		return (
 			<>
-				<Head color="#34749E" title={doc.title} description={doc.shortDescription} keywords={['guratanabata']} />
+				<Head
+					color={guild.color ?? '#FF3D3D'}
+					title={doc.title}
+					description={doc.shortDescription}
+					keywords={['guratanabata']}
+					image={doc.ogImage ?? 'https://holoen.fans/img/logo.png'}
+				/>
 				<BlurBackground ref={(bg) => { (ref as any).current = bg; }} />
 				<Phaser
 					scene="gura3mil"
@@ -157,10 +165,12 @@ export default function ProjectPage({ doc, allSubmissions }: IProps) {
 	return (
 		<>
 			<Head
+				color={guild.color ?? '#FF3D3D'}
 				title={doc.title}
 				description={doc.shortDescription}
 				url={`https://holoen.fans${router.pathname.replace(/\[id\]/gi, router.query.id as string)}`}
 				keywords={[doc.title.toLowerCase()]}
+				image={doc.ogImage ?? 'https://holoen.fans/img/logo.png'}
 			/>
 
 			<div className={themeStyle}>
@@ -307,17 +317,25 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 	const projectData: IProject = await JSON.parse(safeJsonStringify(project));
 
 	const submissions: ISubmission[] = await Submission.find({
-		project: Number.parseInt(context.params?.id as string, 10),
+		project: project._id,
 	}).lean().exec().catch((e) => {
 		throw e;
 	});
 
 	const projectSubmissions: ISubmission[] = await JSON.parse(safeJsonStringify(submissions));
 
+	const guild = await Guild.findById(project.guild)
+		.lean().exec().catch((e) => {
+			throw e;
+		});
+
+	const guildJson: IGuild = await JSON.parse(safeJsonStringify(guild as object));
+
 	return {
 		props: {
 			doc: projectData,
 			allSubmissions: projectSubmissions,
+			guild: guildJson,
 		},
 	};
 };

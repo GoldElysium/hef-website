@@ -1,0 +1,68 @@
+{
+  "projectName": "hefs-website",
+  "projectOwner": "GoldElysium",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": true,
+  "commitConvention": "none",
+  "contributors": [
+    {
+      "login": "GoldElysium",
+      "name": "GoldElysium",
+      "avatar_url": "https://avatars.githubusercontent.com/u/48455312?v=4",
+      "profile": "https://discord.gg/HoloRes",
+      "contributions": [
+        "code",
+        "doc",
+        "design",
+        "maintenance",
+        "infra",
+        "review"
+      ]
+    },
+    {
+      "login": "JackCrescend",
+      "name": "Jack Crescend",
+      "avatar_url": "https://avatars.githubusercontent.com/u/33298232?v=4",
+      "profile": "https://github.com/JackCrescend",
+      "contributions": [
+        "code",
+        "design"
+      ]
+    },
+    {
+      "login": "Edqe14",
+      "name": "Edqe",
+      "avatar_url": "https://avatars.githubusercontent.com/u/34704796?v=4",
+      "profile": "https://edqe.me/",
+      "contributions": [
+        "code",
+        "doc"
+      ]
+    },
+    {
+      "login": "K4rakara",
+      "name": "Jack",
+      "avatar_url": "https://avatars.githubusercontent.com/u/40474474?v=4",
+      "profile": "https://insertdomain.name/",
+      "contributions": [
+        "code",
+        "design"
+      ]
+    },
+    {
+      "login": "koleare",
+      "name": "A Fluffy Koala",
+      "avatar_url": "https://avatars.githubusercontent.com/u/84549008?v=4",
+      "profile": "https://github.com/koleare",
+      "contributions": [
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7
+}
