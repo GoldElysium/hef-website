@@ -19,7 +19,7 @@
     "@emotion/react": "11.4.0",
     "@emotion/styled": "11.3.0",
     "@headlessui/react": "1.3.0",
-    "@heroicons/react": "1.0.1",
+    "@heroicons/react": "1.0.2",
     "@material-ui/core": "5.0.0-alpha.35",
     "@material-ui/lab": "5.0.0-alpha.35",
     "axios": "0.21.1",
