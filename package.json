@@ -33,7 +33,7 @@
     "next-auth": "3.27.3",
     "phaser": "3.55.2",
     "phaser3-nineslice": "0.5.0",
-    "phaser3-rex-plugins": "1.1.56",
+    "phaser3-rex-plugins": "1.1.57",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-infinite-scroll-component": "6.1.0",
