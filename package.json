@@ -24,7 +24,7 @@
     "@material-ui/lab": "5.0.0-alpha.35",
     "axios": "0.21.1",
     "cheerio": "1.0.0-rc.10",
-    "date-fns": "2.22.1",
+    "date-fns": "2.23.0",
     "github-markdown-css": "4.0.0",
     "mongodb": "3.6.10",
     "mongoose": "5.12.15",
