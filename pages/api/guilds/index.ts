@@ -2,6 +2,7 @@ import { getSession } from 'next-auth/client';
 import mongoose from 'mongoose';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import Guild from '../../../models/Guild';
+import { nanoid } from 'nanoid';
 
 try {
 	mongoose.connect(<string>process.env.MONGOOSEURL, {
@@ -25,7 +26,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 		const session = await getSession({ req });
 		if (!session) return res.status(401).end();
 
-		const guild = new Guild(req.body);
+		const guild = new Guild({ ...req.body, id: nanoid() });
 
 		guild.save((err) => {
 			if (err) res.status(500).end();
