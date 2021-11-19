@@ -1,8 +1,8 @@
 import { getSession } from 'next-auth/client';
 import mongoose from 'mongoose';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import Guild from '../../../models/Guild';
 import { nanoid } from 'nanoid';
+import Guild from '../../../models/Guild';
 
 try {
 	mongoose.connect(<string>process.env.MONGOOSEURL, {
