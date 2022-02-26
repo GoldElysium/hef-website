@@ -1,6 +1,5 @@
 import Phaser from 'phaser';
 import axios from 'axios';
-// @ts-expect-error Missing types
 import SoundFade from 'phaser3-rex-plugins/plugins/soundfade';
 // @ts-expect-error Missing types
 import AwaitLoaderPlugin from 'phaser3-rex-plugins/plugins/awaitloader-plugin';
@@ -170,6 +169,7 @@ class Index extends Phaser.Scene {
 
 		this.sound.once('unlocked', () => {
 			try {
+				// @ts-expect-error
 				this.bgm = SoundFade.fadeIn(this, 'bgm', 500, 0.2, 0).setLoop(true);
 				this.toggleBGM();
 				// eslint-disable-next-line no-empty

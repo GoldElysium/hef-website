@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    /* 
+    /*
       background-1: body background
       background-2: header background
       card: card background (unused in project pages)
@@ -199,7 +199,11 @@
 
   .slider.round:before {
     border-radius: 50%;
-  } 
+  }
+}
+
+.markdown-body {
+  background-color: inherit !important;
 }
 
 .markdown-body code {

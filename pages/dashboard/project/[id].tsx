@@ -1,11 +1,13 @@
-import { signIn, useSession } from 'next-auth/client';
+import { signIn, useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import ProjectEditPage from '../../../components/ProjectEditPage';
 import { IProject } from '../../../models/Project';
 
 export default function GuildEdit() {
-	const [session, loading] = useSession();
+	const { data: session, status } = useSession();
+	const loading = status === 'loading';
+
 	const [doc, setDoc] = useState<IProject | null>(null);
 	const router = useRouter();
 

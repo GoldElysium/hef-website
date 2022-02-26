@@ -3,7 +3,7 @@ import { LogoutIcon } from '@heroicons/react/solid';
 import { Menu, Transition } from '@headlessui/react';
 import { useState, Fragment, useEffect } from 'react';
 import Head from 'next/head';
-import { getSession, signOut } from 'next-auth/client';
+import { getSession, signOut } from 'next-auth/react';
 
 export default function DashboardNavbar() {
 	const [menuOpen, setMenuOpen] = useState(false);

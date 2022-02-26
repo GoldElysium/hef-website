@@ -18,7 +18,7 @@ import Phaser from '../../components/project/Phaser';
 import TextHeader from '../../components/TextHeader';
 import Project, { ILink, IProject } from '../../models/Project';
 import Submission, { ISubmission } from '../../models/Submission';
-import 'github-markdown-css';
+import 'github-markdown-css/github-markdown-light.css';
 import Guild, { IGuild } from '../../models/Guild';
 
 const SUBMISSIONS_PER_LOAD = 10;
@@ -295,11 +295,7 @@ export default function ProjectPage({ doc, allSubmissions, guild }: IProps) {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
 	try {
-		mongoose.connect(process.env.MONGOOSEURL as string, {
-			useNewUrlParser: true,
-			useUnifiedTopology: true,
-			useFindAndModify: false,
-		});
+		mongoose.connect(process.env.MONGOOSEURL as string);
 		// eslint-disable-next-line no-empty
 	} catch (e) {}
 

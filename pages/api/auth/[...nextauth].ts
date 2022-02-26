@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
-import NextAuth, { Account, DefaultProfile, User } from 'next-auth';
-import Providers from 'next-auth/providers';
+import NextAuth, { DefaultProfile } from 'next-auth';
+import DiscordProvider from 'next-auth/providers/discord';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 import Setting from '../../../models/Setting';
@@ -12,25 +12,21 @@ interface DiscordProfile extends DefaultProfile {
 }
 
 try {
-	mongoose.connect(<string>process.env.MONGOOSEURL, {
-		useNewUrlParser: true,
-		useUnifiedTopology: true,
-		useFindAndModify: false,
-	});
+	mongoose.connect(<string>process.env.MONGOOSEURL);
 // eslint-disable-next-line no-empty
 } catch (e) {}
 
 const options = {
 	database: process.env.NEXTAUTH_DB,
 	providers: [
-		Providers.Discord({
+		DiscordProvider({
 			clientId: process.env.DISCORD_CLIENT_ID,
 			clientSecret: process.env.DISCORD_CLIENT_SECRET,
-			scope: 'identify',
+			authorization: 'https://discord.com/api/oauth2/authorize?scope=identify',
 		}),
 	],
 	callbacks: {
-		async signIn(user: User, account: Account, profile: DiscordProfile) {
+		async signIn({ profile }: { profile: DiscordProfile }) {
 			if (profile.id === process.env.ADMINID) return true;
 			const whitelistDoc = await Setting.findById('whitelist').exec()
 				.catch((e) => {

@@ -15,7 +15,6 @@ export default function Head({
 	return (
 		<NextHead>
 			<title>{title}</title>
-			<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "5896757c09e04949bf74e7c34efd419a"}' />
 
 			<meta name="keywords" content={[...keywords, 'hololive en', 'hef', 'hololive fan', 'hololive en fan'].join(', ')} />
 			<meta name="subject" content="Hololive EN Fan Website" />

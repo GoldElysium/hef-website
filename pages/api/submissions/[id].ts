@@ -3,11 +3,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import Submission from '../../../models/Submission';
 
 try {
-	mongoose.connect(<string>process.env.MONGOOSEURL, {
-		useNewUrlParser: true,
-		useUnifiedTopology: true,
-		useFindAndModify: false,
-	});
+	mongoose.connect(<string>process.env.MONGOOSEURL);
 // eslint-disable-next-line no-empty
 } catch (e) {}
 
