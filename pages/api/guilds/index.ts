@@ -1,15 +1,11 @@
-import { getSession } from 'next-auth/client';
+import { getSession } from 'next-auth/react';
 import mongoose from 'mongoose';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { nanoid } from 'nanoid';
 import Guild from '../../../models/Guild';
 
 try {
-	mongoose.connect(<string>process.env.MONGOOSEURL, {
-		useNewUrlParser: true,
-		useUnifiedTopology: true,
-		useFindAndModify: false,
-	});
+	mongoose.connect(<string>process.env.MONGOOSEURL);
 // eslint-disable-next-line no-empty
 } catch (e) {}
 

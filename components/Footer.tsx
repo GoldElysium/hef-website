@@ -9,6 +9,7 @@ export default function Footer() {
 &nbsp;by&nbsp;
 				<a href="https://github.com/GoldElysium/hefs-website#contributors-" target="_blank" className="underline" rel="noreferrer">fans</a>
 			</p>
+			<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "5896757c09e04949bf74e7c34efd419a"}' />
 		</div>
 	);
 }
