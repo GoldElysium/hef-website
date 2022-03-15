@@ -14,16 +14,16 @@ export default function Navbar({ disableHead }: IProps) {
 	const [menuOpen, setMenuOpen] = useState(false);
 
 	return (
-		<div className="flex w-full h-20 px-4 sm:px-8 justify-end items-center bg-skin-background-2 dark:bg-skin-dark-background-2">
+		<div className="flex w-full h-20 px-4 sm:px-8 justify-between items-center bg-skin-background-2 dark:bg-skin-dark-background-2">
 			{!disableHead && <Head />}
 
-			<div>
+			{/*<div>
 				<Link href="/">
 					<a>
 						<img className="h-20 hidden" src="/img/logo_banner.png" alt="Logo" />
 					</a>
 				</Link>
-			</div>
+			</div>*/}
 
 			<div>
 				<div className="sm:hidden">
@@ -41,7 +41,7 @@ export default function Navbar({ disableHead }: IProps) {
 							leaveFrom="transform opacity-100 scale-100"
 							leaveTo="transform opacity-0 scale-95"
 						>
-							<Menu.Items static className="absolute right-2 top-16 w-32 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none mr-2">
+							<Menu.Items static className="absolute left-2 top-16 w-32 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none mr-2">
 								<div className="px-2 py-1">
 									<Menu.Item>
 										<Link href="/">
