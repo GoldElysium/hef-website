@@ -2,7 +2,7 @@
   "extends": [
     "config:base"
   ],
-  "labels": ["dependencies"],
+  "labels": ["Type: Dependencies"],
   "packageRules": [
     {
       "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
