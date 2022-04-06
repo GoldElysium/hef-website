@@ -35,7 +35,7 @@ export default function DashboardPage() {
 		for (var key in minimize) {
 			const target = document.getElementById(key);
 			if (!target) continue;
-			if (minimize[key]) target.classList.add('minimize');
+			if ((minimize as any)[key]) target.classList.add('minimize');
 			else target.classList.remove('minimize');
 		}
 		window.localStorage.setItem('minimize', JSON.stringify(minimize));
@@ -83,7 +83,7 @@ export default function DashboardPage() {
 	function onMinimize(id: string) {
 		setMinimize({
 			...minimize,
-			[id]: !minimize[id],
+			[id]: !(minimize as any)[id],
 		});
 	}
 
