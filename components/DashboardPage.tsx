@@ -19,7 +19,27 @@ export default function DashboardPage() {
 	const [whitelist, setWhitelist] = useState<string[]>([]);
 	const [editedWhitelist, setEditedWhitelist] = useState<string[]>([]);
 	const [whitelistHtml, setWhitelistHtml] = useState<JSX.Element[] | JSX.Element>([]);
+	const [minimize, setMinimize] = useState({});
+
 	/* eslint-enable */
+
+	useEffect(() => {
+		const savedMinimizedMode = window.localStorage.getItem('minimize');
+		if (savedMinimizedMode !== null) {
+			setMinimize(JSON.parse(savedMinimizedMode));
+			return;
+		}
+	}, []);
+
+	useEffect(() => {
+		for (var key in minimize) {
+			const target = document.getElementById(key);
+			if (!target) continue;
+			if (minimize[key]) target.classList.add('minimize');
+			else target.classList.remove('minimize');
+		}
+		window.localStorage.setItem('minimize', JSON.stringify(minimize));
+	}, [minimize]);
 
 	// Whitelist setting
 	useEffect(() => {
@@ -60,19 +80,11 @@ export default function DashboardPage() {
 			});
 	}
 
-	function minimize(id: string) {
-		const target = document.getElementById(id);
-		if (!target) return;
-		// Check to see if the parent container is already minimized
-		if (target.classList.contains('minimize')) {
-			target.classList.remove('minimize');
-			target.style.height = 'initial';
-			target.style.overflow = 'auto';
-		} else {
-			target.classList.add('minimize');
-			target.style.height = '0';
-			target.style.overflow = 'hidden';
-		}
+	function onMinimize(id: string) {
+		setMinimize({
+			...minimize,
+			[id]: !minimize[id],
+		});
 	}
 
 	// eslint-disable-next-line consistent-return
@@ -161,7 +173,7 @@ export default function DashboardPage() {
 							<div className="flex border-b-2 border-red-200 justify-center sm:justify-between items-center text-red-500">
 								<h1 className="text-2xl font-bold text-center sm:text-left ml-auto sm:ml-0">Server list</h1>
 								<div className="flex flex-row">
-									<MinusIcon className="w-8 h-8 mt-2 hover:text-red-700 cursor-pointer" onClick={() => minimize('server-list-container')}/>
+									<MinusIcon className="w-8 h-8 mt-2 hover:text-red-700 cursor-pointer" onClick={() => onMinimize('server-list-container')}/>
 									<Link href="/dashboard/guild/new">
 										<a className="ml-auto sm:ml-0"><PlusIcon className="w-8 h-8 mt-2 hover:text-red-700 cursor-pointer" /></a>
 									</Link>
@@ -176,7 +188,7 @@ export default function DashboardPage() {
 							<div className="flex border-b-2 border-red-200 justify-center sm:justify-between items-center text-red-500">
 								<h1 className="text-2xl font-bold text-center sm:text-left ml-auto sm:ml-0">Ongoing projects</h1>
 								<div className="flex flex-row">
-									<MinusIcon className="w-8 h-8 mt-2 hover:text-red-700 cursor-pointer" onClick={() => minimize('ongoing-projects-container')}/>
+									<MinusIcon className="w-8 h-8 mt-2 hover:text-red-700 cursor-pointer" onClick={() => onMinimize('ongoing-projects-container')}/>
 									<Link href="/dashboard/project/new">
 										<a className="ml-auto sm:ml-0"><PlusIcon className="w-8 h-8 mt-2 hover:text-red-700 cursor-pointer" /></a>
 									</Link>
@@ -193,7 +205,7 @@ export default function DashboardPage() {
 									Past
 									projects
 								</h1>
-								<MinusIcon className="w-8 h-8 mt-2 hover:text-red-700 cursor-pointer" onClick={() => minimize('past-projects-container')}/>
+								<MinusIcon className="w-8 h-8 mt-2 hover:text-red-700 cursor-pointer" onClick={() => onMinimize('past-projects-container')}/>
 							</div>
 							<div id="past-projects-container" className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center">
 								{pastProjects.length > 0 ? pastProjects : <div className="font-bold text-2xl mt-4">None</div>}
@@ -202,7 +214,7 @@ export default function DashboardPage() {
 						<div className="mt-4">
 							<div className="flex border-b-2 border-red-200 justify-center sm:justify-between items-center text-red-500">
 								<h1 className="text-2xl text-red-500 font-bold text-center sm:text-left">Settings</h1>
-								<MinusIcon className="w-8 h-8 mt-2 hover:text-red-700 cursor-pointer" onClick={() => minimize('settings-container')}/>
+								<MinusIcon className="w-8 h-8 mt-2 hover:text-red-700 cursor-pointer" onClick={() => onMinimize('settings-container')}/>
 							</div>
 							<div className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center">
 								<div id="settings-container" className="mt-4 sm:w-1/3">
