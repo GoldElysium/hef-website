@@ -629,13 +629,13 @@ export default function ProjectEditPage({ doc }: IProps) {
 								</div>
 								<div className="flex flex-col mt-2">
 									<label htmlFor="description" className="font-bold">Description</label>
-									<div className="flex flex-col justify-start border border-red-300 bg-white max-h-64 rounded-md">
+									<div className="border border-red-300 bg-white min-h-[20vh] max-h-[40vh] rounded-md overflow-auto resize-y">
 										<RichMarkdownEditor
 											onChange={setDescription}
 											id="description"
 											ref={editorRef}
 											defaultValue={'# Welcome\n\nJust an easy to use **Markdown** editor with `slash commands`'}
-											className="rounded-md px-1 w-full overflow-auto"
+											className="rounded-md px-1 w-full"
 										/>
 									</div>
 									<textarea
