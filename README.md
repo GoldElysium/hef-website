@@ -39,6 +39,8 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://edqe.me/"><img src="https://avatars.githubusercontent.com/u/34704796?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Edqe</b></sub></a><br /><a href="https://github.com/GoldElysium/hefs-website/commits?author=Edqe14" title="Code">💻</a> <a href="https://github.com/GoldElysium/hefs-website/commits?author=Edqe14" title="Documentation">📖</a></td>
     <td align="center"><a href="https://insertdomain.name/"><img src="https://avatars.githubusercontent.com/u/40474474?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Jack</b></sub></a><br /><a href="https://github.com/GoldElysium/hefs-website/commits?author=K4rakara" title="Code">💻</a> <a href="#design-K4rakara" title="Design">🎨</a></td>
     <td align="center"><a href="https://github.com/koleare"><img src="https://avatars.githubusercontent.com/u/84549008?v=4?s=100" width="100px;" alt=""/><br /><sub><b>A Fluffy Koala</b></sub></a><br /><a href="https://github.com/GoldElysium/hefs-website/commits?author=koleare" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/Toranteru"><img src="https://avatars.githubusercontent.com/u/102710095?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Toranteru</b></sub></a><br /><a href="https://github.com/GoldElysium/hefs-website/commits?author=Toranteru" title="Code">💻</a></td>
+    <td align="center"><a href="https://renovate.whitesourcesoftware.com/"><img src="https://avatars.githubusercontent.com/u/25180681?v=4?s=100" width="100px;" alt=""/><br /><sub><b>WhiteSource Renovate</b></sub></a><br /><a href="#maintenance-renovate-bot" title="Maintenance">🚧</a></td>
   </tr>
 </table>
 
