@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import {
-	CheckIcon, PlusIcon, ReplyIcon, TrashIcon,
+	CheckIcon, MinusIcon, PlusIcon, ReplyIcon, TrashIcon,
 } from '@heroicons/react/solid';
 import { ChangeEvent, useEffect, useState } from 'react';
 import DashboardNavbar from './DashboardNavbar';
@@ -58,6 +58,21 @@ export default function DashboardPage() {
 				setWhitelist(data.value);
 				setEditedWhitelist(data.value);
 			});
+	}
+
+	function minimize(id: string) {
+		const target = document.getElementById(id);
+		if (!target) return;
+		// Check to see if the parent container is already minimized
+		if (target.classList.contains('minimize')) {
+			target.classList.remove('minimize');
+			target.style.height = 'initial';
+			target.style.overflow = 'auto';
+		} else {
+			target.classList.add('minimize');
+			target.style.height = '0';
+			target.style.overflow = 'hidden';
+		}
 	}
 
 	// eslint-disable-next-line consistent-return
@@ -145,11 +160,14 @@ export default function DashboardPage() {
 						<div>
 							<div className="flex border-b-2 border-red-200 justify-center sm:justify-between items-center text-red-500">
 								<h1 className="text-2xl font-bold text-center sm:text-left ml-auto sm:ml-0">Server list</h1>
-								<Link href="/dashboard/guild/new">
-									<a className="ml-auto sm:ml-0"><PlusIcon className="w-8 h-8 mt-2 hover:text-red-700 cursor-pointer" /></a>
-								</Link>
+								<div className="flex flex-row">
+									<MinusIcon className="w-8 h-8 mt-2 hover:text-red-700 cursor-pointer" onClick={() => minimize('server-list-container')}/>
+									<Link href="/dashboard/guild/new">
+										<a className="ml-auto sm:ml-0"><PlusIcon className="w-8 h-8 mt-2 hover:text-red-700 cursor-pointer" /></a>
+									</Link>
+								</div>
 							</div>
-							<div className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center">
+							<div id="server-list-container" className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center">
 								{guilds.length > 0 ? guilds : <div className="font-bold text-2xl mt-4">None</div>}
 							</div>
 						</div>
@@ -157,28 +175,37 @@ export default function DashboardPage() {
 						<div className="mt-4">
 							<div className="flex border-b-2 border-red-200 justify-center sm:justify-between items-center text-red-500">
 								<h1 className="text-2xl font-bold text-center sm:text-left ml-auto sm:ml-0">Ongoing projects</h1>
-								<Link href="/dashboard/project/new">
-									<a className="ml-auto sm:ml-0"><PlusIcon className="w-8 h-8 mt-2 hover:text-red-700 cursor-pointer" /></a>
-								</Link>
+								<div className="flex flex-row">
+									<MinusIcon className="w-8 h-8 mt-2 hover:text-red-700 cursor-pointer" onClick={() => minimize('ongoing-projects-container')}/>
+									<Link href="/dashboard/project/new">
+										<a className="ml-auto sm:ml-0"><PlusIcon className="w-8 h-8 mt-2 hover:text-red-700 cursor-pointer" /></a>
+									</Link>
+								</div>
 							</div>
-							<div className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center">
+							<div id="ongoing-projects-container" className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center">
 								{projects.length > 0 ? projects : <div className="font-bold text-2xl mt-4">None</div>}
 							</div>
 						</div>
 
 						<div className="mt-4">
-							<h1 className="text-2xl text-red-500 font-bold border-b-2 border-red-200 text-center sm:text-left">
-								Past
-								projects
-							</h1>
-							<div className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center">
+							<div className="flex border-b-2 border-red-200 justify-center sm:justify-between items-center text-red-500">
+								<h1 className="text-2xl text-red-500 font-bold text-center sm:text-left">
+									Past
+									projects
+								</h1>
+								<MinusIcon className="w-8 h-8 mt-2 hover:text-red-700 cursor-pointer" onClick={() => minimize('past-projects-container')}/>
+							</div>
+							<div id="past-projects-container" className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center">
 								{pastProjects.length > 0 ? pastProjects : <div className="font-bold text-2xl mt-4">None</div>}
 							</div>
 						</div>
 						<div className="mt-4">
-							<h1 className="text-2xl text-red-500 font-bold border-b-2 border-red-200 text-center sm:text-left">Settings</h1>
+							<div className="flex border-b-2 border-red-200 justify-center sm:justify-between items-center text-red-500">
+								<h1 className="text-2xl text-red-500 font-bold text-center sm:text-left">Settings</h1>
+								<MinusIcon className="w-8 h-8 mt-2 hover:text-red-700 cursor-pointer" onClick={() => minimize('settings-container')}/>
+							</div>
 							<div className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center">
-								<div className="mt-4 sm:w-1/3">
+								<div id="settings-container" className="mt-4 sm:w-1/3">
 									<div
 										className="bg-white p-8 h-full border-b-4 border-red-500 rounded-lg flex flex-col items-center sm:mx-2 sm:p-3 md:p-8"
 									>
