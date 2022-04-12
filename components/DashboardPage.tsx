@@ -19,7 +19,7 @@ export default function DashboardPage() {
 	const [whitelist, setWhitelist] = useState<string[]>([]);
 	const [editedWhitelist, setEditedWhitelist] = useState<string[]>([]);
 	const [whitelistHtml, setWhitelistHtml] = useState<JSX.Element[] | JSX.Element>([]);
-	const [minimize, setMinimize] = useState({});
+	const [minimize, setMinimize] = useState<{ [key: string]: boolean }>({});
 
 	/* eslint-enable */
 
@@ -35,8 +35,8 @@ export default function DashboardPage() {
 		for (var key in minimize) {
 			const target = document.getElementById(key);
 			if (!target) continue;
-			if ((minimize as any)[key]) target.classList.add('minimize');
-			else target.classList.remove('minimize');
+			if (minimize[key]) target.classList.add('hidden');
+			else target.classList.remove('hidden');
 		}
 		window.localStorage.setItem('minimize', JSON.stringify(minimize));
 	}, [minimize]);
@@ -83,7 +83,7 @@ export default function DashboardPage() {
 	function onMinimize(id: string) {
 		setMinimize({
 			...minimize,
-			[id]: !(minimize as any)[id],
+			[id]: !(minimize[id]),
 		});
 	}
 

@@ -2,11 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-.minimize {
-  height: 0;
-  overflow: hidden;
-}
-
 @layer base {
   :root {
     /*
