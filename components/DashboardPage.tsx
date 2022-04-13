@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import {
-	CheckIcon, PlusIcon, ReplyIcon, TrashIcon,
+	CheckIcon, MinusIcon, PlusIcon, ReplyIcon, TrashIcon,
 } from '@heroicons/react/solid';
 import { ChangeEvent, useEffect, useState } from 'react';
 import DashboardNavbar from './DashboardNavbar';
@@ -19,7 +19,27 @@ export default function DashboardPage() {
 	const [whitelist, setWhitelist] = useState<string[]>([]);
 	const [editedWhitelist, setEditedWhitelist] = useState<string[]>([]);
 	const [whitelistHtml, setWhitelistHtml] = useState<JSX.Element[] | JSX.Element>([]);
+	const [minimize, setMinimize] = useState<{ [key: string]: boolean }>({});
+
 	/* eslint-enable */
+
+	useEffect(() => {
+		const savedMinimizedMode = window.localStorage.getItem('minimize');
+		if (savedMinimizedMode !== null) {
+			setMinimize(JSON.parse(savedMinimizedMode));
+			return;
+		}
+	}, []);
+
+	useEffect(() => {
+		for (var key in minimize) {
+			const target = document.getElementById(key);
+			if (!target) continue;
+			if (minimize[key]) target.classList.add('hidden');
+			else target.classList.remove('hidden');
+		}
+		window.localStorage.setItem('minimize', JSON.stringify(minimize));
+	}, [minimize]);
 
 	// Whitelist setting
 	useEffect(() => {
@@ -58,6 +78,13 @@ export default function DashboardPage() {
 				setWhitelist(data.value);
 				setEditedWhitelist(data.value);
 			});
+	}
+
+	function onMinimize(id: string) {
+		setMinimize({
+			...minimize,
+			[id]: !(minimize[id]),
+		});
 	}
 
 	// eslint-disable-next-line consistent-return
@@ -145,11 +172,14 @@ export default function DashboardPage() {
 						<div>
 							<div className="flex border-b-2 border-red-200 justify-center sm:justify-between items-center text-red-500">
 								<h1 className="text-2xl font-bold text-center sm:text-left ml-auto sm:ml-0">Server list</h1>
-								<Link href="/dashboard/guild/new">
-									<a className="ml-auto sm:ml-0"><PlusIcon className="w-8 h-8 mt-2 hover:text-red-700 cursor-pointer" /></a>
-								</Link>
+								<div className="flex flex-row">
+									<MinusIcon className="w-8 h-8 mt-2 hover:text-red-700 cursor-pointer" onClick={() => onMinimize('server-list-container')}/>
+									<Link href="/dashboard/guild/new">
+										<a className="ml-auto sm:ml-0"><PlusIcon className="w-8 h-8 mt-2 hover:text-red-700 cursor-pointer" /></a>
+									</Link>
+								</div>
 							</div>
-							<div className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center">
+							<div id="server-list-container" className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center">
 								{guilds.length > 0 ? guilds : <div className="font-bold text-2xl mt-4">None</div>}
 							</div>
 						</div>
@@ -157,28 +187,37 @@ export default function DashboardPage() {
 						<div className="mt-4">
 							<div className="flex border-b-2 border-red-200 justify-center sm:justify-between items-center text-red-500">
 								<h1 className="text-2xl font-bold text-center sm:text-left ml-auto sm:ml-0">Ongoing projects</h1>
-								<Link href="/dashboard/project/new">
-									<a className="ml-auto sm:ml-0"><PlusIcon className="w-8 h-8 mt-2 hover:text-red-700 cursor-pointer" /></a>
-								</Link>
+								<div className="flex flex-row">
+									<MinusIcon className="w-8 h-8 mt-2 hover:text-red-700 cursor-pointer" onClick={() => onMinimize('ongoing-projects-container')}/>
+									<Link href="/dashboard/project/new">
+										<a className="ml-auto sm:ml-0"><PlusIcon className="w-8 h-8 mt-2 hover:text-red-700 cursor-pointer" /></a>
+									</Link>
+								</div>
 							</div>
-							<div className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center">
+							<div id="ongoing-projects-container" className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center">
 								{projects.length > 0 ? projects : <div className="font-bold text-2xl mt-4">None</div>}
 							</div>
 						</div>
 
 						<div className="mt-4">
-							<h1 className="text-2xl text-red-500 font-bold border-b-2 border-red-200 text-center sm:text-left">
-								Past
-								projects
-							</h1>
-							<div className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center">
+							<div className="flex border-b-2 border-red-200 justify-center sm:justify-between items-center text-red-500">
+								<h1 className="text-2xl text-red-500 font-bold text-center sm:text-left">
+									Past
+									projects
+								</h1>
+								<MinusIcon className="w-8 h-8 mt-2 hover:text-red-700 cursor-pointer" onClick={() => onMinimize('past-projects-container')}/>
+							</div>
+							<div id="past-projects-container" className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center">
 								{pastProjects.length > 0 ? pastProjects : <div className="font-bold text-2xl mt-4">None</div>}
 							</div>
 						</div>
 						<div className="mt-4">
-							<h1 className="text-2xl text-red-500 font-bold border-b-2 border-red-200 text-center sm:text-left">Settings</h1>
+							<div className="flex border-b-2 border-red-200 justify-center sm:justify-between items-center text-red-500">
+								<h1 className="text-2xl text-red-500 font-bold text-center sm:text-left">Settings</h1>
+								<MinusIcon className="w-8 h-8 mt-2 hover:text-red-700 cursor-pointer" onClick={() => onMinimize('settings-container')}/>
+							</div>
 							<div className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center">
-								<div className="mt-4 sm:w-1/3">
+								<div id="settings-container" className="mt-4 sm:w-1/3">
 									<div
 										className="bg-white p-8 h-full border-b-4 border-red-500 rounded-lg flex flex-col items-center sm:mx-2 sm:p-3 md:p-8"
 									>
