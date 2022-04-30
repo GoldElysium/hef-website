@@ -133,6 +133,28 @@
   .dark .theme-ame .markdown-body a {
     color:rgb(0, 146, 204);
   }
+
+  .theme-irys {
+    --color-background-1: 246, 243, 247;
+    --color-background-2: 106, 4, 68;
+    --color-card: 255, 255, 255;
+    --color-primary-1: 181, 29, 100;
+    --color-secondary-1: 231, 12, 83;
+
+    --color-dark-background-1: 28, 26, 29;
+    --color-dark-background-2: 102, 21, 69;
+    --color-dark-card: 48, 44, 58;
+    --color-dark-primary-1: 219, 44, 108;
+    --color-dark-secondary-1: 183, 37, 203;
+  }
+
+  .theme-irys .markdown-body a {
+    color:rgb(231, 12, 83);
+  }
+
+  .dark .theme-irys .markdown-body a {
+    color:rgb(206, 83, 223);
+  }
 }
 
 @layer components {
