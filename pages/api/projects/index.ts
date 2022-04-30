@@ -22,11 +22,13 @@ const requestHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 
 		const project = new Project(req.body);
 
-		project.save((err) => {
-			if (err) {
+		await project.save()
+			.then(() => res.status(201).json(project))
+			.catch((e) => {
 				res.status(500).end();
-			} else res.status(201).json(project);
-		});
+				throw e;
+			});
+
 	} else res.status(404).end();
 };
 export default requestHandler;

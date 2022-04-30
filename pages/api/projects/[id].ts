@@ -23,7 +23,7 @@ const requestHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 		const session = await getSession({ req });
 		if (!session) return res.status(401).end();
 
-		Project.findByIdAndUpdate(req.query.id, req.body, { returnOriginal: false })
+		await Project.findByIdAndUpdate(req.query.id, req.body, { returnOriginal: false })
 			.then((doc) => {
 				res.status(200).json(doc);
 			})
@@ -35,7 +35,7 @@ const requestHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 		const session = await getSession({ req });
 		if (!session) return res.status(401).end();
 
-		Project.findByIdAndDelete(req.query.id)
+		await Project.findByIdAndDelete(req.query.id)
 			.then(() => {
 				res.status(204).end();
 			})

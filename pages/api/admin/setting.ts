@@ -24,7 +24,7 @@ const requestHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 		res.status(200).json(doc);
 	} if (req.method === 'PATCH') {
 		if (!req.body.setting || !req.body.value) return res.status(400).end();
-		Setting.findByIdAndUpdate(req.body.setting,
+		await Setting.findByIdAndUpdate(req.body.setting,
 			{
 				value: req.body.value,
 			}, {

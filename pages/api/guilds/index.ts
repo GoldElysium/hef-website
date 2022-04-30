@@ -23,10 +23,13 @@ const requestHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 
 		const guild = new Guild({ ...req.body, _id: nanoid() });
 
-		guild.save((err) => {
-			if (err) res.status(500).end();
-			else res.status(201).json(guild);
-		});
+		await guild.save()
+			.then(() => res.status(201).json(guild))
+			.catch((e) => {
+				res.status(500).end();
+				throw e;
+			});
+
 	} else res.status(404).end();
 };
 
