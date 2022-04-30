@@ -8,8 +8,7 @@ try {
 // eslint-disable-next-line no-empty
 } catch (e) {}
 
-// eslint-disable-next-line consistent-return
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+const requestHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 	const session = await getSession({ req });
 	if (!session) return res.status(401).end();
 
@@ -40,3 +39,5 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 			});
 	} else res.status(404).end();
 };
+
+export default requestHandler;

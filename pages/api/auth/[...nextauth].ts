@@ -52,4 +52,6 @@ const options = {
 };
 
 // @ts-expect-error options not assignable to NextAuth's profile
-export default (req: NextApiRequest, res: NextApiResponse) => NextAuth(req, res, options);
+const requestHandler = (req: NextApiRequest, res: NextApiResponse) => NextAuth(req, res, options);
+
+export default requestHandler;

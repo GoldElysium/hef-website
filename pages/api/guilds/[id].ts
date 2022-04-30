@@ -8,8 +8,7 @@ try {
 // eslint-disable-next-line no-empty
 } catch (e) {}
 
-// eslint-disable-next-line consistent-return
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+const requestHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 	if (req.method === 'GET') {
 		const guild = await Guild.findById(req.query.id).exec()
 			.catch(() => {
@@ -45,3 +44,5 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 			});
 	} else res.status(404).end();
 };
+
+export default requestHandler;
