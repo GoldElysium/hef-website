@@ -199,6 +199,28 @@
   .dark .theme-sana .markdown-body a {
     color:rgb(255, 213, 135);
   }
+
+  .theme-mumei {
+    --color-background-1: 255, 253, 252;
+    --color-background-2: 158, 120, 107;
+    --color-card: 255, 255, 255;
+    --color-primary-1:  168, 77, 79;
+    --color-secondary-1: 67, 134, 137;
+
+    --color-dark-background-1: 46, 37, 35;
+    --color-dark-background-2: 91, 76, 73;
+    --color-dark-card: 48, 44, 58;
+    --color-dark-primary-1: 191, 163, 155;
+    --color-dark-secondary-1: 67, 134, 137;
+  }
+
+  .theme-mumei .markdown-body a {
+    color:rgb(0, 138, 143);
+  }
+
+  .dark .theme-mumei .markdown-body a {
+    color:rgb(229, 158, 107);
+  }
 }
 
 @layer components {
