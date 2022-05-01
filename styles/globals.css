@@ -155,6 +155,28 @@
   .dark .theme-irys .markdown-body a {
     color:rgb(206, 83, 223);
   }
+
+  .theme-fauna {
+    --color-background-1: 249, 255, 247;
+    --color-background-2: 87, 142, 62;
+    --color-card: 255, 255, 255;
+    --color-primary-1: 0, 161, 147;
+    --color-secondary-1: 219, 23, 116;
+
+    --color-dark-background-1: 12, 28, 28;
+    --color-dark-background-2: 37, 84, 68;
+    --color-dark-card: 48, 44, 58;
+    --color-dark-primary-1: 139, 204, 141;
+    --color-dark-secondary-1: 0, 168, 38;
+  }
+
+  .theme-fauna .markdown-body a {
+    color:rgb(219, 23, 116);
+  }
+
+  .dark .theme-fauna .markdown-body a {
+    color:rgb(255, 201, 184);
+  }
 }
 
 @layer components {
