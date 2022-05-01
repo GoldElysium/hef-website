@@ -177,6 +177,28 @@
   .dark .theme-fauna .markdown-body a {
     color:rgb(255, 201, 184);
   }
+
+  .theme-sana {
+    --color-background-1: 255, 248, 242;
+    --color-background-2: 101, 35, 226;
+    --color-card: 255, 255, 255;
+    --color-primary-1: 255, 71, 170;
+    --color-secondary-1: 255, 128, 16;
+
+    --color-dark-background-1: 6, 2, 39;
+    --color-dark-background-2: 105, 24, 181;
+    --color-dark-card: 48, 44, 58;
+    --color-dark-primary-1: 255, 31, 150;
+    --color-dark-secondary-1: 255, 128, 16;
+  }
+
+  .theme-sana .markdown-body a {
+    color:rgb(75, 31, 255);
+  }
+
+  .dark .theme-sana .markdown-body a {
+    color:rgb(255, 213, 135);
+  }
 }
 
 @layer components {
