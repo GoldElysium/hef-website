@@ -243,6 +243,28 @@
   .dark .theme-kronii .markdown-body a {
     color:rgb(114, 223, 253);
   }
+
+  .theme-bae {
+    --color-background-1: 251, 250, 255;
+    --color-background-2: 161, 26, 20;
+    --color-card: 255, 255, 255;
+    --color-primary-1:  62, 57, 61;
+    --color-secondary-1: 6, 162, 150;
+
+    --color-dark-background-1: 35, 35, 35;
+    --color-dark-background-2: 122, 4, 0;
+    --color-dark-card: 48, 44, 58;
+    --color-dark-primary-1: 240, 240, 240;
+    --color-dark-secondary-1: 27, 133, 120;
+  }
+
+  .theme-bae .markdown-body a {
+    color:rgb(217, 27, 17);
+  }
+
+  .dark .theme-bae .markdown-body a {
+    color:rgb(255, 219, 73);
+  }
 }
 
 @layer components {
