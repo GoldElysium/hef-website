@@ -35,6 +35,22 @@ ID_TO_STYLE_MAP.set('BSq6epH_Y1ffq0j1ZWOLT', 'theme-gura');
 ID_TO_STYLE_MAP.set('0RdYs2xMNnjmHpIX3CvH6', 'theme-gura');
 ID_TO_STYLE_MAP.set('mnFswH44ZCTyQiC8LPgRH', 'theme-ame');
 ID_TO_STYLE_MAP.set('pnJc6y2SRMbNunt1vOUkR', 'theme-ame');
+ID_TO_STYLE_MAP.set('hpTi3BFuM46B5SBCyrc-5', 'theme-irys');
+ID_TO_STYLE_MAP.set('LHYI_i9eFfDYXksaKKxLB', 'theme-irys');
+ID_TO_STYLE_MAP.set('RYpamVJXs76uWEept42Td', 'theme-sana');
+ID_TO_STYLE_MAP.set('94mdRp-j2N8spCx-6UyRE', 'theme-sana');
+ID_TO_STYLE_MAP.set('h_LNkS8pI64naLiWSafDj', 'theme-fauna');
+ID_TO_STYLE_MAP.set('BPyt7-SyXPhyTR9m5i6P2', 'theme-fauna');
+ID_TO_STYLE_MAP.set('B5vtBaIkfuys1Ln3XMoOY', 'theme-kronii');
+ID_TO_STYLE_MAP.set('-JoyPM46syqox0jp7NXG5', 'theme-kronii');
+ID_TO_STYLE_MAP.set('-ew0gw2u7gk8GdFyxP1-u', 'theme-kronii');
+ID_TO_STYLE_MAP.set('_0S7wwTwY17pDkHzWF9QH', 'theme-kronii');
+ID_TO_STYLE_MAP.set('vCy2Gob7GNK3SOFufaV7K', 'theme-mumei');
+ID_TO_STYLE_MAP.set('c8FUeIsD1jP6a4xUMBubS', 'theme-mumei');
+ID_TO_STYLE_MAP.set('lTv1XHPYI8tt7Lzh7g6qk', 'theme-mumei');
+ID_TO_STYLE_MAP.set('CesQIHnCRvh9RWkhC_XN_', 'theme-mumei');
+ID_TO_STYLE_MAP.set('VkCh1E0PGq8swBN3h7sse', 'theme-bae');
+ID_TO_STYLE_MAP.set('jBX00De0x_fJWg7UhDkOK', 'theme-bae');
 
 interface IProps {
 	doc: IProject,
