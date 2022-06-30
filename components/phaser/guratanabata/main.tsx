@@ -201,7 +201,7 @@ class Main extends Phaser.Scene {
 				duration: 600,
 			}).play();
 
-		this.registry.get('setBackgroundImage')(!this.registry.get('useFallback') ? '/assets/gura3mil/zoomedin1.webp' : '/assets/gura3mil/fallback/zoomedin1.jpg');
+		this.registry.get('setBackgroundImage')(!this.registry.get('useFallback') ? '/assets/guratanabata/zoomedin1.webp' : '/assets/guratanabata/fallback/zoomedin1.jpg');
 	}
 
 	generatePage(messages?: ISubmission[]) {

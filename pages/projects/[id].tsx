@@ -156,7 +156,7 @@ export default function ProjectPage({ doc, allSubmissions, guild }: IProps) {
 		);
 	}
 
-	if (doc.flags?.includes('gura3mil')) {
+	if (doc.flags?.includes('guratanabata')) {
 		return (
 			<>
 				<Head
@@ -168,7 +168,7 @@ export default function ProjectPage({ doc, allSubmissions, guild }: IProps) {
 				/>
 				<BlurBackground ref={(bg) => { (ref as any).current = bg; }} />
 				<Phaser
-					scene="gura3mil"
+					scene="guratanabata"
 					data={{
 						setBackgroundImage: (to: string) => ref.current?.setBackgroundImage(to),
 						submissions: allSubmissions,

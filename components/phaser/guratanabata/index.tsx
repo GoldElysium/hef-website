@@ -88,16 +88,16 @@ class Index extends Phaser.Scene {
 		});
 
 		this.loadPlugins();
-		this.load.audio('bgm', '/assets/gura3mil/bgm.mp3');
+		this.load.audio('bgm', '/assets/guratanabata/bgm.mp3');
 
-		this.load.audio('paperslide1', '/assets/gura3mil/sfx/paperslide1.mp3');
-		this.load.audio('paperslide2', '/assets/gura3mil/sfx/paperslide2.mp3');
-		this.load.audio('paperslide3', '/assets/gura3mil/sfx/paperslide3.mp3');
+		this.load.audio('paperslide1', '/assets/guratanabata/sfx/paperslide1.mp3');
+		this.load.audio('paperslide2', '/assets/guratanabata/sfx/paperslide2.mp3');
+		this.load.audio('paperslide3', '/assets/guratanabata/sfx/paperslide3.mp3');
 
-		if (this.registry.get('canPlayWebm')) this.load.video('gura', '/assets/gura3mil/gura.webm', undefined, true, true);
+		if (this.registry.get('canPlayWebm')) this.load.video('gura', '/assets/guratanabata/gura.webm', undefined, true, true);
 		else {
 			for (let i = 1; i <= 38; i++) {
-				this.load.image(`gura-frame${i}`, `/assets/gura3mil/fallback/frames/final-${i.toString().padStart(4, '0')}.png`);
+				this.load.image(`gura-frame${i}`, `/assets/guratanabata/fallback/frames/final-${i.toString().padStart(4, '0')}.png`);
 			}
 		}
 
@@ -205,68 +205,68 @@ class Index extends Phaser.Scene {
 	}
 
 	loadDefault(index: number) {
-		this.load.image('info', '/assets/gura3mil/info.webp');
-		this.load.image('pause', '/assets/gura3mil/pause.webp');
-		this.load.image('play', '/assets/gura3mil/play.webp');
-		this.load.image('close', '/assets/gura3mil/close.webp');
-		this.load.image('title', '/assets/gura3mil/title.webp');
-		this.load.image('back', '/assets/gura3mil/back.webp');
-		this.load.image('home', '/assets/gura3mil/home.webp');
-		this.load.image('down', '/assets/gura3mil/down.webp');
+		this.load.image('info', '/assets/guratanabata/info.webp');
+		this.load.image('pause', '/assets/guratanabata/pause.webp');
+		this.load.image('play', '/assets/guratanabata/play.webp');
+		this.load.image('close', '/assets/guratanabata/close.webp');
+		this.load.image('title', '/assets/guratanabata/title.webp');
+		this.load.image('back', '/assets/guratanabata/back.webp');
+		this.load.image('home', '/assets/guratanabata/home.webp');
+		this.load.image('down', '/assets/guratanabata/down.webp');
 
-		this.load.image('zoomed1', '/assets/gura3mil/zoomedin1.webp');
-		this.load.image('zoomed2', '/assets/gura3mil/zoomedin2.webp');
-		this.load.image('zoomed3', '/assets/gura3mil/zoomedin3.webp');
+		this.load.image('zoomed1', '/assets/guratanabata/zoomedin1.webp');
+		this.load.image('zoomed2', '/assets/guratanabata/zoomedin2.webp');
+		this.load.image('zoomed3', '/assets/guratanabata/zoomedin3.webp');
 
-		this.load.image('bg', '/assets/gura3mil/bg.webp');
-		this.load.image('infoBG', '/assets/gura3mil/infoBackground.webp');
-		this.load.image('footer', '/assets/gura3mil/footer.webp');
+		this.load.image('bg', '/assets/guratanabata/bg.webp');
+		this.load.image('infoBG', '/assets/guratanabata/infoBackground.webp');
+		this.load.image('footer', '/assets/guratanabata/footer.webp');
 
-		this.load.image('blue', '/assets/gura3mil/papers/blue.webp');
-		this.load.image('orange', '/assets/gura3mil/papers/orange.webp');
-		this.load.image('purple', '/assets/gura3mil/papers/purple.webp');
-		this.load.image('red', '/assets/gura3mil/papers/red.webp');
-		this.load.image('white', '/assets/gura3mil/papers/white.webp');
+		this.load.image('blue', '/assets/guratanabata/papers/blue.webp');
+		this.load.image('orange', '/assets/guratanabata/papers/orange.webp');
+		this.load.image('purple', '/assets/guratanabata/papers/purple.webp');
+		this.load.image('red', '/assets/guratanabata/papers/red.webp');
+		this.load.image('white', '/assets/guratanabata/papers/white.webp');
 
 		this.load.image('bamboo', [
-			'/assets/gura3mil/bamboo1.webp',
-			'/assets/gura3mil/bamboo2.webp',
-			'/assets/gura3mil/bamboo3.webp',
-			'/assets/gura3mil/bamboo4.webp',
-			'/assets/gura3mil/bamboo5.webp',
+			'/assets/guratanabata/bamboo1.webp',
+			'/assets/guratanabata/bamboo2.webp',
+			'/assets/guratanabata/bamboo3.webp',
+			'/assets/guratanabata/bamboo4.webp',
+			'/assets/guratanabata/bamboo5.webp',
 		][index]);
 	}
 
 	loadFallback(index: number) {
-		this.load.image('info', '/assets/gura3mil/fallback/info.png');
-		this.load.image('pause', '/assets/gura3mil/fallback/pause.png');
-		this.load.image('play', '/assets/gura3mil/fallback/play.png');
-		this.load.image('close', '/assets/gura3mil/fallback/close.png');
-		this.load.image('title', '/assets/gura3mil/fallback/title.png');
-		this.load.image('back', '/assets/gura3mil/fallback/back.png');
-		this.load.image('home', '/assets/gura3mil/fallback/home.png');
-		this.load.image('down', '/assets/gura3mil/fallback/down.png');
+		this.load.image('info', '/assets/guratanabata/fallback/info.png');
+		this.load.image('pause', '/assets/guratanabata/fallback/pause.png');
+		this.load.image('play', '/assets/guratanabata/fallback/play.png');
+		this.load.image('close', '/assets/guratanabata/fallback/close.png');
+		this.load.image('title', '/assets/guratanabata/fallback/title.png');
+		this.load.image('back', '/assets/guratanabata/fallback/back.png');
+		this.load.image('home', '/assets/guratanabata/fallback/home.png');
+		this.load.image('down', '/assets/guratanabata/fallback/down.png');
 
-		this.load.image('zoomed1', '/assets/gura3mil/fallback/zoomedin1.jpg');
-		this.load.image('zoomed2', '/assets/gura3mil/fallback/zoomedin2.jpg');
-		this.load.image('zoomed3', '/assets/gura3mil/fallback/zoomedin3.jpg');
+		this.load.image('zoomed1', '/assets/guratanabata/fallback/zoomedin1.jpg');
+		this.load.image('zoomed2', '/assets/guratanabata/fallback/zoomedin2.jpg');
+		this.load.image('zoomed3', '/assets/guratanabata/fallback/zoomedin3.jpg');
 
-		this.load.image('bg', '/assets/gura3mil/fallback/bg.jpg');
-		this.load.image('infoBG', '/assets/gura3mil/fallback/infoBackground.png');
-		this.load.image('footer', '/assets/gura3mil/fallback/footer.jpg');
+		this.load.image('bg', '/assets/guratanabata/fallback/bg.jpg');
+		this.load.image('infoBG', '/assets/guratanabata/fallback/infoBackground.png');
+		this.load.image('footer', '/assets/guratanabata/fallback/footer.jpg');
 
-		this.load.image('blue', '/assets/gura3mil/fallback/papers/blue.png');
-		this.load.image('orange', '/assets/gura3mil/fallback/papers/orange.png');
-		this.load.image('purple', '/assets/gura3mil/fallback/papers/purple.png');
-		this.load.image('red', '/assets/gura3mil/fallback/papers/red.png');
-		this.load.image('white', '/assets/gura3mil/fallback/papers/white.png');
+		this.load.image('blue', '/assets/guratanabata/fallback/papers/blue.png');
+		this.load.image('orange', '/assets/guratanabata/fallback/papers/orange.png');
+		this.load.image('purple', '/assets/guratanabata/fallback/papers/purple.png');
+		this.load.image('red', '/assets/guratanabata/fallback/papers/red.png');
+		this.load.image('white', '/assets/guratanabata/fallback/papers/white.png');
 
 		this.load.image('bamboo', [
-			'/assets/gura3mil/fallback/bamboo1.png',
-			'/assets/gura3mil/fallback/bamboo2.png',
-			'/assets/gura3mil/fallback/bamboo3.png',
-			'/assets/gura3mil/fallback/bamboo4.png',
-			'/assets/gura3mil/fallback/bamboo5.png',
+			'/assets/guratanabata/fallback/bamboo1.png',
+			'/assets/guratanabata/fallback/bamboo2.png',
+			'/assets/guratanabata/fallback/bamboo3.png',
+			'/assets/guratanabata/fallback/bamboo4.png',
+			'/assets/guratanabata/fallback/bamboo5.png',
 		][index]);
 	}
 
