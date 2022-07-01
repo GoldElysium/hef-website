@@ -1,0 +1,7 @@
+node_modules/
+.next/
+.idea/
+.husky/
+.github/
+.git/
+.env*
