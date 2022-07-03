@@ -34,6 +34,8 @@ class Index extends Phaser.Scene {
 
 	public bgmControl?: Phaser.GameObjects.Image;
 
+	public milestoneToggle?: Phaser.GameObjects.Image;
+
 	public showingInfo = false;
 
 	public exiting = false;
@@ -165,7 +167,16 @@ class Index extends Phaser.Scene {
 			.setInteractive({ pixelPerfect: true, cursor: 'pointer' })
 			.on('pointerup', () => this.toggleBGM());
 
+		this.milestoneToggle = this.add.image(this.width - 5, this.height, `toggle${Router.query.id == '6' ? '4' : '3'}`)
+			.setOrigin(1, 1)
+			.setDepth(5)
+			.setScale(0.8)
+			.setInteractive({ pixelPerfect: true, cursor: 'pointer' })
+			.once('pointerup', () => this.toggleMilestone());
+
 		this.scene.launch('splash');
+
+		this.scene.get('splash').input.on('pointerup', () => this.fadeOutMilestone());
 
 		this.sound.once('unlocked', () => {
 			try {
@@ -204,12 +215,58 @@ class Index extends Phaser.Scene {
 		return this.scene.launch('info').get('info').events.once('shutdown', () => { this.showingInfo = false; });
 	}
 
+	toggleMilestone() {
+		if (this.showingInfo) return;
+		if (this.exiting) return;
+
+		this.exiting = true;
+		this.game.destroy(true);
+
+		this.game.events.once('destroy', () => {
+			// TODO: I'm not the biggest fan of using magic numbers (well, magic
+			// strings), but theres no other way no really do this in practice with
+			// the current routing method.
+			// NOTE: This uses location.pathname because we need a full reload, for
+			// whatever reason, Phaser doesn't like to play nice with SPAs.
+			if (Router.query.id == '6') {
+				location.pathname = '/projects/14';
+			} else {
+				location.pathname = '/projects/6';
+			}
+		});
+	}
+
+	fadeOutMilestone() {
+		this.tweens.createTimeline().add({
+			targets: this.milestoneToggle,
+			ease: 'Sine.easeInOut',
+			alpha: 0,
+			duration: 1000,
+		}).play();
+
+		this.scene.get('main').events.once('shutdown', () => this.fadeInMilestone());
+	}
+
+	fadeInMilestone() {
+		this.tweens.createTimeline().add({
+			targets: this.milestoneToggle,
+			ease: 'Sine.easeInOut',
+			alpha: 1,
+			duration: 1000,
+		}).play();
+
+		this.scene.get('splash').input.once('pointerup', () => this.fadeOutMilestone());
+	}
+
 	loadDefault(index: number) {
 		this.load.image('info', '/assets/guratanabata/info.webp');
 		this.load.image('pause', '/assets/guratanabata/pause.webp');
 		this.load.image('play', '/assets/guratanabata/play.webp');
 		this.load.image('close', '/assets/guratanabata/close.webp');
-		this.load.image('title', '/assets/guratanabata/title.webp');
+		this.load.image('title3', '/assets/guratanabata/title3.webp');
+		this.load.image('title4', '/assets/guratanabata/title4.webp');
+		this.load.image('toggle3', '/assets/guratanabata/toggle3.webp');
+		this.load.image('toggle4', '/assets/guratanabata/toggle4.webp');
 		this.load.image('back', '/assets/guratanabata/back.webp');
 		this.load.image('home', '/assets/guratanabata/home.webp');
 		this.load.image('down', '/assets/guratanabata/down.webp');
@@ -242,7 +299,10 @@ class Index extends Phaser.Scene {
 		this.load.image('pause', '/assets/guratanabata/fallback/pause.png');
 		this.load.image('play', '/assets/guratanabata/fallback/play.png');
 		this.load.image('close', '/assets/guratanabata/fallback/close.png');
-		this.load.image('title', '/assets/guratanabata/fallback/title.png');
+		this.load.image('title3', '/assets/guratanabata/fallback/title3.png');
+		this.load.image('title4', '/assets/guratanabata/fallback/title4.png');
+		this.load.image('toggle3', '/assets/guratanabata/fallback/toggle3.png');
+		this.load.image('toggle4', '/assets/guratanabata/fallback/toggle4.png');
 		this.load.image('back', '/assets/guratanabata/fallback/back.png');
 		this.load.image('home', '/assets/guratanabata/fallback/home.png');
 		this.load.image('down', '/assets/guratanabata/fallback/down.png');
