@@ -229,7 +229,7 @@ class Index extends Phaser.Scene {
 			// NOTE: This uses location.pathname because we need a full reload, for
 			// whatever reason, Phaser doesn't like to play nice with SPAs.
 			if (Router.query.id == '6') {
-				location.pathname = '/projects/14';
+				location.pathname = '/projects/16';
 			} else {
 				location.pathname = '/projects/6';
 			}
