@@ -3,23 +3,17 @@ import {
 	createRef, useEffect, useMemo, useState,
 } from 'react';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/outline';
-import { useRouter } from 'next/router';
-import ReactMarkdown from 'react-markdown';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { GetStaticPaths, GetStaticProps } from 'next';
-import mongoose from 'mongoose';
-import safeJsonStringify from 'safe-json-stringify';
-import dynamic from 'next/dynamic';
 import Head from '../../components/Head';
 import BlurBackground from '../../components/project/BlurBackground';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 import TextHeader from '../../components/TextHeader';
-import Project, { ILink, IProject } from '../../models/Project';
-import Submission, { ISubmission } from '../../models/Submission';
 import 'github-markdown-css/github-markdown-light.css';
-import Guild, { IGuild } from '../../models/Guild';
+import { Flag, Guild, Media, Project, Submission, SubmissionMedia } from '../../types/payload-types';
+import PayloadResponse from '../../types/PayloadResponse';
 
 const ExperimentalProjectPage = dynamic(() => import('../../components/project/experimental/Page'), {
 	loading: () => <span>Loading...</span>,
@@ -33,71 +27,50 @@ const SUBMISSIONS_PER_LOAD = 10;
 
 // ID's for both production and development databases
 const ID_TO_STYLE_MAP = new Map<string, string>();
-ID_TO_STYLE_MAP.set('CGeclp7hLj-lpprbhKxX5', 'theme-calli');
-ID_TO_STYLE_MAP.set('hirD8XHurcDYFoNQOFh7p', 'theme-calli');
-ID_TO_STYLE_MAP.set('jnTqYPtoPDKlvXKuBcHuo', 'theme-kiara');
-ID_TO_STYLE_MAP.set('J9600ROFekClHLwtzquhd', 'theme-kiara');
-ID_TO_STYLE_MAP.set('rZNhEJYuseKIKkeSaUSD6', 'theme-ina');
-ID_TO_STYLE_MAP.set('rWykVp0wwqJfqVOiiwuHC', 'theme-ina');
-ID_TO_STYLE_MAP.set('BSq6epH_Y1ffq0j1ZWOLT', 'theme-gura');
-ID_TO_STYLE_MAP.set('0RdYs2xMNnjmHpIX3CvH6', 'theme-gura');
-ID_TO_STYLE_MAP.set('mnFswH44ZCTyQiC8LPgRH', 'theme-ame');
-ID_TO_STYLE_MAP.set('pnJc6y2SRMbNunt1vOUkR', 'theme-ame');
-ID_TO_STYLE_MAP.set('hpTi3BFuM46B5SBCyrc-5', 'theme-irys');
-ID_TO_STYLE_MAP.set('LHYI_i9eFfDYXksaKKxLB', 'theme-irys');
-ID_TO_STYLE_MAP.set('RYpamVJXs76uWEept42Td', 'theme-sana');
-ID_TO_STYLE_MAP.set('94mdRp-j2N8spCx-6UyRE', 'theme-sana');
-ID_TO_STYLE_MAP.set('h_LNkS8pI64naLiWSafDj', 'theme-fauna');
-ID_TO_STYLE_MAP.set('BPyt7-SyXPhyTR9m5i6P2', 'theme-fauna');
-ID_TO_STYLE_MAP.set('B5vtBaIkfuys1Ln3XMoOY', 'theme-kronii');
-ID_TO_STYLE_MAP.set('-JoyPM46syqox0jp7NXG5', 'theme-kronii');
-ID_TO_STYLE_MAP.set('-ew0gw2u7gk8GdFyxP1-u', 'theme-kronii');
-ID_TO_STYLE_MAP.set('_0S7wwTwY17pDkHzWF9QH', 'theme-kronii');
-ID_TO_STYLE_MAP.set('vCy2Gob7GNK3SOFufaV7K', 'theme-mumei');
-ID_TO_STYLE_MAP.set('c8FUeIsD1jP6a4xUMBubS', 'theme-mumei');
-ID_TO_STYLE_MAP.set('lTv1XHPYI8tt7Lzh7g6qk', 'theme-mumei');
-ID_TO_STYLE_MAP.set('CesQIHnCRvh9RWkhC_XN_', 'theme-mumei');
-ID_TO_STYLE_MAP.set('VkCh1E0PGq8swBN3h7sse', 'theme-bae');
-ID_TO_STYLE_MAP.set('jBX00De0x_fJWg7UhDkOK', 'theme-bae');
+ID_TO_STYLE_MAP.set('62c16ca2b919eb349a6b09ba', 'theme-ina');
 
+// NOTE: jp property should *ONLY* be used for translations, not everything is populated here
 interface IProps {
-	doc: IProject,
-	allSubmissions: ISubmission[],
-	guild: IGuild,
+	project: {
+		en: Project;
+		jp: Project;
+	};
+	submissions: Submission[]
 }
 
 // eslint-disable-next-line max-len
-export default function ProjectPage({ doc, allSubmissions, guild }: IProps) {
-	const router = useRouter();
+export default function ProjectPage({ project, submissions }: IProps) {
 	const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
-	const [shownSubmissions, setShownSubmissions] = useState<ISubmission[]>([]);
+	const [shownSubmissions, setShownSubmissions] = useState<Submission[]>([]);
 
 	const ref = useMemo(() => createRef<BlurBackground>(), []);
 
-	const themeStyle = ID_TO_STYLE_MAP.get(doc.guild);
+	const themeStyle = ID_TO_STYLE_MAP.get((project.en.organizer as Guild).id);
 
 	const loadMoreSubmissions = () => {
 		const newSubLength = shownSubmissions.length + SUBMISSIONS_PER_LOAD;
-		setShownSubmissions(allSubmissions.slice(0, newSubLength));
+		setShownSubmissions(submissions.slice(0, newSubLength));
 	};
 
 	useEffect(() => {
-		setShownSubmissions(allSubmissions.slice(0, SUBMISSIONS_PER_LOAD));
-	}, [allSubmissions]);
+		setShownSubmissions(submissions.slice(0, SUBMISSIONS_PER_LOAD));
+	}, [submissions]);
 
 	// eslint-disable-next-line react/no-unstable-nested-components
 	function CurrentGalleryItem() {
-		if (!doc.media) return null;
-		if (doc.media[currentMediaIndex].type === 'video') {
+		if (!project.en.media) return <></>;
+		if (project.en.media[currentMediaIndex].type === 'video') {
 			return (
 				<ReactPlayer
 					width="100%"
 					height="100%"
-					url={doc.media[currentMediaIndex].src}
+					url={project.en.media[currentMediaIndex].url!}
 					controls
 					light
 				/>
 			);
+		} if (project.en.media[currentMediaIndex].type === 'image') {
+			return <img className="max-w-full max-h-full object-contain" src={project.en.media[currentMediaIndex].media} alt="" loading="lazy" />;
 		}
 		if (doc.media[currentMediaIndex].type === 'image') {
 			return (
@@ -141,7 +114,7 @@ export default function ProjectPage({ doc, allSubmissions, guild }: IProps) {
 							<ReactPlayer
 								width="100%"
 								height="100%"
-								url={submission.src}
+								url={submission.url!}
 								controls
 								light
 								className="mb-4 mt-4"
@@ -151,7 +124,7 @@ export default function ProjectPage({ doc, allSubmissions, guild }: IProps) {
 							<div className="mt-4 mb-2 w-full h-full max-h-[750px] flex justify-center">
 								<img
 									className="max-w-10/12 object-contain mb-4"
-									src={submission.src}
+									src={(submission.media as SubmissionMedia).sizes?.thumbnail?.url}
 									alt=""
 									loading="lazy"
 								/>
@@ -183,15 +156,17 @@ export default function ProjectPage({ doc, allSubmissions, guild }: IProps) {
 		);
 	}
 
-	if (doc.flags?.includes('guratanabata')) {
+	if (project.en.flags?.includes('guratanabata')) {
 		return (
 			<>
 				<Head
-					color={guild.color ?? '#FF3D3D'}
-					title={doc.title}
-					description={doc.shortDescription}
+					/* TODO: Make customizable? */
+					color="#FF3D3D"
+					/* TODO: Use locale */
+					title={project.en.title}
+					description={project.en.shortDescription}
 					keywords={['guratanabata']}
-					image={doc.ogImage ?? 'https://holoen.fans/img/logo.png'}
+					image={(project.en.image as Media).sizes?.thumbnail?.url ?? 'https://holoen.fans/img/logo.png'}
 				/>
 				<BlurBackground ref={(bg) => {
 					(ref as any).current = bg;
@@ -202,7 +177,7 @@ export default function ProjectPage({ doc, allSubmissions, guild }: IProps) {
 					scene="guratanabata"
 					data={{
 						setBackgroundImage: (to: string) => ref.current?.setBackgroundImage(to),
-						submissions: allSubmissions,
+						submissions: submissions,
 					}}
 				/>
 			</>
@@ -212,23 +187,29 @@ export default function ProjectPage({ doc, allSubmissions, guild }: IProps) {
 	return (
 		<>
 			<Head
-				color={guild.color ?? '#FF3D3D'}
-				title={doc.title}
-				description={doc.shortDescription}
-				url={`https://holoen.fans${router.pathname.replace(/\[id\]/gi, router.query.id as string)}`}
-				keywords={[doc.title.toLowerCase()]}
-				image={doc.ogImage ?? 'https://holoen.fans/img/logo.png'}
+				/* TODO: Make customizable? */
+				color="#FF3D3D"
+				/* TODO: Use locale */
+				title={project.en.title}
+				description={project.en.shortDescription}
+				url={`https://holoen.fans/projects/${project.en.slug}`}
+				keywords={[project.en.title.toLowerCase(), project.jp.title.toLowerCase()]}
+				image={(project.en.image as Media).sizes?.thumbnail?.url ?? 'https://holoen.fans/img/logo.png'}
 			/>
 
 			<div className={themeStyle}>
 				<div className="flex flex-col h-full min-h-screen bg-skin-background-1 dark:bg-skin-dark-background-1">
-					{!doc.flags?.includes('disableNavbar') && <Navbar disableHead />}
+					{
+						(project.en.flags as Flag[] | undefined)?.findIndex((flag) => flag.name === 'disableNavbar') !== -1
+						&& <Navbar disableHead />
+					}
 
 					{
-						!doc.flags?.includes('disableHeader') && (
+						(project.en.flags as Flag[] | undefined)?.findIndex((flag) => flag.name === 'disableHeader') !== -1
+						&& (
 							<Header
-								title={doc.title ?? 'unknown'}
-								description={doc.shortDescription ?? ''}
+								title={project.en.title ?? 'unknown'}
+								description={project.en.shortDescription ?? ''}
 							/>
 						)
 					}
@@ -239,18 +220,10 @@ export default function ProjectPage({ doc, allSubmissions, guild }: IProps) {
 								<div>
 									<TextHeader text="Description" />
 									<div className="markdown-body">
-										<ReactMarkdown
-											className="px-4 sm:px-0 text-black dark:text-white dark:text-opacity-80"
-										>
-											{
-												doc.description && doc.description
-													.replace(/(\\\n```)/gim, '\n```')
-													.replace(/(```\n\\)|(```\n\n\\)/gim, '```\n')
-											}
-										</ReactMarkdown>
+										{/* TODO: Render Slate data */}
 									</div>
 								</div>
-								{(doc.media?.length ?? 0) > 0 && (
+								{(project.en.media?.length ?? 0) > 0 && (
 									<div className="mt-4">
 										<TextHeader text="Gallery" />
 										<div className="flex flex-col items-center pt-2">
@@ -275,44 +248,42 @@ export default function ProjectPage({ doc, allSubmissions, guild }: IProps) {
 												<span className="text-black dark:text-white">
 													{currentMediaIndex + 1}
 													/
-													{doc.media ? doc.media.length : 0}
+													{project.en.media ? project.en.media.length : 0}
 												</span>
 												<ChevronRightIcon
 													className={
 														currentMediaIndex + 1
-														< (doc.media ? doc.media.length : 0)
+													< (project.en.media ? project.en.media.length : 0)
 															? 'h-8 w-8 cursor-pointer text-black dark:text-white'
 															: 'h-8 w-8 text-skin-primary-1 text-opacity-30 dark:text-skin-dark-primary-1 dark:text-opacity-30'
 													}
 													onClick={() => {
 														if (
 															currentMediaIndex + 1
-															< (doc.media ? doc.media.length : 0)
-														) {
-															setCurrentMediaIndex(currentMediaIndex + 1);
-														}
+														< (project.en.media ? project.en.media.length : 0)
+														) { setCurrentMediaIndex(currentMediaIndex + 1); }
 													}}
 												/>
 											</div>
 										</div>
 									</div>
 								)}
-								{(doc.links?.length ?? 0) > 0 && (
+								{(project.en.links?.length ?? 0) > 0 && (
 									<div className="mt-4">
 										<TextHeader text="Links" />
 										<div className="flex justify-center space-x-6 px-4 sm:px-0">
-											{doc.links
-												&& doc.links.map((link: ILink, index: number) => (
-													<div
-														key={`link-${index}` /* eslint-disable-line react/no-array-index-key */}
-														className="rounded-3xl font-bold w-[6rem] h-10 flex items-center justify-center mt-4 content-end
-													bg-skin-secondary-1 dark:bg-skin-dark-secondary-1 text-white hover:text-opacity-70 text-center"
-													>
-														<a href={link.link} target="_blank" rel="noreferrer">
-															{link.name}
-														</a>
-													</div>
-												))}
+											{project.en.links
+											&& project.en.links.map((link, index: number) => (
+												<div
+													key={`link-${index}` /* eslint-disable-line react/no-array-index-key */}
+													className="rounded-3xl font-bold w-[6rem] h-10 flex items-center justify-center mt-4 content-end
+													bg-skin-secondary-1 dark:bg-skin-dark-secondary-1 text-white hover:text-opacity-70"
+												>
+													<a href={link.url} target="_blank" rel="noreferrer">
+														{link.name}
+													</a>
+												</div>
+											))}
 										</div>
 									</div>
 								)}
@@ -325,14 +296,8 @@ export default function ProjectPage({ doc, allSubmissions, guild }: IProps) {
 												<InfiniteScroll
 													dataLength={shownSubmissions.length}
 													next={loadMoreSubmissions}
-													hasMore={shownSubmissions.length < allSubmissions.length}
-													loader={(
-														<p
-															className="text-black dark:text-white text-center mt-4"
-														>
-															Loading...
-														</p>
-													)}
+													hasMore={shownSubmissions.length < submissions.length}
+													loader={<p className="text-black dark:text-white text-center mt-4">Loading...</p>}
 													scrollThreshold="500px"
 												>
 													{Submissions}
@@ -345,100 +310,82 @@ export default function ProjectPage({ doc, allSubmissions, guild }: IProps) {
 						</div>
 					</div>
 
-					{!doc.flags?.includes('disableFooter') && <Footer />}
+					{!project.en.flags?.includes('disableFooter') && <Footer />}
 				</div>
 			</div>
 		</>
 	);
 }
 
+// @ts-ignore
 export const getStaticPaths: GetStaticPaths = async () => {
-	if (process.env.NODE_ENV === 'production') {
-		return {
-			paths: [
-				{
-					params: {
-						id: '14',
-					},
-				},
-				{
-					params: {
-						id: '16',
-					},
-				},
-				{
-					params: {
-						id: '17',
-					},
-				},
-				{
-					params: {
-						id: '18',
-					},
-				},
-			],
-			fallback: false,
-		};
-	}
-
-	try {
-		mongoose.connect(process.env.MONGOOSEURL!);
-		// eslint-disable-next-line no-empty
-	} catch (e) {
-	}
-
-	const projects = await Project.find({}).lean().exec();
+	const res = await fetch(`${process.env.CMS_URL!}/api/projects?depth=0`);
+	const projects: PayloadResponse<Project> = await res.json();
 
 	return {
-		paths: projects.map((project) => (
+		paths: projects.docs.map((project) => (
 			{
-				params: { id: project._id.toString() },
+				id: project.slug,
 			}
 		)),
-		fallback: false,
 	};
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
-	try {
-		mongoose.connect(process.env.MONGOOSEURL!);
-		// eslint-disable-next-line no-empty
-	} catch (e) {
+	const slug = context.params!.id as string;
+
+	// Fetch EN and JP version for page, CMS will fallback to EN for any fields not translated
+	const enProjectRes = await fetch(`${process.env.CMS_URL!}/api/projects?where[slug][equals]=${slug}&depth=2`);
+	const enProject = (await enProjectRes.json() as PayloadResponse<Project>).docs[0];
+
+	const jpProjectRes = await fetch(`${process.env.CMS_URL!}/api/projects?where[slug][equals]=${slug}&depth=0&locale=jp`);
+	const jpProject = (await jpProjectRes.json() as PayloadResponse<Project>).docs[0];
+
+	// Create an array for all the submissions
+	let moreSubmissions = true;
+	let page = 1;
+	const submissions: Submission[] = [];
+
+	async function fetchNextSubmissions() {
+		// Fetch next page
+		const submissionsRes = await fetch(`${process.env.CMS_URL!}/api/submissions?where[project][equals]=${enProject.id}&limit=100&page=${page}&depth=0`);
+		const body: PayloadResponse<Submission> =  await submissionsRes.json();
+
+		// Process submissions
+		const tasks = body.docs.map(async (submission) => {
+			// Fetch media if needed
+			if (submission.srcIcon) {
+				const mediaFetch = await fetch(`${process.env.CMS_URL!}/api/submission-media/${submission.srcIcon as string}`);
+				const mediaBody: PayloadResponse<SubmissionMedia> = await mediaFetch.json();
+				submission.srcIcon = mediaBody.docs[0];
+			}
+
+			if (submission.media) {
+				const mediaFetch = await fetch(`${process.env.CMS_URL!}/api/submission-media/${submission.media as string}`);
+				const mediaBody: PayloadResponse<SubmissionMedia> = await mediaFetch.json();
+				submission.media = mediaBody.docs[0];
+			}
+
+			submissions.push(submission);
+		});
+		await Promise.all(tasks);
+
+		// Set variables for next fetch
+		page += 1;
+		moreSubmissions = body.hasNextPage;
 	}
 
-	const project = await Project.findById(context.params?.id).lean().exec()
-		.catch((e) => {
-			throw e;
-		});
-
-	if (!project) {
-		return {
-			notFound: true,
-		};
+	while (moreSubmissions) {
+		await fetchNextSubmissions();
 	}
-
-	const projectData: IProject = await JSON.parse(safeJsonStringify(project));
-
-	const submissions: ISubmission[] = await Submission.find({
-		project: project._id,
-	}).lean().exec().catch((e) => {
-		throw e;
-	});
-
-	const projectSubmissions: ISubmission[] = await JSON.parse(safeJsonStringify(submissions));
-
-	const guild = await Guild.findById(project.guild)
-		.lean().exec().catch((e) => {
-			throw e;
-		});
-
-	const guildJson: IGuild = await JSON.parse(safeJsonStringify(guild as object));
 
 	return {
 		props: {
-			doc: projectData,
-			allSubmissions: projectSubmissions,
-			guild: guildJson,
+			project: {
+				en: enProject,
+				jp: jpProject,
+			},
+			submissions,
 		},
 	};
 };
