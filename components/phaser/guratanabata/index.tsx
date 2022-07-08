@@ -4,7 +4,6 @@ import SoundFade from 'phaser3-rex-plugins/plugins/soundfade';
 import AwaitLoaderPlugin from 'phaser3-rex-plugins/plugins/awaitloader-plugin';
 import Router from 'next/router';
 import { Plugin as NineSlicePlugin } from 'phaser3-nineslice';
-import { ISubmission } from '../../../models/Submission';
 import GoogleFontsPlugin from './plugins/gfonts';
 import UIPl from './plugins/ui';
 
@@ -21,8 +20,6 @@ class Index extends Phaser.Scene {
 	public ui!: import('./plugins/ui').default;
 
 	public info: any;
-
-	public subCount!: number;
 
 	public width!: number;
 
@@ -206,15 +203,12 @@ class Index extends Phaser.Scene {
 		this.game.destroy(true);
 
 		this.game.events.once('destroy', () => {
-			// TODO: I'm not the biggest fan of using magic numbers (well, magic
-			// strings), but theres no other way no really do this in practice with
-			// the current routing method.
 			// NOTE: This uses location.pathname because we need a full reload, for
 			// whatever reason, Phaser doesn't like to play nice with SPAs.
-			if (Router.query.id == '6') {
-				location.pathname = '/projects/16';
+			if (Router.query.slug == 'gura3mil') {
+				location.pathname = '/projects/gura4mil';
 			} else {
-				location.pathname = '/projects/6';
+				location.pathname = '/projects/gura3mil';
 			}
 		});
 	}

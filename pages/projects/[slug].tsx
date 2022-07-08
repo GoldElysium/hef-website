@@ -12,13 +12,14 @@ import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 import Phaser from '../../components/project/Phaser';
 import TextHeader from '../../components/TextHeader';
-import 'github-markdown-css/github-markdown-light.css';
 import { Flag, Guild, Media, Project, Submission, SubmissionMedia } from '../../types/payload-types';
 import PayloadResponse from '../../types/PayloadResponse';
+import DescriptionSerializer from '../../components/DescriptionSerializer';
 
 const SUBMISSIONS_PER_LOAD = 10;
 
 // ID's for both production and development databases
+// TODO: Replace with Payload data
 const ID_TO_STYLE_MAP = new Map<string, string>();
 ID_TO_STYLE_MAP.set('62c16ca2b919eb349a6b09ba', 'theme-ina');
 
@@ -26,7 +27,11 @@ ID_TO_STYLE_MAP.set('62c16ca2b919eb349a6b09ba', 'theme-ina');
 interface IProps {
 	project: {
 		en: Project;
-		jp: Project;
+		jp: {
+			title: Project['title'];
+			shortDescription: Project['shortDescription'];
+			description: Project['description'];
+		};
 	};
 	submissions: Submission[]
 }
@@ -62,7 +67,7 @@ export default function ProjectPage({ project, submissions }: IProps) {
 				/>
 			);
 		} if (project.en.media[currentMediaIndex].type === 'image') {
-			return <img className="max-w-full max-h-full object-contain" src={project.en.media[currentMediaIndex].media} alt="" loading="lazy" />;
+			return <img className="max-w-full max-h-full object-contain" src={(project.en.media[currentMediaIndex].media as Media).sizes!.thumbnail!.url} alt="" loading="lazy" />;
 		}
 		return <p>Invalid media</p>;
 	}
@@ -72,10 +77,10 @@ export default function ProjectPage({ project, submissions }: IProps) {
 		const submissionElements: JSX.Element[] = [];
 		shownSubmissions.forEach((submission, index) => {
 			submissionElements.push(
-				<div className="w-full max-h-full text-black dark:text-white" key={submission._id as unknown as string}>
+				<div className="w-full max-h-full text-black dark:text-white" key={submission.id as unknown as string}>
 					<div className="w-full flex mt-4 h-14">
 						{submission.srcIcon && (
-							<img className="object-cover w-14 h-14 rounded-full" src={submission.srcIcon} alt="author icon" />
+							<img className="object-cover w-14 h-14 rounded-full" src={(submission.srcIcon as SubmissionMedia).sizes!.icon!.url} alt="author icon" />
 						)}
 						{submission.author && (
 							<div className="text-lg mt-3 ml-4">
@@ -168,12 +173,12 @@ export default function ProjectPage({ project, submissions }: IProps) {
 			<div className={themeStyle}>
 				<div className="flex flex-col h-full min-h-screen bg-skin-background-1 dark:bg-skin-dark-background-1">
 					{
-						(project.en.flags as Flag[] | undefined)?.findIndex((flag) => flag.name === 'disableNavbar') !== -1
+						(project.en.flags as Flag[] | undefined)?.findIndex((flag) => flag.name === 'disableNavbar') === -1
 						&& <Navbar disableHead />
 					}
 
 					{
-						(project.en.flags as Flag[] | undefined)?.findIndex((flag) => flag.name === 'disableHeader') !== -1
+						(project.en.flags as Flag[] | undefined)?.findIndex((flag) => flag.name === 'disableHeader') === -1
 						&& (
 							<Header
 								title={project.en.title ?? 'unknown'}
@@ -187,8 +192,8 @@ export default function ProjectPage({ project, submissions }: IProps) {
 							<div className="max-w-4xl w-full mx-4 break-words md:break-normal">
 								<div>
 									<TextHeader text="Description" />
-									<div className="markdown-body">
-										{/* TODO: Render Slate data */}
+									<div className="description-body">
+										{DescriptionSerializer(project.en.description)}
 									</div>
 								</div>
 								{(project.en.media?.length ?? 0) > 0 && (
@@ -291,14 +296,15 @@ export const getStaticPaths: GetStaticPaths = async () => {
 	return {
 		paths: projects.docs.map((project) => (
 			{
-				id: project.slug,
+				params: { slug: project.slug },
 			}
 		)),
+		fallback: false,
 	};
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
-	const slug = context.params!.id as string;
+	const slug = context.params!.slug as string;
 
 	// Fetch EN and JP version for page, CMS will fallback to EN for any fields not translated
 	const enProjectRes = await fetch(`${process.env.CMS_URL!}/api/projects?where[slug][equals]=${slug}&depth=2`);
@@ -349,9 +355,13 @@ export const getStaticProps: GetStaticProps = async (context) => {
 		props: {
 			project: {
 				en: enProject,
-				jp: jpProject,
+				jp: {
+					title: jpProject.title,
+					shortDescription: jpProject.shortDescription,
+					description: jpProject.description,
+				},
 			},
 			submissions,
-		},
+		} as IProps,
 	};
 };
