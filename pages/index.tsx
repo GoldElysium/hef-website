@@ -1,47 +1,52 @@
-import { GetStaticProps } from 'next';
-import mongoose from 'mongoose';
-import safeJsonStringify from 'safe-json-stringify';
 import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
 import Card from '../components/Card';
 import Footer from '../components/Footer';
 import TextHeader from '../components/TextHeader';
-import Guild, { IGuild } from '../models/Guild';
-import Project, { IProject } from '../models/Project';
+import { GetStaticProps } from 'next';
+import { Guild, Media, Project } from '../types/payload-types';
+import PayloadResponse from '../types/PayloadResponse';
 
 interface IProps {
-	guilds: string;
-	projects: string;
+	featuredProjects: {
+		en: Project[];
+		jp: {
+			title: Project['title'];
+			shortDescription: Project['shortDescription'];
+			description: Project['description'];
+		}[];
+	};
+	guilds: {
+		en: Guild[];
+		jp: {
+			description: Guild['description'];
+		}[];
+	};
 }
 
-export default function Home({ guilds, projects }: IProps) {
-	const parsedGuilds: IGuild[] = JSON.parse(guilds);
-	const parsedProjects: IProject[] = JSON.parse(projects);
+export default function Home({ featuredProjects, guilds }: IProps) {
+	const featuredProjectsHtml = featuredProjects.en
+		.map((project) => (
+			<Card
+				key={project.id}
+				title={project.title}
+				description={project.shortDescription}
+				button="View"
+				url={`/projects/${project.slug}`}
+				internal
+			/>
+		));
 
-	const guildHtml = parsedGuilds.map((guild: IGuild) => (
+	const guildHtml = guilds.en.map((guild) => (
 		<Card
-			key={guild._id}
-			img={guild.image}
+			key={guild.id}
+			img={(guild.icon as Media).sizes!.icon!.url}
 			title={guild.name}
 			description={guild.description}
 			button="Join!"
 			url={`https://discord.gg/${guild.invite}`}
 		/>
 	));
-
-	const projectHtml = parsedProjects
-		.filter((project: IProject) => project.status === 'ongoing')
-		.slice(0, 3)
-		.map((project: IProject) => (
-			<Card
-				key={project._id}
-				title={project.title}
-				description={project.shortDescription}
-				button="View"
-				url={`/projects/${project._id}`}
-				internal
-			/>
-		));
 
 	return (
 		<div className="flex flex-col h-full min-h-screen bg-skin-background-1 dark:bg-skin-dark-background-1">
@@ -53,8 +58,8 @@ export default function Home({ guilds, projects }: IProps) {
 						<div>
 							<TextHeader text="Featured projects" />
 							<div className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center">
-								{projectHtml.length > 0 ? (
-									projectHtml
+								{featuredProjectsHtml.length > 0 ? (
+									featuredProjectsHtml
 								) : (
 									<div className="font-bold text-2xl mt-4 text-black dark:text-white">None</div>
 								)}
@@ -79,20 +84,68 @@ export default function Home({ guilds, projects }: IProps) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-	try {
-		mongoose.connect(process.env.MONGOOSEURL!);
-		// eslint-disable-next-line no-empty
-	} catch (e) {
+	interface FeaturedProjectsResponse {
+		projects: Project[];
+		globalType: string;
+		createdAt: string;
+		updatedAt: string;
+		id: string;
 	}
 
-	const guilds = safeJsonStringify(await Guild.find({}).lean().exec());
-	const projects = await Project.find({}).lean().exec();
-	const filteredProjects = projects.filter((project) => project.status === 'ongoing').slice(0, 3);
+
+	const enRes = await fetch(`${process.env.CMS_URL!}/api/globals/featured-projects?depth=3`);
+	const enProjects: FeaturedProjectsResponse = await enRes.json();
+
+	const jpRes = await fetch(`${process.env.CMS_URL!}/api/globals/featured-projects?depth=1&locale=jp`);
+	const jpProjects: FeaturedProjectsResponse = await jpRes.json();
+	const jpMinified = jpProjects.projects.map((project) => (
+		{
+			title: project.title,
+			shortDescription: project.shortDescription,
+			description: project.description,
+		}
+	));
+
+	let moreGuilds = true;
+	let page = 1;
+	let enGuilds: Guild[] = [];
+	const jpGuilds: IProps['guilds']['jp'] = [];
+
+	async function fetchNextGuilds() {
+		// Fetch next page
+		const enGuildsRes = await fetch(`${process.env.CMS_URL!}/api/guilds?limit=100&page=${page}`);
+		const enBody: PayloadResponse<Guild> = await enGuildsRes.json();
+
+		const jpGuildsRes = await fetch(`${process.env.CMS_URL!}/api/guilds?limit=100&page=${page}&locale=jp&depth=0`);
+		const jpBody: PayloadResponse<Guild> = await jpGuildsRes.json();
+
+		enGuilds = enGuilds.concat(enBody.docs);
+
+		jpBody.docs.map((guild) => {
+			jpGuilds.push({
+				description: guild.description,
+			});
+		});
+
+		// Set variables for next fetch
+		page += 1;
+		moreGuilds = enBody.hasNextPage;
+	}
+
+	while (moreGuilds) {
+		await fetchNextGuilds();
+	}
 
 	return {
 		props: {
-			guilds,
-			projects: safeJsonStringify(filteredProjects),
-		},
+			featuredProjects: {
+				en: enProjects.projects,
+				jp: jpMinified,
+			},
+			guilds: {
+				en: enGuilds,
+				jp: jpGuilds,
+			},
+		} as IProps,
 	};
 };

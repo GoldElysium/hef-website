@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import Router from 'next/router';
-import { ISubmission } from '../../../models/Submission';
+import { Submission } from '../../../types/payload-types';
 
 const MILLION = Router.query.id === '6' ? '3' : '4';
 
@@ -207,7 +207,7 @@ class Main extends Phaser.Scene {
 		this.registry.get('setBackgroundImage')(!this.registry.get('useFallback') ? '/assets/guratanabata/zoomedin1.webp' : '/assets/guratanabata/fallback/zoomedin1.jpg');
 	}
 
-	generatePage(messages?: ISubmission[]) {
+	generatePage(messages?: Submission[]) {
 		if (!messages) return false;
 
 		let bg: any;
@@ -340,7 +340,7 @@ class Main extends Phaser.Scene {
 		return container;
 	}
 
-	showPaper(paper: string, submission: ISubmission) {
+	showPaper(paper: string, submission: Submission) {
 		if (this.isShowingFull) return;
 		this.isShowingFull = true;
 

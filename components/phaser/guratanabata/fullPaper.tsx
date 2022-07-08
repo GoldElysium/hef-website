@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { ISubmission } from '../../../models/Submission';
+import { Submission } from '../../../types/payload-types';
 
 const PAPER_SLIDES = [
 	'paperslide1',
@@ -57,7 +57,7 @@ export default class FullPaper extends Phaser.Scene {
 			.setInteractive({ cursor: 'pointer' })
 			.once('pointerup', () => this.close());
 
-		const submission = this.data.get('submission') as ISubmission;
+		const submission = this.data.get('submission') as Submission;
 		this.message = this.ui.text(
 			bgBounds.left + 100,
 			150,

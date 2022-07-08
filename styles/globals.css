@@ -36,11 +36,11 @@
     --color-dark-secondary-1: 230, 133, 15;
   }
 
-  .theme-ina .markdown-body a {
+  .theme-ina .description-body a {
     color: rgb(160, 70, 152);
   }
 
-  .dark .theme-ina .markdown-body a {
+  .dark .theme-ina .description-body a {
     color: rgb(230, 133, 15);
   }
 
@@ -57,11 +57,11 @@
     --color-dark-secondary-1: 219, 10, 70;
   }
 
-  .theme-calli .markdown-body a {
+  .theme-calli .description-body a {
     color: rgb(178, 5, 59);
   }
 
-  .dark .theme-calli .markdown-body a {
+  .dark .theme-calli .description-body a {
     color: rgb(219, 10, 70);
   }
 
@@ -78,11 +78,11 @@
     --color-dark-secondary-1: 217, 48, 54;
   }
 
-  .theme-gura .markdown-body a {
+  .theme-gura .description-body a {
     color: rgb(200, 79, 83);
   }
 
-  .dark .theme-gura .markdown-body a {
+  .dark .theme-gura .description-body a {
     color: rgb(217, 48, 54);
   }
 
@@ -99,11 +99,11 @@
     --color-dark-secondary-1: 23, 211, 183;
   }
 
-  .theme-kiara .markdown-body a {
+  .theme-kiara .description-body a {
     color: rgb(0, 128, 94);
   }
 
-  .dark .theme-kiara .markdown-body a {
+  .dark .theme-kiara .description-body a {
     color: rgb(23, 211, 183);
   }
 
@@ -120,11 +120,11 @@
     --color-dark-secondary-1: 0, 146, 204;
   }
 
-  .theme-ame .markdown-body a {
+  .theme-ame .description-body a {
     color: rgb(18, 130, 161);
   }
 
-  .dark .theme-ame .markdown-body a {
+  .dark .theme-ame .description-body a {
     color: rgb(0, 146, 204);
   }
 
@@ -141,11 +141,11 @@
     --color-dark-secondary-1: 183, 37, 203;
   }
 
-  .theme-irys .markdown-body a {
+  .theme-irys .description-body a {
     color: rgb(231, 12, 83);
   }
 
-  .dark .theme-irys .markdown-body a {
+  .dark .theme-irys .description-body a {
     color: rgb(206, 83, 223);
   }
 
@@ -162,11 +162,11 @@
     --color-dark-secondary-1: 0, 168, 38;
   }
 
-  .theme-fauna .markdown-body a {
+  .theme-fauna .description-body a {
     color: rgb(219, 23, 116);
   }
 
-  .dark .theme-fauna .markdown-body a {
+  .dark .theme-fauna .description-body a {
     color: rgb(255, 201, 184);
   }
 
@@ -183,11 +183,11 @@
     --color-dark-secondary-1: 255, 128, 16;
   }
 
-  .theme-sana .markdown-body a {
+  .theme-sana .description-body a {
     color: rgb(75, 31, 255);
   }
 
-  .dark .theme-sana .markdown-body a {
+  .dark .theme-sana .description-body a {
     color: rgb(255, 213, 135);
   }
 
@@ -204,11 +204,11 @@
     --color-dark-secondary-1: 67, 134, 137;
   }
 
-  .theme-mumei .markdown-body a {
+  .theme-mumei .description-body a {
     color: rgb(0, 138, 143);
   }
 
-  .dark .theme-mumei .markdown-body a {
+  .dark .theme-mumei .description-body a {
     color: rgb(229, 158, 107);
   }
 
@@ -225,11 +225,11 @@
     --color-dark-secondary-1: 47, 77, 198;
   }
 
-  .theme-kronii .markdown-body a {
+  .theme-kronii .description-body a {
     color: rgb(21, 107, 207);
   }
 
-  .dark .theme-kronii .markdown-body a {
+  .dark .theme-kronii .description-body a {
     color: rgb(114, 223, 253);
   }
 
@@ -246,11 +246,11 @@
     --color-dark-secondary-1: 27, 133, 120;
   }
 
-  .theme-bae .markdown-body a {
+  .theme-bae .description-body a {
     color: rgb(217, 27, 17);
   }
 
-  .dark .theme-bae .markdown-body a {
+  .dark .theme-bae .description-body a {
     color: rgb(255, 219, 73);
   }
 }
@@ -322,11 +322,11 @@
   }
 }
 
-.markdown-body {
+.description-body {
   background-color: inherit !important;
 }
 
-.markdown-body code {
+.description-body code {
   color: #000;
 }
 

@@ -1,41 +1,30 @@
-import { GetStaticProps } from 'next';
-import mongoose from 'mongoose';
-import safeJsonStringify from 'safe-json-stringify';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 import Card from '../../components/Card';
 import TextHeader from '../../components/TextHeader';
-import Project, { IProject } from '../../models/Project';
+import { GetStaticProps } from 'next';
+import PayloadResponse from '../../types/PayloadResponse';
+import { Project } from '../../types/payload-types';
 
 interface IProps {
-	projects: string;
+	en: Project[];
+	jp: {
+		title: Project['title'];
+		shortDescription: Project['shortDescription'];
+		description: Project['description'];
+	}[];
 }
 
-export default function Projects({ projects }: IProps) {
-	const parsedProjects: IProject[] = JSON.parse(projects);
-	const ongoing = parsedProjects.filter((project) => project.status === 'ongoing');
-	const ongoingHtml = ongoing.map((project: IProject) => (
-		<Card
-			key={project._id}
-			title={project.title}
-			description={project.shortDescription}
-			button="View"
-			url={`/projects/${project._id}`}
-			internal
-		/>
+export default function Projects({ en }: IProps) {
+	const ongoing = en.filter((project: Project) => project.status === 'ongoing');
+	const ongoingProjects = ongoing.map((project: Project) => (
+		<Card key={project.id} title={project.title} description={project.shortDescription} button="View" url={`/projects/${project.slug}`} internal />
 	));
 
-	const past = parsedProjects.filter((project) => project.status === 'past');
-	const pastHtml = past.map((project: IProject) => (
-		<Card
-			key={project._id}
-			title={project.title}
-			description={project.shortDescription}
-			button="View"
-			url={`/projects/${project._id}`}
-			internal
-		/>
+	const past = en.filter((project: Project) => project.status === 'past');
+	const pastProjects = past.map((project: Project) => (
+		<Card key={project.id} title={project.title} description={project.shortDescription} button="View" url={`/projects/${project.slug}`} internal />
 	));
 
 	return (
@@ -49,7 +38,7 @@ export default function Projects({ projects }: IProps) {
 						<div>
 							<TextHeader text="Ongoing projects" />
 							<div className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center">
-								{ongoingHtml.length > 0 ? ongoingHtml : <div className="font-bold text-2xl mt-4 text-black dark:text-white">None</div>}
+								{ongoingProjects.length > 0 ? ongoingProjects : <div className="font-bold text-2xl mt-4 text-black dark:text-white">None</div>}
 							</div>
 						</div>
 						<div className="mt-10">
@@ -68,17 +57,23 @@ export default function Projects({ projects }: IProps) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-	try {
-		mongoose.connect(process.env.MONGOOSEURL!);
-		// eslint-disable-next-line no-empty
-	} catch (e) {
-	}
+	const enRes = await fetch(`${process.env.CMS_URL!}/api/projects?depth=2`);
+	const enProjects: PayloadResponse<Project> = await enRes.json();
 
-	const projects = safeJsonStringify(await Project.find({}).lean().exec());
+	const jpRes = await fetch(`${process.env.CMS_URL!}/api/projects?depth=0&locale=jp`);
+	const jpProjects: PayloadResponse<Project> = await jpRes.json();
+	const jpMinified = jpProjects.docs.map((project) => (
+		{
+			title: project.title,
+			shortDescription: project.shortDescription,
+			description: project.description,
+		}
+	));
 
 	return {
 		props: {
-			projects,
-		},
+			en: enProjects.docs,
+			jp: jpMinified,
+		} as IProps,
 	};
 };
