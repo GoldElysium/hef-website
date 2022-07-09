@@ -153,7 +153,6 @@ class Splash extends Phaser.Scene {
 
 		this.input.on('pointerup', async () => {
 			if (this.started) return false;
-			if (!this.registry.get('showSubmissions')) return (this.scene.get('default') as import('./').default).toggleInfo();
 			this.started = true;
 
 			const timeline = this.tweens.createTimeline()

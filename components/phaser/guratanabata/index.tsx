@@ -1,11 +1,9 @@
 import Phaser from 'phaser';
-import axios from 'axios';
 import SoundFade from 'phaser3-rex-plugins/plugins/soundfade';
 // @ts-expect-error Missing types
 import AwaitLoaderPlugin from 'phaser3-rex-plugins/plugins/awaitloader-plugin';
 import Router from 'next/router';
 import { Plugin as NineSlicePlugin } from 'phaser3-nineslice';
-import cheerio from 'cheerio';
 import { ISubmission } from '../../../models/Submission';
 import GoogleFontsPlugin from './plugins/gfonts';
 import UIPl from './plugins/ui';
@@ -103,35 +101,20 @@ class Index extends Phaser.Scene {
 			}
 		}
 
-		// @ts-expect-error
-		this.load.rexAwait(async (resolve) => {
-			const res = await axios.get('/fakeApi/guraSubs');
-			const $ = cheerio.load(res.data);
-			this.subCount = parseInt($.text($('body')) ?? '3000000', 10);
-			this.registry.set('subCount', this.subCount);
-			this.registry.set('showSubmissions', this.subCount >= 3000000);
+		const urls: Record<string, string> = {};
+		(this.registry.get('submissions') ?? [])
+			.filter((s: ISubmission) => s.type === 'image')
+			.forEach((s: ISubmission) => {
+				const key = `submission-image-${s.author}`;
 
-			if (this.registry.get('showSubmissions')) {
-				const urls: Record<string, string> = {};
-				(this.registry.get('submissions') ?? [])
-					.filter((s: ISubmission) => s.type === 'image')
-					.forEach((s: ISubmission) => {
-						const key = `submission-image-${s.author}`;
-
-						this.load.image(`${key}-thumb`, s.srcIcon);
-						this.load.image(key, s.src ?? s.srcIcon);
-						urls[key] = (s.src ?? s.srcIcon) as string;
-					});
-				this.registry.set('submissionURLs', urls);
-			}
-
-			const i = this.ui.clamp(Math.floor((this.subCount - 2900000) / 20000) - 1, 0, 4);
-
-			if (!this.registry.get('useFallback')) this.loadDefault(i);
-			else this.loadFallback(i);
-
-			resolve();
-		});
+				this.load.image(`${key}-thumb`, s.srcIcon);
+				this.load.image(key, s.src ?? s.srcIcon);
+				urls[key] = (s.src ?? s.srcIcon) as string;
+			});
+		this.registry.set('submissionURLs', urls);
+    
+		if (!this.registry.get('useFallback')) this.loadDefault();
+		else this.loadFallback();
 
 		this.load.once('complete', () => loading.destroy());
 	}
@@ -258,7 +241,7 @@ class Index extends Phaser.Scene {
 		this.scene.get('splash').input.once('pointerup', () => this.fadeOutMilestone());
 	}
 
-	loadDefault(index: number) {
+	loadDefault() {
 		this.load.image('info', '/assets/guratanabata/info.webp');
 		this.load.image('pause', '/assets/guratanabata/pause.webp');
 		this.load.image('play', '/assets/guratanabata/play.webp');
@@ -285,16 +268,10 @@ class Index extends Phaser.Scene {
 		this.load.image('red', '/assets/guratanabata/papers/red.webp');
 		this.load.image('white', '/assets/guratanabata/papers/white.webp');
 
-		this.load.image('bamboo', [
-			'/assets/guratanabata/bamboo1.webp',
-			'/assets/guratanabata/bamboo2.webp',
-			'/assets/guratanabata/bamboo3.webp',
-			'/assets/guratanabata/bamboo4.webp',
-			'/assets/guratanabata/bamboo5.webp',
-		][index]);
+		this.load.image('bamboo', '/assets/guratanabata/bamboo5.webp');
 	}
 
-	loadFallback(index: number) {
+	loadFallback() {
 		this.load.image('info', '/assets/guratanabata/fallback/info.png');
 		this.load.image('pause', '/assets/guratanabata/fallback/pause.png');
 		this.load.image('play', '/assets/guratanabata/fallback/play.png');
@@ -321,13 +298,7 @@ class Index extends Phaser.Scene {
 		this.load.image('red', '/assets/guratanabata/fallback/papers/red.png');
 		this.load.image('white', '/assets/guratanabata/fallback/papers/white.png');
 
-		this.load.image('bamboo', [
-			'/assets/guratanabata/fallback/bamboo1.png',
-			'/assets/guratanabata/fallback/bamboo2.png',
-			'/assets/guratanabata/fallback/bamboo3.png',
-			'/assets/guratanabata/fallback/bamboo4.png',
-			'/assets/guratanabata/fallback/bamboo5.png',
-		][index]);
+		this.load.image('bamboo', '/assets/guratanabata/fallback/bamboo5.png');
 	}
 
 	addScenes() {
