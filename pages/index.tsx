@@ -25,7 +25,6 @@ interface IProps {
 }
 
 export default function Home({ featuredProjects, guilds }: IProps) {
-	console.log(featuredProjects);
 	const featuredProjectsHtml = featuredProjects.en
 		.map((project) => (
 			<Card
