@@ -25,10 +25,11 @@ interface IProps {
 }
 
 export default function Home({ featuredProjects, guilds }: IProps) {
+	console.log(featuredProjects);
 	const featuredProjectsHtml = featuredProjects.en
 		.map((project) => (
 			<Card
-				key={project.id}
+				key={`proj-${project.id}`}
 				title={project.title}
 				description={project.shortDescription}
 				button="View"
@@ -39,7 +40,7 @@ export default function Home({ featuredProjects, guilds }: IProps) {
 
 	const guildHtml = guilds.en.map((guild) => (
 		<Card
-			key={guild.id}
+			key={`guild-${guild.id}`}
 			img={(guild.icon as Media).sizes!.icon!.url}
 			title={guild.name}
 			description={guild.description}
@@ -100,9 +101,9 @@ export const getStaticProps: GetStaticProps = async () => {
 	const jpProjects: FeaturedProjectsResponse = await jpRes.json();
 	const jpMinified = jpProjects.projects.map((project) => (
 		{
-			title: project.title,
-			shortDescription: project.shortDescription,
-			description: project.description,
+			title: project.title ?? null,
+			shortDescription: project.shortDescription ?? null,
+			description: project.description ?? null,
 		}
 	));
 
@@ -113,7 +114,7 @@ export const getStaticProps: GetStaticProps = async () => {
 
 	async function fetchNextGuilds() {
 		// Fetch next page
-		const enGuildsRes = await fetch(`${process.env.CMS_URL!}/api/guilds?limit=100&page=${page}`);
+		const enGuildsRes = await fetch(`${process.env.CMS_URL!}/api/guilds?limit=100&page=${page}&depth=5`);
 		const enBody: PayloadResponse<Guild> = await enGuildsRes.json();
 
 		const jpGuildsRes = await fetch(`${process.env.CMS_URL!}/api/guilds?limit=100&page=${page}&locale=jp&depth=0`);
