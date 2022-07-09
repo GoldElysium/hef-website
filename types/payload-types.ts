@@ -124,6 +124,7 @@ export interface User {
  */
 export interface Flag {
 	id: string;
+	code: string;
 	name: string;
 	createdAt: string;
 	updatedAt: string;

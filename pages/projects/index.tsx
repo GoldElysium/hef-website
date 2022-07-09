@@ -57,23 +57,42 @@ export default function Projects({ en }: IProps) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-	const enRes = await fetch(`${process.env.CMS_URL!}/api/projects?depth=2`);
-	const enProjects: PayloadResponse<Project> = await enRes.json();
+	let moreProjects = true;
+	let page = 1;
+	let enProjects: Project[] = [];
+	const jpProjects: IProps['jp'] = [];
 
-	const jpRes = await fetch(`${process.env.CMS_URL!}/api/projects?depth=0&locale=jp`);
-	const jpProjects: PayloadResponse<Project> = await jpRes.json();
-	const jpMinified = jpProjects.docs.map((project) => (
-		{
-			title: project.title,
-			shortDescription: project.shortDescription,
-			description: project.description,
-		}
-	));
+	async function fetchNextGuilds() {
+		// Fetch next page
+		const enGuildsRes = await fetch(`${process.env.CMS_URL!}/api/projects?limit=100&page=${page}&depth=2`);
+		const enBody: PayloadResponse<Project> = await enGuildsRes.json();
+
+		const jpGuildsRes = await fetch(`${process.env.CMS_URL!}/api/projects?limit=100&page=${page}&locale=jp&depth=0`);
+		const jpBody: PayloadResponse<Project> = await jpGuildsRes.json();
+
+		enProjects = enProjects.concat(enBody.docs);
+
+		jpBody.docs.map((project) => {
+			jpProjects.push({
+				title: project.title,
+				shortDescription: project.shortDescription,
+				description: project.description,
+			});
+		});
+
+		// Set variables for next fetch
+		page += 1;
+		moreProjects = enBody.hasNextPage;
+	}
+
+	while (moreProjects) {
+		await fetchNextGuilds();
+	}
 
 	return {
 		props: {
-			en: enProjects.docs,
-			jp: jpMinified,
+			en: enProjects,
+			jp: jpProjects,
 		} as IProps,
 	};
 };

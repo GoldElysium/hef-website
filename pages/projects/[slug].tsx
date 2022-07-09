@@ -1,7 +1,5 @@
 import ReactPlayer from 'react-player';
-import {
-	createRef, useEffect, useMemo, useState,
-} from 'react';
+import { createRef, Suspense, useEffect, useMemo, useState } from 'react';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/outline';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { GetStaticPaths, GetStaticProps } from 'next';
@@ -10,11 +8,13 @@ import BlurBackground from '../../components/project/BlurBackground';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
-import Phaser from '../../components/project/Phaser';
 import TextHeader from '../../components/TextHeader';
 import { Flag, Guild, Media, Project, Submission, SubmissionMedia } from '../../types/payload-types';
 import PayloadResponse from '../../types/PayloadResponse';
 import DescriptionSerializer from '../../components/DescriptionSerializer';
+import dynamic from 'next/dynamic';
+
+const Phaser = dynamic(() => import('../../components/project/Phaser'));
 
 const SUBMISSIONS_PER_LOAD = 10;
 
@@ -133,7 +133,7 @@ export default function ProjectPage({ project, submissions }: IProps) {
 		);
 	}
 
-	if (project.en.flags?.includes('guratanabata')) {
+	if ((project.en.flags as Flag[] | undefined)?.findIndex((flag) => flag.code === 'guratanabata') !== -1) {
 		return (
 			<>
 				<Head
@@ -145,14 +145,16 @@ export default function ProjectPage({ project, submissions }: IProps) {
 					keywords={['guratanabata']}
 					image={(project.en.image as Media).sizes?.thumbnail?.url ?? 'https://holoen.fans/img/logo.png'}
 				/>
-				<BlurBackground ref={(bg) => { (ref as any).current = bg; }} />
-				<Phaser
-					scene="guratanabata"
-					data={{
-						setBackgroundImage: (to: string) => ref.current?.setBackgroundImage(to),
-						submissions: submissions,
-					}}
-				/>
+				<Suspense fallback={<BlurBackground ref={(bg) => { (ref as any).current = bg; }} />}>
+
+					<Phaser
+						scene="guratanabata"
+						data={{
+							setBackgroundImage: (to: string) => ref.current?.setBackgroundImage(to),
+							submissions: submissions,
+						}}
+					/>
+				</Suspense>
 			</>
 		);
 	}
@@ -173,12 +175,12 @@ export default function ProjectPage({ project, submissions }: IProps) {
 			<div className={themeStyle}>
 				<div className="flex flex-col h-full min-h-screen bg-skin-background-1 dark:bg-skin-dark-background-1">
 					{
-						(project.en.flags as Flag[] | undefined)?.findIndex((flag) => flag.name === 'disableNavbar') === -1
+						(project.en.flags as Flag[] | undefined)?.findIndex((flag) => flag.code === 'disableNavbar') === -1
 						&& <Navbar disableHead />
 					}
 
 					{
-						(project.en.flags as Flag[] | undefined)?.findIndex((flag) => flag.name === 'disableHeader') === -1
+						(project.en.flags as Flag[] | undefined)?.findIndex((flag) => flag.code === 'disableHeader') === -1
 						&& (
 							<Header
 								title={project.en.title ?? 'unknown'}
@@ -328,14 +330,12 @@ export const getStaticProps: GetStaticProps = async (context) => {
 			// Fetch media if needed
 			if (submission.srcIcon) {
 				const mediaFetch = await fetch(`${process.env.CMS_URL!}/api/submission-media/${submission.srcIcon as string}`);
-				const mediaBody: PayloadResponse<SubmissionMedia> = await mediaFetch.json();
-				submission.srcIcon = mediaBody.docs[0];
+				submission.srcIcon = await mediaFetch.json();
 			}
 
 			if (submission.media) {
 				const mediaFetch = await fetch(`${process.env.CMS_URL!}/api/submission-media/${submission.media as string}`);
-				const mediaBody: PayloadResponse<SubmissionMedia> = await mediaFetch.json();
-				submission.media = mediaBody.docs[0];
+				submission.media = await mediaFetch.json();
 			}
 
 			submissions.push(submission);
@@ -356,9 +356,9 @@ export const getStaticProps: GetStaticProps = async (context) => {
 			project: {
 				en: enProject,
 				jp: {
-					title: jpProject.title,
-					shortDescription: jpProject.shortDescription,
-					description: jpProject.description,
+					title: jpProject.title ?? null,
+					shortDescription: jpProject.shortDescription ?? null,
+					description: jpProject.description ?? null,
 				},
 			},
 			submissions,

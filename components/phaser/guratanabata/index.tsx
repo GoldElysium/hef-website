@@ -11,6 +11,7 @@ import Main from './main';
 import Splash from './splash';
 import FullPaper from './fullPaper';
 import Info from './info';
+import { Submission, SubmissionMedia } from '../../../types/payload-types';
 
 class Index extends Phaser.Scene {
 	public bgmPlaying = false;
@@ -100,13 +101,16 @@ class Index extends Phaser.Scene {
 
 		const urls: Record<string, string> = {};
 		(this.registry.get('submissions') ?? [])
-			.filter((s: ISubmission) => s.type === 'image')
-			.forEach((s: ISubmission) => {
+			.filter((s: Submission) => s.type === 'image')
+			.forEach((s: Submission) => {
 				const key = `submission-image-${s.author}`;
 
-				this.load.image(`${key}-thumb`, s.srcIcon);
-				this.load.image(key, s.src ?? s.srcIcon);
-				urls[key] = (s.src ?? s.srcIcon) as string;
+				const mediaUrl = (s.media as SubmissionMedia).sizes!.thumbnail!.url;
+				const srcIconUrl = (s.srcIcon as SubmissionMedia).sizes?.thumbnail?.url;
+
+				this.load.image(`${key}-thumb`, srcIconUrl);
+				this.load.image(key, mediaUrl ?? srcIconUrl);
+				urls[key] = (mediaUrl ?? srcIconUrl) as string;
 			});
 		this.registry.set('submissionURLs', urls);
 
