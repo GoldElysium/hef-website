@@ -26,7 +26,9 @@ ID_TO_STYLE_MAP.set('62c16ca2b919eb349a6b09ba', 'theme-ina');
 // NOTE: jp property should *ONLY* be used for translations, not everything is populated here
 interface IProps {
 	project: {
-		en: Project;
+		en: Omit<Project, 'flags'> & {
+			flags: string[]
+		};
 		jp: {
 			title: Project['title'];
 			shortDescription: Project['shortDescription'];
@@ -133,7 +135,8 @@ export default function ProjectPage({ project, submissions }: IProps) {
 		);
 	}
 
-	if ((project.en.flags as Flag[] | undefined)?.findIndex((flag) => flag.code === 'guratanabata') !== -1) {
+
+	if (project.en.flags?.includes('guratanabata')) {
 		return (
 			<>
 				<Head
@@ -145,8 +148,8 @@ export default function ProjectPage({ project, submissions }: IProps) {
 					keywords={['guratanabata']}
 					image={(project.en.image as Media).sizes?.thumbnail?.url ?? 'https://holoen.fans/img/logo.png'}
 				/>
-				<Suspense fallback={<BlurBackground ref={(bg) => { (ref as any).current = bg; }} />}>
-
+				<BlurBackground ref={(bg) => { (ref as any).current = bg; }} />
+				<Suspense fallback={'Loading...'}>
 					<Phaser
 						scene="guratanabata"
 						data={{
@@ -175,12 +178,12 @@ export default function ProjectPage({ project, submissions }: IProps) {
 			<div className={themeStyle}>
 				<div className="flex flex-col h-full min-h-screen bg-skin-background-1 dark:bg-skin-dark-background-1">
 					{
-						(project.en.flags as Flag[] | undefined)?.findIndex((flag) => flag.code === 'disableNavbar') === -1
+						!project.en.flags?.includes('disableNavbar')
 						&& <Navbar disableHead />
 					}
 
 					{
-						(project.en.flags as Flag[] | undefined)?.findIndex((flag) => flag.code === 'disableHeader') === -1
+						!project.en.flags?.includes('disableHeader')
 						&& (
 							<Header
 								title={project.en.title ?? 'unknown'}
@@ -310,7 +313,8 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
 	// Fetch EN and JP version for page, CMS will fallback to EN for any fields not translated
 	const enProjectRes = await fetch(`${process.env.CMS_URL!}/api/projects?where[slug][equals]=${slug}&depth=2`);
-	const enProject = (await enProjectRes.json() as PayloadResponse<Project>).docs[0];
+	let enProject = (await enProjectRes.json() as PayloadResponse<Project>).docs[0];
+	enProject.flags = (enProject.flags as Flag[] ?? []).map((flag) => flag.code);
 
 	const jpProjectRes = await fetch(`${process.env.CMS_URL!}/api/projects?where[slug][equals]=${slug}&depth=0&locale=jp`);
 	const jpProject = (await jpProjectRes.json() as PayloadResponse<Project>).docs[0];
