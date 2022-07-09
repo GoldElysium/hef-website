@@ -170,6 +170,14 @@ export interface SubmissionMedia {
 			filesize?: number;
 			filename?: string;
 		};
+		tanabata?: {
+			url?: string;
+			width?: number;
+			height?: number;
+			mimeType?: string;
+			filesize?: number;
+			filename?: string;
+		};
 	};
 	createdAt: string;
 	updatedAt: string;

@@ -106,7 +106,7 @@ class Index extends Phaser.Scene {
 				const key = `submission-image-${s.author}`;
 
 				const mediaUrl = (s.media as SubmissionMedia).sizes!.thumbnail!.url;
-				const srcIconUrl = (s.srcIcon as SubmissionMedia).sizes?.thumbnail?.url;
+				const srcIconUrl = (s.srcIcon as SubmissionMedia).sizes?.tanabata?.url;
 
 				this.load.image(`${key}-thumb`, srcIconUrl);
 				this.load.image(key, mediaUrl ?? srcIconUrl);
