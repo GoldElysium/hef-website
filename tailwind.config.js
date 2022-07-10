@@ -53,7 +53,7 @@ module.exports = {
 					'link': withOpacity('--color-link'),
 					'dark-primary-1': withOpacity('--color-dark-primary-1'),
 					'dark-secondary-1': withOpacity('--color-dark-secondary-1'),
-					'dark-card': withOpacity('--color-dark-card'),
+					'dark-link': withOpacity('--color-dark-link'),
 				}
 			},
 			borderColor: {
@@ -63,7 +63,7 @@ module.exports = {
 					'link': withOpacity('--color-link'),
 					'dark-primary-1': withOpacity('--color-dark-primary-1'),
 					'dark-secondary-1': withOpacity('--color-dark-secondary-1'),
-					'dark-card': withOpacity('--color-dark-card'),
+					'dark-link': withOpacity('--color-dark-link'),
 				}
 			},
 			zIndex: {
