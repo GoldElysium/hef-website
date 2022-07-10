@@ -23,6 +23,9 @@ const SUBMISSIONS_PER_LOAD = 10;
 const ID_TO_STYLE_MAP = new Map<string, string>();
 ID_TO_STYLE_MAP.set('62c16ca2b919eb349a6b09ba', 'theme-ina');
 
+// Development testing ID's
+ID_TO_STYLE_MAP.set('62c9442ff1ee39aa37afc4c7', 'theme-ina');
+
 // NOTE: jp property should *ONLY* be used for translations, not everything is populated here
 interface IProps {
 	project: {
@@ -193,10 +196,9 @@ export default function ProjectPage({ project, submissions }: IProps) {
 					}
 
 					<div className="flex-grow">
-						<div className="my-16 w-full flex flex-col items-center">
+						<div className="mb-16 w-full flex flex-col items-center">
 							<div className="max-w-4xl w-full mx-4 break-words md:break-normal">
 								<div>
-									<TextHeader text="Description" />
 									<div className="description-body">
 										{DescriptionSerializer(project.en.description)}
 									</div>

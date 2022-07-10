@@ -9,7 +9,7 @@ const serialize = (children: any[]) => children.map((node, i) => {
 		// @ts-ignore
 		if (node.bold) {
 			text = (
-				<strong key={i}>
+				<strong key={i} className="text-black dark:text-gray-300 font-bold">
 					{text}
 				</strong>
 			);
@@ -18,7 +18,7 @@ const serialize = (children: any[]) => children.map((node, i) => {
 		// @ts-ignore
 		if (node.code) {
 			text = (
-				<code key={i}>
+				<code key={i} className="text-black dark:text-gray-300 font-mono">
 					{text}
 				</code>
 			);
@@ -27,7 +27,7 @@ const serialize = (children: any[]) => children.map((node, i) => {
 		// @ts-ignore
 		if (node.italic) {
 			text = (
-				<em key={i}>
+				<em key={i} className="text-black dark:text-gray-300 italic">
 					{text}
 				</em>
 			);
@@ -49,38 +49,79 @@ const serialize = (children: any[]) => children.map((node, i) => {
 	switch (node.type) {
 		case 'h1':
 			return (
-				<h1 key={i}>
-					{serialize(node.children)}
-				</h1>
+				<>
+					<h1 key={i} className="text-skin-primary-1 dark:text-skin-dark-primary-1 text-5xl font-semibold text-center my-8">
+						{serialize(node.children)}
+					</h1>
+					<div className="h-0.5 w-full bg-skin-primary-1 dark:bg-skin-dark-primary-1 opacity-30 my-4"></div>
+				</>
 			);
-		// Iterate through all headings here...
+		case 'h2':
+			return (
+				<>
+					<h2 key={i} className="text-skin-primary-1 dark:text-skin-dark-primary-1 text-2xl font-semibold my-4">
+						{serialize(node.children)}
+					</h2>
+					<div className="h-0.5 w-full bg-skin-primary-1 dark:bg-skin-dark-primary-1 opacity-30 my-4"></div>
+				</>
+			);
+		case 'h3':
+			return (
+				<>
+					<h2 key={i} className="text-skin-primary-1 dark:text-skin-dark-primary-1 text-xl font-semibold my-4">
+						{serialize(node.children)}
+					</h2>
+					<div className="h-0.5 w-full bg-skin-primary-1 dark:bg-skin-dark-primary-1 opacity-30 my-4"></div>
+				</>
+			);
+		case 'h4':
+			return (
+				<>
+					<h2 key={i} className="text-skin-primary-1 dark:text-skin-dark-primary-1 text-lg font-semibold my-2">
+						{serialize(node.children)}
+					</h2>
+					<div className="h-0.5 w-full bg-skin-primary-1 dark:bg-skin-dark-primary-1 opacity-30 my-2"></div>
+				</>
+			);
+		case 'h5':
+			return (
+				<>
+					<h2 key={i} className="text-skin-primary-1 dark:text-skin-dark-primary-1 text-base font-semibold my-2">
+						{serialize(node.children)}
+					</h2>
+					<div className="h-0.5 w-full bg-skin-primary-1 dark:bg-skin-dark-primary-1 opacity-30 my-2"></div>
+				</>
+			);
 		case 'h6':
 			return (
-				<h6 key={i}>
-					{serialize(node.children)}
-				</h6>
+				<>
+					<h2 key={i} className="text-skin-primary-1 dark:text-skin-dark-primary-1 text-base font-semibold my-2">
+						{serialize(node.children)}
+					</h2>
+					<div className="h-0.5 w-full bg-skin-primary-1 dark:bg-skin-dark-primary-1 opacity-30 my-2"></div>
+				</>
 			);
 		case 'quote':
 			return (
-				<blockquote key={i}>
+				<blockquote key={i} className="text-black dark:text-gray-300">
 					{serialize(node.children)}
 				</blockquote>
 			);
 		case 'ul':
 			return (
-				<ul key={i}>
+				<ul key={i} className="text-black dark:text-gray-300">
 					{serialize(node.children)}
 				</ul>
 			);
 		case 'ol':
 			return (
-				<ol key={i}>
+				<ol key={i} className="text-black dark:text-gray-300">
 					{serialize(node.children)}
 				</ol>
 			);
 		case 'li':
 			return (
-				<li key={i}>
+				<li key={i} className="text-black dark:text-gray-300">
 					{serialize(node.children)}
 				</li>
 			);
@@ -96,7 +137,7 @@ const serialize = (children: any[]) => children.map((node, i) => {
 
 		default:
 			return (
-				<p key={i}>
+				<p key={i} className="text-black dark:text-gray-300">
 					{serialize(node.children)}
 				</p>
 			);
