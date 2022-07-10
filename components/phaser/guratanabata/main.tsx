@@ -1,5 +1,8 @@
 import Phaser from 'phaser';
+import Router from 'next/router';
 import { ISubmission } from '../../../models/Submission';
+
+const MILLION = Router.query.id == '6' ? '3' : '4';
 
 const BASE_WIDTH = 2280;
 const BASE_HEIGHT = 1620;
@@ -28,7 +31,7 @@ const BG_KEYS = [
 
 const FOOTER_MESSAGE = `[shadow]You've reached the bottom of the submissions! We hope you enjoyed reading the notes, and looking at the art.
 
-3 Million subscribers is one heck of an achievement, and we're glad we could make you something to commemorate your achievement.[/shadow]`;
+${MILLION} Million subscribers is one heck of an achievement, and we're glad we could make you something to commemorate your achievement.[/shadow]`;
 
 class Main extends Phaser.Scene {
 	public width!: number;
@@ -201,7 +204,7 @@ class Main extends Phaser.Scene {
 				duration: 600,
 			}).play();
 
-		this.registry.get('setBackgroundImage')(!this.registry.get('useFallback') ? '/assets/gura3mil/zoomedin1.webp' : '/assets/gura3mil/fallback/zoomedin1.jpg');
+		this.registry.get('setBackgroundImage')(!this.registry.get('useFallback') ? '/assets/guratanabata/zoomedin1.webp' : '/assets/guratanabata/fallback/zoomedin1.jpg');
 	}
 
 	generatePage(messages?: ISubmission[]) {
@@ -394,7 +397,7 @@ class Main extends Phaser.Scene {
 			: [this.width / 1.6, this.height * 1.2];
 		const textBigSize = this.game.device.os.desktop ? 120 : 100;
 		const textBigWrapWidth = this.game.device.os.desktop ? 1500 : 1200;
-		const textBig = this.ui.text(...textBigPos, "[shadow]Happy 3 Million, Same-chan, and here's to the next milestone.[/shadow]", textBigSize, textBigWrapWidth, {
+		const textBig = this.ui.text(...textBigPos, `[shadow]Happy ${MILLION} Million, Same-chan, and here's to the next milestone.[/shadow]`, textBigSize, textBigWrapWidth, {
 			color: '#fefefe',
 			shadow: {
 				offsetY: 2,
@@ -433,6 +436,8 @@ class Main extends Phaser.Scene {
 	}
 
 	close() {
+		// Thats an image url for a 1x1 black pixel in png.1
+		this.registry.get('setBackgroundImage')('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVQI12NgYGAAAAAEAAEnNCcKAAAAAElFTkSuQmCC');
 		this.tweens.add({
 			targets: [this.panel, this.counter, this.back],
 			alpha: {

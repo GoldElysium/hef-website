@@ -49,7 +49,7 @@ class Splash extends Phaser.Scene {
 				Router.push('/');
 			});
 
-		this.registry.get('setBackgroundImage')(!this.registry.get('useFallback') ? '/assets/gura3mil/bg.webp' : '/assets/gura3mil/fallback/bg.jpg');
+		this.registry.get('setBackgroundImage')(!this.registry.get('useFallback') ? '/assets/guratanabata/bg.webp' : '/assets/guratanabata/fallback/bg.jpg');
 
 		if (this.game.device.os.desktop) {
 			this.bg = this.rexUI.add.sizer({
@@ -89,7 +89,7 @@ class Splash extends Phaser.Scene {
 			};
 		}
 
-		this.title = this.add.image(this.width / 2, -550, 'title')
+		this.title = this.add.image(this.width / 2, -550, `title${Router.query.id == '6' ? '3' : '4'}`)
 			.setOrigin(0.5, 0)
 			.setDepth(6)
 			.setScale(0.95);
@@ -153,7 +153,6 @@ class Splash extends Phaser.Scene {
 
 		this.input.on('pointerup', async () => {
 			if (this.started) return false;
-			if (!this.registry.get('showSubmissions')) return (this.scene.get('default') as import('./').default).toggleInfo();
 			this.started = true;
 
 			const timeline = this.tweens.createTimeline()

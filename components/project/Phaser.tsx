@@ -27,8 +27,8 @@ const Links = ({
 
 			if (typeof scene === 'string') {
 				switch (scene) {
-					case 'gura3mil': {
-						const info = await import('../phaser/gura3mil');
+					case 'guratanabata': {
+						const info = await import('../phaser/guratanabata');
 						Object.assign(fixedConfig, {
 							scene: info.default,
 							plugins: info.plugins,
