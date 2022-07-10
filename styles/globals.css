@@ -10,17 +10,20 @@
       card: card background (unused in project pages)
       primary-1: Section headings, dark mode toggle
       secondary-1: links
+      link: hyperlinks (smaller, require higher color contrast)
     */
     --color-background-1: 253, 236, 236;
     --color-background-2: 239, 68, 68;
     --color-card: 255, 255, 255;
     --color-primary-1: 239, 68, 68;
     --color-secondary-1: 255, 136, 26;
+    --color-link: 50, 50, 235;
     --color-dark-background-1: 22, 18, 18;
     --color-dark-background-2: 36, 30, 30;
     --color-dark-card: 50, 41, 41;
     --color-dark-primary-1: 207, 23, 23;
     --color-dark-secondary-1: 255, 85, 0;
+    --color-dark-link: 100, 100, 255;
   }
 
   .theme-ina {
@@ -29,19 +32,13 @@
     --color-card: 255, 255, 255;
     --color-primary-1: 160, 70, 152;
     --color-secondary-1: 242, 154, 48;
+    --color-link: 160, 70, 152;
     --color-dark-background-1: 19, 18, 23;
     --color-dark-background-2: 49, 39, 60;
     --color-dark-card: 48, 44, 58;
     --color-dark-primary-1: 171, 110, 160;
     --color-dark-secondary-1: 230, 133, 15;
-  }
-
-  .theme-ina .description-body a {
-    color: rgb(160, 70, 152);
-  }
-
-  .dark .theme-ina .description-body a {
-    color: rgb(230, 133, 15);
+    --color-dark-link: 230, 133, 15;
   }
 
   .theme-calli {
@@ -50,19 +47,13 @@
     --color-card: 255, 255, 255;
     --color-primary-1: 112, 82, 122;
     --color-secondary-1: 178, 5, 59;
+    --color-link: 178, 5, 59;
     --color-dark-background-1: 27, 9, 18;
     --color-dark-background-2: 68, 13, 38;
     --color-dark-card: 48, 10, 25;
     --color-dark-primary-1: 245, 163, 223;
     --color-dark-secondary-1: 219, 10, 70;
-  }
-
-  .theme-calli .description-body a {
-    color: rgb(178, 5, 59);
-  }
-
-  .dark .theme-calli .description-body a {
-    color: rgb(219, 10, 70);
+    --color-dark-link: 219, 10, 70;
   }
 
   .theme-gura {
@@ -71,19 +62,13 @@
     --color-card: 255, 255, 255;
     --color-primary-1: 43, 158, 166;
     --color-secondary-1: 186, 69, 73;
+    --color-link: 200, 79, 83;
     --color-dark-background-1: 5, 11, 15;
     --color-dark-background-2: 15, 33, 46;
     --color-dark-card: 15, 33, 46;
     --color-dark-primary-1: 9, 138, 149;
     --color-dark-secondary-1: 217, 48, 54;
-  }
-
-  .theme-gura .description-body a {
-    color: rgb(200, 79, 83);
-  }
-
-  .dark .theme-gura .description-body a {
-    color: rgb(217, 48, 54);
+    --color-dark-link: 217, 48, 54;
   }
 
   .theme-kiara {
@@ -92,19 +77,13 @@
     --color-card: 255, 255, 255;
     --color-primary-1: 204, 122, 0;
     --color-secondary-1: 20, 148, 114;
+    --color-link: 0, 128, 94;
     --color-dark-background-1: 15, 0, 0;
     --color-dark-background-2: 67, 19, 2;
     --color-dark-card: 40, 12, 3;
     --color-dark-primary-1: 230, 131, 25;
     --color-dark-secondary-1: 23, 211, 183;
-  }
-
-  .theme-kiara .description-body a {
-    color: rgb(0, 128, 94);
-  }
-
-  .dark .theme-kiara .description-body a {
-    color: rgb(23, 211, 183);
+    --color-dark-link: 23, 211, 183;
   }
 
   .theme-ame {
@@ -113,19 +92,13 @@
     --color-card: 255, 255, 255;
     --color-primary-1: 132, 67, 57;
     --color-secondary-1: 18, 130, 161;
+    --color-link: 18, 130, 161;
     --color-dark-background-1: 21, 13, 10;
     --color-dark-background-2: 54, 33, 23;
     --color-dark-card: 54, 33, 23;
     --color-dark-primary-1: 251, 224, 181;
     --color-dark-secondary-1: 0, 146, 204;
-  }
-
-  .theme-ame .description-body a {
-    color: rgb(18, 130, 161);
-  }
-
-  .dark .theme-ame .description-body a {
-    color: rgb(0, 146, 204);
+    --color-dark-link: 0, 146, 204;
   }
 
   .theme-irys {
@@ -134,19 +107,13 @@
     --color-card: 255, 255, 255;
     --color-primary-1: 181, 29, 100;
     --color-secondary-1: 231, 12, 83;
+    --color-link: 231, 12, 83;
     --color-dark-background-1: 28, 26, 29;
     --color-dark-background-2: 102, 21, 69;
     --color-dark-card: 48, 44, 58;
     --color-dark-primary-1: 219, 44, 108;
     --color-dark-secondary-1: 183, 37, 203;
-  }
-
-  .theme-irys .description-body a {
-    color: rgb(231, 12, 83);
-  }
-
-  .dark .theme-irys .description-body a {
-    color: rgb(206, 83, 223);
+    --color-dark-link: 206, 83, 223;
   }
 
   .theme-fauna {
@@ -155,19 +122,13 @@
     --color-card: 255, 255, 255;
     --color-primary-1: 0, 161, 147;
     --color-secondary-1: 219, 23, 116;
+    --color-link: 219, 23, 116;
     --color-dark-background-1: 12, 28, 28;
     --color-dark-background-2: 37, 84, 68;
     --color-dark-card: 48, 44, 58;
     --color-dark-primary-1: 139, 204, 141;
     --color-dark-secondary-1: 0, 168, 38;
-  }
-
-  .theme-fauna .description-body a {
-    color: rgb(219, 23, 116);
-  }
-
-  .dark .theme-fauna .description-body a {
-    color: rgb(255, 201, 184);
+    --color-dark-link: 255, 201, 184;
   }
 
   .theme-sana {
@@ -176,19 +137,13 @@
     --color-card: 255, 255, 255;
     --color-primary-1: 255, 71, 170;
     --color-secondary-1: 255, 128, 16;
+    --color-link: 75, 31, 255;
     --color-dark-background-1: 6, 2, 39;
     --color-dark-background-2: 105, 24, 181;
     --color-dark-card: 48, 44, 58;
     --color-dark-primary-1: 255, 31, 150;
     --color-dark-secondary-1: 255, 128, 16;
-  }
-
-  .theme-sana .description-body a {
-    color: rgb(75, 31, 255);
-  }
-
-  .dark .theme-sana .description-body a {
-    color: rgb(255, 213, 135);
+    --color-dark-link: 255, 213, 135;
   }
 
   .theme-mumei {
@@ -197,19 +152,13 @@
     --color-card: 255, 255, 255;
     --color-primary-1: 168, 77, 79;
     --color-secondary-1: 67, 134, 137;
+    --color-link: 0, 138, 143;
     --color-dark-background-1: 46, 37, 35;
     --color-dark-background-2: 79, 55, 49;
     --color-dark-card: 48, 44, 58;
     --color-dark-primary-1: 191, 163, 155;
     --color-dark-secondary-1: 67, 134, 137;
-  }
-
-  .theme-mumei .description-body a {
-    color: rgb(0, 138, 143);
-  }
-
-  .dark .theme-mumei .description-body a {
-    color: rgb(229, 158, 107);
+    --color-dark-link: 229, 158, 107;
   }
 
   .theme-kronii {
@@ -218,19 +167,13 @@
     --color-card: 255, 255, 255;
     --color-primary-1: 53, 53, 53;
     --color-secondary-1: 39, 73, 173;
+    --color-link: 21, 107, 207;
     --color-dark-background-1: 28, 28, 33;
     --color-dark-background-2: 71, 73, 89;
     --color-dark-card: 48, 44, 58;
     --color-dark-primary-1: 239, 243, 250;
     --color-dark-secondary-1: 47, 77, 198;
-  }
-
-  .theme-kronii .description-body a {
-    color: rgb(21, 107, 207);
-  }
-
-  .dark .theme-kronii .description-body a {
-    color: rgb(114, 223, 253);
+    --color-dark-link: 114, 223, 253;
   }
 
   .theme-bae {
@@ -239,19 +182,13 @@
     --color-card: 255, 255, 255;
     --color-primary-1: 62, 57, 61;
     --color-secondary-1: 6, 162, 150;
+    --color-link: 217, 27, 17;
     --color-dark-background-1: 35, 35, 35;
     --color-dark-background-2: 122, 4, 0;
     --color-dark-card: 48, 44, 58;
     --color-dark-primary-1: 240, 240, 240;
     --color-dark-secondary-1: 27, 133, 120;
-  }
-
-  .theme-bae .description-body a {
-    color: rgb(217, 27, 17);
-  }
-
-  .dark .theme-bae .description-body a {
-    color: rgb(255, 219, 73);
+    --color-dark-link: 255, 219, 73;
   }
 }
 
