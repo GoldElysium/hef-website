@@ -10,8 +10,6 @@ class Splash extends Phaser.Scene {
 
 	public ui!: import('./plugins/ui').default;
 
-	public subCount!: number;
-
 	public bg!: any;
 
 	public bamboo?: Phaser.GameObjects.Image;

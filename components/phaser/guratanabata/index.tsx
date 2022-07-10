@@ -4,7 +4,6 @@ import SoundFade from 'phaser3-rex-plugins/plugins/soundfade';
 import AwaitLoaderPlugin from 'phaser3-rex-plugins/plugins/awaitloader-plugin';
 import Router from 'next/router';
 import { Plugin as NineSlicePlugin } from 'phaser3-nineslice';
-import { ISubmission } from '../../../models/Submission';
 import GoogleFontsPlugin from './plugins/gfonts';
 import UIPl from './plugins/ui';
 
@@ -12,6 +11,7 @@ import Main from './main';
 import Splash from './splash';
 import FullPaper from './fullPaper';
 import Info from './info';
+import { Submission, SubmissionMedia } from '../../../types/payload-types';
 
 class Index extends Phaser.Scene {
 	public bgmPlaying = false;
@@ -21,8 +21,6 @@ class Index extends Phaser.Scene {
 	public ui!: import('./plugins/ui').default;
 
 	public info: any;
-
-	public subCount!: number;
 
 	public width!: number;
 
@@ -103,16 +101,19 @@ class Index extends Phaser.Scene {
 
 		const urls: Record<string, string> = {};
 		(this.registry.get('submissions') ?? [])
-			.filter((s: ISubmission) => s.type === 'image')
-			.forEach((s: ISubmission) => {
+			.filter((s: Submission) => s.type === 'image')
+			.forEach((s: Submission) => {
 				const key = `submission-image-${s.author}`;
 
-				this.load.image(`${key}-thumb`, s.srcIcon);
-				this.load.image(key, s.src ?? s.srcIcon);
-				urls[key] = (s.src ?? s.srcIcon) as string;
+				const mediaUrl = (s.media as SubmissionMedia).sizes!.thumbnail!.url;
+				const srcIconUrl = (s.srcIcon as SubmissionMedia).sizes?.tanabata?.url;
+
+				this.load.image(`${key}-thumb`, srcIconUrl);
+				this.load.image(key, mediaUrl ?? srcIconUrl);
+				urls[key] = (mediaUrl ?? srcIconUrl) as string;
 			});
 		this.registry.set('submissionURLs', urls);
-    
+
 		if (!this.registry.get('useFallback')) this.loadDefault();
 		else this.loadFallback();
 
@@ -206,15 +207,12 @@ class Index extends Phaser.Scene {
 		this.game.destroy(true);
 
 		this.game.events.once('destroy', () => {
-			// TODO: I'm not the biggest fan of using magic numbers (well, magic
-			// strings), but theres no other way no really do this in practice with
-			// the current routing method.
 			// NOTE: This uses location.pathname because we need a full reload, for
 			// whatever reason, Phaser doesn't like to play nice with SPAs.
-			if (Router.query.id == '6') {
-				location.pathname = '/projects/16';
+			if (Router.query.slug == 'gura3mil') {
+				location.pathname = '/projects/gura4mil';
 			} else {
-				location.pathname = '/projects/6';
+				location.pathname = '/projects/gura3mil';
 			}
 		});
 	}

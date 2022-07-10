@@ -17,11 +17,10 @@ jobs:
         uses: docker/metadata-action@v3
         with:
           images: ghcr.io/${{ github.repository }}
-          flavor: |
-            latest=auto
           tags: |
             type=sha
             type=raw,value=prod
+            type=raw,value=latest
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1

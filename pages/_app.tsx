@@ -1,7 +1,6 @@
 import '../styles/globals.css';
 import { AppProps } from 'next/app';
 import { useEffect, useState } from 'react';
-import { SessionProvider } from 'next-auth/react';
 import DarkModeContext from '../contexts/DarkModeContext';
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -28,12 +27,10 @@ function MyApp({ Component, pageProps }: AppProps) {
 
 	return (
 		<DarkModeContext.Provider value={context}>
-			<SessionProvider>
-				<div className={darkMode ? 'dark' : ''}>
-					{/* eslint-disable-next-line react/jsx-props-no-spreading */}
-					<Component {...pageProps} />
-				</div>
-			</SessionProvider>
+			<div className={darkMode ? 'dark' : ''}>
+				{/* eslint-disable-next-line react/jsx-props-no-spreading */}
+				<Component {...pageProps} />
+			</div>
 		</DarkModeContext.Provider>
 	);
 }
