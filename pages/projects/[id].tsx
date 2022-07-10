@@ -310,7 +310,7 @@ export default function ProjectPage({ doc, allSubmissions, guild }: IProps) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-	if (['16', '17'].includes(context.params?.id as string)) return { notFound: true };
+	if (!['14', '16'].includes(context.params?.id as string)) return { notFound: true };
 
 	try {
 		mongoose.connect(process.env.MONGOOSEURL as string);
