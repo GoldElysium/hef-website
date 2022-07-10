@@ -130,6 +130,7 @@ const serialize = (children: any[]) => children.map((node, i) => {
 				<a
 					href={escapeHTML(node.url)}
 					key={i}
+					className="text-skin-link dark:text-skin-dark-link"
 				>
 					{serialize(node.children)}
 				</a>
