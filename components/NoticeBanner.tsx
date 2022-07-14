@@ -11,7 +11,7 @@ export default function NoticeBanner() {
 				<span className="text-[#323232] md:text-lg font-semibold">
 					Many projects are unavailable
 				</span>
-				<button className="bg-white px-4 py-2 bg-[#EF4444] text-white rounded-full md:text-lg"
+				<button className="bg-white px-4 py-2 bg-[#EF4444] hover:bg-red-400 text-white rounded-full md:text-lg"
 					onClick={() => setDialogOpen(true)}>
 					Read more
 				</button>
@@ -69,7 +69,7 @@ export default function NoticeBanner() {
 									<div className="mt-6">
 										<button
 											type="button"
-											className="inline-flex justify-center rounded-full border border-transparent bg-[#EF4444] hover:bg-[#FFE5DA] text-white px-4 py-2 font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
+											className="inline-flex justify-center rounded-full border border-transparent bg-[#EF4444] hover:bg-red-400 text-white px-4 py-2 font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
 											onClick={() => setDialogOpen(false)}
 										>
 											Close
