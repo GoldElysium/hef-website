@@ -5,7 +5,7 @@ export default function NoticeBanner() {
 	const [dialogOpen, setDialogOpen] = useState(false);
 
 	return (
-		<>
+		<div>
 			<div
 				className="h-16 min-w-screen max-w-screen overflow-none flex justify-center items-center gap-4 bg-[#FFE5DA] py-2 px-2">
 				<span className="text-[#323232] md:text-lg font-semibold">
@@ -43,10 +43,10 @@ export default function NoticeBanner() {
 								leaveTo="opacity-0 scale-95"
 							>
 								<Dialog.Panel
-									className="w-full max-w-4xl transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+									className="w-full max-w-4xl transform overflow-hidden rounded-2xl p-6 text-left align-middle shadow-xl transition-all bg-white">
 									<Dialog.Title
 										as="h3"
-										className="text-lg md:text-2xl font-semibold leading-6"
+										className="text-lg md:text-2xl font-semibold leading-6 text-black"
 									>
 										Many projects are unavailable
 									</Dialog.Title>
@@ -54,7 +54,7 @@ export default function NoticeBanner() {
 										<p className="md:text-lg text-[#323232]">
 											Due to issues with our storage provider, we have closed off many project
 											pages and those will return a not
-											found page for now.
+											found page for now. This is also why some server icons are not loading.
 											<br />
 											We are busy recovering everything and migrating to a new
 											provider. The website is also getting a major performance overhaul at the
@@ -81,6 +81,6 @@ export default function NoticeBanner() {
 					</div>
 				</Dialog>
 			</Transition>
-		</>
+		</div>
 	);
 }
