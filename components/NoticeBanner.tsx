@@ -53,16 +53,13 @@ export default function NoticeBanner() {
 									<div className="mt-4">
 										<p className="md:text-lg text-[#323232]">
 											Due to issues with our storage provider, we have closed off many project
-											pages and those will return a not
-											found page for now. This is also why some server icons are not loading.
+											pages and those will return a 404 (not
+											found) page for now. This is also why some server icons are not loading.
 											<br />
 											We are busy recovering everything and migrating to a new
 											provider. The website is also getting a major performance overhaul at the
 											same time
 											and there&apos;s also a redesign planned.
-											<br />
-											Interested in helping? Contact GoldElysium#0200 on Discord, or open a
-											discussion at the GitHub page linked at the bottom of the page.
 										</p>
 									</div>
 
