@@ -25,8 +25,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 		const guild = new Guild({ ...req.body, id: nanoid() });
 
 		guild.save((err) => {
-			if (err) res.status(500).end();
-			else res.status(201).json(guild);
+			if (err) {
+				res.status(500).end();
+				return;
+			}
+
+			res.revalidate('/');
+			res.status(201).json(guild);
 		});
 	} else res.status(404).end();
 };
