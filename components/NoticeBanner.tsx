@@ -57,9 +57,7 @@ export default function NoticeBanner() {
 											found) page for now. This is also why some server icons are not loading.
 											<br />
 											We are busy recovering everything and migrating to a new
-											provider. The website is also getting a major performance overhaul at the
-											same time
-											and there&apos;s also a redesign planned.
+											provider.
 										</p>
 									</div>
 
