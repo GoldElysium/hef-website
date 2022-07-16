@@ -25,6 +25,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
 		Guild.findByIdAndUpdate(req.query.id, req.body, { returnOriginal: false })
 			.then((doc) => {
+				res.revalidate('/');
 				res.status(200).json(doc);
 			})
 			.catch((e) => {
@@ -37,6 +38,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
 		Guild.findByIdAndDelete(req.query.id)
 			.then(() => {
+				res.revalidate('/');
 				res.status(204).end();
 			})
 			.catch((e) => {
