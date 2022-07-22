@@ -15,6 +15,7 @@ import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 import Phaser from '../../components/project/Phaser';
+import SanaLazy from '../../components/project/sanasendoff/Lazy';
 import TextHeader from '../../components/TextHeader';
 import Project, { ILink, IProject } from '../../models/Project';
 import Submission, { ISubmission } from '../../models/Submission';
@@ -178,6 +179,23 @@ export default function ProjectPage({ doc, allSubmissions, guild }: IProps) {
 		);
 	}
 
+	if (doc.flags?.includes('sanasendoff')) {
+
+
+		return (
+			<>
+				<Head
+					color={guild.color ?? '#FF3D3D'}
+					title={doc.title}
+					description={doc.shortDescription}
+					keywords={['guratanabata']}
+					image={doc.ogImage ?? 'https://holoen.fans/img/logo.png'}
+				/>
+				<SanaLazy/>
+			</>
+		);
+	}
+
 	return (
 		<>
 			<Head
@@ -310,7 +328,7 @@ export default function ProjectPage({ doc, allSubmissions, guild }: IProps) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-	if (!['14', '16'].includes(context.params?.id as string)) return { notFound: true };
+	//if (!['14', '16'].includes(context.params?.id as string)) return { notFound: true };
 
 	try {
 		mongoose.connect(process.env.MONGOOSEURL as string);
