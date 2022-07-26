@@ -12,6 +12,13 @@ export interface ILink {
 	link: string,
 }
 
+export interface IEvent {
+	type: undefined, // Placeholder, make sure to update the database schema if changing this
+	date: Date,
+	shortDescription: string,
+	longDescription: string,
+}
+
 export interface IProject {
 	_id?: number,
 	status: 'ongoing' | 'past',
@@ -24,6 +31,7 @@ export interface IProject {
 	date: Date,
 	flags?: string[],
 	ogImage?: string,
+	timeline?: IEvent[],
 }
 
 interface IProjectDocument extends IProject, Document {
@@ -58,6 +66,12 @@ const LinkSchema: Schema = new Schema({
 	link: { type: String, required: true },
 });
 
+const EventSchema: Schema = new Schema({
+	date: { type: Date, required: true },
+	shortDescription: { type: String, required: true },
+	longDescription: { type: String, required: false },
+});
+
 const ProjectSchema: Schema = new Schema({
 	_id: { type: Number },
 	status: { type: String, required: true, enum: ['ongoing', 'past'] },
@@ -70,6 +84,7 @@ const ProjectSchema: Schema = new Schema({
 	date: { type: Date, default: new Date() },
 	flags: { type: [String], default: undefined },
 	ogImage: { type: String },
+	timeline: { type: [EventSchema], default: undefined },
 });
 
 // eslint-disable-next-line func-names

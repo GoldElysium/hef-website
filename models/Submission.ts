@@ -9,6 +9,7 @@ export interface ISubmission {
 	author?: string,
 	srcIcon?: string,
 	type: 'image' | 'video' | 'text',
+	subtype?: 'picture' | 'artwork',
 	src?: string,
 	message?: string,
 }
@@ -22,6 +23,7 @@ const SubmissionSchema: Schema = new Schema({
 	author: { type: String },
 	srcIcon: { type: String },
 	type: { type: String, enum: ['image', 'video', 'text'] },
+	subtype: { type: String, enum: ['picture', 'artwork'] },
 	src: { type: String },
 	message: { type: String },
 });

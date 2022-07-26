@@ -15,8 +15,8 @@ import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 import Phaser from '../../components/project/Phaser';
-import SanaLazy from '../../components/project/sanasendoff/Lazy';
 import TextHeader from '../../components/TextHeader';
+import ExperimentalProjectPage from '../../components/project/experimental/Page';
 import Project, { ILink, IProject } from '../../models/Project';
 import Submission, { ISubmission } from '../../models/Submission';
 import 'github-markdown-css/github-markdown-light.css';
@@ -157,6 +157,12 @@ export default function ProjectPage({ doc, allSubmissions, guild }: IProps) {
 		);
 	}
 
+	if (doc.flags?.includes('experimental')) {
+		return (
+			<ExperimentalProjectPage guild={guild} project={doc}/>
+		);
+	}
+
 	if (doc.flags?.includes('guratanabata')) {
 		return (
 			<>
@@ -175,23 +181,6 @@ export default function ProjectPage({ doc, allSubmissions, guild }: IProps) {
 						submissions: allSubmissions,
 					}}
 				/>
-			</>
-		);
-	}
-
-	if (doc.flags?.includes('sanasendoff')) {
-
-
-		return (
-			<>
-				<Head
-					color={guild.color ?? '#FF3D3D'}
-					title={doc.title}
-					description={doc.shortDescription}
-					keywords={['guratanabata']}
-					image={doc.ogImage ?? 'https://holoen.fans/img/logo.png'}
-				/>
-				<SanaLazy/>
 			</>
 		);
 	}
