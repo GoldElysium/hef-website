@@ -14,7 +14,7 @@ export function ProjectTimeline({ events }: ProjectTimelineProps) {
 
 		// check if an element is in viewport
 		// http://stackoverflow.com/questions/123999/how-to-tell-if-a-dom-element-is-visible-in-the-current-viewport
-		function isElementInViewport(el) {
+		function isElementInViewport(el: any) {
 			const rect = el.getBoundingClientRect();
 			return (
 				rect.top >= 0 &&
@@ -44,7 +44,7 @@ export function ProjectTimeline({ events }: ProjectTimelineProps) {
 		};
 	});
 
-	const dateStringOptions = {
+	const dateStringOptions: any = {
 		day: 'numeric',
 		month: 'long',
 		year: 'numeric',
@@ -210,7 +210,7 @@ export function ProjectTimeline({ events }: ProjectTimelineProps) {
 						<a href="https://www.youtube.com/watch?v=oViEFu_ftXg"
 							target="_blank"
 							rel="noreferrer noopener">【NEW OUTFIT REVEAL】KIMONOut of this world</a><br/>
-						Sana unveils her first new Live2D outfit, a kimono to celebrate the new year! <strike>It comes with a Neighbula mask that Sana can wear</strike> Neighbula also makes his Live2D debut.
+						Sana unveils her first new Live2D outfit, a kimono to celebrate the new year! <s>It comes with a Neighbula mask that Sana can wear</s> Neighbula also makes his Live2D debut.
 					</div>
 				</li>
 				<li>
