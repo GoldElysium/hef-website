@@ -48,7 +48,7 @@
   "devDependencies": {
     "@commitlint/cli": "16.2.1",
     "@commitlint/config-conventional": "16.2.1",
-    "@types/react": "17.0.40",
+    "@types/react": "17.0.48",
     "@types/safe-json-stringify": "1.1.2",
     "@types/webfontloader": "1.6.34",
     "@typescript-eslint/eslint-plugin": "5.15.0",
