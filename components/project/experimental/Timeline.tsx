@@ -10,7 +10,6 @@ export interface ProjectTimelineProps {
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function ProjectTimeline({ events }: ProjectTimelineProps) {
 	useEffect(() => {
-		// noinspection TypeScriptValidateTypes
 		const items = document.querySelectorAll('.timeline li');
 
 		// check if an element is in viewport
@@ -27,7 +26,6 @@ export function ProjectTimeline({ events }: ProjectTimelineProps) {
 		}
 
 		function callbackFunc() {
-			console.log('got to here');
 			for (let i = 0; i < items.length; i++) {
 				if (isElementInViewport(items[i])) {
 					items[i].classList.add('in-view');
@@ -39,6 +37,11 @@ export function ProjectTimeline({ events }: ProjectTimelineProps) {
 		window.addEventListener('resize', callbackFunc);
 		window.addEventListener('scroll', callbackFunc);
 		callbackFunc();
+
+		return () => {
+			window.removeEventListener('resize', callbackFunc);
+			window.removeEventListener('scroll', callbackFunc);
+		};
 	});
 
 	const dateStringOptions = {
