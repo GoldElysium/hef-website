@@ -52,7 +52,7 @@ export function ProjectPage({ guild, project }: ProjectPageProps) {
 							title={project.title ?? 'unknown'}
 							description={project.shortDescription ?? ''}
 						/>
-					)} 
+					)}
 					<div className="flex-grow">
 						<div className="my-16 w-full flex flex-col items-center">
 							<div className="max-w-4xl w-full mx-4 break-words md:break-normal">
@@ -61,18 +61,14 @@ export function ProjectPage({ guild, project }: ProjectPageProps) {
 										<ProjectTab label="About">
 											<ProjectAbout project={project}/>
 										</ProjectTab>
-										{(project.timeline?.length ?? 0) > 0 && (
-											<ProjectTab label="Timeline">
-												<ProjectTimeline events={project.timeline!}/>
-											</ProjectTab>
-										)}
+										<ProjectTab label="Timeline">
+											<ProjectTimeline events={project.timeline!}/>
+										</ProjectTab>
 									</ProjectTabs>
 								) || (
 									<>
 										<ProjectAbout project={project}/>
-										{(project.timeline?.length ?? 0) > 0 && (
-											<ProjectTimeline events={project.timeline!}/>
-										)}
+										<ProjectTimeline events={project.timeline!}/>
 									</>
 								)}
 							</div>
