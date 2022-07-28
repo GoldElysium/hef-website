@@ -1,3 +1,5 @@
+// noinspection TypeScriptValidateTypes
+
 import { useEffect } from 'react';
 import { IEvent } from '../../../models/Project';
 
@@ -39,95 +41,63 @@ export function ProjectTimeline({ events }: ProjectTimelineProps) {
 		callbackFunc();
 	});
 
+	const dateStringOptions = {
+		day: 'numeric',
+		month: 'long',
+		year: 'numeric',
+	};
+
 	return (
 		<div className="timeline">
 			<ul>
 				<li>
 					<div>
-						<time>1934</time>
-						At vero eos et accusamus et iusto odio dignissimos ducimus qui
-						blanditiis praesentium At vero eos et accusamus et iusto odio
-						dignissimos ducimus qui blanditiis praesentium
+						<time>{(new Date('2021-08-22T08:05:27Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						<a href="https://www.youtube.com/watch?v=qaEkfdFSxvs"
+							target="_blank"
+							rel="noreferrer noopener">Sana Landing</a>
 					</div>
 				</li>
 				<li>
 					<div>
-						<time>1937</time>
-						Proin quam velit, efficitur vel neque vitae, rhoncus commodo mi.
-						Suspendisse finibus mauris et bibendum molestie. Aenean ex augue, varius
-						et pulvinar in, pretium non nisi.
+						<time>{(new Date('2021-08-22T18:06:19Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						<a href="https://www.youtube.com/watch?v=3Tv5GyebhQo"
+							target="_blank"
+							rel="noreferrer noopener">【DEBUT STREAM】</a> Sana makes her debut! In which we learn about the BEEGest space baby.
 					</div>
 				</li>
 				<li>
 					<div>
-						<time>1940</time>
-						Proin iaculis, nibh eget efficitur varius, libero tellus porta dolor, at
-						pulvinar tortor ex eget ligula. Integer eu dapibus arcu, sit amet
-						sollicitudin eros.
+						<time>{(new Date('2021-09-05T05:33:26Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						<a href="https://www.youtube.com/watch?v=I6YaBqHtkTU"
+							target="_blank"
+							rel="noreferrer noopener">【SUPARTY!】</a> Sana celebrates the opening of Super Chats on her channel and definitely does not buy enough party poppers.
 					</div>
 				</li>
 				<li>
 					<div>
-						<time>1943</time>
-						In mattis elit vitae odio posuere, nec maximus massa varius. Suspendisse
-						varius volutpat mattis. Vestibulum id magna est.
+						<time>{(new Date('2021-09-27T02:26:57Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						<a href="https://www.youtube.com/watch?v=v0p_T5nv-7Q"
+							target="_blank"
+							rel="noreferrer noopener">【Memberships Open!】</a> We birth a horse together with Sana.
 					</div>
 				</li>
 				<li>
 					<div>
-						<time>1946</time>
-						In mattis elit vitae odio posuere, nec maximus massa varius. Suspendisse
-						varius volutpat mattis. Vestibulum id magna est.
+						<time>October 13, 2021</time>
+						Sana achieves 200,000 YouTube subscribers.
 					</div>
 				</li>
 				<li>
 					<div>
-						<time>1956</time>
-						In mattis elit vitae odio posuere, nec maximus massa varius. Suspendisse
-						varius volutpat mattis. Vestibulum id magna est.
+						<time>March 10, 2022</time>
+						Sana achieves 300,000 YouTube subscribers.
 					</div>
 				</li>
 				<li>
 					<div>
-						<time>1957</time>
-						In mattis elit vitae odio posuere, nec maximus massa varius. Suspendisse
-						varius volutpat mattis. Vestibulum id magna est.
-					</div>
-				</li>
-				<li>
-					<div>
-						<time>1967</time>
-						Aenean condimentum odio a bibendum rhoncus. Ut mauris felis, volutpat
-						eget porta faucibus, euismod quis ante.
-					</div>
-				</li>
-				<li>
-					<div>
-						<time>1977</time>
-						Vestibulum porttitor lorem sed pharetra dignissim. Nulla maximus, dui a
-						tristique iaculis, quam dolor convallis enim, non dignissim ligula ipsum
-						a turpis.
-					</div>
-				</li>
-				<li>
-					<div>
-						<time>1985</time>
-						In mattis elit vitae odio posuere, nec maximus massa varius. Suspendisse
-						varius volutpat mattis. Vestibulum id magna est.
-					</div>
-				</li>
-				<li>
-					<div>
-						<time>2000</time>
-						In mattis elit vitae odio posuere, nec maximus massa varius. Suspendisse
-						varius volutpat mattis. Vestibulum id magna est.
-					</div>
-				</li>
-				<li>
-					<div>
-						<time>2005</time>
-						In mattis elit vitae odio posuere, nec maximus massa varius. Suspendisse
-						varius volutpat mattis. Vestibulum id magna est.
+						<time>July 12, 2022</time>
+						Sana announces her graduation date of July 31st.
 					</div>
 				</li>
 			</ul>
