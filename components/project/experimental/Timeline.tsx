@@ -99,16 +99,40 @@ export function ProjectTimeline({ events }: ProjectTimelineProps) {
 						<time>{(new Date('2021-10-11T03:34:15Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
 						<a href="https://www.youtube.com/watch?v=SqXnQ8jSGBk"
 							target="_blank"
-							rel="noreferrer noopener">【Celeste B-sides】</a> Chat breaks Sana and her manager by starting a sorry SC train (sorry!).<br/>
-						<a href="https://www.youtube.com/watch?v=EKkaN5eoo3U"
-							target="_blank"
-							rel="noreferrer noopener">Clip</a>
+							rel="noreferrer noopener">【Celeste B-sides】floor doko</a><br/>
+						Chat breaks Sana and her manager by starting a <a href="https://www.youtube.com/watch?v=EKkaN5eoo3U" target="_blank" rel="noreferrer noopener">sorry SC train</a> (sorry!). Sana destroys Earth for a second time, and <a href="https://www.youtube.com/watch?v=8--Ppk2xkZw" target="_blank" rel="noreferrer noopener">Fauna has to fix it</a>.
+
 					</div>
 				</li>
 				<li>
 					<div>
 						<time>October 13, 2021</time>
 						Sana achieves 200,000 YouTube subscribers.
+					</div>
+				</li>
+				<li>
+					<div>
+						<time>{(new Date('2021-11-10T17:33:02Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						<a href="https://www.youtube.com/watch?v=5SvarR1zE74"
+							target="_blank"
+							rel="noreferrer noopener">【Sana Landing】Look! Up in the sky!</a><br/>
+						Sana returns from a break and <a href="https://www.youtube.com/watch?v=wlywyCL03VA" target="_blank" rel="noreferrer noopener">accidentally destroys the Earth again</a> during her landing! Oops. Council comes together to fix it this time.
+
+					</div>
+				</li>
+				<li>
+					<div>
+						<time>{(new Date('2021-11-15T01:26:47Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						<a href="https://www.youtube.com/watch?v=CV42ivUlyN0"
+							target="_blank"
+							rel="noreferrer noopener">【Evil God Korone】Oh I&apos;m die.</a><br/>
+						Wait, there&apos;s a Sana cult now? No, but Korone did brainwash Sana and <a href="https://www.youtube.com/watch?v=BKfpZWSR29Q" target="_blank" rel="noreferrer noopener">convert her into a Koronesuki</a>. <em>Seno seno Korone ga seno! Kawaii Korone ga seno chu!</em>
+					</div>
+				</li>
+				<li>
+					<div>
+						<time>November 19, 2021</time>
+						Sana appears alongside Council at Anime NYC during a special panel.
 					</div>
 				</li>
 				<li>
@@ -127,6 +151,20 @@ export function ProjectTimeline({ events }: ProjectTimelineProps) {
 							target="_blank"
 							rel="noreferrer noopener">【NEW OUTFIT REVEAL】KIMONOut of this world</a><br/>
 						Sana unveils her first new Live2D outfit, a kimono to celebrate the new year! <strike>It comes with a Neighbula mask that Sana can wear</strike> Neighbula also makes his Live2D debut.
+					</div>
+				</li>
+				<li>
+					<div>
+						<time>{(new Date('2022-01-01T10:02:37Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						Sana rings in the New Year with <a href="https://www.youtube.com/watch?v=8xFvwcI9jOg" target="_blank" rel="noreferrer noopener">a 14-hour Animal Crossing stream</a> <a href="https://www.youtube.com/watch?v=2ug7ZmRuwws" target="_blank" rel="noreferrer noopener">in 2 parts</a>. She catches ALL THE FISH. Some lucky Sanallites also visit her island to celebrate together!
+					</div>
+				</li>
+				<li>
+					<div>
+						<time>{(new Date('2022-01-03T02:55:02Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						After 738 resets (a 14% chance), <a href="https://www.youtube.com/watch?v=tyC9A2tuf28"
+							target="_blank"
+							rel="noreferrer noopener">Sana catches a shiny Rayquaza</a>! On the first try. With a luxury ball. BEEG luck! She also completed her Pokedex this stream.
 					</div>
 				</li>
 				<li>
@@ -160,14 +198,26 @@ export function ProjectTimeline({ events }: ProjectTimelineProps) {
 				</li>
 				<li>
 					<div>
+						<time>{(new Date('2022-07-05T04:51:54Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						Sana helps IRyS design <a href="https://www.youtube.com/watch?v=WjYCPf3shKI" target="_blank" rel="noreferrer noopener">an official mascot</a>... or a pair of mascots. Welcome to the family, Bloom and Gloom!
+					</div>
+				</li>
+				<li>
+					<div>
 						<time>{(new Date('2022-07-11T23:34:12Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
-						Sana <a href="https://www.youtube.com/watch?v=R8y1aWMlPOs" target="_blank" rel="noreferrer noopener">announces</a> she will be graduating from Hololive on July 31st, scheduling a large number of collabs prior to her retirement, along with teasing a special Council collab stream.
+						Sana <a href="https://www.youtube.com/watch?v=UbqJ7JObVBM" target="_blank" rel="noreferrer noopener">announces</a> she will be graduating from Hololive on July 31st, scheduling a large number of collabs prior to her retirement, along with teasing a special Council collab stream.
+					</div>
+				</li>
+				<li>
+					<div>
+						<time>July 16–17, 2022</time>
+						Sana appears at Smash Con 2022 along with Bae, doing two panels as well as a meet-and-greet with lucky fans.
 					</div>
 				</li>
 				<li>
 					<div>
 						<time>{(new Date('2022-07-21T01:27:24Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
-						HoloCouncil <a href="https://www.youtube.com/watch?v=R8y1aWMlPOs" target="_blank" rel="noreferrer noopener">debuts their BEEGsmol 3D models</a> (designed by Sana herself), in a pseudo-anniversary celebration stream.
+						HoloCouncil debuts their BEEGsmol 3D models (designed by Sana herself), in <a href="https://www.youtube.com/watch?v=bFjuKhG2Hzc" target="_blank" rel="noreferrer noopener">a pseudo-anniversary celebration stream</a>.
 					</div>
 				</li>
 			</ul>
