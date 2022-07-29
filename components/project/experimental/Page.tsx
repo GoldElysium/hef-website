@@ -4,11 +4,13 @@ import Head from '../../Head';
 import Header from '../../Header';
 import Navbar from '../../Navbar';
 import ProjectAbout from './About';
+import ProjectSubmissions from '../Submissions';
 import ProjectTab from './Tab';
 import ProjectTabs from './Tabs';
 import ProjectTimeline from './Timeline';
 import { IGuild } from '../../../models/Guild';
 import { IProject } from '../../../models/Project';
+import { ISubmission } from '../../../models/Submission';
 
 const GUILD_TO_OSHI = Object.assign(Object.create(null), {
 	'CGeclp7hLj-lpprbhKxX5': 'calli', 'hirD8XHurcDYFoNQOFh7p': 'calli',
@@ -29,9 +31,10 @@ const GUILD_TO_OSHI = Object.assign(Object.create(null), {
 export interface ProjectPageProps {
 	guild: IGuild,
 	project: IProject,
+	submissions: ISubmission[],
 }
 
-export function ProjectPage({ guild, project }: ProjectPageProps) {
+export function ProjectPage({ guild, project, submissions }: ProjectPageProps) {
 	return (
 		<>
 			<Head
@@ -64,11 +67,79 @@ export function ProjectPage({ guild, project }: ProjectPageProps) {
 										<ProjectTab label="Timeline">
 											<ProjectTimeline events={project.timeline!}/>
 										</ProjectTab>
+										{submissions.length > 0 && (
+											project.flags?.includes('sectionedSubmissions') && (() => {
+												// the submissions prop will never change; it's statically
+												// assigned on the server side, so we don't need to
+												// memorize this.
+												const [artwork, pictures, videos, messages] = submissions
+													.reduce(([_artwork, _pictures, _videos, _messages], submission) => {
+														switch (submission.type) {
+															case 'image':
+																switch (submission.subtype) {
+																	case 'artwork':
+																		_artwork.push(submission);
+																		break;
+																	case 'picture':
+																		_pictures.push(submission);
+																		break;
+																	default:
+																		_pictures.push(submission);
+																		break;
+																}
+																break;
+															case 'text':
+																_messages.push(submission);
+																break;
+															case 'video':
+																_videos.push(submission);
+																break;
+															default:
+																console.warn('Unreachable code reached');
+																break;
+														}
+														return [_artwork, _pictures, _videos, _messages];
+													}, [[], [], [], []]);
+												return (
+													<>
+														{artwork.length > 0 && (
+															<ProjectTab label="Artwork">
+																<ProjectSubmissions submissions={artwork}/>
+															</ProjectTab>
+														)}
+														{pictures.length > 0 && (
+															<ProjectTab label="Pictures">
+																<ProjectSubmissions submissions={pictures}/>
+															</ProjectTab>
+														)}
+														{videos.length > 0 && (
+															<ProjectTab label="Videos">
+																<ProjectSubmissions submissions={videos}/>
+															</ProjectTab>
+														)}
+														{messages.length > 0 && (
+															<ProjectTab label="Messages">
+																<ProjectSubmissions submissions={messages}/>
+															</ProjectTab>
+														)}
+													</>
+												);
+											})() || (
+												<ProjectTab label="Submissions">
+													<ProjectSubmissions submissions={submissions}/>
+												</ProjectTab>
+											)
+										)}
 									</ProjectTabs>
 								) || (
 									<>
 										<ProjectAbout project={project}/>
+										{/* PS: the ProjectTabs component provides a context -- use can use a */}
+										{/* useContext hook to conditionally show headings on these components */}
 										<ProjectTimeline events={project.timeline!}/>
+										{submissions.length > 0 && (
+											<ProjectSubmissions submissions={submissions}/>
+										)}
 									</>
 								)}
 							</div>

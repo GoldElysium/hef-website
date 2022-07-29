@@ -159,7 +159,7 @@ export default function ProjectPage({ doc, allSubmissions, guild }: IProps) {
 
 	if (doc.flags?.includes('experimental')) {
 		return (
-			<ExperimentalProjectPage guild={guild} project={doc}/>
+			<ExperimentalProjectPage guild={guild} project={doc} submissions={allSubmissions}/>
 		);
 	}
 
