@@ -3,13 +3,15 @@ import ReactPlayer from 'react-player';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import TextHeader from '../TextHeader';
 import { ISubmission } from '../../models/Submission';
+import { IProject } from '../../models/Project';
 
 interface ISubmissionProps {
+	project?: IProject | undefined,
 	data: ISubmission,
 	index: number
 }
 
-const Submission = ({ data, index }: ISubmissionProps) => (
+const Submission = ({ project, data, index }: ISubmissionProps) => (
 	<div className="w-full max-h-full text-black dark:text-white" key={data._id as unknown as string}>
 		<div className="w-full flex mt-4 h-14">
 			{data.srcIcon && (
@@ -47,8 +49,8 @@ const Submission = ({ data, index }: ISubmissionProps) => (
 				</div>
 			)}
 			{data.message && (
-				<p className="mx-4 mb-4 w-auto h-full overflow-auto whitespace-pre-line dark:text-gray-300">
-					{data.message}
+				<p className={`mx-4 mb-4 w-auto h-full overflow-auto whitespace-pre-line dark:text-gray-300 ${project?.title === 'sana sendoff' ? 'sana-message' : ''}`}>
+					<span className="relative">{data.message}</span>
 				</p>
 			)}
 			<hr className="border-t-1 border-dashed border-gray-400" />
@@ -58,11 +60,12 @@ const Submission = ({ data, index }: ISubmissionProps) => (
 
 interface IProps {
 	submissions: ISubmission[] | undefined,
+	project?: IProject | undefined,
 }
 
 const SUBMISSIONS_PER_LOAD = 10;
 
-const Submissions = ({ submissions }: IProps) => {
+const Submissions = ({ submissions, project }: IProps) => {
 	const [showLimit, setShowLimit] = React.useState(SUBMISSIONS_PER_LOAD);
 	if (!submissions || submissions.length === 0) return <></>;
 
@@ -88,6 +91,7 @@ const Submissions = ({ submissions }: IProps) => {
 							<div className="sm:w-11/12 md:w-10/12 h-full">
 								{shownSubmissions.map((submission, index) => (
 									<Submission
+										project={project}
 										data={submission}
 										index={index}
 										key={submission._id as unknown as string}

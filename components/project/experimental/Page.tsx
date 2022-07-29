@@ -104,29 +104,29 @@ export function ProjectPage({ guild, project, submissions }: ProjectPageProps) {
 													<>
 														{artwork.length > 0 && (
 															<ProjectTab label="Artwork">
-																<ProjectSubmissions submissions={artwork}/>
+																<ProjectSubmissions submissions={artwork} project={project}/>
 															</ProjectTab>
 														)}
 														{pictures.length > 0 && (
 															<ProjectTab label="Pictures">
-																<ProjectSubmissions submissions={pictures}/>
+																<ProjectSubmissions submissions={pictures} project={project}/>
 															</ProjectTab>
 														)}
 														{videos.length > 0 && (
 															<ProjectTab label="Videos">
-																<ProjectSubmissions submissions={videos}/>
+																<ProjectSubmissions submissions={videos} project={project}/>
 															</ProjectTab>
 														)}
 														{messages.length > 0 && (
 															<ProjectTab label="Messages">
-																<ProjectSubmissions submissions={messages}/>
+																<ProjectSubmissions submissions={messages} project={project}/>
 															</ProjectTab>
 														)}
 													</>
 												);
 											})() || (
 												<ProjectTab label="Submissions">
-													<ProjectSubmissions submissions={submissions}/>
+													<ProjectSubmissions submissions={submissions} project={project}/>
 												</ProjectTab>
 											)
 										)}
@@ -138,7 +138,7 @@ export function ProjectPage({ guild, project, submissions }: ProjectPageProps) {
 										{/* useContext hook to conditionally show headings on these components */}
 										<ProjectTimeline events={project.timeline!}/>
 										{submissions.length > 0 && (
-											<ProjectSubmissions submissions={submissions}/>
+											<ProjectSubmissions submissions={submissions} project={project}/>
 										)}
 									</>
 								)}

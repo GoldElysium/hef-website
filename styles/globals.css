@@ -341,3 +341,22 @@
   to { opacity: 1; }
 }
 
+.sana-message {
+  background-image: url('/assets/sanasendoff/message_bg.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 600px;
+  @apply flex text-center justify-center items-center !text-slate-700;
+}
+
+.sana-message span {
+  top: -25px;
+  width: 330px;
+}
+
+@media only screen and (max-width: 530px) {
+  .sana-message span {
+    width: 200px;
+  }
+}
