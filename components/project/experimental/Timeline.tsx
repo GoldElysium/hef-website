@@ -88,6 +88,22 @@ export function ProjectTimeline({ events }: ProjectTimelineProps) {
 				</li>
 				<li>
 					<div>
+						<time>{(new Date('2021-09-23T02:13:06Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						<a href="https://www.youtube.com/watch?v=jG0GKIXFdHw"
+							target="_blank"
+							rel="noreferrer noopener">1 month together with Sana!</a> She surprises her fans with a beautiful piece of art to celebrate. She also mentions a possible horse-birthing stream in the future, and doesn&apos;t elaborate further.
+					</div>
+				</li>
+				<li>
+					<div>
+						<time>{(new Date('2021-09-26T00:04:04Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						Kicked off by <a href="https://www.youtube.com/watch?v=t2n90NUzncQ" target="_blank" rel="noreferrer noopener">an ominous teaser</a> a few days ago, <a href="https://www.youtube.com/watch?v=s4M7quMcnnI"
+							target="_blank"
+							rel="noreferrer noopener">Inasanaty have their first collab</a>, in which we learned that Ina and Sana are old friends.
+					</div>
+				</li>
+				<li>
+					<div>
 						<time>{(new Date('2021-09-27T02:26:57Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
 						<a href="https://www.youtube.com/watch?v=v0p_T5nv-7Q"
 							target="_blank"
@@ -112,12 +128,18 @@ export function ProjectTimeline({ events }: ProjectTimelineProps) {
 				</li>
 				<li>
 					<div>
+						<time>{(new Date('2021-11-06T10:06:10Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						Sana participates in the <a href="https://www.youtube.com/watch?v=D6T6_UIJoc0" target="_blank" rel="noreferrer noopener">2021 Hololive Sports Festival</a> in White C Team.
+					</div>
+				</li>
+				<li>
+					<div>
 						<time>{(new Date('2021-11-10T17:33:02Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
 						<a href="https://www.youtube.com/watch?v=5SvarR1zE74"
 							target="_blank"
 							rel="noreferrer noopener">【Sana Landing】Look! Up in the sky!</a><br/>
-						Sana returns from a break and <a href="https://www.youtube.com/watch?v=wlywyCL03VA" target="_blank" rel="noreferrer noopener">accidentally destroys the Earth again</a> during her landing! Oops. Council comes together again to fix it this time.
-
+						Sana officially returns from her break and <a href="https://www.youtube.com/watch?v=wlywyCL03VA" target="_blank" rel="noreferrer noopener">accidentally destroys the Earth again</a> during her landing! Oops. Council comes together again to fix it this time.<br/>
+						Elsewhere, <a href="https://www.youtube.com/watch?v=Fln9XkzqcqI" target="_blank" rel="noreferrer noopener">Yagoo reads Sana&apos;s demand</a> on behalf of the Sanallites to give birth to Neighbula.
 					</div>
 				</li>
 				<li>
@@ -162,6 +184,18 @@ export function ProjectTimeline({ events }: ProjectTimelineProps) {
 						After 738 resets (a 14% chance), <a href="https://www.youtube.com/watch?v=tyC9A2tuf28"
 							target="_blank"
 							rel="noreferrer noopener">Sana catches a shiny Rayquaza</a>! On the first try. With a luxury ball. BEEG luck! She also completed her Pokedex this stream.
+					</div>
+				</li>
+				<li>
+					<div>
+						<time>{(new Date('2022-01-07T09:11:14Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						Sana participates in the <a href="https://www.youtube.com/watch?v=U_IW6CyYn1k" target="_blank" rel="noreferrer noopener">2022 New Year&apos;s Mario Kart Tournament</a> as part of C block. She gives it a valiant effort, but at 4th place behind Kronii, she is just 1 spot away from qualifying for the Winner&apos;s Cup.
+					</div>
+				</li>
+				<li>
+					<div>
+						<time>January 10, 2022</time>
+						Sana does a members-only drawing stream, and Sanallites officially become bread dogs.
 					</div>
 				</li>
 				<li>
@@ -221,7 +255,7 @@ export function ProjectTimeline({ events }: ProjectTimelineProps) {
 						<time>{(new Date('2022-06-11T03:00:15Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
 						Sana releases her first original song <a href="https://www.youtube.com/watch?v=R8y1aWMlPOs"
 							target="_blank"
-							rel="noreferrer noopener"><em>Astrogirl</em></a>.
+							rel="noreferrer noopener"><em>Astrogirl</em></a>. She&apos;s not alone!
 					</div>
 				</li>
 				<li>
@@ -245,6 +279,13 @@ export function ProjectTimeline({ events }: ProjectTimelineProps) {
 					<div>
 						<time>{(new Date('2022-07-05T04:51:54Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
 						Sana helps IRyS design <a href="https://www.youtube.com/watch?v=WjYCPf3shKI" target="_blank" rel="noreferrer noopener">an official mascot</a>... or a pair of mascots. Welcome to the family, Bloom and Gloom!
+					</div>
+				</li>
+				<li>
+					<div>
+						<time>{(new Date('2022-07-08T00:24:02Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						The final Inasanaty collab, where <a href="https://www.youtube.com/watch?v=cObkYo5zMvI" target="_blank" rel="noreferrer noopener">Sana and Ina celebrate Tanabata together.</a><br/>
+						They read out wishes sent in by fans, hanging them on virtual bamboo trees. In the end, they read their own wishes too. Sana&apos;s wish is that all the talents and the fans can find happiness!
 					</div>
 				</li>
 				<li>
