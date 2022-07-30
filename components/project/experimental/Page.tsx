@@ -54,13 +54,14 @@ export function ProjectPage({ guild, project, submissions }: ProjectPageProps) {
 						<Header
 							title={project.title ?? 'unknown'}
 							description={project.shortDescription ?? ''}
+							background={project.flags?.includes('sanaSendoff') ? '/assets/sanasendoff/background.png' : undefined}
 						/>
 					)}
 					<div className='flex-grow'>
 						<div className='my-16 w-full flex flex-col items-center'>
 							<div className='max-w-4xl w-full mx-4 break-words md:break-normal'>
 								{!project.flags?.includes('disableTabs') && (
-									<ProjectTabs>
+									<ProjectTabs default='About'>
 										<ProjectTab label='About'>
 											<ProjectAbout project={project}/>
 										</ProjectTab>
@@ -145,7 +146,11 @@ export function ProjectPage({ guild, project, submissions }: ProjectPageProps) {
 							</div>
 						</div>
 					</div>
-					{!project.flags?.includes('disableFooter') && (<Footer/>)}
+					{!project.flags?.includes('disableFooter') && (
+						<Footer
+							background={project.flags?.includes('sanaSendoff') ? '/assets/sanasendoff/background.png' : undefined}
+						/>
+					)}
 				</div>
 			</div>
 		</>

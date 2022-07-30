@@ -346,7 +346,7 @@
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  height: 600px;
+  height: 20rem;
   @apply flex text-center justify-center items-center !text-slate-700;
 }
 

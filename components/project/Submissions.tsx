@@ -49,11 +49,13 @@ const Submission = ({ project, data, index }: ISubmissionProps) => (
 				</div>
 			)}
 			{data.message && (
-				<p className={`mx-4 mb-4 w-auto h-full overflow-auto whitespace-pre-line dark:text-gray-300 ${project?.title === 'sana sendoff' ? 'sana-message' : ''}`}>
+				<p className={`mx-4 mb-4 w-auto h-full overflow-auto whitespace-pre-line dark:text-gray-300 ${project?.flags?.includes('sanaSendoff') ? 'sana-message' : ''}`}>
 					<span className="relative">{data.message}</span>
 				</p>
 			)}
-			<hr className="border-t-1 border-dashed border-gray-400" />
+			{!project?.flags?.includes('tiledSubmissions') && (
+				<hr className="border-t-1 border-dashed border-gray-400" />
+			)}
 		</div>
 	</div>
 );
@@ -77,7 +79,9 @@ const Submissions = ({ submissions, project }: IProps) => {
 
 	return (
 		<div className="mt-4">
-			<TextHeader text="Submissions" />
+			{project?.flags?.includes('disableTabs') && (
+				<TextHeader text="Submissions" />
+			)}
 			<div className="flex flex-col items-center pt-2">
 				<div className="w-full overflow-auto">
 					<InfiniteScroll
@@ -87,18 +91,34 @@ const Submissions = ({ submissions, project }: IProps) => {
 						loader={<p className="text-black dark:text-white text-center mt-4">Loading...</p>}
 						scrollThreshold="600px"
 					>
-						<div className="w-full h-full flex justify-center">
-							<div className="sm:w-11/12 md:w-10/12 h-full">
-								{shownSubmissions.map((submission, index) => (
-									<Submission
-										project={project}
-										data={submission}
-										index={index}
-										key={submission._id as unknown as string}
-									/>
-								))}
+						{!project?.flags?.includes('tiledSubmissions') && (
+							<div className="w-full h-full flex justify-center">
+								<div className="sm:w-11/12 md:w-10/12 h-full">
+									{shownSubmissions.map((submission, index) => (
+										<Submission
+											project={project}
+											data={submission}
+											index={index}
+											key={submission._id as unknown as string}
+										/>
+									))}
+								</div>
 							</div>
-						</div>
+						) || (
+							<div className="w-full h-full flex justify-center content-center">
+								<div className="sm:w-11/12 md:w-10/12 sm:h-11/12 md:h-10/12 flex">
+									{shownSubmissions.map((submission, index) => (
+										<div className="w-1/2 h-1/2" key={submission._id as unknown as string}>
+											<Submission
+												project={project}
+												data={submission}
+												index={index}
+											/>
+										</div>
+									))}
+								</div>
+							</div>
+						)}
 					</InfiniteScroll>
 				</div>
 			</div>

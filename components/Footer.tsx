@@ -1,8 +1,22 @@
+import { useCallback } from 'react';
 import { HeartIcon } from '@heroicons/react/solid';
 
-export default function Footer() {
+interface IProps {
+	background?: string,
+}
+
+export default function Footer({ background }: IProps) {
+	const wrapper = useCallback((wrapperDeez: HTMLDivElement) => {
+		if (background != null && wrapperDeez != null) {
+			wrapperDeez.style.backgroundImage = `url(${background})` ;
+		}
+	}, [ ]);
+
 	return (
-		<div className="flex w-full h-24 px-4 sm:px-8 justify-center items-center mt-16 bg-skin-background-2 dark:bg-skin-dark-background-2">
+		<div
+			className="flex w-full h-24 px-4 sm:px-8 justify-center items-center mt-16 bg-skin-background-2 dark:bg-skin-dark-background-2"
+			ref={wrapper}
+		>
 			<p className="text-center flex items-center text-white text-opacity-70">
 				Made with&nbsp;
 				<HeartIcon className="w-4 h-4 text-white" />

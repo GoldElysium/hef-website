@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
 import { createContext, useContext, useMemo } from 'react';
 
 import { ProjectTabsContext } from './Tabs';
@@ -24,12 +24,14 @@ export function ProjectTab({ label, children }: ProjectTabProps) {
 		);
 	}, [ label, children ]);
   
-	const { child, setChild } = useContext(ProjectTabsContext)!;
+	const { child, setChild, setAssociation } = useContext(ProjectTabsContext)!;
+
+	useEffect(() => setAssociation(label, childrenWrapper), [ ]);
 
 	return (
 		<h2
 			className={
-				'text-2xl text-center text-skin-primary-1 dark:text-skin-dark-primary-1 '
+				'text-2xl text-center text-skin-primary-1 dark:text-skin-dark-primary-1 select-none '
         + ((childrenWrapper == child) ? 'font-bold' : '')
 			}
 			onClick={(e) => e.button == 0 && setChild(childrenWrapper)}
