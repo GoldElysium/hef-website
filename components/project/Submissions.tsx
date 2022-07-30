@@ -29,14 +29,26 @@ const Submission = ({ project, data, index }: ISubmissionProps) => (
 		</div>
 		<div className="w-full mt-3">
 			{data.type === 'video' && (
-				<ReactPlayer
-					width="100%"
-					height="100%"
-					url={data.src}
-					controls
-					light
-					className="mb-4 mt-4"
-				/>
+				data.src?.includes('youtube.com') && (
+				// TODO: Fix these type errors, fuck you intrinsic JSX attributes.
+					<iframe
+						width="100%"
+						height="300px"
+						type="text/html"
+						src={data.src!}
+						frameBorder="0"
+						allowFullScreen="1">
+					</iframe>
+				) || (
+					<ReactPlayer
+						width="100%"
+						height="100%"
+						url={data.src}
+						controls
+						light
+						className="mb-4 mt-4"
+					/>
+				)
 			)}
 			{data.type === 'image' && (
 				<div className="mt-4 mb-2 w-full h-full max-h-[750px] flex justify-center">
