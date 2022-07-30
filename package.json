@@ -53,7 +53,7 @@
     "@types/webfontloader": "1.6.34",
     "@typescript-eslint/eslint-plugin": "5.15.0",
     "@typescript-eslint/parser": "5.15.0",
-    "autoprefixer": "10.4.2",
+    "autoprefixer": "10.4.8",
     "eslint": "8.11.0",
     "eslint-config-airbnb": "19.0.4",
     "eslint-config-airbnb-typescript": "16.1.2",
