@@ -42,7 +42,7 @@
     "react-player": "2.10.0",
     "rich-markdown-editor": "11.21.3",
     "safe-json-stringify": "1.2.0",
-    "styled-components": "5.3.3",
+    "styled-components": "5.3.5",
     "webfontloader": "1.6.28"
   },
   "devDependencies": {
