@@ -116,7 +116,7 @@ export function ProjectTimeline({ events }: ProjectTimelineProps) {
 						<a href="https://www.youtube.com/watch?v=5SvarR1zE74"
 							target="_blank"
 							rel="noreferrer noopener">【Sana Landing】Look! Up in the sky!</a><br/>
-						Sana returns from a break and <a href="https://www.youtube.com/watch?v=wlywyCL03VA" target="_blank" rel="noreferrer noopener">accidentally destroys the Earth again</a> during her landing! Oops. Council comes together to fix it this time.
+						Sana returns from a break and <a href="https://www.youtube.com/watch?v=wlywyCL03VA" target="_blank" rel="noreferrer noopener">accidentally destroys the Earth again</a> during her landing! Oops. Council comes together again to fix it this time.
 
 					</div>
 				</li>
@@ -126,7 +126,7 @@ export function ProjectTimeline({ events }: ProjectTimelineProps) {
 						<a href="https://www.youtube.com/watch?v=CV42ivUlyN0"
 							target="_blank"
 							rel="noreferrer noopener">【Evil God Korone】Oh I&apos;m die.</a><br/>
-						Wait, there&apos;s a Sana cult now? No, but Korone did brainwash Sana and <a href="https://www.youtube.com/watch?v=BKfpZWSR29Q" target="_blank" rel="noreferrer noopener">convert her into a Koronesuki</a>. <em>Seno seno Korone ga seno! Kawaii Korone ga seno chu!</em>
+						Wait, there&apos;s a Sana cult now? No, but Korone did brainwash Sana and <a href="https://www.youtube.com/watch?v=BKfpZWSR29Q" target="_blank" rel="noreferrer noopener">convert her into a Koronesuki</a>. <em>Seno seno Korone ga seno! Kawaii Korone ga seno chu!</em> Papa pako <a href="https://twitter.com/pakosun/status/1460047796417953797" target="_blank" rel="noreferrer noopener">draws a Yatagarasuki</a> (Sanasuki?) that Sanallites immediately adopt as a profile picture en-masse. Definitely not a cult though.
 					</div>
 				</li>
 				<li>
@@ -137,20 +137,17 @@ export function ProjectTimeline({ events }: ProjectTimelineProps) {
 				</li>
 				<li>
 					<div>
-						<time>{(new Date('2021-12-21T01:15:13Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
-						<a href="https://www.youtube.com/watch?v=kPyLnwSXqkA"
-							target="_blank"
-							rel="noreferrer noopener">The Twelve Days of Christmas - hololive English Cover</a><br/>
-						Sana participates in her first official cover song, a rendition of The Twelve Days of Christmas.<br/>
+						<time>{(new Date('2021-12-21T01:10:37Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						<a href="https://www.youtube.com/watch?v=ejuKoCAKs_Q" target="_blank" rel="noreferrer noopener">HoloEN celebrates Christmas together</a> in VRChat! Through Sana&apos;s camera work, we see Myth, Council and IRyS share some heartwarming moments together.
 					</div>
 				</li>
 				<li>
 					<div>
 						<time>{(new Date('2021-12-21T01:15:13Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
-						<a href="https://www.youtube.com/watch?v=oViEFu_ftXg"
+						<a href="https://www.youtube.com/watch?v=kPyLnwSXqkA"
 							target="_blank"
-							rel="noreferrer noopener">【NEW OUTFIT REVEAL】KIMONOut of this world</a><br/>
-						Sana unveils her first new Live2D outfit, a kimono to celebrate the new year! <strike>It comes with a Neighbula mask that Sana can wear</strike> Neighbula also makes his Live2D debut.
+							rel="noreferrer noopener">The Twelve Days of Christmas - hololive English Cover</a><br/>
+						Sana participates in her first official cover song, a rendition of <em>The Twelve Days of Christmas</em>.<br/>
 					</div>
 				</li>
 				<li>
@@ -169,6 +166,31 @@ export function ProjectTimeline({ events }: ProjectTimelineProps) {
 				</li>
 				<li>
 					<div>
+						<time>{(new Date('2022-01-15T21:34:14Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						<a href="https://www.youtube.com/watch?v=oViEFu_ftXg"
+							target="_blank"
+							rel="noreferrer noopener">【NEW OUTFIT REVEAL】KIMONOut of this world</a><br/>
+						Sana unveils her first new Live2D outfit, a kimono to celebrate the new year! <strike>It comes with a Neighbula mask that Sana can wear</strike> Neighbula also makes his Live2D debut.
+					</div>
+				</li>
+				<li>
+					<div>
+						<time>{(new Date('2022-01-26T00:40:21Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						<a href="https://www.youtube.com/watch?v=OgEsyuN8oKY"
+							target="_blank"
+							rel="noreferrer noopener">HoloMinistry makes their debut</a> (and speedruns the fastest graduation). We meet Tsukumo San. He may look boyish, but just don&apos;t call him small...
+					</div>
+				</li>
+				<li>
+					<div>
+						<time>{(new Date('2022-01-27T06:04:43Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						Sana participates in <a href="https://www.youtube.com/watch?v=KNZi4VYhbRE"
+							target="_blank"
+							rel="noreferrer noopener">the HoloENxID Pokemon tournament</a>, achieving decisive victories with her signature Togekiss and becoming the champion. Did you expect any less?
+					</div>
+				</li>
+				<li>
+					<div>
 						<time>{(new Date('2022-02-14T23:10:57Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
 						<a href="https://www.youtube.com/watch?v=MIN-lwixweI"
 							target="_blank"
@@ -178,7 +200,7 @@ export function ProjectTimeline({ events }: ProjectTimelineProps) {
 				</li>
 				<li>
 					<div>
-						<time>{(new Date('2022-02-14T23:10:57Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						<time>{(new Date('2022-02-23T05:15:51Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
 						<a href="https://www.youtube.com/watch?v=P_GbsqSjgt8" target="_blank" rel="noreferrer noopener">HoloCouncil celebrates their 6-month anniversary!</a> They also release a cover of <a href="https://www.youtube.com/watch?v=U-9M-BjFYMc" target="_blank" rel="noreferrer noopener"><em>Hikaru Nara</em></a> after the stream, marking Sana&apos;s second official song cover.
 					</div>
 				</li>
@@ -190,10 +212,33 @@ export function ProjectTimeline({ events }: ProjectTimelineProps) {
 				</li>
 				<li>
 					<div>
+						<time>{(new Date('2022-04-01T01:57:01Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						It&apos;s April Fools&apos; Day (somewhere in the world), and Sana <a href="https://www.youtube.com/watch?v=Yv2_XjybbXc" target="_blank" rel="noreferrer noopener">is not quite herself</a>. Meanwhile, Fauna <a href="https://www.youtube.com/watch?v=1gBvxOgGDCc" target="_blank" rel="noreferrer noopener">sounds a little familiar</a>...
+					</div>
+				</li>
+				<li>
+					<div>
 						<time>{(new Date('2022-06-11T03:00:15Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
 						Sana releases her first original song <a href="https://www.youtube.com/watch?v=R8y1aWMlPOs"
 							target="_blank"
 							rel="noreferrer noopener"><em>Astrogirl</em></a>.
+					</div>
+				</li>
+				<li>
+					<div>
+						<time>{(new Date('2022-06-17T04:58:52Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						Sana tackles Metroid Dread again, but this time she brings with her <a href="https://www.youtube.com/watch?v=-tToGs-jm70"
+							 target="_blank"
+							 rel="noreferrer noopener">an army of bread dogs</a> submitted by Sanallites on Twitter!
+					</div>
+				</li>
+				<li>
+					<div>
+						<time>{(new Date('2022-06-11T03:09:05Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						Sana <a href="https://www.youtube.com/watch?v=BnW8BrppGr8"
+							target="_blank"
+							rel="noreferrer noopener">celebrates her birthday</a>! With call-ins aplenty and the unveil of her birthday merch (including an incredibly face-plantable bread dog plushie), it&apos;s a good time all around.<br/>
+						Sanallites also send her all their love, with Sana <a href="https://www.youtube.com/watch?v=BnW8BrppGr8&t=11710s" target="_blank" rel="noreferrer noopener">tearing up over <em>Sana&apos;s Space Birthday Project</em></a> and <a href="https://www.youtube.com/watch?v=BnW8BrppGr8&t=12227s" target="_blank" rel="noreferrer noopener">showing off the <em>BEEG SANA</em> fangame</a>.
 					</div>
 				</li>
 				<li>
@@ -212,6 +257,18 @@ export function ProjectTimeline({ events }: ProjectTimelineProps) {
 					<div>
 						<time>July 16–17, 2022</time>
 						Sana appears at Smash Con 2022 along with Bae, doing two panels as well as a meet-and-greet with lucky fans.
+					</div>
+				</li>
+				<li>
+					<div>
+						<time>{(new Date('2022-07-20T06:07:16Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						Sana <a href="https://www.youtube.com/watch?v=gawUszEwpnY" target="_blank" rel="noreferrer noopener">finishes her BEEG tower in Minecraft</a>, along with Moona and Kronii&apos;s help.
+					</div>
+				</li>
+				<li>
+					<div>
+						<time>{(new Date('2022-07-20T07:05:57Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						Council and IRyS band together to <a href="https://www.youtube.com/watch?v=8irDdE1YUYw" target="_blank" rel="noreferrer noopener">defeat the Ender Dragon</a>! Sana gets a few good hits in with a loaf of bread. Thanks to Fauna&apos;s leadership, the epic battle concludes swiftly.
 					</div>
 				</li>
 				<li>
