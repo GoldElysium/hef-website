@@ -165,6 +165,12 @@ export function ProjectTimeline({ events }: ProjectTimelineProps) {
 				</li>
 				<li>
 					<div>
+						<time>{(new Date('2021-12-21T14:46:03Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						Sana embarks on her quest <a href="https://www.youtube.com/watch?v=2S6sImgYqQc" target="_blank" rel="noreferrer noopener">to catch a shiny Rayquaza</a>! Calli <a href="https://www.youtube.com/watch?v=fzS16Ln8ANQ" target="_blank" rel="noreferrer noopener">joins her</a> shortly after, trying to catch her own shiny Giratina. This would mark the longest collab in the history of Hololive at the time, at over 9 hours of playing together.
+					</div>
+				</li>
+				<li>
+					<div>
 						<time>{(new Date('2021-12-21T01:15:13Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
 						<a href="https://www.youtube.com/watch?v=kPyLnwSXqkA"
 							target="_blank"
