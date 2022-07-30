@@ -45,10 +45,10 @@ export function ProjectPage({ guild, project, submissions }: ProjectPageProps) {
 				image={project.ogImage ?? 'https://holoen.fans/img/logo.png'}
 			/>
 
-			{/* Hypothetically this could label the div with a nonexistant "theme-"*/}
+			{/* Hypothetically this could label the div with a nonexistant 'theme-'*/}
 			{/* class but CSS just ignores nonexistant classes, so who cares? */}
-			<div className={'container theme-' + GUILD_TO_OSHI[guild._id!]}>
-				<div className="flex flex-col h-full min-h-screen bg-skin-background-1 dark:bg-skin-dark-background-1">
+			<div className={'theme-' + GUILD_TO_OSHI[guild._id!]}>
+				<div className='flex flex-col h-full min-h-screen bg-skin-background-1 dark:bg-skin-dark-background-1'>
 					{!project.flags?.includes('disableNavbar') && (<Navbar disableHead/>)}
 					{!project.flags?.includes('disableHeader') && (
 						<Header
@@ -56,15 +56,15 @@ export function ProjectPage({ guild, project, submissions }: ProjectPageProps) {
 							description={project.shortDescription ?? ''}
 						/>
 					)}
-					<div className="flex-grow">
-						<div className="my-16 w-full flex flex-col items-center">
-							<div className="max-w-4xl w-full mx-4 break-words md:break-normal">
+					<div className='flex-grow'>
+						<div className='my-16 w-full flex flex-col items-center'>
+							<div className='max-w-4xl w-full mx-4 break-words md:break-normal'>
 								{!project.flags?.includes('disableTabs') && (
 									<ProjectTabs>
-										<ProjectTab label="About">
+										<ProjectTab label='About'>
 											<ProjectAbout project={project}/>
 										</ProjectTab>
-										<ProjectTab label="Timeline">
+										<ProjectTab label='Timeline'>
 											<ProjectTimeline events={project.timeline!}/>
 										</ProjectTab>
 										{submissions.length > 0 && (
@@ -99,33 +99,33 @@ export function ProjectPage({ guild, project, submissions }: ProjectPageProps) {
 																break;
 														}
 														return [_artwork, _pictures, _videos, _messages];
-													}, [[], [], [], []]);
+													}, [[], [], [], []] as ISubmission[][]);
 												return (
 													<>
 														{artwork.length > 0 && (
-															<ProjectTab label="Artwork">
+															<ProjectTab label='Artwork'>
 																<ProjectSubmissions submissions={artwork} project={project}/>
 															</ProjectTab>
 														)}
 														{pictures.length > 0 && (
-															<ProjectTab label="Pictures">
+															<ProjectTab label='Pictures'>
 																<ProjectSubmissions submissions={pictures} project={project}/>
 															</ProjectTab>
 														)}
 														{videos.length > 0 && (
-															<ProjectTab label="Videos">
+															<ProjectTab label='Videos'>
 																<ProjectSubmissions submissions={videos} project={project}/>
 															</ProjectTab>
 														)}
 														{messages.length > 0 && (
-															<ProjectTab label="Messages">
+															<ProjectTab label='Messages'>
 																<ProjectSubmissions submissions={messages} project={project}/>
 															</ProjectTab>
 														)}
 													</>
 												);
 											})() || (
-												<ProjectTab label="Submissions">
+												<ProjectTab label='Submissions'>
 													<ProjectSubmissions submissions={submissions} project={project}/>
 												</ProjectTab>
 											)
