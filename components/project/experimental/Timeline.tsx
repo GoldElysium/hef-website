@@ -324,7 +324,17 @@ export function ProjectTimeline({ events }: ProjectTimelineProps) {
 						HoloCouncil debuts their BEEGsmol 3D models (designed by Sana herself), in <a href="https://www.youtube.com/watch?v=bFjuKhG2Hzc" target="_blank" rel="noreferrer noopener">a pseudo-anniversary celebration stream</a>.
 					</div>
 				</li>
+				<li>
+					<div>
+						<time>{(new Date('2022-07-31T00:36:34Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						<a href="https://www.youtube.com/watch?v=t8vPcBsVIqY" target="_blank" rel="noreferrer noopener">The graduation stream</a>. With a canvas of art and goodbye messages from fellow Hololive members, a full HoloEN smol 3D concert, and an emotional conclusion (with one final, heartfelt &quot;Sananara&quot;), our eternal Astrogirl takes to the stars.<br/>
+						Overall, it was truly a celebration of Sana&apos;s time in Hololive, and the love between Sana and her Sanallites.
+					</div>
+				</li>
 			</ul>
+			<div className="text-center">
+				<em className="text-xs text-slate-500">All dates are displayed in your local timezone.</em>
+			</div>
 		</div>
 	);
 }
