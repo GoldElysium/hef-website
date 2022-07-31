@@ -11,7 +11,7 @@ export default function Header({ title, description, background }: IProps) {
 		if (background != null && wrapperDeez != null) {
 			wrapperDeez.style.backgroundImage = `url(${background})` ;
 		}
-	}, [ ]);
+	}, [ background ]);
 
 	return (
 		<div

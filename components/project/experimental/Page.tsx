@@ -28,6 +28,37 @@ const GUILD_TO_OSHI = Object.assign(Object.create(null), {
 	'VkCh1E0PGq8swBN3h7sse': 'bae', 'jBX00De0x_fJWg7UhDkOK': 'bae',
 });
 
+const letter = `Hi Sana!
+
+Firstly, thank you so much for spending your time with
+us. It means the world to us that we got to have the time
+we did. We've all been through a lot together and even
+though our journey has Led us to part ways, we wouldn't
+change It for the world. Every moment we spent with
+Vou was precious ta us, and we hope you'll always look
+back on our time together and smile.
+
+We've been able to watch you grow and change as a
+streamer, and many of us have bean Inspired just by
+being your fans. It's been so much fun to experience the
+long streams, designing Neighbula, catching Pokemon,
+experiencing Kirby, and all the rest. But Its been even.
+more fun just to spend time with you. Your sunny
+Personality brightens up our days.
+
+Whatever happens after this, please know that we'll
+always remember the time we had together. We hope
+Vou'll hold the memories you made with us close, and
+remember us if you feel Lonely. If you ever feel like your.
+Journey is getting tiring or you feel Lonely, please know
+that we'll be here, ready to welcome you home.
+
+We love you, Sana, and we'll miss you, but we wish you
+all the best on your travels,
+
+Love,
+Your Sanallites`;
+
 export interface ProjectPageProps {
 	guild: IGuild,
 	project: IProject,
@@ -67,7 +98,7 @@ export function ProjectPage({ guild, project, submissions }: ProjectPageProps) {
 											{project.flags?.includes('sanaSendoff') && (
 											// something something next/image something something
 											// L + ratio, idc rn
-												<img className='sana-letter' src='/assets/sanasendoff/letter.png'/>
+												<img alt={letter} className='sana-letter' src='/assets/sanasendoff/letter.png'/>
 											)}
 										</ProjectTab>
 										<ProjectTab label='Timeline'>
