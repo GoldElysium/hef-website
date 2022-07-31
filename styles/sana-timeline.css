@@ -50,14 +50,14 @@
   left: 45px;
 }
 
-.timeline ul li:nth-child(even) div {
-  left: -439px;
-}
-
 .timeline ul li:nth-child(odd) div::before {
   left: -15px;
   border-width: 8px 16px 8px 0;
   border-color: transparent #fff8e7 transparent transparent;
+}
+
+.timeline ul li:nth-child(even) div {
+  left: -439px;
 }
 
 .timeline ul li:nth-child(even) div::before {
@@ -76,32 +76,23 @@
 /* EFFECTS
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
+.timeline ul li.in-view::after {
+  background: #fff8e7;
+}
+.timeline ul li.in-view:nth-child(3n+1)::after {
+  background: #f543a7;
+}
+.timeline ul li.in-view:nth-child(3n+2)::after {
+  background: #ecd3de;
+}
+.timeline ul li.in-view:nth-child(3n+3)::after {
+  background: #4b41d2;
+}
+
 .timeline ul li div {
   visibility: hidden;
   opacity: 0;
   transition: all 0.5s ease-in-out;
-}
-
-.timeline ul li.in-view div {
-  transform: none;
-  visibility: visible;
-  opacity: 1;
-}
-
-.timeline ul li.in-view::after {
-  background: #fff8e7;
-}
-
-.timeline ul li.in-view:nth-child(3n+1)::after {
-  background: #f543a7;
-}
-
-.timeline ul li.in-view:nth-child(3n+2)::after {
-  background: #ecd3de;
-}
-
-.timeline ul li.in-view:nth-child(3n+3)::after {
-  background: #4b41d2;
 }
 
 .timeline ul li:nth-child(odd) div {
@@ -110,6 +101,12 @@
 
 .timeline ul li:nth-child(even) div {
   transform: translate3d(-200px, 0, 0);
+}
+
+.timeline ul li.in-view div {
+  transform: none;
+  visibility: visible;
+  opacity: 1;
 }
 
 
@@ -122,7 +119,7 @@
   }
   .timeline ul li:nth-child(even) div {
     left: -289px;
-    /* 250+45-6 */
+    /*250+45-6*/
   }
 }
 
@@ -161,11 +158,30 @@
 }
 
 .timeline-star ul li::after {
-  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  clip-path: polygon(
+    50% 0%,
+    61% 35%,
+    98% 35%,
+    68% 57%,
+    79% 91%,
+    50% 70%,
+    21% 91%,
+    32% 57%,
+    2% 35%,
+    39% 35%
+  );
 }
 
 .timeline-heptagon ul li::after {
-  clip-path: polygon(50% 0%, 90% 20%, 100% 60%, 75% 100%, 25% 100%, 0% 60%, 10% 20%);
+  clip-path: polygon(
+    50% 0%,
+    90% 20%,
+    100% 60%,
+    75% 100%,
+    25% 100%,
+    0% 60%,
+    10% 20%
+  );
 }
 
 .timeline-infinite ul li::after {
@@ -176,11 +192,9 @@
   0% {
     transform: translateX(-50%) scale(1);
   }
-
   50% {
     transform: translateX(-50%) scale(1.25);
   }
-  
   100% {
     transform: translateX(-50%) scale(1);
   }

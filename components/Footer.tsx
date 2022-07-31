@@ -10,7 +10,7 @@ export default function Footer({ background }: IProps) {
 		if (background != null && wrapperDeez != null) {
 			wrapperDeez.style.backgroundImage = `url(${background})` ;
 		}
-	}, [ background ]);
+	}, [ ]);
 
 	return (
 		<div

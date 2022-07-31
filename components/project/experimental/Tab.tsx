@@ -26,7 +26,7 @@ export function ProjectTab({ label, children }: ProjectTabProps) {
   
 	const { child, setChild, setAssociation } = useContext(ProjectTabsContext)!;
 
-	useEffect(() => setAssociation(label, childrenWrapper), [ childrenWrapper, label, setAssociation ]);
+	useEffect(() => setAssociation(label, childrenWrapper), [ ]);
 
 	return (
 		<h2
