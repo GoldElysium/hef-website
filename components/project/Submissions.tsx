@@ -118,9 +118,9 @@ const Submissions = ({ submissions, project }: IProps) => {
 							</div>
 						) || (
 							<div className="w-full h-full flex flex-wrap justify-center content-center">
-								<div className="sm:w-11/12 md:w-10/12 sm:h-11/12 md:h-10/12 flex flex-wrap">
+								<div className="sm:w-11/12 md:w-10/12 flex flex-wrap">
 									{shownSubmissions.map((submission, index) => (
-										<div className="min-w-80 w-1/2 h-1/2" key={submission._id as unknown as string}>
+										<div className="min-w-80 w-1/2" key={submission._id as unknown as string}>
 											<Submission
 												project={project}
 												data={submission}
