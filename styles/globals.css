@@ -360,3 +360,8 @@
     width: 200px;
   }
 }
+
+.sana-letter {
+  transform: rotate(2.5deg);
+  transform-origin: 50% 50%;
+}

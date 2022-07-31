@@ -64,6 +64,11 @@ export function ProjectPage({ guild, project, submissions }: ProjectPageProps) {
 									<ProjectTabs default='About'>
 										<ProjectTab label='About'>
 											<ProjectAbout project={project}/>
+											{project.flags?.includes('sanaSendoff') && (
+											// something something next/image something something
+											// L + ratio, idc rn
+												<img className='sana-letter' src='/assets/sanasendoff/letter.png'/>
+											)}
 										</ProjectTab>
 										<ProjectTab label='Timeline'>
 											<ProjectTimeline events={project.timeline!}/>
