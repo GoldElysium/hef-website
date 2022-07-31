@@ -35,7 +35,7 @@ export function ProjectTabs(props: ProjectTabsProps) {
 
 	return (
 		<ProjectTabsContext.Provider value={{ child: child, setChild, setAssociation }}>
-			<div className="flex flex-row justify-evenly content-center my-4">{props.children}</div>
+			<div className="flex flex-row flex-wrap justify-evenly content-center my-4">{props.children}</div>
 			<div>{child}</div>
 		</ProjectTabsContext.Provider>
 	);
