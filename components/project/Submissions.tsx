@@ -34,10 +34,9 @@ const Submission = ({ project, data, index }: ISubmissionProps) => (
 					<iframe
 						width="100%"
 						height="300px"
-						type="text/html"
 						src={data.src!}
 						frameBorder="0"
-						allowFullScreen="1">
+						allowFullScreen={true}>
 					</iframe>
 				) || (
 					<ReactPlayer
