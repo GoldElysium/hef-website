@@ -29,7 +29,7 @@ const Submission = ({ project, data, index }: ISubmissionProps) => (
 		</div>
 		<div className="w-full mt-3">
 			{data.type === 'video' && (
-				data.src?.startsWith('https://www.youtube.com') && (
+				data.src?.startsWith('https://www.youtube.com/') && (
 				// TODO: Fix these type errors, fuck you intrinsic JSX attributes.
 					<iframe
 						width="100%"
