@@ -1,12 +1,10 @@
 import ReactPlayer from 'react-player';
-import {
-	createRef, useEffect, useMemo, useState,
-} from 'react';
+import { createRef, useEffect, useMemo, useState } from 'react';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/outline';
 import { useRouter } from 'next/router';
 import ReactMarkdown from 'react-markdown';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { GetServerSideProps } from 'next';
+import { GetStaticPaths, GetStaticProps } from 'next';
 import mongoose from 'mongoose';
 import safeJsonStringify from 'safe-json-stringify';
 import Head from '../../components/Head';
@@ -14,13 +12,17 @@ import BlurBackground from '../../components/project/BlurBackground';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
-import Phaser from '../../components/project/Phaser';
 import TextHeader from '../../components/TextHeader';
 import ExperimentalProjectPage from '../../components/project/experimental/Page';
 import Project, { ILink, IProject } from '../../models/Project';
 import Submission, { ISubmission } from '../../models/Submission';
 import 'github-markdown-css/github-markdown-light.css';
 import Guild, { IGuild } from '../../models/Guild';
+import dynamic from 'next/dynamic';
+
+const Phaser = dynamic(() => import('../../components/project/Phaser'), {
+	loading: () => <span>Loading...</span>,
+});
 
 const SUBMISSIONS_PER_LOAD = 10;
 
@@ -90,8 +92,12 @@ export default function ProjectPage({ doc, allSubmissions, guild }: IProps) {
 					light
 				/>
 			);
-		} if (doc.media[currentMediaIndex].type === 'image') {
-			return <img className="max-w-full max-h-full object-contain" src={doc.media[currentMediaIndex].src} alt="" loading="lazy" />;
+		}
+		if (doc.media[currentMediaIndex].type === 'image') {
+			return (
+				<img className="max-w-full max-h-full object-contain" src={doc.media[currentMediaIndex].src} alt=""
+					loading="lazy"/>
+			);
 		}
 		return <p>Invalid media</p>;
 	}
@@ -104,7 +110,8 @@ export default function ProjectPage({ doc, allSubmissions, guild }: IProps) {
 				<div className="w-full max-h-full text-black dark:text-white" key={submission._id as unknown as string}>
 					<div className="w-full flex mt-4 h-14">
 						{submission.srcIcon && (
-							<img className="object-cover w-14 h-14 rounded-full" src={submission.srcIcon} alt="author icon" />
+							<img className="object-cover w-14 h-14 rounded-full" src={submission.srcIcon}
+								alt="author icon"/>
 						)}
 						{submission.author && (
 							<div className="text-lg mt-3 ml-4">
@@ -113,7 +120,7 @@ export default function ProjectPage({ doc, allSubmissions, guild }: IProps) {
 								<span className="font-bold">{submission.author}</span>
 							</div>
 						)}
-						<div className="flex-grow" />
+						<div className="flex-grow"/>
 						<p className="text-xl mt-3 mr-4">{`#${index + 1}`}</p>
 					</div>
 					<div className="w-full mt-3">
@@ -142,7 +149,7 @@ export default function ProjectPage({ doc, allSubmissions, guild }: IProps) {
 								{submission.message}
 							</p>
 						)}
-						<hr className="border-t-1 border-dashed border-gray-400" />
+						<hr className="border-t-1 border-dashed border-gray-400"/>
 					</div>
 				</div>,
 			);
@@ -173,7 +180,10 @@ export default function ProjectPage({ doc, allSubmissions, guild }: IProps) {
 					keywords={['guratanabata']}
 					image={doc.ogImage ?? 'https://holoen.fans/img/logo.png'}
 				/>
-				<BlurBackground ref={(bg) => { (ref as any).current = bg; }} />
+				<BlurBackground ref={(bg) => {
+					(ref as any).current = bg;
+				}}/>
+				{/* Don't use Suspense, we're still running on React 17 here due to MUI */}
 				<Phaser
 					scene="guratanabata"
 					data={{
@@ -198,7 +208,7 @@ export default function ProjectPage({ doc, allSubmissions, guild }: IProps) {
 
 			<div className={themeStyle}>
 				<div className="flex flex-col h-full min-h-screen bg-skin-background-1 dark:bg-skin-dark-background-1">
-					{!doc.flags?.includes('disableNavbar') && <Navbar disableHead />}
+					{!doc.flags?.includes('disableNavbar') && <Navbar disableHead/>}
 
 					{
 						!doc.flags?.includes('disableHeader') && (
@@ -213,9 +223,10 @@ export default function ProjectPage({ doc, allSubmissions, guild }: IProps) {
 						<div className="my-16 w-full flex flex-col items-center">
 							<div className="max-w-4xl w-full mx-4 break-words md:break-normal">
 								<div>
-									<TextHeader text="Description" />
+									<TextHeader text="Description"/>
 									<div className="markdown-body">
-										<ReactMarkdown className="px-4 sm:px-0 text-black dark:text-white dark:text-opacity-80">
+										<ReactMarkdown
+											className="px-4 sm:px-0 text-black dark:text-white dark:text-opacity-80">
 											{
 												doc.description && doc.description
 													.replace(/(\\\n```)/gim, '\n```')
@@ -226,12 +237,13 @@ export default function ProjectPage({ doc, allSubmissions, guild }: IProps) {
 								</div>
 								{(doc.media?.length ?? 0) > 0 && (
 									<div className="mt-4">
-										<TextHeader text="Gallery" />
+										<TextHeader text="Gallery"/>
 										<div className="flex flex-col items-center pt-2">
 											<div className="w-full h-52 sm:w-8/12 sm:h-96">
-												<CurrentGalleryItem />
+												<CurrentGalleryItem/>
 											</div>
-											<div className="flex mt-2 font-bold items-center justify-center text-center">
+											<div
+												className="flex mt-2 font-bold items-center justify-center text-center">
 												<ChevronLeftIcon
 													className={
 														currentMediaIndex > 0
@@ -252,15 +264,17 @@ export default function ProjectPage({ doc, allSubmissions, guild }: IProps) {
 												<ChevronRightIcon
 													className={
 														currentMediaIndex + 1
-													< (doc.media ? doc.media.length : 0)
+														< (doc.media ? doc.media.length : 0)
 															? 'h-8 w-8 cursor-pointer text-black dark:text-white'
 															: 'h-8 w-8 text-skin-primary-1 text-opacity-30 dark:text-skin-dark-primary-1 dark:text-opacity-30'
 													}
 													onClick={() => {
 														if (
 															currentMediaIndex + 1
-														< (doc.media ? doc.media.length : 0)
-														) { setCurrentMediaIndex(currentMediaIndex + 1); }
+															< (doc.media ? doc.media.length : 0)
+														) {
+															setCurrentMediaIndex(currentMediaIndex + 1);
+														}
 													}}
 												/>
 											</div>
@@ -269,37 +283,38 @@ export default function ProjectPage({ doc, allSubmissions, guild }: IProps) {
 								)}
 								{(doc.links?.length ?? 0) > 0 && (
 									<div className="mt-4">
-										<TextHeader text="Links" />
+										<TextHeader text="Links"/>
 										<div className="flex justify-center space-x-6 px-4 sm:px-0">
 											{doc.links
-											&& doc.links.map((link: ILink, index: number) => (
-												<div
-													key={`link-${index}` /* eslint-disable-line react/no-array-index-key */}
-													className="rounded-3xl font-bold w-[6rem] h-10 flex items-center justify-center mt-4 content-end
+												&& doc.links.map((link: ILink, index: number) => (
+													<div
+														key={`link-${index}` /* eslint-disable-line react/no-array-index-key */}
+														className="rounded-3xl font-bold w-[6rem] h-10 flex items-center justify-center mt-4 content-end
 													bg-skin-secondary-1 dark:bg-skin-dark-secondary-1 text-white hover:text-opacity-70"
-												>
-													<a href={link.link} target="_blank" rel="noreferrer">
-														{link.name}
-													</a>
-												</div>
-											))}
+													>
+														<a href={link.link} target="_blank" rel="noreferrer">
+															{link.name}
+														</a>
+													</div>
+												))}
 										</div>
 									</div>
 								)}
 								{/* TODO: Move submissions to separate tab */}
 								{((shownSubmissions?.length ?? 0) > 0) && (
 									<div className="mt-4">
-										<TextHeader text="Submissions" />
+										<TextHeader text="Submissions"/>
 										<div className="flex flex-col items-center pt-2">
 											<div className="w-full overflow-auto">
 												<InfiniteScroll
 													dataLength={shownSubmissions.length}
 													next={loadMoreSubmissions}
 													hasMore={shownSubmissions.length < allSubmissions.length}
-													loader={<p className="text-black dark:text-white text-center mt-4">Loading...</p>}
+													loader={<p
+														className="text-black dark:text-white text-center mt-4">Loading...</p>}
 													scrollThreshold="500px"
 												>
-													<Submissions />
+													<Submissions/>
 												</InfiniteScroll>
 											</div>
 										</div>
@@ -309,20 +324,61 @@ export default function ProjectPage({ doc, allSubmissions, guild }: IProps) {
 						</div>
 					</div>
 
-					{!doc.flags?.includes('disableFooter') && <Footer />}
+					{!doc.flags?.includes('disableFooter') && <Footer/>}
 				</div>
 			</div>
 		</>
 	);
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-	//if (!['14', '16'].includes(context.params?.id as string)) return { notFound: true };
+export const getStaticPaths: GetStaticPaths = async () => {
+	if (process.env.NODE_ENV === 'production') {
+		return {
+			paths: [
+				{
+					params: {
+						id: '14',
+					},
+				},
+				{
+					params: {
+						id: '16',
+					},
+				},
+				{
+					params: {
+						id: '17',
+					},
+				},
+			],
+			fallback: false,
+		};
+	}
 
 	try {
-		mongoose.connect(process.env.MONGOOSEURL as string);
+		mongoose.connect(process.env.MONGOOSEURL!);
 		// eslint-disable-next-line no-empty
-	} catch (e) {}
+	} catch (e) {
+	}
+
+	const projects = await Project.find({}).lean().exec();
+
+	return {
+		paths: projects.map((project) => (
+			{
+				params: { id: project._id.toString() },
+			}
+		)),
+		fallback: false,
+	};
+};
+
+export const getStaticProps: GetStaticProps = async (context) => {
+	try {
+		mongoose.connect(process.env.MONGOOSEURL!);
+		// eslint-disable-next-line no-empty
+	} catch (e) {
+	}
 
 	const project = await Project.findById(context.params?.id).lean().exec()
 		.catch((e) => {

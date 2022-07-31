@@ -26,7 +26,14 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 		project.save((err) => {
 			if (err) {
 				res.status(500).end();
-			} else res.status(201).json(project);
+				return;
+			}
+
+			res.revalidate('/');
+			res.revalidate('/projects');
+			res.revalidate(`/projects/${project._id}`);
+
+			res.status(201).json(project);
 		});
 	} else res.status(404).end();
 };

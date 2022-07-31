@@ -26,6 +26,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
 		Project.findByIdAndUpdate(req.query.id, req.body, { returnOriginal: false })
 			.then((doc) => {
+				res.revalidate('/');
+				res.revalidate('/projects');
+				res.revalidate(`/project/${req.query.id}`);
+
 				res.status(200).json(doc);
 			})
 			.catch((e) => {
@@ -38,6 +42,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
 		Project.findByIdAndDelete(req.query.id)
 			.then(() => {
+				res.revalidate('/');
+				res.revalidate('/projects');
+				res.revalidate(`/project/${req.query.id}`);
+
 				res.status(204).end();
 			})
 			.catch((e) => {
