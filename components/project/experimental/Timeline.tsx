@@ -123,7 +123,7 @@ export function ProjectTimeline({ events }: ProjectTimelineProps) {
 				</li>
 				<li>
 					<div>
-						<time dateTime="2021-10-13">{(new Date('2021-10-13')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						<time dateTime="2021-10-13">{(new Date('2021-10-13')).toLocaleDateString(undefined, { ...dateStringOptions, timeZone: 'Japan' })}</time>
 						Sana achieves 200,000 YouTube subscribers.
 					</div>
 				</li>
@@ -154,7 +154,7 @@ export function ProjectTimeline({ events }: ProjectTimelineProps) {
 				</li>
 				<li>
 					<div>
-						<time dateTime="2021-11-19">{(new Date('2021-11-19')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						<time dateTime="2021-11-19">{(new Date('2021-11-19')).toLocaleDateString(undefined, { ...dateStringOptions, timeZone: 'America/New_York' })}</time>
 						Sana appears alongside Council at Anime NYC during a special panel.
 					</div>
 				</li>
@@ -201,7 +201,7 @@ export function ProjectTimeline({ events }: ProjectTimelineProps) {
 				</li>
 				<li>
 					<div>
-						<time dateTime="2022-01-10">{(new Date('2022-01-10')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						<time dateTime="2022-01-10T05:13:02Z">{(new Date('2022-01-10T05:13:02Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
 						Sana does a members-only drawing stream, and Sanallites officially become bread dogs.
 					</div>
 				</li>
@@ -247,7 +247,7 @@ export function ProjectTimeline({ events }: ProjectTimelineProps) {
 				</li>
 				<li>
 					<div>
-						<time dateTime="2022-03-10">{(new Date('2022-03-10')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						<time dateTime="2022-03-10">{(new Date('2022-03-10')).toLocaleDateString(undefined, { ...dateStringOptions, timeZone: 'Japan' })}</time>
 						Sana achieves 300,000 YouTube subscribers.
 					</div>
 				</li>
@@ -303,7 +303,7 @@ export function ProjectTimeline({ events }: ProjectTimelineProps) {
 				</li>
 				<li>
 					<div>
-						<time dateTime="2022-07-16">{(new Intl.DateTimeFormat(undefined, dateStringOptions)).formatRange(new Date('2022-07-16'), new Date('2022-07-17'))}</time>
+						<time dateTime="2022-07-16">{(new Intl.DateTimeFormat(undefined, { ...dateStringOptions, timeZone: 'Australia/Sydney' })).formatRange(new Date('2022-07-16'), new Date('2022-07-17'))}</time>
 						Sana appears at Smash Con 2022 along with Bae, doing two panels as well as a meet-and-greet with lucky fans.
 					</div>
 				</li>
