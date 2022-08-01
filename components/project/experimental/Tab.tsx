@@ -32,7 +32,7 @@ export function ProjectTab({ label, children }: ProjectTabProps) {
 		<button>
 			<h2
 				className={
-					'text-2xl text-center text-skin-primary-1 dark:text-skin-dark-primary-1 select-none '
+					'text-2xl text-center text-skin-primary-1 dark:text-skin-dark-primary-1 select-none mx-4 '
 					+ ((childrenWrapper == child) ? 'font-bold' : '')
 				}
 				onClick={(e) => e.button == 0 && setChild(childrenWrapper)}
