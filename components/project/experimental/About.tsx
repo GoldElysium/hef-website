@@ -11,7 +11,7 @@ export interface ProjectAboutProps {
 export function ProjectAbout({ project }: ProjectAboutProps) {
 	if (project.flags?.includes('bigAbout')) {
 		return (
-			<p className='flex justify-center content-center text-black dark:text-white dark:text-opacity-80 text-4xl text-center my-16'>
+			<p className='flex justify-center content-center text-black dark:text-white dark:text-opacity-80 text-3xl text-center my-16'>
 				{project.description}
 			</p>
 		);

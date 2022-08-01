@@ -23,21 +23,23 @@ export function ProjectTab({ label, children }: ProjectTabProps) {
 			</ProjectTabContext.Provider>
 		);
 	}, [ label, children ]);
-  
+
 	const { child, setChild, setAssociation } = useContext(ProjectTabsContext)!;
 
 	useEffect(() => setAssociation(label, childrenWrapper), [ ]);
 
 	return (
-		<h2
-			className={
-				'text-2xl text-center text-skin-primary-1 dark:text-skin-dark-primary-1 select-none '
-        + ((childrenWrapper == child) ? 'font-bold' : '')
-			}
-			onClick={(e) => e.button == 0 && setChild(childrenWrapper)}
-		>
-			{label}
-		</h2>
+		<button>
+			<h2
+				className={
+					'text-2xl text-center text-skin-primary-1 dark:text-skin-dark-primary-1 select-none '
+					+ ((childrenWrapper == child) ? 'font-bold' : '')
+				}
+				onClick={(e) => e.button == 0 && setChild(childrenWrapper)}
+			>
+				{label}
+			</h2>
+		</button>
 	);
 }
 
