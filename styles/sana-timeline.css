@@ -1,3 +1,7 @@
+.timeline {
+  overflow-x: hidden;
+}
+
 .timeline a {
   text-decoration: underline;
 }
