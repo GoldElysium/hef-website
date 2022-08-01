@@ -14,13 +14,15 @@ export function ProjectTimeline({ events }: ProjectTimelineProps) {
 
 		// check if an element is in viewport
 		// http://stackoverflow.com/questions/123999/how-to-tell-if-a-dom-element-is-visible-in-the-current-viewport
+		// (modified to show the element a bit earlier as the original waits for the whole invisible
+		// element to be in the viewport first)
 		function isElementInViewport(el: any) {
 			const rect = el.getBoundingClientRect();
 			return (
 				rect.top >= 0 &&
 				rect.left >= 0 &&
 				rect.bottom <=
-				(window.innerHeight || document.documentElement.clientHeight) &&
+				((window.innerHeight || document.documentElement.clientHeight) - (rect.top - rect.bottom) - 125) &&
 				rect.right <= (window.innerWidth || document.documentElement.clientWidth)
 			);
 		}
