@@ -14,13 +14,15 @@ export function ProjectTimeline({ events }: ProjectTimelineProps) {
 
 		// check if an element is in viewport
 		// http://stackoverflow.com/questions/123999/how-to-tell-if-a-dom-element-is-visible-in-the-current-viewport
+		// (modified to show the element a bit earlier as the original waits for the whole invisible
+		// element to be in the viewport first)
 		function isElementInViewport(el: any) {
 			const rect = el.getBoundingClientRect();
 			return (
 				rect.top >= 0 &&
 				rect.left >= 0 &&
 				rect.bottom <=
-				(window.innerHeight || document.documentElement.clientHeight) &&
+				((window.innerHeight || document.documentElement.clientHeight) - (rect.top - rect.bottom) - 125) &&
 				rect.right <= (window.innerWidth || document.documentElement.clientWidth)
 			);
 		}
@@ -165,17 +167,17 @@ export function ProjectTimeline({ events }: ProjectTimelineProps) {
 				</li>
 				<li>
 					<div>
-						<time>{(new Date('2021-12-21T14:46:03Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
-						Sana embarks on her quest <a href="https://www.youtube.com/watch?v=2S6sImgYqQc" target="_blank" rel="noreferrer noopener">to catch a shiny Rayquaza</a>! Calli <a href="https://www.youtube.com/watch?v=fzS16Ln8ANQ" target="_blank" rel="noreferrer noopener">joins her</a> shortly after, trying to catch her own shiny Giratina. This would mark the longest collab in the history of Hololive at the time, at over 9 hours of playing together.
-					</div>
-				</li>
-				<li>
-					<div>
 						<time>{(new Date('2021-12-21T01:15:13Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
 						<a href="https://www.youtube.com/watch?v=kPyLnwSXqkA"
 							target="_blank"
 							rel="noreferrer noopener">The Twelve Days of Christmas - hololive English Cover</a><br/>
 						Sana participates in her first official cover song, a rendition of <em>The Twelve Days of Christmas</em>.<br/>
+					</div>
+				</li>
+				<li>
+					<div>
+						<time>{(new Date('2021-12-21T14:46:03Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						Sana embarks on her quest <a href="https://www.youtube.com/watch?v=2S6sImgYqQc" target="_blank" rel="noreferrer noopener">to catch a shiny Rayquaza</a>! Calli <a href="https://www.youtube.com/watch?v=fzS16Ln8ANQ" target="_blank" rel="noreferrer noopener">joins her</a> shortly after, trying to catch her own shiny Giratina. This would mark the longest collab in the history of Hololive at the time, at over 9 hours of playing together.
 					</div>
 				</li>
 				<li>
@@ -266,19 +268,19 @@ export function ProjectTimeline({ events }: ProjectTimelineProps) {
 				</li>
 				<li>
 					<div>
-						<time>{(new Date('2022-06-17T04:58:52Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
-						Sana tackles Metroid Dread again, but this time she brings with her <a href="https://www.youtube.com/watch?v=-tToGs-jm70"
-							 target="_blank"
-							 rel="noreferrer noopener">an army of bread dogs</a> submitted by Sanallites on Twitter!
-					</div>
-				</li>
-				<li>
-					<div>
 						<time>{(new Date('2022-06-11T03:09:05Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
 						Sana <a href="https://www.youtube.com/watch?v=BnW8BrppGr8"
 							target="_blank"
 							rel="noreferrer noopener">celebrates her birthday</a>! With call-ins aplenty and the unveil of her birthday merch (including an incredibly face-plantable bread dog plushie), it&apos;s a good time all around.<br/>
 						Sanallites also send her all their love, with Sana <a href="https://www.youtube.com/watch?v=BnW8BrppGr8&t=11710s" target="_blank" rel="noreferrer noopener">tearing up over <em>Sana&apos;s Space Birthday Project</em></a> and <a href="https://www.youtube.com/watch?v=BnW8BrppGr8&t=12227s" target="_blank" rel="noreferrer noopener">showing off the <em>BEEG SANA</em> fangame</a>.
+					</div>
+				</li>
+				<li>
+					<div>
+						<time>{(new Date('2022-06-17T04:58:52Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						Sana tackles Metroid Dread again, but this time she brings with her <a href="https://www.youtube.com/watch?v=-tToGs-jm70"
+							 target="_blank"
+							 rel="noreferrer noopener">an army of bread dogs</a> submitted by Sanallites on Twitter!
 					</div>
 				</li>
 				<li>
