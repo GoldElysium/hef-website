@@ -13,6 +13,7 @@ import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 import TextHeader from '../../components/TextHeader';
+import ExperimentalProjectPage from '../../components/project/experimental/Page';
 import Project, { ILink, IProject } from '../../models/Project';
 import Submission, { ISubmission } from '../../models/Submission';
 import 'github-markdown-css/github-markdown-light.css';
@@ -160,6 +161,12 @@ export default function ProjectPage({ doc, allSubmissions, guild }: IProps) {
 					{submissionElements}
 				</div>
 			</div>
+		);
+	}
+
+	if (doc.flags?.includes('experimental')) {
+		return (
+			<ExperimentalProjectPage guild={guild} project={doc} submissions={allSubmissions}/>
 		);
 	}
 

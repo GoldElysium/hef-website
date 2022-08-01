@@ -1,4 +1,5 @@
 import '../styles/globals.css';
+import '../styles/sana-timeline.css';
 import { AppProps } from 'next/app';
 import { useEffect, useState } from 'react';
 import { SessionProvider } from 'next-auth/react';
