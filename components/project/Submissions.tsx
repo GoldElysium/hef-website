@@ -104,7 +104,7 @@ const Submissions = ({ submissions, project }: IProps) => {
 					>
 						{!project?.flags?.includes('tiledSubmissions') && (
 							<div className="w-full h-full flex justify-center">
-								<div className="sm:w-11/12 md:w-10/12 h-full">
+								<div className={'sm:w-11/12 md:w-10/12 h-full ' + (project?.flags?.includes('sanaSendoff') ? 'w-full' : '') }>
 									{shownSubmissions.map((submission, index) => (
 										<Submission
 											project={project}
