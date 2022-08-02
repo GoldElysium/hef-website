@@ -309,14 +309,14 @@ export function ProjectTimeline({ events }: ProjectTimelineProps) {
 				</li>
 				<li>
 					<div>
-						<time dateTime="2022-07-20T06:07:16Z">{(new Date('2022-07-20T06:07:16Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
-						Sana <a href="https://www.youtube.com/watch?v=gawUszEwpnY" target="_blank" rel="noreferrer noopener">finishes her BEEG tower in Minecraft</a>, along with Moona and Kronii&apos;s help.
+						<time dateTime="2022-07-19T04:52:33Z">{(new Date('2022-07-19T04:52:33Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						Council and IRyS band together to <a href="https://www.youtube.com/watch?v=8irDdE1YUYw" target="_blank" rel="noreferrer noopener">defeat the Ender Dragon</a>! Sana gets a few good hits in with a loaf of bread. Thanks to Fauna&apos;s leadership, the epic battle concludes swiftly.
 					</div>
 				</li>
 				<li>
 					<div>
-						<time dateTime="2022-07-20T07:05:57Z">{(new Date('2022-07-20T07:05:57Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
-						Council and IRyS band together to <a href="https://www.youtube.com/watch?v=8irDdE1YUYw" target="_blank" rel="noreferrer noopener">defeat the Ender Dragon</a>! Sana gets a few good hits in with a loaf of bread. Thanks to Fauna&apos;s leadership, the epic battle concludes swiftly.
+						<time dateTime="2022-07-20T06:07:16Z">{(new Date('2022-07-20T06:07:16Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						Sana <a href="https://www.youtube.com/watch?v=gawUszEwpnY" target="_blank" rel="noreferrer noopener">finishes her BEEG tower in Minecraft</a>, along with Moona and Kronii&apos;s help.
 					</div>
 				</li>
 				<li>
