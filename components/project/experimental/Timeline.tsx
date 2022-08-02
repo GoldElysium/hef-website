@@ -154,7 +154,7 @@ export function ProjectTimeline({ events }: ProjectTimelineProps) {
 				</li>
 				<li>
 					<div>
-						<time dateTime="2021-11-19T14:30:00-0400">{(new Date('2021-11-19T14:30:00-0400')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						<time dateTime="2021-11-19T14:30:00-0500">{(new Date('2021-11-19T14:30:00-0500')).toLocaleDateString(undefined, dateStringOptions)}</time>
 						Sana appears alongside Council at Anime NYC during a special panel.
 					</div>
 				</li>
