@@ -123,7 +123,7 @@ export function ProjectTimeline({ events }: ProjectTimelineProps) {
 				</li>
 				<li>
 					<div>
-						<time dateTime="2021-10-13T02:33:31Z">{(new Date('2021-10-13T02:33:31Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						<time dateTime="2021-10-13T02:05:45Z">{(new Date('2021-10-13T02:05:45Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
 						Sana achieves 200,000 YouTube subscribers.
 					</div>
 				</li>
@@ -247,7 +247,7 @@ export function ProjectTimeline({ events }: ProjectTimelineProps) {
 				</li>
 				<li>
 					<div>
-						<time dateTime="2022-03-10T16:04:31Z">{(new Date('2022-03-10T16:04:31Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						<time dateTime="2022-03-10T14:32:01Z">{(new Date('2022-03-10T14:32:01Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
 						Sana achieves 300,000 YouTube subscribers.
 					</div>
 				</li>
