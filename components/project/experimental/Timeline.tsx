@@ -259,19 +259,19 @@ export function ProjectTimeline({ events }: ProjectTimelineProps) {
 				</li>
 				<li>
 					<div>
-						<time dateTime="2022-06-11T03:00:15Z">{(new Date('2022-06-11T03:00:15Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
-						Sana releases her first original song <a href="https://www.youtube.com/watch?v=R8y1aWMlPOs"
-							target="_blank"
-							rel="noreferrer noopener"><em>Astrogirl</em></a>. She&apos;s not alone!
-					</div>
-				</li>
-				<li>
-					<div>
 						<time dateTime="2022-06-10T23:00:31Z">{(new Date('2022-06-10T23:00:31Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
 						Sana <a href="https://www.youtube.com/watch?v=BnW8BrppGr8"
 							target="_blank"
 							rel="noreferrer noopener">celebrates her birthday</a>! With call-ins aplenty and the unveil of her birthday merch (including an incredibly face-plantable bread dog plushie), it&apos;s a good time all around.<br/>
 						Sanallites also send her all their love, with Sana <a href="https://www.youtube.com/watch?v=BnW8BrppGr8&t=11710s" target="_blank" rel="noreferrer noopener">tearing up over <em>Sana&apos;s Space Birthday Project</em></a> and <a href="https://www.youtube.com/watch?v=BnW8BrppGr8&t=12227s" target="_blank" rel="noreferrer noopener">showing off the <em>BEEG SANA</em> fangame</a>.
+					</div>
+				</li>
+				<li>
+					<div>
+						<time dateTime="2022-06-11T03:00:15Z">{(new Date('2022-06-11T03:00:15Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						Sana releases her first original song <a href="https://www.youtube.com/watch?v=R8y1aWMlPOs"
+							target="_blank"
+							rel="noreferrer noopener"><em>Astrogirl</em></a>. She&apos;s not alone!
 					</div>
 				</li>
 				<li>
