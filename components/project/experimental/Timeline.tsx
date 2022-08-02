@@ -74,7 +74,7 @@ export function ProjectTimeline({ events }: ProjectTimelineProps) {
 				</li>
 				<li>
 					<div>
-						<time dateTime="2021-08-22T18:06:19Z">{(new Date('2021-08-22T18:06:19Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						<time dateTime="2021-08-22T17:02:23Z">{(new Date('2021-08-22T17:02:23Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
 						<a href="https://www.youtube.com/watch?v=3Tv5GyebhQo"
 							target="_blank"
 							rel="noreferrer noopener">Sana makes her debut!</a> In which we learn about the BEEGest space baby, and Earth is destroyed for the first time.
@@ -82,7 +82,7 @@ export function ProjectTimeline({ events }: ProjectTimelineProps) {
 				</li>
 				<li>
 					<div>
-						<time dateTime="2021-09-05T05:33:26Z">{(new Date('2021-09-05T05:33:26Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						<time dateTime="2021-09-05T04:00:36Z">{(new Date('2021-09-05T04:00:36Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
 						<a href="https://www.youtube.com/watch?v=I6YaBqHtkTU"
 							target="_blank"
 							rel="noreferrer noopener">Sana celebrates the opening of Super Chats</a> on her channel and definitely does not buy enough party poppers.
@@ -90,7 +90,7 @@ export function ProjectTimeline({ events }: ProjectTimelineProps) {
 				</li>
 				<li>
 					<div>
-						<time dateTime="2021-09-23T02:13:06Z">{(new Date('2021-09-23T02:13:06Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						<time dateTime="2021-09-22T22:00:09Z">{(new Date('2021-09-22T22:00:09Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
 						<a href="https://www.youtube.com/watch?v=jG0GKIXFdHw"
 							target="_blank"
 							rel="noreferrer noopener">1 month together with Sana!</a> She surprises her fans with a beautiful piece of art to celebrate. She also mentions a possible horse-birthing stream in the future, and doesn&apos;t elaborate further.
@@ -98,7 +98,7 @@ export function ProjectTimeline({ events }: ProjectTimelineProps) {
 				</li>
 				<li>
 					<div>
-						<time dateTime="2021-09-26T00:04:04Z">{(new Date('2021-09-26T00:04:04Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						<time dateTime="2021-09-25T22:00:16Z">{(new Date('2021-09-25T22:00:16Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
 						Kicked off by <a href="https://www.youtube.com/watch?v=t2n90NUzncQ" target="_blank" rel="noreferrer noopener">an ominous teaser</a> a few days ago, <a href="https://www.youtube.com/watch?v=s4M7quMcnnI"
 							target="_blank"
 							rel="noreferrer noopener">Inasanaty have their first collab</a>, in which we learned that Ina and Sana are old friends.
@@ -106,7 +106,7 @@ export function ProjectTimeline({ events }: ProjectTimelineProps) {
 				</li>
 				<li>
 					<div>
-						<time dateTime="2021-09-27T02:26:57Z">{(new Date('2021-09-27T02:26:57Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						<time dateTime="2021-09-26T23:59:46Z">{(new Date('2021-09-26T23:59:46Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
 						<a href="https://www.youtube.com/watch?v=v0p_T5nv-7Q"
 							target="_blank"
 							rel="noreferrer noopener">Memberships open!</a> We birth a horse together with Sana.
@@ -114,7 +114,7 @@ export function ProjectTimeline({ events }: ProjectTimelineProps) {
 				</li>
 				<li>
 					<div>
-						<time dateTime="2021-10-11T03:34:15Z">{(new Date('2021-10-11T03:34:15Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						<time dateTime="2021-10-11T01:00:04Z">{(new Date('2021-10-11T01:00:04Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
 						<a href="https://www.youtube.com/watch?v=SqXnQ8jSGBk"
 							target="_blank"
 							rel="noreferrer noopener">【Celeste B-sides】floor doko</a><br/>
@@ -129,13 +129,13 @@ export function ProjectTimeline({ events }: ProjectTimelineProps) {
 				</li>
 				<li>
 					<div>
-						<time dateTime="2021-11-06T10:06:10Z">{(new Date('2021-11-06T10:06:10Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						<time dateTime="2021-11-06T04:00:32Z">{(new Date('2021-11-06T04:00:32Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
 						Sana participates in the <a href="https://www.youtube.com/watch?v=D6T6_UIJoc0" target="_blank" rel="noreferrer noopener">2021 Hololive Sports Festival</a> in White C Team.
 					</div>
 				</li>
 				<li>
 					<div>
-						<time dateTime="2021-11-10T17:33:02Z">{(new Date('2021-11-10T17:33:02Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						<time dateTime="2021-11-10T16:03:26Z">{(new Date('2021-11-10T16:03:26Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
 						<a href="https://www.youtube.com/watch?v=5SvarR1zE74"
 							target="_blank"
 							rel="noreferrer noopener">【Sana Landing】Look! Up in the sky!</a><br/>
@@ -145,7 +145,7 @@ export function ProjectTimeline({ events }: ProjectTimelineProps) {
 				</li>
 				<li>
 					<div>
-						<time dateTime="2021-11-15T01:26:47Z">{(new Date('2021-11-15T01:26:47Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						<time dateTime="2021-11-14T23:59:52Z">{(new Date('2021-11-14T23:59:52Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
 						<a href="https://www.youtube.com/watch?v=CV42ivUlyN0"
 							target="_blank"
 							rel="noreferrer noopener">【Evil God Korone】Oh I&apos;m die.</a><br/>
@@ -160,7 +160,7 @@ export function ProjectTimeline({ events }: ProjectTimelineProps) {
 				</li>
 				<li>
 					<div>
-						<time dateTime="2021-12-21T01:10:37Z">{(new Date('2021-12-21T01:10:37Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						<time dateTime="2021-12-20T22:59:33Z">{(new Date('2021-12-20T22:59:33Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
 						<a href="https://www.youtube.com/watch?v=ejuKoCAKs_Q" target="_blank" rel="noreferrer noopener">HoloEN celebrates Christmas together</a> in VRChat! Through Sana&apos;s camera work, we see Myth, Council and IRyS share some heartwarming moments together.
 					</div>
 				</li>
@@ -175,19 +175,19 @@ export function ProjectTimeline({ events }: ProjectTimelineProps) {
 				</li>
 				<li>
 					<div>
-						<time dateTime="2021-12-21T14:46:03Z">{(new Date('2021-12-21T14:46:03Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						<time dateTime="2021-12-21T03:00:24Z">{(new Date('2021-12-21T03:00:24Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
 						Sana embarks on her quest <a href="https://www.youtube.com/watch?v=2S6sImgYqQc" target="_blank" rel="noreferrer noopener">to catch a shiny Rayquaza</a>! Calli <a href="https://www.youtube.com/watch?v=fzS16Ln8ANQ" target="_blank" rel="noreferrer noopener">joins her</a> shortly after, trying to catch her own shiny Giratina. This would mark the longest collab in the history of Hololive at the time, at over 9 hours of playing together.
 					</div>
 				</li>
 				<li>
 					<div>
-						<time dateTime="2022-01-01T10:02:37Z">{(new Date('2022-01-01T10:02:37Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						<time dateTime="2021-12-31T21:24:17Z">{(new Date('2021-12-31T21:24:17Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
 						Sana rings in the New Year with <a href="https://www.youtube.com/watch?v=8xFvwcI9jOg" target="_blank" rel="noreferrer noopener">a 14-hour Animal Crossing stream</a> <a href="https://www.youtube.com/watch?v=2ug7ZmRuwws" target="_blank" rel="noreferrer noopener">in 2 parts</a>. She catches ALL THE FISH. Some lucky Sanallites also visit her island to celebrate together!
 					</div>
 				</li>
 				<li>
 					<div>
-						<time dateTime="2022-01-03T02:55:02Z">{(new Date('2022-01-03T02:55:02Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						<time dateTime="2022-01-02T21:01:20Z">{(new Date('2022-01-02T21:01:20Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
 						After 738 resets (a 14% chance), <a href="https://www.youtube.com/watch?v=tyC9A2tuf28"
 							target="_blank"
 							rel="noreferrer noopener">Sana catches a shiny Rayquaza</a>! On the first try. With a luxury ball. BEEG luck! She also completed her Pokedex this stream.
@@ -195,7 +195,7 @@ export function ProjectTimeline({ events }: ProjectTimelineProps) {
 				</li>
 				<li>
 					<div>
-						<time dateTime="2022-01-07T09:11:14Z">{(new Date('2022-01-07T09:11:14Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						<time dateTime="2022-01-07T04:02:02Z">{(new Date('2022-01-07T04:02:02Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
 						Sana participates in the <a href="https://www.youtube.com/watch?v=U_IW6CyYn1k" target="_blank" rel="noreferrer noopener">2022 New Year&apos;s Mario Kart Tournament</a> as part of C block. She gives it a valiant effort, but at 4th place behind Kronii, she is just 1 spot away from qualifying for the Winner&apos;s Cup.
 					</div>
 				</li>
@@ -207,7 +207,7 @@ export function ProjectTimeline({ events }: ProjectTimelineProps) {
 				</li>
 				<li>
 					<div>
-						<time dateTime="2022-01-15T21:34:14Z">{(new Date('2022-01-15T21:34:14Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						<time dateTime="2022-01-15T20:59:55Z">{(new Date('2022-01-15T20:59:55Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
 						<a href="https://www.youtube.com/watch?v=oViEFu_ftXg"
 							target="_blank"
 							rel="noreferrer noopener">【NEW OUTFIT REVEAL】KIMONOut of this world</a><br/>
@@ -216,7 +216,7 @@ export function ProjectTimeline({ events }: ProjectTimelineProps) {
 				</li>
 				<li>
 					<div>
-						<time dateTime="2022-01-26T00:40:21Z">{(new Date('2022-01-26T00:40:21Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						<time dateTime="2022-01-25T23:15:20Z">{(new Date('2022-01-25T23:15:20Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
 						<a href="https://www.youtube.com/watch?v=OgEsyuN8oKY"
 							target="_blank"
 							rel="noreferrer noopener">HoloMinistry makes their debut</a> (and speedruns the fastest graduation). We meet Tsukumo San. He may look boyish, but just don&apos;t call him small...
@@ -224,7 +224,7 @@ export function ProjectTimeline({ events }: ProjectTimelineProps) {
 				</li>
 				<li>
 					<div>
-						<time dateTime="2022-01-27T06:04:43Z">{(new Date('2022-01-27T06:04:43Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						<time dateTime="2022-01-27T02:20:27Z">{(new Date('2022-01-27T02:20:27Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
 						Sana participates in <a href="https://www.youtube.com/watch?v=KNZi4VYhbRE"
 							target="_blank"
 							rel="noreferrer noopener">the HoloENxID Pokemon tournament</a>, achieving decisive victories with her signature Togekiss and becoming the champion. Did you expect any less?
@@ -232,7 +232,7 @@ export function ProjectTimeline({ events }: ProjectTimelineProps) {
 				</li>
 				<li>
 					<div>
-						<time dateTime="2022-02-14T23:10:57Z">{(new Date('2022-02-14T23:10:57Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						<time dateTime="2022-02-14T21:30:23Z">{(new Date('2022-02-14T21:30:23Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
 						<a href="https://www.youtube.com/watch?v=MIN-lwixweI"
 							target="_blank"
 							rel="noreferrer noopener">V-v-valentines cards?!</a><br/>
@@ -241,7 +241,7 @@ export function ProjectTimeline({ events }: ProjectTimelineProps) {
 				</li>
 				<li>
 					<div>
-						<time dateTime="2022-02-23T05:15:51Z">{(new Date('2022-02-23T05:15:51Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						<time dateTime="2022-02-23T03:32:01Z">{(new Date('2022-02-23T03:32:01Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
 						<a href="https://www.youtube.com/watch?v=P_GbsqSjgt8" target="_blank" rel="noreferrer noopener">HoloCouncil celebrates their 6-month anniversary!</a> They also release a cover of <a href="https://www.youtube.com/watch?v=U-9M-BjFYMc" target="_blank" rel="noreferrer noopener"><em>Hikaru Nara</em></a> after the stream, marking Sana&apos;s second official song cover.
 					</div>
 				</li>
@@ -253,7 +253,7 @@ export function ProjectTimeline({ events }: ProjectTimelineProps) {
 				</li>
 				<li>
 					<div>
-						<time dateTime="2022-04-01T01:57:01Z">{(new Date('2022-04-01T01:57:01Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						<time dateTime="2022-04-01T01:31:25Z">{(new Date('2022-04-01T01:31:25Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
 						It&apos;s April Fools&apos; Day (somewhere in the world), and Sana <a href="https://www.youtube.com/watch?v=Yv2_XjybbXc" target="_blank" rel="noreferrer noopener">is not quite herself</a>. Meanwhile, Fauna <a href="https://www.youtube.com/watch?v=1gBvxOgGDCc" target="_blank" rel="noreferrer noopener">sounds a little familiar</a>...
 					</div>
 				</li>
@@ -267,7 +267,7 @@ export function ProjectTimeline({ events }: ProjectTimelineProps) {
 				</li>
 				<li>
 					<div>
-						<time dateTime="2022-06-17T04:58:52Z">{(new Date('2022-06-11T03:09:05Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						<time dateTime="2022-06-10T23:00:31Z">{(new Date('2022-06-10T23:00:31Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
 						Sana <a href="https://www.youtube.com/watch?v=BnW8BrppGr8"
 							target="_blank"
 							rel="noreferrer noopener">celebrates her birthday</a>! With call-ins aplenty and the unveil of her birthday merch (including an incredibly face-plantable bread dog plushie), it&apos;s a good time all around.<br/>
@@ -276,7 +276,7 @@ export function ProjectTimeline({ events }: ProjectTimelineProps) {
 				</li>
 				<li>
 					<div>
-						<time dateTime="2022-06-11T03:09:05Z">{(new Date('2022-06-17T04:58:52Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						<time dateTime="2022-06-17T01:20:59Z">{(new Date('2022-06-17T01:20:59Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
 						Sana tackles Metroid Dread again, but this time she brings with her <a href="https://www.youtube.com/watch?v=-tToGs-jm70"
 							 target="_blank"
 							 rel="noreferrer noopener">an army of bread dogs</a> submitted by Sanallites on Twitter!
@@ -284,20 +284,20 @@ export function ProjectTimeline({ events }: ProjectTimelineProps) {
 				</li>
 				<li>
 					<div>
-						<time dateTime="2022-07-05T04:51:54Z">{(new Date('2022-07-05T04:51:54Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						<time dateTime="2022-07-05T03:02:03Z">{(new Date('2022-07-05T03:02:03Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
 						Sana helps IRyS design <a href="https://www.youtube.com/watch?v=WjYCPf3shKI" target="_blank" rel="noreferrer noopener">an official mascot</a>... or a pair of mascots. Welcome to the family, Bloom and Gloom!
 					</div>
 				</li>
 				<li>
 					<div>
-						<time dateTime="2022-07-08T00:24:02Z">{(new Date('2022-07-08T00:24:02Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						<time dateTime="2022-07-07T23:00:23Z">{(new Date('2022-07-07T23:00:23Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
 						The final Inasanaty collab, where <a href="https://www.youtube.com/watch?v=cObkYo5zMvI" target="_blank" rel="noreferrer noopener">Sana and Ina celebrate Tanabata together.</a><br/>
 						They read out wishes sent in by fans, hanging them on virtual bamboo trees. In the end, they read their own wishes too. Sana&apos;s wish is that all the talents and the fans can find happiness!
 					</div>
 				</li>
 				<li>
 					<div>
-						<time dateTime="2022-07-11T23:34:12Z">{(new Date('2022-07-11T23:34:12Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						<time dateTime="2022-07-11T23:00:15Z">{(new Date('2022-07-11T23:00:15Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
 						Sana <a href="https://www.youtube.com/watch?v=UbqJ7JObVBM" target="_blank" rel="noreferrer noopener">announces</a> she will be graduating from Hololive on July 31st, scheduling a large number of collabs prior to her retirement, along with teasing a special Council collab stream.
 					</div>
 				</li>
@@ -309,25 +309,25 @@ export function ProjectTimeline({ events }: ProjectTimelineProps) {
 				</li>
 				<li>
 					<div>
-						<time dateTime="2022-07-19T04:52:33Z">{(new Date('2022-07-19T04:52:33Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						<time dateTime="2022-07-19T03:18:20Z">{(new Date('2022-07-19T03:18:20Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
 						Council and IRyS band together to <a href="https://www.youtube.com/watch?v=8irDdE1YUYw" target="_blank" rel="noreferrer noopener">defeat the Ender Dragon</a>! Sana gets a few good hits in with a loaf of bread. Thanks to Fauna&apos;s leadership, the epic battle concludes swiftly.
 					</div>
 				</li>
 				<li>
 					<div>
-						<time dateTime="2022-07-20T06:07:16Z">{(new Date('2022-07-20T06:07:16Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						<time dateTime="2022-07-20T01:00:56Z">{(new Date('2022-07-20T01:00:56Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
 						Sana <a href="https://www.youtube.com/watch?v=gawUszEwpnY" target="_blank" rel="noreferrer noopener">finishes her BEEG tower in Minecraft</a>, along with Moona and Kronii&apos;s help.
 					</div>
 				</li>
 				<li>
 					<div>
-						<time dateTime="2022-07-21T01:27:24Z">{(new Date('2022-07-21T01:27:24Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						<time dateTime="2022-07-20T23:48:02Z">{(new Date('2022-07-20T23:48:02Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
 						HoloCouncil debuts their BEEGsmol 3D models (designed by Sana herself), in <a href="https://www.youtube.com/watch?v=bFjuKhG2Hzc" target="_blank" rel="noreferrer noopener">a pseudo-anniversary celebration stream</a>.
 					</div>
 				</li>
 				<li>
 					<div>
-						<time dateTime="2022-07-31T00:36:34Z">{(new Date('2022-07-31T00:36:34Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						<time dateTime="2022-07-30T23:00:41Z">{(new Date('2022-07-30T23:00:41Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
 						<a href="https://www.youtube.com/watch?v=t8vPcBsVIqY" target="_blank" rel="noreferrer noopener">The graduation stream</a>. With a canvas of art and goodbye messages from fellow Hololive members, a full HoloEN smol 3D concert, and an emotional conclusion (with one final, heartfelt &quot;Sananara&quot;), our eternal Astrogirl takes to the stars.<br/>
 						Overall, it was truly a celebration of Sana&apos;s time in Hololive, and the love between Sana and her Sanallites.
 					</div>
