@@ -21,10 +21,9 @@ function MyApp({ Component, pageProps }: AppProps) {
 
 	const context = {
 		darkMode,
-		toggleDarkMode: () => {
-			window.localStorage.setItem('darkMode', JSON.stringify(!darkMode));
-			setDarkMode(!darkMode);
-		},
+		setDarkMode,
+		saveDarkMode: () => window.localStorage.setItem('darkMode', JSON.stringify(darkMode)),
+		toggleDarkMode: () => setDarkMode(!darkMode),
 	};
 
 	return (

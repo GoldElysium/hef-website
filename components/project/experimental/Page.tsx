@@ -1,4 +1,6 @@
+import { useContext } from 'react';
 
+import DarkModeContext from '../../../contexts/DarkModeContext';
 import Footer from '../../Footer';
 import Head from '../../Head';
 import Header from '../../Header';
@@ -36,6 +38,11 @@ export interface ProjectPageProps {
 }
 
 export function ProjectPage({ guild, project, submissions }: ProjectPageProps) {
+	const { setDarkMode } = useContext(DarkModeContext);
+
+	if (project.flags?.includes('alwaysDarkMode')) setDarkMode(true);
+	if (project.flags?.includes('alwaysLightMode')) setDarkMode(false);
+
 	return (
 		<>
 			<Head
@@ -46,13 +53,13 @@ export function ProjectPage({ guild, project, submissions }: ProjectPageProps) {
 				image={project.ogImage ?? 'https://holoen.fans/img/logo.png'}
 			/>
 
-			{project.backgroundMusic != null && (
-				<ProjectBackgroundMusic backgroundMusic={project.backgroundMusic!}/>
-			)}
-
 			{/* Hypothetically this could label the div with a nonexistant 'theme-'*/}
 			{/* class but CSS just ignores nonexistant classes, so who cares? */}
 			<div className={'theme-' + GUILD_TO_OSHI[guild._id!]}>
+				{project.backgroundMusic != null && (
+					<ProjectBackgroundMusic backgroundMusic={project.backgroundMusic!}/>
+				)}
+
 				<div className='flex flex-col h-full min-h-screen bg-skin-background-1 dark:bg-skin-dark-background-1'>
 					{!project.flags?.includes('disableNavbar') && (<Navbar disableHead/>)}
 					{!project.flags?.includes('disableHeader') && (
