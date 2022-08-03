@@ -4,6 +4,7 @@ import Head from '../../Head';
 import Header from '../../Header';
 import Navbar from '../../Navbar';
 import ProjectAbout from './About';
+import ProjectBackgroundMusic from './BackgroundMusic';
 import ProjectSubmissions from '../Submissions';
 import ProjectTab from './Tab';
 import ProjectTabs from './Tabs';
@@ -44,6 +45,10 @@ export function ProjectPage({ guild, project, submissions }: ProjectPageProps) {
 				keywords={[project.title.toLowerCase()]}
 				image={project.ogImage ?? 'https://holoen.fans/img/logo.png'}
 			/>
+
+			{project.backgroundMusic != null && (
+				<ProjectBackgroundMusic backgroundMusic={project.backgroundMusic!}/>
+			)}
 
 			{/* Hypothetically this could label the div with a nonexistant 'theme-'*/}
 			{/* class but CSS just ignores nonexistant classes, so who cares? */}

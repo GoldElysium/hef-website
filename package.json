@@ -21,6 +21,7 @@
     "@headlessui/react": "^1.6.6",
     "@heroicons/react": "1.0.6",
     "@material-ui/core": "5.0.0-alpha.35",
+    "@material-ui/icons": "5.0.0-alpha.35",
     "@material-ui/lab": "5.0.0-alpha.35",
     "@material-ui/unstyled": "5.0.0-alpha.35",
     "axios": "0.26.1",

@@ -13,12 +13,15 @@ import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 import TextHeader from '../../components/TextHeader';
-import ExperimentalProjectPage from '../../components/project/experimental/Page';
 import Project, { ILink, IProject } from '../../models/Project';
 import Submission, { ISubmission } from '../../models/Submission';
 import 'github-markdown-css/github-markdown-light.css';
 import Guild, { IGuild } from '../../models/Guild';
 import dynamic from 'next/dynamic';
+
+const ExperimentalProjectPage = dynamic(() => import('../../components/project/experimental/Page'), {
+	loading: () => <span>Loading...</span>,
+});
 
 const Phaser = dynamic(() => import('../../components/project/Phaser'), {
 	loading: () => <span>Loading...</span>,
