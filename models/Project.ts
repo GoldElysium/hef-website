@@ -32,6 +32,7 @@ export interface IProject {
 	flags?: string[],
 	ogImage?: string,
 	timeline?: IEvent[],
+	backgroundMusic?: string,
 }
 
 interface IProjectDocument extends IProject, Document {
@@ -85,6 +86,7 @@ const ProjectSchema: Schema = new Schema({
 	flags: { type: [String], default: undefined },
 	ogImage: { type: String },
 	timeline: { type: [EventSchema], default: undefined },
+	backgroundMusic: { type: String },
 });
 
 // eslint-disable-next-line func-names
