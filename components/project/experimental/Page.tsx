@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 
 import DarkModeContext from '../../../contexts/DarkModeContext';
 import Footer from '../../Footer';
@@ -40,8 +40,10 @@ export interface ProjectPageProps {
 export function ProjectPage({ guild, project, submissions }: ProjectPageProps) {
 	const { setDarkMode } = useContext(DarkModeContext);
 
-	if (project.flags?.includes('alwaysDarkMode')) setDarkMode(true);
-	if (project.flags?.includes('alwaysLightMode')) setDarkMode(false);
+	useEffect(() => {
+		if (project.flags?.includes('alwaysDarkMode')) setDarkMode(true);
+		if (project.flags?.includes('alwaysLightMode')) setDarkMode(false);
+	});
 
 	return (
 		<>
