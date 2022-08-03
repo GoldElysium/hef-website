@@ -38,19 +38,10 @@ export interface ProjectPageProps {
 }
 
 export function ProjectPage({ guild, project, submissions }: ProjectPageProps) {
-	const { darkMode, toggleDarkMode } = useContext(DarkModeContext);
+	const { setDarkMode } = useContext(DarkModeContext);
 
-	if (project.flags?.includes('alwaysDarkMode')) {
-		if (!darkMode) {
-			toggleDarkMode();
-		}
-	}
-
-	if (project.flags?.includes('alwaysLightMode')) {
-		if (darkMode) {
-			toggleDarkMode();
-		}
-	}
+	if (project.flags?.includes('alwaysDarkMode')) setDarkMode(true);
+	if (project.flags?.includes('alwaysLightMode')) setDarkMode(false);
 
 	return (
 		<>

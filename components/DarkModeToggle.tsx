@@ -3,12 +3,15 @@ import DarkModeContext from '../contexts/DarkModeContext';
 export default function DarkModeToggle() {
 	return (
 		<DarkModeContext.Consumer>
-			{({ darkMode, toggleDarkMode }) => (
+			{({ darkMode, saveDarkMode, toggleDarkMode }) => (
 				<div className="flex flex-nowrap align-middle items-center">
 					<label className="switch ml-6">
 						<input
 							type="checkbox"
-							onChange={() => toggleDarkMode()}
+							onChange={() => {
+								toggleDarkMode();
+								saveDarkMode();
+							}}
 							checked={darkMode}
 						/>
 						<span className={darkMode ? 'slider round bg-skin-dark-primary-1' : 'slider round bg-skin-background-1'} />

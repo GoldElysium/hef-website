@@ -21,7 +21,7 @@ export function ProjectBackgroundMusic({ backgroundMusic }: ProjectBackgroundMus
 	const [autoplayed, setAutoplayed] = useState(false);
 	const [blocked, setBlocked] = useState(false);
 	const [hidden, setHidden] = useState(false);
-	const [muted, setMuted] = useState(true); 
+	const [muted, setMuted] = useState(false); 
 	const [volume, setVolume] = useState(0.125);
 
 	useEffect(() => {
