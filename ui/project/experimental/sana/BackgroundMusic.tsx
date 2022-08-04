@@ -162,6 +162,7 @@ export default function ProjectBackgroundMusic({ backgroundMusic }: ProjectBackg
 						className="text-black dark:text-white"
 						checked={muted}
 						onChange={() => setMuted(!muted)}
+						onFocus={() => setHidden(false)}
 					/>
 
 					<SpeakerWaveIcon className="swap-off w-6 h-6" />
@@ -175,6 +176,7 @@ export default function ProjectBackgroundMusic({ backgroundMusic }: ProjectBackg
 					step={0.05}
 					value={volume}
 					onChange={(e) => setVolume(Number.parseFloat(e.target.value))}
+					onFocus={() => setHidden(false)}
 					className="range range-accent range-s disabled:range-xs"
 				/>
 			</div>
