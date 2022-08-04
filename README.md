@@ -42,6 +42,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/Toranteru"><img src="https://avatars.githubusercontent.com/u/102710095?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Toranteru</b></sub></a><br /><a href="https://github.com/GoldElysium/hefs-website/commits?author=Toranteru" title="Code">💻</a></td>
     <td align="center"><a href="https://renovate.whitesourcesoftware.com/"><img src="https://avatars.githubusercontent.com/u/25180681?v=4?s=100" width="100px;" alt=""/><br /><sub><b>WhiteSource Renovate</b></sub></a><br /><a href="#maintenance-renovate-bot" title="Maintenance">🚧</a></td>
   </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/waylaidwanderer"><img src="https://avatars.githubusercontent.com/u/2882110?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Joel</b></sub></a><br /><a href="https://github.com/GoldElysium/hefs-website/commits?author=waylaidwanderer" title="Code">💻</a> <a href="#design-waylaidwanderer" title="Design">🎨</a></td>
+  </tr>
 </table>
 
 <!-- markdownlint-restore -->
