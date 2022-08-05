@@ -332,6 +332,12 @@ export function ProjectTimeline({ events }: ProjectTimelineProps) {
 						Overall, it was truly a celebration of Sana&apos;s time in Hololive, and the love between Sana and her Sanallites.
 					</div>
 				</li>
+				<li>
+					<div>
+						<time dateTime="2022-08-05T01:01:24Z">{(new Date('2022-08-05T01:01:24Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						Sana makes an appearance during Mumei&apos;s birthday celebration stream <a href="https://www.youtube.com/watch?v=gpVQHURm76Q&t=13087s" target="_blank" rel="noreferrer noopener">with a pre-recorded video message</a>.
+					</div>
+				</li>
 			</ul>
 			<div className="text-center">
 				<em className="text-xs text-slate-500">All dates are displayed in your local timezone.</em>
