@@ -48,7 +48,7 @@ export function ProjectPage({ guild, project, submissions }: ProjectPageProps) {
 	return (
 		<>
 			<Head
-				color={guild.color ?? '#FF3D3D'}
+				color={guild.color ?? (project.flags?.includes('sanaSendoff') ? '#FFF8E7' : '#FF3D3D')}
 				title={project.title}
 				description={project.shortDescription}
 				keywords={[project.title.toLowerCase()]}
