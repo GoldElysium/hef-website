@@ -14,7 +14,7 @@ export default function Footer({ background }: IProps) {
 
 	return (
 		<div
-			className="flex w-full h-24 px-4 sm:px-8 justify-center items-center mt-16 bg-skin-background-2 dark:bg-skin-dark-background-2"
+			className="flex flex-col w-full h-32 px-4 sm:px-8 justify-center items-center mt-16 bg-skin-background-2 dark:bg-skin-dark-background-2 gap-2"
 			ref={wrapper}
 		>
 			<p className="text-center flex items-center text-white text-opacity-70">
@@ -23,6 +23,9 @@ export default function Footer({ background }: IProps) {
 &nbsp;by&nbsp;
 				<a href="https://github.com/GoldElysium/hefs-website#contributors-" target="_blank" className="underline" rel="noreferrer">fans</a>
 			</p>
+			<a href="https://vercel.com/?utm_source=holoen-fans&utm_campaign=oss">
+				<img src="/img/powered-by-vercel.svg" alt="Powered by vercel" className="h-10" />
+			</a>
 			<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "5896757c09e04949bf74e7c34efd419a"}' />
 		</div>
 	);

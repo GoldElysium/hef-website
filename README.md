@@ -54,3 +54,6 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
+
+## Sponsors
+[![Powered by Vercel](public/img/powered-by-vercel.svg)](https://vercel.com/?utm_source=holoen-fans&utm_campaign=oss)
