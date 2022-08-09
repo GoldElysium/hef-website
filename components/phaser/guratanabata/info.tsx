@@ -12,9 +12,7 @@ const INFO_TEXT = `${Router.query.id == '6'
 
 BGM - Guratanabata by Jesterdist. 
 Free download at [area=bgm] [color=${COLORS.link}]https://bit.ly/guraTanabata[/color] [/area]
-(Gura you can use this BGM if you want. It's loopable!)
-
-[size=42]> You also could open the link above by clicking the toggle BGM icon while holding the CTRL key[/size]
+(Gura -- you can use this BGM if you want. It's loopable!)
 
 [size=64]Project Artworks[/size]
 Layouts, Backgrounds, Assets - Caudy the Corgi
@@ -28,7 +26,10 @@ K4rakara
 Sephi
 
 [size=64]Submissions[/size]
-Chumbuds everywhere`;
+Chumbuds everywhere
+
+[area=vercel] [img=vercel] [/area]
+`;
 
 export default class Info extends Phaser.Scene {
 	public width!: number;
@@ -104,6 +105,12 @@ export default class Info extends Phaser.Scene {
 				},
 			},
 			content: INFO_TEXT,
+			//@ts-expect-error
+			images: {
+				vercel: {
+					frame: 'vercel',
+				},
+			},
 		}).setAlpha(0).layout();
 
 		const textBounds = this.textArea.getBounds();
@@ -194,6 +201,11 @@ export default class Info extends Phaser.Scene {
 		switch (key) {
 			case 'bgm': {
 				window.open('https://bit.ly/guraTanabata', '_blank', 'noopener noreferrer');
+				break;
+			}
+
+			case 'vercel': {
+				window.open('https://vercel.com/?utm_source=holoen-fans&utm_campaign=oss', '_blank', 'noopener noreferrer');
 				break;
 			}
 

@@ -269,6 +269,8 @@ class Index extends Phaser.Scene {
 		this.load.image('white', '/assets/guratanabata/papers/white.webp');
 
 		this.load.image('bamboo', '/assets/guratanabata/bamboo5.webp');
+
+		this.load.image('vercel', '/img/powered-by-vercel.png');
 	}
 
 	loadFallback() {
@@ -299,6 +301,8 @@ class Index extends Phaser.Scene {
 		this.load.image('white', '/assets/guratanabata/fallback/papers/white.png');
 
 		this.load.image('bamboo', '/assets/guratanabata/fallback/bamboo5.png');
+    
+		this.load.image('vercel', '/img/powered-by-vercel.png');
 	}
 
 	addScenes() {
