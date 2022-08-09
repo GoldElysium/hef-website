@@ -56,7 +56,7 @@ export default function Home({ featuredProjects, guilds }: IProps) {
 				<div className="my-16 w-full flex flex-col items-center">
 					<div className="max-w-4xl w-full mx-4">
 						<div>
-							<TextHeader text="Featured projects" />
+							<TextHeader>Featured projects</TextHeader>
 							<div className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center">
 								{featuredProjectsHtml.length > 0 ? (
 									featuredProjectsHtml
@@ -66,7 +66,7 @@ export default function Home({ featuredProjects, guilds }: IProps) {
 							</div>
 						</div>
 						<div className="mt-10">
-							<TextHeader text="EN Servers" />
+							<TextHeader>EN Servers</TextHeader>
 							<div className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center">
 								{guildHtml.length > 0 ? (
 									guildHtml
