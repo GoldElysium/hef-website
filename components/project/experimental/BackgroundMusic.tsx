@@ -1,15 +1,5 @@
-import {
-	useCallback, useEffect, useRef, useState,
-} from 'react';
-import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
-import Grid from '@material-ui/core/Grid';
-import Icon from '@material-ui/core/Icon';
-import IconButton from '@material-ui/core/IconButton';
-import Slider from '@material-ui/core/Slider';
-import ErrorIcon from '@material-ui/icons/Error';
-import VolumeOffIcon from '@material-ui/icons/VolumeOff';
-import VolumeUpIcon from '@material-ui/icons/VolumeUp';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { ExclamationCircleIcon, VolumeOffIcon, VolumeUpIcon } from '@heroicons/react/solid';
 
 export interface ProjectBackgroundMusicProps {
 	backgroundMusic: string,
@@ -125,31 +115,24 @@ export default function ProjectBackgroundMusic({ backgroundMusic }: ProjectBackg
 
 	if (blocked) {
 		return (
-			<Card
-				classes={{
-					root: `${(hidden) ? 'opacity-0 translate-y-16 ' : ''
-					}fixed bottom-4 left-4 z-50 transition-all `
-              + 'motion-reduce:transition-none text-black dark:text-white '
-              + 'bg-skin-card dark:bg-skin-dark-card',
-				}}
-			>
-				<div className="relative w-128 h-16 flex justify-center items-center">
-					<Icon classes={{ root: 'flex mx-4' }}>
-						<ErrorIcon />
-					</Icon>
+			<div
+				className={
+					`${(hidden) ? 'opacity-0 translate-y-16' : ''} fixed bottom-4 left-4 z-50 transition-all duration-500 motion-reduce:transition-none text-black dark:text-white bg-skin-card dark:bg-skin-dark-card px-4 rounded-lg`
+				}>
+				<div className='relative w-128 h-16 flex justify-center items-center gap-2'>
+					<ExclamationCircleIcon className="w-6 h-6"/>
 					Your browser has denied audio playback
-					<Button
-						classes={{ root: 'mx-4 text-skin-primary-1 darK:text-skin-primary-1' }}
-						variant="text"
+					<button
+						className={'mx-4 text-skin-primary-1 darK:text-skin-primary-1'}
 						onClick={() => {
 							setHidden(true);
 							setTimeout(() => setDismissed(true), 1000);
 						}}
 					>
 						Dismiss
-					</Button>
+					</button>
 				</div>
-			</Card>
+			</div>
 		);
 	}
 
@@ -164,46 +147,29 @@ export default function ProjectBackgroundMusic({ backgroundMusic }: ProjectBackg
 			>
 				<source src={backgroundMusic} type="audio/mp3" />
 			</audio>
-			<Card
-				classes={{
-					root: `${(hidden) ? 'opacity-0 translate-y-16 ' : ''
-					}fixed bottom-4 left-4 z-50 transition-all `
-              + 'motion-reduce:transition-none bg-skin-card '
-              + 'dark:bg-skin-dark-card',
-				}}
+			<div
+				className={`${(hidden) ? 'opacity-0 translate-y-16' : ''} fixed bottom-4 left-4 z-50 transition-all motion-reduce:transition-none bg-skin-card dark:bg-skin-dark-card rounded-lg w-64 h-16 flex justify-between items-center gap-2 px-4 py-2`}
 			>
-				<div className="relative left-3 w-64 h-16 flex justify-center items-center">
-					<Grid container spacing={1}>
-						<Grid item xs={2}>
-							<IconButton
-								classes={{ root: 'text-black dark:text-white' }}
-								onClick={() => setMuted(!muted)}
-							>
-								{!muted ? <VolumeUpIcon /> : <VolumeOffIcon />}
-							</IconButton>
-						</Grid>
-						<Grid
-							item
-							classes={{ root: 'flex justify-center items-center' }}
-							xs={8}
-						>
-							<Slider
-								classes={{
-									rail: 'bg-skin-background-2 dark:bg-skin-dark-background-2',
-									thumb: 'bg-skin-primary-1 dark:bg-skin-dark-primary-1',
-									track: 'bg-skin-primary-1 dark:bg-skin-dark-primary-1',
-								}}
-								disabled={muted}
-								max={1}
-								min={0}
-								step={0.05}
-								value={volume}
-								onChange={(_, value) => setVolume(value as number)}
-							/>
-						</Grid>
-					</Grid>
-				</div>
-			</Card>
+				<label className="swap swap-flip">
+					<input
+						type="checkbox"
+						className="text-black dark:text-white"
+						checked={muted}
+						onChange={() => setMuted(!muted)} />
+
+					<VolumeUpIcon className="swap-off w-6 h-6" />
+					<VolumeOffIcon className="swap-on w-6 h-6"/>
+				</label>
+				<input type="range"
+					disabled={muted}
+					max={1}
+					min={0}
+					step={0.05}
+					value={volume}
+					onChange={(e) => setVolume(Number.parseFloat(e.target.value))}
+					className="range range-accent range-s disabled:range-xs"
+				/>
+			</div>
 		</>
 	);
 }

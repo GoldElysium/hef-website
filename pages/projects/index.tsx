@@ -44,7 +44,7 @@ export default function Projects({ en }: IProps) {
 						<div className="mt-10">
 							<TextHeader text="Past projects" />
 							<div className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center">
-								{pastHtml.length > 0 ? pastHtml : <div className="font-bold text-2xl mt-4 text-black dark:text-white">None</div>}
+								{pastProjects.length > 0 ? pastProjects : <div className="font-bold text-2xl mt-4 text-black dark:text-white">None</div>}
 							</div>
 						</div>
 					</div>

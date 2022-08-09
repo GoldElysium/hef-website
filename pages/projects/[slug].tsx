@@ -15,6 +15,7 @@ import DescriptionSerializer from '../../components/DescriptionSerializer';
 import dynamic from 'next/dynamic';
 
 const Phaser = dynamic(() => import('../../components/project/Phaser'));
+const ExperimentalProjectPage = dynamic(() => import('../../components/project/experimental/Page'));
 
 const SUBMISSIONS_PER_LOAD = 10;
 
@@ -29,8 +30,11 @@ ID_TO_STYLE_MAP.set('62c9442ff1ee39aa37afc4c7', 'theme-ina');
 // NOTE: jp property should *ONLY* be used for translations, not everything is populated here
 interface IProps {
 	project: {
-		en: Omit<Project, 'flags'> & {
-			flags: string[]
+		en: Omit<Project, 'flags' | 'devprops'> & {
+			flags: string[];
+			devprops: {
+				[key: string]: string;
+			};
 		};
 		jp: {
 			title: Project['title'];
@@ -110,6 +114,7 @@ export default function ProjectPage({ project, submissions }: IProps) {
 						)}
 						{submission.type === 'image' && (
 							<div className="mt-4 mb-2 w-full h-full max-h-[750px] flex justify-center">
+								{/* eslint-disable-next-line @next/next/no-img-element */}
 								<img
 									className="max-w-10/12 object-contain mb-4"
 									src={(submission.media as SubmissionMedia).sizes?.thumbnail?.url}
@@ -138,6 +143,13 @@ export default function ProjectPage({ project, submissions }: IProps) {
 		);
 	}
 
+	if (project.en.flags?.includes('experimental')) {
+		return (
+			<Suspense fallback={'Loading...'}>
+				<ExperimentalProjectPage project={project} submissions={submissions} />
+			</Suspense>
+		);
+	}
 
 	if (project.en.flags?.includes('guratanabata')) {
 		return (
@@ -205,7 +217,7 @@ export default function ProjectPage({ project, submissions }: IProps) {
 								</div>
 								{(project.en.media?.length ?? 0) > 0 && (
 									<div className="mt-4">
-										<TextHeader text="Gallery" />
+										<TextHeader>Gallery</TextHeader>
 										<div className="flex flex-col items-center pt-2">
 											<div className="w-full h-52 sm:w-8/12 sm:h-96">
 												<CurrentGalleryItem />
@@ -248,7 +260,7 @@ export default function ProjectPage({ project, submissions }: IProps) {
 								)}
 								{(project.en.links?.length ?? 0) > 0 && (
 									<div className="mt-4">
-										<TextHeader text="Links" />
+										<TextHeader>Links</TextHeader>
 										<div className="flex justify-center space-x-6 px-4 sm:px-0">
 											{project.en.links
 											&& project.en.links.map((link, index: number) => (
@@ -268,7 +280,7 @@ export default function ProjectPage({ project, submissions }: IProps) {
 								{/* TODO: Move submissions to separate tab */}
 								{((shownSubmissions?.length ?? 0) > 0) && (
 									<div className="mt-4">
-										<TextHeader text="Submissions" />
+										<TextHeader>Submissions</TextHeader>
 										<div className="flex flex-col items-center pt-2">
 											<div className="w-full overflow-auto">
 												<InfiniteScroll
@@ -360,7 +372,10 @@ export const getStaticProps: GetStaticProps = async (context) => {
 	return {
 		props: {
 			project: {
-				en: enProject,
+				en: {
+					...enProject,
+					devprops: enProject.devprops ? enProject.devprops.reduce((a, v) => ({ ...a, [v.key]: v.value }), {}) : {},
+				},
 				jp: {
 					title: jpProject.title ?? null,
 					shortDescription: jpProject.shortDescription ?? null,

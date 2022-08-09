@@ -1,17 +1,23 @@
 import ProjectDescription from '../Description';
 import ProjectGallery from '../Gallery';
 import ProjectLinks from './Links';
-import { IProject } from '../../../models/Project';
+import { Project } from '../../../types/payload-types';
+import DescriptionSerializer from '../../DescriptionSerializer';
 
 export interface ProjectAboutProps {
-	project: IProject,
+	project: Omit<Project, 'flags' | 'devprops'> & {
+		flags: string[];
+		devprops: {
+			[key: string]: string;
+		};
+	};
 }
 
 export default function ProjectAbout({ project }: ProjectAboutProps) {
 	if (project.flags?.includes('bigAbout')) {
 		return (
 			<p className="flex justify-center content-center text-black dark:text-white dark:text-opacity-80 text-3xl text-center my-16">
-				{project.description}
+				{DescriptionSerializer(project.description)}
 			</p>
 		);
 	}
