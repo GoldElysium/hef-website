@@ -4,3 +4,4 @@ postcss.config.js
 next.config.js
 commitlint.config.js
 node_modules
+types/payload-types.ts
