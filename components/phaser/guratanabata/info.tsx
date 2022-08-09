@@ -4,9 +4,9 @@ import Router from 'next/router';
 const COLORS = {
 	link: '#163fc9',
 };
-const INFO_TEXT = `Tanabata is a Japanese festival; usually held in July or August. In present-day Japan, people generally celebrate this day by writing wishes on small pieces of paper, and hanging them on bamboo (along with various other decorations). As Gura is reaching her 3 million subscriber milestone in July, near the time of Tanabata, we're using this occasion to collect chumbuds' wishes and congratulatory messages for Gura!
-${Router.query.id == '6' ? `
-[size=42]> Please note that the submissions will only become viewable when Gura's sub count reaches 3 Million. Until then enjoy this nice background and BGM, and scroll down in this window for credits and a link to download the BGM.[/size]` : ''}
+const INFO_TEXT = `${Router.query.id == '6'
+	? 'Tanabata is a Japanese festival; usually held in July or August. In present-day Japan, people generally celebrate this day by writing wishes on small pieces of paper, and hanging them on bamboo (along with various other decorations). As Gura is reaching her 3 million subscriber milestone in July, near the time of Tanabata, we\'re using this occasion to collect chumbuds\' wishes and congratulatory messages for Gura!'
+	: 'This year, Gura hit her 4 million sub milestone very close to Tanabata, so we\'ve decided to do an updated site with new messages from you guys for her! We hope you enjoy it!'}
 
 [size=72]Credits[/size]
 
