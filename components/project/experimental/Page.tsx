@@ -7,6 +7,7 @@ import Header from '../../Header';
 import Navbar from '../../Navbar';
 import ProjectAbout from './About';
 import ProjectBackgroundMusic from './BackgroundMusic';
+import ProjectCredits from './Credits';
 import ProjectSubmissions from '../Submissions';
 import ProjectTab from './Tab';
 import ProjectTabs from './Tabs';
@@ -149,6 +150,11 @@ export function ProjectPage({ guild, project, submissions }: ProjectPageProps) {
 													<ProjectSubmissions submissions={submissions} project={project}/>
 												</ProjectTab>
 											)
+										)}
+										{project.credits != null && (
+											<ProjectTab label='Credits'>
+												<ProjectCredits credits={project.credits}/>
+											</ProjectTab>
 										)}
 									</ProjectTabs>
 								) || (

@@ -1,5 +1,5 @@
 .timeline {
-  overflow-x: clip;
+  overflow-x: visible;
 }
 
 .timeline a {
