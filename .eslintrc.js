@@ -14,7 +14,6 @@ module.exports = {
 			useTabs: false
 		}],
 		'@typescript-eslint/indent': ['error', 'tab'],
-    '@typescript-eslint/no-shadow': 'off',
 		'react/jsx-indent': ['error', 'tab'],
 		'react/jsx-indent-props': ['error', 'tab'],
 		'react/react-in-jsx-scope': 'off',

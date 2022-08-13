@@ -11,13 +11,13 @@ export interface ProjectCreditProps {
 
 export function ProjectCredit({ credit }: ProjectCreditProps) {
 	const socials = useMemo(() => {
-		const socials = [ ];
+		const temp = [ ];
 
-		if (credit.youtube != null) socials.push({ type: 'youtube', link: credit.youtube! });
-		if (credit.twitter != null) socials.push({ type: 'twitter', link: credit.twitter! });
-		if (credit.github != null) socials.push({ type: 'github', link: credit.github! });
+		if (credit.youtube != null) temp.push({ type: 'youtube', link: credit.youtube! });
+		if (credit.twitter != null) temp.push({ type: 'twitter', link: credit.twitter! });
+		if (credit.github != null) temp.push({ type: 'github', link: credit.github! });
 
-		return socials;
+		return temp;
 	}, [ credit ]);
   
 	return (
