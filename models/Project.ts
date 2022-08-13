@@ -19,6 +19,15 @@ export interface IEvent {
 	longDescription: string,
 }
 
+export interface ICredit {
+	type: 'artwork' | 'code' | 'music' | 'organization',
+	user: string,
+	pfp: string,
+	github?: string,
+	twitter?: string,
+	youtube?: string,
+}
+
 export interface IProject {
 	_id?: number,
 	status: 'ongoing' | 'past',
@@ -33,6 +42,7 @@ export interface IProject {
 	ogImage?: string,
 	timeline?: IEvent[],
 	backgroundMusic?: string,
+	credits?: ICredit[],
 }
 
 interface IProjectDocument extends IProject, Document {
@@ -73,6 +83,15 @@ const EventSchema: Schema = new Schema({
 	longDescription: { type: String, required: false },
 });
 
+const CreditSchema: Schema = new Schema({
+	type: { type: String, enum: ['artwork', 'code', 'music', 'organization'], required: true },
+	user: { type: String, required: true },
+	pfp: { type: String, required: true },
+	github: { type: String },
+	twitter: { type: String },
+	youtube: { type: String },
+});
+
 const ProjectSchema: Schema = new Schema({
 	_id: { type: Number },
 	status: { type: String, required: true, enum: ['ongoing', 'past'] },
@@ -87,6 +106,7 @@ const ProjectSchema: Schema = new Schema({
 	ogImage: { type: String },
 	timeline: { type: [EventSchema], default: undefined },
 	backgroundMusic: { type: String },
+	credits: { type: [CreditSchema], default: undefined },
 });
 
 // eslint-disable-next-line func-names
