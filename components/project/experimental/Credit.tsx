@@ -19,12 +19,12 @@ export function ProjectCredit({ credit }: ProjectCreditProps) {
 
 		return temp;
 	}, [ credit ]);
-  
+
 	return (
 		<div className='flex flex-col justify-start items-center mx-8 my-4 w-32 h-max text-black dark:text-white'>
 			<img className='inline w-32 m-4 rounded-full' src={credit.pfp}/>
 			<div className='flex flex-col justify-center items-start h-full'>
-				<div className='flex flex-row h-full'>
+				<div className='flex flex-col justify-center items-center md:flex-row h-full'>
 					<span className='text-2xl'>{credit.user}</span>
 					<span className='flex flex-row items-center'>
 						{socials.map(({ type, link }, index) => (
