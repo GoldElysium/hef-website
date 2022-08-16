@@ -28,9 +28,9 @@ export function ProjectCredits({ credits }: ProjectCreditsProps) {
 				});
 			});
 	}, [ credits ]);
-  
+
 	return (
-		<div className='flex flex-col w-full h-full text-black dark:text-white'>
+		<div className='flex flex-col w-full h-full text-black dark:text-white px-5 lg:px-0'>
 			{(organizers.length > 0) && (
 				<div className='flex flex-col w-full'>
 					<div className='flex flex-row my-8 w-full text-2xl font-bold border-b-2
