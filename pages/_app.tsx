@@ -1,7 +1,7 @@
 import '../styles/globals.css';
 import '../styles/sana-timeline.css';
 import { AppProps } from 'next/app';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { SessionProvider } from 'next-auth/react';
 import DarkModeContext from '../contexts/DarkModeContext';
 
@@ -19,12 +19,12 @@ function MyApp({ Component, pageProps }: AppProps) {
 		}
 	}, []);
 
-	const context = {
+	const context = useMemo(() => ({
 		darkMode,
 		setDarkMode,
 		saveDarkMode: () => window.localStorage.setItem('darkMode', JSON.stringify(darkMode)),
 		toggleDarkMode: () => setDarkMode(!darkMode),
-	};
+	}), [darkMode]);
 
 	return (
 		<DarkModeContext.Provider value={context}>

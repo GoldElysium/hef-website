@@ -89,7 +89,7 @@ class Splash extends Phaser.Scene {
 			};
 		}
 
-		this.title = this.add.image(this.width / 2, -550, `title${Router.query.id == '6' ? '3' : '4'}`)
+		this.title = this.add.image(this.width / 2, -550, `title${Router.query.id === '6' ? '3' : '4'}`)
 			.setOrigin(0.5, 0)
 			.setDepth(6)
 			.setScale(0.95);

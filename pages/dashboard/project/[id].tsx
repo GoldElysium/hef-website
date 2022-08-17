@@ -29,8 +29,6 @@ export default function GuildEdit() {
 	if (!doc && router.query.id !== 'new') return <div>Loading...</div>;
 
 	return (
-		<>
-			{session ? <ProjectEditPage doc={router.query.id !== 'new' ? doc as IProject : undefined} /> : <></>}
-		</>
+		session ? <ProjectEditPage doc={router.query.id !== 'new' ? doc as IProject : undefined} /> : null
 	);
 }

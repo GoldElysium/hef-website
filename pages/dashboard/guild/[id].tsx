@@ -11,8 +11,6 @@ export default function GuildEdit() {
 	}, [session, loading]);
 
 	return (
-		<>
-			{session ? <GuildEditPage /> : <></>}
-		</>
+		session ? <GuildEditPage /> : null
 	);
 }

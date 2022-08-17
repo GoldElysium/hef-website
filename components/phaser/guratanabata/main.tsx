@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import Router from 'next/router';
 import { ISubmission } from '../../../models/Submission';
 
-const MILLION = Router.query.id == '6' ? '3' : '4';
+const MILLION = Router.query.id === '6' ? '3' : '4';
 
 const BASE_WIDTH = 2280;
 const BASE_HEIGHT = 1620;
@@ -264,9 +264,11 @@ class Main extends Phaser.Scene {
 				.setInteractive({ pixelPerfect: true, cursor: 'pointer' })
 				.on('pointerup', () => this.showPaper(paper, message));
 			const author = this.ui.text(
-				x, y + image.displayHeight - 50,
+				x,
+				y + image.displayHeight - 50,
 				message.author as string,
-				32, 170,
+				32,
+				170,
 			).setOrigin(0.5, 0.5);
 			const objects = [image, author];
 
@@ -328,8 +330,10 @@ class Main extends Phaser.Scene {
 
 		// @ts-expect-error
 		const container = this.add.rexContainerLite(
-			0, 0,
-			this.width, this.height,
+			0,
+			0,
+			this.width,
+			this.height,
 			[bg, placed],
 		);
 
@@ -427,8 +431,10 @@ class Main extends Phaser.Scene {
 
 		// @ts-expect-error
 		const container = this.add.rexContainerLite(
-			0, 0,
-			this.width, this.height * 2,
+			0,
+			0,
+			this.width,
+			this.height * 2,
 			[bg, gura, text, textBig],
 		);
 

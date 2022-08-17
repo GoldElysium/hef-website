@@ -8,7 +8,7 @@ interface GalleryProps {
 	media: IMedia,
 }
 
-const CurrentGalleryItem = ({ media }: GalleryProps) => {
+function CurrentGalleryItem({ media }: GalleryProps) {
 	if (media.type === 'video') {
 		return (
 			<ReactPlayer
@@ -24,16 +24,16 @@ const CurrentGalleryItem = ({ media }: GalleryProps) => {
 		return <img className="max-w-full max-h-full object-contain" src={media.src} alt="" loading="lazy" />;
 	}
 	return <p>Invalid media</p>;
-};
+}
 
 interface IProps {
 	media: IMedia[] | undefined
 }
 
-const Gallery = ({ media }: IProps) => {
+function Gallery({ media }: IProps) {
 	const [currentMediaIndex, setCurrentMediaIndex] = React.useState(0);
 
-	if (!media || media.length === 0) return <></>;
+	if (!media || media.length === 0) return null;
 
 	return (
 		<div className="mt-4">
@@ -77,6 +77,6 @@ const Gallery = ({ media }: IProps) => {
 			</div>
 		</div>
 	);
-};
+}
 
 export default Gallery;

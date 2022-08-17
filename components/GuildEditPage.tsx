@@ -208,7 +208,7 @@ export default function GuildEditPage() {
 													className="w-8 h-8 mt-2 ml-4 hover:text-red-700 cursor-pointer"
 												/>
 												<CheckIcon
-													onClick={removeGuild}
+													onClick={() => removeGuild()}
 													className="w-8 h-8 mt-2 ml-4 hover:text-red-700 cursor-pointer"
 												/>
 											</>

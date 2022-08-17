@@ -6,8 +6,8 @@ interface IProps {
 	description: string | undefined,
 }
 
-const Description = ({ description }: IProps) => {
-	if (!description || description.length === 0) return <></>;
+function Description({ description }: IProps) {
+	if (!description || description.length === 0) return null;
 
 	return (
 		<div>
@@ -21,6 +21,6 @@ const Description = ({ description }: IProps) => {
 			</div>
 		</div>
 	);
-};
+}
 
 export default Description;

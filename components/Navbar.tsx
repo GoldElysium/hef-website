@@ -20,13 +20,13 @@ export default function Navbar({ disableHead }: IProps) {
 			<div className="flex w-full h-20 px-4 sm:px-8 justify-between items-center bg-skin-background-2 dark:bg-skin-dark-background-2">
 				{!disableHead && <Head />}
 
-				{/*<div>
+				{/* <div>
 				<Link href="/">
 					<a>
 						<img className="h-20 hidden" src="/img/logo_banner.png" alt="Logo" />
 					</a>
 				</Link>
-			</div>*/}
+			</div> */}
 
 				<div>
 					<div className="sm:hidden">

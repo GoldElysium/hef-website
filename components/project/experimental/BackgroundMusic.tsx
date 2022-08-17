@@ -1,4 +1,6 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import {
+	useCallback, useEffect, useRef, useState,
+} from 'react';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import Grid from '@material-ui/core/Grid';
@@ -13,14 +15,14 @@ export interface ProjectBackgroundMusicProps {
 	backgroundMusic: string,
 }
 
-export function ProjectBackgroundMusic({ backgroundMusic }: ProjectBackgroundMusicProps) {
+export default function ProjectBackgroundMusic({ backgroundMusic }: ProjectBackgroundMusicProps) {
 	const audio = useRef<HTMLAudioElement | null>(null);
 
 	const [autoplayed, setAutoplayed] = useState(false);
 	const [blocked, setBlocked] = useState(false);
 	const [dismissed, setDismissed] = useState(false);
 	const [hidden, setHidden] = useState(false);
-	const [muted, setMuted] = useState(false); 
+	const [muted, setMuted] = useState(false);
 	const [volume, setVolume] = useState(0.125);
 	const [y, setY] = useState(0.0);
 
@@ -30,7 +32,7 @@ export function ProjectBackgroundMusic({ backgroundMusic }: ProjectBackgroundMus
 		if (audioSnapshot != null) {
 			audioSnapshot.volume = volume;
 		}
-	}, [ audio, volume ]);
+	}, [audio, volume]);
 
 	useEffect(() => {
 		if (blocked) return;
@@ -42,7 +44,7 @@ export function ProjectBackgroundMusic({ backgroundMusic }: ProjectBackgroundMus
 			(async () => {
 				const play = () => new Promise((resolve) => {
 					const played = audioSnapshot.play();
-          
+
 					// Node uses an object for this, browsers use a number.
 					let timeout: any;
 
@@ -65,13 +67,11 @@ export function ProjectBackgroundMusic({ backgroundMusic }: ProjectBackgroundMus
 				const autoPlaying = await play();
 
 				if (!autoPlaying) {
-					let clickEventListener: () => Promise<void>;
-					let hoverEventListener: () => Promise<void>;
-
-					clickEventListener = async () => {
+					const clickEventListener = async () => {
 						const nowAutoPlaying = await play();
 
 						if (!nowAutoPlaying) {
+							// eslint-disable-next-line no-console
 							console.warn('This browser _really_ doesn\'t want us to autoplay music, even after interaction, so I guess we just won\'t have any music then.');
 							setBlocked(true);
 							audioSnapshot.remove();
@@ -80,10 +80,11 @@ export function ProjectBackgroundMusic({ backgroundMusic }: ProjectBackgroundMus
 						}
 
 						document.body.removeEventListener('mousedown', clickEventListener);
+						// eslint-disable-next-line @typescript-eslint/no-use-before-define
 						document.body.removeEventListener('mouseover', hoverEventListener);
 					};
 
-					hoverEventListener = async () => {
+					const hoverEventListener = async () => {
 						const nowAutoPlaying = await play();
 
 						if (nowAutoPlaying) {
@@ -98,9 +99,10 @@ export function ProjectBackgroundMusic({ backgroundMusic }: ProjectBackgroundMus
 					document.body.addEventListener('mouseover', hoverEventListener);
 				}
 			})()
+				// eslint-disable-next-line no-console
 				.catch(console.error);
 		}
-	}, [ audio, autoplayed, blocked ]);
+	}, [audio, autoplayed, blocked]);
 
 	const scrollEventListener = useCallback(() => {
 		if (window.scrollY > y) {
@@ -110,38 +112,40 @@ export function ProjectBackgroundMusic({ backgroundMusic }: ProjectBackgroundMus
 		}
 
 		setY(window.scrollY);
-	}, [ y ]);
+	}, [y]);
 
 	useEffect(() => {
 		setY(window.scrollY);
 		window.addEventListener('scroll', scrollEventListener);
 
 		return () => window.removeEventListener('scroll', scrollEventListener);
-	}, [ scrollEventListener ]);
+	}, [scrollEventListener]);
 
-	if (dismissed) return (<></>);
+	if (dismissed) return null;
 
 	if (blocked) {
 		return (
 			<Card
 				classes={{
-					root: ((hidden) ? 'opacity-0 translate-y-16 ' : '')
-              + 'fixed bottom-4 left-4 z-50 transition-all '
+					root: `${(hidden) ? 'opacity-0 translate-y-16 ' : ''
+					}fixed bottom-4 left-4 z-50 transition-all `
               + 'motion-reduce:transition-none text-black dark:text-white '
               + 'bg-skin-card dark:bg-skin-dark-card',
-				}}>
-				<div className='relative w-128 h-16 flex justify-center items-center'>
+				}}
+			>
+				<div className="relative w-128 h-16 flex justify-center items-center">
 					<Icon classes={{ root: 'flex mx-4' }}>
-						<ErrorIcon/>
+						<ErrorIcon />
 					</Icon>
 					Your browser has denied audio playback
 					<Button
 						classes={{ root: 'mx-4 text-skin-primary-1 darK:text-skin-primary-1' }}
-						variant='text'
+						variant="text"
 						onClick={() => {
 							setHidden(true);
 							setTimeout(() => setDismissed(true), 1000);
-						}}>
+						}}
+					>
 						Dismiss
 					</Button>
 				</div>
@@ -151,32 +155,38 @@ export function ProjectBackgroundMusic({ backgroundMusic }: ProjectBackgroundMus
 
 	return (
 		<>
+			{/* eslint-disable-next-line jsx-a11y/media-has-caption */}
 			<audio
 				ref={audio}
 				controls={false}
-				loop={true}
-				muted={muted}>
-				<source src={backgroundMusic} type='audio/mp3'></source>
+				loop
+				muted={muted}
+			>
+				<source src={backgroundMusic} type="audio/mp3" />
 			</audio>
 			<Card
 				classes={{
-					root: ((hidden) ? 'opacity-0 translate-y-16 ' : '')
-              + 'fixed bottom-4 left-4 z-50 transition-all '
+					root: `${(hidden) ? 'opacity-0 translate-y-16 ' : ''
+					}fixed bottom-4 left-4 z-50 transition-all `
               + 'motion-reduce:transition-none bg-skin-card '
               + 'dark:bg-skin-dark-card',
-				}}>
-				<div className='relative left-3 w-64 h-16 flex justify-center items-center'>
+				}}
+			>
+				<div className="relative left-3 w-64 h-16 flex justify-center items-center">
 					<Grid container spacing={1}>
 						<Grid item xs={2}>
 							<IconButton
 								classes={{ root: 'text-black dark:text-white' }}
-								onClick={() => setMuted(!muted)}>
-								{!muted && (<VolumeUpIcon/>) || (<VolumeOffIcon/>)}
+								onClick={() => setMuted(!muted)}
+							>
+								{!muted ? <VolumeUpIcon /> : <VolumeOffIcon />}
 							</IconButton>
 						</Grid>
-						<Grid item
+						<Grid
+							item
 							classes={{ root: 'flex justify-center items-center' }}
-							xs={8}>
+							xs={8}
+						>
 							<Slider
 								classes={{
 									rail: 'bg-skin-background-2 dark:bg-skin-dark-background-2',
@@ -197,5 +207,3 @@ export function ProjectBackgroundMusic({ backgroundMusic }: ProjectBackgroundMus
 		</>
 	);
 }
-
-export default ProjectBackgroundMusic;

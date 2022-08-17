@@ -112,7 +112,7 @@ class Index extends Phaser.Scene {
 				urls[key] = (s.src ?? s.srcIcon) as string;
 			});
 		this.registry.set('submissionURLs', urls);
-    
+
 		if (!this.registry.get('useFallback')) this.loadDefault();
 		else this.loadFallback();
 
@@ -150,7 +150,7 @@ class Index extends Phaser.Scene {
 			.setInteractive({ pixelPerfect: true, cursor: 'pointer' })
 			.on('pointerup', () => this.toggleBGM());
 
-		this.milestoneToggle = this.add.image(this.width - 5, this.height, `toggle${Router.query.id == '6' ? '4' : '3'}`)
+		this.milestoneToggle = this.add.image(this.width - 5, this.height, `toggle${Router.query.id === '6' ? '4' : '3'}`)
 			.setOrigin(1, 1)
 			.setDepth(5)
 			.setScale(0.8)
@@ -211,9 +211,11 @@ class Index extends Phaser.Scene {
 			// the current routing method.
 			// NOTE: This uses location.pathname because we need a full reload, for
 			// whatever reason, Phaser doesn't like to play nice with SPAs.
-			if (Router.query.id == '6') {
+			if (Router.query.id === '6') {
+				// eslint-disable-next-line no-restricted-globals
 				location.pathname = '/projects/16';
 			} else {
+				// eslint-disable-next-line no-restricted-globals
 				location.pathname = '/projects/6';
 			}
 		});

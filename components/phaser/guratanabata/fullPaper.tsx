@@ -59,18 +59,23 @@ export default class FullPaper extends Phaser.Scene {
 
 		const submission = this.data.get('submission') as ISubmission;
 		this.message = this.ui.text(
-			bgBounds.left + 100, 150,
+			bgBounds.left + 100,
+			150,
 			submission.message as string,
-			64, submission.type === 'text' ? this.bg.displayWidth - 200 : 550,
+			64,
+			submission.type === 'text' ? this.bg.displayWidth - 200 : 550,
 			{
 				align: 'left',
 			},
 		).setOrigin(0, 0) as Phaser.GameObjects.Text;
 
 		this.author = this.ui.text(
-			bgBounds.left + 100, this.height - 120,
+			bgBounds.left + 100,
+			this.height - 120,
 			submission.author as string,
-			48, 850, {
+			48,
+			850,
+			{
 				align: 'left',
 			},
 		).setOrigin(0, 1) as Phaser.GameObjects.Text;

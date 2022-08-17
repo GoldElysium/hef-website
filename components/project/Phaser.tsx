@@ -10,9 +10,9 @@ interface IProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivEle
 	data?: any;
 }
 
-const Links = ({
+function Links({
 	id, scene, config = {}, width, height, data = {},
-}: IProps) => {
+}: IProps) {
 	const router = useRouter();
 	const [isMobile, setMobile] = useState(false);
 	const [hideText, setHide] = useState(false);
@@ -85,7 +85,7 @@ const Links = ({
 			<div id={id ?? 'game'} className="w-screen h-screen overflow-hidden" />
 		</>
 	);
-};
+}
 
 Links.defaultProps = {
 	config: undefined,

@@ -1,4 +1,3 @@
-
 import { createContext } from 'react';
 
 // WIP exparamental context that provides information about different platform
