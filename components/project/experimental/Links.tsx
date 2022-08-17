@@ -5,10 +5,10 @@ export interface ProjectLinksProps {
 	links: ILink[],
 }
 
-export function ProjectLinks({ links }: ProjectLinksProps) {
+export default function ProjectLinks({ links }: ProjectLinksProps) {
 	return (
 		<div className="mt-4">
-			<TextHeader text="Links"/>
+			<TextHeader text="Links" />
 			<div className="flex justify-center space-x-6 px-4 sm:px-0">
 				{links.map((link, index) => (
 					<div
@@ -26,5 +26,3 @@ export function ProjectLinks({ links }: ProjectLinksProps) {
 		</div>
 	);
 }
-
-export default ProjectLinks;

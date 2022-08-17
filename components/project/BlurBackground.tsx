@@ -1,9 +1,9 @@
 import React from 'react';
 
 interface IState {
-	currentImage: string | null,
-	targetImage: string | null,
-	timeout: number,
+	currentImage: string | null;
+	targetImage: string | null;
+	timeout: number;
 }
 
 export default class BlurBackground extends React.Component<{}, IState> {
@@ -16,6 +16,7 @@ export default class BlurBackground extends React.Component<{}, IState> {
 		};
 	}
 
+	// eslint-disable-next-line react/no-unused-class-component-methods
 	setBackgroundImage(to: string) {
 		const { timeout } = this.state;
 		clearTimeout(timeout);
@@ -42,8 +43,7 @@ export default class BlurBackground extends React.Component<{}, IState> {
 					alt=""
 				/>
 				{(targetImage != null)
-					? <img className="absolute w-full h-full object-cover filter blur-xl transform scale-125 blur-background-target" src={targetImage} alt="" />
-					: <></>}
+					&& (<img className="absolute w-full h-full object-cover filter blur-xl transform scale-125 blur-background-target" src={targetImage} alt="" />)}
 			</div>
 		);
 	}

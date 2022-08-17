@@ -1,6 +1,7 @@
 module.exports = {
 	extends: [
-		'next',
+		'next/core-web-vitals',
+		'airbnb',
 		'airbnb-typescript',
 	],
 	parserOptions: {
@@ -26,6 +27,9 @@ module.exports = {
 			'components': [ 'Link' ],
 			'specialLink': [ 'hrefLeft', 'hrefRight' ],
 			'aspects': [ 'invalidHref', 'preferButton' ]
-		}]
+		}],
+		'@next/next/no-img-element': 'off',
+		'import/no-anonymous-default-export': 'off',
+		'react/require-default-props': 'off',
 	}
 }

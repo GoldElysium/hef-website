@@ -27,17 +27,17 @@ export default function DashboardPage() {
 		const savedMinimizedMode = window.localStorage.getItem('minimize');
 		if (savedMinimizedMode !== null) {
 			setMinimize(JSON.parse(savedMinimizedMode));
-			return;
 		}
 	}, []);
 
 	useEffect(() => {
-		for (var key in minimize) {
+		Object.keys(minimize).forEach((key) => {
 			const target = document.getElementById(key);
-			if (!target) continue;
+			if (!target) return;
+
 			if (minimize[key]) target.classList.add('hidden');
 			else target.classList.remove('hidden');
-		}
+		});
 		window.localStorage.setItem('minimize', JSON.stringify(minimize));
 	}, [minimize]);
 
@@ -173,7 +173,7 @@ export default function DashboardPage() {
 							<div className="flex border-b-2 border-red-200 justify-center sm:justify-between items-center text-red-500">
 								<h1 className="text-2xl font-bold text-center sm:text-left ml-auto sm:ml-0">Server list</h1>
 								<div className="flex flex-row">
-									<MinusIcon className="w-8 h-8 mt-2 hover:text-red-700 cursor-pointer" onClick={() => onMinimize('server-list-container')}/>
+									<MinusIcon className="w-8 h-8 mt-2 hover:text-red-700 cursor-pointer" onClick={() => onMinimize('server-list-container')} />
 									<Link href="/dashboard/guild/new">
 										<a className="ml-auto sm:ml-0"><PlusIcon className="w-8 h-8 mt-2 hover:text-red-700 cursor-pointer" /></a>
 									</Link>
@@ -188,7 +188,7 @@ export default function DashboardPage() {
 							<div className="flex border-b-2 border-red-200 justify-center sm:justify-between items-center text-red-500">
 								<h1 className="text-2xl font-bold text-center sm:text-left ml-auto sm:ml-0">Ongoing projects</h1>
 								<div className="flex flex-row">
-									<MinusIcon className="w-8 h-8 mt-2 hover:text-red-700 cursor-pointer" onClick={() => onMinimize('ongoing-projects-container')}/>
+									<MinusIcon className="w-8 h-8 mt-2 hover:text-red-700 cursor-pointer" onClick={() => onMinimize('ongoing-projects-container')} />
 									<Link href="/dashboard/project/new">
 										<a className="ml-auto sm:ml-0"><PlusIcon className="w-8 h-8 mt-2 hover:text-red-700 cursor-pointer" /></a>
 									</Link>
@@ -205,7 +205,7 @@ export default function DashboardPage() {
 									Past
 									projects
 								</h1>
-								<MinusIcon className="w-8 h-8 mt-2 hover:text-red-700 cursor-pointer" onClick={() => onMinimize('past-projects-container')}/>
+								<MinusIcon className="w-8 h-8 mt-2 hover:text-red-700 cursor-pointer" onClick={() => onMinimize('past-projects-container')} />
 							</div>
 							<div id="past-projects-container" className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center">
 								{pastProjects.length > 0 ? pastProjects : <div className="font-bold text-2xl mt-4">None</div>}
@@ -214,7 +214,7 @@ export default function DashboardPage() {
 						<div className="mt-4">
 							<div className="flex border-b-2 border-red-200 justify-center sm:justify-between items-center text-red-500">
 								<h1 className="text-2xl text-red-500 font-bold text-center sm:text-left">Settings</h1>
-								<MinusIcon className="w-8 h-8 mt-2 hover:text-red-700 cursor-pointer" onClick={() => onMinimize('settings-container')}/>
+								<MinusIcon className="w-8 h-8 mt-2 hover:text-red-700 cursor-pointer" onClick={() => onMinimize('settings-container')} />
 							</div>
 							<div className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center">
 								<div id="settings-container" className="mt-4 sm:w-1/3">
@@ -225,12 +225,12 @@ export default function DashboardPage() {
 										<div className="mt-2">{whitelistHtml}</div>
 										<PlusIcon
 											className="w-8 h-8 mt-2 hover:text-gray-500 cursor-pointer"
-											onClick={addWhitelistUser}
+											onClick={() => addWhitelistUser()}
 										/>
 										{whitelist !== editedWhitelist && (
 											<div className="flex items-center">
 												<ReplyIcon className="w-6 h-6 cursor-pointer mr-2" onClick={() => setEditedWhitelist(whitelist)} />
-												<CheckIcon className="w-6 h-6 cursor-pointer ml-2" onClick={saveWhitelist} />
+												<CheckIcon className="w-6 h-6 cursor-pointer ml-2" onClick={() => saveWhitelist()} />
 											</div>
 										)}
 									</div>

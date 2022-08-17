@@ -11,8 +11,6 @@ export default function Dashboard() {
 	}, [session, loading]);
 
 	return (
-		<>
-			{session ? <DashboardPage /> : <></>}
-		</>
+		session ? <DashboardPage /> : null
 	);
 }

@@ -6,11 +6,12 @@ interface IProps {
 }
 
 export default function Footer({ background }: IProps) {
-	const wrapper = useCallback((wrapperDeez: HTMLDivElement) => {
-		if (background != null && wrapperDeez != null) {
-			wrapperDeez.style.backgroundImage = `url(${background})` ;
+	const wrapper = useCallback((wrapperEl: HTMLDivElement) => {
+		if (background && wrapperEl) {
+			// eslint-disable-next-line no-param-reassign
+			wrapperEl.style.backgroundImage = `url(${background})`;
 		}
-	}, [ ]);
+	}, [background]);
 
 	return (
 		<div

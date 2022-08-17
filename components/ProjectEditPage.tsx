@@ -141,7 +141,7 @@ export default function ProjectEditPage({ doc }: IProps) {
 		}
 
 		run();
-	}, []);
+	}, [router.query.id]);
 
 	useEffect(() => {
 		if (
@@ -572,7 +572,7 @@ export default function ProjectEditPage({ doc }: IProps) {
 													className="w-8 h-8 mt-2 ml-4 hover:text-red-700 cursor-pointer"
 												/>
 												<CheckIcon
-													onClick={removeProject}
+													onClick={() => removeProject()}
 													className="w-8 h-8 mt-2 ml-4 hover:text-red-700 cursor-pointer"
 												/>
 											</>
@@ -677,7 +677,7 @@ export default function ProjectEditPage({ doc }: IProps) {
 										<label htmlFor="status" className="font-bold">Links</label>
 										<PlusIcon
 											className="w-6 h-6 mt-1 hover:text-gray-500 cursor-pointer"
-											onClick={addLink}
+											onClick={() => addLink()}
 										/>
 									</div>
 									{linksHtml}
@@ -686,7 +686,7 @@ export default function ProjectEditPage({ doc }: IProps) {
 							<div>
 								<div className="flex justify-between">
 									<h2 className="text-xl font-bold text-center sm:text-left text-red-500 mt-4">Media</h2>
-									<PlusIcon className="w-8 h-8 mt-2 text-red-500 cursor-pointer" onClick={addGalleryItem} />
+									<PlusIcon className="w-8 h-8 mt-2 text-red-500 cursor-pointer" onClick={() => addGalleryItem()} />
 								</div>
 								<div>
 									{galleryHtml}
@@ -696,7 +696,7 @@ export default function ProjectEditPage({ doc }: IProps) {
 							<div>
 								<div className="flex justify-between">
 									<h2 className="text-xl font-bold text-center sm:text-left text-red-500 mt-4">Submissions</h2>
-									<PlusIcon className="w-8 h-8 mt-2 text-red-500 cursor-pointer" onClick={addSubmission} />
+									<PlusIcon className="w-8 h-8 mt-2 text-red-500 cursor-pointer" onClick={() => addSubmission()} />
 								</div>
 								<div>
 									{submissionsHtml}

@@ -1,5 +1,6 @@
-import { ReactNode, useRef } from 'react';
-import { createContext, useState } from 'react';
+import {
+	ReactNode, useRef, createContext, useState, useMemo,
+} from 'react';
 
 export const ProjectTabsContext = createContext<ProjectTabsContext | null>(null);
 
@@ -11,34 +12,35 @@ export interface ProjectTabsContext {
 }
 
 export interface ProjectTabsProps {
-	default: string,
+	defaultText: string,
 	children: ReactNode | ReactNode[],
 }
 
-export function ProjectTabs(props: ProjectTabsProps) {
+export default function ProjectTabs({ defaultText, children }: ProjectTabsProps) {
 	const [child, rawSetChild] = useState<ReactNode | null>(null);
 	const [hasSetChild, setHasSetChild] = useState<boolean>(false);
 
 	const associations = useRef<Map<string, ReactNode>>(new Map());
 
-	function setChild(childDeez: ReactNode) {
-		rawSetChild(childDeez);
+	function setChild(childEl: ReactNode) {
+		rawSetChild(childEl);
 		setHasSetChild(true);
 	}
 
-	function setAssociation(label: string, childDeez: ReactNode) {
-		associations.current.set(label, childDeez);
-		if (!hasSetChild && props.default == label) {
-			setChild(childDeez);
+	function setAssociation(label: string, childEl: ReactNode) {
+		associations.current.set(label, childEl);
+		if (!hasSetChild && defaultText === label) {
+			setChild(childEl);
 		}
 	}
 
+	// eslint-disable-next-line max-len,react-hooks/exhaustive-deps
+	const providerValue = useMemo(() => ({ child, setChild, setAssociation }), [child]);
+
 	return (
-		<ProjectTabsContext.Provider value={{ child: child, setChild, setAssociation }}>
-			<div className="flex flex-row flex-wrap justify-evenly content-center my-4">{props.children}</div>
+		<ProjectTabsContext.Provider value={providerValue}>
+			<div className="flex flex-row flex-wrap justify-evenly content-center my-4">{children}</div>
 			<div>{child}</div>
 		</ProjectTabsContext.Provider>
 	);
 }
-
-export default ProjectTabs;

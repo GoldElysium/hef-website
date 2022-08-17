@@ -6,8 +6,8 @@ interface IProps {
 	links: ILink[] | undefined
 }
 
-const Links = ({ links }: IProps) => {
-	if (!links || links.length === 0) return <></>;
+function Links({ links }: IProps) {
+	if (!links || links.length === 0) return null;
 
 	return (
 		<div className="mt-4">
@@ -27,6 +27,6 @@ const Links = ({ links }: IProps) => {
 			</div>
 		</div>
 	);
-};
+}
 
 export default Links;

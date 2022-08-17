@@ -1,5 +1,6 @@
-import { ReactNode, useEffect } from 'react';
-import { createContext, useContext, useMemo } from 'react';
+import {
+	ReactNode, useEffect, createContext, useContext, useMemo,
+} from 'react';
 
 import { ProjectTabsContext } from './Tabs';
 
@@ -15,32 +16,32 @@ export interface ProjectTabProps {
 	children: ReactNode | ReactNode[],
 }
 
-export function ProjectTab({ label, children }: ProjectTabProps) {
-	const childrenWrapper = useMemo(() => {
-		return (
-			<ProjectTabContext.Provider value={{ label }}>
-				{children}
-			</ProjectTabContext.Provider>
-		);
-	}, [ label, children ]);
+export default function ProjectTab({ label, children }: ProjectTabProps) {
+	const labelMemo = useMemo(() => ({ label }), [label]);
+
+	const childrenWrapper = useMemo(() => (
+		<ProjectTabContext.Provider value={labelMemo}>
+			{children}
+		</ProjectTabContext.Provider>
+	), [labelMemo, children]);
 
 	const { child, setChild, setAssociation } = useContext(ProjectTabsContext)!;
 
-	useEffect(() => setAssociation(label, childrenWrapper), [ ]);
+	useEffect(() => setAssociation(label, childrenWrapper), [childrenWrapper, label, setAssociation]);
 
 	return (
-		<button>
+		<button type="button">
+			{/* eslint-disable-next-line max-len */}
+			{/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions */}
 			<h2
 				className={
-					'text-2xl text-center text-skin-primary-1 dark:text-skin-dark-primary-1 select-none mx-4 '
-					+ ((childrenWrapper == child) ? 'font-bold' : '')
+					`text-2xl text-center text-skin-primary-1 dark:text-skin-dark-primary-1 select-none mx-4 ${
+						(childrenWrapper === child) ? 'font-bold' : ''}`
 				}
-				onClick={(e) => e.button == 0 && setChild(childrenWrapper)}
+				onClick={(e) => e.button === 0 && setChild(childrenWrapper)}
 			>
 				{label}
 			</h2>
 		</button>
 	);
 }
-
-export default ProjectTab;

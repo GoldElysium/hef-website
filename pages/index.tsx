@@ -1,3 +1,6 @@
+import { GetStaticProps } from 'next';
+import mongoose from 'mongoose';
+import safeJsonStringify from 'safe-json-stringify';
 import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
 import Card from '../components/Card';
@@ -5,9 +8,6 @@ import Footer from '../components/Footer';
 import TextHeader from '../components/TextHeader';
 import Guild, { IGuild } from '../models/Guild';
 import Project, { IProject } from '../models/Project';
-import { GetStaticProps } from 'next';
-import mongoose from 'mongoose';
-import safeJsonStringify from 'safe-json-stringify';
 
 interface IProps {
 	guilds: string;
@@ -45,13 +45,13 @@ export default function Home({ guilds, projects }: IProps) {
 
 	return (
 		<div className="flex flex-col h-full min-h-screen bg-skin-background-1 dark:bg-skin-dark-background-1">
-			<Navbar/>
-			<Hero/>
+			<Navbar />
+			<Hero />
 			<div className="flex-grow">
 				<div className="my-16 w-full flex flex-col items-center">
 					<div className="max-w-4xl w-full mx-4">
 						<div>
-							<TextHeader text="Featured projects"/>
+							<TextHeader text="Featured projects" />
 							<div className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center">
 								{projectHtml.length > 0 ? (
 									projectHtml
@@ -61,7 +61,7 @@ export default function Home({ guilds, projects }: IProps) {
 							</div>
 						</div>
 						<div className="mt-10">
-							<TextHeader text="EN Servers"/>
+							<TextHeader text="EN Servers" />
 							<div className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center">
 								{guildHtml.length > 0 ? (
 									guildHtml
@@ -73,7 +73,7 @@ export default function Home({ guilds, projects }: IProps) {
 					</div>
 				</div>
 			</div>
-			<Footer/>
+			<Footer />
 		</div>
 	);
 }

@@ -7,12 +7,16 @@ export default function NoticeBanner() {
 	return (
 		<div>
 			<div
-				className="h-16 min-w-screen max-w-screen overflow-none flex justify-center items-center gap-4 bg-[#FFE5DA] py-2 px-2">
+				className="h-16 min-w-screen max-w-screen overflow-none flex justify-center items-center gap-4 bg-[#FFE5DA] py-2 px-2"
+			>
 				<span className="text-[#323232] md:text-lg font-semibold">
 					Many projects are unavailable
 				</span>
-				<button className="bg-white px-4 py-2 bg-[#EF4444] hover:bg-red-400 text-white rounded-full md:text-lg"
-					onClick={() => setDialogOpen(true)}>
+				<button
+					type="button"
+					className="bg-white px-4 py-2 bg-[#EF4444] hover:bg-red-400 text-white rounded-full md:text-lg"
+					onClick={() => setDialogOpen(true)}
+				>
 					Read more
 				</button>
 			</div>
@@ -28,7 +32,7 @@ export default function NoticeBanner() {
 						leaveFrom="opacity-100"
 						leaveTo="opacity-0"
 					>
-						<div className="fixed inset-0 bg-black bg-opacity-60"/>
+						<div className="fixed inset-0 bg-black bg-opacity-60" />
 					</Transition.Child>
 
 					<div className="fixed inset-0 overflow-y-auto">
@@ -43,7 +47,8 @@ export default function NoticeBanner() {
 								leaveTo="opacity-0 scale-95"
 							>
 								<Dialog.Panel
-									className="w-full max-w-4xl transform overflow-hidden rounded-2xl p-6 text-left align-middle shadow-xl transition-all bg-white">
+									className="w-full max-w-4xl transform overflow-hidden rounded-2xl p-6 text-left align-middle shadow-xl transition-all bg-white"
+								>
 									<Dialog.Title
 										as="h3"
 										className="text-lg md:text-2xl font-semibold leading-6 text-black"

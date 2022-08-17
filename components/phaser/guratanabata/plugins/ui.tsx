@@ -34,8 +34,10 @@ export default class UI extends Phaser.Plugins.ScenePlugin {
 	}
 
 	// eslint-disable-next-line class-methods-use-this
-	sleep(ms = 1000) {
-		return new Promise((resolve) => setTimeout(resolve, ms));
+	sleep(ms = 1000): Promise<void> {
+		return new Promise((resolve) => {
+			setTimeout(() => resolve(), ms);
+		});
 	}
 
 	// eslint-disable-next-line class-methods-use-this
