@@ -89,7 +89,7 @@ export default function ProjectPage({ guild, project, submissions }: ProjectPage
 						<div className="my-16 w-full flex flex-col items-center">
 							<div className="max-w-4xl w-full mx-4 break-words md:break-normal">
 								{(!project.flags?.includes('disableTabs') && (
-									<ProjectTabs defaultText="About">
+									<ProjectTabs defaultTab="About">
 										<ProjectTab label="About">
 											<ProjectAbout project={project} />
 											{project.flags?.includes('sanaSendoff') && (

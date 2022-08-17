@@ -12,11 +12,11 @@ export interface ProjectTabsContext {
 }
 
 export interface ProjectTabsProps {
-	defaultText: string,
+	defaultTab: string,
 	children: ReactNode | ReactNode[],
 }
 
-export default function ProjectTabs({ defaultText, children }: ProjectTabsProps) {
+export default function ProjectTabs({ defaultTab, children }: ProjectTabsProps) {
 	const [child, rawSetChild] = useState<ReactNode | null>(null);
 	const [hasSetChild, setHasSetChild] = useState<boolean>(false);
 
@@ -29,7 +29,7 @@ export default function ProjectTabs({ defaultText, children }: ProjectTabsProps)
 
 	function setAssociation(label: string, childEl: ReactNode) {
 		associations.current.set(label, childEl);
-		if (!hasSetChild && defaultText === label) {
+		if (!hasSetChild && defaultTab === label) {
 			setChild(childEl);
 		}
 	}
