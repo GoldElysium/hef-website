@@ -69,6 +69,7 @@ export default function ProjectTimeline({ events }: ProjectTimelineProps) {
 						</a>
 						{' '}
 						and Sana makes
+						{' '}
 						<a href="https://twitter.com/tsukumosana/status/1427436063832776714" target="_blank" rel="noreferrer noopener">her first tweet</a>
 						.
 					</div>
@@ -441,6 +442,7 @@ export default function ProjectTimeline({ events }: ProjectTimelineProps) {
 						{' '}
 						<a href="https://www.youtube.com/watch?v=BnW8BrppGr8&t=11710s" target="_blank" rel="noreferrer noopener">
 							tearing up over
+							{' '}
 							<em>Sana&apos;s Space Birthday Project</em>
 						</a>
 						{' '}
@@ -448,6 +450,7 @@ export default function ProjectTimeline({ events }: ProjectTimelineProps) {
 						{' '}
 						<a href="https://www.youtube.com/watch?v=BnW8BrppGr8&t=12227s" target="_blank" rel="noreferrer noopener">
 							showing off the
+							{' '}
 							<em>BEEG SANA</em>
 							{' '}
 							fangame
