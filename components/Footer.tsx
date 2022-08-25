@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 import { HeartIcon } from '@heroicons/react/24/solid';
+import Script from 'next/script';
 
 interface IProps {
 	background?: string,
@@ -31,8 +32,7 @@ export default function Footer({ background }: IProps) {
 					fans
 				</a>
 			</p>
-			<script
-				defer
+			<Script
 				src="https://static.cloudflareinsights.com/beacon.min.js"
 				data-cf-beacon='{"token": "5896757c09e04949bf74e7c34efd419a"}'
 			/>
