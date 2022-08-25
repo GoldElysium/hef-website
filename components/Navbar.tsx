@@ -1,8 +1,8 @@
 import Link from 'next/link';
-import { MenuIcon } from '@heroicons/react/solid';
+import { Bars3Icon } from '@heroicons/react/24/solid';
 import { Menu, Transition } from '@headlessui/react';
 import { useState, Fragment } from 'react';
-import { ClipboardListIcon, HomeIcon } from '@heroicons/react/outline';
+import { ListBulletIcon, HomeIcon } from '@heroicons/react/24/outline';
 import Head from './Head';
 import DarkModeToggle from './DarkModeToggle';
 import NoticeBanner from './NoticeBanner';
@@ -32,7 +32,7 @@ export default function Navbar({ disableHead }: IProps) {
 					<div className="sm:hidden">
 						<Menu as="div">
 							<Menu.Button>
-								<MenuIcon onClick={() => { setMenuOpen(!menuOpen); }} className="h-10 w-10 -mb-1 text-white sm:hidden" />
+								<Bars3Icon onClick={() => { setMenuOpen(!menuOpen); }} className="h-10 w-10 -mb-1 text-white sm:hidden" />
 							</Menu.Button>
 							<Transition
 								show={menuOpen}
@@ -58,7 +58,7 @@ export default function Navbar({ disableHead }: IProps) {
 										<Menu.Item>
 											<Link href="/projects">
 												<a type="button" className="flex rounded-md items-center w-full mt-1">
-													<ClipboardListIcon className="h-6 w-6 text-skin-primary-1 mr-2" />
+													<ListBulletIcon className="h-6 w-6 text-skin-primary-1 mr-2" />
 													Projects
 												</a>
 											</Link>

@@ -1,8 +1,8 @@
 import ReactPlayer from 'react-player';
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
+import { useState } from 'react';
 import { Media, Project } from '../../types/payload-types';
 import TextHeader from '../TextHeader';
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/outline';
-import { useState } from 'react';
 
 function CurrentGalleryItem({ media }: { media: Exclude<Project['media'], undefined>[number] }) {
 	if (media.type === 'video') {

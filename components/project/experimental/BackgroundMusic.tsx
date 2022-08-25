@@ -1,5 +1,7 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { ExclamationCircleIcon, VolumeOffIcon, VolumeUpIcon } from '@heroicons/react/solid';
+import {
+	useCallback, useEffect, useRef, useState,
+} from 'react';
+import { ExclamationCircleIcon, SpeakerXMarkIcon, SpeakerWaveIcon } from '@heroicons/react/24/solid';
 
 export interface ProjectBackgroundMusicProps {
 	backgroundMusic: string,
@@ -118,12 +120,14 @@ export default function ProjectBackgroundMusic({ backgroundMusic }: ProjectBackg
 			<div
 				className={
 					`${(hidden) ? 'opacity-0 translate-y-16' : ''} fixed bottom-4 left-4 z-50 transition-all duration-500 motion-reduce:transition-none text-black dark:text-white bg-skin-card dark:bg-skin-dark-card px-4 rounded-lg`
-				}>
-				<div className='relative w-128 h-16 flex justify-center items-center gap-2'>
-					<ExclamationCircleIcon className="w-6 h-6"/>
+				}
+			>
+				<div className="relative w-128 h-16 flex justify-center items-center gap-2">
+					<ExclamationCircleIcon className="w-6 h-6" />
 					Your browser has denied audio playback
 					<button
-						className={'mx-4 text-skin-primary-1 darK:text-skin-primary-1'}
+						type="button"
+						className="mx-4 text-skin-primary-1 darK:text-skin-primary-1"
 						onClick={() => {
 							setHidden(true);
 							setTimeout(() => setDismissed(true), 1000);
@@ -155,12 +159,14 @@ export default function ProjectBackgroundMusic({ backgroundMusic }: ProjectBackg
 						type="checkbox"
 						className="text-black dark:text-white"
 						checked={muted}
-						onChange={() => setMuted(!muted)} />
+						onChange={() => setMuted(!muted)}
+					/>
 
-					<VolumeUpIcon className="swap-off w-6 h-6" />
-					<VolumeOffIcon className="swap-on w-6 h-6"/>
+					<SpeakerWaveIcon className="swap-off w-6 h-6" />
+					<SpeakerXMarkIcon className="swap-on w-6 h-6" />
 				</label>
-				<input type="range"
+				<input
+					type="range"
 					disabled={muted}
 					max={1}
 					min={0}

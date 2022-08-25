@@ -1,18 +1,22 @@
 import ReactPlayer from 'react-player';
-import { createRef, Suspense, useEffect, useMemo, useState } from 'react';
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/outline';
+import {
+	createRef, Suspense, useEffect, useMemo, useState,
+} from 'react';
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { GetStaticPaths, GetStaticProps } from 'next';
+import dynamic from 'next/dynamic';
 import Head from '../../components/Head';
 import BlurBackground from '../../components/project/BlurBackground';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 import TextHeader from '../../components/TextHeader';
-import { Flag, Guild, Media, Project, Submission, SubmissionMedia } from '../../types/payload-types';
+import {
+	Flag, Guild, Media, Project, Submission, SubmissionMedia,
+} from '../../types/payload-types';
 import PayloadResponse from '../../types/PayloadResponse';
 import DescriptionSerializer from '../../components/DescriptionSerializer';
-import dynamic from 'next/dynamic';
 
 const Phaser = dynamic(() => import('../../components/project/Phaser'));
 const ExperimentalProjectPage = dynamic(() => import('../../components/project/experimental/Page'));
@@ -45,6 +49,95 @@ interface IProps {
 	submissions: Submission[]
 }
 
+interface SubmissionsProps {
+	shownSubmissions: Submission[]
+}
+
+function Submissions({ shownSubmissions }: SubmissionsProps) {
+	// eslint-disable-next-line no-undef
+	const submissionElements: JSX.Element[] = [];
+	shownSubmissions.forEach((submission, index) => {
+		submissionElements.push(
+			<div className="w-full max-h-full text-black dark:text-white" key={submission.id as unknown as string}>
+				<div className="w-full flex mt-4 h-14">
+					{submission.srcIcon && (
+						<img className="object-cover w-14 h-14 rounded-full" src={(submission.srcIcon as SubmissionMedia).sizes!.icon!.url} alt="author icon" />
+					)}
+					{submission.author && (
+						<div className="text-lg mt-3 ml-4">
+							From:
+							{' '}
+							<span className="font-bold">{submission.author}</span>
+						</div>
+					)}
+					<div className="flex-grow" />
+					<p className="text-xl mt-3 mr-4">{`#${index + 1}`}</p>
+				</div>
+				<div className="w-full mt-3">
+					{submission.type === 'video' && (
+						<ReactPlayer
+							width="100%"
+							height="100%"
+							url={submission.url!}
+							controls
+							light
+							className="mb-4 mt-4"
+						/>
+					)}
+					{submission.type === 'image' && (
+						<div className="mt-4 mb-2 w-full h-full max-h-[750px] flex justify-center">
+							{/* eslint-disable-next-line @next/next/no-img-element */}
+							<img
+								className="max-w-10/12 object-contain mb-4"
+								src={(submission.media as SubmissionMedia).sizes?.thumbnail?.url}
+								alt=""
+								loading="lazy"
+							/>
+						</div>
+					)}
+					{submission.message && (
+						<p className="mx-4 mb-4 w-auto h-full overflow-auto whitespace-pre-line dark:text-gray-300">
+							{submission.message}
+						</p>
+					)}
+					<hr className="border-t-1 border-dashed border-gray-400" />
+				</div>
+			</div>,
+		);
+	});
+
+	return (
+		<div className="w-full h-full flex justify-center">
+			<div className="sm:w-11/12 md:w-10/12 h-full">
+				{submissionElements}
+			</div>
+		</div>
+	);
+}
+
+interface GalleryItemProps {
+	media: Project['media'];
+	index: number
+}
+
+function CurrentGalleryItem({ media, index }: GalleryItemProps) {
+	if (!media) return null;
+	if (media[index].type === 'video') {
+		return (
+			<ReactPlayer
+				width="100%"
+				height="100%"
+				url={media[index].url!}
+				controls
+				light
+			/>
+		);
+	} if (media[index].type === 'image') {
+		return <img className="max-w-full max-h-full object-contain" src={(media[index].media as Media).sizes!.thumbnail!.url} alt="" loading="lazy" />;
+	}
+	return <p>Invalid media</p>;
+}
+
 // eslint-disable-next-line max-len
 export default function ProjectPage({ project, submissions }: IProps) {
 	const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
@@ -63,89 +156,9 @@ export default function ProjectPage({ project, submissions }: IProps) {
 		setShownSubmissions(submissions.slice(0, SUBMISSIONS_PER_LOAD));
 	}, [submissions]);
 
-	function CurrentGalleryItem() {
-		if (!project.en.media) return <></>;
-		if (project.en.media[currentMediaIndex].type === 'video') {
-			return (
-				<ReactPlayer
-					width="100%"
-					height="100%"
-					url={project.en.media[currentMediaIndex].url!}
-					controls
-					light
-				/>
-			);
-		} if (project.en.media[currentMediaIndex].type === 'image') {
-			return <img className="max-w-full max-h-full object-contain" src={(project.en.media[currentMediaIndex].media as Media).sizes!.thumbnail!.url} alt="" loading="lazy" />;
-		}
-		return <p>Invalid media</p>;
-	}
-
-	function Submissions() {
-		// eslint-disable-next-line no-undef
-		const submissionElements: JSX.Element[] = [];
-		shownSubmissions.forEach((submission, index) => {
-			submissionElements.push(
-				<div className="w-full max-h-full text-black dark:text-white" key={submission.id as unknown as string}>
-					<div className="w-full flex mt-4 h-14">
-						{submission.srcIcon && (
-							<img className="object-cover w-14 h-14 rounded-full" src={(submission.srcIcon as SubmissionMedia).sizes!.icon!.url} alt="author icon" />
-						)}
-						{submission.author && (
-							<div className="text-lg mt-3 ml-4">
-								From:
-								{' '}
-								<span className="font-bold">{submission.author}</span>
-							</div>
-						)}
-						<div className="flex-grow" />
-						<p className="text-xl mt-3 mr-4">{`#${index + 1}`}</p>
-					</div>
-					<div className="w-full mt-3">
-						{submission.type === 'video' && (
-							<ReactPlayer
-								width="100%"
-								height="100%"
-								url={submission.url!}
-								controls
-								light
-								className="mb-4 mt-4"
-							/>
-						)}
-						{submission.type === 'image' && (
-							<div className="mt-4 mb-2 w-full h-full max-h-[750px] flex justify-center">
-								{/* eslint-disable-next-line @next/next/no-img-element */}
-								<img
-									className="max-w-10/12 object-contain mb-4"
-									src={(submission.media as SubmissionMedia).sizes?.thumbnail?.url}
-									alt=""
-									loading="lazy"
-								/>
-							</div>
-						)}
-						{submission.message && (
-							<p className="mx-4 mb-4 w-auto h-full overflow-auto whitespace-pre-line dark:text-gray-300">
-								{submission.message}
-							</p>
-						)}
-						<hr className="border-t-1 border-dashed border-gray-400" />
-					</div>
-				</div>,
-			);
-		});
-
-		return (
-			<div className="w-full h-full flex justify-center">
-				<div className="sm:w-11/12 md:w-10/12 h-full">
-					{submissionElements}
-				</div>
-			</div>
-		);
-	}
-
 	if (project.en.flags?.includes('experimental')) {
 		return (
-			<Suspense fallback={'Loading...'}>
+			<Suspense fallback="Loading...">
 				<ExperimentalProjectPage project={project} submissions={submissions} />
 			</Suspense>
 		);
@@ -164,12 +177,12 @@ export default function ProjectPage({ project, submissions }: IProps) {
 					image={(project.en.image as Media).sizes?.thumbnail?.url ?? 'https://holoen.fans/img/logo.png'}
 				/>
 				<BlurBackground ref={(bg) => { (ref as any).current = bg; }} />
-				<Suspense fallback={'Loading...'}>
+				<Suspense fallback="Loading...">
 					<Phaser
 						scene="guratanabata"
 						data={{
 							setBackgroundImage: (to: string) => ref.current?.setBackgroundImage(to),
-							submissions: submissions,
+							submissions,
 						}}
 					/>
 				</Suspense>
@@ -220,7 +233,7 @@ export default function ProjectPage({ project, submissions }: IProps) {
 										<TextHeader>Gallery</TextHeader>
 										<div className="flex flex-col items-center pt-2">
 											<div className="w-full h-52 sm:w-8/12 sm:h-96">
-												<CurrentGalleryItem />
+												<CurrentGalleryItem media={project.en.media} index={currentMediaIndex} />
 											</div>
 											<div className="flex mt-2 font-bold items-center justify-center text-center">
 												<ChevronLeftIcon
@@ -290,7 +303,7 @@ export default function ProjectPage({ project, submissions }: IProps) {
 													loader={<p className="text-black dark:text-white text-center mt-4">Loading...</p>}
 													scrollThreshold="500px"
 												>
-													<Submissions />
+													<Submissions shownSubmissions={shownSubmissions} />
 												</InfiniteScroll>
 											</div>
 										</div>
@@ -327,7 +340,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
 	// Fetch EN and JP version for page, CMS will fallback to EN for any fields not translated
 	const enProjectRes = await fetch(`${process.env.CMS_URL!}/api/projects?where[slug][equals]=${slug}&depth=2`);
-	let enProject = (await enProjectRes.json() as PayloadResponse<Project>).docs[0];
+	const enProject = (await enProjectRes.json() as PayloadResponse<Project>).docs[0];
 	enProject.flags = (enProject.flags as Flag[] ?? []).map((flag) => flag.code);
 
 	const jpProjectRes = await fetch(`${process.env.CMS_URL!}/api/projects?where[slug][equals]=${slug}&depth=0&locale=jp`);
@@ -341,18 +354,20 @@ export const getStaticProps: GetStaticProps = async (context) => {
 	async function fetchNextSubmissions() {
 		// Fetch next page
 		const submissionsRes = await fetch(`${process.env.CMS_URL!}/api/submissions?where[project][equals]=${enProject.id}&limit=100&page=${page}&depth=0`);
-		const body: PayloadResponse<Submission> =  await submissionsRes.json();
+		const body: PayloadResponse<Submission> = await submissionsRes.json();
 
 		// Process submissions
 		const tasks = body.docs.map(async (submission) => {
 			// Fetch media if needed
 			if (submission.srcIcon) {
 				const mediaFetch = await fetch(`${process.env.CMS_URL!}/api/submission-media/${submission.srcIcon as string}`);
+				// eslint-disable-next-line no-param-reassign
 				submission.srcIcon = await mediaFetch.json();
 			}
 
 			if (submission.media) {
 				const mediaFetch = await fetch(`${process.env.CMS_URL!}/api/submission-media/${submission.media as string}`);
+				// eslint-disable-next-line no-param-reassign
 				submission.media = await mediaFetch.json();
 			}
 
@@ -366,6 +381,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 	}
 
 	while (moreSubmissions) {
+		// eslint-disable-next-line no-await-in-loop
 		await fetchNextSubmissions();
 	}
 
@@ -374,6 +390,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
 			project: {
 				en: {
 					...enProject,
+					// eslint-disable-next-line max-len
 					devprops: enProject.devprops ? enProject.devprops.reduce((a, v) => ({ ...a, [v.key]: v.value }), {}) : {},
 				},
 				jp: {

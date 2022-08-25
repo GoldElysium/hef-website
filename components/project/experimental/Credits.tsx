@@ -1,10 +1,16 @@
 import { useMemo } from 'react';
 
 import ProjectCredit from './Credit';
-import { ICredit } from '../../../models/Project';
 
 export interface ProjectCreditsProps {
-	credits: ICredit[],
+	credits: {
+		type: 'artwork' | 'code' | 'music' | 'organization';
+		user: string;
+		pfp: string;
+		github?: string;
+		twitter?: string;
+		youtube?: string;
+	}[],
 }
 
 export default function ProjectCredits({ credits }: ProjectCreditsProps) {
@@ -18,7 +24,7 @@ export default function ProjectCredits({ credits }: ProjectCreditsProps) {
 				case 'code': _coders.push(credit); break;
 			}
 			return [_organizers, _artists, _musicians, _coders];
-		}, [[], [], [], []] as ICredit[][])
+		}, [[], [], [], []] as ProjectCreditsProps['credits'][])
 		.map((type) => type.sort((firstCredit, secondCredit) => {
 			if (firstCredit.user < secondCredit.user) return -1;
 			if (firstCredit.user > secondCredit.user) return 1;

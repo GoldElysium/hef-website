@@ -1,9 +1,9 @@
+import { GetStaticProps } from 'next';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 import Card from '../../components/Card';
 import TextHeader from '../../components/TextHeader';
-import { GetStaticProps } from 'next';
 import PayloadResponse from '../../types/PayloadResponse';
 import { Project } from '../../types/payload-types';
 
@@ -16,7 +16,8 @@ interface IProps {
 	}[];
 }
 
-export default function Projects({ en }: IProps) {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export default function Projects({ en, jp }: IProps) {
 	const ongoing = en.filter((project: Project) => project.status === 'ongoing');
 	const ongoingProjects = ongoing.map((project: Project) => (
 		<Card key={project.id} title={project.title} description={project.shortDescription} button="View" url={`/projects/${project.slug}`} internal />
@@ -72,7 +73,7 @@ export const getStaticProps: GetStaticProps = async () => {
 
 		enProjects = enProjects.concat(enBody.docs);
 
-		jpBody.docs.map((project) => {
+		jpBody.docs.forEach((project) => {
 			jpProjects.push({
 				title: project.title,
 				shortDescription: project.shortDescription,
@@ -86,6 +87,7 @@ export const getStaticProps: GetStaticProps = async () => {
 	}
 
 	while (moreProjects) {
+		// eslint-disable-next-line no-await-in-loop
 		await fetchNextGuilds();
 	}
 

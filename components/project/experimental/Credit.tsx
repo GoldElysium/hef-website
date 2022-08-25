@@ -2,19 +2,24 @@ import { Icon } from '@mdi/react';
 import { mdiGithub, mdiTwitter, mdiYoutube } from '@mdi/js';
 import { useMemo } from 'react';
 
-import { ICredit } from '../../../models/Project';
-
 export interface ProjectCreditProps {
-	credit: ICredit,
+	credit: {
+		type: 'artwork' | 'code' | 'music' | 'organization';
+		user: string;
+		pfp: string;
+		github?: string;
+		twitter?: string;
+		youtube?: string;
+	},
 }
 
 export default function ProjectCredit({ credit }: ProjectCreditProps) {
 	const socials = useMemo(() => {
 		const temp = [];
 
-		if (credit.youtube != null) temp.push({ type: 'youtube', link: credit.youtube! });
-		if (credit.twitter != null) temp.push({ type: 'twitter', link: credit.twitter! });
-		if (credit.github != null) temp.push({ type: 'github', link: credit.github! });
+		if (credit.youtube) temp.push({ type: 'youtube', link: credit.youtube });
+		if (credit.twitter) temp.push({ type: 'twitter', link: credit.twitter });
+		if (credit.github) temp.push({ type: 'github', link: credit.github });
 
 		return temp;
 	}, [credit]);

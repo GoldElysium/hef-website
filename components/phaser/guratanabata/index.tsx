@@ -209,9 +209,11 @@ class Index extends Phaser.Scene {
 		this.game.events.once('destroy', () => {
 			// NOTE: This uses location.pathname because we need a full reload, for
 			// whatever reason, Phaser doesn't like to play nice with SPAs.
-			if (Router.query.slug == 'gura3mil') {
+			if (Router.query.slug === 'gura3mil') {
+				// eslint-disable-next-line no-restricted-globals
 				location.pathname = '/projects/gura4mil';
 			} else {
+				// eslint-disable-next-line no-restricted-globals
 				location.pathname = '/projects/gura3mil';
 			}
 		});

@@ -1,9 +1,9 @@
+import { GetStaticProps } from 'next';
 import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
 import Card from '../components/Card';
 import Footer from '../components/Footer';
 import TextHeader from '../components/TextHeader';
-import { GetStaticProps } from 'next';
 import { Guild, Media, Project } from '../types/payload-types';
 import PayloadResponse from '../types/PayloadResponse';
 
@@ -92,7 +92,6 @@ export const getStaticProps: GetStaticProps = async () => {
 		id: string;
 	}
 
-
 	const enRes = await fetch(`${process.env.CMS_URL!}/api/globals/featured-projects?depth=3`);
 	const enProjects: FeaturedProjectsResponse = await enRes.json();
 
@@ -121,7 +120,7 @@ export const getStaticProps: GetStaticProps = async () => {
 
 		enGuilds = enGuilds.concat(enBody.docs);
 
-		jpBody.docs.map((guild) => {
+		jpBody.docs.forEach((guild) => {
 			jpGuilds.push({
 				description: guild.description,
 			});
@@ -133,6 +132,7 @@ export const getStaticProps: GetStaticProps = async () => {
 	}
 
 	while (moreGuilds) {
+		// eslint-disable-next-line no-await-in-loop
 		await fetchNextGuilds();
 	}
 
