@@ -127,13 +127,14 @@ function CurrentGalleryItem({ media, index }: GalleryItemProps) {
 			<ReactPlayer
 				width="100%"
 				height="100%"
+				key={media[index].id!}
 				url={media[index].url!}
 				controls
 				light
 			/>
 		);
 	} if (media[index].type === 'image') {
-		return <img className="max-w-full max-h-full object-contain" src={(media[index].media as Media).sizes!.thumbnail!.url} alt="" loading="lazy" />;
+		return <img className="max-w-full max-h-full object-contain" key={media[index].id!} src={(media[index].media as Media).sizes!.thumbnail!.url} alt="" loading="lazy" />;
 	}
 	return <p>Invalid media</p>;
 }
@@ -276,9 +277,9 @@ export default function ProjectPage({ project, submissions }: IProps) {
 										<TextHeader>Links</TextHeader>
 										<div className="flex justify-center space-x-6 px-4 sm:px-0">
 											{project.en.links
-											&& project.en.links.map((link, index: number) => (
+											&& project.en.links.map((link) => (
 												<div
-													key={`link-${index}` /* eslint-disable-line react/no-array-index-key */}
+													key={`link-${link.name}-${link.url}`}
 													className="rounded-3xl font-bold w-[6rem] h-10 flex items-center justify-center mt-4 content-end
 													bg-skin-secondary-1 dark:bg-skin-dark-secondary-1 text-white hover:text-opacity-70"
 												>
