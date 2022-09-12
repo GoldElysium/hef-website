@@ -1,8 +1,27 @@
-import { Fragment, useState, Suspense } from 'react';
+import { Fragment, Suspense, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
+import useSWR, { Fetcher } from 'swr';
+import { NoticeBanner as APINoticeBanner } from '../types/payload-types';
+import DescriptionSerializer from './DescriptionSerializer';
+
+const fetcher: Fetcher<APINoticeBanner> = () => fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/globals/notice`).then((res) => res.json());
+
+function useNoticeBanner() {
+	// eslint-disable-next-line max-len
+	const { data, error } = useSWR<APINoticeBanner>('true', fetcher, { refreshInterval: 10 * 60 * 1000 });
+	return {
+		data,
+		isLoading: !error && !data,
+		isError: error,
+	};
+}
 
 export default function NoticeBanner() {
+	const { data, isError, isLoading } = useNoticeBanner();
 	const [dialogOpen, setDialogOpen] = useState(false);
+
+	// eslint-disable-next-line max-len
+	if (isLoading || isError || !data || !data.enabled || !data.message || !data.description) return null;
 
 	return (
 		<div>
@@ -10,7 +29,7 @@ export default function NoticeBanner() {
 				className="h-16 min-w-screen max-w-screen overflow-none flex justify-center items-center gap-4 bg-[#FFE5DA] py-2 px-2"
 			>
 				<span className="text-[#323232] md:text-lg font-semibold">
-					Many projects are unavailable
+					{data.description}
 				</span>
 				<button
 					type="button"
@@ -54,16 +73,11 @@ export default function NoticeBanner() {
 											as="h3"
 											className="text-lg md:text-2xl font-semibold leading-6 text-black"
 										>
-											Many projects are unavailable
+											{data.description}
 										</Dialog.Title>
 										<div className="mt-4">
 											<p className="md:text-lg text-[#323232]">
-												Due to issues with our storage provider, we have closed off many project
-												pages and those will return a 404 (not
-												found) page for now. This is also why some server icons are not loading.
-												<br />
-												We are busy recovering everything and migrating to a new
-												provider.
+												{DescriptionSerializer(data.message)}
 											</p>
 										</div>
 

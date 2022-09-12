@@ -65,10 +65,10 @@ export const getStaticProps: GetStaticProps = async () => {
 
 	async function fetchNextGuilds() {
 		// Fetch next page
-		const enGuildsRes = await fetch(`${process.env.CMS_URL!}/api/projects?limit=100&page=${page}&depth=2`);
+		const enGuildsRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/projects?limit=100&page=${page}&depth=2`);
 		const enBody: PayloadResponse<Project> = await enGuildsRes.json();
 
-		const jpGuildsRes = await fetch(`${process.env.CMS_URL!}/api/projects?limit=100&page=${page}&locale=jp&depth=0`);
+		const jpGuildsRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/projects?limit=100&page=${page}&locale=jp&depth=0`);
 		const jpBody: PayloadResponse<Project> = await jpGuildsRes.json();
 
 		enProjects = enProjects.concat(enBody.docs);

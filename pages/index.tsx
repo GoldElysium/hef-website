@@ -92,10 +92,10 @@ export const getStaticProps: GetStaticProps = async () => {
 		id: string;
 	}
 
-	const enRes = await fetch(`${process.env.CMS_URL!}/api/globals/featured-projects?depth=3`);
+	const enRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/globals/featured-projects?depth=3`);
 	const enProjects: FeaturedProjectsResponse = await enRes.json();
 
-	const jpRes = await fetch(`${process.env.CMS_URL!}/api/globals/featured-projects?depth=1&locale=jp`);
+	const jpRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/globals/featured-projects?depth=1&locale=jp`);
 	const jpProjects: FeaturedProjectsResponse = await jpRes.json();
 	const jpMinified = jpProjects.projects.map((project) => (
 		{
@@ -112,10 +112,10 @@ export const getStaticProps: GetStaticProps = async () => {
 
 	async function fetchNextGuilds() {
 		// Fetch next page
-		const enGuildsRes = await fetch(`${process.env.CMS_URL!}/api/guilds?limit=100&page=${page}&depth=5`);
+		const enGuildsRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/guilds?limit=100&page=${page}&depth=5`);
 		const enBody: PayloadResponse<Guild> = await enGuildsRes.json();
 
-		const jpGuildsRes = await fetch(`${process.env.CMS_URL!}/api/guilds?limit=100&page=${page}&locale=jp&depth=0`);
+		const jpGuildsRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/guilds?limit=100&page=${page}&locale=jp&depth=0`);
 		const jpBody: PayloadResponse<Guild> = await jpGuildsRes.json();
 
 		enGuilds = enGuilds.concat(enBody.docs);

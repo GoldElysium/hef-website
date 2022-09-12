@@ -322,7 +322,7 @@ export default function ProjectPage({ project, submissions }: IProps) {
 
 // @ts-ignore
 export const getStaticPaths: GetStaticPaths = async () => {
-	const res = await fetch(`${process.env.CMS_URL!}/api/projects?depth=0`);
+	const res = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/projects?depth=0`);
 	const projects: PayloadResponse<Project> = await res.json();
 
 	return {
@@ -339,11 +339,11 @@ export const getStaticProps: GetStaticProps = async (context) => {
 	const slug = context.params!.slug as string;
 
 	// Fetch EN and JP version for page, CMS will fallback to EN for any fields not translated
-	const enProjectRes = await fetch(`${process.env.CMS_URL!}/api/projects?where[slug][equals]=${slug}&depth=2`);
+	const enProjectRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/projects?where[slug][equals]=${slug}&depth=2`);
 	const enProject = (await enProjectRes.json() as PayloadResponse<Project>).docs[0];
 	enProject.flags = (enProject.flags as Flag[] ?? []).map((flag) => flag.code);
 
-	const jpProjectRes = await fetch(`${process.env.CMS_URL!}/api/projects?where[slug][equals]=${slug}&depth=0&locale=jp`);
+	const jpProjectRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/projects?where[slug][equals]=${slug}&depth=0&locale=jp`);
 	const jpProject = (await jpProjectRes.json() as PayloadResponse<Project>).docs[0];
 
 	// Create an array for all the submissions
@@ -353,20 +353,20 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
 	async function fetchNextSubmissions() {
 		// Fetch next page
-		const submissionsRes = await fetch(`${process.env.CMS_URL!}/api/submissions?where[project][equals]=${enProject.id}&limit=100&page=${page}&depth=0`);
+		const submissionsRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/submissions?where[project][equals]=${enProject.id}&limit=100&page=${page}&depth=0`);
 		const body: PayloadResponse<Submission> = await submissionsRes.json();
 
 		// Process submissions
 		const tasks = body.docs.map(async (submission) => {
 			// Fetch media if needed
 			if (submission.srcIcon) {
-				const mediaFetch = await fetch(`${process.env.CMS_URL!}/api/submission-media/${submission.srcIcon as string}`);
+				const mediaFetch = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/submission-media/${submission.srcIcon as string}`);
 				// eslint-disable-next-line no-param-reassign
 				submission.srcIcon = await mediaFetch.json();
 			}
 
 			if (submission.media) {
-				const mediaFetch = await fetch(`${process.env.CMS_URL!}/api/submission-media/${submission.media as string}`);
+				const mediaFetch = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/submission-media/${submission.media as string}`);
 				// eslint-disable-next-line no-param-reassign
 				submission.media = await mediaFetch.json();
 			}

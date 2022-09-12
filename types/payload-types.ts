@@ -5,7 +5,9 @@
  * and re-run `payload generate:types` to regenerate this file.
  */
 
-export interface Config {}
+export interface Config {
+}
+
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "featured-projects".
@@ -14,6 +16,7 @@ export interface FeaturedProjects {
 	id: string;
 	projects?: (string | Project)[];
 }
+
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "projects".
@@ -54,6 +57,7 @@ export interface Project {
 	createdAt: string;
 	updatedAt: string;
 }
+
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "guilds".
@@ -71,6 +75,7 @@ export interface Guild {
 	createdAt: string;
 	updatedAt: string;
 }
+
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
@@ -112,18 +117,19 @@ export interface Media {
 	createdAt: string;
 	updatedAt: string;
 }
+
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
 	id: string;
-	email?: string;
-	resetPasswordToken?: string;
-	resetPasswordExpiration?: string;
 	enableAPIKey?: boolean;
 	apiKey?: string;
 	apiKeyIndex?: string;
+	email?: string;
+	resetPasswordToken?: string;
+	resetPasswordExpiration?: string;
 	_verified?: boolean;
 	_verificationToken?: string;
 	loginAttempts?: number;
@@ -133,6 +139,7 @@ export interface User {
 	createdAt: string;
 	updatedAt: string;
 }
+
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "flags".
@@ -144,6 +151,7 @@ export interface Flag {
 	createdAt: string;
 	updatedAt: string;
 }
+
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "notice".
@@ -156,6 +164,7 @@ export interface NoticeBanner {
 		[k: string]: unknown;
 	}[];
 }
+
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "submission-media".
@@ -197,6 +206,7 @@ export interface SubmissionMedia {
 	createdAt: string;
 	updatedAt: string;
 }
+
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "submissions".
