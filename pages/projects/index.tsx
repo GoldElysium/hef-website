@@ -63,13 +63,21 @@ export const getStaticProps: GetStaticProps = async () => {
 	let enProjects: Project[] = [];
 	const jpProjects: IProps['jp'] = [];
 
-	async function fetchNextGuilds() {
+	async function fetchNextProjects() {
 		// Fetch next page
-		const enGuildsRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/projects?limit=100&page=${page}&depth=2`);
-		const enBody: PayloadResponse<Project> = await enGuildsRes.json();
+		const enProjectsRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/projects?limit=100&page=${page}&depth=2`, {
+			headers: {
+				'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? '',
+			} as Record<string, string>,
+		});
+		const enBody: PayloadResponse<Project> = await enProjectsRes.json();
 
-		const jpGuildsRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/projects?limit=100&page=${page}&locale=jp&depth=0`);
-		const jpBody: PayloadResponse<Project> = await jpGuildsRes.json();
+		const jpProjectsRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/projects?limit=100&page=${page}&locale=jp&depth=0`, {
+			headers: {
+				'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? '',
+			} as Record<string, string>,
+		});
+		const jpBody: PayloadResponse<Project> = await jpProjectsRes.json();
 
 		enProjects = enProjects.concat(enBody.docs);
 
@@ -88,7 +96,7 @@ export const getStaticProps: GetStaticProps = async () => {
 
 	while (moreProjects) {
 		// eslint-disable-next-line no-await-in-loop
-		await fetchNextGuilds();
+		await fetchNextProjects();
 	}
 
 	return {

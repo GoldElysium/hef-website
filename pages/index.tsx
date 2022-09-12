@@ -112,10 +112,18 @@ export const getStaticProps: GetStaticProps = async () => {
 
 	async function fetchNextGuilds() {
 		// Fetch next page
-		const enGuildsRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/guilds?limit=100&page=${page}&depth=5`);
+		const enGuildsRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/guilds?limit=100&page=${page}&depth=5`, {
+			headers: {
+				'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? '',
+			} as Record<string, string>,
+		});
 		const enBody: PayloadResponse<Guild> = await enGuildsRes.json();
 
-		const jpGuildsRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/guilds?limit=100&page=${page}&locale=jp&depth=0`);
+		const jpGuildsRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/guilds?limit=100&page=${page}&locale=jp&depth=0`, {
+			headers: {
+				'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? '',
+			} as Record<string, string>,
+		});
 		const jpBody: PayloadResponse<Guild> = await jpGuildsRes.json();
 
 		enGuilds = enGuilds.concat(enBody.docs);

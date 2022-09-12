@@ -151,7 +151,7 @@ class Index extends Phaser.Scene {
 			.setInteractive({ pixelPerfect: true, cursor: 'pointer' })
 			.on('pointerup', () => this.toggleBGM());
 
-		this.milestoneToggle = this.add.image(this.width - 5, this.height, `toggle${Router.query.id === '6' ? '4' : '3'}`)
+		this.milestoneToggle = this.add.image(this.width - 5, this.height, `toggle${Router.query.slug === 'gura3mil' ? '4' : '3'}`)
 			.setOrigin(1, 1)
 			.setDepth(5)
 			.setScale(0.8)

@@ -323,11 +323,33 @@ export default function ProjectPage({ project, submissions }: IProps) {
 
 // @ts-ignore
 export const getStaticPaths: GetStaticPaths = async () => {
-	const res = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/projects?depth=0`);
-	const projects: PayloadResponse<Project> = await res.json();
+	let projects: Project[] = [];
+	let moreProjects = true;
+	let page = 1;
+
+	async function fetchNextProjects() {
+		// Fetch next page
+		const enProjectsRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/projects?depth=0&limit=100&page=${page}&depth=0`, {
+			headers: {
+				'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? '',
+			} as Record<string, string>,
+		});
+		const enBody: PayloadResponse<Project> = await enProjectsRes.json();
+
+		projects = projects.concat(enBody.docs);
+
+		// Set variables for next fetch
+		page += 1;
+		moreProjects = enBody.hasNextPage;
+	}
+
+	while (moreProjects) {
+		// eslint-disable-next-line no-await-in-loop
+		await fetchNextProjects();
+	}
 
 	return {
-		paths: projects.docs.map((project) => (
+		paths: projects.map((project) => (
 			{
 				params: { slug: project.slug },
 			}
@@ -340,11 +362,19 @@ export const getStaticProps: GetStaticProps = async (context) => {
 	const slug = context.params!.slug as string;
 
 	// Fetch EN and JP version for page, CMS will fallback to EN for any fields not translated
-	const enProjectRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/projects?where[slug][equals]=${slug}&depth=2`);
+	const enProjectRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/projects?where[slug][equals]=${slug}&depth=2`, {
+		headers: {
+			'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? '',
+		} as Record<string, string>,
+	});
 	const enProject = (await enProjectRes.json() as PayloadResponse<Project>).docs[0];
 	enProject.flags = (enProject.flags as Flag[] ?? []).map((flag) => flag.code);
 
-	const jpProjectRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/projects?where[slug][equals]=${slug}&depth=0&locale=jp`);
+	const jpProjectRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/projects?where[slug][equals]=${slug}&depth=0&locale=jp`, {
+		headers: {
+			'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? '',
+		} as Record<string, string>,
+	});
 	const jpProject = (await jpProjectRes.json() as PayloadResponse<Project>).docs[0];
 
 	// Create an array for all the submissions
@@ -354,20 +384,32 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
 	async function fetchNextSubmissions() {
 		// Fetch next page
-		const submissionsRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/submissions?where[project][equals]=${enProject.id}&limit=100&page=${page}&depth=0`);
+		const submissionsRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/submissions?where[project][equals]=${enProject.id}&limit=100&page=${page}&depth=0`, {
+			headers: {
+				'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? '',
+			} as Record<string, string>,
+		});
 		const body: PayloadResponse<Submission> = await submissionsRes.json();
 
 		// Process submissions
 		const tasks = body.docs.map(async (submission) => {
 			// Fetch media if needed
 			if (submission.srcIcon) {
-				const mediaFetch = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/submission-media/${submission.srcIcon as string}`);
+				const mediaFetch = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/submission-media/${submission.srcIcon as string}`, {
+					headers: {
+						'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? '',
+					} as Record<string, string>,
+				});
 				// eslint-disable-next-line no-param-reassign
 				submission.srcIcon = await mediaFetch.json();
 			}
 
 			if (submission.media) {
-				const mediaFetch = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/submission-media/${submission.media as string}`);
+				const mediaFetch = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/submission-media/${submission.media as string}`, {
+					headers: {
+						'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? '',
+					} as Record<string, string>,
+				});
 				// eslint-disable-next-line no-param-reassign
 				submission.media = await mediaFetch.json();
 			}
