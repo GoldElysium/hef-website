@@ -13,7 +13,7 @@ COPY . .
 ARG ENV_FILE
 ENV NEXT_TELEMETRY_DISABLED 1
 
-RUN echo $ENV_FILE | base64 -d > .env.payload.production \
+RUN echo $ENV_FILE | base64 -d > .env.production \
     && npm run build
 
 # Production image, copy all the files and run next
@@ -26,7 +26,7 @@ ENV NEXT_TELEMETRY_DISABLED 1
 
 RUN addgroup --system --gid 1001 nodejs \
 	&& adduser --system --uid 1001 nextjs \
-    && echo $ENV_FILE | base64 -d > .env.payload.production
+    && echo $ENV_FILE | base64 -d > .env.production
 
 COPY --from=builder /app/next.config.js ./
 COPY --from=builder /app/public ./public
