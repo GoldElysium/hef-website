@@ -92,10 +92,18 @@ export const getStaticProps: GetStaticProps = async () => {
 		id: string;
 	}
 
-	const enRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/globals/featured-projects?depth=3`);
+	const enRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/globals/featured-projects?depth=3`, {
+		headers: {
+			'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? '',
+		} as Record<string, string>,
+	});
 	const enProjects: FeaturedProjectsResponse = await enRes.json();
 
-	const jpRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/globals/featured-projects?depth=1&locale=jp`);
+	const jpRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/globals/featured-projects?depth=1&locale=jp`, {
+		headers: {
+			'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? '',
+		} as Record<string, string>,
+	});
 	const jpProjects: FeaturedProjectsResponse = await jpRes.json();
 	const jpMinified = jpProjects.projects.map((project) => (
 		{
