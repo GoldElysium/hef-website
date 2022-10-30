@@ -76,7 +76,6 @@ function Links({
 			};
 			router.events.on('routeChangeStart', handler);
 		})();
-	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return (

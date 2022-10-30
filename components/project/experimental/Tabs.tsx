@@ -1,5 +1,5 @@
 import {
-	ReactNode, useRef, createContext, useState, useMemo,
+	createContext, ReactNode, useMemo, useRef, useState,
 } from 'react';
 
 export const ProjectTabsContext = createContext<ProjectTabsContext | null>(null);
@@ -34,7 +34,6 @@ export default function ProjectTabs({ defaultTab, children }: ProjectTabsProps) 
 		}
 	}
 
-	// eslint-disable-next-line max-len,react-hooks/exhaustive-deps
 	const providerValue = useMemo(() => ({ child, setChild, setAssociation }), [child]);
 
 	return (
