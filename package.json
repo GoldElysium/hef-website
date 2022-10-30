@@ -46,6 +46,7 @@
   "devDependencies": {
     "@commitlint/cli": "17.0.3",
     "@commitlint/config-conventional": "17.0.3",
+    "@next/eslint-plugin-next": "^13.0.0",
     "@types/escape-html": "^1.0.2",
     "@types/react": "18.0.17",
     "@types/safe-json-stringify": "1.1.2",
