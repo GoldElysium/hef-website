@@ -6,7 +6,7 @@
 import { ReactNode, useEffect } from 'react';
 
 function Link({ href, children }: { href: string, children?: ReactNode }) {
-	return <a href={href}>{children}</a>;
+	return <a href={href} target="_blank" rel="noreferrer noopener">{children}</a>;
 }
 
 export default function ProjectTimeline() {
@@ -453,6 +453,15 @@ export default function ProjectTimeline() {
 						Sana makes an appearance during Mumei&apos;s birthday celebration stream
 						{' '}
 						<Link href="https://www.youtube.com/watch?v=gpVQHURm76Q&t=13087s">with a pre-recorded video message</Link>
+						.
+					</div>
+				</li>
+				<li>
+					<div>
+						<time dateTime="2022-08-22T03:00:10Z">{(new Date('2022-08-22T03:00:10Z')).toLocaleDateString(undefined, dateStringOptions)}</time>
+						Sana makes one final appearance in Council&apos;s original song,
+						{' '}
+						<Link href="https://www.youtube.com/watch?v=jHibTDJlTJw">Rise</Link>
 						.
 					</div>
 				</li>
