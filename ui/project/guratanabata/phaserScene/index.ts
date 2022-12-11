@@ -1,11 +1,9 @@
-'use client';
-
 import Phaser from 'phaser';
 import SoundFade from 'phaser3-rex-plugins/plugins/soundfade';
 // @ts-expect-error Missing types
 import AwaitLoaderPlugin from 'phaser3-rex-plugins/plugins/awaitloader-plugin';
-import Router from 'next/router';
 import { Plugin as NineSlicePlugin } from 'phaser3-nineslice';
+import { Submission, SubmissionMedia } from 'types/payload-types';
 import GoogleFontsPlugin from './plugins/gfonts';
 import UIPl from './plugins/ui';
 
@@ -13,7 +11,6 @@ import Main from './main';
 import Splash from './splash';
 import FullPaper from './fullPaper';
 import Info from './info';
-import { Submission, SubmissionMedia } from '../../../types/payload-types';
 
 class Index extends Phaser.Scene {
 	public bgmPlaying = false;
@@ -43,7 +40,9 @@ class Index extends Phaser.Scene {
 	public progressText!: Phaser.GameObjects.Text;
 
 	init() {
-		if (!this.ui) return Router.reload();
+		console.log(this.ui);
+
+		// if (!this.ui) return window.location.reload();
 
 		const { width, height } = this.game.canvas;
 		this.width = width;
@@ -123,6 +122,8 @@ class Index extends Phaser.Scene {
 	}
 
 	create() {
+		const match = window.location.pathname?.match(/\/projects\/(?<slug>[0-z]+)/i);
+
 		this.progressBar.destroy();
 		this.progressText.destroy();
 		this.addScenes();
@@ -153,7 +154,7 @@ class Index extends Phaser.Scene {
 			.setInteractive({ pixelPerfect: true, cursor: 'pointer' })
 			.on('pointerup', () => this.toggleBGM());
 
-		this.milestoneToggle = this.add.image(this.width - 5, this.height, `toggle${Router.query.slug === 'gura3mil' ? '4' : '3'}`)
+		this.milestoneToggle = this.add.image(this.width - 5, this.height, `toggle${match?.groups?.slug === 'gura3mil' ? '4' : '3'}`)
 			.setOrigin(1, 1)
 			.setDepth(5)
 			.setScale(0.8)
@@ -209,9 +210,11 @@ class Index extends Phaser.Scene {
 		this.game.destroy(true);
 
 		this.game.events.once('destroy', () => {
+			const match = window.location.pathname?.match(/\/projects\/(?<slug>[0-z]+)/i);
+
 			// NOTE: This uses location.pathname because we need a full reload, for
 			// whatever reason, Phaser doesn't like to play nice with SPAs.
-			if (Router.query.slug === 'gura3mil') {
+			if (match?.groups?.slug === 'gura3mil') {
 				// eslint-disable-next-line no-restricted-globals
 				location.pathname = '/projects/gura4mil';
 			} else {

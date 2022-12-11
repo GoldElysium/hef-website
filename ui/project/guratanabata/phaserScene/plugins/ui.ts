@@ -1,5 +1,3 @@
-'use client';
-
 import Phaser from 'phaser';
 import BBCode from 'phaser3-rex-plugins/plugins/bbcodetext';
 

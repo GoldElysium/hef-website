@@ -1,14 +1,37 @@
 'use client';
 
-import { useCallback } from 'react';
 import { HeartIcon } from '@heroicons/react/24/solid';
 import Script from 'next/script';
+import { usePathname } from 'next/navigation';
+import { Flag, Project } from 'types/payload-types';
+import PayloadResponse from 'types/PayloadResponse';
+import { useCallback, useEffect, useState } from 'react';
 
-interface IProps {
-	background?: string,
-}
+export default function Footer() {
+	const pathname = usePathname();
 
-export default function Footer({ background }: IProps) {
+	const [background, setBackground] = useState<string | null>(null);
+	const [flags, setFlags] = useState<string[]>([]);
+
+	useEffect(() => {
+		const match = pathname?.match(/\/projects\/(?<slug>[0-z]+)/i);
+		if (match?.groups?.slug) {
+			(async () => {
+				const res = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/projects?where[slug][equals]=${match!.groups!.slug}&depth=2`);
+				const project = (await res.json() as PayloadResponse<Project>).docs[0];
+				const newFlags = (project.flags as Flag[] ?? []).map((flag) => flag.code);
+
+				setFlags(newFlags);
+			})();
+		}
+	}, [pathname]);
+
+	useEffect(() => {
+		if (flags.includes('sanaSendoff')) {
+			setBackground('/assets/sanasendoff/background.png');
+		}
+	}, [flags]);
+
 	const wrapper = useCallback((wrapperEl: HTMLDivElement) => {
 		if (background && wrapperEl) {
 			// eslint-disable-next-line no-param-reassign
@@ -16,9 +39,11 @@ export default function Footer({ background }: IProps) {
 		}
 	}, [background]);
 
+	if (flags.includes('disableFooter')) return null;
+
 	return (
 		<div
-			className="flex w-full h-24 px-4 sm:px-8 justify-center items-center mt-16 bg-skin-background-2 dark:bg-skin-dark-background-2"
+			className="flex w-full h-24 px-4 sm:px-8 justify-center items-center bg-skin-background-2 dark:bg-skin-dark-background-2"
 			ref={wrapper}
 		>
 			<p className="text-center flex items-center text-white text-opacity-70">

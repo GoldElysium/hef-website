@@ -11,7 +11,11 @@ interface IProps {
 	disableHead?: boolean;
 }
 
-export default function Navbar({ disableHead }: IProps) {
+const defaultProps = {
+	disableHead: false,
+};
+
+export default function Navbar({ disableHead }: IProps = defaultProps) {
 	const [menuOpen, setMenuOpen] = useState(false);
 
 	return (
@@ -88,7 +92,3 @@ export default function Navbar({ disableHead }: IProps) {
 		</>
 	);
 }
-
-Navbar.defaultProps = {
-	disableHead: false,
-};

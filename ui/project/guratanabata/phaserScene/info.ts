@@ -1,13 +1,12 @@
-'use client';
-
 import Phaser from 'phaser';
-import Router from 'next/router';
+
+const match = window.location.pathname?.match(/\/projects\/(?<slug>[0-z]+)/i);
 
 const COLORS = {
 	link: '#163fc9',
 };
 const INFO_TEXT = `Tanabata is a Japanese festival; usually held in July or August. In present-day Japan, people generally celebrate this day by writing wishes on small pieces of paper, and hanging them on bamboo (along with various other decorations). As Gura is reaching her 3 million subscriber milestone in July, near the time of Tanabata, we're using this occasion to collect chumbuds' wishes and congratulatory messages for Gura!
-${Router.query.slug === 'gura3mil' ? `
+${match?.groups?.slug === 'gura3mil' ? `
 [size=42]> Please note that the submissions will only become viewable when Gura's sub count reaches 3 Million. Until then enjoy this nice background and BGM, and scroll down in this window for credits and a link to download the BGM.[/size]` : ''}
 
 [size=72]Credits[/size]

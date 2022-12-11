@@ -1,20 +1,37 @@
+'use client';
+
 import Link from 'next/link';
-import Head from './Head';
+import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import DarkModeToggle from './DarkModeToggle';
 import NavbarMenu from './NavbarMenu';
 import NoticeBanner from './NoticeBanner';
+import PayloadResponse from '../types/PayloadResponse';
+import { Flag, Project } from '../types/payload-types';
 
-interface IProps {
-	disableHead?: boolean;
-}
+export default function Navbar() {
+	const pathname = usePathname();
+	const [flags, setFlags] = useState<string[]>([]);
 
-export default function Navbar({ disableHead }: IProps) {
+	useEffect(() => {
+		const match = pathname?.match(/\/projects\/(?<slug>[0-z]+)/i);
+		if (match?.groups?.slug) {
+			(async () => {
+				const res = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/projects?where[slug][equals]=${match!.groups!.slug}&depth=2`);
+				const project = (await res.json() as PayloadResponse<Project>).docs[0];
+				const newFlags = (project.flags as Flag[] ?? []).map((flag) => flag.code);
+
+				setFlags(newFlags);
+			})();
+		}
+	}, [pathname]);
+
+	if (flags.includes('disableNavbar')) return null;
+
 	return (
 		<>
 			<NoticeBanner />
 			<div className="flex w-full h-20 px-4 sm:px-8 justify-between items-center bg-skin-background-2 dark:bg-skin-dark-background-2">
-				{!disableHead && <Head />}
-
 				{/*
 				<div>
 					<Link href="/">
@@ -47,7 +64,3 @@ export default function Navbar({ disableHead }: IProps) {
 		</>
 	);
 }
-
-Navbar.defaultProps = {
-	disableHead: false,
-};

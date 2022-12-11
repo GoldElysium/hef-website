@@ -1,5 +1,3 @@
-'use client';
-
 import Phaser from 'phaser';
 import { Submission } from 'types/payload-types';
 

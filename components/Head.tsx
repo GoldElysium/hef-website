@@ -9,9 +9,18 @@ interface IProps {
 	keywords?: string[];
 }
 
+const defaultProps = {
+	title: 'Hololive EN Fan Website',
+	description: 'A place to chat with other fans of Hololive English! If you want to hang out, you‘ve come to the right place.',
+	url: 'https://holoen.fans',
+	image: 'https://holoen.fans/img/logo.png',
+	color: '#FF3D3D',
+	keywords: [],
+};
+
 export default function Head({
 	title, description, url, image, color, keywords = [],
-}: IProps) {
+}: IProps = defaultProps) {
 	return (
 		<NextHead>
 			<title>{title}</title>
@@ -40,12 +49,3 @@ export default function Head({
 		</NextHead>
 	);
 }
-
-Head.defaultProps = {
-	title: 'Hololive EN Fan Website',
-	description: 'A place to chat with other fans of Hololive English! If you want to hang out, you‘ve come to the right place.',
-	url: 'https://holoen.fans',
-	image: 'https://holoen.fans/img/logo.png',
-	color: '#FF3D3D',
-	keywords: [],
-};

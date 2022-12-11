@@ -1,21 +1,20 @@
-import '../styles/globals.css';
-import '../styles/sana-timeline.css';
-import DarkModeContextProvider from './DarkModeContextProvider';
-import Navbar from '../ui/Navbar';
+import 'styles/globals.css';
+import 'styles/sana-timeline.css';
+import Navbar from 'ui/Navbar';
+import DarkModeContextProvider from 'ui/DarkModeContextProvider';
+import Footer from 'ui/Footer';
 
-export default function RootLayout({ children }: {
-	children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
 		<html lang="en">
-			<head>
-				<title>HoloEN Fan Website</title>
-			</head>
 			<DarkModeContextProvider>
+				{/* @ts-ignore */}
 				<Navbar />
 				<main>
 					{children}
 				</main>
+				{/* @ts-ignore */}
+				<Footer />
 			</DarkModeContextProvider>
 		</html>
 	);

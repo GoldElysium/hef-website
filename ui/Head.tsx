@@ -7,11 +7,20 @@ interface IProps {
 	keywords?: string[];
 }
 
+const defaultProps = {
+	title: 'Hololive EN Fan Website',
+	description: 'A place to chat with other fans of Hololive English! If you want to hang out, you‘ve come to the right place.',
+	url: 'https://holoen.fans',
+	image: 'https://holoen.fans/img/logo.png',
+	color: '#FF3D3D',
+	keywords: [],
+};
+
 export default function Head({
 	title, description, url, image, color, keywords = [],
-}: IProps) {
+}: IProps = defaultProps) {
 	return (
-		<head>
+		<>
 			<title>{title}</title>
 
 			<meta name="keywords" content={[...keywords, 'hololive en', 'hef', 'hololive fan', 'hololive en fan'].join(', ')} />
@@ -35,15 +44,6 @@ export default function Head({
 			<meta name="twitter:description" content={description} />
 			<meta name="twitter:site" content="@HEFSdiscord" />
 			<meta name="twitter:creator" content="@goldelysium" />
-		</head>
+		</>
 	);
 }
-
-Head.defaultProps = {
-	title: 'Hololive EN Fan Website',
-	description: 'A place to chat with other fans of Hololive English! If you want to hang out, you‘ve come to the right place.',
-	url: 'https://holoen.fans',
-	image: 'https://holoen.fans/img/logo.png',
-	color: '#FF3D3D',
-	keywords: [],
-};

@@ -1,7 +1,4 @@
-'use client';
-
 import Phaser from 'phaser';
-import Router from 'next/router';
 
 class Splash extends Phaser.Scene {
 	public width!: number;
@@ -46,7 +43,7 @@ class Splash extends Phaser.Scene {
 				(this.scene.get('default') as import('./').default).exiting = true;
 				this.game.scale.stopFullscreen();
 				this.game.destroy(true);
-				Router.push('/');
+				window.location.href = '/';
 			});
 
 		this.registry.get('setBackgroundImage')(!this.registry.get('useFallback') ? '/assets/guratanabata/bg.webp' : '/assets/guratanabata/fallback/bg.jpg');
@@ -89,7 +86,8 @@ class Splash extends Phaser.Scene {
 			};
 		}
 
-		this.title = this.add.image(this.width / 2, -550, `title${Router.query.slug === 'gura3mil' ? '3' : '4'}`)
+		const match = window.location.pathname?.match(/\/projects\/(?<slug>[0-z]+)/i);
+		this.title = this.add.image(this.width / 2, -550, `title${match?.groups?.slug === 'gura3mil' ? '3' : '4'}`)
 			.setOrigin(0.5, 0)
 			.setDepth(6)
 			.setScale(0.95);

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useMemo, useState } from 'react';
-import DarkModeContext from '../contexts/DarkModeContext';
+import DarkModeContext from 'contexts/DarkModeContext';
 
 export default function DarkModeContextProvider({ children }: { children: React.ReactNode }) {
 	const [darkMode, setDarkMode] = useState(false);
@@ -29,7 +29,6 @@ export default function DarkModeContextProvider({ children }: { children: React.
 	}), [darkMode]);
 
 	return (
-
 		<DarkModeContext.Provider value={context}>
 			<body className={darkMode ? 'dark' : ''}>
 				{children}

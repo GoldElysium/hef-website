@@ -1,10 +1,8 @@
-'use client';
-
 import Phaser from 'phaser';
-import Router from 'next/router';
 import { Submission } from 'types/payload-types';
 
-const MILLION = Router.query.slug === 'gura3mil' ? '3' : '4';
+const match = window.location.pathname?.match(/\/projects\/(?<slug>[0-z]+)/i);
+const MILLION = match?.groups?.slug === 'gura3mil' ? '3' : '4';
 
 const BASE_WIDTH = 2280;
 const BASE_HEIGHT = 1620;

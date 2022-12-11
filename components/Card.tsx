@@ -30,13 +30,12 @@ export default function Card({
 					</p>
 				</div>
 				{internal ? (
-					<Link href={url} passHref legacyBehavior>
-						<div
-							className="rounded-3xl font-bold w-20 h-10 flex items-center justify-center mt-4 content-end cursor-pointer
+					<Link
+						href={url}
+						className="rounded-3xl font-bold w-20 h-10 flex items-center justify-center mt-4 content-end cursor-pointer
 							bg-skin-secondary-1 dark:bg-skin-dark-secondary-1 text-white hover:text-opacity-70"
-						>
-							<a>{button}</a>
-						</div>
+					>
+						{button}
 					</Link>
 				) : (
 					<a href={url}>
