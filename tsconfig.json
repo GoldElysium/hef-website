@@ -1,30 +1,35 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
+    // Sets the appropriate root directory.
+    "baseUrl": "./app",
+    // Allows us to run tsc for typechecking without using it as a compiler.
     "noEmit": true,
+    // This is required for .tsx files to work.
+    // We're not using the TypeScript compiler, so it doesn't matter what value we put here.
+    "jsx": "react-jsx",
+    // Required for packages with esm type declarations to work.
     "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
+    // Reflame works by transpiling and deploying independent modules.
+    // This ensures we don't use any TypeScript features that would prevent that.
+    // (specifically namespaces and const enums, which are features we probably wouldn't want to use anyways)
     "isolatedModules": true,
-    "jsx": "preserve",
-    "incremental": true
-  },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+    // Includes types for all the latest browser features.
+    "lib": [
+      "DOM",
+      "ESNext"
+    ],
+    // Reflame supports importing by absolute path using the browser native '/some/long/path.js' format.
+    // This enables typechecking for this pattern.
+    // Note that we can import using .ts(x) .js(x) or without extensions in Reflame thanks to import maps, 
+    // but TypeScript will complain about .ts(x), so in practice we will probably need to choose one of the other options.
+    "paths": {
+      "/*": [
+        "./*"
+      ]
+    },
+    // Just a generally helpful flag to avoid issues around case consistency between source control and different OSes.
+    "forceConsistentCasingInFileNames": true,
+    // Not strictly required, but highly recommended.
+    "strict": true,
+  }
 }
