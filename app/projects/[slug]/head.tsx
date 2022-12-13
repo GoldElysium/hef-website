@@ -15,14 +15,16 @@ interface ProjectData {
 	}
 }
 
-async function fetchProject(slug: string): Promise<ProjectData> {
+async function fetchProject(slug: string): Promise<ProjectData | null> {
 	// Fetch EN and JP version for page, CMS will fallback to EN for any fields not translated
 	const enProjectRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/projects?where[slug][equals]=${slug}&depth=2`, {
 		headers: {
 			'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? '',
 		} as Record<string, string>,
 	});
-	const enProject = (await enProjectRes.json() as PayloadResponse<Project>).docs[0];
+	const parsedEnProjectRes = (await enProjectRes.json() as PayloadResponse<Project>);
+	if (parsedEnProjectRes.totalDocs === 0) return null;
+	const enProject = parsedEnProjectRes.docs[0];
 
 	const jpProjectRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/projects?where[slug][equals]=${slug}&depth=0&locale=jp`, {
 		headers: {
@@ -53,10 +55,19 @@ export default async function PageHead({ params }: { params: { slug: string } })
 			/* TODO: Make customizable? */
 			color="#FF3D3D"
 			/* TODO: Use locale */
-			title={project.en.title}
-			description={project.en.shortDescription}
+			title={project?.en.title ?? undefined}
+			description={project?.en.shortDescription ?? undefined}
 			keywords={['guratanabata']}
-			image={(project.en.image as Media).sizes?.thumbnail?.url ?? 'https://holoen.fans/img/logo.png'}
+			image={
+				// eslint-disable-next-line no-nested-ternary
+				(project
+					? (
+						project.en.image.sizes?.thumbnail?.width
+							? project.en.image.sizes.thumbnail.url
+							: project.en.image.url
+					)
+					: 'https://holoen.fans/img/logo.png')
+			}
 		/>
 	);
 }

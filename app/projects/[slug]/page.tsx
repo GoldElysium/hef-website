@@ -7,6 +7,7 @@ import Gallery from 'ui/project/Gallery';
 import ExperimentalProjectPage from 'ui/project/experimental/Page';
 import PhaserSubmissionWrapper from 'ui/project/guratanabata/PhaserSubmissionWrapper';
 import { Suspense } from 'react';
+import { notFound } from 'next/navigation';
 
 // ID's for both production and development databases
 // TODO: Replace with Payload data
@@ -40,14 +41,18 @@ interface ProjectData {
 	};
 }
 
-async function fetchProject(slug: string): Promise<ProjectData> {
+async function fetchProject(slug: string): Promise<ProjectData | null> {
 	// Fetch EN and JP version for page, CMS will fallback to EN for any fields not translated
 	const enProjectRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/projects?where[slug][equals]=${slug}&depth=2`, {
 		headers: {
 			'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? '',
 		} as Record<string, string>,
 	});
-	const enProject = (await enProjectRes.json() as PayloadResponse<Project>).docs[0];
+
+	const res = (await enProjectRes.json() as PayloadResponse<Project>);
+	if (res.totalDocs === 0) return null;
+
+	const enProject = res.docs[0];
 	const flags = (enProject.flags as Flag[] ?? []).map((flag) => flag.code);
 
 	const jpProjectRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/projects?where[slug][equals]=${slug}&depth=0&locale=jp`, {
@@ -76,7 +81,12 @@ async function fetchProject(slug: string): Promise<ProjectData> {
 
 // eslint-disable-next-line max-len
 export default async function ProjectPage({ params }: IProps) {
-	const { project } = await fetchProject(params.slug);
+	const res = await fetchProject(params.slug);
+	if (res === null) {
+		notFound();
+	}
+
+	const { project } = res;
 
 	// const ref = useMemo(() => createRef<BlurBackground>(), []);
 

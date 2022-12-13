@@ -18,7 +18,11 @@ export default function Footer() {
 		if (match?.groups?.slug) {
 			(async () => {
 				const res = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/projects?where[slug][equals]=${match!.groups!.slug}&depth=2`);
-				const project = (await res.json() as PayloadResponse<Project>).docs[0];
+				const parsedRes = (await res.json() as PayloadResponse<Project>);
+				if (parsedRes.totalDocs === 0) return;
+
+				const project = parsedRes.docs[0];
+
 				const newFlags = (project.flags as Flag[] ?? []).map((flag) => flag.code);
 
 				setFlags(newFlags);
