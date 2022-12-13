@@ -1,8 +1,8 @@
 import { Guild, Media, Project } from '../types/payload-types';
 import PayloadResponse from '../types/PayloadResponse';
-import Card from '../components/Card';
-import Hero from '../components/Hero';
-import TextHeader from '../components/TextHeader';
+import Card from '../ui/Card';
+import Hero from '../ui/Hero';
+import TextHeader from '../ui/TextHeader';
 
 interface PageData {
 	featuredProjects: {

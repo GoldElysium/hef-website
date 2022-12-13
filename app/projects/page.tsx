@@ -1,5 +1,5 @@
-import Card from 'components/Card';
-import TextHeader from 'components/TextHeader';
+import Card from 'ui/Card';
+import TextHeader from 'ui/TextHeader';
 import { Project } from 'types/payload-types';
 import PayloadResponse from 'types/PayloadResponse';
 

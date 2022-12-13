@@ -3,11 +3,11 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import DarkModeToggle from './DarkModeToggle';
-import NavbarMenu from './NavbarMenu';
-import NoticeBanner from './NoticeBanner';
-import PayloadResponse from '../types/PayloadResponse';
-import { Flag, Project } from '../types/payload-types';
+import DarkModeToggle from 'ui/DarkModeToggle';
+import NavbarMenu from 'ui/NavbarMenu';
+import NoticeBanner from 'ui/NoticeBanner';
+import PayloadResponse from 'types/PayloadResponse';
+import { Flag, Project } from 'types/payload-types';
 
 export default function Navbar() {
 	const pathname = usePathname();

@@ -1,10 +1,10 @@
 'use client';
 
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
-import TextHeader from 'components/TextHeader';
+import TextHeader from 'ui/TextHeader';
 import GalleryItem from 'ui/project/GalleryItem';
 import { useState } from 'react';
-import { Project } from '../../types/payload-types';
+import { Project } from 'types/payload-types';
 
 interface IProps {
 	project: Omit<Project, 'flags' | 'devprops'> & {

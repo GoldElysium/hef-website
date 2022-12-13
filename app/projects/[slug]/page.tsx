@@ -1,6 +1,6 @@
 import { Flag, Guild, Project } from 'types/payload-types';
-import DescriptionSerializer from 'components/DescriptionSerializer';
-import TextHeader from 'components/TextHeader';
+import DescriptionSerializer from 'ui/DescriptionSerializer';
+import TextHeader from 'ui/TextHeader';
 import PayloadResponse from 'types/PayloadResponse';
 import Submissions from 'ui/project/Submissions';
 import Gallery from 'ui/project/Gallery';

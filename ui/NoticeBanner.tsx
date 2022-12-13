@@ -3,8 +3,8 @@
 import { Fragment, Suspense, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import useSWR, { Fetcher } from 'swr';
-import { Notice as APINoticeBanner } from '../types/payload-types';
-import DescriptionSerializer from '../components/DescriptionSerializer';
+import { Notice as APINoticeBanner } from 'types/payload-types';
+import DescriptionSerializer from 'ui/DescriptionSerializer';
 
 const fetcher: Fetcher<APINoticeBanner> = () => fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/globals/notice`).then((res) => res.json());
 

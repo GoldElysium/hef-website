@@ -1,6 +1,6 @@
 import { Project, Submission } from 'types/payload-types';
 import PayloadResponse from 'types/PayloadResponse';
-import PhaserWrapper from './PhaserWrapper';
+import PhaserWrapper from 'ui/project/guratanabata/PhaserWrapper';
 
 interface IProps {
 	project: Omit<Project, 'flags' | 'devprops'> & {

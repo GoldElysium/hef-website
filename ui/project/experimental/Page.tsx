@@ -1,5 +1,5 @@
 import { Guild, Project, Submission } from 'types/payload-types';
-import Header from 'components/Header';
+import Header from 'ui/Header';
 import ProjectSubmissions from 'ui/project/experimental/Submissions';
 import ProjectAbout from 'ui/project/experimental/About';
 import ProjectBackgroundMusic from 'ui/project/experimental/BackgroundMusic';

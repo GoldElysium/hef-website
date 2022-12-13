@@ -1,5 +1,5 @@
 import ProjectDescription from 'ui/project/experimental/Description';
-import DescriptionSerializer from 'ui/project/DescriptionSerializer';
+import DescriptionSerializer from 'ui/DescriptionSerializer';
 import ProjectGallery from 'ui/project/Gallery';
 import ProjectLinks from 'ui/project/experimental/Links';
 import { Project } from 'types/payload-types';
