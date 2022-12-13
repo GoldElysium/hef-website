@@ -29,7 +29,6 @@ export default function NavbarMenu() {
 					<div className="px-2 py-1">
 						<Menu.Item>
 							<Link href="/" type="button" className="flex rounded-md items-center w-full">
-
 								<HomeIcon className="h-6 w-6 text-skin-primary-1 mr-2" />
 								Home
 							</Link>
@@ -41,7 +40,6 @@ export default function NavbarMenu() {
 								type="button"
 								className="flex rounded-md items-center w-full mt-1"
 							>
-
 								<ListBulletIcon className="h-6 w-6 text-skin-primary-1 mr-2" />
 								Projects
 							</Link>

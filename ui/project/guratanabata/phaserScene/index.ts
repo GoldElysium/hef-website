@@ -40,8 +40,7 @@ class Index extends Phaser.Scene {
 	public progressText!: Phaser.GameObjects.Text;
 
 	init() {
-		console.log(this.ui);
-
+		// ! Temp commented out because of bug
 		// if (!this.ui) return window.location.reload();
 
 		const { width, height } = this.game.canvas;
