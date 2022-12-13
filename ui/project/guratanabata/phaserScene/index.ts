@@ -122,7 +122,7 @@ class Index extends Phaser.Scene {
 	}
 
 	create() {
-		const match = window.location.pathname?.match(/\/projects\/(?<slug>[0-z]+)/i);
+		const match = window.location.pathname?.match(/\/projects\/(?<slug>[a-zA-Z0-9\-_]+)/i);
 
 		this.progressBar.destroy();
 		this.progressText.destroy();
@@ -210,7 +210,7 @@ class Index extends Phaser.Scene {
 		this.game.destroy(true);
 
 		this.game.events.once('destroy', () => {
-			const match = window.location.pathname?.match(/\/projects\/(?<slug>[0-z]+)/i);
+			const match = window.location.pathname?.match(/\/projects\/(?<slug>[a-zA-Z0-9\-_]+)/i);
 
 			// NOTE: This uses location.pathname because we need a full reload, for
 			// whatever reason, Phaser doesn't like to play nice with SPAs.

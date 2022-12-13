@@ -131,7 +131,7 @@ export default async function ProjectPage({ params }: IProps) {
 							)}
 							{/* TODO: Move submissions to separate tab */}
 							<div className="mt-4">
-								{project.en.flags.includes('disableTabs') && (
+								{!project.en.flags.includes('disableTabs') && (
 									<TextHeader>Submissions</TextHeader>
 								)}
 								<Suspense fallback={<p>Loading submissions...</p>}>

@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 
-const match = window.location.pathname?.match(/\/projects\/(?<slug>[0-z]+)/i);
+const match = window.location.pathname?.match(/\/projects\/(?<slug>[a-zA-Z0-9\-_]+)/i);
 
 const COLORS = {
 	link: '#163fc9',

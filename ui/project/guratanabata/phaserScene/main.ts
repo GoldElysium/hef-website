@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 import { Submission } from 'types/payload-types';
 
-const match = window.location.pathname?.match(/\/projects\/(?<slug>[0-z]+)/i);
+const match = window.location.pathname?.match(/\/projects\/(?<slug>[a-zA-Z0-9\-_]+)/i);
 const MILLION = match?.groups?.slug === 'gura3mil' ? '3' : '4';
 
 const BASE_WIDTH = 2280;

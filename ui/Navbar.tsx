@@ -14,7 +14,7 @@ export default function Navbar() {
 	const [flags, setFlags] = useState<string[]>([]);
 
 	useEffect(() => {
-		const match = pathname?.match(/\/projects\/(?<slug>[0-z]+)/i);
+		const match = pathname?.match(/\/projects\/(?<slug>[a-zA-Z0-9\-_]+)/i);
 		if (match?.groups?.slug) {
 			(async () => {
 				const res = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/projects?where[slug][equals]=${match!.groups!.slug}&depth=2`);
