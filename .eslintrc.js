@@ -1,8 +1,8 @@
 module.exports = {
 	extends: [
-		'next/core-web-vitals',
 		'airbnb',
 		'airbnb-typescript',
+		'plugin:@next/next/recommended',
 	],
 	parserOptions: {
 		project: './tsconfig.json',

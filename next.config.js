@@ -4,8 +4,11 @@
  * @type {import('next').NextConfig}
  **/
 const nextConfig = {
-	output: 'standalone',
-	swcMinify: true
+	// output: 'standalone',
+	experimental: {
+		appDir: true,
+		enableUndici: true,
+	}
 };
 
 module.exports = nextConfig;
