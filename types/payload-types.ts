@@ -5,25 +5,21 @@
  * and re-run `payload generate:types` to regenerate this file.
  */
 
-export interface Config {
-}
-
+export interface Config {}
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "featured-projects".
  */
-export interface FeaturedProjects {
+export interface FeaturedProject {
 	id: string;
-	projects?: (string | Project)[];
+	projects?: string[] | Project[];
 }
-
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "projects".
  */
 export interface Project {
 	id: string;
-	_status?: 'draft' | 'published';
 	title: string;
 	slug: string;
 	shortDescription: string;
@@ -32,12 +28,12 @@ export interface Project {
 	}[];
 	organizer: string | Guild;
 	status: 'draft' | 'ongoing' | 'past';
-	links?: {
+	links: {
 		name: string;
 		url: string;
 		id?: string;
 	}[];
-	media?: {
+	media: {
 		type: 'image' | 'video';
 		media?: string | Media;
 		url?: string;
@@ -47,49 +43,49 @@ export interface Project {
 	image: string | Media;
 	ogImage?: string | Media;
 	'submission-url'?: string;
-	collaborators?: (string | User)[];
-	flags?: (string | Flag)[];
-	devprops?: {
+	collaborators?: string[] | User[];
+	flags?: string[] | Flag[];
+	devprops: {
 		key: string;
 		value: string;
 		id?: string;
 	}[];
+	_status?: 'draft' | 'published';
 	createdAt: string;
 	updatedAt: string;
 }
-
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "guilds".
  */
 export interface Guild {
 	id: string;
-	_status?: 'draft' | 'published';
 	name: string;
 	description: string;
 	debutDate: string;
 	invite: string;
 	icon: string | Media;
 	color?: string;
-	staff?: (string | User)[];
+	staff?: string[] | User[];
+	_status?: 'draft' | 'published';
 	createdAt: string;
 	updatedAt: string;
 }
-
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
  */
 export interface Media {
 	id: string;
+	prefix?: string;
 	url?: string;
 	filename?: string;
 	mimeType?: string;
 	filesize?: number;
 	width?: number;
 	height?: number;
-	sizes?: {
-		icon?: {
+	sizes: {
+		icon: {
 			url?: string;
 			width?: number;
 			height?: number;
@@ -97,7 +93,7 @@ export interface Media {
 			filesize?: number;
 			filename?: string;
 		};
-		opengraph?: {
+		opengraph: {
 			url?: string;
 			width?: number;
 			height?: number;
@@ -105,7 +101,7 @@ export interface Media {
 			filesize?: number;
 			filename?: string;
 		};
-		thumbnail?: {
+		thumbnail: {
 			url?: string;
 			width?: number;
 			height?: number;
@@ -117,13 +113,14 @@ export interface Media {
 	createdAt: string;
 	updatedAt: string;
 }
-
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
 	id: string;
+	name: string;
+	roles: ('superadmin' | 'project-owner' | 'content-moderator' | 'developer' | 'translator')[];
 	enableAPIKey?: boolean;
 	apiKey?: string;
 	apiKeyIndex?: string;
@@ -134,12 +131,9 @@ export interface User {
 	_verificationToken?: string;
 	loginAttempts?: number;
 	lockUntil?: string;
-	name: string;
-	roles: ('superadmin' | 'project-owner' | 'content-moderator' | 'developer' | 'translator')[];
 	createdAt: string;
 	updatedAt: string;
 }
-
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "flags".
@@ -151,12 +145,11 @@ export interface Flag {
 	createdAt: string;
 	updatedAt: string;
 }
-
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "notice".
  */
-export interface NoticeBanner {
+export interface Notice {
 	id: string;
 	enabled?: boolean;
 	description?: string;
@@ -164,21 +157,21 @@ export interface NoticeBanner {
 		[k: string]: unknown;
 	}[];
 }
-
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "submission-media".
  */
 export interface SubmissionMedia {
 	id: string;
+	prefix?: string;
 	url?: string;
 	filename?: string;
 	mimeType?: string;
 	filesize?: number;
 	width?: number;
 	height?: number;
-	sizes?: {
-		icon?: {
+	sizes: {
+		icon: {
 			url?: string;
 			width?: number;
 			height?: number;
@@ -186,7 +179,7 @@ export interface SubmissionMedia {
 			filesize?: number;
 			filename?: string;
 		};
-		thumbnail?: {
+		thumbnail: {
 			url?: string;
 			width?: number;
 			height?: number;
@@ -194,7 +187,7 @@ export interface SubmissionMedia {
 			filesize?: number;
 			filename?: string;
 		};
-		tanabata?: {
+		tanabata: {
 			url?: string;
 			width?: number;
 			height?: number;
@@ -206,14 +199,12 @@ export interface SubmissionMedia {
 	createdAt: string;
 	updatedAt: string;
 }
-
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "submissions".
  */
 export interface Submission {
 	id: string;
-	_status?: 'draft' | 'published';
 	project: string | Project;
 	author: string;
 	srcIcon?: string | SubmissionMedia;
@@ -222,11 +213,12 @@ export interface Submission {
 	message?: string;
 	media?: string | SubmissionMedia;
 	url?: string;
-	devprops?: {
+	devprops: {
 		key: string;
 		value: string;
 		id?: string;
 	}[];
+	_status?: 'draft' | 'published';
 	createdAt: string;
 	updatedAt: string;
 }

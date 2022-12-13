@@ -13,57 +13,61 @@ interface ISubmissionProps {
 			[key: string]: string;
 		};
 	};
-	data: Submission;
+	submission: Omit<Submission, 'media'> & { media: SubmissionMedia };
 	index: number;
 }
 
-function SubmissionElement({ project, data, index }: ISubmissionProps) {
+function SubmissionElement({ project, submission, index }: ISubmissionProps) {
 	return (
-		<div className="w-full max-h-full text-black dark:text-white" key={data.id}>
+		<div className="w-full max-h-full text-black dark:text-white" key={submission.id}>
 			<div className="w-full flex mt-4 h-14">
-				{data.srcIcon && (
+				{submission.srcIcon && (
 					<img
 						className="object-cover w-14 h-14 rounded-full"
-						src={(data.srcIcon as SubmissionMedia).sizes!.icon!.url}
+						src={(submission.srcIcon as SubmissionMedia).sizes!.icon!.url}
 						alt="author icon"
 					/>
 				)}
-				{data.author && (
+				{submission.author && (
 					<div className="text-lg mt-3 ml-4">
 						From:
 						{' '}
-						<span className="font-bold">{data.author}</span>
+						<span className="font-bold">{submission.author}</span>
 					</div>
 				)}
 				<div className="flex-grow" />
 				<p className="text-xl mt-3 mr-4">{`#${index + 1}`}</p>
 			</div>
 			<div className="w-full mt-3">
-				{data.type === 'video' && (
-					data.url?.startsWith('https://www.youtube.com/') && (
+				{submission.type === 'video' && (
+					submission.url?.startsWith('https://www.youtube.com/') && (
 						<ReactPlayer
 							width="100%"
 							height="300px"
-							url={data.url!}
+							url={submission.url!}
 							controls
 							light
 							className="mb-4 mt-4"
 						/>
 					)
 				)}
-				{data.type === 'image' && (
+				{submission.type === 'image' && (
 					<div className="mt-4 mb-2 w-full h-full max-h-[750px] flex justify-center">
 						<img
 							className="max-w-10/12 object-contain mb-4"
-							src={(data.media as SubmissionMedia).sizes!.thumbnail!.url}
+							src={
+								submission.media.sizes?.thumbnail?.width
+									? submission.media.sizes.thumbnail.url
+									: submission.media.url
+							}
 							alt=""
 							loading="lazy"
 						/>
 					</div>
 				)}
-				{data.message && (
+				{submission.message && (
 					<p className={`mx-4 mb-4 w-auto h-full overflow-auto whitespace-pre-line dark:text-gray-300 ${project?.flags?.includes('sanaSendoff') ? 'sana-message' : ''}`}>
-						<span className="relative">{data.message}</span>
+						<span className="relative">{submission.message}</span>
 					</p>
 				)}
 				{!project?.flags?.includes('tiledSubmissions') && (
@@ -118,7 +122,7 @@ function Submissions({ submissions, project }: IProps) {
 									{shownSubmissions.map((submission, index) => (
 										<SubmissionElement
 											project={project}
-											data={submission}
+											submission={submission as any}
 											index={index}
 											key={submission.id}
 										/>
@@ -132,7 +136,7 @@ function Submissions({ submissions, project }: IProps) {
 										<div className="min-w-80 w-1/2" key={submission.id}>
 											<SubmissionElement
 												project={project}
-												data={submission}
+												submission={submission as any}
 												index={index}
 											/>
 										</div>

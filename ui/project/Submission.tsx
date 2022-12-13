@@ -2,7 +2,7 @@ import { Submission as ISubmission, SubmissionMedia } from 'types/payload-types'
 import ReactPlayerWrapper from 'ui/project/ReactPlayerWrapper';
 
 interface IProps {
-	submission: ISubmission;
+	submission: Omit<ISubmission, 'media'> & { media: SubmissionMedia };
 	index: number;
 }
 
@@ -39,7 +39,11 @@ export default function Submission({ submission, index }: IProps) {
 						{/* eslint-disable-next-line @next/next/no-img-element */}
 						<img
 							className="max-w-10/12 object-contain mb-4"
-							src={(submission.media as SubmissionMedia).sizes?.thumbnail?.url}
+							src={
+								submission.media.sizes?.thumbnail?.width
+									? submission.media.sizes.thumbnail.url
+									: submission.media.url
+							}
 							alt=""
 							loading="lazy"
 						/>

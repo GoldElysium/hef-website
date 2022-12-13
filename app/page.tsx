@@ -14,7 +14,7 @@ interface PageData {
 		}[];
 	};
 	guilds: {
-		en: Guild[];
+		en: Array<Omit<Guild, 'icon'> & { icon: Media }>;
 		jp: {
 			description: Guild['description'];
 		}[];
@@ -96,7 +96,7 @@ async function fetchData() {
 			jp: jpMinified,
 		},
 		guilds: {
-			en: enGuilds,
+			en: enGuilds as any,
 			jp: jpGuilds,
 		},
 	} as PageData;
@@ -120,7 +120,11 @@ export default async function Page() {
 	const guildHtml = guilds.en.map((guild) => (
 		<Card
 			key={`guild-${guild.id}`}
-			img={(guild.icon as Media).sizes!.icon!.url}
+			img={
+				guild.icon.sizes?.icon?.width
+					? guild.icon.sizes.icon.url
+					: guild.icon.url
+			}
 			title={guild.name}
 			description={guild.description}
 			button="Join!"

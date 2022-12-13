@@ -6,6 +6,7 @@ import Submissions from 'ui/project/Submissions';
 import Gallery from 'ui/project/Gallery';
 import ExperimentalProjectPage from 'ui/project/experimental/Page';
 import PhaserSubmissionWrapper from 'ui/project/guratanabata/PhaserSubmissionWrapper';
+import { Suspense } from 'react';
 
 // ID's for both production and development databases
 // TODO: Replace with Payload data
@@ -129,7 +130,15 @@ export default async function ProjectPage({ params }: IProps) {
 								</div>
 							)}
 							{/* TODO: Move submissions to separate tab */}
-							<Submissions project={project.en} />
+							<div className="mt-4">
+								{project.en.flags.includes('disableTabs') && (
+									<TextHeader>Submissions</TextHeader>
+								)}
+								<Suspense fallback={<p>Loading submissions...</p>}>
+									{/* @ts-ignore */}
+									<Submissions project={project.en} />
+								</Suspense>
+							</div>
 						</div>
 					</div>
 				</div>

@@ -3,7 +3,7 @@
 import { Fragment, Suspense, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import useSWR, { Fetcher } from 'swr';
-import { NoticeBanner as APINoticeBanner } from '../types/payload-types';
+import { Notice as APINoticeBanner } from '../types/payload-types';
 import DescriptionSerializer from '../components/DescriptionSerializer';
 
 const fetcher: Fetcher<APINoticeBanner> = () => fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/globals/notice`).then((res) => res.json());
@@ -35,7 +35,7 @@ export default function NoticeBanner() {
 				</span>
 				<button
 					type="button"
-					className="bg-white px-4 py-2 bg-[#EF4444] hover:bg-red-400 text-white rounded-full md:text-lg"
+					className="px-4 py-2 bg-[#EF4444] hover:bg-red-400 text-white rounded-full md:text-lg"
 					onClick={() => setDialogOpen(true)}
 				>
 					Read more
@@ -69,11 +69,11 @@ export default function NoticeBanner() {
 									leaveTo="opacity-0 scale-95"
 								>
 									<Dialog.Panel
-										className="w-full max-w-4xl transform overflow-hidden rounded-2xl p-6 text-left align-middle shadow-xl transition-all bg-white"
+										className="w-full max-w-4xl transform overflow-hidden rounded-2xl p-6 text-left align-middle shadow-xl transition-all bg-white dark:bg-skin-dark-background-2"
 									>
 										<Dialog.Title
 											as="h3"
-											className="text-lg md:text-2xl font-semibold leading-6 text-black"
+											className="text-lg md:text-2xl font-semibold leading-6 text-black dark:text-white"
 										>
 											{data.description}
 										</Dialog.Title>
