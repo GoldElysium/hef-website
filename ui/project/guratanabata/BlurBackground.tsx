@@ -28,7 +28,7 @@ export default class BlurBackground extends React.Component<{}, IState> {
 			timeout: (setTimeout(() => {
 				this.setState((state2) => ({
 					...state2,
-					currentImage: state2.targetImage,
+					currentImage: to,
 					targetImage: null,
 				}));
 			}, 500) as unknown) as number,
@@ -44,7 +44,7 @@ export default class BlurBackground extends React.Component<{}, IState> {
 					src={currentImage!}
 					alt=""
 				/>
-				{(targetImage != null)
+				{(targetImage !== null)
 					&& (<img className="absolute w-full h-full object-cover filter blur-xl transform scale-125 blur-background-target" src={targetImage} alt="" />)}
 			</div>
 		);
