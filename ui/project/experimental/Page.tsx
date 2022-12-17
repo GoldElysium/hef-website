@@ -1,4 +1,6 @@
-import { Guild, Project, Submission } from 'types/payload-types';
+import {
+	Guild, Project, Submission, SubmissionMedia,
+} from 'types/payload-types';
 import Header from 'ui/Header';
 import ProjectSubmissions from 'ui/project/experimental/Submissions';
 import ProjectAbout from 'ui/project/experimental/About';
@@ -9,6 +11,7 @@ import ProjectTabs from 'ui/project/experimental/Tabs';
 import ProjectTimeline from 'ui/project/experimental/Timeline';
 import DarkModeFlag from 'ui/project/experimental/DarkModeFlag';
 import PayloadResponse from 'types/PayloadResponse';
+import { getImageUrl } from '../../Image';
 
 const GUILD_TO_OSHI = Object.assign(Object.create(null), {
 	'CGeclp7hLj-lpprbhKxX5': 'calli',
@@ -85,6 +88,8 @@ async function fetchSubmissions(project: ProjectPageProps['project']['en']) {
 				});
 				// eslint-disable-next-line no-param-reassign
 				submission.srcIcon = await mediaFetch.json();
+				// eslint-disable-next-line no-param-reassign,max-len
+				(submission.srcIcon as SubmissionMedia).url = getImageUrl({ src: (submission.srcIcon as SubmissionMedia).url!, width: 56 });
 			}
 
 			if (submission.media) {
@@ -95,6 +100,8 @@ async function fetchSubmissions(project: ProjectPageProps['project']['en']) {
 				});
 				// eslint-disable-next-line no-param-reassign
 				submission.media = await mediaFetch.json();
+				// eslint-disable-next-line no-param-reassign,max-len
+				(submission.media as SubmissionMedia).url = getImageUrl({ src: (submission.media as SubmissionMedia).url!, width: 1024 });
 			}
 
 			submissions.push(submission);

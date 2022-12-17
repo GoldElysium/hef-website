@@ -120,11 +120,7 @@ export default async function Page() {
 	const guildHtml = guilds.en.map((guild) => (
 		<Card
 			key={`guild-${guild.id}`}
-			img={
-				guild.icon.sizes?.icon?.width
-					? guild.icon.sizes.icon.url
-					: guild.icon.url
-			}
+			img={guild.icon.url}
 			title={guild.name}
 			description={guild.description}
 			button="Join!"
@@ -137,10 +133,10 @@ export default async function Page() {
 			<Hero />
 			<div className="flex-grow">
 				<div className="my-16 w-full flex flex-col items-center">
-					<div className="max-w-4xl w-full mx-4">
+					<div className="max-w-4xl mx-4 sm:mx-0">
 						<div>
 							<TextHeader>Featured projects</TextHeader>
-							<div className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center">
+							<div className="flex flex-col text-center sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center">
 								{featuredProjectsHtml.length > 0 ? (
 									featuredProjectsHtml
 								) : (
@@ -150,7 +146,7 @@ export default async function Page() {
 						</div>
 						<div className="mt-10">
 							<TextHeader>EN Servers</TextHeader>
-							<div className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center">
+							<div className="flex flex-col text-center sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center">
 								{guildHtml.length > 0 ? (
 									guildHtml
 								) : (

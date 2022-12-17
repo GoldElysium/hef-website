@@ -1,8 +1,9 @@
 import { Submission as ISubmission, SubmissionMedia } from 'types/payload-types';
 import ReactPlayerWrapper from 'ui/project/ReactPlayerWrapper';
+import Image from 'ui/Image';
 
 interface IProps {
-	submission: Omit<ISubmission, 'media'> & { media: SubmissionMedia };
+	submission: Omit<ISubmission, 'media' | 'srcIcon'> & { media: SubmissionMedia; srcIcon: SubmissionMedia };
 	index: number;
 }
 
@@ -11,7 +12,19 @@ export default function Submission({ submission, index }: IProps) {
 		<div className="w-full max-h-full text-black dark:text-white">
 			<div className="w-full flex mt-4 h-14">
 				{submission.srcIcon && (
-					<img className="object-cover w-14 h-14 rounded-full" src={(submission.srcIcon as SubmissionMedia).sizes!.icon!.url} alt="author icon" />
+					<Image
+						className="object-cover w-14 h-14 rounded-full"
+						src={submission.srcIcon.url!}
+						width={
+							submission.srcIcon.width! < 56 ? submission.srcIcon.width : 56
+						}
+						height={
+							submission.srcIcon.width! < 56
+								? submission.srcIcon.height!
+								: (submission.srcIcon.height! / submission.srcIcon.width!) * 56
+						}
+						alt={`Profile picture of ${submission.author}`}
+					/>
 				)}
 				{submission.author && (
 					<div className="text-lg mt-3 ml-4">
@@ -36,16 +49,18 @@ export default function Submission({ submission, index }: IProps) {
 				)}
 				{submission.type === 'image' && (
 					<div className="mt-4 mb-2 w-full h-full max-h-[750px] flex justify-center">
-						{/* eslint-disable-next-line @next/next/no-img-element */}
-						<img
+						<Image
 							className="max-w-10/12 object-contain mb-4"
-							src={
-								submission.media.sizes?.thumbnail?.width
-									? submission.media.sizes.thumbnail.url
-									: submission.media.url
+							src={submission.media.url!}
+							width={
+								submission.media.width! < 1024 ? submission.media.width : 1024
 							}
-							alt=""
-							loading="lazy"
+							height={
+								submission.media.width! < 1024
+									? submission.media.height!
+									: (submission.media.height! / submission.media.width!) * 1024
+							}
+							alt={`Image submission from ${submission.author}`}
 						/>
 					</div>
 				)}

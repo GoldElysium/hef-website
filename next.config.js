@@ -8,6 +8,11 @@ const nextConfig = {
 	experimental: {
 		appDir: true,
 		enableUndici: true,
+	},
+	images: {
+		loader: 'custom',
+		loaderFile: './lib/imageLoader.ts',
+		unoptimized: true,
 	}
 };
 

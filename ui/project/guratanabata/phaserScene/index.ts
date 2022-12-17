@@ -3,7 +3,8 @@ import SoundFade from 'phaser3-rex-plugins/plugins/soundfade';
 // @ts-expect-error Missing types
 import AwaitLoaderPlugin from 'phaser3-rex-plugins/plugins/awaitloader-plugin';
 import { Plugin as NineSlicePlugin } from 'phaser3-nineslice';
-import { Submission, SubmissionMedia } from 'types/payload-types';
+import { TanabataSubmission } from 'ui/project/guratanabata/PhaserSubmissionWrapper';
+
 import GoogleFontsPlugin from './plugins/gfonts';
 import UIPl from './plugins/ui';
 
@@ -101,16 +102,13 @@ class Index extends Phaser.Scene {
 
 		const urls: Record<string, string> = {};
 		(this.registry.get('submissions') ?? [])
-			.filter((s: Submission) => s.type === 'image')
-			.forEach((s: Submission) => {
+			.filter((s: TanabataSubmission) => s.type === 'image')
+			.forEach((s: TanabataSubmission) => {
 				const key = `submission-image-${s.author}`;
 
-				const mediaUrl = (s.media as SubmissionMedia).sizes!.thumbnail!.url;
-				const srcIconUrl = (s.srcIcon as SubmissionMedia).sizes?.tanabata?.url;
-
-				this.load.image(`${key}-thumb`, srcIconUrl);
-				this.load.image(key, mediaUrl ?? srcIconUrl);
-				urls[key] = (mediaUrl ?? srcIconUrl) as string;
+				this.load.image(`${key}-thumb`, s.media!.thumbnail);
+				this.load.image(key, s.media!.full);
+				urls[key] = s.media!.url;
 			});
 		this.registry.set('submissionURLs', urls);
 

@@ -1,4 +1,6 @@
-import { Flag, Guild, Project } from 'types/payload-types';
+import {
+	Flag, Guild, Media, Project,
+} from 'types/payload-types';
 import DescriptionSerializer from 'ui/DescriptionSerializer';
 import TextHeader from 'ui/TextHeader';
 import PayloadResponse from 'types/PayloadResponse';
@@ -8,6 +10,7 @@ import ExperimentalProjectPage from 'ui/project/experimental/Page';
 import PhaserSubmissionWrapper from 'ui/project/guratanabata/PhaserSubmissionWrapper';
 import { Suspense } from 'react';
 import { notFound } from 'next/navigation';
+import { getImageUrl } from '../../../ui/Image';
 
 // ID's for both production and development databases
 // TODO: Replace with Payload data
@@ -66,6 +69,17 @@ async function fetchProject(slug: string): Promise<ProjectData | null> {
 		project: {
 			en: {
 				...enProject,
+				media: enProject.media.map((item) => {
+					if (!item.media) return item;
+
+					return {
+						...item,
+						media: {
+							...item.media as Media,
+							url: getImageUrl({ src: (item.media as Media).url!, width: 1024 }),
+						} as Media,
+					};
+				}),
 				flags,
 				// eslint-disable-next-line max-len
 				devprops: enProject.devprops ? enProject.devprops.reduce((a, v) => ({ ...a, [v.key]: v.value }), {}) : {},
@@ -111,14 +125,14 @@ export default async function ProjectPage({ params }: IProps) {
 			<div className="flex flex-col h-full min-h-screen bg-skin-background-1 dark:bg-skin-dark-background-1">
 				<div className="flex-grow">
 					<div className="mb-16 w-full flex flex-col items-center">
-						<div className="max-w-4xl w-full mx-4 break-words md:break-normal">
+						<div className="max-w-4xl mx-4 break-words md:break-normal">
 							<div>
 								<div className="description-body">
 									{DescriptionSerializer(project.en.description)}
 								</div>
 							</div>
 							{(project.en.media?.length ?? 0) > 0 && (
-								<Gallery project={project.en} />
+								<Gallery project={project.en as any} />
 							)}
 							{(project.en.links?.length ?? 0) > 0 && (
 								<div className="mt-4">

@@ -1,6 +1,7 @@
 import PayloadResponse from 'types/PayloadResponse';
 import { Media, Project } from 'types/payload-types';
 import Head from 'ui/Head';
+import { getImageUrl } from '../../../ui/Image';
 
 interface ProjectData {
 	en: {
@@ -61,11 +62,7 @@ export default async function PageHead({ params }: { params: { slug: string } })
 			image={
 				// eslint-disable-next-line no-nested-ternary
 				(project
-					? (
-						project.en.image.sizes?.thumbnail?.width
-							? project.en.image.sizes.thumbnail.url
-							: project.en.image.url
-					)
+					? getImageUrl({ src: project.en.image.url!, width: 1024 })
 					: 'https://holoen.fans/img/logo.png')
 			}
 		/>

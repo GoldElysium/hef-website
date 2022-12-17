@@ -25,7 +25,7 @@ export default function ProjectAbout({ project }: ProjectAboutProps) {
 		<>
 			<ProjectDescription description={project.description} />
 			{(project.media?.length ?? 0) > 0 && (
-				<ProjectGallery project={project} />
+				<ProjectGallery project={project as any} />
 			)}
 			{(project.media?.length ?? 0) > 0 && (
 				<ProjectLinks links={project.links!} />

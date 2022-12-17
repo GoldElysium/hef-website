@@ -50,7 +50,6 @@ export interface Project {
 		value: string;
 		id?: string;
 	}[];
-	_status?: 'draft' | 'published';
 	createdAt: string;
 	updatedAt: string;
 }
@@ -84,32 +83,6 @@ export interface Media {
 	filesize?: number;
 	width?: number;
 	height?: number;
-	sizes: {
-		icon: {
-			url?: string;
-			width?: number;
-			height?: number;
-			mimeType?: string;
-			filesize?: number;
-			filename?: string;
-		};
-		opengraph: {
-			url?: string;
-			width?: number;
-			height?: number;
-			mimeType?: string;
-			filesize?: number;
-			filename?: string;
-		};
-		thumbnail: {
-			url?: string;
-			width?: number;
-			height?: number;
-			mimeType?: string;
-			filesize?: number;
-			filename?: string;
-		};
-	};
 	createdAt: string;
 	updatedAt: string;
 }
@@ -170,32 +143,6 @@ export interface SubmissionMedia {
 	filesize?: number;
 	width?: number;
 	height?: number;
-	sizes: {
-		icon: {
-			url?: string;
-			width?: number;
-			height?: number;
-			mimeType?: string;
-			filesize?: number;
-			filename?: string;
-		};
-		thumbnail: {
-			url?: string;
-			width?: number;
-			height?: number;
-			mimeType?: string;
-			filesize?: number;
-			filename?: string;
-		};
-		tanabata: {
-			url?: string;
-			width?: number;
-			height?: number;
-			mimeType?: string;
-			filesize?: number;
-			filename?: string;
-		};
-	};
 	createdAt: string;
 	updatedAt: string;
 }

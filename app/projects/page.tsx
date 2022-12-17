@@ -78,16 +78,16 @@ export default async function Page() {
 		<div className="flex flex-col h-full min-h-screen bg-skin-background-1 dark:bg-skin-dark-background-1">
 			<div className="flex-grow">
 				<div className="my-16 w-full flex flex-col items-center">
-					<div className="max-w-4xl w-full mx-4">
+					<div className="max-w-4xl mx-4">
 						<div>
 							<TextHeader>Ongoing projects</TextHeader>
-							<div className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center">
+							<div className="flex flex-col text-center sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center">
 								{ongoingProjects.length > 0 ? ongoingProjects : <div className="font-bold text-2xl mt-4 text-black dark:text-white">None</div>}
 							</div>
 						</div>
 						<div className="mt-10">
 							<TextHeader>Past projects</TextHeader>
-							<div className="flex flex-col sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center">
+							<div className="flex flex-col text-center sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center">
 								{pastProjects.length > 0 ? pastProjects : <div className="font-bold text-2xl mt-4 text-black dark:text-white">None</div>}
 							</div>
 						</div>

@@ -2,14 +2,16 @@
 
 import { Media, Project } from 'types/payload-types';
 import ReactPlayer from 'react-player';
+import Image from 'next/image';
 
 interface GalleryItemProps {
-	media: Project['media'];
+	media: Array<Omit<Project['media'][number], 'media'> & { media: Media }>;
 	index: number;
 }
 
 export default function GalleryItem({ media, index }: GalleryItemProps) {
 	if (!media) return null;
+
 	if (media[index].type === 'video') {
 		return (
 			<ReactPlayer
@@ -21,8 +23,25 @@ export default function GalleryItem({ media, index }: GalleryItemProps) {
 				light
 			/>
 		);
-	} if (media[index].type === 'image') {
-		return <img className="max-w-full max-h-full object-contain" key={media[index].id!} src={(media[index].media as Media).sizes!.thumbnail!.url} alt="" loading="lazy" />;
 	}
+	if (media[index].type === 'image') {
+		return (
+			<Image
+				className="max-w-full max-h-full object-contain"
+				key={media[index].id!}
+				src={media[index].media.url!}
+				width={
+					media[index].media.width! < 1024 ? media[index].media.width : 1024
+				}
+				height={
+					media[index].media.width! < 1024
+						? media[index].media.height!
+						: (media[index].media.height! / media[index].media.width!) * 1024
+				}
+				alt=""
+			/>
+		);
+	}
+
 	return <p>Invalid media</p>;
 }

@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { Submission } from 'types/payload-types';
+import { TanabataSubmission } from 'ui/project/guratanabata/PhaserSubmissionWrapper';
 
 const PAPER_SLIDES = [
 	'paperslide1',
@@ -57,7 +57,7 @@ export default class FullPaper extends Phaser.Scene {
 			.setInteractive({ cursor: 'pointer' })
 			.once('pointerup', () => this.close());
 
-		const submission = this.data.get('submission') as Submission;
+		const submission = this.data.get('submission') as TanabataSubmission;
 		this.message = this.ui.text(
 			bgBounds.left + 100,
 			150,

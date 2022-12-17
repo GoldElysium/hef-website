@@ -25,7 +25,7 @@ export default function NavbarMenu() {
 				leaveTo="transform opacity-0 scale-95"
 			>
 
-				<Menu.Items static className="absolute left-2 top-16 w-32 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none mr-2">
+				<Menu.Items static className="absolute top-10 w-32 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none mr-2 dark:bg-skin-dark-background-2">
 					<div className="px-2 py-1">
 						<Menu.Item>
 							<Link href="/" type="button" className="flex rounded-md items-center w-full">

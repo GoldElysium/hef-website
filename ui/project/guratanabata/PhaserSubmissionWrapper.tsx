@@ -1,6 +1,7 @@
-import { Project, Submission } from 'types/payload-types';
+import { Project, Submission, SubmissionMedia } from 'types/payload-types';
 import PayloadResponse from 'types/PayloadResponse';
 import PhaserWrapper from 'ui/project/guratanabata/PhaserWrapper';
+import { getImageUrl } from '../../Image';
 
 interface IProps {
 	project: Omit<Project, 'flags' | 'devprops'> & {
@@ -11,7 +12,20 @@ interface IProps {
 	};
 }
 
-async function fetchSubmissions(id: string): Promise<Submission[]> {
+export interface TanabataSubmission {
+	id: string;
+	author: string;
+	type: 'text' | 'image' | 'video';
+	message?: string;
+	media?: {
+		full: string;
+		thumbnail: string;
+		url: string;
+	};
+	url?: string;
+}
+
+async function fetchSubmissions(id: string): Promise<TanabataSubmission[]> {
 	// Create an array for all the submissions
 	let moreSubmissions = true;
 	let page = 1;
@@ -63,7 +77,22 @@ async function fetchSubmissions(id: string): Promise<Submission[]> {
 		await fetchNextSubmissions();
 	}
 
-	return submissions;
+	return submissions.map((submission) => {
+		if (submission.type !== 'image') return submission as TanabataSubmission;
+
+		return {
+			...submission,
+			media: {
+				full: getImageUrl({
+					src: (submission.media as SubmissionMedia).url!, width: 1024,
+				}),
+				thumbnail: getImageUrl({
+					src: (submission.media as SubmissionMedia).url!, width: 400, height: 1280, action: 'smartcrop',
+				}),
+				url: (submission.media as SubmissionMedia).url!,
+			},
+		} as TanabataSubmission;
+	});
 }
 
 export default async function PhaserSubmissionWrapper({ project } : IProps) {

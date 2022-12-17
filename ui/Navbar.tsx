@@ -47,7 +47,7 @@ export default function Navbar() {
 				*/}
 
 				<div>
-					<div className="sm:hidden">
+					<div className="sm:hidden relative">
 						<NavbarMenu />
 					</div>
 

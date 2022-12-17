@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { Submission } from 'types/payload-types';
+import { TanabataSubmission } from 'ui/project/guratanabata/PhaserSubmissionWrapper';
 
 const match = window.location.pathname?.match(/\/projects\/(?<slug>[a-zA-Z0-9\-_]+)/i);
 const MILLION = match?.groups?.slug === 'gura3mil' ? '3' : '4';
@@ -207,7 +207,7 @@ class Main extends Phaser.Scene {
 		this.registry.get('setBackgroundImage')(!this.registry.get('useFallback') ? '/assets/guratanabata/zoomedin1.webp' : '/assets/guratanabata/fallback/zoomedin1.jpg');
 	}
 
-	generatePage(messages?: Submission[]) {
+	generatePage(messages?: TanabataSubmission[]) {
 		if (!messages) return false;
 
 		let bg: any;
@@ -340,7 +340,7 @@ class Main extends Phaser.Scene {
 		return container;
 	}
 
-	showPaper(paper: string, submission: Submission) {
+	showPaper(paper: string, submission: TanabataSubmission) {
 		if (this.isShowingFull) return;
 		this.isShowingFull = true;
 

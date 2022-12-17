@@ -5,6 +5,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import TextHeader from 'ui/project/experimental/TextHeader';
 import { Project, Submission, SubmissionMedia } from 'types/payload-types';
 import ReactPlayer from 'react-player';
+import Image from 'next/image';
 
 interface ISubmissionProps {
 	project?: Omit<Project, 'flags' | 'devprops'> & {
@@ -13,7 +14,7 @@ interface ISubmissionProps {
 			[key: string]: string;
 		};
 	};
-	submission: Omit<Submission, 'media'> & { media: SubmissionMedia };
+	submission: Omit<Submission, 'media' | 'srcIcon'> & { media: SubmissionMedia; srcIcon: SubmissionMedia };
 	index: number;
 }
 
@@ -22,10 +23,18 @@ function SubmissionElement({ project, submission, index }: ISubmissionProps) {
 		<div className="w-full max-h-full text-black dark:text-white" key={submission.id}>
 			<div className="w-full flex mt-4 h-14">
 				{submission.srcIcon && (
-					<img
+					<Image
 						className="object-cover w-14 h-14 rounded-full"
-						src={(submission.srcIcon as SubmissionMedia).sizes!.icon!.url}
-						alt="author icon"
+						src={submission.srcIcon.url!}
+						width={
+							submission.srcIcon.width! < 56 ? submission.srcIcon.width : 56
+						}
+						height={
+							submission.srcIcon.width! < 56
+								? submission.srcIcon.height!
+								: (submission.srcIcon.height! / submission.srcIcon.width!) * 56
+						}
+						alt={`Profile picture of ${submission.author}`}
 					/>
 				)}
 				{submission.author && (
@@ -53,15 +62,18 @@ function SubmissionElement({ project, submission, index }: ISubmissionProps) {
 				)}
 				{submission.type === 'image' && (
 					<div className="mt-4 mb-2 w-full h-full max-h-[750px] flex justify-center">
-						<img
+						<Image
 							className="max-w-10/12 object-contain mb-4"
-							src={
-								submission.media.sizes?.thumbnail?.width
-									? submission.media.sizes.thumbnail.url
-									: submission.media.url
+							src={submission.media.url!}
+							width={
+								submission.media.width! < 1024 ? submission.media.width : 1024
+							}
+							height={
+								submission.media.width! < 1024
+									? submission.media.height!
+									: (submission.media.height! / submission.media.width!) * 1024
 							}
 							alt=""
-							loading="lazy"
 						/>
 					</div>
 				)}

@@ -9,7 +9,7 @@ interface IProps {
 
 const defaultProps = {
 	title: 'HoloEN Fan Website',
-	description: 'A place to chat with other fans of Hololive English! If you want to hang out, you‘ve come to the right place.',
+	description: 'A website featuring amazing projects organized by the community!',
 	url: 'https://holoen.fans',
 	image: 'https://holoen.fans/img/logo.png',
 	color: '#FF3D3D',
@@ -23,7 +23,7 @@ export default function Head({
 		<>
 			<title>{title ?? defaultProps.title}</title>
 			<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-			<meta charset="UTF-8" />
+			<meta charSet="UTF-8" />
 
 			<meta name="keywords" content={[...(keywords ?? []), 'hololive en', 'hef', 'hololive fan', 'hololive en fan'].join(', ')} />
 			<meta name="subject" content="Hololive EN Fan Website" />
