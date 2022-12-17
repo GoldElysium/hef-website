@@ -13,12 +13,15 @@ export default function Navbar() {
 	const pathname = usePathname();
 	const [flags, setFlags] = useState<string[]>([]);
 
-	// Work-around for Sana sendoff url transforms
-	if (
-		window.location.host.endsWith('sanallites.space')
-		|| window.location.host.endsWith('astrogirl.space')) return null;
-
 	useEffect(() => {
+		// Work-around for Sana sendoff url transforms
+		if (window && (
+			window.location.host.endsWith('sanallites.space')
+			|| window.location.host.endsWith('astrogirl.space'))) {
+			setFlags(['disableNavbar']);
+			return;
+		}
+
 		const match = pathname?.match(/\/projects\/(?<slug>[a-zA-Z0-9\-_]+)/i);
 		if (match?.groups?.slug) {
 			(async () => {
