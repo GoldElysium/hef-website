@@ -8,8 +8,12 @@ function withOpacity(variableName) {
 }
 
 module.exports = {
-	mode: 'jit',
-	content: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
+	content: [
+		'./app/**/*.{js,ts,jsx,tsx}',
+		'./ui/**/*.{js,ts,jsx,tsx}',
+		'./pages/**/*.{js,ts,jsx,tsx}',
+		'./components/**/*.{js,ts,jsx,tsx}',
+	],
 	darkMode: 'class',
 	theme: {
 		extend: {
@@ -33,8 +37,10 @@ module.exports = {
 				skin: {
 					'primary-1': withOpacity('--color-primary-1'),
 					'secondary-1': withOpacity('--color-secondary-1'),
+					'link': withOpacity('--color-link'),
 					'dark-primary-1': withOpacity('--color-dark-primary-1'),
 					'dark-secondary-1': withOpacity('--color-dark-secondary-1'),
+					'dark-link': withOpacity('--color-dark-link'),
 				}
 			},
 			backgroundColor: {
@@ -48,16 +54,20 @@ module.exports = {
 
 					'primary-1': withOpacity('--color-primary-1'),
 					'secondary-1': withOpacity('--color-secondary-1'),
+					'link': withOpacity('--color-link'),
 					'dark-primary-1': withOpacity('--color-dark-primary-1'),
 					'dark-secondary-1': withOpacity('--color-dark-secondary-1'),
+					'dark-link': withOpacity('--color-dark-link'),
 				}
 			},
 			borderColor: {
 				skin: {
 					'primary-1': withOpacity('--color-primary-1'),
 					'secondary-1': withOpacity('--color-secondary-1'),
+					'link': withOpacity('--color-link'),
 					'dark-primary-1': withOpacity('--color-dark-primary-1'),
 					'dark-secondary-1': withOpacity('--color-dark-secondary-1'),
+					'dark-link': withOpacity('--color-dark-link'),
 				}
 			},
 			zIndex: {
@@ -68,5 +78,5 @@ module.exports = {
 	variants: {
 		extend: {},
 	},
-	plugins: [],
+	plugins: [require('daisyui')],
 };

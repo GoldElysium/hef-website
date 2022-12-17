@@ -15,15 +15,16 @@ This repository holds the website for [holoen.fans](https://holoen.fans), which 
 ## Stack 📚
 
 * [Next.JS](https://nextjs.org)
-* [MongoDB](http://mongodb.com/)
+* [PayloadCMS](https://payloadcms.com/) ([Our repo](https://github.com/HoloENFans/hef-website-cms))
 * [Tailwind CSS](https://tailwindcss.com/)
 
 ## Contributing ✏
 
 * Have NodeJS installed *(obviously)* and clone this repo.
 * Copy `.env.example` to `.env.local` and fill all the values.
-* Now, you can now start coding! Start the dev server by running `npm run dev`.
-* After you've made your changes, please run ESLint by running `npm run lint:fix` and make sure your commits abide by the Conventional Commits rule as described in [`CONTRIBUTING.md`](https://github.com/GoldElysium/hefs-website/blob/master/CONTRIBUTING.md). You can do this automatically by using the git hooks in this repo using [Husky](https://github.com/typicode/husky).
+  * (Optional) Clone and setup the CMS repo, otherwise point to production CMS: `https://cms.holoen.fans`.
+* Now, you can now start coding! Start the dev server by running `pnpm dev`.
+* After you've made your changes, please run ESLint by running `pnpm lint:fix` and make sure your commits abide by the Conventional Commits rule as described in [`CONTRIBUTING.md`](https://github.com/GoldElysium/hefs-website/blob/master/CONTRIBUTING.md). You can do this automatically by using the git hooks in this repo using [Husky](https://github.com/typicode/husky).
 
 ## Contributors ✨
 
