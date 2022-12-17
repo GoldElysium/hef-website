@@ -125,11 +125,9 @@ export default async function ProjectPage({ params }: IProps) {
 			<div className="flex flex-col h-full min-h-screen bg-skin-background-1 dark:bg-skin-dark-background-1">
 				<div className="flex-grow">
 					<div className="mb-16 w-full flex flex-col items-center">
-						<div className="max-w-4xl mx-4 break-words md:break-normal">
-							<div>
-								<div className="description-body">
-									{DescriptionSerializer(project.en.description)}
-								</div>
+						<div className="max-w-full sm:!max-w-4xl px-4 break-words md:break-normal">
+							<div className="description-body">
+								{DescriptionSerializer(project.en.description)}
 							</div>
 							{(project.en.media?.length ?? 0) > 0 && (
 								<Gallery project={project.en as any} />

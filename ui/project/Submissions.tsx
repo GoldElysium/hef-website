@@ -71,13 +71,13 @@ export default async function Submissions({ project }: IProps) {
 
 	return (
 		<div className="flex flex-col items-center pt-2">
-			<div className="w-full overflow-auto">
+			<div className="w-full max-w-full overflow-auto">
 				{
 					!project?.flags?.includes('tiledSubmissions')
 						? (
 							<div className="w-full h-full flex justify-center">
 								<div
-									className={`sm:w-11/12 md:w-10/12 h-full ${project?.flags?.includes('sanaSendoff') ? 'w-full' : ''}`}
+									className={`sm:w-11/12 md:w-10/12 h-full ${project?.flags?.includes('sanaSendoff') ? 'w-full' : 'max-w-full'}`}
 								>
 									{submissions.map((submission, index) => (
 										<Submission

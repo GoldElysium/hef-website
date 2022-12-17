@@ -2,6 +2,7 @@ import Card from 'ui/Card';
 import TextHeader from 'ui/TextHeader';
 import { Project } from 'types/payload-types';
 import PayloadResponse from 'types/PayloadResponse';
+import Header from '../../ui/Header';
 
 interface ProjectList {
 	en: Project[];
@@ -76,6 +77,11 @@ export default async function Page() {
 
 	return (
 		<div className="flex flex-col h-full min-h-screen bg-skin-background-1 dark:bg-skin-dark-background-1">
+			<Header
+				title="Projects"
+				description="A list of all the projects organized by Hololive EN Fan servers!"
+			/>
+
 			<div className="flex-grow">
 				<div className="my-16 w-full flex flex-col items-center">
 					<div className="max-w-4xl mx-4">
