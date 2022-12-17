@@ -10,6 +10,11 @@ import { useCallback, useEffect, useState } from 'react';
 export default function Footer() {
 	const pathname = usePathname();
 
+	// Work-around for Sana sendoff url transforms
+	if (
+		window.location.host.endsWith('sanallites.space')
+		|| window.location.host.endsWith('astrogirl.space')) return null;
+
 	const [background, setBackground] = useState<string | null>(null);
 	const [flags, setFlags] = useState<string[]>([]);
 
