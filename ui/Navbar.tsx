@@ -9,13 +9,6 @@ interface IProps {
 
 export default function Navbar({ flags }: IProps) {
 	if (flags.includes('disableNavbar')) return null;
-	if (
-		process.env.NEXT_PUBLIC_VERCEL_URL
-		&& (
-			process.env.NEXT_PUBLIC_VERCEL_URL.endsWith('sanallites.space')
-			|| process.env.NEXT_PUBLIC_VERCEL_URL.endsWith('astrogirl.space')
-		)
-	) return null;
 
 	return (
 		<>
