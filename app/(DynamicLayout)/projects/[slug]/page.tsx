@@ -45,20 +45,23 @@ interface ProjectData {
 }
 
 async function fetchProject(slug: string): Promise<ProjectData | null> {
+	console.log(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/projects?where[slug][like]=${slug}&depth=2`);
 	// Fetch EN and JP version for page, CMS will fallback to EN for any fields not translated
-	const enProjectRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/projects?where[slug][equals]=${slug}&depth=2`, {
+	const enProjectRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/projects?where[slug][like]=${slug}&depth=2`, {
 		headers: {
 			'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? '',
 		} as Record<string, string>,
+		cache: 'no-cache',
 	});
 
 	const res = (await enProjectRes.json() as PayloadResponse<Project>);
+	console.log(res);
 	if (res.totalDocs === 0) return null;
 
 	const enProject = res.docs[0];
 	const flags = (enProject.flags as Flag[] ?? []).map((flag) => flag.code);
 
-	const jpProjectRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/projects?where[slug][equals]=${slug}&depth=0&locale=jp`, {
+	const jpProjectRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/projects?where[slug][like]=${slug}&depth=0&locale=jp`, {
 		headers: {
 			'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? '',
 		} as Record<string, string>,

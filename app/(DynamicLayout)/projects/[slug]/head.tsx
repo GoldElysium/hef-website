@@ -18,7 +18,7 @@ interface ProjectData {
 
 async function fetchProject(slug: string): Promise<ProjectData | null> {
 	// Fetch EN and JP version for page, CMS will fallback to EN for any fields not translated
-	const enProjectRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/projects?where[slug][equals]=${slug}&depth=2`, {
+	const enProjectRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/projects?where[slug][like]=${slug}&depth=2`, {
 		headers: {
 			'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? '',
 		} as Record<string, string>,
@@ -27,7 +27,7 @@ async function fetchProject(slug: string): Promise<ProjectData | null> {
 	if (parsedEnProjectRes.totalDocs === 0) return null;
 	const enProject = parsedEnProjectRes.docs[0];
 
-	const jpProjectRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/projects?where[slug][equals]=${slug}&depth=0&locale=jp`, {
+	const jpProjectRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/projects?where[slug][like]=${slug}&depth=0&locale=jp`, {
 		headers: {
 			'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? '',
 		} as Record<string, string>,
