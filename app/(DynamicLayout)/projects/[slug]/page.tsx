@@ -45,17 +45,14 @@ interface ProjectData {
 }
 
 async function fetchProject(slug: string): Promise<ProjectData | null> {
-	console.log(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/projects?where[slug][like]=${slug}&depth=2`);
 	// Fetch EN and JP version for page, CMS will fallback to EN for any fields not translated
 	const enProjectRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/projects?where[slug][like]=${slug}&depth=2`, {
 		headers: {
 			'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? '',
 		} as Record<string, string>,
-		cache: 'no-cache',
 	});
 
 	const res = (await enProjectRes.json() as PayloadResponse<Project>);
-	console.log(res);
 	if (res.totalDocs === 0) return null;
 
 	const enProject = res.docs[0];
@@ -127,8 +124,8 @@ export default async function ProjectPage({ params }: IProps) {
 		<div className={themeStyle}>
 			<div className="flex flex-col h-full min-h-screen bg-skin-background-1 dark:bg-skin-dark-background-1">
 				<div className="flex-grow">
-					<div className="mb-16 w-full flex flex-col items-center">
-						<div className="max-w-full sm:!max-w-4xl px-4 break-words md:break-normal">
+					<div className="mb-16 mt-4 w-full flex flex-col items-center">
+						<div className="max-w-full w-full sm:!max-w-4xl px-4 break-words md:break-normal">
 							<div className="description-body">
 								{DescriptionSerializer(project.en.description)}
 							</div>
