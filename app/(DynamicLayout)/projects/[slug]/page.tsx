@@ -10,7 +10,7 @@ import ExperimentalProjectPage from 'ui/project/experimental/Page';
 import PhaserSubmissionWrapper from 'ui/project/guratanabata/PhaserSubmissionWrapper';
 import { Suspense } from 'react';
 import { notFound } from 'next/navigation';
-import { getImageUrl } from '../../../../ui/Image';
+import { getImageUrl } from 'ui/Image';
 
 // ID's for both production and development databases
 // TODO: Replace with Payload data
