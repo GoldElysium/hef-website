@@ -1,43 +1,13 @@
-'use client';
-
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
 import DarkModeToggle from 'ui/DarkModeToggle';
 import NavbarMenu from 'ui/NavbarMenu';
 import NoticeBanner from 'ui/NoticeBanner';
-import PayloadResponse from 'types/PayloadResponse';
-import { Flag, Project } from 'types/payload-types';
 
-export default function Navbar() {
-	const pathname = usePathname();
-	const [flags, setFlags] = useState<string[]>([]);
+interface IProps {
+	flags: string[];
+}
 
-	useEffect(() => {
-		// Work-around for Sana sendoff url transforms
-		if (window && (
-			window.location.host.endsWith('sanallites.space')
-			|| window.location.host.endsWith('astrogirl.space'))) {
-			setFlags(['disableNavbar']);
-			return;
-		}
-
-		const match = pathname?.match(/\/projects\/(?<slug>[a-zA-Z0-9\-_]+)/i);
-		if (match?.groups?.slug) {
-			(async () => {
-				const res = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/projects?where[slug][equals]=${match!.groups!.slug}&depth=2`);
-				const parsedRes = (await res.json() as PayloadResponse<Project>);
-				if (parsedRes.totalDocs === 0) return;
-
-				const project = parsedRes.docs[0];
-
-				const newFlags = (project.flags as Flag[] ?? []).map((flag) => flag.code);
-
-				setFlags(newFlags);
-			})();
-		}
-	}, [pathname]);
-
+export default function Navbar({ flags }: IProps) {
 	if (flags.includes('disableNavbar')) return null;
 
 	return (

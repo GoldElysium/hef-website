@@ -2,7 +2,7 @@ import Card from 'ui/Card';
 import TextHeader from 'ui/TextHeader';
 import { Project } from 'types/payload-types';
 import PayloadResponse from 'types/PayloadResponse';
-import Header from '../../ui/Header';
+import Header from '../../../ui/Header';
 
 interface ProjectList {
 	en: Project[];

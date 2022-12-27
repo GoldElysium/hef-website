@@ -1,63 +1,19 @@
-'use client';
-
 import { HeartIcon } from '@heroicons/react/24/solid';
 import Script from 'next/script';
-import { usePathname } from 'next/navigation';
-import { Flag, Project } from 'types/payload-types';
-import PayloadResponse from 'types/PayloadResponse';
-import { useCallback, useEffect, useState } from 'react';
 
-export default function Footer() {
-	const pathname = usePathname();
+interface IProps {
+	flags: string[];
+}
 
-	// Work-around for Sana sendoff url transforms
-	const [background, setBackground] = useState<string | null>(null);
-	const [flags, setFlags] = useState<string[]>([]);
-
-	useEffect(() => {
-		// Work-around for Sana sendoff url transforms
-		if (window && (
-			window.location.host.endsWith('sanallites.space')
-			|| window.location.host.endsWith('astrogirl.space'))) {
-			setFlags(['sanaSendoff']);
-			return;
-		}
-
-		const match = pathname?.match(/\/projects\/(?<slug>[a-zA-Z0-9\-_]+)/i);
-		if (match?.groups?.slug) {
-			(async () => {
-				const res = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/projects?where[slug][equals]=${match!.groups!.slug}&depth=2`);
-				const parsedRes = (await res.json() as PayloadResponse<Project>);
-				if (parsedRes.totalDocs === 0) return;
-
-				const project = parsedRes.docs[0];
-
-				const newFlags = (project.flags as Flag[] ?? []).map((flag) => flag.code);
-
-				setFlags(newFlags);
-			})();
-		}
-	}, [pathname]);
-
-	useEffect(() => {
-		if (flags.includes('sanaSendoff')) {
-			setBackground('/assets/sanasendoff/background.png');
-		}
-	}, [flags]);
-
-	const wrapper = useCallback((wrapperEl: HTMLDivElement) => {
-		if (background && wrapperEl) {
-			// eslint-disable-next-line no-param-reassign
-			wrapperEl.style.backgroundImage = `url(${background})`;
-		}
-	}, [background]);
-
+export default function Footer({ flags }: IProps) {
 	if (flags.includes('disableFooter')) return null;
 
 	return (
 		<div
 			className="flex w-full h-24 px-4 sm:px-8 justify-center items-center bg-skin-background-2 dark:bg-skin-dark-background-2"
-			ref={wrapper}
+			style={{
+				backgroundImage: flags.includes('sanaSendoff') ? 'url(/assets/sanasendoff/background.png)' : undefined,
+			}}
 		>
 			<p className="text-center flex items-center text-white text-opacity-70">
 				Made with&nbsp;

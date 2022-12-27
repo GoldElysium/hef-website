@@ -1,7 +1,7 @@
 import PayloadResponse from 'types/PayloadResponse';
 import { Media, Project } from 'types/payload-types';
 import Head from 'ui/Head';
-import { getImageUrl } from '../../../ui/Image';
+import { getImageUrl } from '../../../../ui/Image';
 
 interface ProjectData {
 	en: {
