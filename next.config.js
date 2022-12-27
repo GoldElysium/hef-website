@@ -7,7 +7,7 @@ const nextConfig = {
 	// output: 'standalone',
 	experimental: {
 		appDir: true,
-		enableUndici: true,
+		// enableUndici: true,
 	},
 	images: {
 		loader: 'custom',
