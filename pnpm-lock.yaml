@@ -34,7 +34,7 @@ specifiers:
   next: 13.1.1
   phaser: 3.55.2
   phaser3-nineslice: 0.5.0
-  phaser3-rex-plugins: 1.1.77
+  phaser3-rex-plugins: 1.1.79
   postcss: 8.4.19
   react: 18.2.0
   react-dom: 18.2.0
@@ -62,7 +62,7 @@ dependencies:
   next: 13.1.1_672uxklweod7ene3nqtsh262ca
   phaser: 3.55.2
   phaser3-nineslice: 0.5.0_webpack@4.46.0
-  phaser3-rex-plugins: 1.1.77
+  phaser3-rex-plugins: 1.1.79
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   react-infinite-scroll-component: 6.1.0_react@18.2.0
@@ -5100,8 +5100,8 @@ packages:
       - webpack
     dev: false
 
-  /phaser3-rex-plugins/1.1.77:
-    resolution: {integrity: sha512-uIZOkqSv7oDJ6yu8X9H6Oybvu2gd/1Xu7FcKj9LNjnuTAWgM8DuRSqmL662PnXipM06Yzwjq2dGePYLkxUBOUQ==}
+  /phaser3-rex-plugins/1.1.79:
+    resolution: {integrity: sha512-eYTX1HJiFRuqiF4j79ZnfIJIBN2LtB0XbdYaEKiBiRh7GG7quUPmCeOBUwXq7BnV61ovt+uNgVrl2JBMfgRH2A==}
     dependencies:
       eventemitter3: 3.1.2
       handlebars: 4.7.7
