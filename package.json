@@ -39,7 +39,7 @@
     "react-infinite-scroll-component": "6.1.0",
     "react-player": "2.11.0",
     "server-only": "^0.0.1",
-    "slate": "^0.87.0",
+    "slate": "^0.88.0",
     "styled-components": "5.3.6",
     "swr": "^2.0.0",
     "webfontloader": "1.6.28"
