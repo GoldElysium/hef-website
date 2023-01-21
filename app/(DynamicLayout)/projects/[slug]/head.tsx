@@ -9,6 +9,7 @@ interface ProjectData {
 		shortDescription: string;
 		slug: string;
 		image: Media;
+		ogImage?: Media;
 	};
 	jp: {
 		title?: string;
@@ -40,6 +41,7 @@ async function fetchProject(slug: string): Promise<ProjectData | null> {
 			shortDescription: enProject.shortDescription,
 			slug: enProject.slug,
 			image: enProject.image as Media,
+			ogImage: enProject.ogImage as Media,
 		},
 		jp: {
 			title: jpProject.title ?? null,
@@ -60,9 +62,8 @@ export default async function PageHead({ params }: { params: { slug: string } })
 			description={project?.en.shortDescription ?? undefined}
 			keywords={['guratanabata']}
 			image={
-				// eslint-disable-next-line no-nested-ternary
 				(project
-					? getImageUrl({ src: project.en.image.url!, width: 1024 })
+					? getImageUrl({ src: project.en.ogImage?.url ?? project.en.image.url!, width: 1024 })
 					: 'https://holoen.fans/img/logo.png')
 			}
 		/>
