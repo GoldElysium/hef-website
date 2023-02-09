@@ -63,6 +63,7 @@ export default function ProjectTimeline() {
 						<Link href="https://www.youtube.com/watch?v=SLnxCyzFgPw">The debut PV for Hololive Council is released</Link>
 						{' '}
 						and Sana makes
+						{' '}
 						<Link href="https://twitter.com/tsukumosana/status/1427436063832776714">her first tweet</Link>
 						.
 					</div>
@@ -304,6 +305,7 @@ export default function ProjectTimeline() {
 						<Link href="https://www.youtube.com/watch?v=P_GbsqSjgt8">HoloCouncil celebrates their 6-month anniversary!</Link>
 						{' '}
 						They also release a cover of
+						{' '}
 						<Link href="https://www.youtube.com/watch?v=U-9M-BjFYMc"><em>Hikaru Nara</em></Link>
 						{' '}
 						after the stream, marking Sana&apos;s second official song cover.
@@ -339,6 +341,7 @@ export default function ProjectTimeline() {
 						{' '}
 						<Link href="https://www.youtube.com/watch?v=BnW8BrppGr8&t=11710s">
 							tearing up over
+							{' '}
 							<em>Sana&apos;s Space Birthday Project</em>
 						</Link>
 						{' '}
@@ -346,6 +349,7 @@ export default function ProjectTimeline() {
 						{' '}
 						<Link href="https://www.youtube.com/watch?v=BnW8BrppGr8&t=12227s">
 							showing off the
+							{' '}
 							<em>BEEG SANA</em>
 							{' '}
 							fangame
