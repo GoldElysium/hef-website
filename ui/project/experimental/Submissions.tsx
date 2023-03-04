@@ -3,9 +3,12 @@
 import React from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import TextHeader from 'ui/project/experimental/TextHeader';
-import { Project, Submission, SubmissionMedia } from 'types/payload-types';
+import {
+	Project, Submission as ISubmission, Submission, SubmissionMedia,
+} from 'types/payload-types';
 import ReactPlayer from 'react-player';
 import Image from 'next/image';
+import SubmissionGallery from '../SubmissionGallery';
 
 interface ISubmissionProps {
 	project?: Omit<Project, 'flags' | 'devprops'> & {
@@ -14,7 +17,7 @@ interface ISubmissionProps {
 			[key: string]: string;
 		};
 	};
-	submission: Omit<Submission, 'media' | 'srcIcon'> & { media: SubmissionMedia; srcIcon: SubmissionMedia };
+	submission: Omit<ISubmission, 'media' | 'srcIcon'> & { media: Array<ISubmission['media'][number] & { image: SubmissionMedia }>; srcIcon: SubmissionMedia };
 	index: number;
 }
 
@@ -48,35 +51,46 @@ function SubmissionElement({ project, submission, index }: ISubmissionProps) {
 				<p className="text-xl mt-3 mr-4">{`#${index + 1}`}</p>
 			</div>
 			<div className="w-full mt-3">
-				{submission.type === 'video' && (
-					submission.url?.startsWith('https://www.youtube.com/') && (
-						<ReactPlayer
-							width="100%"
-							height="300px"
-							url={submission.url!}
-							controls
-							light
-							className="mb-4 mt-4"
-						/>
+				{
+					submission.media.length === 1 && (
+						<>
+							{submission.media[0].type === 'video' && (
+								<ReactPlayer
+									width="100%"
+									height="100%"
+									url={submission.media[0].url!}
+									controls
+									light
+									className="mb-4 mt-4"
+								/>
+							)}
+							{submission.media[0].type === 'image' && (
+								<div className="mt-4 mb-2 w-full h-full max-h-[750px] flex justify-center">
+									<Image
+										className="max-w-10/12 object-contain mb-4"
+										src={submission.media[0].image.url!}
+										width={
+											submission.media[0].image.width! < 1024
+												? submission.media[0].image.width : 1024
+										}
+										height={
+											submission.media[0].image.width! < 1024
+												? submission.media[0].image.height!
+												// eslint-disable-next-line max-len
+												: (submission.media[0].image.height! / submission.media[0].image.width!) * 1024
+										}
+										alt={`Image submission from ${submission.author}`}
+									/>
+								</div>
+							)}
+						</>
 					)
-				)}
-				{submission.type === 'image' && (
-					<div className="mt-4 mb-2 w-full h-full max-h-[750px] flex justify-center">
-						<Image
-							className="max-w-10/12 object-contain mb-4"
-							src={submission.media.url!}
-							width={
-								submission.media.width! < 1024 ? submission.media.width : 1024
-							}
-							height={
-								submission.media.width! < 1024
-									? submission.media.height!
-									: (submission.media.height! / submission.media.width!) * 1024
-							}
-							alt=""
-						/>
-					</div>
-				)}
+				}
+				{
+					submission.media.length > 1 && (
+						<SubmissionGallery submission={submission} />
+					)
+				}
 				{submission.message && (
 					<p className={`mx-4 mb-4 w-auto h-full overflow-auto whitespace-pre-line dark:text-gray-300 ${project?.flags?.includes('sanaSendoff') ? 'sana-message' : ''}`}>
 						<span className="relative">{submission.message}</span>
