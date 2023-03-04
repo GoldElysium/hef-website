@@ -111,12 +111,14 @@ export const metadata: Metadata = {
 	openGraph: {
 		title: 'HoloEN Fan Website - Projects',
 		description: 'A list of all the projects organized by Hololive EN Fan servers!',
+		images: 'https://holoen.fans/img/logo.png',
 		type: 'website',
 		siteName: 'HoloEN Fan Website',
 	},
 	twitter: {
 		title: 'HoloEN Fan Website - Projects',
 		description: 'A list of all the projects organized by Hololive EN Fan servers!',
+		images: 'https://holoen.fans/img/logo.png',
 		site: '@HEF_Website',
 		creator: '@GoldElysium',
 		card: 'summary_large_image',
