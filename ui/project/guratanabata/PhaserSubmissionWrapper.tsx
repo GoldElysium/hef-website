@@ -1,4 +1,6 @@
-import { Project, Submission, SubmissionMedia } from 'types/payload-types';
+import {
+	Project, Submission as ISubmission, Submission, SubmissionMedia,
+} from 'types/payload-types';
 import PayloadResponse from 'types/PayloadResponse';
 import PhaserWrapper from 'ui/project/guratanabata/PhaserWrapper';
 import { getImageUrl } from '../../Image';
@@ -53,15 +55,26 @@ async function fetchSubmissions(id: string): Promise<TanabataSubmission[]> {
 				submission.srcIcon = await mediaFetch.json();
 			}
 
-			if (submission.media) {
-				const mediaFetch = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/submission-media/${submission.media as string}`, {
+			const mediaDocs: ISubmission['media'] = [];
+			await Promise.all(submission.media.map(async (item) => {
+				if (item.type !== 'image') {
+					mediaDocs.push(item);
+					return;
+				}
+
+				const mediaFetch = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/submission-media/${item.image as string}`, {
 					headers: {
 						'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? '',
 					} as Record<string, string>,
 				});
-				// eslint-disable-next-line no-param-reassign
-				submission.media = await mediaFetch.json();
-			}
+				mediaDocs.push({
+					...item,
+					image: await mediaFetch.json(),
+				});
+			}));
+
+			// eslint-disable-next-line no-param-reassign
+			submission.media = mediaDocs;
 
 			submissions.push(submission);
 		});
@@ -78,20 +91,20 @@ async function fetchSubmissions(id: string): Promise<TanabataSubmission[]> {
 	}
 
 	return submissions.map((submission) => {
-		if (submission.type !== 'image') return submission as TanabataSubmission;
+		if (submission.media.length === 0) return submission as unknown as TanabataSubmission;
 
 		return {
 			...submission,
 			media: {
 				full: getImageUrl({
-					src: (submission.media as SubmissionMedia).url!, width: 1024,
+					src: (submission.media[0].image as SubmissionMedia).url!, width: 1024,
 				}),
 				thumbnail: getImageUrl({
-					src: (submission.media as SubmissionMedia).url!, width: 400, height: 1280, action: 'smartcrop',
+					src: (submission.media[0].image as SubmissionMedia).url!, width: 400, height: 1280, action: 'smartcrop',
 				}),
-				url: (submission.media as SubmissionMedia).url!,
+				url: (submission.media[0].image as SubmissionMedia).url!,
 			},
-		} as TanabataSubmission;
+		} as unknown as TanabataSubmission;
 	});
 }
 
