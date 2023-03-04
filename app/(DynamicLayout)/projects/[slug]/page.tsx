@@ -8,7 +8,6 @@ import Submissions from 'ui/project/Submissions';
 import Gallery from 'ui/project/Gallery';
 import ExperimentalProjectPage from 'ui/project/experimental/Page';
 import PhaserSubmissionWrapper from 'ui/project/guratanabata/PhaserSubmissionWrapper';
-import { Suspense } from 'react';
 import { notFound } from 'next/navigation';
 import { getImageUrl } from 'ui/Image';
 
@@ -156,10 +155,8 @@ export default async function ProjectPage({ params }: IProps) {
 								{!project.en.flags.includes('disableTabs') && (
 									<TextHeader>Submissions</TextHeader>
 								)}
-								<Suspense fallback={<p>Loading submissions...</p>}>
-									{/* @ts-ignore */}
-									<Submissions project={project.en} />
-								</Suspense>
+								{/* @ts-ignore */}
+								<Submissions project={project.en} />
 							</div>
 						</div>
 					</div>

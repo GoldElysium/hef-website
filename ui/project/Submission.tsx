@@ -1,9 +1,10 @@
 import { Submission as ISubmission, SubmissionMedia } from 'types/payload-types';
 import ReactPlayerWrapper from 'ui/project/ReactPlayerWrapper';
 import Image from 'ui/Image';
+import SubmissionGallery from './SubmissionGallery';
 
 interface IProps {
-	submission: Omit<ISubmission, 'media' | 'srcIcon'> & { media: SubmissionMedia; srcIcon: SubmissionMedia };
+	submission: Omit<ISubmission, 'media' | 'srcIcon'> & { media: Array<ISubmission['media'][number] & { image: SubmissionMedia }>; srcIcon: SubmissionMedia };
 	index: number;
 }
 
@@ -37,33 +38,46 @@ export default function Submission({ submission, index }: IProps) {
 				<p className="text-xl mt-3 mr-4">{`#${index + 1}`}</p>
 			</div>
 			<div className="w-full mt-3">
-				{submission.type === 'video' && (
-					<ReactPlayerWrapper
-						width="100%"
-						height="100%"
-						url={submission.url!}
-						controls
-						light
-						className="mb-4 mt-4"
-					/>
-				)}
-				{submission.type === 'image' && (
-					<div className="mt-4 mb-2 w-full h-full max-h-[750px] flex justify-center">
-						<Image
-							className="max-w-10/12 object-contain mb-4"
-							src={submission.media.url!}
-							width={
-								submission.media.width! < 1024 ? submission.media.width : 1024
-							}
-							height={
-								submission.media.width! < 1024
-									? submission.media.height!
-									: (submission.media.height! / submission.media.width!) * 1024
-							}
-							alt={`Image submission from ${submission.author}`}
-						/>
-					</div>
-				)}
+				{
+					submission.media.length === 1 && (
+						<>
+							{submission.media[0].type === 'video' && (
+								<ReactPlayerWrapper
+									width="100%"
+									height="100%"
+									url={submission.media[0].url!}
+									controls
+									light
+									className="mb-4 mt-4"
+								/>
+							)}
+							{submission.media[0].type === 'image' && (
+								<div className="mt-4 mb-2 w-full h-full max-h-[750px] flex justify-center">
+									<Image
+										className="max-w-10/12 object-contain mb-4"
+										src={submission.media[0].image.url!}
+										width={
+											submission.media[0].image.width! < 1024
+												? submission.media[0].image.width : 1024
+										}
+										height={
+											submission.media[0].image.width! < 1024
+												? submission.media[0].image.height!
+												// eslint-disable-next-line max-len
+												: (submission.media[0].image.height! / submission.media[0].image.width!) * 1024
+										}
+										alt={`Image submission from ${submission.author}`}
+									/>
+								</div>
+							)}
+						</>
+					)
+				}
+				{
+					submission.media.length > 1 && (
+						<SubmissionGallery submission={submission} />
+					)
+				}
 				{submission.message && (
 					<p className="mx-4 mb-4 w-auto h-full overflow-auto whitespace-pre-line dark:text-gray-300">
 						{submission.message}

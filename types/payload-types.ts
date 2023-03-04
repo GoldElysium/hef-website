@@ -5,19 +5,76 @@
  * and re-run `payload generate:types` to regenerate this file.
  */
 
-export interface Config {}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "featured-projects".
- */
-export interface FeaturedProject {
-	id: string;
-	projects?: string[] | Project[];
+export interface Config {
+	collections: {
+		users: User;
+		media: Media;
+		guilds: Guild;
+		'submission-media': SubmissionMedia;
+		projects: Project;
+		submissions: Submission;
+		flags: Flag;
+	};
+	globals: {
+		'featured-projects': FeaturedProject;
+		notice: Notice;
+	};
 }
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "projects".
- */
+export interface User {
+	id: string;
+	name: string;
+	roles: ('superadmin' | 'project-owner' | 'content-moderator' | 'developer' | 'translator')[];
+	enableAPIKey?: boolean;
+	apiKey?: string;
+	apiKeyIndex?: string;
+	email?: string;
+	resetPasswordToken?: string;
+	resetPasswordExpiration?: string;
+	_verified?: boolean;
+	_verificationToken?: string;
+	loginAttempts?: number;
+	lockUntil?: string;
+	createdAt: string;
+	updatedAt: string;
+	password?: string;
+}
+export interface Media {
+	id: string;
+	prefix?: string;
+	url?: string;
+	filename?: string;
+	mimeType?: string;
+	filesize?: number;
+	width?: number;
+	height?: number;
+	createdAt: string;
+	updatedAt: string;
+}
+export interface Guild {
+	id: string;
+	name: string;
+	description: string;
+	debutDate: string;
+	invite: string;
+	icon: string | Media;
+	color?: string;
+	staff?: string[] | User[];
+	_status?: 'draft' | 'published';
+	createdAt: string;
+	updatedAt: string;
+}
+export interface SubmissionMedia {
+	id: string;
+	prefix?: string;
+	url?: string;
+	filename?: string;
+	mimeType?: string;
+	filesize?: number;
+	width?: number;
+	height?: number;
+	createdAt: string;
+	updatedAt: string;
+}
 export interface Project {
 	id: string;
 	title: string;
@@ -53,64 +110,6 @@ export interface Project {
 	createdAt: string;
 	updatedAt: string;
 }
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "guilds".
- */
-export interface Guild {
-	id: string;
-	name: string;
-	description: string;
-	debutDate: string;
-	invite: string;
-	icon: string | Media;
-	color?: string;
-	staff?: string[] | User[];
-	_status?: 'draft' | 'published';
-	createdAt: string;
-	updatedAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media".
- */
-export interface Media {
-	id: string;
-	prefix?: string;
-	url?: string;
-	filename?: string;
-	mimeType?: string;
-	filesize?: number;
-	width?: number;
-	height?: number;
-	createdAt: string;
-	updatedAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users".
- */
-export interface User {
-	id: string;
-	name: string;
-	roles: ('superadmin' | 'project-owner' | 'content-moderator' | 'developer' | 'translator')[];
-	enableAPIKey?: boolean;
-	apiKey?: string;
-	apiKeyIndex?: string;
-	email?: string;
-	resetPasswordToken?: string;
-	resetPasswordExpiration?: string;
-	_verified?: boolean;
-	_verificationToken?: string;
-	loginAttempts?: number;
-	lockUntil?: string;
-	createdAt: string;
-	updatedAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "flags".
- */
 export interface Flag {
 	id: string;
 	code: string;
@@ -118,10 +117,31 @@ export interface Flag {
 	createdAt: string;
 	updatedAt: string;
 }
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "notice".
- */
+export interface Submission {
+	id: string;
+	project: string | Project;
+	author: string;
+	srcIcon?: string | SubmissionMedia;
+	message?: string;
+	media: {
+		type: 'image' | 'video';
+		subtype?: 'artwork' | 'picture' | 'other';
+		image?: string | SubmissionMedia;
+		url?: string;
+		id?: string;
+	}[];
+	devprops: {
+		key: string;
+		value: string;
+		id?: string;
+	}[];
+	createdAt: string;
+	updatedAt: string;
+}
+export interface FeaturedProject {
+	id: string;
+	projects?: string[] | Project[];
+}
 export interface Notice {
 	id: string;
 	enabled?: boolean;
@@ -129,43 +149,4 @@ export interface Notice {
 	message?: {
 		[k: string]: unknown;
 	}[];
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "submission-media".
- */
-export interface SubmissionMedia {
-	id: string;
-	prefix?: string;
-	url?: string;
-	filename?: string;
-	mimeType?: string;
-	filesize?: number;
-	width?: number;
-	height?: number;
-	createdAt: string;
-	updatedAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "submissions".
- */
-export interface Submission {
-	id: string;
-	project: string | Project;
-	author: string;
-	srcIcon?: string | SubmissionMedia;
-	type: 'text' | 'image' | 'video';
-	subtype?: 'artwork' | 'picture' | 'other';
-	message?: string;
-	media?: string | SubmissionMedia;
-	url?: string;
-	devprops: {
-		key: string;
-		value: string;
-		id?: string;
-	}[];
-	_status?: 'draft' | 'published';
-	createdAt: string;
-	updatedAt: string;
 }

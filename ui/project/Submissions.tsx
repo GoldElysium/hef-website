@@ -11,7 +11,7 @@ interface IProps {
 	};
 }
 
-async function fetchSubmissions(project: Project) {
+async function fetchSubmissions(project: { id: string }) {
 	// Create an array for all the submissions
 	let moreSubmissions = true;
 	let page = 1;
@@ -39,16 +39,26 @@ async function fetchSubmissions(project: Project) {
 				submission.srcIcon = await mediaFetch.json();
 			}
 
-			if (submission.media) {
-				const mediaFetch = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/submission-media/${submission.media as string}`, {
+			const mediaDocs: ISubmission['media'] = [];
+			await Promise.all(submission.media.map(async (item) => {
+				if (item.type !== 'image') {
+					mediaDocs.push(item);
+					return;
+				}
+
+				const mediaFetch = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/submission-media/${item.image as string}`, {
 					headers: {
 						'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? '',
 					} as Record<string, string>,
 				});
-				// eslint-disable-next-line no-param-reassign
-				submission.media = await mediaFetch.json();
-			}
+				mediaDocs.push({
+					...item,
+					image: await mediaFetch.json(),
+				});
+			}));
 
+			// eslint-disable-next-line no-param-reassign
+			submission.media = mediaDocs;
 			submissions.push(submission);
 		});
 		await Promise.all(tasks);
@@ -67,7 +77,7 @@ async function fetchSubmissions(project: Project) {
 }
 
 export default async function Submissions({ project }: IProps) {
-	const submissions = await fetchSubmissions(project as unknown as Project);
+	const submissions = await fetchSubmissions(project);
 
 	return (
 		<div className="flex flex-col items-center pt-2">
