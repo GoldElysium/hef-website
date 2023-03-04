@@ -3,6 +3,7 @@ import TextHeader from 'ui/TextHeader';
 import { Project } from 'types/payload-types';
 import PayloadResponse from 'types/PayloadResponse';
 import Header from 'ui/Header';
+import { Metadata } from 'next';
 
 interface ProjectList {
 	en: Project[];
@@ -103,3 +104,21 @@ export default async function Page() {
 		</div>
 	);
 }
+
+export const metadata: Metadata = {
+	title: 'HoloEN Fan Website - Projects',
+	description: 'A list of all the projects organized by Hololive EN Fan servers!',
+	openGraph: {
+		title: 'HoloEN Fan Website - Projects',
+		description: 'A list of all the projects organized by Hololive EN Fan servers!',
+		type: 'website',
+		siteName: 'HoloEN Fan Website',
+	},
+	twitter: {
+		title: 'HoloEN Fan Website - Projects',
+		description: 'A list of all the projects organized by Hololive EN Fan servers!',
+		site: '@HEF_Website',
+		creator: '@GoldElysium',
+		card: 'summary_large_image',
+	},
+};
