@@ -130,6 +130,14 @@ export interface Submission {
 		url?: string;
 		id?: string;
 	}[];
+	filterableAttributes: {
+		name: string;
+		values: {
+			value: string;
+			id?: string;
+		}[];
+		id?: string;
+	}[];
 	devprops: {
 		key: string;
 		value: string;

@@ -1,4 +1,4 @@
-import TextHeader from 'ui/project/experimental/TextHeader';
+import TextHeader from 'ui/project/experimental/sana/TextHeader';
 import { Project } from 'types/payload-types';
 
 export interface ProjectLinksProps {

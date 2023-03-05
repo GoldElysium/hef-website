@@ -2,13 +2,13 @@
 
 import React from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import TextHeader from 'ui/project/experimental/TextHeader';
+import TextHeader from 'ui/project/experimental/sana/TextHeader';
 import {
 	Project, Submission as ISubmission, Submission, SubmissionMedia,
 } from 'types/payload-types';
 import ReactPlayer from 'react-player';
 import Image from 'next/image';
-import SubmissionGallery from '../SubmissionGallery';
+import SubmissionGallery from '../../SubmissionGallery';
 
 interface ISubmissionProps {
 	project?: Omit<Project, 'flags' | 'devprops'> & {
@@ -55,14 +55,15 @@ function SubmissionElement({ project, submission, index }: ISubmissionProps) {
 					submission.media.length === 1 && (
 						<>
 							{submission.media[0].type === 'video' && (
-								<ReactPlayer
-									width="100%"
-									height="100%"
-									url={submission.media[0].url!}
-									controls
-									light
-									className="mb-4 mt-4"
-								/>
+								<div className="mb-4 w-full h-[300px] flex justify-center">
+									<ReactPlayer
+										width="83%"
+										height="300px"
+										url={submission.media[0].url!}
+										controls
+										light
+									/>
+								</div>
 							)}
 							{submission.media[0].type === 'image' && (
 								<div className="mt-4 mb-2 w-full h-full max-h-[750px] flex justify-center">
@@ -88,7 +89,44 @@ function SubmissionElement({ project, submission, index }: ISubmissionProps) {
 				}
 				{
 					submission.media.length > 1 && (
-						<SubmissionGallery submission={submission} />
+						<SubmissionGallery
+							submission={submission}
+							elements={submission.media.map((media, submissionIndex) => {
+								if (media.type === 'video') {
+									return (
+										<ReactPlayer
+											width="100%"
+											height="100%"
+											key={media.id!}
+											url={media.url!}
+											controls
+											light
+										/>
+									);
+								}
+								if (media.type === 'image') {
+									return (
+										<Image
+											className="max-w-10/12 object-contain mb-4"
+											key={media.id!}
+											src={media.image.url!}
+											width={
+												media.image.width! < 1024 ? media.image.width : 1024
+											}
+											height={
+												media.image.width! < 1024
+													? media.image.height!
+													: (media.image.height! / media.image.width!) * 1024
+											}
+											alt=""
+											loading={submissionIndex > 0 ? 'eager' : 'lazy'}
+										/>
+									);
+								}
+
+								return <p>Invalid media</p>;
+							})}
+						/>
 					)
 				}
 				{submission.message && (

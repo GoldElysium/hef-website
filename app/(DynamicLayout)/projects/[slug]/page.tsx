@@ -6,10 +6,11 @@ import TextHeader from 'ui/TextHeader';
 import PayloadResponse from 'types/PayloadResponse';
 import Submissions from 'ui/project/Submissions';
 import Gallery from 'ui/project/Gallery';
-import ExperimentalProjectPage from 'ui/project/experimental/Page';
+import ExperimentalProjectPage from 'ui/project/experimental/sana/Page';
 import PhaserSubmissionWrapper from 'ui/project/guratanabata/PhaserSubmissionWrapper';
 import { notFound } from 'next/navigation';
 import { getImageUrl } from 'ui/Image';
+import { Metadata } from 'next';
 
 // ID's for both production and development databases
 // TODO: Replace with Payload data
@@ -152,7 +153,7 @@ export default async function ProjectPage({ params }: IProps) {
 							)}
 							{/* TODO: Move submissions to separate tab */}
 							<div className="mt-4">
-								{!project.en.flags.includes('disableTabs') && (
+								{!(project.en.flags.includes('disableTabs') || project.en.flags.includes('filterableSubmissions')) && (
 									<TextHeader>Submissions</TextHeader>
 								)}
 								{/* @ts-ignore */}
@@ -197,4 +198,43 @@ export async function generateStaticParams() {
 			slug: project.slug,
 		}
 	));
+}
+
+export async function generateMetadata({ params }: any): Promise<Metadata> {
+	const enProjectRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/projects?where[slug][like]=${params.slug}&depth=2`, {
+		headers: {
+			'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? '',
+		} as Record<string, string>,
+	});
+	const parsedEnProjectRes = (await enProjectRes.json() as PayloadResponse<Project>);
+	if (parsedEnProjectRes.totalDocs === 0) return notFound();
+	const enProject = parsedEnProjectRes.docs[0];
+
+	// eslint-disable-next-line max-len
+	/* const jpProjectRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/projects?where[slug][like]=${slug}&depth=0&locale=jp`, {
+		headers: {
+			'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? '',
+		} as Record<string, string>,
+	});
+	const jpProject = (await jpProjectRes.json() as PayloadResponse<Project>).docs[0]; */
+
+	return {
+		title: enProject.title,
+		description: enProject.shortDescription,
+		openGraph: {
+			title: enProject.title,
+			description: enProject.shortDescription,
+			type: 'website',
+			siteName: 'HoloEN Fan Website',
+		},
+		twitter: {
+			title: enProject.title,
+			description: enProject.shortDescription,
+			// eslint-disable-next-line max-len
+			images: getImageUrl({ src: (enProject.ogImage as Media | undefined)?.url ?? (enProject.image as Media).url!, width: 1024 }),
+			site: '@HEF_Website',
+			creator: '@GoldElysium',
+			card: 'summary_large_image',
+		},
+	};
 }
