@@ -40,9 +40,9 @@ async function fetchSubmissions(project: { id: string }) {
 			}
 
 			const mediaDocs: ISubmission['media'] = [];
-			await Promise.all(submission.media.map(async (item) => {
+			await Promise.all(submission.media.map(async (item, index) => {
 				if (item.type !== 'image') {
-					mediaDocs.push(item);
+					mediaDocs[index] = item;
 					return;
 				}
 
@@ -51,10 +51,10 @@ async function fetchSubmissions(project: { id: string }) {
 						'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? '',
 					} as Record<string, string>,
 				});
-				mediaDocs.push({
+				mediaDocs[index] = {
 					...item,
 					image: await mediaFetch.json(),
-				});
+				};
 			}));
 
 			// eslint-disable-next-line no-param-reassign
