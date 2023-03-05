@@ -94,7 +94,7 @@ function SubmissionElement({ project, submission, index }: ISubmissionProps) {
 							elements={submission.media.map((media, submissionIndex) => {
 								if (media.type === 'video') {
 									return (
-										<ReactPlayerWrapper
+										<ReactPlayer
 											width="100%"
 											height="100%"
 											key={media.id!}
