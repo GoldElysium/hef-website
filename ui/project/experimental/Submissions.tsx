@@ -55,14 +55,15 @@ function SubmissionElement({ project, submission, index }: ISubmissionProps) {
 					submission.media.length === 1 && (
 						<>
 							{submission.media[0].type === 'video' && (
-								<ReactPlayer
-									width="100%"
-									height="100%"
-									url={submission.media[0].url!}
-									controls
-									light
-									className="mb-4 mt-4"
-								/>
+								<div className="mb-4 w-full h-[300px] flex justify-center">
+									<ReactPlayer
+										width="83%"
+										height="300px"
+										url={submission.media[0].url!}
+										controls
+										light
+									/>
+								</div>
 							)}
 							{submission.media[0].type === 'image' && (
 								<div className="mt-4 mb-2 w-full h-full max-h-[750px] flex justify-center">
