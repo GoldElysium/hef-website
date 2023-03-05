@@ -6,7 +6,7 @@ import TextHeader from 'ui/TextHeader';
 import PayloadResponse from 'types/PayloadResponse';
 import Submissions from 'ui/project/Submissions';
 import Gallery from 'ui/project/Gallery';
-import ExperimentalProjectPage from 'ui/project/experimental/Page';
+import ExperimentalProjectPage from 'ui/project/experimental/sana/Page';
 import PhaserSubmissionWrapper from 'ui/project/guratanabata/PhaserSubmissionWrapper';
 import { notFound } from 'next/navigation';
 import { getImageUrl } from 'ui/Image';
@@ -153,7 +153,7 @@ export default async function ProjectPage({ params }: IProps) {
 							)}
 							{/* TODO: Move submissions to separate tab */}
 							<div className="mt-4">
-								{!project.en.flags.includes('disableTabs') && (
+								{!(project.en.flags.includes('disableTabs') || project.en.flags.includes('filterableSubmissions')) && (
 									<TextHeader>Submissions</TextHeader>
 								)}
 								{/* @ts-ignore */}

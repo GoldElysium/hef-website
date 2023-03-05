@@ -1,6 +1,7 @@
 import Submission from 'ui/project/Submission';
 import { Project, Submission as ISubmission } from 'types/payload-types';
 import PayloadResponse from 'types/PayloadResponse';
+import SubmissionsWithFilter from './experimental/submissionsFilter/SubmissionsWithFilter';
 
 interface IProps {
 	project: Omit<Project, 'flags' | 'devprops'> & {
@@ -79,42 +80,82 @@ async function fetchSubmissions(project: { id: string }) {
 export default async function Submissions({ project }: IProps) {
 	const submissions = await fetchSubmissions(project);
 
+	if (project.flags.includes('tiledSubmissions')) {
+		return (
+			<div className="flex flex-col items-center pt-2">
+				<div className="w-full max-w-full overflow-auto">
+					<div className="w-full h-full flex flex-wrap justify-center content-center">
+						<div className="sm:w-11/12 md:w-10/12 flex flex-wrap">
+							{submissions.map((submission, index) => (
+								<div className="min-w-80 w-1/2" key={submission.id}>
+									<Submission
+										submission={submission as any}
+										index={index}
+										key={submission.id}
+									/>
+								</div>
+							))}
+						</div>
+					</div>
+					<p>You have reached the end!</p>
+				</div>
+			</div>
+		);
+	}
+
+	if (project.flags.includes('filterableSubmissions')) {
+		const filterOptions: { [key: string]: string[] } = {};
+
+		/* eslint-disable no-restricted-syntax */
+		for (const submission of submissions) {
+			for (const attribute of submission.filterableAttributes) {
+				if (!filterOptions[attribute.name]) filterOptions[attribute.name] = [];
+
+				for (const value of attribute.values) {
+					if (!filterOptions[attribute.name].includes(value.value)) {
+						filterOptions[attribute.name].push(value.value);
+					}
+				}
+			}
+		}
+
+		for (const key in filterOptions) {
+			if (Object.hasOwnProperty.call(filterOptions, key)) {
+				filterOptions[key].sort((a, b) => a.localeCompare(b));
+			}
+		}
+		/* eslint-enable */
+
+		return (
+			<SubmissionsWithFilter
+				submissions={submissions.map((submission) => ({
+					data: submission,
+					el: <Submission
+						submission={submission as any}
+						key={submission.id}
+					/>,
+				}))}
+				filterOptions={filterOptions}
+			/>
+		);
+	}
+
 	return (
 		<div className="flex flex-col items-center pt-2">
 			<div className="w-full max-w-full overflow-auto">
-				{
-					!project?.flags?.includes('tiledSubmissions')
-						? (
-							<div className="w-full h-full flex justify-center">
-								<div
-									className={`sm:w-11/12 md:w-10/12 h-full ${project?.flags?.includes('sanaSendoff') ? 'w-full' : 'max-w-full'}`}
-								>
-									{submissions.map((submission, index) => (
-										<Submission
-											submission={submission as any}
-											index={index}
-											key={submission.id}
-										/>
-									))}
-								</div>
-							</div>
-						)
-						: (
-							<div className="w-full h-full flex flex-wrap justify-center content-center">
-								<div className="sm:w-11/12 md:w-10/12 flex flex-wrap">
-									{submissions.map((submission, index) => (
-										<div className="min-w-80 w-1/2" key={submission.id}>
-											<Submission
-												submission={submission as any}
-												index={index}
-												key={submission.id}
-											/>
-										</div>
-									))}
-								</div>
-							</div>
-						)
-				}
+				<div className="w-full h-full flex justify-center">
+					<div
+						className={`sm:w-11/12 md:w-10/12 h-full ${project.flags.includes('sanaSendoff') ? 'w-full' : 'max-w-full'}`}
+					>
+						{submissions.map((submission, index) => (
+							<Submission
+								submission={submission as any}
+								index={index}
+								key={submission.id}
+							/>
+						))}
+					</div>
+				</div>
 				<p>You have reached the end!</p>
 			</div>
 		</div>

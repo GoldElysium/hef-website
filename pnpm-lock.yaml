@@ -11,6 +11,7 @@ specifiers:
   '@mdi/react': ^1.6.1
   '@next/eslint-plugin-next': ^13.2.3
   '@types/escape-html': ^1.0.2
+  '@types/lodash': ^4.14.191
   '@types/react': 18.0.28
   '@types/safe-json-stringify': 1.1.2
   '@types/webfontloader': 1.6.35
@@ -30,6 +31,7 @@ specifiers:
   eslint-plugin-react-hooks: 4.6.0
   husky: 8.0.3
   lint-staged: 13.1.2
+  lodash: ^4.17.21
   nanoid: 4.0.1
   next: 13.2.3
   phaser: 3.55.2
@@ -58,6 +60,7 @@ dependencies:
   daisyui: 2.51.3_by5iqycgvtroytm54ytclj4zzi
   date-fns: 2.29.3
   escape-html: 1.0.3
+  lodash: 4.17.21
   nanoid: 4.0.1
   next: 13.2.3_biqbaboplfbrettd7655fr4n2y
   phaser: 3.55.2
@@ -78,6 +81,7 @@ devDependencies:
   '@commitlint/config-conventional': 17.4.4
   '@next/eslint-plugin-next': 13.2.3
   '@types/escape-html': 1.0.2
+  '@types/lodash': 4.14.191
   '@types/react': 18.0.28
   '@types/safe-json-stringify': 1.1.2
   '@types/webfontloader': 1.6.35
@@ -817,6 +821,10 @@ packages:
 
   /@types/json5/0.0.29:
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
+    dev: true
+
+  /@types/lodash/4.14.191:
+    resolution: {integrity: sha512-BdZ5BCCvho3EIXw6wUCXHe7rS53AIDPLE+JzwgT+OsJk53oBfbSmZZ7CX4VaRoN78N+TJpFi9QPlfIVNmJYWxQ==}
     dev: true
 
   /@types/minimist/1.2.2:

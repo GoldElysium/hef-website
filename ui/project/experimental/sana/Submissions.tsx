@@ -2,13 +2,13 @@
 
 import React from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import TextHeader from 'ui/project/experimental/TextHeader';
+import TextHeader from 'ui/project/experimental/sana/TextHeader';
 import {
 	Project, Submission as ISubmission, Submission, SubmissionMedia,
 } from 'types/payload-types';
 import ReactPlayer from 'react-player';
 import Image from 'next/image';
-import SubmissionGallery from '../SubmissionGallery';
+import SubmissionGallery from '../../SubmissionGallery';
 
 interface ISubmissionProps {
 	project?: Omit<Project, 'flags' | 'devprops'> & {

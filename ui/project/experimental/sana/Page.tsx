@@ -2,16 +2,16 @@ import {
 	Guild, Project, Submission as ISubmission, Submission, SubmissionMedia,
 } from 'types/payload-types';
 import Header from 'ui/Header';
-import ProjectSubmissions from 'ui/project/experimental/Submissions';
-import ProjectAbout from 'ui/project/experimental/About';
-import ProjectBackgroundMusic from 'ui/project/experimental/BackgroundMusic';
-import ProjectCredits from 'ui/project/experimental/Credits';
-import ProjectTab from 'ui/project/experimental/Tab';
-import ProjectTabs from 'ui/project/experimental/Tabs';
-import ProjectTimeline from 'ui/project/experimental/Timeline';
-import DarkModeFlag from 'ui/project/experimental/DarkModeFlag';
+import ProjectSubmissions from 'ui/project/experimental/sana/Submissions';
+import ProjectAbout from 'ui/project/experimental/sana/About';
+import ProjectBackgroundMusic from 'ui/project/experimental/sana/BackgroundMusic';
+import ProjectCredits from 'ui/project/experimental/sana/Credits';
+import ProjectTab from 'ui/project/experimental/sana/Tab';
+import ProjectTabs from 'ui/project/experimental/sana/Tabs';
+import ProjectTimeline from 'ui/project/experimental/sana/Timeline';
+import DarkModeFlag from 'ui/project/experimental/sana/DarkModeFlag';
 import PayloadResponse from 'types/PayloadResponse';
-import { getImageUrl } from '../../Image';
+import { getImageUrl } from '../../../Image';
 
 const GUILD_TO_OSHI = Object.assign(Object.create(null), {
 	'CGeclp7hLj-lpprbhKxX5': 'calli',

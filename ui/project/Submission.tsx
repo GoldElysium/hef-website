@@ -5,7 +5,7 @@ import SubmissionGallery from './SubmissionGallery';
 
 interface IProps {
 	submission: Omit<ISubmission, 'media' | 'srcIcon'> & { media: Array<ISubmission['media'][number] & { image: SubmissionMedia }>; srcIcon: SubmissionMedia };
-	index: number;
+	index?: number;
 }
 
 export default function Submission({ submission, index }: IProps) {
@@ -35,7 +35,7 @@ export default function Submission({ submission, index }: IProps) {
 					</div>
 				)}
 				<div className="flex-grow" />
-				<p className="text-xl mt-3 mr-4">{`#${index + 1}`}</p>
+				{index && <p className="text-xl mt-3 mr-4">{`#${index + 1}`}</p>}
 			</div>
 			<div className="w-full mt-3">
 				{
