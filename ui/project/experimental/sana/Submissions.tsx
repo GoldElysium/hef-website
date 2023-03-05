@@ -89,7 +89,44 @@ function SubmissionElement({ project, submission, index }: ISubmissionProps) {
 				}
 				{
 					submission.media.length > 1 && (
-						<SubmissionGallery submission={submission} />
+						<SubmissionGallery
+							submission={submission}
+							elements={submission.media.map((media, submissionIndex) => {
+								if (media.type === 'video') {
+									return (
+										<ReactPlayerWrapper
+											width="100%"
+											height="100%"
+											key={media.id!}
+											url={media.url!}
+											controls
+											light
+										/>
+									);
+								}
+								if (media.type === 'image') {
+									return (
+										<Image
+											className="max-w-10/12 object-contain mb-4"
+											key={media.id!}
+											src={media.image.url!}
+											width={
+												media.image.width! < 1024 ? media.image.width : 1024
+											}
+											height={
+												media.image.width! < 1024
+													? media.image.height!
+													: (media.image.height! / media.image.width!) * 1024
+											}
+											alt=""
+											loading={submissionIndex > 0 ? 'eager' : 'lazy'}
+										/>
+									);
+								}
+
+								return <p>Invalid media</p>;
+							})}
+						/>
 					)
 				}
 				{submission.message && (
