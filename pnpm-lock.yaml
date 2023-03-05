@@ -6,7 +6,7 @@ specifiers:
   '@emotion/react': 11.10.5
   '@emotion/styled': 11.10.5
   '@headlessui/react': 1.7.7
-  '@heroicons/react': 2.0.13
+  '@heroicons/react': 2.0.16
   '@mdi/js': ^7.1.96
   '@mdi/react': ^1.6.1
   '@next/eslint-plugin-next': ^13.1.6
@@ -52,7 +52,7 @@ dependencies:
   '@emotion/react': 11.10.5_3stiutgnnbnfnf3uowm5cip22i
   '@emotion/styled': 11.10.5_jrh5enlbqfbnumycmktdqgd6se
   '@headlessui/react': 1.7.7_biqbaboplfbrettd7655fr4n2y
-  '@heroicons/react': 2.0.13_react@18.2.0
+  '@heroicons/react': 2.0.16_react@18.2.0
   '@mdi/js': 7.1.96
   '@mdi/react': 1.6.1
   daisyui: 2.50.1_by5iqycgvtroytm54ytclj4zzi
@@ -556,8 +556,8 @@ packages:
       react-dom: 18.2.0_react@18.2.0
     dev: false
 
-  /@heroicons/react/2.0.13_react@18.2.0:
-    resolution: {integrity: sha512-iSN5XwmagrnirWlYEWNPdCDj9aRYVD/lnK3JlsC9/+fqGF80k8C7rl+1HCvBX0dBoagKqOFBs6fMhJJ1hOg1EQ==}
+  /@heroicons/react/2.0.16_react@18.2.0:
+    resolution: {integrity: sha512-x89rFxH3SRdYaA+JCXwfe+RkE1SFTo9GcOkZettHer71Y3T7V+ogKmfw5CjTazgS3d0ClJ7p1NA+SP7VQLQcLw==}
     peerDependencies:
       react: '>= 16'
     dependencies:
