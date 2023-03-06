@@ -1,5 +1,5 @@
 {
-  "projectName": "hefs-website",
+  "projectName": "hef-website",
   "projectOwner": "GoldElysium",
   "repoType": "github",
   "repoHost": "https://github.com",
@@ -96,6 +96,15 @@
       "name": "Livia Medeiros",
       "avatar_url": "https://avatars.githubusercontent.com/u/74449973?v=4",
       "profile": "https://github.com/LiviaMedeiros",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "killbasa",
+      "name": "Shane",
+      "avatar_url": "https://avatars.githubusercontent.com/u/13106700?v=4",
+      "profile": "https://kbot.ca/",
       "contributions": [
         "code"
       ]
