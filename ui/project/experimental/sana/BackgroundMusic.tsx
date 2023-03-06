@@ -154,7 +154,7 @@ export default function ProjectBackgroundMusic({ backgroundMusic }: ProjectBackg
 				<source src={backgroundMusic} type="audio/mp3" />
 			</audio>
 			<div
-				className={`${(hidden) ? 'opacity-0 translate-y-16' : ''} fixed bottom-4 left-4 z-50 transition-all motion-reduce:transition-none bg-skin-card dark:bg-skin-dark-card rounded-lg w-64 h-16 flex justify-between items-center gap-2 px-4 py-2`}
+				className={`${(hidden) ? 'opacity-0 translate-y-16' : ''} fixed bottom-4 left-4 z-50 transition-all motion-reduce:transition-none text-black dark:text-white bg-skin-card dark:bg-skin-dark-card rounded-lg w-64 h-16 flex justify-between items-center gap-2 px-4 py-2`}
 			>
 				<label className="swap swap-flip">
 					<input
