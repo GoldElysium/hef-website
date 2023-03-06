@@ -48,6 +48,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/waylaidwanderer"><img src="https://avatars.githubusercontent.com/u/2882110?v=4?s=100" width="100px;" alt="Joel"/><br /><sub><b>Joel</b></sub></a><br /><a href="https://github.com/GoldElysium/hef-website/commits?author=waylaidwanderer" title="Code">💻</a> <a href="#design-waylaidwanderer" title="Design">🎨</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/LiviaMedeiros"><img src="https://avatars.githubusercontent.com/u/74449973?v=4?s=100" width="100px;" alt="Livia Medeiros"/><br /><sub><b>Livia Medeiros</b></sub></a><br /><a href="https://github.com/GoldElysium/hef-website/commits?author=LiviaMedeiros" title="Code">💻</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://kbot.ca/"><img src="https://avatars.githubusercontent.com/u/13106700?v=4?s=100" width="100px;" alt="Shane"/><br /><sub><b>Shane</b></sub></a><br /><a href="https://github.com/GoldElysium/hef-website/commits?author=killbasa" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Ninjastahr"><img src="https://avatars.githubusercontent.com/u/10507354?v=4?s=100" width="100px;" alt="Ninjastahr"/><br /><sub><b>Ninjastahr</b></sub></a><br /><a href="https://github.com/GoldElysium/hef-website/issues?q=author%3ANinjastahr" title="Bug reports">🐛</a></td>
     </tr>
   </tbody>
 </table>
