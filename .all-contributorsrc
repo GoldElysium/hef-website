@@ -117,6 +117,34 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "Yagato",
+      "name": "Yagato",
+      "avatar_url": "https://avatars.githubusercontent.com/u/35155190?v=4",
+      "profile": "https://github.com/Yagato",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "renovate[bot]",
+      "name": "renovate[bot]",
+      "avatar_url": "https://avatars.githubusercontent.com/in/2740?v=4",
+      "profile": "https://github.com/apps/renovate",
+      "contributions": [
+        "maintenance",
+        "tool"
+      ]
+    },
+    {
+      "login": "allcontributors[bot]",
+      "name": "allcontributors[bot]",
+      "avatar_url": "https://avatars.githubusercontent.com/in/23186?v=4",
+      "profile": "https://github.com/apps/allcontributors",
+      "contributions": [
+        "tool"
+      ]
     }
   ],
   "contributorsPerLine": 7
