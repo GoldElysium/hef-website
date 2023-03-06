@@ -1,5 +1,5 @@
 {
-  "projectName": "hefs-website",
+  "projectName": "hef-website",
   "projectOwner": "GoldElysium",
   "repoType": "github",
   "repoHost": "https://github.com",
@@ -98,6 +98,15 @@
       "profile": "https://github.com/LiviaMedeiros",
       "contributions": [
         "code"
+      ]
+    },
+    {
+      "login": "Ninjastahr",
+      "name": "Ninjastahr",
+      "avatar_url": "https://avatars.githubusercontent.com/u/10507354?v=4",
+      "profile": "https://github.com/Ninjastahr",
+      "contributions": [
+        "bug"
       ]
     }
   ],
