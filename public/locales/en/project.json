@@ -1,0 +1,14 @@
+{
+	"page": {
+		"links": "Links",
+		"submissions": "Submissions",
+		"loading": "Loading submissions..."
+	},
+	"submissions": {
+		"end": "You have reached the end!"
+	},
+	"submission": {
+		"author": "From: {{author}}",
+		"invalid-media": "Invalid media"
+	}
+}

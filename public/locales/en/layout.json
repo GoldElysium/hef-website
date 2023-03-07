@@ -1,0 +1,17 @@
+{
+	"head": {
+		"title": "HoloEN Fan Website",
+		"description": "A website featuring amazing projects organized by the community!"
+	},
+	"nav": {
+		"home": "Home",
+		"projects": "Projects"
+	},
+	"notice-banner": {
+		"open": "Read more",
+		"close": "Close"
+	},
+	"locale-select": {
+		"button": "Languages"
+	}
+}

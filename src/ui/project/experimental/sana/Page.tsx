@@ -47,22 +47,15 @@ const GUILD_TO_OSHI = Object.assign(Object.create(null), {
 });
 
 export interface ProjectPageProps {
-	project: {
-		en: Omit<Project, 'flags' | 'devprops'> & {
-			flags: string[];
-			devprops: {
-				[key: string]: string;
-			};
-		};
-		jp: {
-			title: Project['title'];
-			shortDescription: Project['shortDescription'];
-			description: Project['description'];
+	project: Omit<Project, 'flags' | 'devprops'> & {
+		flags: string[];
+		devprops: {
+			[key: string]: string;
 		};
 	};
 }
 
-async function fetchSubmissions(project: ProjectPageProps['project']['en']) {
+async function fetchSubmissions(project: ProjectPageProps['project']) {
 	// Create an array for all the submissions
 	let moreSubmissions = true;
 	let page = 1;
@@ -131,7 +124,7 @@ async function fetchSubmissions(project: ProjectPageProps['project']['en']) {
 }
 
 export default async function ProjectPage({ project }: ProjectPageProps) {
-	const submissions = await fetchSubmissions(project.en);
+	const submissions = await fetchSubmissions(project);
 
 	return (
 		<>
@@ -139,27 +132,27 @@ export default async function ProjectPage({ project }: ProjectPageProps) {
 
 			{/* Hypothetically this could label the div with a nonexistant 'theme-' */}
 			{/* class but CSS just ignores nonexistant classes, so who cares? */}
-			<div className={`theme-${GUILD_TO_OSHI[(project.en.organizer as Guild).id]}`}>
-				{project.en.devprops.backgroundMusic && (
-					<ProjectBackgroundMusic backgroundMusic={project.en.devprops.backgroundMusic!} />
+			<div className={`theme-${GUILD_TO_OSHI[(project.organizer as Guild).id]}`}>
+				{project.devprops.backgroundMusic && (
+					<ProjectBackgroundMusic backgroundMusic={project.devprops.backgroundMusic!} />
 				)}
 
 				<div className="flex flex-col h-full min-h-screen bg-skin-background-1 dark:bg-skin-dark-background-1">
-					{!project.en.flags?.includes('disableHeader') && (
+					{!project.flags?.includes('disableHeader') && (
 						<Header
-							title={project.en.title ?? 'unknown'}
-							description={project.en.shortDescription ?? ''}
-							background={project.en.flags?.includes('sanaSendoff') ? '/assets/sanasendoff/background.png' : undefined}
+							title={project.title ?? 'unknown'}
+							description={project.shortDescription ?? ''}
+							background={project.flags?.includes('sanaSendoff') ? '/assets/sanasendoff/background.png' : undefined}
 						/>
 					)}
 					<div className="flex-grow pb-16">
 						<div className="my-32 w-full flex flex-col items-center">
 							<div className="max-w-4xl w-full mx-4 break-words md:break-normal">
-								{(!project.en.flags?.includes('disableTabs') && (
+								{(!project.flags?.includes('disableTabs') && (
 									<ProjectTabs defaultTab="About">
 										<ProjectTab label="About">
-											<ProjectAbout project={project.en} />
-											{project.en.flags?.includes('sanaSendoff') && (
+											<ProjectAbout project={project} />
+											{project.flags?.includes('sanaSendoff') && (
 												// something something next/image something something
 												// L + ratio, idc rn
 												<img className="sana-letter" src="/assets/sanasendoff/letter.png" alt="Letter to Sana" />
@@ -169,7 +162,7 @@ export default async function ProjectPage({ project }: ProjectPageProps) {
 											<ProjectTimeline />
 										</ProjectTab>
 										{submissions.length > 0 && (
-											(project.en.flags?.includes('sectionedSubmissions') && (() => {
+											(project.flags?.includes('sectionedSubmissions') && (() => {
 												// the submissions prop will never change; it's statically
 												// assigned on the server side, so we don't need to
 												// memorize this.
@@ -210,7 +203,7 @@ export default async function ProjectPage({ project }: ProjectPageProps) {
 															<ProjectTab label="Artwork">
 																<ProjectSubmissions
 																	submissions={artwork}
-																	project={project.en}
+																	project={project}
 																/>
 															</ProjectTab>
 														)}
@@ -218,7 +211,7 @@ export default async function ProjectPage({ project }: ProjectPageProps) {
 															<ProjectTab label="Pictures">
 																<ProjectSubmissions
 																	submissions={pictures}
-																	project={project.en}
+																	project={project}
 																/>
 															</ProjectTab>
 														)}
@@ -226,7 +219,7 @@ export default async function ProjectPage({ project }: ProjectPageProps) {
 															<ProjectTab label="Videos">
 																<ProjectSubmissions
 																	submissions={videos}
-																	project={project.en}
+																	project={project}
 																/>
 															</ProjectTab>
 														)}
@@ -234,7 +227,7 @@ export default async function ProjectPage({ project }: ProjectPageProps) {
 															<ProjectTab label="Messages">
 																<ProjectSubmissions
 																	submissions={messages}
-																	project={project.en}
+																	project={project}
 																/>
 															</ProjectTab>
 														)}
@@ -242,24 +235,24 @@ export default async function ProjectPage({ project }: ProjectPageProps) {
 												);
 											})()) || (
 												<ProjectTab label="Submissions">
-													<ProjectSubmissions submissions={submissions} project={project.en} />
+													<ProjectSubmissions submissions={submissions} project={project} />
 												</ProjectTab>
 											)
 										)}
-										{project.en.devprops.credits != null && (
+										{project.devprops.credits != null && (
 											<ProjectTab label="Credits">
-												<ProjectCredits credits={JSON.parse(project.en.devprops.credits)} />
+												<ProjectCredits credits={JSON.parse(project.devprops.credits)} />
 											</ProjectTab>
 										)}
 									</ProjectTabs>
 								)) || (
 									<>
-										<ProjectAbout project={project.en} />
+										<ProjectAbout project={project} />
 										{/* PS: the ProjectTabs component provides a context -- use can use a */}
 										{/* useContext hook to conditionally show headings on these components */}
 										<ProjectTimeline />
 										{submissions.length > 0 && (
-											<ProjectSubmissions submissions={submissions} project={project.en} />
+											<ProjectSubmissions submissions={submissions} project={project} />
 										)}
 									</>
 								)}

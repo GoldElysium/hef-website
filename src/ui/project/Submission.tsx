@@ -1,14 +1,19 @@
 import { Submission as ISubmission, SubmissionMedia } from 'types/payload-types';
 import ReactPlayerWrapper from 'ui/project/ReactPlayerWrapper';
 import Image from 'ui/Image';
+import useTranslation from 'lib/i18n/server';
+import { Language } from 'lib/i18n/languages';
 import SubmissionGallery from './SubmissionGallery';
 
 interface IProps {
 	submission: Omit<ISubmission, 'media' | 'srcIcon'> & { media: Array<ISubmission['media'][number] & { image: SubmissionMedia }>; srcIcon: SubmissionMedia };
 	index?: number;
+	lang: Language;
 }
 
-export default function Submission({ submission, index }: IProps) {
+export default async function Submission({ submission, index, lang }: IProps) {
+	const { t } = await useTranslation(lang, 'project', 'submission');
+
 	return (
 		<div className="w-full max-h-full text-black dark:text-white">
 			<div className="w-full flex mt-4 h-14">
@@ -29,9 +34,7 @@ export default function Submission({ submission, index }: IProps) {
 				)}
 				{submission.author && (
 					<div className="text-lg mt-3 ml-4">
-						From:
-						{' '}
-						<span className="font-bold">{submission.author}</span>
+						{t('author', { author: submission.author })}
 					</div>
 				)}
 				<div className="flex-grow" />
@@ -110,7 +113,11 @@ export default function Submission({ submission, index }: IProps) {
 									);
 								}
 
+<<<<<<< 82e954e4225964fb0da31e93f0a43cf14dd1af46:src/ui/project/Submission.tsx
 								return <p key={media.id!}>Invalid media</p>;
+=======
+								return <p>{t('invalid-media')}</p>;
+>>>>>>> feat(i18n): add i18n support:ui/project/Submission.tsx
 							})}
 						/>
 					)
