@@ -35,8 +35,6 @@ export async function generateStaticParams() {
 	return languages.map((language) => ({ lang: language }));
 }
 
-export const revalidate = 3600;
-
 export async function generateMetadata({ params: { lang } }: IProps): Promise<Metadata> {
 	const { t } = await useTranslation(lang, 'layout', 'head');
 
