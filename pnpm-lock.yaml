@@ -41,7 +41,7 @@ specifiers:
   react: 18.2.0
   react-dom: 18.2.0
   react-infinite-scroll-component: 6.1.0
-  react-player: 2.11.2
+  react-player: 2.12.0
   server-only: ^0.0.1
   slate: ^0.91.4
   styled-components: 5.3.8
@@ -69,7 +69,7 @@ dependencies:
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   react-infinite-scroll-component: 6.1.0_react@18.2.0
-  react-player: 2.11.2_react@18.2.0
+  react-player: 2.12.0_react@18.2.0
   server-only: 0.0.1
   slate: 0.91.4
   styled-components: 5.3.8_7i5myeigehqah43i5u7wbekgba
@@ -5417,8 +5417,8 @@ packages:
     resolution: {integrity: sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==}
     dev: false
 
-  /react-player/2.11.2_react@18.2.0:
-    resolution: {integrity: sha512-V5bf3g6lIpOjfKPUw18Og+qfizmlv6PQfJojlFiGpkfn/e21w5U4nSXE8vSIrFkfllgCrLM35nNGR1/jYQ8KIw==}
+  /react-player/2.12.0_react@18.2.0:
+    resolution: {integrity: sha512-rymLRz/2GJJD+Wc01S7S+i9pGMFYnNmQibR2gVE3KmHJCBNN8BhPAlOPTGZtn1uKpJ6p4RPLlzPQ1OLreXd8gw==}
     peerDependencies:
       react: '>=16.6.0'
     dependencies:
