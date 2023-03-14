@@ -44,7 +44,7 @@ specifiers:
   react-player: 2.11.2
   server-only: ^0.0.1
   slate: ^0.91.4
-  styled-components: 5.3.8
+  styled-components: 5.3.9
   swr: ^2.0.4
   tailwindcss: 3.2.7
   typescript: 4.9.5
@@ -72,7 +72,7 @@ dependencies:
   react-player: 2.11.2_react@18.2.0
   server-only: 0.0.1
   slate: 0.91.4
-  styled-components: 5.3.8_7i5myeigehqah43i5u7wbekgba
+  styled-components: 5.3.9_7i5myeigehqah43i5u7wbekgba
   swr: 2.0.4_react@18.2.0
   webfontloader: 1.6.28
 
@@ -1452,7 +1452,7 @@ packages:
       resolve: 1.22.1
     dev: false
 
-  /babel-plugin-styled-components/2.0.7_styled-components@5.3.8:
+  /babel-plugin-styled-components/2.0.7_styled-components@5.3.9:
     resolution: {integrity: sha512-i7YhvPgVqRKfoQ66toiZ06jPNA3p6ierpfUuEWxNF+fV27Uv5gxBkf8KZLHUCc1nFA9j6+80pYoIpqCeyW3/bA==}
     peerDependencies:
       styled-components: '>= 2'
@@ -1462,7 +1462,7 @@ packages:
       babel-plugin-syntax-jsx: 6.18.0
       lodash: 4.17.21
       picomatch: 2.3.1
-      styled-components: 5.3.8_7i5myeigehqah43i5u7wbekgba
+      styled-components: 5.3.9_7i5myeigehqah43i5u7wbekgba
     dev: false
 
   /babel-plugin-syntax-jsx/6.18.0:
@@ -6153,8 +6153,8 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /styled-components/5.3.8_7i5myeigehqah43i5u7wbekgba:
-    resolution: {integrity: sha512-6jQrlvaJQ16uWVVO0rBfApaTPItkqaG32l3746enNZzpMDxMvzmHzj8rHUg39bvVtom0Y8o8ZzWuchEXKGjVsg==}
+  /styled-components/5.3.9_7i5myeigehqah43i5u7wbekgba:
+    resolution: {integrity: sha512-Aj3kb13B75DQBo2oRwRa/APdB5rSmwUfN5exyarpX+x/tlM/rwZA2vVk2vQgVSP6WKaZJHWwiFrzgHt+CLtB4A==}
     engines: {node: '>=10'}
     peerDependencies:
       react: '>= 16.8.0'
@@ -6166,7 +6166,7 @@ packages:
       '@emotion/is-prop-valid': 1.2.0
       '@emotion/stylis': 0.8.5
       '@emotion/unitless': 0.7.5
-      babel-plugin-styled-components: 2.0.7_styled-components@5.3.8
+      babel-plugin-styled-components: 2.0.7_styled-components@5.3.9
       css-to-react-native: 3.2.0
       hoist-non-react-statics: 3.3.2
       react: 18.2.0

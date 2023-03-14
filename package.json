@@ -41,7 +41,7 @@
     "react-player": "2.11.2",
     "server-only": "^0.0.1",
     "slate": "^0.91.4",
-    "styled-components": "5.3.8",
+    "styled-components": "5.3.9",
     "swr": "^2.0.4",
     "webfontloader": "1.6.28"
   },
