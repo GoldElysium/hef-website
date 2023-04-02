@@ -34,6 +34,7 @@ export default function PhaserGame({
 		(async () => {
 			const Phaser = await import('phaser');
 
+			// eslint-disable-next-line import/no-cycle
 			const info = await import('./phaserScene');
 			Object.assign(fixedConfig, {
 				scene: info.default,
