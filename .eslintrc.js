@@ -3,6 +3,7 @@ module.exports = {
 		'airbnb',
 		'airbnb-typescript',
 		'next/core-web-vitals',
+		'plugin:storybook/recommended',
 	],
 	parserOptions: {
 		project: './tsconfig.json'

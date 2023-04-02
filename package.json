@@ -8,7 +8,9 @@
     "prepare": "npx husky install && node .husky/link.js",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "lint:report": "eslint --output-file eslint_report.json --format json ."
+    "lint:report": "eslint --output-file eslint_report.json --format json .",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "lint-staged": {
     "*.{js,ts,jsx,tsx}": [
@@ -49,6 +51,13 @@
     "@commitlint/cli": "17.5.1",
     "@commitlint/config-conventional": "17.4.4",
     "@next/eslint-plugin-next": "^13.2.4",
+    "@storybook/addon-essentials": "7.0.0",
+    "@storybook/addon-interactions": "7.0.0",
+    "@storybook/addon-links": "7.0.0",
+    "@storybook/blocks": "7.0.0",
+    "@storybook/nextjs": "7.0.0",
+    "@storybook/react": "7.0.0",
+    "@storybook/testing-library": "0.0.14-next.2",
     "@types/escape-html": "^1.0.2",
     "@types/lodash": "^4.14.192",
     "@types/react": "18.0.32",
@@ -65,9 +74,11 @@
     "eslint-plugin-jsx-a11y": "6.7.1",
     "eslint-plugin-react": "7.32.2",
     "eslint-plugin-react-hooks": "4.6.0",
+    "eslint-plugin-storybook": "^0.6.11",
     "husky": "8.0.3",
     "lint-staged": "13.2.0",
     "postcss": "8.4.21",
+    "storybook": "7.0.0",
     "tailwindcss": "3.3.1",
     "typescript": "5.0.3"
   },
