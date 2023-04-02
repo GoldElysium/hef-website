@@ -2,10 +2,10 @@ module.exports = {
 	extends: [
 		'airbnb',
 		'airbnb-typescript',
-		'plugin:@next/next/recommended',
+		'next/core-web-vitals',
 	],
 	parserOptions: {
-		project: './tsconfig.json',
+		project: './tsconfig.json'
 	},
 	rules: {
 		'no-tabs': 'off',
@@ -20,16 +20,16 @@ module.exports = {
 		'react/react-in-jsx-scope': 'off',
 		'no-underscore-dangle': 'off', // Mongoose uses _id
 		'no-plusplus': ['error', {
-			'allowForLoopAfterthoughts': true,
+			'allowForLoopAfterthoughts': true
 		}],
 		'jsx-a11y/label-has-associated-control': 'off',
-		'jsx-a11y/anchor-is-valid': [ 'error', {
-			'components': [ 'Link' ],
-			'specialLink': [ 'hrefLeft', 'hrefRight' ],
-			'aspects': [ 'invalidHref', 'preferButton' ]
+		'jsx-a11y/anchor-is-valid': ['error', {
+			'components': ['Link'],
+			'specialLink': ['hrefLeft', 'hrefRight'],
+			'aspects': ['invalidHref', 'preferButton']
 		}],
 		'@next/next/no-img-element': 'off',
 		'import/no-anonymous-default-export': 'off',
-		'react/require-default-props': 'off',
+		'react/require-default-props': 'off'
 	}
-}
+};
