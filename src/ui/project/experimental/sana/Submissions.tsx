@@ -124,7 +124,7 @@ function SubmissionElement({ project, submission, index }: ISubmissionProps) {
 									);
 								}
 
-								return <p>Invalid media</p>;
+								return <p key={media.id}>Invalid media</p>;
 							})}
 						/>
 					)

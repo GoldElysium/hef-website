@@ -3,6 +3,7 @@ import SoundFade from 'phaser3-rex-plugins/plugins/soundfade';
 // @ts-expect-error Missing types
 import AwaitLoaderPlugin from 'phaser3-rex-plugins/plugins/awaitloader-plugin';
 import { Plugin as NineSlicePlugin } from 'phaser3-nineslice';
+// eslint-disable-next-line import/no-cycle
 import { TanabataSubmission } from 'ui/project/guratanabata/PhaserSubmissionWrapper';
 
 import GoogleFontsPlugin from './plugins/gfonts';

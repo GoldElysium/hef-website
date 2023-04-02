@@ -110,7 +110,7 @@ export default function Submission({ submission, index }: IProps) {
 									);
 								}
 
-								return <p>Invalid media</p>;
+								return <p key={media.id!}>Invalid media</p>;
 							})}
 						/>
 					)
