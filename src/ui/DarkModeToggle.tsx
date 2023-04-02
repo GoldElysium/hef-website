@@ -1,27 +1,54 @@
 'use client';
 
-import DarkModeContext from 'contexts/DarkModeContext';
+import { useTheme } from 'next-themes';
+import { useEffect, useState } from 'react';
 
 export default function DarkModeToggle() {
-	return (
-		<DarkModeContext.Consumer>
-			{({ darkMode, toggleDarkMode }) => (
-				<div className="flex flex-nowrap align-middle items-center">
-					<label className="switch ml-6">
-						<input
-							type="checkbox"
-							onChange={() => toggleDarkMode()}
-							checked={darkMode}
-						/>
-						<span className={darkMode ? 'slider round bg-skin-dark-primary-1' : 'slider round bg-skin-background-1'} />
-					</label>
-					<img
-						src="/img/nightMode.svg"
-						alt="Night Mode Icon"
-						className="inline w-8 h-auto ml-2"
+	const [mounted, setMounted] = useState(false);
+	const { theme, setTheme } = useTheme();
+
+	// useEffect only runs on the client, so now we can safely show the UI
+	useEffect(() => {
+		setMounted(true);
+	}, []);
+
+	if (!mounted) {
+		// Return non working toggle before client-side hydration
+		return (
+			<div className="flex flex-nowrap align-middle items-center">
+				<label className="switch ml-6">
+					<input
+						type="checkbox"
+						checked={false}
 					/>
-				</div>
-			)}
-		</DarkModeContext.Consumer>
+					<span className="slider round bg-skin-background-1 dark:bg-skin-dark-primary-1" />
+				</label>
+				<img
+					src="/img/nightMode.svg"
+					alt="Night Mode Icon"
+					className="inline w-8 h-auto ml-2"
+				/>
+			</div>
+		);
+	}
+
+	return (
+		<div className="flex flex-nowrap align-middle items-center">
+			<label className="switch ml-6">
+				<input
+					type="checkbox"
+					onChange={() => {
+						setTheme(theme === 'dark' ? 'light' : 'dark');
+					}}
+					checked={theme === 'dark'}
+				/>
+				<span className="slider round bg-skin-background-1 dark:bg-skin-dark-primary-1" />
+			</label>
+			<img
+				src="/img/nightMode.svg"
+				alt="Night Mode Icon"
+				className="inline w-8 h-auto ml-2"
+			/>
+		</div>
 	);
 }

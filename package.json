@@ -26,14 +26,15 @@
     "@emotion/styled": "11.10.6",
     "@headlessui/react": "1.7.13",
     "@heroicons/react": "2.0.17",
-    "@mdi/js": "^7.2.96",
-    "@mdi/react": "^1.6.1",
-    "daisyui": "^2.51.5",
+    "@mdi/js": "7.2.96",
+    "@mdi/react": "^.6.1",
+    "daisyui": "2.51.5",
     "date-fns": "2.29.3",
-    "escape-html": "^1.0.3",
-    "lodash": "^4.17.21",
+    "escape-html": "1.0.3",
+    "lodash": "4.17.21",
     "nanoid": "4.0.2",
     "next": "13.2.4",
+    "next-themes": "0.2.1",
     "phaser": "3.55.2",
     "phaser3-nineslice": "0.5.0",
     "phaser3-rex-plugins": "1.1.84",
@@ -42,9 +43,9 @@
     "react-infinite-scroll-component": "6.1.0",
     "react-player": "2.12.0",
     "server-only": "^0.0.1",
-    "slate": "^0.91.4",
+    "slate": "0.91.4",
     "styled-components": "5.3.9",
-    "swr": "^2.1.2",
+    "swr": "2.1.2",
     "webfontloader": "1.6.28"
   },
   "devDependencies": {
@@ -59,7 +60,7 @@
     "@storybook/react": "7.0.0",
     "@storybook/testing-library": "0.0.14-next.2",
     "@types/escape-html": "^1.0.2",
-    "@types/lodash": "^4.14.192",
+    "@types/lodash": "4.14.192",
     "@types/react": "18.0.32",
     "@types/safe-json-stringify": "1.1.2",
     "@types/webfontloader": "1.6.35",
@@ -74,7 +75,7 @@
     "eslint-plugin-jsx-a11y": "6.7.1",
     "eslint-plugin-react": "7.32.2",
     "eslint-plugin-react-hooks": "4.6.0",
-    "eslint-plugin-storybook": "^0.6.11",
+    "eslint-plugin-storybook": "0.6.11",
     "husky": "8.0.3",
     "lint-staged": "13.2.0",
     "postcss": "8.4.21",
@@ -83,7 +84,7 @@
     "typescript": "5.0.3"
   },
   "overrides": {
-    "prosemirror-tables": "^1.1.1"
+    "prosemirror-tables": "1.1.1"
   },
   "description": "Hololive EN Fan Server website",
   "repository": {

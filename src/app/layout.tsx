@@ -1,5 +1,5 @@
 import 'styles/globals.css';
-import DarkModeContextProvider from 'ui/DarkModeContextProvider';
+import DarkModeProvider from 'ui/DarkModeProvider';
 import { Metadata } from 'next';
 
 interface IProps {
@@ -8,10 +8,13 @@ interface IProps {
 
 export default async function RootLayout({ children }: IProps) {
 	return (
-		<html lang="en">
-			<DarkModeContextProvider>
-				{children}
-			</DarkModeContextProvider>
+		<html lang="en" suppressHydrationWarning>
+			<head />
+			<body>
+				<DarkModeProvider>
+					{children}
+				</DarkModeProvider>
+			</body>
 		</html>
 	);
 }
@@ -33,7 +36,6 @@ export const metadata: Metadata = {
 		description: 'A website featuring amazing projects organized by the community!',
 		images: 'https://holoen.fans/img/logo.png',
 		site: '@HEF_Website',
-		creator: '@GoldElysium',
 		card: 'summary_large_image',
 	},
 	other: {

@@ -1,7 +1,7 @@
 'use client';
 
-import { useContext, useEffect } from 'react';
-import DarkModeContext from 'contexts/DarkModeContext';
+import { useEffect } from 'react';
+import { useTheme } from 'next-themes';
 import { Project } from 'types/payload-types';
 
 export interface ProjectPageProps {
@@ -20,12 +20,20 @@ export interface ProjectPageProps {
 	};
 }
 export default function DarkModeFlag({ project }: ProjectPageProps) {
-	const { setDarkMode } = useContext(DarkModeContext);
+	const { theme, setTheme } = useTheme();
 
 	useEffect(() => {
-		if (project.en.flags?.includes('alwaysDarkMode')) setDarkMode(true);
-		if (project.en.flags?.includes('alwaysLightMode')) setDarkMode(false);
-	}, []);
+		const oldTheme = theme;
+
+		if (project.en.flags?.includes('alwaysDarkMode')) setTheme('dark');
+		if (project.en.flags?.includes('alwaysLightMode')) setTheme('light');
+
+		return () => {
+			if (oldTheme) {
+				setTheme(oldTheme);
+			}
+		};
+	}, [project.en.flags, setTheme, theme]);
 
 	return null;
 }
