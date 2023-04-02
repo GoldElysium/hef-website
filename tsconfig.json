@@ -23,7 +23,7 @@
         "name": "next"
       }
     ],
-    "baseUrl": "."
+    "baseUrl": "src"
   },
   "include": [
     "next-env.d.ts",

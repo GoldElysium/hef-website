@@ -11,7 +11,7 @@ const nextConfig = {
 	},
 	images: {
 		loader: 'custom',
-		loaderFile: './lib/imageLoader.ts',
+		loaderFile: 'src/lib/imageLoader.ts',
 		unoptimized: true,
 	}
 };
