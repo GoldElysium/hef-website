@@ -27,7 +27,7 @@
     "@headlessui/react": "1.7.13",
     "@heroicons/react": "2.0.17",
     "@mdi/js": "7.2.96",
-    "@mdi/react": "^.6.1",
+    "@mdi/react": "1.6.1",
     "daisyui": "2.51.5",
     "date-fns": "2.29.3",
     "escape-html": "1.0.3",

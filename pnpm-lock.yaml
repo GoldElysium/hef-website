@@ -14,22 +14,22 @@ dependencies:
     specifier: 2.0.17
     version: 2.0.17(react@18.2.0)
   '@mdi/js':
-    specifier: ^7.2.96
+    specifier: 7.2.96
     version: 7.2.96
   '@mdi/react':
-    specifier: ^1.6.1
+    specifier: 1.6.1
     version: 1.6.1
   daisyui:
-    specifier: ^2.51.5
+    specifier: 2.51.5
     version: 2.51.5(autoprefixer@10.4.14)(postcss@8.4.21)(ts-node@10.9.1)
   date-fns:
     specifier: 2.29.3
     version: 2.29.3
   escape-html:
-    specifier: ^1.0.3
+    specifier: 1.0.3
     version: 1.0.3
   lodash:
-    specifier: ^4.17.21
+    specifier: 4.17.21
     version: 4.17.21
   nanoid:
     specifier: 4.0.2
@@ -38,7 +38,7 @@ dependencies:
     specifier: 13.2.4
     version: 13.2.4(@babel/core@7.21.4)(react-dom@18.2.0)(react@18.2.0)
   next-themes:
-    specifier: ^0.2.1
+    specifier: 0.2.1
     version: 0.2.1(next@13.2.4)(react-dom@18.2.0)(react@18.2.0)
   phaser:
     specifier: 3.55.2
@@ -65,13 +65,13 @@ dependencies:
     specifier: ^0.0.1
     version: 0.0.1
   slate:
-    specifier: ^0.91.4
+    specifier: 0.91.4
     version: 0.91.4
   styled-components:
     specifier: 5.3.9
     version: 5.3.9(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)
   swr:
-    specifier: ^2.1.2
+    specifier: 2.1.2
     version: 2.1.2(react@18.2.0)
   webfontloader:
     specifier: 1.6.28
@@ -112,7 +112,7 @@ devDependencies:
     specifier: ^1.0.2
     version: 1.0.2
   '@types/lodash':
-    specifier: ^4.14.192
+    specifier: 4.14.192
     version: 4.14.192
   '@types/react':
     specifier: 18.0.32
@@ -157,7 +157,7 @@ devDependencies:
     specifier: 4.6.0
     version: 4.6.0(eslint@8.37.0)
   eslint-plugin-storybook:
-    specifier: ^0.6.11
+    specifier: 0.6.11
     version: 0.6.11(eslint@8.37.0)(typescript@5.0.3)
   husky:
     specifier: 8.0.3
