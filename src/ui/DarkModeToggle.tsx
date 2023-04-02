@@ -20,6 +20,7 @@ export default function DarkModeToggle() {
 					<input
 						type="checkbox"
 						checked={false}
+						readOnly
 					/>
 					<span className="slider round bg-skin-background-1 dark:bg-skin-dark-primary-1" />
 				</label>
