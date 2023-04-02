@@ -120,7 +120,6 @@ export const metadata: Metadata = {
 		description: 'A list of all the projects organized by Hololive EN Fan servers!',
 		images: 'https://holoen.fans/img/logo.png',
 		site: '@HEF_Website',
-		creator: '@GoldElysium',
 		card: 'summary_large_image',
 	},
 };

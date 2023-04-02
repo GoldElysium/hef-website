@@ -233,7 +233,6 @@ export async function generateMetadata({ params }: any): Promise<Metadata> {
 			// eslint-disable-next-line max-len
 			images: getImageUrl({ src: (enProject.ogImage as Media | undefined)?.url ?? (enProject.image as Media).url!, width: 1024 }),
 			site: '@HEF_Website',
-			creator: '@GoldElysium',
 			card: 'summary_large_image',
 		},
 	};
