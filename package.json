@@ -18,8 +18,8 @@
     ]
   },
   "engines": {
-    "node": ">=18.12.1",
-    "pnpm": ">=7"
+    "node": ">=18.12.1 <19",
+    "pnpm": ">=8"
   },
   "dependencies": {
     "@emotion/react": "11.10.6",
