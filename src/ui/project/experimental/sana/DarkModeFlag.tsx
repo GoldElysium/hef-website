@@ -20,20 +20,12 @@ export interface ProjectPageProps {
 	};
 }
 export default function DarkModeFlag({ project }: ProjectPageProps) {
-	const { theme, setTheme } = useTheme();
+	const { setTheme } = useTheme();
 
 	useEffect(() => {
-		const oldTheme = theme;
-
 		if (project.en.flags?.includes('alwaysDarkMode')) setTheme('dark');
 		if (project.en.flags?.includes('alwaysLightMode')) setTheme('light');
-
-		return () => {
-			if (oldTheme) {
-				setTheme(oldTheme);
-			}
-		};
-	}, [project.en.flags, setTheme, theme]);
+	}, [project.en.flags, setTheme]);
 
 	return null;
 }

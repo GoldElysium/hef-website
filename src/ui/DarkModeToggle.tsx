@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 
 export default function DarkModeToggle() {
 	const [mounted, setMounted] = useState(false);
-	const { theme, setTheme } = useTheme();
+	const { resolvedTheme, setTheme } = useTheme();
 
 	// useEffect only runs on the client, so now we can safely show the UI
 	useEffect(() => {
@@ -13,7 +13,7 @@ export default function DarkModeToggle() {
 	}, []);
 
 	if (!mounted) {
-		// Return non working toggle before client-side hydration
+		// Return non-working toggle before client-side hydration
 		return (
 			<div className="flex flex-nowrap align-middle items-center">
 				<label className="switch ml-6">
@@ -39,9 +39,9 @@ export default function DarkModeToggle() {
 				<input
 					type="checkbox"
 					onChange={() => {
-						setTheme(theme === 'dark' ? 'light' : 'dark');
+						setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
 					}}
-					checked={theme === 'dark'}
+					checked={resolvedTheme === 'dark'}
 				/>
 				<span className="slider round bg-skin-background-1 dark:bg-skin-dark-primary-1" />
 			</label>
