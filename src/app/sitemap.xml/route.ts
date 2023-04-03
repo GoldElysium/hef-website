@@ -47,3 +47,6 @@ export async function GET() {
 		},
 	});
 }
+
+// Allow revalidation every 30 min
+export const revalidate = 30 * 60;
