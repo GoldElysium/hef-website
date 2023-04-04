@@ -65,8 +65,8 @@ dependencies:
     specifier: ^0.0.1
     version: 0.0.1
   slate:
-    specifier: 0.91.4
-    version: 0.91.4
+    specifier: 0.93.0
+    version: 0.93.0
   styled-components:
     specifier: 5.3.9
     version: 5.3.9(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)
@@ -2600,7 +2600,7 @@ packages:
       '@storybook/csf-plugin': 7.0.0
       '@storybook/csf-tools': 7.0.0
       '@storybook/global': 5.0.0
-      '@storybook/mdx2-csf': 1.0.0-next.7
+      '@storybook/mdx2-csf': 1.0.0-next.8
       '@storybook/node-logger': 7.0.0
       '@storybook/postinstall': 7.0.0
       '@storybook/preview-api': 7.0.0
@@ -3119,7 +3119,7 @@ packages:
       '@storybook/core-events': 7.0.0
       '@storybook/csf': 0.0.2-next.11
       '@storybook/csf-tools': 7.0.0
-      '@storybook/docs-mdx': 0.0.1-next.6
+      '@storybook/docs-mdx': 0.0.1-next.7
       '@storybook/global': 5.0.0
       '@storybook/manager': 7.0.0
       '@storybook/node-logger': 7.0.0
@@ -3210,8 +3210,8 @@ packages:
       type-fest: 2.19.0
     dev: true
 
-  /@storybook/docs-mdx@0.0.1-next.6:
-    resolution: {integrity: sha512-DjoSIXADmLJtdroXAjUotFiZlcZ2usWhqrS7aeOtZs0DVR0Ws5WQjnwtpDUXt8gryTSd+OZJ0cNsDcqg4JDEvQ==}
+  /@storybook/docs-mdx@0.0.1-next.7:
+    resolution: {integrity: sha512-JbgBf/EMBtx65iXtB3pOiX3818UeL9jZ+KAY241OAPqJVXjMQ5KaVOdg/57MSmd508HDIGx7CiImOMEmWwQ9/g==}
     dev: true
 
   /@storybook/docs-tools@7.0.0:
@@ -3271,8 +3271,8 @@ packages:
     resolution: {integrity: sha512-lMSM6PQvSLtq46JVaMq/xuxjOzZuD20DMcJzYnjFL3bkMjmkL2hHyzYjfs4BTI9i9nhPqXF/rZSwFGGG+ok9dw==}
     dev: true
 
-  /@storybook/mdx2-csf@1.0.0-next.7:
-    resolution: {integrity: sha512-xcQ8w4IecABAjsakaZTGiUEnEgFZzVKsMjqECjd+qdkwgD3R/kwrBdfyC15CLM5Ye1miPwYBIwJGeBXB9qxsZg==}
+  /@storybook/mdx2-csf@1.0.0-next.8:
+    resolution: {integrity: sha512-t2O5s/HHTH5evZVHgVtCWTZgMZ/CaqDu3xVGgjVbKeTvpPAbi0Waab5SSX8T9PG5jNDei/x+jpAVCcNMOHoWzg==}
     dev: true
 
   /@storybook/nextjs@7.0.0(@babel/core@7.21.4)(esbuild@0.17.15)(next@13.2.4)(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.3)(webpack@5.77.0):
@@ -10241,8 +10241,8 @@ packages:
     engines: {node: '>=12'}
     dev: true
 
-  /slate@0.91.4:
-    resolution: {integrity: sha512-aUJ3rpjrdi5SbJ5G1Qjr3arytfRkEStTmHjBfWq2A2Q8MybacIzkScSvGJjQkdTk3djCK9C9SEOt39sSeZFwTw==}
+  /slate@0.93.0:
+    resolution: {integrity: sha512-80IktTrGJU9/MzOp8T4fgXfMMedeG1qx0Y/EiABd68Qm9iFgJ9khnAt8clDfYyFDTs7erXJpjbQoZnV0XKuqfA==}
     dependencies:
       immer: 9.0.21
       is-plain-object: 5.0.0
