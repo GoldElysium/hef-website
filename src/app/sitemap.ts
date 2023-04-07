@@ -1,8 +1,9 @@
 /* eslint-disable import/prefer-default-export */
-import { Project } from 'types/payload-types';
-import PayloadResponse from 'types/PayloadResponse';
+import type { Project } from 'types/payload-types';
+import type PayloadResponse from 'types/PayloadResponse';
+import type { MetadataRoute } from 'next';
 
-export async function GET() {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 	let projects: Project[] = [];
 	let moreProjects = true;
 	let page = 1;
@@ -28,24 +29,17 @@ export async function GET() {
 		await fetchNextProjects();
 	}
 
-	const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-	<url>
-		<loc>https://holoen.fans</loc>
-	</url>
-	<url>
-		<loc>https://holoen.fans/projects</loc>
-	</url>${projects.map(((project) => `
-	<url>
-        <loc>https://holoen.fans/${project.slug}</loc>
-    </url>`)).join('')}
-</urlset>`;
-
-	return new Response(xml, {
-		headers: {
-			'Content-Type': 'text/xml',
+	return [
+		{
+			url: 'https://holoen.fans',
 		},
-	});
+		{
+			url: 'https://holoen.fans/projects',
+		},
+		...projects.map(((project) => ({
+			url: `https://holoen.fans/projects/${project.slug}`,
+		}))),
+	];
 }
 
 // Allow revalidation every 30 min
