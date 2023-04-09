@@ -1,5 +1,10 @@
 import Phaser from 'phaser';
 import SoundFade from 'phaser3-rex-plugins/plugins/soundfade';
+import RexUIPlugin from 'phaser3-rex-plugins/templates/ui/ui-plugin';
+// @ts-expect-error Missing types
+import ContainerLitePlugin from 'phaser3-rex-plugins/plugins/containerlite-plugin';
+// @ts-expect-error Missing types
+import BBCodeTextPlugin from 'phaser3-rex-plugins/plugins/bbcodetext-plugin';
 // @ts-expect-error Missing types
 import AwaitLoaderPlugin from 'phaser3-rex-plugins/plugins/awaitloader-plugin';
 import { Plugin as NineSlicePlugin } from 'phaser3-nineslice';
@@ -87,7 +92,6 @@ class Index extends Phaser.Scene {
 			this.progressText.setText(`${Math.floor(p * 100)}%`).setPosition(this.width * p - 5, this.progressText.y);
 		});
 
-		this.loadPlugins();
 		this.load.audio('bgm', '/assets/guratanabata/bgm.mp3');
 
 		this.load.audio('paperslide1', '/assets/guratanabata/sfx/paperslide1.mp3');
@@ -311,12 +315,6 @@ class Index extends Phaser.Scene {
 		this.scene.add('info', Info);
 		this.scene.bringToTop(this);
 	}
-
-	loadPlugins() {
-		this.load.scenePlugin('rexuiplugin', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexuiplugin.min.js', 'rexUI', 'rexUI');
-		this.load.plugin('rexcontainerliteplugin', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexcontainerliteplugin.min.js', true);
-		this.load.plugin('rexbbcodetextplugin', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexbbcodetextplugin.min.js', true);
-	}
 }
 
 export default Index;
@@ -332,6 +330,16 @@ export const plugins = {
 			plugin: AwaitLoaderPlugin,
 			start: true,
 		},
+		{
+			key: 'rexContainerLitePlugin',
+			plugin: ContainerLitePlugin,
+			start: true,
+		},
+		{
+			key: 'rexBBCodeTextPlugin',
+			plugin: BBCodeTextPlugin,
+			start: true,
+		},
 		NineSlicePlugin.DefaultCfg,
 	],
 	scene: [
@@ -339,6 +347,11 @@ export const plugins = {
 			key: 'UI',
 			plugin: UIPl,
 			mapping: 'ui',
+		},
+		{
+			key: 'rexUI',
+			plugin: RexUIPlugin,
+			mapping: 'rexUI',
 		},
 	],
 };
