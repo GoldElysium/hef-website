@@ -53,6 +53,7 @@ ${languages.map((language) => `\
 	</url>${projects.map(((project) => `
 	<url>
 		<loc>https://holoen.fans/projects/${project.slug}</loc>
+		<lastmod>${project.updatedAt}</lastmod>
 ${languages.map((language) => `\
 		<xhtml:link
 			rel="alternate"
