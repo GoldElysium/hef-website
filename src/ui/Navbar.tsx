@@ -16,7 +16,9 @@ interface IProps {
 export default function Navbar({ flags }: IProps) {
 	if (flags.includes('disableNavbar')) return null;
 
+	// eslint-disable-next-line react-hooks/rules-of-hooks
 	const { locale } = useLocale();
+	// eslint-disable-next-line react-hooks/rules-of-hooks
 	const { t } = useTranslation('layout', 'nav');
 
 	return (

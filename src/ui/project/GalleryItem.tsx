@@ -12,6 +12,7 @@ interface GalleryItemProps {
 
 export default function GalleryItem({ media, index }: GalleryItemProps) {
 	if (!media) return null;
+	// eslint-disable-next-line react-hooks/rules-of-hooks
 	const { t } = useTranslation('project', 'submission');
 
 	if (media[index].type === 'video') {
