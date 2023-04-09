@@ -82,6 +82,7 @@ export default async function ProjectPage({ params: { slug, lang } }: IProps) {
 	}
 
 	const { project } = res;
+
 	// const ref = useMemo(() => createRef<BlurBackground>(), []);
 
 	const themeStyle = ID_TO_STYLE_MAP.get((project.organizer as Guild).id);
@@ -100,6 +101,7 @@ export default async function ProjectPage({ params: { slug, lang } }: IProps) {
 		);
 	}
 
+	// eslint-disable-next-line react-hooks/rules-of-hooks
 	const { t } = await useTranslation(lang, 'project', 'page');
 
 	return (
@@ -209,7 +211,6 @@ export async function generateMetadata({ params: { slug, lang } }: IProps): Prom
 			// eslint-disable-next-line max-len
 			images: getImageUrl({ src: (ogImage as Media | undefined)?.url ?? (image as Media).url!, width: 1024 }),
 			site: '@HEF_Website',
-			creator: '@GoldElysium',
 			card: 'summary_large_image',
 		},
 	};

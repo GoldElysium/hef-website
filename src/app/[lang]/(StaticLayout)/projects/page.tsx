@@ -107,6 +107,7 @@ export default async function Page({ params: { lang } }: IProps) {
 }
 
 export async function generateMetadata({ params: { lang } }: IProps): Promise<Metadata> {
+	// eslint-disable-next-line react-hooks/rules-of-hooks
 	const { t } = await useTranslation(lang, 'projects', 'head');
 
 	const title = t('title');
@@ -127,7 +128,6 @@ export async function generateMetadata({ params: { lang } }: IProps): Promise<Me
 			description,
 			images: 'https://holoen.fans/img/logo.png',
 			site: '@HEF_Website',
-			creator: '@GoldElysium',
 			card: 'summary_large_image',
 		},
 	};

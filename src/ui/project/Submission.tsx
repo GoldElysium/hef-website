@@ -38,7 +38,9 @@ export default async function Submission({ submission, index, lang }: IProps) {
 					</div>
 				)}
 				<div className="flex-grow" />
-				{index && <p className="text-xl mt-3 mr-4">{`#${index + 1}`}</p>}
+				{index !== undefined && (
+					<p className="text-xl mt-3 mr-4">{`#${index + 1}`}</p>
+				)}
 			</div>
 			<div className="w-full mt-3">
 				{
@@ -113,11 +115,7 @@ export default async function Submission({ submission, index, lang }: IProps) {
 									);
 								}
 
-<<<<<<< 82e954e4225964fb0da31e93f0a43cf14dd1af46:src/ui/project/Submission.tsx
-								return <p key={media.id!}>Invalid media</p>;
-=======
-								return <p>{t('invalid-media')}</p>;
->>>>>>> feat(i18n): add i18n support:ui/project/Submission.tsx
+								return <p key={media.id!}>{t('invalid-media')}</p>;
 							})}
 						/>
 					)

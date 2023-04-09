@@ -1,5 +1,5 @@
 import 'styles/globals.css';
-import DarkModeContextProvider from 'ui/DarkModeContextProvider';
+import DarkModeProvider from 'ui/DarkModeProvider';
 import { Metadata } from 'next';
 import { dir } from 'i18next';
 import LocaleContextProvider from 'ui/LocaleContextProvider';
@@ -21,12 +21,14 @@ export default async function RootLayout({
 	},
 }: IProps) {
 	return (
-		<html lang={lang} dir={dir(lang)}>
-			<DarkModeContextProvider>
-				<LocaleContextProvider lang={lang}>
-					{children}
-				</LocaleContextProvider>
-			</DarkModeContextProvider>
+		<html lang={lang} dir={dir(lang)} suppressHydrationWarning>
+			<body>
+				<DarkModeProvider>
+					<LocaleContextProvider lang={lang}>
+						{children}
+					</LocaleContextProvider>
+				</DarkModeProvider>
+			</body>
 		</html>
 	);
 }
@@ -36,6 +38,7 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params: { lang } }: IProps): Promise<Metadata> {
+	// eslint-disable-next-line react-hooks/rules-of-hooks
 	const { t } = await useTranslation(lang, 'layout', 'head');
 
 	const title = t('title');
@@ -58,7 +61,6 @@ export async function generateMetadata({ params: { lang } }: IProps): Promise<Me
 			description,
 			images: 'https://holoen.fans/img/logo.png',
 			site: '@HEF_Website',
-			creator: '@GoldElysium',
 			card: 'summary_large_image',
 		},
 		other: {

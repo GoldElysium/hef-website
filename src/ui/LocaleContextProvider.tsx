@@ -17,7 +17,7 @@ i18next
 	.use(initReactI18next)
 	.use(
 		resourcesToBackend(
-			(lng: string, ns: string) => import(`../public/locales/${lng}/${ns}.json`),
+			(lng: string, ns: string) => import(`../../public/locales/${lng}/${ns}.json`),
 		),
 	)
 	.init({
