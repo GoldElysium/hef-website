@@ -5,14 +5,13 @@ import { usePathname } from 'next/navigation';
 import { Menu, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/24/solid';
 import { Fragment } from 'react';
-import useTranslation from 'lib/i18n/client';
 import { useLocale } from 'contexts/LocaleContext';
 import localizePathname from 'lib/util/localizePathname';
 import { Languages } from 'lib/i18n/languages';
+import { LanguageIcon } from '@heroicons/react/24/outline';
 
 export default function LocaleSelect() {
 	const { locale } = useLocale();
-	const { t } = useTranslation('layout', 'locale-select');
 	const pathName = usePathname();
 
 	return (
@@ -20,7 +19,7 @@ export default function LocaleSelect() {
 			<Menu as="div" className="relative inline-block text-left">
 				<div>
 					<Menu.Button className="inline-flex w-full justify-center rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
-						{t('button')}
+						<LanguageIcon height={24} />
 						<ChevronDownIcon
 							className="ml-2 -mr-1 h-5 w-5 text-white"
 							aria-hidden="true"
