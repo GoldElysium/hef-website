@@ -3,6 +3,7 @@
 import { Media, Project } from 'types/payload-types';
 import ReactPlayer from 'react-player';
 import Image from 'next/image';
+import useTranslation from 'lib/i18n/client';
 
 interface GalleryItemProps {
 	media: Array<Omit<Project['media'][number], 'media'> & { media: Media }>;
@@ -11,6 +12,8 @@ interface GalleryItemProps {
 
 export default function GalleryItem({ media, index }: GalleryItemProps) {
 	if (!media) return null;
+	// eslint-disable-next-line react-hooks/rules-of-hooks
+	const { t } = useTranslation('project', 'submission');
 
 	if (media[index].type === 'video') {
 		return (
@@ -43,5 +46,5 @@ export default function GalleryItem({ media, index }: GalleryItemProps) {
 		);
 	}
 
-	return <p>Invalid media</p>;
+	return <p>{t('invalid-media')}</p>;
 }

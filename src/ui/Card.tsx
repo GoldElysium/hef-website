@@ -1,3 +1,5 @@
+import { Language } from 'lib/i18n/languages';
+import localizePathname from 'lib/util/localizePathname';
 import Link from 'next/link';
 import Image from 'ui/Image';
 
@@ -9,11 +11,12 @@ interface IProps {
 	button: string,
 	url: string,
 	internal?: boolean,
+	lang: Language
 	/* eslint-enable */
 }
 
 export default function Card({
-	img, title, description, button, url, internal,
+	img, title, description, button, url, internal, lang,
 }: IProps) {
 	return (
 		<div className="mt-4 w-full sm:w-1/3">
@@ -33,7 +36,8 @@ export default function Card({
 				</div>
 				{internal ? (
 					<Link
-						href={url}
+						href={localizePathname(lang, url)}
+						hrefLang={lang}
 						className="rounded-3xl font-bold w-20 h-10 flex items-center justify-center mt-4 content-end cursor-pointer
 							bg-skin-secondary-1 dark:bg-skin-dark-secondary-1 text-white hover:text-opacity-70"
 					>

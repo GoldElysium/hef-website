@@ -1,7 +1,13 @@
+'use client';
+
+import { useLocale } from 'contexts/LocaleContext';
+import useTranslation from 'lib/i18n/client';
+import localizePathname from 'lib/util/localizePathname';
 import Link from 'next/link';
 import DarkModeToggle from 'ui/DarkModeToggle';
 import NavbarMenu from 'ui/NavbarMenu';
 import NoticeBanner from 'ui/NoticeBanner';
+import LocaleSelect from './LocaleSelect';
 
 interface IProps {
 	flags: string[];
@@ -9,6 +15,11 @@ interface IProps {
 
 export default function Navbar({ flags }: IProps) {
 	if (flags.includes('disableNavbar')) return null;
+
+	// eslint-disable-next-line react-hooks/rules-of-hooks
+	const { locale } = useLocale();
+	// eslint-disable-next-line react-hooks/rules-of-hooks
+	const { t } = useTranslation('layout', 'nav');
 
 	return (
 		<>
@@ -23,25 +34,32 @@ export default function Navbar({ flags }: IProps) {
 					</Link>
 				</div>
 				*/}
-
 				<div>
-					<div className="sm:hidden relative">
+					<div className="flex sm:hidden relative">
 						<NavbarMenu />
 					</div>
 
-					<div className="hidden sm:block flex items-center text-lg space-x-4">
-						<Link href="/" className="text-white font-semibold hover:text-opacity-80">
-							Home
-						</Link>
+					<div className="hidden sm:flex items-center text-lg space-x-4">
 						<Link
-							href="/projects"
+							href={localizePathname(locale, '/')}
+							hrefLang={locale}
 							className="text-white font-semibold hover:text-opacity-80"
 						>
-							Projects
+							{t('home')}
+						</Link>
+						<Link
+							href={localizePathname(locale, '/projects')}
+							hrefLang={locale}
+							className="text-white font-semibold hover:text-opacity-80"
+						>
+							{t('projects')}
 						</Link>
 					</div>
 				</div>
-				<DarkModeToggle />
+				<div className="flex flex-row">
+					<LocaleSelect />
+					<DarkModeToggle />
+				</div>
 			</div>
 		</>
 	);

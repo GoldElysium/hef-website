@@ -1,6 +1,8 @@
 import Submission from 'ui/project/Submission';
 import { Project, Submission as ISubmission } from 'types/payload-types';
 import PayloadResponse from 'types/PayloadResponse';
+import useTranslation from 'lib/i18n/server';
+import { Language } from 'lib/i18n/languages';
 import SubmissionsWithFilter from './experimental/submissionsFilter/SubmissionsWithFilter';
 
 interface IProps {
@@ -10,6 +12,7 @@ interface IProps {
 			[key: string]: string;
 		};
 	};
+	lang: Language;
 }
 
 async function fetchSubmissions(project: { id: string }) {
@@ -77,8 +80,9 @@ async function fetchSubmissions(project: { id: string }) {
 	return submissions;
 }
 
-export default async function Submissions({ project }: IProps) {
+export default async function Submissions({ project, lang }: IProps) {
 	const submissions = await fetchSubmissions(project);
+	const { t } = await useTranslation(lang, 'project', 'submissions');
 
 	if (project.flags.includes('tiledSubmissions')) {
 		return (
@@ -88,16 +92,18 @@ export default async function Submissions({ project }: IProps) {
 						<div className="sm:w-11/12 md:w-10/12 flex flex-wrap">
 							{submissions.map((submission, index) => (
 								<div className="min-w-80 w-1/2" key={submission.id}>
+									{/* @ts-expect-error */}
 									<Submission
 										submission={submission as any}
 										index={index}
 										key={submission.id}
+										lang={lang}
 									/>
 								</div>
 							))}
 						</div>
 					</div>
-					<p>You have reached the end!</p>
+					<p>{t('end')}</p>
 				</div>
 			</div>
 		);
@@ -130,9 +136,11 @@ export default async function Submissions({ project }: IProps) {
 			<SubmissionsWithFilter
 				submissions={submissions.map((submission) => ({
 					data: submission,
+					/* @ts-expect-error */
 					el: <Submission
 						submission={submission as any}
 						key={submission.id}
+						lang={lang}
 					/>,
 				}))}
 				filterOptions={filterOptions}
@@ -148,15 +156,17 @@ export default async function Submissions({ project }: IProps) {
 						className={`sm:w-11/12 md:w-10/12 h-full ${project.flags.includes('sanaSendoff') ? 'w-full' : 'max-w-full'}`}
 					>
 						{submissions.map((submission, index) => (
+							/* @ts-expect-error */
 							<Submission
 								submission={submission as any}
 								index={index}
 								key={submission.id}
+								lang={lang}
 							/>
 						))}
 					</div>
 				</div>
-				<p>You have reached the end!</p>
+				<p>{t('end')}</p>
 			</div>
 		</div>
 	);

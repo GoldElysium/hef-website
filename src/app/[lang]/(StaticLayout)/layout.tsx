@@ -8,12 +8,10 @@ interface IProps {
 export default function RootLayout({ children }: IProps) {
 	return (
 		<>
-			{/* @ts-ignore */}
 			<Navbar flags={[]} />
 			<main>
 				{children}
 			</main>
-			{/* @ts-ignore */}
 			<Footer flags={[]} />
 		</>
 	);

@@ -25,11 +25,11 @@ async function getFlags(slug: string): Promise<string[]> {
 	return (project.flags as Flag[] ?? []).map((flag) => flag.code);
 }
 
-export default async function RootLayout({ children, params }: IProps) {
+export default async function RootLayout({ children, params: { slug } }: IProps) {
 	let flags: string[] = [];
 
-	if (params.slug) {
-		flags = await getFlags(params.slug);
+	if (slug) {
+		flags = await getFlags(slug);
 	}
 
 	return (

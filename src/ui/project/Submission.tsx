@@ -1,14 +1,19 @@
 import { Submission as ISubmission, SubmissionMedia } from 'types/payload-types';
 import ReactPlayerWrapper from 'ui/project/ReactPlayerWrapper';
 import Image from 'ui/Image';
+import useTranslation from 'lib/i18n/server';
+import { Language } from 'lib/i18n/languages';
 import SubmissionGallery from './SubmissionGallery';
 
 interface IProps {
 	submission: Omit<ISubmission, 'media' | 'srcIcon'> & { media: Array<ISubmission['media'][number] & { image: SubmissionMedia }>; srcIcon: SubmissionMedia };
 	index?: number;
+	lang: Language;
 }
 
-export default function Submission({ submission, index }: IProps) {
+export default async function Submission({ submission, index, lang }: IProps) {
+	const { t } = await useTranslation(lang, 'project', 'submission');
+
 	return (
 		<div className="w-full max-h-full text-black dark:text-white">
 			<div className="w-full flex mt-4 h-14">
@@ -29,13 +34,13 @@ export default function Submission({ submission, index }: IProps) {
 				)}
 				{submission.author && (
 					<div className="text-lg mt-3 ml-4">
-						From:
-						{' '}
-						<span className="font-bold">{submission.author}</span>
+						{t('author', { author: submission.author })}
 					</div>
 				)}
 				<div className="flex-grow" />
-				{index && <p className="text-xl mt-3 mr-4">{`#${index + 1}`}</p>}
+				{index !== undefined && (
+					<p className="text-xl mt-3 mr-4">{`#${index + 1}`}</p>
+				)}
 			</div>
 			<div className="w-full mt-3">
 				{
@@ -110,7 +115,7 @@ export default function Submission({ submission, index }: IProps) {
 									);
 								}
 
-								return <p key={media.id!}>Invalid media</p>;
+								return <p key={media.id!}>{t('invalid-media')}</p>;
 							})}
 						/>
 					)
