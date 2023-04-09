@@ -108,7 +108,9 @@ class Main extends Phaser.Scene {
 			},
 			panel: {
 				child: this.sizer,
-				mask: false,
+				/* This setting breaks the panel, no clue why.
+				   Doesn't seem to change anything when it's commented out */
+				// mask: false,
 			},
 			scroller: {
 				slidingDeceleration: 7500,

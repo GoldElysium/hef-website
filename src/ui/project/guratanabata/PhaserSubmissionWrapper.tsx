@@ -92,10 +92,17 @@ async function fetchSubmissions(id: string): Promise<TanabataSubmission[]> {
 	}
 
 	return submissions.map((submission) => {
-		if (submission.media.length === 0) return submission as unknown as TanabataSubmission;
+		if (submission.media.length === 0) {
+			return {
+				...submission,
+				media: undefined,
+				type: 'text',
+			} satisfies TanabataSubmission;
+		}
 
 		return {
 			...submission,
+			type: 'image',
 			media: {
 				full: getImageUrl({
 					src: (submission.media[0].image as SubmissionMedia).url!, width: 1024,
@@ -105,7 +112,7 @@ async function fetchSubmissions(id: string): Promise<TanabataSubmission[]> {
 				}),
 				url: (submission.media[0].image as SubmissionMedia).url!,
 			},
-		} as unknown as TanabataSubmission;
+		} satisfies TanabataSubmission;
 	});
 }
 
