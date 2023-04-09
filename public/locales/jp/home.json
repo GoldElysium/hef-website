@@ -1,0 +1,11 @@
+{
+	"page": {
+		"featured": "Featured projects",
+		"servers": "EN Servers",
+		"none": "None"
+	},
+	"hero": {
+		"title": "HoloEN Fan Website",
+		"description": "A website featuring amazing projects organized by the community!"
+	}
+}
