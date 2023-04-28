@@ -1,0 +1,17 @@
+{
+	"head": {
+		"title": "ホロENのファンのウェブサイト",
+		"description": "ウェブサイトでァンのコミュニティは素晴らしいプロジェクトがあります。"
+	},
+	"nav": {
+		"home": "ホーム",
+		"projects": "プロジェクト"
+	},
+	"notice-banner": {
+		"open": "もっと読む",
+		"close": "閉じる"
+	},
+	"locale-select": {
+		"button": "言語"
+	}
+}

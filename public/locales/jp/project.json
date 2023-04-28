@@ -1,0 +1,14 @@
+{
+	"page": {
+		"links": "リンク",
+		"submissions": "ファンの貢献",
+		"loading": "待ってください"
+	},
+	"submissions": {
+		"end": "終わりました"
+	},
+	"submission": {
+		"author": "著者:{{author}}",
+		"invalid-media": "不正なメディア"
+	}
+}
