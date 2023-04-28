@@ -1,11 +1,11 @@
 {
 	"head": {
-		"title": "HoloEN Fan Website - Projects",
-		"description": "A list of all the projects organized by Hololive EN Fan servers!"
+		"title": "HoloENファンウェブサイト - プロジェクト",
+		"description": "全部プロジェクト"
 	},
 	"page": {
-		"ongoing": "Ongoing projects",
-		"past": "Past projects",
-		"none": "None"
+		"ongoing": "進行中のプロジェクト",
+		"past": "終わったプロジェクトのリスト",
+		"none": "なし"
 	}
 }
