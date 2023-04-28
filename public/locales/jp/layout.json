@@ -1,17 +1,17 @@
 {
 	"head": {
-		"title": "HoloEN Fan Website",
+		"title": "ホロENのファンのウェブサイト",
 		"description": "A website featuring amazing projects organized by the community!"
 	},
 	"nav": {
-		"home": "Home",
-		"projects": "Projects"
+		"home": "ホーム",
+		"projects": "プロジェクト"
 	},
 	"notice-banner": {
-		"open": "Read more",
-		"close": "Close"
+		"open": "もっと読む",
+		"close": "閉じる"
 	},
 	"locale-select": {
-		"button": "Languages"
+		"button": "言語"
 	}
 }
