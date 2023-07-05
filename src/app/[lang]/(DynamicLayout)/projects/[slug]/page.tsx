@@ -89,14 +89,12 @@ export default async function ProjectPage({ params: { slug, lang } }: IProps) {
 
 	if (project.flags?.includes('experimental')) {
 		return (
-		/* @ts-expect-error https://github.com/vercel/next.js/issues/42292 */
 			<ExperimentalProjectPage project={project} />
 		);
 	}
 
 	if (project.flags?.includes('guratanabata')) {
 		return (
-		/* @ts-expect-error https://github.com/vercel/next.js/issues/42292 */
 			<PhaserSubmissionWrapper project={project} />
 		);
 	}
@@ -140,7 +138,6 @@ export default async function ProjectPage({ params: { slug, lang } }: IProps) {
 								{!(project.flags.includes('disableTabs') || project.flags.includes('filterableSubmissions')) && (
 									<TextHeader>Submissions</TextHeader>
 								)}
-								{/* @ts-expect-error */}
 								<Submissions project={project} lang={lang} />
 							</div>
 						</div>
@@ -204,6 +201,8 @@ export async function generateMetadata({ params: { slug, lang } }: IProps): Prom
 			title,
 			description: shortDescription,
 			siteName: 'HoloEN Fan Website',
+			// eslint-disable-next-line max-len
+			images: getImageUrl({ src: (ogImage as Media | undefined)?.url ?? (image as Media).url!, width: 1024 }),
 		},
 		twitter: {
 			title,
