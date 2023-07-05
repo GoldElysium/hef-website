@@ -16,6 +16,10 @@ async function getFlags(slug: string): Promise<string[]> {
 		headers: {
 			'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? '',
 		} as Record<string, string>,
+		cache: 'no-cache',
+		next: {
+			tags: [slug],
+		},
 	});
 	const parsedRes = (await res.json() as PayloadResponse<Project>);
 	if (parsedRes.totalDocs === 0) return [];
@@ -34,12 +38,10 @@ export default async function RootLayout({ children, params: { slug } }: IProps)
 
 	return (
 		<>
-			{/* @ts-ignore */}
 			<Navbar flags={flags} />
 			<main>
 				{children}
 			</main>
-			{/* @ts-ignore */}
 			<Footer flags={flags} />
 		</>
 	);

@@ -65,6 +65,9 @@ dependencies:
   phaser3-rex-plugins:
     specifier: 1.1.85
     version: 1.1.85
+  pixi-viewport:
+    specifier: ^5.0.1
+    version: 5.0.1
   pixi.js:
     specifier: 7.2.4
     version: 7.2.4(@pixi/utils@7.2.4)
@@ -11012,6 +11015,10 @@ packages:
   /pirates@4.0.6:
     resolution: {integrity: sha512-saLsH7WeYYPiD25LDuLRRY/i+6HaPYr6G1OUlN39otzkSTxKnubR9RTxS3/Kk50s1g2JTgFwWQDQyplC5/SHZg==}
     engines: {node: '>= 6'}
+
+  /pixi-viewport@5.0.1:
+    resolution: {integrity: sha512-fIILU9xztqGnhGF5SYfjn1Rir/7asWkJ8zSUay2hwzPrdGTWFtB4yiIlZDeFaLf7KHA04RRb2kI01Sy1kNksAw==}
+    dev: false
 
   /pixi.js@7.2.4(@pixi/utils@7.2.4):
     resolution: {integrity: sha512-nBH60meoLnHxoMFz17HoMxXS4uJpG5jwIdL+Gx2S11TzWgP3iKF+/WLOTrkSdyuQoQSdIBxVqpnYii0Wiox15A==}
