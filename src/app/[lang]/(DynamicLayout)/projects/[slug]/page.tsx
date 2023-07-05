@@ -197,6 +197,13 @@ export async function generateMetadata({ params: { slug, lang } }: IProps): Prom
 	return {
 		title,
 		description: shortDescription,
+		alternates: {
+			canonical: `/projects/${slug}`,
+			languages: {
+				en: `/en/projects/${slug}`,
+				ja: `/jp/projects/${slug}`,
+			},
+		},
 		openGraph: {
 			title,
 			description: shortDescription,
