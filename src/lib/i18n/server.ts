@@ -25,8 +25,6 @@ export default async function useTranslation<
 	const ns = Array.isArray(namespace) ? namespace[0] : namespace ?? defaultNamespace;
 	const i18nextInstance = await initI18next(lang, ns);
 	return {
-		// @ts-expect-error
-		// https://github.com/i18next/react-i18next/issues/1601
 		t: i18nextInstance.getFixedT(lang, ns, keyPrefix),
 		i18n: i18nextInstance,
 	};

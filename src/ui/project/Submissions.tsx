@@ -92,7 +92,6 @@ export default async function Submissions({ project, lang }: IProps) {
 						<div className="sm:w-11/12 md:w-10/12 flex flex-wrap">
 							{submissions.map((submission, index) => (
 								<div className="min-w-80 w-1/2" key={submission.id}>
-									{/* @ts-expect-error */}
 									<Submission
 										submission={submission as any}
 										index={index}
@@ -136,7 +135,6 @@ export default async function Submissions({ project, lang }: IProps) {
 			<SubmissionsWithFilter
 				submissions={submissions.map((submission) => ({
 					data: submission,
-					/* @ts-expect-error */
 					el: <Submission
 						submission={submission as any}
 						key={submission.id}
@@ -156,7 +154,6 @@ export default async function Submissions({ project, lang }: IProps) {
 						className={`sm:w-11/12 md:w-10/12 h-full ${project.flags.includes('sanaSendoff') ? 'w-full' : 'max-w-full'}`}
 					>
 						{submissions.map((submission, index) => (
-							/* @ts-expect-error */
 							<Submission
 								submission={submission as any}
 								index={index}
