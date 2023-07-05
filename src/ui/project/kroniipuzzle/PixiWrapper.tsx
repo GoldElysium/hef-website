@@ -24,6 +24,7 @@ export default function PixiWrapper({ project }: IProps) {
 
 	useEffect(() => {
 		const onResize = () => {
+			// TODO: properly resize the canvas
 			setStageSize({
 				width: window.innerWidth,
 				height: window.innerHeight,

@@ -45,7 +45,7 @@ export default function PixiPuzzle({ project, stageSize }: IProps) {
 			</Viewport>
 			<Sprite
 				image="https://pixijs.io/pixi-react/img/bunny.png"
-				x={stageSize - 200}
+				x={stageSize.width - 200}
 				y={270}
 				anchor={{ x: 0.5, y: 0.5 }}
 			/>
