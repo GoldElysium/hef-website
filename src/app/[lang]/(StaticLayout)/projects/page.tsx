@@ -116,6 +116,13 @@ export async function generateMetadata({ params: { lang } }: IProps): Promise<Me
 	return {
 		title,
 		description,
+		alternates: {
+			canonical: '/projects',
+			languages: {
+				en: '/en/projects',
+				ja: '/jp/projects',
+			},
+		},
 		openGraph: {
 			title,
 			description,

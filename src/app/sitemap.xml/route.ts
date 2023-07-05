@@ -1,7 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 import { Project } from 'types/payload-types';
 import PayloadResponse from 'types/PayloadResponse';
-import { languages } from '../../lib/i18n/settings';
 
 export async function GET() {
 	let projects: Project[] = [];
@@ -35,31 +34,37 @@ export async function GET() {
 		xmlns:xhtml="http://www.w3.org/1999/xhtml">
 	<url>
 		<loc>https://holoen.fans</loc>
-${languages.map((language) => `\
 		<xhtml:link
 			rel="alternate"
-			hreflang="${language}"
-			href="https://holoen.fans/${language}"/>
-`).join('')}\
+			hreflang="en"
+			href="https://holoen.fans/en" />
+		<xhtml:link
+			rel="alternate"
+			hreflang="ja"
+			href="https://holoen.fans/jp" />
 	</url>
 	<url>
 		<loc>https://holoen.fans/projects</loc>
-${languages.map((language) => `\
 		<xhtml:link
 			rel="alternate"
-			hreflang="${language}"
-			href="https://holoen.fans/${language}/projects"/>
-`).join('')}\
+			hreflang="en"
+			href="https://holoen.fans/en/projects" />
+		<xhtml:link
+			rel="alternate"
+			hreflang="ja"
+			href="https://holoen.fans/jp/projects" />
 	</url>${projects.map(((project) => `
 	<url>
 		<loc>https://holoen.fans/projects/${project.slug}</loc>
 		<lastmod>${project.updatedAt}</lastmod>
-${languages.map((language) => `\
 		<xhtml:link
 			rel="alternate"
-			hreflang="${language}"
-			href="https://holoen.fans/${language}/projects/${project.slug}"/>
-`).join('')}\
+			hreflang="en"
+			href="https://holoen.fans/en/projects/${project.slug}" />
+		<xhtml:link
+			rel="alternate"
+			hreflang="ja"
+			href="https://holoen.fans/jp/projects/${project.slug}" />
 	</url>`)).join('')}
 </urlset>\
 `;

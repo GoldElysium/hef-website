@@ -22,6 +22,7 @@ export default async function RootLayout({
 }: IProps) {
 	return (
 		<html lang={lang} dir={dir(lang)} suppressHydrationWarning>
+			<head />
 			<body>
 				<DarkModeProvider>
 					<LocaleContextProvider lang={lang}>
@@ -47,6 +48,13 @@ export async function generateMetadata({ params: { lang } }: IProps): Promise<Me
 	return {
 		title,
 		description,
+		alternates: {
+			canonical: '/',
+			languages: {
+				en: '/en',
+				ja: '/jp',
+			},
+		},
 		keywords: ['hololive en', 'hef', 'hololive fan', 'hololive en fan', 'hololive'],
 		themeColor: '#FF3D3D',
 		openGraph: {
