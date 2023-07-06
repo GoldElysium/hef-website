@@ -26,10 +26,14 @@ async function fetchData(lang: Language) {
 		id: string;
 	}
 
-	const res = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/globals/featured-projects?depth=3&locale=${lang}`, {
+	const res = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/globals/featured-projects?depth=3&locale=${lang}&fallback-locale=en`, {
 		headers: {
-			'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? '',
+			'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? undefined,
+			Authorization: process.env.PAYLOAD_API_KEY ? `users API-Key ${process.env.PAYLOAD_API_KEY}` : undefined,
 		} as Record<string, string>,
+		next: {
+			tags: ['featuredProjects'],
+		},
 	});
 	const projects: FeaturedProjectsResponse = await res.json();
 
@@ -39,10 +43,14 @@ async function fetchData(lang: Language) {
 
 	async function fetchNextGuilds() {
 		// Fetch next page
-		const guildsRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/guilds?limit=100&page=${page}&depth=5&locale=${lang}`, {
+		const guildsRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/guilds?limit=100&page=${page}&depth=5&locale=${lang}&fallback-locale=en`, {
 			headers: {
-				'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? '',
+				'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? undefined,
+				Authorization: process.env.PAYLOAD_API_KEY ? `users API-Key ${process.env.PAYLOAD_API_KEY}` : undefined,
 			} as Record<string, string>,
+			next: {
+				tags: ['guilds'],
+			},
 		});
 		const body: PayloadResponse<Guild> = await guildsRes.json();
 
