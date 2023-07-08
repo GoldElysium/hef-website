@@ -28,37 +28,56 @@ export default function PixiPuzzle({ project, stageSize }: IProps) {
 
 	const [showModal, setShowModal] = useState(false);
 
+	const sidebarWidth = 400;
+	const viewportWidth = stageSize.width - sidebarWidth;
+
 	const drawColorForViewport = useCallback((g: PIXI.Graphics) => {
 		g.beginFill(0x5599ff);
-		g.drawRect(400, 0, stageSize.width - 400, stageSize.height);
+		g.drawRect(sidebarWidth, 0, viewportWidth, stageSize.height);
 		g.endFill();
-	}, [stageSize]);
+	}, [sidebarWidth, stageSize, viewportWidth]);
+	const drawPuzzleContainer = useCallback((g: PIXI.Graphics) => {
+		g.lineStyle(2, 0xffffff);
+
+		const width = viewportWidth / 2;
+
+		g.drawRect(
+			sidebarWidth + (width / 2),
+			stageSize.height / 2 - (width / 2) / 2,
+			width,
+			(viewportWidth / 2) / 2,
+		);
+	}, [sidebarWidth, stageSize, viewportWidth]);
 	const drawColorForSidebar = useCallback((g: PIXI.Graphics) => {
 		g.beginFill(0xff5599);
-		g.drawRect(0, 0, 400, stageSize.height);
+		g.drawRect(0, 0, sidebarWidth, stageSize.height);
 		g.endFill();
 	}, [stageSize]);
 
 	return (
 		<>
 			{/* @ts-ignore */}
-			<Viewport width={stageSize.width - 400} height={stageSize.height} app={app}>
+			<Viewport width={viewportWidth} height={stageSize.height} app={app}>
 				<Graphics
-					width={stageSize.width - 400}
+					width={viewportWidth}
 					height={stageSize.height}
-					draw={drawColorForViewport}
+					draw={(g) => {
+						g.clear();
+						drawColorForViewport(g);
+						drawPuzzleContainer(g);
+					}}
 				/>
 				<Sprite
 					image="https://pixijs.io/pixi-react/img/bunny.png"
-					x={400 + (stageSize.width - 400) / 2}
+					x={sidebarWidth + viewportWidth / 2}
 					y={270}
 					anchor={{ x: 0.5, y: 0.5 }}
 				/>
 			</Viewport>
 			{/* @ts-ignore */}
-			<Sidebar width={400} height={stageSize.height} app={app}>
+			<Sidebar width={sidebarWidth} height={stageSize.height} app={app}>
 				<Graphics
-					width={400}
+					width={sidebarWidth}
 					height={stageSize.height}
 					draw={drawColorForSidebar}
 				/>
