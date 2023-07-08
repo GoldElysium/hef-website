@@ -4,11 +4,13 @@ import {
 	Graphics, Sprite, useApp,
 } from '@pixi/react';
 import { Project } from 'types/payload-types';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import * as PIXI from 'pixi.js';
 import type { StageSize } from './PixiWrapper';
 import Viewport from './pixi/Viewport';
 import Sidebar from './pixi/Sidebar';
+import Button from './pixi/Button';
+import Modal from './pixi/Modal';
 
 interface IProps {
 	project: Omit<Project, 'flags' | 'devprops'> & {
@@ -23,6 +25,8 @@ interface IProps {
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function PixiPuzzle({ project, stageSize }: IProps) {
 	const app = useApp();
+
+	const [showModal, setShowModal] = useState(false);
 
 	const drawColorForViewport = useCallback((g: PIXI.Graphics) => {
 		g.beginFill(0x5599ff);
@@ -58,6 +62,14 @@ export default function PixiPuzzle({ project, stageSize }: IProps) {
 					height={stageSize.height}
 					draw={drawColorForSidebar}
 				/>
+				<Button
+					x={0}
+					y={0}
+					width={200}
+					height={100}
+					label="Preview"
+					onClick={() => { setShowModal(true); }}
+				/>
 				<Sprite
 					image="https://pixijs.io/pixi-react/img/bunny.png"
 					x={200}
@@ -65,6 +77,17 @@ export default function PixiPuzzle({ project, stageSize }: IProps) {
 					anchor={{ x: 0.5, y: 0.5 }}
 				/>
 			</Sidebar>
+
+			{showModal && (
+				<Modal
+					x={0}
+					y={0}
+					width={stageSize.width}
+					height={stageSize.height}
+					label="Dismiss"
+					onClick={() => { setShowModal(false); }}
+				/>
+			)}
 		</>
 	);
 }
