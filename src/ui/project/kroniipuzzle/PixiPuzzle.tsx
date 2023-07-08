@@ -11,6 +11,7 @@ import Viewport from './pixi/Viewport';
 import Sidebar from './pixi/Sidebar';
 import Button from './pixi/Button';
 import Modal from './pixi/Modal';
+import Puzzle from './puzzle/Puzzle';
 
 interface IProps {
 	project: Omit<Project, 'flags' | 'devprops'> & {
@@ -53,6 +54,10 @@ export default function PixiPuzzle({ project, stageSize }: IProps) {
 		g.drawRect(0, 0, sidebarWidth, stageSize.height);
 		g.endFill();
 	}, [stageSize]);
+
+	// todo: implement puzzle
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	const puzzle = Puzzle.generate();
 
 	return (
 		<>
