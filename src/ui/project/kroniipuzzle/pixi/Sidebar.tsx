@@ -4,21 +4,21 @@ import * as PIXI from 'pixi.js';
 import { Viewport as PixiViewport } from 'pixi-viewport';
 import type * as React from 'react';
 
-interface PixiComponentViewportProps extends React.FC {
+interface PixiComponentSidebarProps extends React.FC {
 	width: number;
 	height: number;
 	app: Application;
 	children?: React.ReactNode;
 }
 
-const Viewport = PixiComponent('Viewport', {
-	create({ width, height, app }: PixiComponentViewportProps) {
+const Sidebar = PixiComponent('Sidebar', {
+	create({ width, height, app }: PixiComponentSidebarProps) {
 		if (!('events' in app.renderer)) {
 			// @ts-ignore
-			app.renderer.addSystem(PIXI.EventSystem, 'events');
+			props.app.renderer.addSystem(PIXI.EventSystem, 'events');
 		}
 
-		const viewport = new PixiViewport({
+		const container = new PixiViewport({
 			screenWidth: width,
 			screenHeight: height,
 			worldWidth: width,
@@ -26,17 +26,25 @@ const Viewport = PixiComponent('Viewport', {
 			ticker: app.ticker,
 			events: app.renderer.events,
 		});
-
-		viewport
+		const sidebar = new PixiViewport({
+			screenWidth: width,
+			screenHeight: height,
+			worldWidth: width,
+			worldHeight: height,
+			ticker: app.ticker,
+			events: app.renderer.events,
+		});
+		sidebar
 			.drag()
 			.pinch()
 			.wheel()
 			.clamp({ direction: 'all' })
 			.clampZoom({ minScale: 0.5, maxScale: 4 });
+		container.addChild(sidebar);
 
-		return viewport;
+		return container;
 	},
-	applyProps(viewport, _oldProps, _newProps) {
+	applyProps(sidebar, _oldProps, _newProps) {
 		const { children: oldChildren, ...oldProps } = _oldProps;
 		const { children: newChildren, ...newProps } = _newProps;
 
@@ -44,7 +52,7 @@ const Viewport = PixiComponent('Viewport', {
 			// @ts-ignore
 			if (oldProps[p] !== newProps[p]) {
 				// @ts-ignore
-				viewport[p] = newProps[p]; // eslint-disable-line no-param-reassign
+				sidebar[p] = newProps[p]; // eslint-disable-line no-param-reassign
 			}
 		});
 	},
@@ -54,4 +62,4 @@ const Viewport = PixiComponent('Viewport', {
 	},
 });
 
-export default Viewport;
+export default Sidebar;
