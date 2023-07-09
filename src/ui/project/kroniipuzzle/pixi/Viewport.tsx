@@ -10,6 +10,8 @@ interface PixiComponentViewportProps extends React.FC {
 	disableDragging?: boolean;
 	app: Application;
 	children?: React.ReactNode;
+	x?: number;
+	y?: number;
 }
 
 const Viewport = PixiComponent('Viewport', {
@@ -34,9 +36,11 @@ const Viewport = PixiComponent('Viewport', {
 		viewport
 			.drag()
 			.pinch()
+			.decelerate()
 			.wheel()
+			.bounce()
 			.clamp({ direction: 'all' })
-			.clampZoom({ minScale: 0.5, maxScale: 4 });
+			.clampZoom({ minScale: 1, maxScale: 4 });
 
 		return viewport;
 	},

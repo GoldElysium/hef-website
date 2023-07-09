@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useContext, useState } from 'react';
 import {
-	Container, Graphics, Sprite, Text,
+	Container, Sprite, Text,
 } from '@pixi/react';
 import {
 	FederatedPointerEvent, TextStyle, Texture, Sprite as PixiSprite,
@@ -11,6 +11,7 @@ import {
 import ViewportContext from '../providers/ViewportContext';
 import Message from './Message';
 import PieceInfo from './PieceInfo';
+import SmoothGraphics from '../pixi/SmoothGraphics';
 
 interface PieceProps {
 	c: number;
@@ -67,9 +68,9 @@ const Piece: React.FC<PieceProps> = ({
 
 	function isNearTargetPosition(x: number, y: number): boolean {
 		// todo: check this logic. probably too contrived to work consistently for all resolutions
-		const xx = Math.abs(x - targetPosition.x);
-		const yy = Math.abs(y - targetPosition.y);
-		return xx < 100 && yy < 100;
+		const deltaX = Math.abs(x - targetPosition.x);
+		const deltaY = Math.abs(y - targetPosition.y);
+		return deltaX < 100 && deltaY < 100;
 	}
 
 	const handleDragStart = (event: FederatedPointerEvent) => {
@@ -157,7 +158,7 @@ const Piece: React.FC<PieceProps> = ({
 				y={0}
 				scale={0.2}
 			/>
-			<Graphics
+			<SmoothGraphics
 				width={pieceSize}
 				height={pieceSize}
 				draw={(g) => {

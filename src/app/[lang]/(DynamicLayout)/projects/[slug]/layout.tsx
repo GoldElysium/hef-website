@@ -17,7 +17,6 @@ async function getFlags(slug: string): Promise<string[]> {
 			'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? undefined,
 			Authorization: process.env.PAYLOAD_API_KEY ? `users API-Key ${process.env.PAYLOAD_API_KEY}` : undefined,
 		} as Record<string, string>,
-		cache: 'no-cache',
 		next: {
 			tags: [slug],
 		},

@@ -3,7 +3,9 @@
 import { Project } from 'types/payload-types';
 import { Stage } from '@pixi/react';
 import { useEffect, useState } from 'react';
+import * as PIXI from 'pixi.js';
 import PixiPuzzle from './PixiPuzzle';
+import Message from './puzzle/Message';
 
 interface IProps {
 	project: Omit<Project, 'flags' | 'devprops'> & {
@@ -12,6 +14,7 @@ interface IProps {
 			[key: string]: string;
 		};
 	};
+	submissions: Message[];
 }
 
 export interface StageSize {
@@ -19,9 +22,11 @@ export interface StageSize {
 	height: number;
 }
 
-export default function PixiWrapper({ project }: IProps) {
+export default function PixiWrapper({ project, submissions }: IProps) {
 	const [stageSize, setStageSize] = useState<StageSize | null>(null);
+	const [ready, setReady] = useState(false);
 
+	// Resize logic
 	useEffect(() => {
 		const onResize = () => {
 			// TODO: properly resize the canvas
@@ -40,7 +45,19 @@ export default function PixiWrapper({ project }: IProps) {
 		};
 	}, []);
 
+	useEffect(() => {
+		(async () => {
+			await PIXI.Assets.init({ manifest: '/assets/kroniipuzzle/manifest.json' });
+			await PIXI.Assets.loadBundle('puzzle');
+
+			setReady(true);
+		})();
+	}, []);
+
 	if (!stageSize) return null;
+
+	// TODO: Loading screen?
+	if (!ready) return null;
 
 	return (
 		<Stage
@@ -50,7 +67,7 @@ export default function PixiWrapper({ project }: IProps) {
 				backgroundColor: 0x5599ff,
 			}}
 		>
-			<PixiPuzzle project={project} stageSize={stageSize} />
+			<PixiPuzzle project={project} stageSize={stageSize} submissions={submissions} />
 		</Stage>
 	);
 }

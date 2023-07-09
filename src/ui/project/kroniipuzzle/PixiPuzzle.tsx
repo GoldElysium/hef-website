@@ -7,6 +7,8 @@ import { Project } from 'types/payload-types';
 import {
 	useEffect, useMemo, useState,
 } from 'react';
+import { UPDATE_PRIORITY } from 'pixi.js';
+import { addStats } from 'pixi-stats';
 import type { StageSize } from './PixiWrapper';
 import Viewport from './pixi/Viewport';
 import Sidebar from './pixi/Sidebar';
@@ -16,6 +18,7 @@ import ViewportContext from './providers/ViewportContext';
 import PuzzleCompleteModal from './pixi/PuzzleCompleteModal';
 import PieceDisplay from './pixi/PieceDisplay';
 import PieceInfo from './puzzle/PieceInfo';
+import Message from './puzzle/Message';
 
 interface IProps {
 	project: Omit<Project, 'flags' | 'devprops'> & {
@@ -25,10 +28,11 @@ interface IProps {
 		};
 	};
 	stageSize: StageSize;
+	submissions: Message[];
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export default function PixiPuzzle({ project, stageSize }: IProps) {
+export default function PixiPuzzle({ project, stageSize, submissions }: IProps) {
 	const app = useApp();
 
 	const [showModal, setShowModal] = useState(false);
@@ -59,6 +63,12 @@ export default function PixiPuzzle({ project, stageSize }: IProps) {
 	const x = sidebarWidth + height;
 	const y = stageSize.height / 2 - height / 2;
 
+	// ! TODO: REMOVE IN PRODUCTION (And don't forget to remove the dependency)
+	useEffect(() => {
+		const stats = addStats(document, app);
+		app.ticker.add(stats.update, stats, UPDATE_PRIORITY.UTILITY);
+	}, []);
+
 	return (
 		<ViewportContext.Provider value={viewportContextMemo}>
 			{/* @ts-ignore */}
@@ -67,6 +77,7 @@ export default function PixiPuzzle({ project, stageSize }: IProps) {
 				height={stageSize.height}
 				disableDragging={disableDragging}
 				app={app}
+				x={sidebarWidth}
 			>
 				<Sprite
 					image="https://pixijs.io/pixi-react/img/bunny.png"
@@ -81,6 +92,7 @@ export default function PixiPuzzle({ project, stageSize }: IProps) {
 					height={height}
 					puzzleFinished={() => setShowPuzzleCompleteModal(true)}
 					onPieceSelected={(piece: PieceInfo) => setSelectedPiece(piece)}
+					submissions={submissions}
 				/>
 			</Viewport>
 			{/* @ts-ignore */}

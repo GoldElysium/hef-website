@@ -1,0 +1,25 @@
+{
+	"bundles": [
+		{
+			"name": "puzzle",
+			"assets": [
+				{
+					"name": "background",
+					"srcs": "/assets/kroniipuzzle/puzzle.png"
+				},
+				{
+					"name": "background-half",
+					"srcs": "/assets/kroniipuzzle/puzzle_half_size.png"
+				},
+				{
+					"name": "background-quarter",
+					"srcs": "/assets/kroniipuzzle/puzzle_quarter_size.png"
+				},
+				{
+					"name": "kronie",
+					"srcs": "/assets/kroniipuzzle/kronie.png"
+				}
+			]
+		}
+	]
+}

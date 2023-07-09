@@ -13,7 +13,7 @@ import { getImageUrl } from 'ui/Image';
 import { Metadata } from 'next';
 import useTranslation from 'lib/i18n/server';
 import { Language } from 'lib/i18n/languages';
-import dynamic from 'next/dynamic';
+import PixiSubmissionWrapper from 'ui/project/kroniipuzzle/PixiSubmissionWrapper';
 
 // ID's for both production and development databases
 // TODO: Replace with Payload data
@@ -105,13 +105,8 @@ export default async function ProjectPage({ params: { slug, lang } }: IProps) {
 	}
 
 	if (project.flags?.includes('kronii-puzzle')) {
-		// TODO: Wrap in submissions provider component
-		const PixiWrapper = dynamic(() => import('ui/project/kroniipuzzle/PixiWrapper'), {
-			ssr: false,
-		});
-
 		return (
-			<PixiWrapper project={project} />
+			<PixiSubmissionWrapper project={project} />
 		);
 	}
 
