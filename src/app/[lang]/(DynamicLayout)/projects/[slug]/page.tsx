@@ -41,9 +41,10 @@ interface ProjectData {
 
 async function fetchProject(slug: string, lang: Language): Promise<ProjectData | null> {
 	// Fetch locale for the page, CMS will fallback to EN for any fields not translated
-	const projectRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/projects?where[slug][like]=${slug}&depth=2&locale=${lang}`, {
+	const projectRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/projects?where[slug][like]=${slug}&depth=2&locale=${lang}&fallback-locale=en`, {
 		headers: {
-			'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? '',
+			'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? undefined,
+			Authorization: process.env.PAYLOAD_API_KEY ? `users API-Key ${process.env.PAYLOAD_API_KEY}` : undefined,
 		} as Record<string, string>,
 	});
 
@@ -56,7 +57,7 @@ async function fetchProject(slug: string, lang: Language): Promise<ProjectData |
 	return {
 		project: {
 			...project,
-			media: project.media.map((item) => {
+			media: project.media!.map((item) => {
 				if (!item.media) return item;
 
 				return {
@@ -155,10 +156,14 @@ export async function generateStaticParams({ params: { lang } }: IProps) {
 
 	async function fetchNextProjects() {
 		// Fetch next page
-		const projectsRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/projects?depth=0&limit=100&page=${page}&depth=0&locale=${lang}`, {
+		const projectsRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/projects?depth=0&limit=100&page=${page}&depth=0&locale=${lang}&fallback-locale=en`, {
 			headers: {
-				'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? '',
+				'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? undefined,
+				Authorization: process.env.PAYLOAD_API_KEY ? `users API-Key ${process.env.PAYLOAD_API_KEY}` : undefined,
 			} as Record<string, string>,
+			next: {
+				tags: ['projectList'],
+			},
 		});
 		const body: PayloadResponse<Project> = await projectsRes.json();
 
@@ -182,9 +187,10 @@ export async function generateStaticParams({ params: { lang } }: IProps) {
 }
 
 export async function generateMetadata({ params: { slug, lang } }: IProps): Promise<Metadata> {
-	const projectRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/projects?where[slug][like]=${slug}&depth=2&locale=${lang}`, {
+	const projectRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/projects?where[slug][like]=${slug}&depth=2&locale=${lang}&fallback-locale=en`, {
 		headers: {
-			'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? '',
+			'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? undefined,
+			Authorization: process.env.PAYLOAD_API_KEY ? `users API-Key ${process.env.PAYLOAD_API_KEY}` : undefined,
 		} as Record<string, string>,
 	});
 	const parsedProjectRes = (await projectRes.json() as PayloadResponse<Project>);

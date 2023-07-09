@@ -17,7 +17,7 @@ interface ISubmissionProps {
 			[key: string]: string;
 		};
 	};
-	submission: Omit<ISubmission, 'media' | 'srcIcon'> & { media: Array<ISubmission['media'][number] & { image: SubmissionMedia }>; srcIcon: SubmissionMedia };
+	submission: Omit<ISubmission, 'media' | 'srcIcon'> & { media: Array<Required<ISubmission>['media'][number] & { image: SubmissionMedia }>; srcIcon: SubmissionMedia };
 	index: number;
 }
 

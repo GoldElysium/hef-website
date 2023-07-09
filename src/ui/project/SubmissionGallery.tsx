@@ -5,7 +5,7 @@ import { ReactNode, useState } from 'react';
 import { Submission as ISubmission, SubmissionMedia } from 'types/payload-types';
 
 interface IProps {
-	submission: Omit<ISubmission, 'media' | 'srcIcon'> & { media: Array<ISubmission['media'][number] & { image: SubmissionMedia }>; srcIcon: SubmissionMedia };
+	submission: Omit<ISubmission, 'media' | 'srcIcon'> & { media: Array<Required<ISubmission>['media'][number] & { image: SubmissionMedia }>; srcIcon: SubmissionMedia };
 	elements: ReactNode[];
 }
 

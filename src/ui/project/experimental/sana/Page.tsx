@@ -65,7 +65,8 @@ async function fetchSubmissions(project: ProjectPageProps['project']) {
 		// Fetch next page
 		const submissionsRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/submissions?where[project][equals]=${project.id}&limit=100&page=${page}&depth=0`, {
 			headers: {
-				'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? '',
+				'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? undefined,
+				Authorization: process.env.PAYLOAD_API_KEY ? `users API-Key ${process.env.PAYLOAD_API_KEY}` : undefined,
 			} as Record<string, string>,
 		});
 		const body: PayloadResponse<Submission> = await submissionsRes.json();
@@ -76,7 +77,8 @@ async function fetchSubmissions(project: ProjectPageProps['project']) {
 			if (submission.srcIcon) {
 				const mediaFetch = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/submission-media/${submission.srcIcon as string}`, {
 					headers: {
-						'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? '',
+						'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? undefined,
+						Authorization: process.env.PAYLOAD_API_KEY ? `users API-Key ${process.env.PAYLOAD_API_KEY}` : undefined,
 					} as Record<string, string>,
 				});
 				// eslint-disable-next-line no-param-reassign
@@ -86,7 +88,7 @@ async function fetchSubmissions(project: ProjectPageProps['project']) {
 			}
 
 			const mediaDocs: ISubmission['media'] = [];
-			await Promise.all(submission.media.map(async (item, index) => {
+			await Promise.all(submission.media!.map(async (item, index) => {
 				if (item.type !== 'image') {
 					mediaDocs[index] = item;
 					return;
@@ -94,7 +96,8 @@ async function fetchSubmissions(project: ProjectPageProps['project']) {
 
 				const mediaFetch = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/submission-media/${item.image as string}`, {
 					headers: {
-						'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? '',
+						'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? undefined,
+						Authorization: process.env.PAYLOAD_API_KEY ? `users API-Key ${process.env.PAYLOAD_API_KEY}` : undefined,
 					} as Record<string, string>,
 				});
 				mediaDocs[index] = {
@@ -168,10 +171,10 @@ export default async function ProjectPage({ project }: ProjectPageProps) {
 												// memorize this.
 												const [artwork, pictures, videos, messages] = submissions
 													.reduce(([_artwork, _pictures, _videos, _messages], submission) => {
-														if (submission.media.length > 0) {
-															switch (submission.media[0].type) {
+														if (submission.media!.length > 0) {
+															switch (submission.media![0].type) {
 																case 'image':
-																	switch (submission.media[0].subtype) {
+																	switch (submission.media![0].subtype) {
 																		case 'artwork':
 																			_artwork.push(submission);
 																			break;

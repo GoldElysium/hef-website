@@ -12,7 +12,7 @@ interface IProps {
 		devprops: {
 			[key: string]: string;
 		};
-		media: Array<Omit<Project['media'][number], 'media'> & { media: Media }>
+		media: Array<Omit<Required<Project>['media'][number], 'media'> & { media: Media }>
 	};
 }
 export default function Gallery({ project }: IProps) {

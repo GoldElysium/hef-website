@@ -9,18 +9,19 @@ export async function GET() {
 
 	async function fetchNextProjects() {
 		// Fetch next page
-		const enProjectsRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/projects?depth=0&limit=100&page=${page}&depth=0`, {
+		const projectsRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/projects?depth=0&limit=100&page=${page}&depth=0`, {
 			headers: {
-				'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? '',
+				'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? undefined,
+				Authorization: process.env.PAYLOAD_API_KEY ? `users API-Key ${process.env.PAYLOAD_API_KEY}` : undefined,
 			} as Record<string, string>,
 		});
-		const enBody: PayloadResponse<Project> = await enProjectsRes.json();
+		const body: PayloadResponse<Project> = await projectsRes.json();
 
-		projects = projects.concat(enBody.docs);
+		projects = projects.concat(body.docs);
 
 		// Set variables for next fetch
 		page += 1;
-		moreProjects = enBody.hasNextPage;
+		moreProjects = body.hasNextPage;
 	}
 
 	while (moreProjects) {
