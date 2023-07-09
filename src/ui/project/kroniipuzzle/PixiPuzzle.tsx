@@ -31,6 +31,10 @@ export default function PixiPuzzle({ project, stageSize }: IProps) {
 
 	const sidebarWidth = 400;
 	const viewportWidth = stageSize.width - sidebarWidth;
+	const width = viewportWidth / 2;
+	const height = width / 2;
+	const x = sidebarWidth + height;
+	const y = stageSize.height / 2 - height / 2;
 
 	const drawColorForViewport = useCallback((g: PIXI.Graphics) => {
 		g.beginFill(0x5599ff);
@@ -41,52 +45,13 @@ export default function PixiPuzzle({ project, stageSize }: IProps) {
 	const drawPuzzle = useCallback((g: PIXI.Graphics) => {
 		g.lineStyle(2, 0xffffff);
 
-		const width = viewportWidth / 2;
-
-		const x = sidebarWidth + (width / 2);
-		const y = stageSize.height / 2 - (width / 2) / 2;
-		const height = width / 2;
-
 		g.drawRect(
 			x,
 			y,
 			width,
 			height,
 		);
-
-		const puzzle = Puzzle.generate();
-		const numCols = puzzle.sizeX;
-		const numRows = puzzle.sizeY;
-		const texture = PIXI.Texture.from('/assets/kroniipuzzle/puzzle.png');
-
-		for (let r = 0; r < numRows; r++) {
-			for (let c = 0; c < numCols; c++) {
-				const t2 = new PIXI.Texture(
-					texture.baseTexture,
-					new PIXI.Rectangle(
-						c * (texture.width / numCols),
-						r * (texture.height / numRows),
-						texture.width / numCols,
-						texture.height / numRows,
-					),
-				);
-
-				const spriteWidth = width / numCols;
-				const spriteHeight = height / numRows;
-				const sprite = new PIXI.Sprite(t2);
-				sprite.width = spriteWidth;
-				sprite.height = spriteHeight;
-				sprite.x = x + c * spriteWidth;
-				sprite.y = y + r * spriteHeight;
-
-				const text = new PIXI.Text(`${r}, ${c}`);
-				sprite.addChild(text);
-
-				g.addChild(sprite);
-				puzzle.pieces[r][c].sprite = sprite;
-			}
-		}
-	}, [sidebarWidth, stageSize, viewportWidth]);
+	}, [height, width, x, y]);
 	const drawColorForSidebar = useCallback((g: PIXI.Graphics) => {
 		g.beginFill(0xff5599);
 		g.drawRect(0, 0, sidebarWidth, stageSize.height);
@@ -111,6 +76,12 @@ export default function PixiPuzzle({ project, stageSize }: IProps) {
 					x={sidebarWidth + viewportWidth / 2}
 					y={270}
 					anchor={{ x: 0.5, y: 0.5 }}
+				/>
+				<Puzzle
+					x={x}
+					y={y}
+					width={width}
+					height={height}
 				/>
 			</Viewport>
 			{/* @ts-ignore */}

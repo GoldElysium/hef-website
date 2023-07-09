@@ -1,89 +1,93 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable class-methods-use-this */
-/**
- * A piece of the puzzle
- *
- * contains an image that can be "zoomed"
- * contains a "kronie message"
- *
- * starts out at a random spot on the puzzle
- */
+import React from 'react';
+import {
+	Container, Graphics, Sprite, Text,
+} from '@pixi/react';
+import { Rectangle, TextStyle, Texture } from 'pixi.js';
 
-import { Sprite } from 'pixi.js';
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-class Piece {
-	sprite: Sprite | undefined;
-
-	// kronie message
-	message: string | undefined;
-
-	// floats for current position of piece.
-	// randomized on initialization
-	currentPosX: number;
-
-	currentPosY: number;
-
-	// floats for target position of piece.
-	// based on index on puzzle
-	targetPosX: number;
-
-	targetPosY: number;
-
-	// timestamp used to determine how the pieces overlap
-	lastUpdatedAt: Date | undefined;
-
-	/**
-   *
-   * @param puzzleIndexX integer specifying "x" index on puzzle
-   * @param puzzleIndexY integer specifying "y" index on puzzle
-   */
-	constructor(
-		puzzleIndexX: number,
-		puzzleIndexY: number,
-	) {
-		this.targetPosX = this.extrapolatePosX(puzzleIndexX);
-		this.targetPosY = this.extrapolatePosY(puzzleIndexY);
-
-		this.currentPosX = this.getInitialPosX();
-		this.currentPosY = this.getInitialPosY();
-	}
-
-	/**
-   * random position on the puzzle within X bounds
-   */
-	getInitialPosX(): number {
-		// todo
-		return 0;
-	}
-
-	/**
-   * random position on the puzzle within Y bounds
-   */
-	getInitialPosY(): number {
-		// todo
-		return 0;
-	}
-
-	/**
-   *
-   * @param puzzleIndexX matrix index on the puzzle
-   * @returns float position based on the puzzle index
-   */
-	extrapolatePosX(puzzleIndexX: number): number {
-		// todo
-		return 0;
-	}
-
-	/**
-   *
-   * @param puzzleIndexY matrix index on the puzzle
-   * @returns float position based on the puzzle index
-   */
-	extrapolatePosY(puzzleIndexX: number): number {
-		// todo
-		return 0;
-	}
+interface PieceProps {
+	c: number;
+	r: number;
+	numCols: number;
+	numRows: number;
+	pieceSize: number;
+	texture: Texture;
 }
+
+// eslint-disable-next-line react/function-component-definition
+const Piece: React.FC<PieceProps> = ({
+	c, r, numCols, numRows, pieceSize, texture,
+}) => {
+	function getInitialPosX(): number {
+		// TODO
+		return 0;
+	}
+
+	function getInitialPosY(): number {
+		// TODO
+		return 0;
+	}
+
+	function extrapolatePosX(index: number): number {
+		// TODO
+		return 0;
+	}
+
+	function extrapolatePosY(index: number): number {
+		// TODO
+		return 0;
+	}
+
+	const targetPosX = extrapolatePosX(c);
+	const targetPosY = extrapolatePosY(r);
+
+	const currentPosX = getInitialPosX();
+	const currentPosY = getInitialPosY();
+
+	return (
+		<Container>
+			<Sprite
+				texture={new Texture(
+					texture.baseTexture,
+					new Rectangle(
+						c * (texture.width / numCols),
+						r * (texture.height / numRows),
+						texture.width / numCols,
+						texture.height / numRows,
+					),
+				)}
+				x={c * pieceSize}
+				y={r * pieceSize}
+				width={pieceSize}
+				height={pieceSize}
+			/>
+			<Text
+				text={`${c}, ${r}`}
+				style={{
+					fill: 'white',
+					fontSize: 25,
+					fontWeight: 'bold',
+				} as TextStyle}
+				x={c * pieceSize}
+				y={r * pieceSize}
+				scale={0.1}
+			/>
+			{/* todo: figure out why this scales weirdly */}
+			{/* <Graphics
+				width={pieceSize}
+				height={pieceSize}
+				draw={(g) => {
+					g.lineStyle(1, 0xffffff);
+					g.drawRect(
+						c * pieceSize,
+						r * pieceSize,
+						pieceSize,
+						pieceSize,
+					);
+				}}
+			/> */}
+		</Container>
+	);
+};
 
 export default Piece;
