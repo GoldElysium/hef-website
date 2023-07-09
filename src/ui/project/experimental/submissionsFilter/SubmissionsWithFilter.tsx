@@ -34,8 +34,8 @@ export default function SubmissionsWithFilter({ submissions, filterOptions }: IP
 				if (key === 'type') {
 					acceptableSubmissions = acceptableSubmissions.filter((submission) => {
 						let determinedType = 'Messages';
-						if (submission.data.media.length > 0) {
-							determinedType = submission.data.media[0].type === 'image' ? 'Images' : 'Videos';
+						if (submission.data.media!.length > 0) {
+							determinedType = submission.data.media![0].type === 'image' ? 'Images' : 'Videos';
 						}
 
 						return filter.type.includes(determinedType);
@@ -48,8 +48,8 @@ export default function SubmissionsWithFilter({ submissions, filterOptions }: IP
 				acceptableSubmissions = acceptableSubmissions.filter((submission) => {
 					// eslint-disable-next-line arrow-body-style
 					return filter[key].map((filterValue) => {
-						return !!submission.data.filterableAttributes
-							.find((attribute) => attribute.name === key)!.values
+						return !!submission.data.filterableAttributes!
+							.find((attribute) => attribute.name === key)!.values!
 							.find((value) => value.value === filterValue);
 					}).includes(true);
 				});

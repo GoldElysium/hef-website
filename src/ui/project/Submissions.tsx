@@ -25,7 +25,8 @@ async function fetchSubmissions(project: { id: string }) {
 		// Fetch next page
 		const submissionsRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/submissions?where[project][equals]=${project.id}&limit=100&page=${page}&depth=0`, {
 			headers: {
-				'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? '',
+				'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? undefined,
+				Authorization: process.env.PAYLOAD_API_KEY ? `users API-Key ${process.env.PAYLOAD_API_KEY}` : undefined,
 			} as Record<string, string>,
 		});
 		const body: PayloadResponse<ISubmission> = await submissionsRes.json();
@@ -36,7 +37,8 @@ async function fetchSubmissions(project: { id: string }) {
 			if (submission.srcIcon) {
 				const mediaFetch = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/submission-media/${submission.srcIcon as string}`, {
 					headers: {
-						'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? '',
+						'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? undefined,
+						Authorization: process.env.PAYLOAD_API_KEY ? `users API-Key ${process.env.PAYLOAD_API_KEY}` : undefined,
 					} as Record<string, string>,
 				});
 				// eslint-disable-next-line no-param-reassign
@@ -44,7 +46,7 @@ async function fetchSubmissions(project: { id: string }) {
 			}
 
 			const mediaDocs: ISubmission['media'] = [];
-			await Promise.all(submission.media.map(async (item, index) => {
+			await Promise.all(submission.media!.map(async (item, index) => {
 				if (item.type !== 'image') {
 					mediaDocs[index] = item;
 					return;
@@ -52,7 +54,8 @@ async function fetchSubmissions(project: { id: string }) {
 
 				const mediaFetch = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/submission-media/${item.image as string}`, {
 					headers: {
-						'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? '',
+						'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? undefined,
+						Authorization: process.env.PAYLOAD_API_KEY ? `users API-Key ${process.env.PAYLOAD_API_KEY}` : undefined,
 					} as Record<string, string>,
 				});
 				mediaDocs[index] = {
@@ -92,7 +95,6 @@ export default async function Submissions({ project, lang }: IProps) {
 						<div className="sm:w-11/12 md:w-10/12 flex flex-wrap">
 							{submissions.map((submission, index) => (
 								<div className="min-w-80 w-1/2" key={submission.id}>
-									{/* @ts-expect-error */}
 									<Submission
 										submission={submission as any}
 										index={index}
@@ -114,10 +116,10 @@ export default async function Submissions({ project, lang }: IProps) {
 
 		/* eslint-disable no-restricted-syntax */
 		for (const submission of submissions) {
-			for (const attribute of submission.filterableAttributes) {
+			for (const attribute of submission.filterableAttributes!) {
 				if (!filterOptions[attribute.name]) filterOptions[attribute.name] = [];
 
-				for (const value of attribute.values) {
+				for (const value of attribute.values!) {
 					if (!filterOptions[attribute.name].includes(value.value)) {
 						filterOptions[attribute.name].push(value.value);
 					}
@@ -136,7 +138,6 @@ export default async function Submissions({ project, lang }: IProps) {
 			<SubmissionsWithFilter
 				submissions={submissions.map((submission) => ({
 					data: submission,
-					/* @ts-expect-error */
 					el: <Submission
 						submission={submission as any}
 						key={submission.id}
@@ -156,7 +157,6 @@ export default async function Submissions({ project, lang }: IProps) {
 						className={`sm:w-11/12 md:w-10/12 h-full ${project.flags.includes('sanaSendoff') ? 'w-full' : 'max-w-full'}`}
 					>
 						{submissions.map((submission, index) => (
-							/* @ts-expect-error */
 							<Submission
 								submission={submission as any}
 								index={index}

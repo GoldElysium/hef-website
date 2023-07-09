@@ -20,10 +20,14 @@ async function fetchProjects(lang: Language): Promise<Project[]> {
 
 	async function fetchNextProjects() {
 		// Fetch next page
-		const projectsRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/projects?limit=100&page=${page}&depth=2&locale=${lang}`, {
+		const projectsRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/projects?limit=100&page=${page}&depth=2&locale=${lang}&fallback-locale=en`, {
 			headers: {
-				'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? '',
+				'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? undefined,
+				Authorization: process.env.PAYLOAD_API_KEY ? `users API-Key ${process.env.PAYLOAD_API_KEY}` : undefined,
 			} as Record<string, string>,
+			next: {
+				tags: ['projectList'],
+			},
 		});
 		const body: PayloadResponse<Project> = await projectsRes.json();
 
@@ -116,6 +120,13 @@ export async function generateMetadata({ params: { lang } }: IProps): Promise<Me
 	return {
 		title,
 		description,
+		alternates: {
+			canonical: '/projects',
+			languages: {
+				en: '/en/projects',
+				ja: '/jp/projects',
+			},
+		},
 		openGraph: {
 			title,
 			description,

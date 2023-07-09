@@ -6,7 +6,7 @@ import { Language } from 'lib/i18n/languages';
 import SubmissionGallery from './SubmissionGallery';
 
 interface IProps {
-	submission: Omit<ISubmission, 'media' | 'srcIcon'> & { media: Array<ISubmission['media'][number] & { image: SubmissionMedia }>; srcIcon: SubmissionMedia };
+	submission: Omit<ISubmission, 'media' | 'srcIcon'> & { media: Array<Required<ISubmission>['media'][number] & { image: SubmissionMedia }>; srcIcon: SubmissionMedia };
 	index?: number;
 	lang: Language;
 }

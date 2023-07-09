@@ -1,7 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 import { Project } from 'types/payload-types';
 import PayloadResponse from 'types/PayloadResponse';
-import { languages } from '../../lib/i18n/settings';
 
 export async function GET() {
 	let projects: Project[] = [];
@@ -10,18 +9,19 @@ export async function GET() {
 
 	async function fetchNextProjects() {
 		// Fetch next page
-		const enProjectsRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/projects?depth=0&limit=100&page=${page}&depth=0`, {
+		const projectsRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/projects?depth=0&limit=100&page=${page}&depth=0`, {
 			headers: {
-				'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? '',
+				'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? undefined,
+				Authorization: process.env.PAYLOAD_API_KEY ? `users API-Key ${process.env.PAYLOAD_API_KEY}` : undefined,
 			} as Record<string, string>,
 		});
-		const enBody: PayloadResponse<Project> = await enProjectsRes.json();
+		const body: PayloadResponse<Project> = await projectsRes.json();
 
-		projects = projects.concat(enBody.docs);
+		projects = projects.concat(body.docs);
 
 		// Set variables for next fetch
 		page += 1;
-		moreProjects = enBody.hasNextPage;
+		moreProjects = body.hasNextPage;
 	}
 
 	while (moreProjects) {
@@ -35,31 +35,37 @@ export async function GET() {
 		xmlns:xhtml="http://www.w3.org/1999/xhtml">
 	<url>
 		<loc>https://holoen.fans</loc>
-${languages.map((language) => `\
 		<xhtml:link
 			rel="alternate"
-			hreflang="${language}"
-			href="https://holoen.fans/${language}"/>
-`).join('')}\
+			hreflang="en"
+			href="https://holoen.fans/en" />
+		<xhtml:link
+			rel="alternate"
+			hreflang="ja"
+			href="https://holoen.fans/jp" />
 	</url>
 	<url>
 		<loc>https://holoen.fans/projects</loc>
-${languages.map((language) => `\
 		<xhtml:link
 			rel="alternate"
-			hreflang="${language}"
-			href="https://holoen.fans/${language}/projects"/>
-`).join('')}\
+			hreflang="en"
+			href="https://holoen.fans/en/projects" />
+		<xhtml:link
+			rel="alternate"
+			hreflang="ja"
+			href="https://holoen.fans/jp/projects" />
 	</url>${projects.map(((project) => `
 	<url>
 		<loc>https://holoen.fans/projects/${project.slug}</loc>
 		<lastmod>${project.updatedAt}</lastmod>
-${languages.map((language) => `\
 		<xhtml:link
 			rel="alternate"
-			hreflang="${language}"
-			href="https://holoen.fans/${language}/projects/${project.slug}"/>
-`).join('')}\
+			hreflang="en"
+			href="https://holoen.fans/en/projects/${project.slug}" />
+		<xhtml:link
+			rel="alternate"
+			hreflang="ja"
+			href="https://holoen.fans/jp/projects/${project.slug}" />
 	</url>`)).join('')}
 </urlset>\
 `;
