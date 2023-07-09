@@ -170,6 +170,11 @@ export interface Event {
 	content: {
 		[k: string]: unknown;
 	}[];
+	devprops?: {
+		key: string;
+		value: string;
+		id?: string;
+	}[];
 	updatedAt: string;
 	createdAt: string;
 }
