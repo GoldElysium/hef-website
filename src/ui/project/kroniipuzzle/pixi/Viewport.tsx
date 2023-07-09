@@ -12,7 +12,9 @@ interface PixiComponentViewportProps extends React.FC {
 }
 
 const Viewport = PixiComponent('Viewport', {
-	create({ width, height, app }: PixiComponentViewportProps) {
+	create({
+		width, height, app,
+	}: PixiComponentViewportProps) {
 		if (!('events' in app.renderer)) {
 			// @ts-ignore
 			app.renderer.addSystem(PIXI.EventSystem, 'events');

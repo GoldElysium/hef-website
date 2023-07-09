@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React from 'react';
+import React, {
+	useState,
+} from 'react';
 import {
 	Container, Graphics, Sprite, Text,
 } from '@pixi/react';
@@ -18,6 +20,30 @@ interface PieceProps {
 const Piece: React.FC<PieceProps> = ({
 	c, r, numCols, numRows, pieceSize, texture,
 }) => {
+	const [dragging, setDragging] = useState(false);
+	const [startPosition, setStartPosition] = useState({ x: 0, y: 0 });
+	const [currentPosition, setCurrentPosition] = useState({ x: 0, y: 0 });
+
+	const handleDragStart = (event: React.PointerEvent<HTMLElement>) => {
+		setDragging(true);
+		setStartPosition({ x: event.clientX, y: event.clientY });
+	};
+
+	const handleDragMove = (event: React.PointerEvent<HTMLElement>) => {
+		if (dragging) {
+			setCurrentPosition({ x: event.clientX, y: event.clientY });
+		}
+	};
+
+	const handleDragEnd = () => {
+		setDragging(false);
+		setStartPosition({ x: 0, y: 0 });
+		setCurrentPosition({ x: 0, y: 0 });
+	};
+
+	const piecePositionX = dragging ? currentPosition.x - startPosition.x : c * pieceSize;
+	const piecePositionY = dragging ? currentPosition.y - startPosition.y : r * pieceSize;
+
 	function getInitialPosX(): number {
 		// TODO
 		return 0;
@@ -45,7 +71,20 @@ const Piece: React.FC<PieceProps> = ({
 	const currentPosY = getInitialPosY();
 
 	return (
-		<Container>
+		<Container
+			x={piecePositionX}
+			y={piecePositionY}
+			interactive
+			onpointerdown={(event: any) => handleDragStart(event)}
+			onpointermove={(event: any) => handleDragMove(event)}
+			onpointerup={handleDragEnd}
+			onpointerupoutside={handleDragEnd}
+			touchstart={handleDragEnd}
+			touchmove={handleDragEnd}
+			touchend={handleDragEnd}
+			touchendoutside={handleDragEnd}
+		>
+
 			<Sprite
 				texture={new Texture(
 					texture.baseTexture,
@@ -56,8 +95,8 @@ const Piece: React.FC<PieceProps> = ({
 						texture.height / numRows,
 					),
 				)}
-				x={c * pieceSize}
-				y={r * pieceSize}
+				x={0}
+				y={0}
 				width={pieceSize}
 				height={pieceSize}
 			/>
@@ -68,24 +107,23 @@ const Piece: React.FC<PieceProps> = ({
 					fontSize: 25,
 					fontWeight: 'bold',
 				} as TextStyle}
-				x={c * pieceSize}
-				y={r * pieceSize}
+				x={0}
+				y={0}
 				scale={0.1}
 			/>
-			{/* todo: figure out why this scales weirdly */}
-			{/* <Graphics
+			<Graphics
 				width={pieceSize}
 				height={pieceSize}
 				draw={(g) => {
-					g.lineStyle(1, 0xffffff);
+					g.lineStyle(0.2, 0xffffff);
 					g.drawRect(
-						c * pieceSize,
-						r * pieceSize,
+						0,
+						0,
 						pieceSize,
 						pieceSize,
 					);
 				}}
-			/> */}
+			/>
 		</Container>
 	);
 };

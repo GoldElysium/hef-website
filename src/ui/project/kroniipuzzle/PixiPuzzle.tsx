@@ -61,7 +61,11 @@ export default function PixiPuzzle({ project, stageSize }: IProps) {
 	return (
 		<>
 			{/* @ts-ignore */}
-			<Viewport width={viewportWidth} height={stageSize.height} app={app}>
+			<Viewport
+				width={viewportWidth}
+				height={stageSize.height}
+				app={app}
+			>
 				<Graphics
 					width={viewportWidth}
 					height={stageSize.height}
