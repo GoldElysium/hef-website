@@ -37,27 +37,61 @@ export default function PixiPuzzle({ project, stageSize }: IProps) {
 		g.drawRect(sidebarWidth, 0, viewportWidth, stageSize.height);
 		g.endFill();
 	}, [sidebarWidth, stageSize, viewportWidth]);
-	const drawPuzzleContainer = useCallback((g: PIXI.Graphics) => {
+
+	const drawPuzzle = useCallback((g: PIXI.Graphics) => {
 		g.lineStyle(2, 0xffffff);
 
 		const width = viewportWidth / 2;
 
+		const x = sidebarWidth + (width / 2);
+		const y = stageSize.height / 2 - (width / 2) / 2;
+		const height = width / 2;
+
 		g.drawRect(
-			sidebarWidth + (width / 2),
-			stageSize.height / 2 - (width / 2) / 2,
+			x,
+			y,
 			width,
-			(viewportWidth / 2) / 2,
+			height,
 		);
+
+		const puzzle = Puzzle.generate();
+		const numCols = puzzle.sizeX;
+		const numRows = puzzle.sizeY;
+		const texture = PIXI.Texture.from('/assets/kroniipuzzle/puzzle.png');
+
+		for (let r = 0; r < numRows; r++) {
+			for (let c = 0; c < numCols; c++) {
+				const t2 = new PIXI.Texture(
+					texture.baseTexture,
+					new PIXI.Rectangle(
+						c * (texture.width / numCols),
+						r * (texture.height / numRows),
+						texture.width / numCols,
+						texture.height / numRows,
+					),
+				);
+
+				const spriteWidth = width / numCols;
+				const spriteHeight = height / numRows;
+				const sprite = new PIXI.Sprite(t2);
+				sprite.width = spriteWidth;
+				sprite.height = spriteHeight;
+				sprite.x = x + c * spriteWidth;
+				sprite.y = y + r * spriteHeight;
+
+				const text = new PIXI.Text(`${r}, ${c}`);
+				sprite.addChild(text);
+
+				g.addChild(sprite);
+				puzzle.pieces[r][c].sprite = sprite;
+			}
+		}
 	}, [sidebarWidth, stageSize, viewportWidth]);
 	const drawColorForSidebar = useCallback((g: PIXI.Graphics) => {
 		g.beginFill(0xff5599);
 		g.drawRect(0, 0, sidebarWidth, stageSize.height);
 		g.endFill();
 	}, [stageSize]);
-
-	// todo: implement puzzle
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	const puzzle = Puzzle.generate();
 
 	return (
 		<>
@@ -69,7 +103,7 @@ export default function PixiPuzzle({ project, stageSize }: IProps) {
 					draw={(g) => {
 						g.clear();
 						drawColorForViewport(g);
-						drawPuzzleContainer(g);
+						drawPuzzle(g);
 					}}
 				/>
 				<Sprite

@@ -8,10 +8,12 @@
  *
  * starts out at a random spot on the puzzle
  */
+
+import { Sprite } from 'pixi.js';
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 class Piece {
-	// contains references to image thumb and full
-	img: Img | undefined;
+	sprite: Sprite | undefined;
 
 	// kronie message
 	message: string | undefined;

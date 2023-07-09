@@ -12,9 +12,9 @@ class Puzzle {
 	sizeY: number;
 
 	// matrix containing references to the puzzle pieces
-	pieces: [Piece[]];
+	pieces: Piece[][];
 
-	constructor(pieces: [Piece[]]) {
+	constructor(pieces: Piece[][]) {
 		this.pieces = pieces;
 
 		this.sizeY = pieces.length;
@@ -22,13 +22,15 @@ class Puzzle {
 	}
 
 	static generate() {
-		const pieces: [Piece[]] = [[]];
+		const numCols = 36;
+		const numRows = 18;
+		const pieces: Piece[][] = [];
 
-		for (let r = 0; r < 18; r++) {
-			for (let c = 0; c < 36; c++) {
+		for (let r = 0; r < numRows; r++) {
+			pieces.push([]);
+			for (let c = 0; c < numCols; c++) {
 				pieces[r].push(new Piece(c, r));
 			}
-			pieces.push([]);
 		}
 
 		return new Puzzle(pieces);
