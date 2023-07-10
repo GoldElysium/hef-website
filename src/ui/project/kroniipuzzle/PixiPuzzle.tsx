@@ -1,10 +1,10 @@
 'use client';
 
-import {
-	Graphics, Sprite, useApp,
-} from '@pixi/react';
+import { Graphics, Sprite, useApp } from '@pixi/react';
 import { Project } from 'types/payload-types';
-import { useCallback, useState } from 'react';
+import {
+	useCallback, useEffect, useMemo, useState,
+} from 'react';
 import * as PIXI from 'pixi.js';
 import type { StageSize } from './PixiWrapper';
 import Viewport from './pixi/Viewport';
@@ -12,6 +12,7 @@ import Sidebar from './pixi/Sidebar';
 import Button from './pixi/Button';
 import Modal from './pixi/Modal';
 import Puzzle from './puzzle/Puzzle';
+import ViewportContext from './providers/ViewportContext';
 
 interface IProps {
 	project: Omit<Project, 'flags' | 'devprops'> & {
@@ -28,6 +29,23 @@ export default function PixiPuzzle({ project, stageSize }: IProps) {
 	const app = useApp();
 
 	const [showModal, setShowModal] = useState(false);
+	const [disableDragging, setDisableDragging] = useState(false);
+
+	const viewportContextMemo = useMemo(
+		() => (
+			{
+				disableDragging,
+				setDisableDragging,
+			}
+		),
+		[disableDragging],
+	);
+
+	// ! TODO: Remove, only here for Pixi devtools
+	useEffect(() => {
+		// @ts-ignore
+		globalThis.__PIXI_APP__ = app;
+	}, []);
 
 	const sidebarWidth = 400;
 	const viewportWidth = stageSize.width - sidebarWidth;
@@ -35,12 +53,6 @@ export default function PixiPuzzle({ project, stageSize }: IProps) {
 	const height = width / 2;
 	const x = sidebarWidth + height;
 	const y = stageSize.height / 2 - height / 2;
-
-	const drawColorForViewport = useCallback((g: PIXI.Graphics) => {
-		g.beginFill(0x5599ff);
-		g.drawRect(sidebarWidth, 0, viewportWidth, stageSize.height);
-		g.endFill();
-	}, [sidebarWidth, stageSize, viewportWidth]);
 
 	const drawPuzzle = useCallback((g: PIXI.Graphics) => {
 		g.lineStyle(2, 0xffffff);
@@ -59,11 +71,12 @@ export default function PixiPuzzle({ project, stageSize }: IProps) {
 	}, [stageSize]);
 
 	return (
-		<>
+		<ViewportContext.Provider value={viewportContextMemo}>
 			{/* @ts-ignore */}
 			<Viewport
 				width={viewportWidth}
 				height={stageSize.height}
+				disableDragging={disableDragging}
 				app={app}
 			>
 				<Graphics
@@ -71,7 +84,6 @@ export default function PixiPuzzle({ project, stageSize }: IProps) {
 					height={stageSize.height}
 					draw={(g) => {
 						g.clear();
-						drawColorForViewport(g);
 						drawPuzzle(g);
 					}}
 				/>
@@ -121,6 +133,6 @@ export default function PixiPuzzle({ project, stageSize }: IProps) {
 					onClick={() => { setShowModal(false); }}
 				/>
 			)}
-		</>
+		</ViewportContext.Provider>
 	);
 }

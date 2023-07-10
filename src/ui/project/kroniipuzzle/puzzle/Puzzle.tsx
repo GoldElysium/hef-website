@@ -26,12 +26,14 @@ const Puzzle: React.FC<PuzzleProps> = ({
 	const texture = Texture.from(imageUrl);
 
 	const puzzlePieces: JSX.Element[][] = [];
+	const newPuzzlePieces: JSX.Element[] = [];
 
 	for (let r = 0; r < numRows; r++) {
 		const row: JSX.Element[] = [];
 		for (let c = 0; c < numCols; c++) {
 			const piece = (
 				<Piece
+					key={`piece-${r}-${c}`}
 					c={c}
 					r={r}
 					numCols={numCols}
@@ -41,13 +43,15 @@ const Puzzle: React.FC<PuzzleProps> = ({
 				/>
 			);
 			row.push(piece);
+			newPuzzlePieces.push(piece);
 		}
 		puzzlePieces.push(row);
 	}
 
 	return (
-		<Container x={x} y={y}>
-			{puzzlePieces.map((row, r) => (
+		<Container x={x} y={y} sortableChildren>
+			{newPuzzlePieces}
+			{/* {puzzlePieces.map((row, r) => (
 				<Container key={`row-${r}`}>
 					{row.map((piece, c) => (
 						<Container key={`piece-${r}-${c}`}>
@@ -55,7 +59,7 @@ const Puzzle: React.FC<PuzzleProps> = ({
 						</Container>
 					))}
 				</Container>
-			))}
+			))} */}
 		</Container>
 	);
 };

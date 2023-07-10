@@ -1,11 +1,14 @@
+'use client';
+
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, {
-	useState,
-} from 'react';
+import { useContext, useState } from 'react';
 import {
 	Container, Graphics, Sprite, Text,
 } from '@pixi/react';
-import { Rectangle, TextStyle, Texture } from 'pixi.js';
+import {
+	FederatedPointerEvent, Rectangle, TextStyle, Texture,
+} from 'pixi.js';
+import ViewportContext from '../providers/ViewportContext';
 
 interface PieceProps {
 	c: number;
@@ -21,28 +24,27 @@ const Piece: React.FC<PieceProps> = ({
 	c, r, numCols, numRows, pieceSize, texture,
 }) => {
 	const [dragging, setDragging] = useState(false);
-	const [startPosition, setStartPosition] = useState({ x: 0, y: 0 });
-	const [currentPosition, setCurrentPosition] = useState({ x: 0, y: 0 });
+	const [currentPosition, setCurrentPosition] = useState({ x: c * pieceSize, y: r * pieceSize });
+	const { setDisableDragging } = useContext(ViewportContext);
 
-	const handleDragStart = (event: React.PointerEvent<HTMLElement>) => {
+	const handleDragStart = (event: FederatedPointerEvent) => {
 		setDragging(true);
-		setStartPosition({ x: event.clientX, y: event.clientY });
+		setDisableDragging(true);
 	};
 
-	const handleDragMove = (event: React.PointerEvent<HTMLElement>) => {
+	const handleDragMove = (event: FederatedPointerEvent) => {
 		if (dragging) {
-			setCurrentPosition({ x: event.clientX, y: event.clientY });
+			const { x, y } = event.getLocalPosition(event.target.parent! as any);
+			setCurrentPosition({ x, y });
 		}
 	};
 
-	const handleDragEnd = () => {
+	const handleDragEnd = (event: FederatedPointerEvent) => {
 		setDragging(false);
-		setStartPosition({ x: 0, y: 0 });
-		setCurrentPosition({ x: 0, y: 0 });
+		setDisableDragging(false);
+		const { x, y } = event.getLocalPosition(event.target.parent! as any);
+		setCurrentPosition({ x, y });
 	};
-
-	const piecePositionX = dragging ? currentPosition.x - startPosition.x : c * pieceSize;
-	const piecePositionY = dragging ? currentPosition.y - startPosition.y : r * pieceSize;
 
 	function getInitialPosX(): number {
 		// TODO
@@ -72,17 +74,19 @@ const Piece: React.FC<PieceProps> = ({
 
 	return (
 		<Container
-			x={piecePositionX}
-			y={piecePositionY}
-			interactive
-			onpointerdown={(event: any) => handleDragStart(event)}
-			onpointermove={(event: any) => handleDragMove(event)}
+			x={currentPosition.x ?? c * pieceSize}
+			y={currentPosition.y ?? r * pieceSize}
+			eventMode="static"
+			onpointerdown={handleDragStart}
+			onpointermove={handleDragMove}
+			onglobalpointermove={handleDragMove}
 			onpointerup={handleDragEnd}
 			onpointerupoutside={handleDragEnd}
 			touchstart={handleDragEnd}
 			touchmove={handleDragEnd}
 			touchend={handleDragEnd}
 			touchendoutside={handleDragEnd}
+			zIndex={dragging ? 5000 : 0}
 		>
 
 			<Sprite

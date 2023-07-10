@@ -7,6 +7,7 @@ import type * as React from 'react';
 interface PixiComponentViewportProps extends React.FC {
 	width: number;
 	height: number;
+	disableDragging?: boolean;
 	app: Application;
 	children?: React.ReactNode;
 }
@@ -23,6 +24,7 @@ const Viewport = PixiComponent('Viewport', {
 		const viewport = new PixiViewport({
 			screenWidth: width,
 			screenHeight: height,
+			// TODO: Set fixed world width and height
 			worldWidth: width,
 			worldHeight: height,
 			ticker: app.ticker,
@@ -39,8 +41,15 @@ const Viewport = PixiComponent('Viewport', {
 		return viewport;
 	},
 	applyProps(viewport, _oldProps, _newProps) {
-		const { children: oldChildren, ...oldProps } = _oldProps;
-		const { children: newChildren, ...newProps } = _newProps;
+		// eslint-disable-next-line @typescript-eslint/naming-convention
+		const { children: oldChildren, disableDragging: _, ...oldProps } = _oldProps;
+		const { children: newChildren, disableDragging, ...newProps } = _newProps;
+
+		if (disableDragging) {
+			viewport.plugins.pause('drag');
+		} else {
+			viewport.plugins.resume('drag');
+		}
 
 		Object.keys(newProps).forEach((p) => {
 			// @ts-ignore

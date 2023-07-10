@@ -43,7 +43,13 @@ export default function PixiWrapper({ project }: IProps) {
 	if (!stageSize) return null;
 
 	return (
-		<Stage width={stageSize.width} height={stageSize.height}>
+		<Stage
+			width={stageSize.width}
+			height={stageSize.height}
+			options={{
+				backgroundColor: 0x5599ff,
+			}}
+		>
 			<PixiPuzzle project={project} stageSize={stageSize} />
 		</Stage>
 	);
