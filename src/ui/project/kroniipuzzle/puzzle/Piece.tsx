@@ -25,24 +25,43 @@ const Piece: React.FC<PieceProps> = ({
 }) => {
 	const [dragging, setDragging] = useState(false);
 	const [currentPosition, setCurrentPosition] = useState({ x: c * pieceSize, y: r * pieceSize });
+	const [lastUpdatedAt, setLastUpatedAt] = useState(Date.now());
+	const [parent, setParent] = useState(null as any);
 	const { setDisableDragging } = useContext(ViewportContext);
 
 	const handleDragStart = (event: FederatedPointerEvent) => {
+		if (dragging) {
+			return;
+		}
+
+		const tempParent = event.target?.parent;
+		if (tempParent != null) {
+			setParent(tempParent);
+		}
 		setDragging(true);
 		setDisableDragging(true);
+		const now = Date.now();
+		setLastUpatedAt(now);
 	};
 
 	const handleDragMove = (event: FederatedPointerEvent) => {
-		if (dragging) {
-			const { x, y } = event.getLocalPosition(event.target.parent! as any);
-			setCurrentPosition({ x, y });
+		if (!dragging) {
+			return;
 		}
+
+		const { x, y } = event.getLocalPosition(parent);
+		setCurrentPosition({ x, y });
 	};
 
 	const handleDragEnd = (event: FederatedPointerEvent) => {
+		if (!dragging) {
+			return;
+		}
+
 		setDragging(false);
 		setDisableDragging(false);
-		const { x, y } = event.getLocalPosition(event.target.parent! as any);
+
+		const { x, y } = event.getLocalPosition(parent);
 		setCurrentPosition({ x, y });
 	};
 
@@ -86,7 +105,7 @@ const Piece: React.FC<PieceProps> = ({
 			touchmove={handleDragEnd}
 			touchend={handleDragEnd}
 			touchendoutside={handleDragEnd}
-			zIndex={dragging ? 5000 : 0}
+			zIndex={lastUpdatedAt}
 		>
 
 			<Sprite
@@ -109,11 +128,10 @@ const Piece: React.FC<PieceProps> = ({
 				style={{
 					fill: 'white',
 					fontSize: 25,
-					fontWeight: 'bold',
 				} as TextStyle}
 				x={0}
 				y={0}
-				scale={0.1}
+				scale={0.2}
 			/>
 			<Graphics
 				width={pieceSize}

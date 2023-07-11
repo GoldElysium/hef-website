@@ -1,7 +1,8 @@
 /* eslint-disable react/no-array-index-key */
-import React from 'react';
+import React, { useCallback } from 'react';
+import * as PIXI from 'pixi.js';
 import {
-	Container,
+	Container, Graphics,
 } from '@pixi/react';
 import { Texture } from 'pixi.js';
 import Piece from './Piece';
@@ -28,6 +29,17 @@ const Puzzle: React.FC<PuzzleProps> = ({
 	const puzzlePieces: JSX.Element[][] = [];
 	const newPuzzlePieces: JSX.Element[] = [];
 
+	const drawPuzzleContainer = useCallback((g: PIXI.Graphics) => {
+		g.lineStyle(2, 0xffffff);
+
+		g.drawRect(
+			0,
+			0,
+			width,
+			height,
+		);
+	}, [height, width]);
+
 	for (let r = 0; r < numRows; r++) {
 		const row: JSX.Element[] = [];
 		for (let c = 0; c < numCols; c++) {
@@ -50,16 +62,15 @@ const Puzzle: React.FC<PuzzleProps> = ({
 
 	return (
 		<Container x={x} y={y} sortableChildren>
+			<Graphics
+				width={width}
+				height={height}
+				draw={(g) => {
+					g.clear();
+					drawPuzzleContainer(g);
+				}}
+			/>
 			{newPuzzlePieces}
-			{/* {puzzlePieces.map((row, r) => (
-				<Container key={`row-${r}`}>
-					{row.map((piece, c) => (
-						<Container key={`piece-${r}-${c}`}>
-							{piece}
-						</Container>
-					))}
-				</Container>
-			))} */}
 		</Container>
 	);
 };

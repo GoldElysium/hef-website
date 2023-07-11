@@ -54,18 +54,8 @@ export default function PixiPuzzle({ project, stageSize }: IProps) {
 	const x = sidebarWidth + height;
 	const y = stageSize.height / 2 - height / 2;
 
-	const drawPuzzle = useCallback((g: PIXI.Graphics) => {
-		g.lineStyle(2, 0xffffff);
-
-		g.drawRect(
-			x,
-			y,
-			width,
-			height,
-		);
-	}, [height, width, x, y]);
 	const drawColorForSidebar = useCallback((g: PIXI.Graphics) => {
-		g.beginFill(0xff5599);
+		g.beginFill(0xff9955);
 		g.drawRect(0, 0, sidebarWidth, stageSize.height);
 		g.endFill();
 	}, [stageSize]);
@@ -79,14 +69,6 @@ export default function PixiPuzzle({ project, stageSize }: IProps) {
 				disableDragging={disableDragging}
 				app={app}
 			>
-				<Graphics
-					width={viewportWidth}
-					height={stageSize.height}
-					draw={(g) => {
-						g.clear();
-						drawPuzzle(g);
-					}}
-				/>
 				<Sprite
 					image="https://pixijs.io/pixi-react/img/bunny.png"
 					x={sidebarWidth + viewportWidth / 2}
