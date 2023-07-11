@@ -39,7 +39,7 @@ const Puzzle: React.FC<PuzzleProps> = ({
 		if (newCount >= numPieces) {
 			puzzleFinished();
 		}
-	}, []);
+	}, [count]);
 
 	const drawPuzzleContainer = useCallback((g: PIXI.Graphics) => {
 		g.lineStyle(2, 0xffffff);
