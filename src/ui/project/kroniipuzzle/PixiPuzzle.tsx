@@ -1,11 +1,14 @@
 'use client';
 
-import { Graphics, Sprite, useApp } from '@pixi/react';
+import {
+	Graphics, Sprite, useApp, Text,
+} from '@pixi/react';
 import { Project } from 'types/payload-types';
 import {
 	useCallback, useEffect, useMemo, useState,
 } from 'react';
 import * as PIXI from 'pixi.js';
+import { TextStyle } from 'pixi.js';
 import type { StageSize } from './PixiWrapper';
 import Viewport from './pixi/Viewport';
 import Sidebar from './pixi/Sidebar';
@@ -14,6 +17,7 @@ import Modal from './pixi/Modal';
 import Puzzle from './puzzle/Puzzle';
 import ViewportContext from './providers/ViewportContext';
 import PuzzleCompleteModal from './pixi/PuzzleCompleteModal';
+import PieceDisplay from './pixi/PieceDisplay';
 
 interface IProps {
 	project: Omit<Project, 'flags' | 'devprops'> & {
@@ -32,6 +36,7 @@ export default function PixiPuzzle({ project, stageSize }: IProps) {
 	const [showModal, setShowModal] = useState(false);
 	const [showPuzzleCompleteModal, setShowPuzzleCompleteModal] = useState(false);
 	const [disableDragging, setDisableDragging] = useState(false);
+	const [selectedPiece, setSelectedPiece] = useState(null as any);
 
 	const viewportContextMemo = useMemo(
 		() => (
@@ -61,6 +66,11 @@ export default function PixiPuzzle({ project, stageSize }: IProps) {
 		g.drawRect(0, 0, sidebarWidth, stageSize.height);
 		g.endFill();
 	}, [stageSize]);
+	const drawColorForPieceDisplay = useCallback((g: PIXI.Graphics) => {
+		g.beginFill(0xdd8866);
+		g.drawRect(0, stageSize.height - sidebarWidth, sidebarWidth, sidebarWidth);
+		g.endFill();
+	}, [stageSize]);
 
 	return (
 		<ViewportContext.Provider value={viewportContextMemo}>
@@ -83,6 +93,7 @@ export default function PixiPuzzle({ project, stageSize }: IProps) {
 					width={width}
 					height={height}
 					puzzleFinished={() => setShowPuzzleCompleteModal(true)}
+					onPieceSelected={(piece: any) => setSelectedPiece(piece)}
 				/>
 			</Viewport>
 			{/* @ts-ignore */}
@@ -106,6 +117,32 @@ export default function PixiPuzzle({ project, stageSize }: IProps) {
 					y={270}
 					anchor={{ x: 0.5, y: 0.5 }}
 				/>
+				{/* @ts-ignore */}
+				<PieceDisplay
+					width={sidebarWidth}
+					height={sidebarWidth}
+					app={app}
+				>
+					<Graphics
+						width={sidebarWidth}
+						height={sidebarWidth}
+						draw={drawColorForPieceDisplay}
+					/>
+
+					<Text
+						text={selectedPiece?.message}
+						style={{
+							align: 'center',
+							fill: 'white',
+							fontSize: 25,
+							wordWrap: true,
+							wordWrapWidth: sidebarWidth,
+						} as TextStyle}
+						x={0}
+						y={stageSize.height - sidebarWidth}
+						scale={1}
+					/>
+				</PieceDisplay>
 			</Sidebar>
 
 			{showModal && (

@@ -6,7 +6,7 @@ import {
 	Container, Graphics, Sprite, Text,
 } from '@pixi/react';
 import {
-	FederatedPointerEvent, Rectangle, TextStyle, Texture,
+	FederatedPointerEvent, TextStyle, Texture,
 } from 'pixi.js';
 import ViewportContext from '../providers/ViewportContext';
 
@@ -18,6 +18,8 @@ interface PieceProps {
 	pieceSize: number;
 	texture: Texture;
 	incrementCountAndCheckPuzzleFinished: () => void;
+	setSelectedPiece: (piece: any) => void;
+	message?: string;
 }
 
 // eslint-disable-next-line react/function-component-definition
@@ -29,6 +31,8 @@ const Piece: React.FC<PieceProps> = ({
 	pieceSize,
 	texture,
 	incrementCountAndCheckPuzzleFinished,
+	setSelectedPiece,
+	message,
 }) => {
 	function getInitialPosX(): number {
 		return Math.floor(Math.random() * pieceSize * numCols);
@@ -60,10 +64,12 @@ const Piece: React.FC<PieceProps> = ({
 		// todo: check this logic. probably too contrived to work consistently for all resolutions
 		const xx = Math.abs(x - targetPosition.x);
 		const yy = Math.abs(y - targetPosition.y);
-		return xx < 500 && yy < 500;
+		return xx < 100 && yy < 100;
 	}
 
 	const handleDragStart = (event: FederatedPointerEvent) => {
+		setSelectedPiece({ message });
+
 		if (dragging || settled) {
 			return;
 		}
@@ -125,15 +131,7 @@ const Piece: React.FC<PieceProps> = ({
 		>
 
 			<Sprite
-				texture={new Texture(
-					texture.baseTexture,
-					new Rectangle(
-						c * (texture.width / numCols),
-						r * (texture.height / numRows),
-						texture.width / numCols,
-						texture.height / numRows,
-					),
-				)}
+				texture={texture}
 				x={0}
 				y={0}
 				width={pieceSize}
