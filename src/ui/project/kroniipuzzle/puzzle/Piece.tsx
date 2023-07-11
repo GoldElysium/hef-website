@@ -90,7 +90,8 @@ const Piece: React.FC<PieceProps> = ({
 		}
 
 		const { x, y } = event.getLocalPosition(parent);
-		setCurrentPosition({ x, y });
+		// todo: get position accounting for drag start position
+		setCurrentPosition({ x: x - pieceSize / 2, y: y - pieceSize / 2 });
 	};
 
 	const handleDragEnd = (event: FederatedPointerEvent) => {
@@ -106,7 +107,8 @@ const Piece: React.FC<PieceProps> = ({
 			setLastUpatedAt(0);
 			incrementCountAndCheckPuzzleFinished();
 		} else {
-			setCurrentPosition({ x, y });
+			// todo: get position accounting for drag start position
+			setCurrentPosition({ x: x - pieceSize / 2, y: y - pieceSize / 2 });
 		}
 
 		setDragging(false);
