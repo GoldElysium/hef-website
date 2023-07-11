@@ -13,6 +13,7 @@ import Button from './pixi/Button';
 import Modal from './pixi/Modal';
 import Puzzle from './puzzle/Puzzle';
 import ViewportContext from './providers/ViewportContext';
+import PuzzleCompleteModal from './pixi/PuzzleCompleteModal';
 
 interface IProps {
 	project: Omit<Project, 'flags' | 'devprops'> & {
@@ -29,6 +30,7 @@ export default function PixiPuzzle({ project, stageSize }: IProps) {
 	const app = useApp();
 
 	const [showModal, setShowModal] = useState(false);
+	const [showPuzzleCompleteModal, setShowPuzzleCompleteModal] = useState(false);
 	const [disableDragging, setDisableDragging] = useState(false);
 
 	const viewportContextMemo = useMemo(
@@ -45,7 +47,7 @@ export default function PixiPuzzle({ project, stageSize }: IProps) {
 	useEffect(() => {
 		// @ts-ignore
 		globalThis.__PIXI_APP__ = app;
-	}, []);
+	}, [app]);
 
 	const sidebarWidth = 400;
 	const viewportWidth = stageSize.width - sidebarWidth;
@@ -80,6 +82,7 @@ export default function PixiPuzzle({ project, stageSize }: IProps) {
 					y={y}
 					width={width}
 					height={height}
+					puzzleFinished={() => setShowPuzzleCompleteModal(true)}
 				/>
 			</Viewport>
 			{/* @ts-ignore */}
@@ -111,8 +114,17 @@ export default function PixiPuzzle({ project, stageSize }: IProps) {
 					y={0}
 					width={stageSize.width}
 					height={stageSize.height}
-					label="Dismiss"
 					onClick={() => { setShowModal(false); }}
+				/>
+			)}
+
+			{showPuzzleCompleteModal && (
+				<PuzzleCompleteModal
+					x={0}
+					y={0}
+					width={stageSize.width}
+					height={stageSize.height}
+					onClick={() => { setShowPuzzleCompleteModal(false); }}
 				/>
 			)}
 		</ViewportContext.Provider>

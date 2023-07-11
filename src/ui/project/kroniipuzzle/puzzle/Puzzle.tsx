@@ -1,5 +1,5 @@
 /* eslint-disable react/no-array-index-key */
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import * as PIXI from 'pixi.js';
 import {
 	Container, Graphics,
@@ -12,15 +12,17 @@ interface PuzzleProps {
 	y: number;
 	width: number;
 	height: number;
+	puzzleFinished: () => void;
 }
 
 // eslint-disable-next-line react/function-component-definition
 const Puzzle: React.FC<PuzzleProps> = ({
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	x, y, width, height,
+	x, y, width, height, puzzleFinished,
 }) => {
-	const numCols = 36;
-	const numRows = 18;
+	const numCols = 18;
+	const numRows = 9;
+	const numPieces = numCols * numRows;
 	const pieceWidth = width / numCols;
 
 	const imageUrl = '/assets/kroniipuzzle/puzzle.png';
@@ -28,6 +30,16 @@ const Puzzle: React.FC<PuzzleProps> = ({
 
 	const puzzlePieces: JSX.Element[][] = [];
 	const newPuzzlePieces: JSX.Element[] = [];
+
+	const [count, setCount] = useState(0);
+
+	const incrementCountAndCheckPuzzleFinished = useCallback(() => {
+		const newCount = count + 1;
+		setCount(newCount);
+		if (newCount >= numPieces) {
+			puzzleFinished();
+		}
+	}, []);
 
 	const drawPuzzleContainer = useCallback((g: PIXI.Graphics) => {
 		g.lineStyle(2, 0xffffff);
@@ -52,6 +64,7 @@ const Puzzle: React.FC<PuzzleProps> = ({
 					numRows={numRows}
 					pieceSize={pieceWidth}
 					texture={texture}
+					incrementCountAndCheckPuzzleFinished={incrementCountAndCheckPuzzleFinished}
 				/>
 			);
 			row.push(piece);

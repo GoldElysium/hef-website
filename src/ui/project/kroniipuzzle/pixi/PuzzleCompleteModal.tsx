@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-	Container, Graphics, Sprite, Text,
+	Container, Graphics, Text,
 } from '@pixi/react';
 import { Graphics as PixiGraphics, TextStyle } from 'pixi.js';
 
@@ -9,13 +9,12 @@ interface ModalProps {
 	y: number;
 	width: number;
 	height: number;
-	label?: string;
 	onClick?: () => void;
 }
 
 // eslint-disable-next-line react/function-component-definition
 const Modal: React.FC<ModalProps> = ({
-	x, y, width, height, label, onClick,
+	x, y, width, height, onClick,
 }) => {
 	const handleClick = () => {
 		if (onClick) {
@@ -33,19 +32,11 @@ const Modal: React.FC<ModalProps> = ({
 					g.endFill();
 				}}
 			/>
-			<Sprite
-				image="/assets/kroniipuzzle/puzzle.png"
-				x={width / 2}
-				y={height / 2}
-				width={Math.min(width, height * 2)}
-				height={Math.min(width / 2, height)}
-				anchor={{ x: 0.5, y: 0.5 }}
-			/>
 			<Text
-				text={label}
+				text="Happy 2 Year Anniversary, Kronii!"
 				style={{
 					fill: 'white',
-					fontSize: 18,
+					fontSize: 30,
 					fontWeight: 'bold',
 				} as TextStyle}
 				anchor={[0.5, 0.5]}

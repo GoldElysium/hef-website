@@ -17,11 +17,18 @@ interface PieceProps {
 	numRows: number;
 	pieceSize: number;
 	texture: Texture;
+	incrementCountAndCheckPuzzleFinished: () => void;
 }
 
 // eslint-disable-next-line react/function-component-definition
 const Piece: React.FC<PieceProps> = ({
-	c, r, numCols, numRows, pieceSize, texture,
+	c,
+	r,
+	numCols,
+	numRows,
+	pieceSize,
+	texture,
+	incrementCountAndCheckPuzzleFinished,
 }) => {
 	function getInitialPosX(): number {
 		return Math.floor(Math.random() * pieceSize * numCols);
@@ -53,7 +60,7 @@ const Piece: React.FC<PieceProps> = ({
 		// todo: check this logic. probably too contrived to work consistently for all resolutions
 		const xx = Math.abs(x - targetPosition.x);
 		const yy = Math.abs(y - targetPosition.y);
-		return xx < 10 && yy < 10;
+		return xx < 500 && yy < 500;
 	}
 
 	const handleDragStart = (event: FederatedPointerEvent) => {
@@ -85,18 +92,19 @@ const Piece: React.FC<PieceProps> = ({
 			return;
 		}
 
-		setDragging(false);
-		setDisableDragging(false);
-
 		const { x, y } = event.getLocalPosition(parent);
 
 		if (isNearTargetPosition(x, y)) {
 			setSettled(true);
 			setCurrentPosition({ x: targetPosition.x, y: targetPosition.y });
 			setLastUpatedAt(0);
+			incrementCountAndCheckPuzzleFinished();
 		} else {
 			setCurrentPosition({ x, y });
 		}
+
+		setDragging(false);
+		setDisableDragging(false);
 	};
 
 	return (
@@ -145,7 +153,8 @@ const Piece: React.FC<PieceProps> = ({
 				width={pieceSize}
 				height={pieceSize}
 				draw={(g) => {
-					g.lineStyle(0.2, 0xffffff);
+					g.clear();
+					g.lineStyle(settled ? 0.2 : 2, 0xffffff);
 					g.drawRect(
 						0,
 						0,
