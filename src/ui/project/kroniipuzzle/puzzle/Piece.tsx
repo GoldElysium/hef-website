@@ -23,14 +23,41 @@ interface PieceProps {
 const Piece: React.FC<PieceProps> = ({
 	c, r, numCols, numRows, pieceSize, texture,
 }) => {
+	function getInitialPosX(): number {
+		return Math.floor(Math.random() * pieceSize * numCols);
+	}
+
+	function getInitialPosY(): number {
+		return Math.floor(Math.random() * pieceSize * numRows);
+	}
+
+	function extrapolatePos(index: number): number {
+		return index * pieceSize;
+	}
+
 	const [dragging, setDragging] = useState(false);
-	const [currentPosition, setCurrentPosition] = useState({ x: c * pieceSize, y: r * pieceSize });
+	const [currentPosition, setCurrentPosition] = useState({
+		x: getInitialPosX(),
+		y: getInitialPosY(),
+	});
+	const [targetPosition, setTargetPosition] = useState({
+		x: extrapolatePos(c),
+		y: extrapolatePos(r),
+	});
 	const [lastUpdatedAt, setLastUpatedAt] = useState(Date.now());
 	const [parent, setParent] = useState(null as any);
 	const { setDisableDragging } = useContext(ViewportContext);
+	const [settled, setSettled] = useState(false);
+
+	function isNearTargetPosition(x: number, y: number): boolean {
+		// todo: check this logic. probably too contrived to work consistently for all resolutions
+		const xx = Math.abs(x - targetPosition.x);
+		const yy = Math.abs(y - targetPosition.y);
+		return xx < 10 && yy < 10;
+	}
 
 	const handleDragStart = (event: FederatedPointerEvent) => {
-		if (dragging) {
+		if (dragging || settled) {
 			return;
 		}
 
@@ -62,34 +89,15 @@ const Piece: React.FC<PieceProps> = ({
 		setDisableDragging(false);
 
 		const { x, y } = event.getLocalPosition(parent);
-		setCurrentPosition({ x, y });
+
+		if (isNearTargetPosition(x, y)) {
+			setSettled(true);
+			setCurrentPosition({ x: targetPosition.x, y: targetPosition.y });
+			setLastUpatedAt(0);
+		} else {
+			setCurrentPosition({ x, y });
+		}
 	};
-
-	function getInitialPosX(): number {
-		// TODO
-		return 0;
-	}
-
-	function getInitialPosY(): number {
-		// TODO
-		return 0;
-	}
-
-	function extrapolatePosX(index: number): number {
-		// TODO
-		return 0;
-	}
-
-	function extrapolatePosY(index: number): number {
-		// TODO
-		return 0;
-	}
-
-	const targetPosX = extrapolatePosX(c);
-	const targetPosY = extrapolatePosY(r);
-
-	const currentPosX = getInitialPosX();
-	const currentPosY = getInitialPosY();
 
 	return (
 		<Container
