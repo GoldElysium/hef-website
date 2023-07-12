@@ -12,10 +12,9 @@ interface ModalProps {
 	onClick?: () => void;
 }
 
-// eslint-disable-next-line react/function-component-definition
-const Modal: React.FC<ModalProps> = ({
+export default function Modal({
 	x, y, width, height, onClick,
-}) => {
+}: ModalProps) {
 	const handleClick = () => {
 		if (onClick) {
 			onClick();
@@ -23,7 +22,7 @@ const Modal: React.FC<ModalProps> = ({
 	};
 
 	return (
-		<Container interactive pointerdown={handleClick} x={x} y={y}>
+		<Container eventMode={onClick ? 'static' : 'auto'} pointerdown={handleClick} x={x} y={y}>
 			<Graphics
 				draw={(g: PixiGraphics) => {
 					g.clear();
@@ -45,6 +44,4 @@ const Modal: React.FC<ModalProps> = ({
 			/>
 		</Container>
 	);
-};
-
-export default Modal;
+}

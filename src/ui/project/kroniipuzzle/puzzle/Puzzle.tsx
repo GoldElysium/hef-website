@@ -31,7 +31,7 @@ export default function Puzzle({
 	const numPieces = numCols * numRows;
 	const pieceWidth = width / numCols;
 
-	const newPuzzlePieces: JSX.Element[] = [];
+	const puzzlePieces: JSX.Element[] = [];
 
 	const [count, setCount] = useState(0);
 
@@ -53,6 +53,7 @@ export default function Puzzle({
 			height,
 		);
 	}, [height, width]);
+
 	useEffect(() => {
 		PIXI.Assets.loadBundle('puzzle')
 			.then((loadedBundle) => {
@@ -66,10 +67,6 @@ export default function Puzzle({
 	}, []);
 
 	if (!assetBundle || !piecesBundle) return null;
-
-	if (submissions.length === 0) {
-		return null;
-	}
 
 	for (let r = 0; r < numRows; r++) {
 		for (let c = 0; c < numCols; c++) {
@@ -112,7 +109,7 @@ export default function Puzzle({
 			if (!piece) {
 				return null;
 			}
-			newPuzzlePieces.push(piece);
+			puzzlePieces.push(piece);
 		}
 	}
 
@@ -126,7 +123,7 @@ export default function Puzzle({
 					drawPuzzleContainer(g);
 				}}
 			/>
-			{newPuzzlePieces}
+			{puzzlePieces}
 		</Container>
 	);
 }

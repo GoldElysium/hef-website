@@ -4,18 +4,17 @@ import { Graphics as PixiGraphics } from 'pixi.js';
 import Button from './Button';
 
 interface SidebarProps {
-	x: number;
-	y: number;
+	x?: number;
+	y?: number;
 	width: number;
 	height: number;
 	setShowModal: (x: boolean) => void;
 	children?: React.ReactNode;
 }
 
-// eslint-disable-next-line react/function-component-definition
-const Sidebar: React.FC<SidebarProps> = ({
+export default function Sidebar({
 	x, y, width, height, setShowModal, children,
-}) => {
+}: SidebarProps) {
 	const drawColorForSidebar = useCallback((g: PixiGraphics) => {
 		g.clear();
 		g.beginFill(0xff9955);
@@ -39,6 +38,4 @@ const Sidebar: React.FC<SidebarProps> = ({
 			/>
 		</Container>
 	);
-};
-
-export default Sidebar;
+}

@@ -11,10 +11,9 @@ interface ButtonProps {
 	onClick?: () => void;
 }
 
-// eslint-disable-next-line react/function-component-definition
-const Button: React.FC<ButtonProps> = ({
+export default function Button({
 	x, y, width, height, label, onClick,
-}) => {
+}: ButtonProps) {
 	const handleClick = () => {
 		if (onClick) {
 			onClick();
@@ -22,7 +21,7 @@ const Button: React.FC<ButtonProps> = ({
 	};
 
 	return (
-		<Container interactive pointerdown={handleClick} x={x} y={y}>
+		<Container eventMode={onClick ? 'static' : 'auto'} pointerdown={handleClick} x={x} y={y}>
 			<Graphics
 				draw={(g: PixiGraphics) => {
 					g.clear();
@@ -44,6 +43,4 @@ const Button: React.FC<ButtonProps> = ({
 			/>
 		</Container>
 	);
-};
-
-export default Button;
+}

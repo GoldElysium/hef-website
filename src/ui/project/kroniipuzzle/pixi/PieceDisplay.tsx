@@ -6,18 +6,17 @@ import {
 import PieceInfo from '../puzzle/PieceInfo';
 
 interface PieceDisplayProps {
-	x: number;
-	y: number;
+	x?: number;
+	y?: number;
 	width: number;
 	height: number;
 	pieceInfo?: PieceInfo;
 	children?: React.ReactNode;
 }
 
-// eslint-disable-next-line react/function-component-definition
-const PieceDisplay: React.FC<PieceDisplayProps> = ({
+export default function PieceDisplay({
 	x, y, width, height, pieceInfo, children,
-}) => {
+}: PieceDisplayProps) {
 	const drawColorForPieceDisplay = useCallback((g: PixiGraphics) => {
 		g.clear();
 		g.beginFill(0xdd8866);
@@ -73,6 +72,4 @@ ${pieceInfo?.message?.favoriteMoment}
 			{children}
 		</Container>
 	);
-};
-
-export default PieceDisplay;
+}

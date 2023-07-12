@@ -1,17 +1,13 @@
 'use client';
 
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useContext, useState } from 'react';
+import { Container, Sprite, Text } from '@pixi/react';
 import {
-	Container, Sprite, Text,
-} from '@pixi/react';
-import {
-	FederatedPointerEvent, TextStyle, Texture, Sprite as PixiSprite,
+	FederatedPointerEvent, Sprite as PixiSprite, TextStyle, Texture,
 } from 'pixi.js';
 import ViewportContext from '../providers/ViewportContext';
 import Message from './Message';
 import PieceInfo from './PieceInfo';
-import SmoothGraphics from '../pixi/SmoothGraphics';
 
 interface PieceProps {
 	c: number;
@@ -56,6 +52,7 @@ const Piece: React.FC<PieceProps> = ({
 		x: getInitialPosX(),
 		y: getInitialPosY(),
 	});
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [targetPosition, setTargetPosition] = useState({
 		x: extrapolatePos(c),
 		y: extrapolatePos(r),
@@ -64,6 +61,7 @@ const Piece: React.FC<PieceProps> = ({
 	const [parent, setParent] = useState(null as any);
 	const { setDisableDragging } = useContext(ViewportContext);
 	const [settled, setSettled] = useState(false);
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [isRead, setIsRead] = useState(false);
 
 	function isNearTargetPosition(x: number, y: number): boolean {

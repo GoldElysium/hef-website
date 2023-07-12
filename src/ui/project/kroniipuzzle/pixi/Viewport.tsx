@@ -4,7 +4,7 @@ import * as PIXI from 'pixi.js';
 import { Viewport as PixiViewport } from 'pixi-viewport';
 import type * as React from 'react';
 
-interface PixiComponentViewportProps extends React.FC {
+interface PixiComponentViewportProps {
 	width: number;
 	height: number;
 	disableDragging?: boolean;

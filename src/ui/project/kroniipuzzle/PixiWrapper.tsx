@@ -59,7 +59,7 @@ export default function PixiWrapper({ project, submissions }: IProps) {
 
 	if (!stageSize) return null;
 
-	// TODO: Loading screen?
+	// TODO: Loading screen, loadBundle has a onProgress callback function
 	if (!ready) return null;
 
 	return (

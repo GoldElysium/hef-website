@@ -1,12 +1,8 @@
 'use client';
 
-import {
-	Sprite, useApp,
-} from '@pixi/react';
+import { useApp } from '@pixi/react';
 import { Project } from 'types/payload-types';
-import {
-	useEffect, useMemo, useState,
-} from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { UPDATE_PRIORITY } from 'pixi.js';
 import { addStats } from 'pixi-stats';
 import type { StageSize } from './PixiWrapper';
@@ -71,7 +67,6 @@ export default function PixiPuzzle({ project, stageSize, submissions }: IProps) 
 
 	return (
 		<ViewportContext.Provider value={viewportContextMemo}>
-			{/* @ts-ignore */}
 			<Viewport
 				// TODO: Set world width and height?
 				width={stageSize.width}
@@ -80,12 +75,6 @@ export default function PixiPuzzle({ project, stageSize, submissions }: IProps) 
 				app={app}
 				x={sidebarWidth}
 			>
-				<Sprite
-					image="https://pixijs.io/pixi-react/img/bunny.png"
-					x={sidebarWidth + viewportWidth / 2}
-					y={270}
-					anchor={{ x: 0.5, y: 0.5 }}
-				/>
 				<Puzzle
 					x={x}
 					y={y}
@@ -96,19 +85,11 @@ export default function PixiPuzzle({ project, stageSize, submissions }: IProps) 
 					submissions={submissions}
 				/>
 			</Viewport>
-			{/* @ts-ignore */}
 			<Sidebar
 				width={sidebarWidth}
 				height={stageSize.height}
 				setShowModal={setShowModal}
 			>
-				<Sprite
-					image="https://pixijs.io/pixi-react/img/bunny.png"
-					x={200}
-					y={270}
-					anchor={{ x: 0.5, y: 0.5 }}
-				/>
-				{/* @ts-ignore */}
 				<PieceDisplay
 					y={stageSize.height * 0.25}
 					width={sidebarWidth}
