@@ -141,10 +141,10 @@ const Piece: React.FC<PieceProps> = ({
 
 			<Sprite
 				texture={texture}
-				x={0}
-				y={0}
-				width={pieceSize}
-				height={pieceSize}
+				x={-pieceSize / 2}
+				y={-pieceSize / 2}
+				width={pieceSize * 2}
+				height={pieceSize * 2}
 			/>
 			<Text
 				text={`${c}, ${r}`}
