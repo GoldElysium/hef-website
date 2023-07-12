@@ -6,9 +6,11 @@ import {
 	Container, Graphics, Sprite, Text,
 } from '@pixi/react';
 import {
-	FederatedPointerEvent, TextStyle, Texture,
+	FederatedPointerEvent, TextStyle, Texture, Sprite as PixiSprite,
 } from 'pixi.js';
 import ViewportContext from '../providers/ViewportContext';
+import Message from './Message';
+import PieceInfo from './PieceInfo';
 
 interface PieceProps {
 	c: number;
@@ -18,8 +20,9 @@ interface PieceProps {
 	pieceSize: number;
 	texture: Texture;
 	incrementCountAndCheckPuzzleFinished: () => void;
-	setSelectedPiece: (piece: any) => void;
-	message?: string;
+	setSelectedPiece: (piece: PieceInfo) => void;
+	message?: Message;
+	kronie?: PixiSprite;
 }
 
 // eslint-disable-next-line react/function-component-definition
@@ -33,6 +36,7 @@ const Piece: React.FC<PieceProps> = ({
 	incrementCountAndCheckPuzzleFinished,
 	setSelectedPiece,
 	message,
+	kronie,
 }) => {
 	function getInitialPosX(): number {
 		return Math.floor(Math.random() * pieceSize * numCols);
@@ -69,7 +73,10 @@ const Piece: React.FC<PieceProps> = ({
 	}
 
 	const handleDragStart = (event: FederatedPointerEvent) => {
-		setSelectedPiece({ message });
+		setSelectedPiece({
+			message,
+			sprite: kronie,
+		} as PieceInfo);
 
 		if (dragging || settled) {
 			return;

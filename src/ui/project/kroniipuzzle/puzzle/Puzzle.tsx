@@ -4,8 +4,10 @@ import * as PIXI from 'pixi.js';
 import {
 	Container, Graphics,
 } from '@pixi/react';
-import { Rectangle, Texture } from 'pixi.js';
+import { Rectangle, Texture, Sprite as PixiSprite } from 'pixi.js';
 import Piece from './Piece';
+import Message from './Message';
+import PieceInfo from './PieceInfo';
 
 interface PuzzleProps {
 	x: number;
@@ -13,7 +15,7 @@ interface PuzzleProps {
 	width: number;
 	height: number;
 	puzzleFinished: () => void;
-	onPieceSelected: (piece: any) => void;
+	onPieceSelected: (piece: PieceInfo) => void;
 }
 
 // eslint-disable-next-line react/function-component-definition
@@ -96,10 +98,26 @@ const Puzzle: React.FC<PuzzleProps> = ({
 		return null;
 	}
 
+	const kronieTexture = Texture.from('/assets/kroniipuzzle/kronie.png');
+
 	for (let r = 0; r < numRows; r++) {
 		const row: JSX.Element[] = [];
 		for (let c = 0; c < numCols; c++) {
 			const message = dummyMessages[r * numCols + c];
+
+			const words = message.split(' ');
+			const midpoint = Math.floor(words.length / 2);
+
+			const congrats = words.slice(0, midpoint).join(' ');
+			const congratulations = congrats + (congrats[congrats.length - 1] !== '.' ? '.' : '');
+			const f = words.slice(midpoint).join(' ');
+			const favoriteMoment = f.charAt(0).toUpperCase() + f.slice(1);
+			const kronie = new PixiSprite(kronieTexture);
+
+			// todo: this doesn't stick for some reason. not really an issue though
+			// since the tinting is just for debug purposes
+			kronie.tint = PIXI.utils.rgb2hex([Math.random(), Math.random(), Math.random()]);
+
 			const piece = dummyMessages.length > 0 && (
 				<Piece
 					key={`piece-${r}-${c}`}
@@ -119,7 +137,13 @@ const Puzzle: React.FC<PuzzleProps> = ({
 					)}
 					incrementCountAndCheckPuzzleFinished={incrementCountAndCheckPuzzleFinished}
 					setSelectedPiece={onPieceSelected}
-					message={message}
+					message={{
+						from: `${c}_${r}`,
+						congratulations,
+						favoriteMoment,
+						isRead: false,
+					} as Message}
+					kronie={kronie}
 				/>
 			);
 			if (!piece) {

@@ -1,14 +1,12 @@
 'use client';
 
 import {
-	Graphics, Sprite, useApp, Text,
+	Sprite, useApp,
 } from '@pixi/react';
 import { Project } from 'types/payload-types';
 import {
-	useCallback, useEffect, useMemo, useState,
+	useEffect, useMemo, useState,
 } from 'react';
-import * as PIXI from 'pixi.js';
-import { TextStyle } from 'pixi.js';
 import type { StageSize } from './PixiWrapper';
 import Viewport from './pixi/Viewport';
 import Sidebar from './pixi/Sidebar';
@@ -17,6 +15,7 @@ import Puzzle from './puzzle/Puzzle';
 import ViewportContext from './providers/ViewportContext';
 import PuzzleCompleteModal from './pixi/PuzzleCompleteModal';
 import PieceDisplay from './pixi/PieceDisplay';
+import PieceInfo from './puzzle/PieceInfo';
 
 interface IProps {
 	project: Omit<Project, 'flags' | 'devprops'> & {
@@ -35,7 +34,7 @@ export default function PixiPuzzle({ project, stageSize }: IProps) {
 	const [showModal, setShowModal] = useState(false);
 	const [showPuzzleCompleteModal, setShowPuzzleCompleteModal] = useState(false);
 	const [disableDragging, setDisableDragging] = useState(false);
-	const [selectedPiece, setSelectedPiece] = useState(null as any);
+	const [selectedPiece, setSelectedPiece] = useState<PieceInfo | undefined>(undefined);
 
 	const viewportContextMemo = useMemo(
 		() => (
@@ -60,12 +59,6 @@ export default function PixiPuzzle({ project, stageSize }: IProps) {
 	const x = sidebarWidth + height;
 	const y = stageSize.height / 2 - height / 2;
 
-	const drawColorForPieceDisplay = useCallback((g: PIXI.Graphics) => {
-		g.beginFill(0xdd8866);
-		g.drawRect(0, stageSize.height - sidebarWidth, sidebarWidth, sidebarWidth);
-		g.endFill();
-	}, [stageSize]);
-
 	return (
 		<ViewportContext.Provider value={viewportContextMemo}>
 			{/* @ts-ignore */}
@@ -87,7 +80,7 @@ export default function PixiPuzzle({ project, stageSize }: IProps) {
 					width={width}
 					height={height}
 					puzzleFinished={() => setShowPuzzleCompleteModal(true)}
-					onPieceSelected={(piece: any) => setSelectedPiece(piece)}
+					onPieceSelected={(piece: PieceInfo) => setSelectedPiece(piece)}
 				/>
 			</Viewport>
 			{/* @ts-ignore */}
@@ -104,29 +97,11 @@ export default function PixiPuzzle({ project, stageSize }: IProps) {
 				/>
 				{/* @ts-ignore */}
 				<PieceDisplay
+					y={stageSize.height * 0.25}
 					width={sidebarWidth}
-					height={sidebarWidth}
-				>
-					<Graphics
-						width={sidebarWidth}
-						height={sidebarWidth}
-						draw={drawColorForPieceDisplay}
-					/>
-
-					<Text
-						text={selectedPiece?.message}
-						style={{
-							align: 'center',
-							fill: 'white',
-							fontSize: 25,
-							wordWrap: true,
-							wordWrapWidth: sidebarWidth,
-						} as TextStyle}
-						x={0}
-						y={stageSize.height - sidebarWidth}
-						scale={1}
-					/>
-				</PieceDisplay>
+					height={stageSize.height * 0.75}
+					pieceInfo={selectedPiece}
+				/>
 			</Sidebar>
 
 			{showModal && (
