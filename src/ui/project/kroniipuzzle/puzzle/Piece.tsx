@@ -59,6 +59,7 @@ const Piece: React.FC<PieceProps> = ({
 	const [parent, setParent] = useState(null as any);
 	const { setDisableDragging } = useContext(ViewportContext);
 	const [settled, setSettled] = useState(false);
+	const [isRead, setIsRead] = useState(false);
 
 	function isNearTargetPosition(x: number, y: number): boolean {
 		// todo: check this logic. probably too contrived to work consistently for all resolutions

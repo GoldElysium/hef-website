@@ -61,11 +61,6 @@ export default function PixiPuzzle({ project, stageSize }: IProps) {
 	const x = sidebarWidth + height;
 	const y = stageSize.height / 2 - height / 2;
 
-	const drawColorForSidebar = useCallback((g: PIXI.Graphics) => {
-		g.beginFill(0xff9955);
-		g.drawRect(0, 0, sidebarWidth, stageSize.height);
-		g.endFill();
-	}, [stageSize]);
 	const drawColorForPieceDisplay = useCallback((g: PIXI.Graphics) => {
 		g.beginFill(0xdd8866);
 		g.drawRect(0, stageSize.height - sidebarWidth, sidebarWidth, sidebarWidth);
@@ -98,11 +93,6 @@ export default function PixiPuzzle({ project, stageSize }: IProps) {
 			</Viewport>
 			{/* @ts-ignore */}
 			<Sidebar width={sidebarWidth} height={stageSize.height} app={app}>
-				<Graphics
-					width={sidebarWidth}
-					height={stageSize.height}
-					draw={drawColorForSidebar}
-				/>
 				<Button
 					x={0}
 					y={0}
