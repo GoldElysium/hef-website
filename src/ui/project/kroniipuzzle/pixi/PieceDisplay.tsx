@@ -1,50 +1,34 @@
-import { PixiComponent } from '@pixi/react';
-import type { Application } from 'pixi.js';
-import * as PIXI from 'pixi.js';
-import { Viewport as PixiViewport } from 'pixi-viewport';
-import type * as React from 'react';
+import React, { useCallback } from 'react';
+import { Container, Graphics } from '@pixi/react';
+import { Graphics as PixiGraphics } from 'pixi.js';
 
-interface PixiComponentPieceDisplayProps extends React.FC {
+interface PieceDisplayProps {
+	x: number;
+	y: number;
 	width: number;
 	height: number;
-	app: Application;
 	children?: React.ReactNode;
 }
 
-const PieceDisplay = PixiComponent('PieceDisplay', {
-	create({ width, height, app }: PixiComponentPieceDisplayProps) {
-		if (!('events' in app.renderer)) {
-			// @ts-ignore
-			props.app.renderer.addSystem(PIXI.EventSystem, 'events');
-		}
+// eslint-disable-next-line react/function-component-definition
+const PieceDisplay: React.FC<PieceDisplayProps> = ({
+	x, y, width, height, children,
+}) => {
+	const drawColorForPieceDisplay = useCallback((g: PixiGraphics) => {
+		g.clear();
+		g.beginFill(0xff9955);
+		g.drawRect(0, 0, width, height);
+		g.endFill();
+	}, [width, height]);
 
-		const container = new PixiViewport({
-			screenWidth: width,
-			screenHeight: height,
-			worldWidth: width,
-			worldHeight: height,
-			ticker: app.ticker,
-			events: app.renderer.events,
-		});
-
-		return container;
-	},
-	applyProps(pieceDisplay, _oldProps, _newProps) {
-		const { children: oldChildren, ...oldProps } = _oldProps;
-		const { children: newChildren, ...newProps } = _newProps;
-
-		Object.keys(newProps).forEach((p) => {
-			// @ts-ignore
-			if (oldProps[p] !== newProps[p]) {
-				// @ts-ignore
-				pieceDisplay[p] = newProps[p]; // eslint-disable-line no-param-reassign
-			}
-		});
-	},
-	config: {
-		destroy: true,
-		destroyChildren: true,
-	},
-});
+	return (
+		<Container x={x} y={y}>
+			<Graphics
+				draw={drawColorForPieceDisplay}
+			/>
+			{children}
+		</Container>
+	);
+};
 
 export default PieceDisplay;

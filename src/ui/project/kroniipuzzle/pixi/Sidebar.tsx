@@ -1,26 +1,21 @@
 import React, { useCallback } from 'react';
 import { Container, Graphics } from '@pixi/react';
 import { Graphics as PixiGraphics } from 'pixi.js';
+import Button from './Button';
 
 interface SidebarProps {
 	x: number;
 	y: number;
 	width: number;
 	height: number;
-	onClick?: () => void;
+	setShowModal: (x: boolean) => void;
 	children?: React.ReactNode;
 }
 
 // eslint-disable-next-line react/function-component-definition
 const Sidebar: React.FC<SidebarProps> = ({
-	x, y, width, height, onClick, children,
+	x, y, width, height, setShowModal, children,
 }) => {
-	const handleClick = () => {
-		if (onClick) {
-			onClick();
-		}
-	};
-
 	const drawColorForSidebar = useCallback((g: PixiGraphics) => {
 		g.clear();
 		g.beginFill(0xff9955);
@@ -29,11 +24,19 @@ const Sidebar: React.FC<SidebarProps> = ({
 	}, [width, height]);
 
 	return (
-		<Container interactive pointerdown={handleClick} x={x} y={y}>
+		<Container x={x} y={y}>
 			<Graphics
 				draw={drawColorForSidebar}
 			/>
 			{children}
+			<Button
+				x={0}
+				y={0}
+				width={200}
+				height={100}
+				label="Preview"
+				onClick={() => { setShowModal(true); }}
+			/>
 		</Container>
 	);
 };

@@ -12,7 +12,6 @@ import { TextStyle } from 'pixi.js';
 import type { StageSize } from './PixiWrapper';
 import Viewport from './pixi/Viewport';
 import Sidebar from './pixi/Sidebar';
-import Button from './pixi/Button';
 import Modal from './pixi/Modal';
 import Puzzle from './puzzle/Puzzle';
 import ViewportContext from './providers/ViewportContext';
@@ -92,15 +91,11 @@ export default function PixiPuzzle({ project, stageSize }: IProps) {
 				/>
 			</Viewport>
 			{/* @ts-ignore */}
-			<Sidebar width={sidebarWidth} height={stageSize.height} app={app}>
-				<Button
-					x={0}
-					y={0}
-					width={200}
-					height={100}
-					label="Preview"
-					onClick={() => { setShowModal(true); }}
-				/>
+			<Sidebar
+				width={sidebarWidth}
+				height={stageSize.height}
+				setShowModal={setShowModal}
+			>
 				<Sprite
 					image="https://pixijs.io/pixi-react/img/bunny.png"
 					x={200}
@@ -111,7 +106,6 @@ export default function PixiPuzzle({ project, stageSize }: IProps) {
 				<PieceDisplay
 					width={sidebarWidth}
 					height={sidebarWidth}
-					app={app}
 				>
 					<Graphics
 						width={sidebarWidth}
