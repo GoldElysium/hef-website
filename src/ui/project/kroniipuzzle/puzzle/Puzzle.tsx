@@ -3,10 +3,8 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useCallback, useEffect, useState } from 'react';
 import * as PIXI from 'pixi.js';
-import {
-	Container, Graphics,
-} from '@pixi/react';
-import { Rectangle, Texture, Sprite as PixiSprite } from 'pixi.js';
+import { Sprite as PixiSprite } from 'pixi.js';
+import { Container, Graphics } from '@pixi/react';
 import Piece from './Piece';
 import Message from './Message';
 import PieceInfo from './PieceInfo';
@@ -25,10 +23,11 @@ export default function Puzzle({
 	// @ts-ignore
 	x, y, width, height, puzzleFinished, onPieceSelected, submissions,
 }: PuzzleProps) {
-	const [bundle, setBundle] = useState<null | any>(null);
+	const [assetBundle, setAssetBundle] = useState<null | any>(null);
+	const [piecesBundle, setPiecesBundle] = useState<null | any>(null);
 
-	const numCols = 18;
-	const numRows = 9;
+	const numCols = 36;
+	const numRows = 18;
 	const numPieces = numCols * numRows;
 	const pieceWidth = width / numCols;
 
@@ -57,13 +56,16 @@ export default function Puzzle({
 	useEffect(() => {
 		PIXI.Assets.loadBundle('puzzle')
 			.then((loadedBundle) => {
-				setBundle(loadedBundle);
-				console.log('bg', loadedBundle.background);
-				console.log('bundle', loadedBundle);
+				setAssetBundle(loadedBundle);
+			});
+
+		PIXI.Assets.loadBundle('pieces')
+			.then((loadedBundle) => {
+				setPiecesBundle(loadedBundle);
 			});
 	}, []);
 
-	if (!bundle) return null;
+	if (!assetBundle || !piecesBundle) return null;
 
 	if (submissions.length === 0) {
 		return null;
@@ -81,7 +83,7 @@ export default function Puzzle({
 			const congratulations = congrats + (congrats[congrats.length - 1] !== '.' ? '.' : '');
 			const f = words.slice(midpoint).join(' ');
 			const favoriteMoment = f.charAt(0).toUpperCase() + f.slice(1);
-			const kronie = new PixiSprite(bundle.kronie);
+			const kronie = new PixiSprite(assetBundle.kronie);
 
 			// todo: this doesn't stick for some reason. not really an issue though
 			// since the tinting is just for debug purposes
@@ -95,15 +97,7 @@ export default function Puzzle({
 					numCols={numCols}
 					numRows={numRows}
 					pieceSize={pieceWidth}
-					texture={new Texture(
-						bundle.background.baseTexture,
-						new Rectangle(
-							c * (bundle.background.width / numCols),
-							r * (bundle.background.height / numRows),
-							bundle.background.width / numCols,
-							bundle.background.height / numRows,
-						),
-					)}
+					texture={piecesBundle[`${r}-${c}`]}
 					incrementCountAndCheckPuzzleFinished={incrementCountAndCheckPuzzleFinished}
 					setSelectedPiece={onPieceSelected}
 					message={{

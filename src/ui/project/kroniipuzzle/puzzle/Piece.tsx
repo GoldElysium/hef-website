@@ -154,24 +154,11 @@ const Piece: React.FC<PieceProps> = ({
 					fill: 'white',
 					fontSize: 25,
 				} as TextStyle}
-				x={0}
-				y={0}
+				x={pieceSize / 4}
+				y={pieceSize / 4}
 				scale={0.2}
 			/>
-			<SmoothGraphics
-				width={pieceSize}
-				height={pieceSize}
-				draw={(g) => {
-					g.clear();
-					g.lineStyle(settled ? 0.2 : 2, 0xffffff);
-					g.drawRect(
-						0,
-						0,
-						pieceSize,
-						pieceSize,
-					);
-				}}
-			/>
+
 		</Container>
 	);
 };

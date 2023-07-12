@@ -73,6 +73,7 @@ export default function PixiPuzzle({ project, stageSize, submissions }: IProps) 
 		<ViewportContext.Provider value={viewportContextMemo}>
 			{/* @ts-ignore */}
 			<Viewport
+				// TODO: Set world width and height?
 				width={stageSize.width}
 				height={stageSize.height}
 				disableDragging={disableDragging}

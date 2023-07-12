@@ -26,6 +26,8 @@ export default function PixiWrapper({ project, submissions }: IProps) {
 	const [stageSize, setStageSize] = useState<StageSize | null>(null);
 	const [ready, setReady] = useState(false);
 
+	// TODO: Check if mobile, if so, force landscape and fullscreen like guratanabata.
+
 	// Resize logic
 	useEffect(() => {
 		const onResize = () => {
@@ -49,6 +51,7 @@ export default function PixiWrapper({ project, submissions }: IProps) {
 		(async () => {
 			await PIXI.Assets.init({ manifest: '/assets/kroniipuzzle/manifest.json' });
 			await PIXI.Assets.loadBundle('puzzle');
+			await PIXI.Assets.loadBundle('pieces');
 
 			setReady(true);
 		})();
@@ -61,6 +64,8 @@ export default function PixiWrapper({ project, submissions }: IProps) {
 
 	return (
 		<Stage
+			// eslint-disable-next-line max-len
+			// TODO: If there's a set viewport width + height, then stage size should follow set aspect ratio.
 			width={stageSize.width}
 			height={stageSize.height}
 			options={{
