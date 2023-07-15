@@ -11,6 +11,10 @@ interface State {
 				x: number;
 				y: number;
 			}
+			localPosition: {
+				x: number;
+				y: number;
+			}
 			pieceGroup: string;
 		}
 	}
@@ -28,6 +32,7 @@ interface State {
 
 interface Actions {
 	updatePiecePosition: (key: string) => (newPosition: { x: number; y:number; }) => void;
+	updatePieceLocalPosition: (key: string) => (newPosition: { x: number; y:number; }) => void;
 	updatePieceGroupPosition: (key: string) => (newPosition: { x: number; y:number; }) => void;
 	changePieceGroup: (key: string) => (newGroupKey: string) => void;
 	setCorrect: (key: string) => (val?: boolean) => void;
@@ -48,6 +53,10 @@ const usePuzzleStore = create(devtools(
 						x: -1000,
 						y: -1000,
 					},
+					localPosition: {
+						x: 0,
+						y: 0,
+					},
 					pieceGroup: `${r}-${c}`,
 				};
 				initialState.pieceGroups[`${r}-${c}`] = {
@@ -65,6 +74,9 @@ const usePuzzleStore = create(devtools(
 			...initialState,
 			updatePiecePosition: (key) => (newPos) => set((state) => {
 				state.pieces[key].position = newPos;
+			}),
+			updatePieceLocalPosition: (key) => (newPos) => set((state) => {
+				state.pieces[key].localPosition = newPos;
 			}),
 			updatePieceGroupPosition: (key: string) => (newPos) => set((state) => {
 				state.pieceGroups[key].position = newPos;

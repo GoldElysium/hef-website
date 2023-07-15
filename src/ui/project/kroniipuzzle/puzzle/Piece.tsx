@@ -1,13 +1,8 @@
 'use client';
 
-import {
-	useContext, useEffect, useRef, useState,
-} from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Container, Sprite, Text } from '@pixi/react';
-import {
-	FederatedPointerEvent, Sprite as PixiSprite, TextStyle, Texture,
-} from 'pixi.js';
-import ViewportContext from '../providers/ViewportContext';
+import { Sprite as PixiSprite, TextStyle, Texture } from 'pixi.js';
 import Message from './Message';
 import PieceInfo from './PieceInfo';
 import { COL_COUNT, PIECE_SIZE, ROW_COUNT } from './PuzzleConfig';
@@ -28,7 +23,7 @@ interface PieceProps {
 		- Remove drag handlers
 		- Add click handler to select this piece to show the message
 	- Change currentPosition to position inside pieceGroup container
-	- Position in Zustand store is global, for snapping
+	- On snap, update global and local position in the store
  */
 
 // eslint-disable-next-line react/function-component-definition
@@ -36,34 +31,23 @@ const Piece: React.FC<PieceProps> = ({
 	c,
 	r,
 	texture,
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	incrementCountAndCheckPuzzleFinished,
 	setSelectedPiece,
 	message,
 	kronie,
 }) => {
-	function getInitialPosX(): number {
-		return Math.floor(Math.random() * PIECE_SIZE * COL_COUNT);
-	}
-
-	function getInitialPosY(): number {
-		return Math.floor(Math.random() * PIECE_SIZE * ROW_COUNT);
-	}
-
 	function extrapolatePos(index: number): number {
 		return index * PIECE_SIZE;
 	}
 
-	const [dragging, setDragging] = useState(false);
-	const [currentPosition, setCurrentPosition] = useState({ x: -1000, y: -1000 });
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	const [currentPosition, setCurrentPosition] = useState({ x: 0, y: 0 });
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [targetPosition, setTargetPosition] = useState({
 		x: extrapolatePos(c),
 		y: extrapolatePos(r),
 	});
-	const [lastUpdatedAt, setLastUpdatedAt] = useState(Date.now());
-	const [parent, setParent] = useState(null as any);
-	const { setDisableDragging } = useContext(ViewportContext);
-	const [settled, setSettled] = useState(false);
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [isRead, setIsRead] = useState(false);
 
@@ -80,12 +64,12 @@ const Piece: React.FC<PieceProps> = ({
 	// Set initial position in store
 	useEffect(() => {
 		const initialPosition = {
-			x: getInitialPosX(),
-			y: getInitialPosY(),
+			x: 0,
+			y: 0,
 		};
 
 		setCurrentPosition(initialPosition);
-		updatePiecePosition(initialPosition);
+		// updatePiecePosition(initialPosition);
 	}, []);
 
 	// Subscribe to all side pieces
@@ -119,6 +103,7 @@ const Piece: React.FC<PieceProps> = ({
 		return deltaX < 100 && deltaY < 100;
 	}
 
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	function isNearSidePiece(x: number, y: number): boolean {
 		let isNear = false;
 
@@ -131,78 +116,19 @@ const Piece: React.FC<PieceProps> = ({
 		return isNear;
 	}
 
-	const handleDragStart = (event: FederatedPointerEvent) => {
-		setSelectedPiece({
-			message,
-			sprite: kronie,
-		} as PieceInfo);
-
-		if (dragging || settled) {
-			return;
-		}
-
-		const tempParent = event.target?.parent;
-		if (tempParent != null) {
-			setParent(tempParent);
-		}
-		setDragging(true);
-		setDisableDragging(true);
-		const now = Date.now();
-		setLastUpdatedAt(now);
-	};
-
-	const handleDragMove = (event: FederatedPointerEvent) => {
-		if (!dragging) {
-			return;
-		}
-
-		const { x, y } = event.getLocalPosition(parent);
-		// todo: get position accounting for drag start position
-		setCurrentPosition({ x: x - PIECE_SIZE / 2, y: y - PIECE_SIZE / 2 });
-	};
-
-	const handleDragEnd = (event: FederatedPointerEvent) => {
-		if (!dragging) {
-			return;
-		}
-
-		const { x, y } = event.getLocalPosition(parent);
-
-		if (isNearPosition(x, y, targetPosition.x, targetPosition.y)) {
-			setSettled(true);
-			const newPos = { x: targetPosition.x, y: targetPosition.y };
-			setCurrentPosition(newPos);
-			updatePiecePosition(newPos);
-			setLastUpdatedAt(0);
-			incrementCountAndCheckPuzzleFinished();
-		} else if (isNearSidePiece(x, y)) {
-			//
-		} else {
-			// todo: get position accounting for drag start position
-			const newPos = { x: x - PIECE_SIZE / 2, y: y - PIECE_SIZE / 2 };
-			setCurrentPosition(newPos);
-			updatePiecePosition(newPos);
-		}
-
-		setDragging(false);
-		setDisableDragging(false);
-	};
-
+	// TODO: Something breaks badly when interaction is enabled on pieces, idk what
 	return (
 		<Container
-			x={currentPosition.x ?? c * PIECE_SIZE}
-			y={currentPosition.y ?? r * PIECE_SIZE}
-			eventMode="static"
-			onpointerdown={handleDragStart}
-			onpointermove={handleDragMove}
-			onglobalpointermove={handleDragMove}
-			onpointerup={handleDragEnd}
-			onpointerupoutside={handleDragEnd}
-			touchstart={handleDragEnd}
-			touchmove={handleDragEnd}
-			touchend={handleDragEnd}
-			touchendoutside={handleDragEnd}
-			zIndex={lastUpdatedAt}
+			x={0}
+			y={0}
+			// "auto" means non-interactive, "static" means interactive
+			eventMode="auto"
+			onpointertap={() => {
+				setSelectedPiece({
+					message,
+					sprite: kronie,
+				} as PieceInfo);
+			}}
 		>
 
 			<Sprite

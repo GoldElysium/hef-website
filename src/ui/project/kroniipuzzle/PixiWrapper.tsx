@@ -27,6 +27,7 @@ export interface StageSize {
 export default function PixiWrapper({ project, submissions }: IProps) {
 	const [stageSize, setStageSize] = useState<StageSize | null>(null);
 	const [ready, setReady] = useState(false);
+	const [loadProgress, setLoadProgress] = useState(0);
 	const [orientation, setOrientation] = useState('');
 
 	// TODO: Check if mobile, if so, force landscape and fullscreen like guratanabata.
@@ -68,7 +69,9 @@ export default function PixiWrapper({ project, submissions }: IProps) {
 		(async () => {
 			await PIXI.Assets.init({ manifest: '/assets/kroniipuzzle/manifest.json' });
 			await PIXI.Assets.loadBundle('puzzle');
-			await PIXI.Assets.loadBundle('pieces');
+			await PIXI.Assets.loadBundle('pieces', (progress) => {
+				setLoadProgress(progress * 100);
+			});
 
 			setReady(true);
 		})();
@@ -76,9 +79,19 @@ export default function PixiWrapper({ project, submissions }: IProps) {
 
 	if (!stageSize) return null;
 
-	// TODO: Loading screen, loadBundle has a onProgress callback function
-	if (!ready) return null;
+	// TODO: Proper loading screen
+	if (!ready) {
+		return (
+			<p>
+				Loading...
+				{' '}
+				{loadProgress.toFixed(0)}
+				%
+			</p>
+		);
+	}
 
+	// TODO: Enforce aspect ratio of 16:9
 	return (
 		<>
 			{!OS.desktop && orientation.startsWith('portrait') && (

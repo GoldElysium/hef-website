@@ -1,15 +1,23 @@
 'use client';
 
 import { Container } from '@pixi/react';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { FederatedPointerEvent } from 'pixi.js';
 import usePuzzleStore from './PuzzleStore';
-import { PIECE_SIZE } from './PuzzleConfig';
+import { COL_COUNT, PIECE_SIZE, ROW_COUNT } from './PuzzleConfig';
 import ViewportContext from '../providers/ViewportContext';
 
 interface PieceGroupProps {
 	groupKey: string;
 	pieces: Record<string, JSX.Element>;
+}
+
+function getInitialPosX(): number {
+	return Math.floor(Math.random() * PIECE_SIZE * COL_COUNT);
+}
+
+function getInitialPosY(): number {
+	return Math.floor(Math.random() * PIECE_SIZE * ROW_COUNT);
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -26,6 +34,17 @@ export default function PieceGroup({ groupKey, pieces }: PieceGroupProps) {
 		(state) => [state.updatePieceGroupPosition(groupKey), state.setCorrect(groupKey)],
 	);
 	/* eslint-enable */
+
+	// Set initial position in store
+	useEffect(() => {
+		const initialPosition = {
+			x: getInitialPosX(),
+			y: getInitialPosY(),
+		};
+
+		setCurrentPosition(initialPosition);
+		updatePieceGroupPosition(initialPosition);
+	}, []);
 
 	const handleDragStart = (event: FederatedPointerEvent) => {
 		if (dragging || thisPieceGroup.correct) {
@@ -70,7 +89,7 @@ export default function PieceGroup({ groupKey, pieces }: PieceGroupProps) {
 
 	/* TODO:
 		- On drag end:
-			- Update the position of every piece
+			- Update the global position of every piece
 			- Check every piece if near side piece, if so, snap to that side piece
 			  (What do we do if multiple pieces are close? Since this could cause some nasty
 			  movement for snapping, or the snap distance needs to be significantly lowered)
@@ -94,7 +113,7 @@ export default function PieceGroup({ groupKey, pieces }: PieceGroupProps) {
 			touchendoutside={handleDragEnd}
 			zIndex={lastUpdatedAt}
 		>
-			{/* */}
+			{thisPieceGroup.pieces.map((pieceKey) => pieces[pieceKey])}
 		</Container>
 	);
 }

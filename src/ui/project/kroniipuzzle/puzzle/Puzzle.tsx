@@ -9,6 +9,8 @@ import Piece from './Piece';
 import Message from './Message';
 import PieceInfo from './PieceInfo';
 import { COL_COUNT, PIECE_COUNT, ROW_COUNT } from './PuzzleConfig';
+import usePuzzleStore from './PuzzleStore';
+import PieceGroup from './PieceGroup';
 
 interface PuzzleProps {
 	x: number;
@@ -27,9 +29,11 @@ export default function Puzzle({
 	const [assetBundle, setAssetBundle] = useState<null | any>(null);
 	const [piecesBundle, setPiecesBundle] = useState<null | any>(null);
 
-	const puzzlePieces: JSX.Element[] = [];
+	const puzzlePieces: Record<string, JSX.Element> = {};
 
 	const [count, setCount] = useState(0);
+
+	const pieceGroups = usePuzzleStore((state) => state.pieceGroups);
 
 	const incrementCountAndCheckPuzzleFinished = useCallback(() => {
 		const newCount = count + 1;
@@ -104,7 +108,7 @@ export default function Puzzle({
 			if (!piece) {
 				return null;
 			}
-			puzzlePieces.push(piece);
+			puzzlePieces[`${r}-${c}`] = piece;
 		}
 	}
 
@@ -115,7 +119,13 @@ export default function Puzzle({
 				height={height}
 				draw={drawPuzzleContainer}
 			/>
-			{puzzlePieces}
+			{Object.keys(pieceGroups).map((groupKey) => (
+				<PieceGroup
+					key={groupKey}
+					groupKey={groupKey}
+					pieces={puzzlePieces}
+				/>
+			))}
 		</Container>
 	);
 }
