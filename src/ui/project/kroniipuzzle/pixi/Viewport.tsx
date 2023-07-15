@@ -3,20 +3,24 @@ import type { Application } from 'pixi.js';
 import * as PIXI from 'pixi.js';
 import { Viewport as PixiViewport } from 'pixi-viewport';
 import type * as React from 'react';
+import { MutableRefObject } from 'react';
 
 interface PixiComponentViewportProps {
-	width: number;
-	height: number;
+	width?: number;
+	height?: number;
+	worldWidth?: number;
+	worldHeight?: number;
 	disableDragging?: boolean;
 	app: Application;
 	children?: React.ReactNode;
 	x?: number;
 	y?: number;
+	ref?: MutableRefObject<PixiViewport | null>
 }
 
 const Viewport = PixiComponent('Viewport', {
 	create({
-		width, height, app,
+		width, height, worldWidth, worldHeight, app, ref,
 	}: PixiComponentViewportProps) {
 		if (!('events' in app.renderer)) {
 			// @ts-ignore
@@ -26,9 +30,8 @@ const Viewport = PixiComponent('Viewport', {
 		const viewport = new PixiViewport({
 			screenWidth: width,
 			screenHeight: height,
-			// TODO: Set fixed world width and height
-			worldWidth: width,
-			worldHeight: height,
+			worldWidth: worldWidth ?? width,
+			worldHeight: worldHeight ?? height,
 			ticker: app.ticker,
 			events: app.renderer.events,
 		});
@@ -40,14 +43,52 @@ const Viewport = PixiComponent('Viewport', {
 			.wheel()
 			.bounce()
 			.clamp({ direction: 'all' })
-			.clampZoom({ minScale: 1, maxScale: 4 });
+			.clampZoom({ minScale: 0.2, maxScale: 10 });
+
+		if (ref) {
+			// eslint-disable-next-line no-param-reassign
+			ref.current = viewport;
+		}
 
 		return viewport;
 	},
 	applyProps(viewport, _oldProps, _newProps) {
-		// eslint-disable-next-line @typescript-eslint/naming-convention
-		const { children: oldChildren, disableDragging: _, ...oldProps } = _oldProps;
-		const { children: newChildren, disableDragging, ...newProps } = _newProps;
+		/* eslint-disable @typescript-eslint/naming-convention */
+		const {
+			children: oldChildren,
+			disableDragging: _disableDragging,
+			width: oldWidth,
+			height: oldHeight,
+			worldWidth: oldWorldWidth,
+			worldHeight: oldWorldHeight,
+			ref: _oldRef,
+			...oldProps
+		} = _oldProps;
+		/* eslint-enable */
+		const {
+			children: newChildren,
+			disableDragging,
+			width,
+			height,
+			worldWidth,
+			worldHeight,
+			ref,
+			...newProps
+		} = _newProps;
+
+		if (
+			oldWidth !== width
+			|| oldHeight !== height
+			|| oldWorldWidth !== worldWidth
+			|| oldWorldHeight !== worldHeight
+		) {
+			viewport.resize(
+				width,
+				height,
+				worldWidth ?? width,
+				worldHeight ?? worldHeight,
+			);
+		}
 
 		if (disableDragging) {
 			viewport.plugins.pause('drag');
@@ -62,6 +103,10 @@ const Viewport = PixiComponent('Viewport', {
 				viewport[p] = newProps[p]; // eslint-disable-line no-param-reassign
 			}
 		});
+
+		if (ref) {
+			ref.current = viewport;
+		}
 	},
 	config: {
 		destroy: true,

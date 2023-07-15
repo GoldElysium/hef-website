@@ -1,6 +1,8 @@
 'use client';
 
-import { useContext, useState } from 'react';
+import {
+	useContext, useEffect, useRef, useState,
+} from 'react';
 import { Container, Sprite, Text } from '@pixi/react';
 import {
 	FederatedPointerEvent, Sprite as PixiSprite, TextStyle, Texture,
@@ -8,12 +10,12 @@ import {
 import ViewportContext from '../providers/ViewportContext';
 import Message from './Message';
 import PieceInfo from './PieceInfo';
+import { COL_COUNT, ROW_COUNT } from './PuzzleConfig';
+import usePuzzleStore from './PuzzleStore';
 
 interface PieceProps {
 	c: number;
 	r: number;
-	numCols: number;
-	numRows: number;
 	pieceSize: number;
 	texture: Texture;
 	incrementCountAndCheckPuzzleFinished: () => void;
@@ -26,8 +28,6 @@ interface PieceProps {
 const Piece: React.FC<PieceProps> = ({
 	c,
 	r,
-	numCols,
-	numRows,
 	pieceSize,
 	texture,
 	incrementCountAndCheckPuzzleFinished,
@@ -36,11 +36,11 @@ const Piece: React.FC<PieceProps> = ({
 	kronie,
 }) => {
 	function getInitialPosX(): number {
-		return Math.floor(Math.random() * pieceSize * numCols);
+		return Math.floor(Math.random() * pieceSize * COL_COUNT);
 	}
 
 	function getInitialPosY(): number {
-		return Math.floor(Math.random() * pieceSize * numRows);
+		return Math.floor(Math.random() * pieceSize * ROW_COUNT);
 	}
 
 	function extrapolatePos(index: number): number {
@@ -48,27 +48,81 @@ const Piece: React.FC<PieceProps> = ({
 	}
 
 	const [dragging, setDragging] = useState(false);
-	const [currentPosition, setCurrentPosition] = useState({
-		x: getInitialPosX(),
-		y: getInitialPosY(),
-	});
+	const [currentPosition, setCurrentPosition] = useState({ x: -1000, y: -1000 });
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [targetPosition, setTargetPosition] = useState({
 		x: extrapolatePos(c),
 		y: extrapolatePos(r),
 	});
-	const [lastUpdatedAt, setLastUpatedAt] = useState(Date.now());
+	const [lastUpdatedAt, setLastUpdatedAt] = useState(Date.now());
 	const [parent, setParent] = useState(null as any);
 	const { setDisableDragging } = useContext(ViewportContext);
 	const [settled, setSettled] = useState(false);
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [isRead, setIsRead] = useState(false);
 
-	function isNearTargetPosition(x: number, y: number): boolean {
+	/* eslint-disable @typescript-eslint/no-unused-vars */
+	// Use refs to not trigger re-renders every time these update
+	const thisPiece = usePuzzleStore((state) => state.pieces[`${r}-${c}`]);
+	const pieceLeft = useRef(c !== 0 && usePuzzleStore.getState().pieces[`${r}-${c - 1}`]);
+	const pieceTop = useRef(r !== 0 && usePuzzleStore.getState().pieces[`${r - 1}-${c}`]);
+	const pieceRight = useRef(c !== COL_COUNT - 1 && usePuzzleStore.getState().pieces[`${r}-${c + 1}`]);
+	const pieceBottom = useRef(r !== ROW_COUNT - 1 && usePuzzleStore.getState().pieces[`${r + 1}-${c}`]);
+	const [updatePiecePosition, changePieceGroup] = usePuzzleStore((state) => [state.updatePiecePosition(`${r}-${c}`), state.changePieceGroup(`${r}-${c}`)]);
+	/* eslint-enable */
+
+	// Set initial position in store
+	useEffect(() => {
+		const initialPosition = {
+			x: getInitialPosX(),
+			y: getInitialPosY(),
+		};
+
+		setCurrentPosition(initialPosition);
+		updatePiecePosition(initialPosition);
+	}, []);
+
+	// Subscribe to all side pieces
+	/* eslint-disable react-hooks/rules-of-hooks,no-return-assign */
+	if (c !== 0) {
+		useEffect(() => usePuzzleStore.subscribe(
+			(state) => (pieceLeft.current = state.pieces[`${r}-${c - 1}`]),
+		), []);
+	}
+	if (r !== 0) {
+		useEffect(() => usePuzzleStore.subscribe(
+			(state) => (pieceTop.current = state.pieces[`${r - 1}-${c}`]),
+		), []);
+	}
+	if (c !== COL_COUNT - 1) {
+		useEffect(() => usePuzzleStore.subscribe(
+			(state) => (pieceRight.current = state.pieces[`${r}-${c + 1}`]),
+		), []);
+	}
+	if (r !== ROW_COUNT - 1) {
+		useEffect(() => usePuzzleStore.subscribe(
+			(state) => (pieceBottom.current = state.pieces[`${r + 1}-${c}`]),
+		), []);
+	}
+	/* eslint-enable */
+
+	function isNearPosition(currentX: number, currentY: number, targetX: number, targetY: number) {
 		// todo: check this logic. probably too contrived to work consistently for all resolutions
-		const deltaX = Math.abs(x - targetPosition.x);
-		const deltaY = Math.abs(y - targetPosition.y);
+		const deltaX = Math.abs(currentX - targetX);
+		const deltaY = Math.abs(currentY - targetY);
 		return deltaX < 100 && deltaY < 100;
+	}
+
+	function isNearSidePiece(x: number, y: number): boolean {
+		let isNear = false;
+
+		if (pieceLeft.current
+			&& isNearPosition(x, y, pieceLeft.current.position.x, pieceLeft.current.position.y)) {
+			isNear = true;
+			// TODO: Snap
+		}
+
+		return isNear;
 	}
 
 	const handleDragStart = (event: FederatedPointerEvent) => {
@@ -88,7 +142,7 @@ const Piece: React.FC<PieceProps> = ({
 		setDragging(true);
 		setDisableDragging(true);
 		const now = Date.now();
-		setLastUpatedAt(now);
+		setLastUpdatedAt(now);
 	};
 
 	const handleDragMove = (event: FederatedPointerEvent) => {
@@ -108,14 +162,20 @@ const Piece: React.FC<PieceProps> = ({
 
 		const { x, y } = event.getLocalPosition(parent);
 
-		if (isNearTargetPosition(x, y)) {
+		if (isNearPosition(x, y, targetPosition.x, targetPosition.y)) {
 			setSettled(true);
-			setCurrentPosition({ x: targetPosition.x, y: targetPosition.y });
-			setLastUpatedAt(0);
+			const newPos = { x: targetPosition.x, y: targetPosition.y };
+			setCurrentPosition(newPos);
+			updatePiecePosition(newPos);
+			setLastUpdatedAt(0);
 			incrementCountAndCheckPuzzleFinished();
+		} else if (isNearSidePiece(x, y)) {
+			//
 		} else {
 			// todo: get position accounting for drag start position
-			setCurrentPosition({ x: x - pieceSize / 2, y: y - pieceSize / 2 });
+			const newPos = { x: x - pieceSize / 2, y: y - pieceSize / 2 };
+			setCurrentPosition(newPos);
+			updatePiecePosition(newPos);
 		}
 
 		setDragging(false);

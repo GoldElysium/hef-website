@@ -2,9 +2,12 @@
 
 import { useApp } from '@pixi/react';
 import { Project } from 'types/payload-types';
-import { useEffect, useMemo, useState } from 'react';
+import {
+	useEffect, useMemo, useRef, useState,
+} from 'react';
 import { UPDATE_PRIORITY } from 'pixi.js';
 import { addStats } from 'pixi-stats';
+import type { Viewport as PixiViewport } from 'pixi-viewport';
 import type { StageSize } from './PixiWrapper';
 import Viewport from './pixi/Viewport';
 import Sidebar from './pixi/Sidebar';
@@ -35,6 +38,7 @@ export default function PixiPuzzle({ project, stageSize, submissions }: IProps) 
 	const [showPuzzleCompleteModal, setShowPuzzleCompleteModal] = useState(false);
 	const [disableDragging, setDisableDragging] = useState(false);
 	const [selectedPiece, setSelectedPiece] = useState<PieceInfo | undefined>(undefined);
+	const viewportRef = useRef<PixiViewport | null>(null);
 
 	const viewportContextMemo = useMemo(
 		() => (
@@ -53,11 +57,14 @@ export default function PixiPuzzle({ project, stageSize, submissions }: IProps) 
 	}, [app]);
 
 	const sidebarWidth = 400;
-	const viewportWidth = stageSize.width - sidebarWidth;
-	const width = viewportWidth / 2;
-	const height = width / 2;
-	const x = sidebarWidth + height;
-	const y = stageSize.height / 2 - height / 2;
+	const worldWidth = 3840;
+	const worldHeight = 2160;
+	const puzzleWidth = (worldWidth - sidebarWidth) / 2;
+
+	useEffect(() => {
+		app.renderer.resize(stageSize.width, stageSize.height);
+		viewportRef.current?.fit();
+	}, [stageSize]);
 
 	// ! TODO: REMOVE IN PRODUCTION (And don't forget to remove the dependency)
 	useEffect(() => {
@@ -68,18 +75,20 @@ export default function PixiPuzzle({ project, stageSize, submissions }: IProps) 
 	return (
 		<ViewportContext.Provider value={viewportContextMemo}>
 			<Viewport
-				// TODO: Set world width and height?
 				width={stageSize.width}
 				height={stageSize.height}
+				worldWidth={worldWidth}
+				worldHeight={worldHeight}
 				disableDragging={disableDragging}
 				app={app}
 				x={sidebarWidth}
+				ref={viewportRef}
 			>
 				<Puzzle
-					x={x}
-					y={y}
-					width={width}
-					height={height}
+					x={sidebarWidth + puzzleWidth / 2}
+					y={worldHeight / 2 - worldWidth / 4}
+					width={puzzleWidth}
+					height={puzzleWidth / 2}
 					puzzleFinished={() => setShowPuzzleCompleteModal(true)}
 					onPieceSelected={(piece: PieceInfo) => setSelectedPiece(piece)}
 					submissions={submissions}

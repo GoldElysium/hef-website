@@ -4,6 +4,8 @@ import { Project } from 'types/payload-types';
 import { Stage } from '@pixi/react';
 import { useEffect, useState } from 'react';
 import * as PIXI from 'pixi.js';
+// @ts-ignore
+import OS from 'phaser/src/device/OS';
 import PixiPuzzle from './PixiPuzzle';
 import Message from './puzzle/Message';
 
@@ -25,6 +27,7 @@ export interface StageSize {
 export default function PixiWrapper({ project, submissions }: IProps) {
 	const [stageSize, setStageSize] = useState<StageSize | null>(null);
 	const [ready, setReady] = useState(false);
+	const [orientation, setOrientation] = useState('');
 
 	// TODO: Check if mobile, if so, force landscape and fullscreen like guratanabata.
 
@@ -48,6 +51,20 @@ export default function PixiWrapper({ project, submissions }: IProps) {
 	}, []);
 
 	useEffect(() => {
+		const onOrientationChange = () => {
+			setOrientation(window.screen.orientation.type);
+		};
+
+		onOrientationChange();
+
+		window.addEventListener('orientationchange', onOrientationChange);
+
+		return () => {
+			window.removeEventListener('orientationchange', onOrientationChange);
+		};
+	}, []);
+
+	useEffect(() => {
 		(async () => {
 			await PIXI.Assets.init({ manifest: '/assets/kroniipuzzle/manifest.json' });
 			await PIXI.Assets.loadBundle('puzzle');
@@ -63,16 +80,27 @@ export default function PixiWrapper({ project, submissions }: IProps) {
 	if (!ready) return null;
 
 	return (
-		<Stage
-			// eslint-disable-next-line max-len
-			// TODO: If there's a set viewport width + height, then stage size should follow set aspect ratio.
-			width={stageSize.width}
-			height={stageSize.height}
-			options={{
-				backgroundColor: 0x5599ff,
-			}}
-		>
-			<PixiPuzzle project={project} stageSize={stageSize} submissions={submissions} />
-		</Stage>
+		<>
+			{!OS.desktop && orientation.startsWith('portrait') && (
+				<button
+					className="text-center z-10 min-h-screen min-w-screen h-full w-full bg-black text-white absolute"
+					type="button"
+					onClick={() => {
+						document.documentElement.requestFullscreen().then(() => {
+							window.screen.orientation.lock('landscape');
+						});
+					}}
+				>
+					Click to screen to fullscreen
+				</button>
+			)}
+			<Stage
+				options={{
+					backgroundColor: 0x5599ff,
+				}}
+			>
+				<PixiPuzzle project={project} stageSize={stageSize} submissions={submissions} />
+			</Stage>
+		</>
 	);
 }

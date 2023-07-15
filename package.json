@@ -36,6 +36,7 @@
     "escape-html": "1.0.3",
     "i18next": "^23.2.7",
     "i18next-resources-to-backend": "^1.1.4",
+    "immer": "^10.0.2",
     "lodash": "4.17.21",
     "nanoid": "4.0.2",
     "next": "13.4.8",
@@ -55,7 +56,8 @@
     "slate": "0.94.1",
     "styled-components": "6.0.2",
     "swr": "2.2.0",
-    "webfontloader": "1.6.28"
+    "webfontloader": "1.6.28",
+    "zustand": "^4.3.9"
   },
   "devDependencies": {
     "@commitlint/cli": "17.6.6",

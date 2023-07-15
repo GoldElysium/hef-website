@@ -47,6 +47,9 @@ dependencies:
   i18next-resources-to-backend:
     specifier: ^1.1.4
     version: 1.1.4
+  immer:
+    specifier: ^10.0.2
+    version: 10.0.2
   lodash:
     specifier: 4.17.21
     version: 4.17.21
@@ -107,6 +110,9 @@ dependencies:
   webfontloader:
     specifier: 1.6.28
     version: 1.6.28
+  zustand:
+    specifier: ^4.3.9
+    version: 4.3.9(immer@10.0.2)(react@18.2.0)
 
 devDependencies:
   '@commitlint/cli':
@@ -9091,6 +9097,10 @@ packages:
       queue: 6.0.2
     dev: true
 
+  /immer@10.0.2:
+    resolution: {integrity: sha512-Rx3CqeqQ19sxUtYV9CU911Vhy8/721wRFnJv3REVGWUmoAcIwzifTsdmJte/MV+0/XpM35LZdQMBGkRIoLPwQA==}
+    dev: false
+
   /immer@9.0.21:
     resolution: {integrity: sha512-bc4NBHqOqSfRW7POMkHd51LvClaeMXpm8dx0e8oE2GORbq5aRK7Bxl4FyzVLdGtLmvLKL7BTDBG5ACQm4HWjTA==}
     dev: false
@@ -13702,3 +13712,20 @@ packages:
 
   /zod@3.21.4:
     resolution: {integrity: sha512-m46AKbrzKVzOzs/DZgVnG5H55N1sv1M8qZU3A8RIKbs3mrACDNeIOeilDymVb2HdmP8uwshOCF4uJ8uM9rCqJw==}
+
+  /zustand@4.3.9(immer@10.0.2)(react@18.2.0):
+    resolution: {integrity: sha512-Tat5r8jOMG1Vcsj8uldMyqYKC5IZvQif8zetmLHs9WoZlntTHmIoNM8TpLRY31ExncuUvUOXehd0kvahkuHjDw==}
+    engines: {node: '>=12.7.0'}
+    peerDependencies:
+      immer: '>=9.0'
+      react: '>=16.8'
+    peerDependenciesMeta:
+      immer:
+        optional: true
+      react:
+        optional: true
+    dependencies:
+      immer: 10.0.2
+      react: 18.2.0
+      use-sync-external-store: 1.2.0(react@18.2.0)
+    dev: false

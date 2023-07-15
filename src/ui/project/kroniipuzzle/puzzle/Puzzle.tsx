@@ -8,6 +8,7 @@ import { Container, Graphics } from '@pixi/react';
 import Piece from './Piece';
 import Message from './Message';
 import PieceInfo from './PieceInfo';
+import { COL_COUNT, PIECE_COUNT, ROW_COUNT } from './PuzzleConfig';
 
 interface PuzzleProps {
 	x: number;
@@ -26,10 +27,7 @@ export default function Puzzle({
 	const [assetBundle, setAssetBundle] = useState<null | any>(null);
 	const [piecesBundle, setPiecesBundle] = useState<null | any>(null);
 
-	const numCols = 36;
-	const numRows = 18;
-	const numPieces = numCols * numRows;
-	const pieceWidth = width / numCols;
+	const pieceWidth = width / COL_COUNT;
 
 	const puzzlePieces: JSX.Element[] = [];
 
@@ -38,13 +36,15 @@ export default function Puzzle({
 	const incrementCountAndCheckPuzzleFinished = useCallback(() => {
 		const newCount = count + 1;
 		setCount(newCount);
-		if (newCount >= numPieces) {
+		if (newCount >= PIECE_COUNT) {
 			puzzleFinished();
 		}
 	}, [count]);
 
 	const drawPuzzleContainer = useCallback((g: PIXI.Graphics) => {
+		g.clear();
 		g.lineStyle(2, 0xffffff);
+		console.log('Redrawing container');
 
 		g.drawRect(
 			0,
@@ -68,10 +68,10 @@ export default function Puzzle({
 
 	if (!assetBundle || !piecesBundle) return null;
 
-	for (let r = 0; r < numRows; r++) {
-		for (let c = 0; c < numCols; c++) {
+	for (let r = 0; r < ROW_COUNT; r++) {
+		for (let c = 0; c < COL_COUNT; c++) {
 			// TODO: Remove this type coercion in prod
-			const message = submissions[r * numCols + c] as unknown as string;
+			const message = submissions[r * COL_COUNT + c] as unknown as string;
 
 			const words = message.split(' ');
 			const midpoint = Math.floor(words.length / 2);
@@ -91,8 +91,6 @@ export default function Puzzle({
 					key={`piece-${r}-${c}`}
 					c={c}
 					r={r}
-					numCols={numCols}
-					numRows={numRows}
 					pieceSize={pieceWidth}
 					texture={piecesBundle[`${r}-${c}`]}
 					incrementCountAndCheckPuzzleFinished={incrementCountAndCheckPuzzleFinished}
@@ -118,10 +116,7 @@ export default function Puzzle({
 			<Graphics
 				width={width}
 				height={height}
-				draw={(g) => {
-					g.clear();
-					drawPuzzleContainer(g);
-				}}
+				draw={drawPuzzleContainer}
 			/>
 			{puzzlePieces}
 		</Container>
