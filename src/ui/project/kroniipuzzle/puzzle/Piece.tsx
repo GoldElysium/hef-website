@@ -20,7 +20,6 @@ interface PieceProps {
 
 /* TODO:
 	- Change interaction handlers:
-		- Remove drag handlers
 		- Add click handler to select this piece to show the message
 	- Change currentPosition to position inside pieceGroup container
 	- On snap, update global and local position in the store

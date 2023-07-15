@@ -87,7 +87,7 @@ export default function PieceGroup({ groupKey, pieces }: PieceGroupProps) {
 		setDisableDragging(false);
 	};
 
-	/* TODO:
+	/* TODO: @GoldElysium
 		- On drag end:
 			- Update the global position of every piece
 			- Check every piece if near side piece, if so, snap to that side piece
