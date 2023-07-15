@@ -21,6 +21,7 @@ interface State {
 				y: number;
 			}
 			pieces: string[];
+			correct: boolean;
 		};
 	}
 }
@@ -29,6 +30,7 @@ interface Actions {
 	updatePiecePosition: (key: string) => (newPosition: { x: number; y:number; }) => void;
 	updatePieceGroupPosition: (key: string) => (newPosition: { x: number; y:number; }) => void;
 	changePieceGroup: (key: string) => (newGroupKey: string) => void;
+	setCorrect: (key: string) => (val?: boolean) => void;
 }
 
 // TODO: Persist this data, see https://docs.pmnd.rs/zustand/integrations/persisting-store-data
@@ -54,6 +56,7 @@ const usePuzzleStore = create(devtools(
 						y: -1000,
 					},
 					pieces: [`${r}-${c}`],
+					correct: false,
 				};
 			}
 		}
@@ -78,6 +81,9 @@ const usePuzzleStore = create(devtools(
 				// Merge everything into the other group and delete the old group
 				state.pieceGroups[newGroupKey].pieces.push(...state.pieceGroups[oldGroupKey].pieces);
 				delete state.pieceGroups[oldGroupKey];
+			}),
+			setCorrect: (key) => (val) => set((state) => {
+				state.pieceGroups[key].correct = val ?? true;
 			}),
 		} satisfies State & Actions;
 	}),

@@ -10,13 +10,12 @@ import {
 import ViewportContext from '../providers/ViewportContext';
 import Message from './Message';
 import PieceInfo from './PieceInfo';
-import { COL_COUNT, ROW_COUNT } from './PuzzleConfig';
+import { COL_COUNT, PIECE_SIZE, ROW_COUNT } from './PuzzleConfig';
 import usePuzzleStore from './PuzzleStore';
 
 interface PieceProps {
 	c: number;
 	r: number;
-	pieceSize: number;
 	texture: Texture;
 	incrementCountAndCheckPuzzleFinished: () => void;
 	setSelectedPiece: (piece: PieceInfo) => void;
@@ -24,11 +23,18 @@ interface PieceProps {
 	kronie?: PixiSprite;
 }
 
+/* TODO:
+	- Change interaction handlers:
+		- Remove drag handlers
+		- Add click handler to select this piece to show the message
+	- Change currentPosition to position inside pieceGroup container
+	- Position in Zustand store is global, for snapping
+ */
+
 // eslint-disable-next-line react/function-component-definition
 const Piece: React.FC<PieceProps> = ({
 	c,
 	r,
-	pieceSize,
 	texture,
 	incrementCountAndCheckPuzzleFinished,
 	setSelectedPiece,
@@ -36,15 +42,15 @@ const Piece: React.FC<PieceProps> = ({
 	kronie,
 }) => {
 	function getInitialPosX(): number {
-		return Math.floor(Math.random() * pieceSize * COL_COUNT);
+		return Math.floor(Math.random() * PIECE_SIZE * COL_COUNT);
 	}
 
 	function getInitialPosY(): number {
-		return Math.floor(Math.random() * pieceSize * ROW_COUNT);
+		return Math.floor(Math.random() * PIECE_SIZE * ROW_COUNT);
 	}
 
 	function extrapolatePos(index: number): number {
-		return index * pieceSize;
+		return index * PIECE_SIZE;
 	}
 
 	const [dragging, setDragging] = useState(false);
@@ -152,7 +158,7 @@ const Piece: React.FC<PieceProps> = ({
 
 		const { x, y } = event.getLocalPosition(parent);
 		// todo: get position accounting for drag start position
-		setCurrentPosition({ x: x - pieceSize / 2, y: y - pieceSize / 2 });
+		setCurrentPosition({ x: x - PIECE_SIZE / 2, y: y - PIECE_SIZE / 2 });
 	};
 
 	const handleDragEnd = (event: FederatedPointerEvent) => {
@@ -173,7 +179,7 @@ const Piece: React.FC<PieceProps> = ({
 			//
 		} else {
 			// todo: get position accounting for drag start position
-			const newPos = { x: x - pieceSize / 2, y: y - pieceSize / 2 };
+			const newPos = { x: x - PIECE_SIZE / 2, y: y - PIECE_SIZE / 2 };
 			setCurrentPosition(newPos);
 			updatePiecePosition(newPos);
 		}
@@ -184,8 +190,8 @@ const Piece: React.FC<PieceProps> = ({
 
 	return (
 		<Container
-			x={currentPosition.x ?? c * pieceSize}
-			y={currentPosition.y ?? r * pieceSize}
+			x={currentPosition.x ?? c * PIECE_SIZE}
+			y={currentPosition.y ?? r * PIECE_SIZE}
 			eventMode="static"
 			onpointerdown={handleDragStart}
 			onpointermove={handleDragMove}
@@ -201,10 +207,10 @@ const Piece: React.FC<PieceProps> = ({
 
 			<Sprite
 				texture={texture}
-				x={-pieceSize / 2}
-				y={-pieceSize / 2}
-				width={pieceSize * 2}
-				height={pieceSize * 2}
+				x={-PIECE_SIZE / 2}
+				y={-PIECE_SIZE / 2}
+				width={PIECE_SIZE * 2}
+				height={PIECE_SIZE * 2}
 			/>
 			<Text
 				text={`${c}, ${r}`}
@@ -212,8 +218,8 @@ const Piece: React.FC<PieceProps> = ({
 					fill: 'white',
 					fontSize: 25,
 				} as TextStyle}
-				x={pieceSize / 4}
-				y={pieceSize / 4}
+				x={PIECE_SIZE / 4}
+				y={PIECE_SIZE / 4}
 				scale={0.2}
 			/>
 

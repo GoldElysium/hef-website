@@ -18,6 +18,9 @@ import PuzzleCompleteModal from './pixi/PuzzleCompleteModal';
 import PieceDisplay from './pixi/PieceDisplay';
 import PieceInfo from './puzzle/PieceInfo';
 import Message from './puzzle/Message';
+import {
+	PUZZLE_WIDTH, SIDEBAR_WIDTH, WORLD_HEIGHT, WORLD_WIDTH,
+} from './puzzle/PuzzleConfig';
 
 interface IProps {
 	project: Omit<Project, 'flags' | 'devprops'> & {
@@ -56,11 +59,6 @@ export default function PixiPuzzle({ project, stageSize, submissions }: IProps) 
 		globalThis.__PIXI_APP__ = app;
 	}, [app]);
 
-	const sidebarWidth = 400;
-	const worldWidth = 3840;
-	const worldHeight = 2160;
-	const puzzleWidth = (worldWidth - sidebarWidth) / 2;
-
 	useEffect(() => {
 		app.renderer.resize(stageSize.width, stageSize.height);
 		viewportRef.current?.fit();
@@ -77,31 +75,31 @@ export default function PixiPuzzle({ project, stageSize, submissions }: IProps) 
 			<Viewport
 				width={stageSize.width}
 				height={stageSize.height}
-				worldWidth={worldWidth}
-				worldHeight={worldHeight}
+				worldWidth={WORLD_WIDTH}
+				worldHeight={WORLD_HEIGHT}
 				disableDragging={disableDragging}
 				app={app}
-				x={sidebarWidth}
+				x={SIDEBAR_WIDTH}
 				ref={viewportRef}
 			>
 				<Puzzle
-					x={sidebarWidth + puzzleWidth / 2}
-					y={worldHeight / 2 - worldWidth / 4}
-					width={puzzleWidth}
-					height={puzzleWidth / 2}
+					x={SIDEBAR_WIDTH + PUZZLE_WIDTH / 2}
+					y={WORLD_HEIGHT / 2 - WORLD_WIDTH / 4}
+					width={PUZZLE_WIDTH}
+					height={PUZZLE_WIDTH / 2}
 					puzzleFinished={() => setShowPuzzleCompleteModal(true)}
 					onPieceSelected={(piece: PieceInfo) => setSelectedPiece(piece)}
 					submissions={submissions}
 				/>
 			</Viewport>
 			<Sidebar
-				width={sidebarWidth}
+				width={SIDEBAR_WIDTH}
 				height={stageSize.height}
 				setShowModal={setShowModal}
 			>
 				<PieceDisplay
 					y={stageSize.height * 0.25}
-					width={sidebarWidth}
+					width={SIDEBAR_WIDTH}
 					height={stageSize.height * 0.75}
 					pieceInfo={selectedPiece}
 				/>

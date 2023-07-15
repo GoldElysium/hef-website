@@ -27,8 +27,6 @@ export default function Puzzle({
 	const [assetBundle, setAssetBundle] = useState<null | any>(null);
 	const [piecesBundle, setPiecesBundle] = useState<null | any>(null);
 
-	const pieceWidth = width / COL_COUNT;
-
 	const puzzlePieces: JSX.Element[] = [];
 
 	const [count, setCount] = useState(0);
@@ -91,7 +89,6 @@ export default function Puzzle({
 					key={`piece-${r}-${c}`}
 					c={c}
 					r={r}
-					pieceSize={pieceWidth}
 					texture={piecesBundle[`${r}-${c}`]}
 					incrementCountAndCheckPuzzleFinished={incrementCountAndCheckPuzzleFinished}
 					setSelectedPiece={onPieceSelected}
