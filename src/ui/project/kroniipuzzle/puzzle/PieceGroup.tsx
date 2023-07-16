@@ -32,11 +32,10 @@ export default function PieceGroup({ groupKey, pieces }: PieceGroupProps) {
 
 	const thisPieceGroup = usePuzzleStore((state) => state.pieceGroups[groupKey]);
 	const [updatePieceGroupPosition, setCorrect,
-		updatePieceLocalPosition, changePieceGroup] = usePuzzleStore(
+		changePieceGroup] = usePuzzleStore(
 		(state) => [
 			state.updatePieceGroupPosition(groupKey),
 			state.setCorrect(groupKey),
-			state.updatePieceLocalPosition,
 			state.changePieceGroup(groupKey),
 		],
 	);
@@ -106,6 +105,8 @@ export default function PieceGroup({ groupKey, pieces }: PieceGroupProps) {
 			setCurrentPosition(newPos);
 			updatePieceGroupPosition(newPos);
 			setCorrect();
+			// Force to background when correct, otherwise can interfere with other pieces behind it
+			setLastUpdatedAt(-1);
 			// eslint-disable-next-line no-restricted-syntax
 			for (const pieceKey of thisPieceGroup.pieces) {
 				pieces[pieceKey].ref.current.updateGlobalPosition();
@@ -171,16 +172,6 @@ export default function PieceGroup({ groupKey, pieces }: PieceGroupProps) {
 		setDragging(false);
 		setDisableDragging(false);
 	};
-
-	/* TODO: @GoldElysium
-		- On drag end:
-			- Update the global position of every piece
-			- Check every piece if near side piece, if so, snap to that side piece
-			  (What do we do if multiple pieces are close? Since this could cause some nasty
-			  movement for snapping, or the snap distance needs to be significantly lowered)
-			- Check for a single piece if it's near the target position, if so, then everything is
-			  and should snap to the correct position.
-	*/
 
 	return (
 		<Container

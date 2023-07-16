@@ -33,17 +33,14 @@ export default function Puzzle({
 
 	const puzzlePieces: Record<string, { ref: React.MutableRefObject<any>, piece: JSX.Element }> = {};
 
-	const [count, setCount] = useState(0);
-
+	const correctCount = usePuzzleStore((state) => state.correctCount);
 	const pieceGroups = usePuzzleStore((state) => state.pieceGroups);
 
-	const incrementCountAndCheckPuzzleFinished = useCallback(() => {
-		const newCount = count + 1;
-		setCount(newCount);
-		if (newCount >= PIECE_COUNT) {
+	useEffect(() => {
+		if (correctCount >= PIECE_COUNT) {
 			puzzleFinished();
 		}
-	}, [count]);
+	}, [correctCount]);
 
 	const drawPuzzleContainer = useCallback((g: PIXI.Graphics) => {
 		g.clear();
@@ -53,8 +50,8 @@ export default function Puzzle({
 		g.drawRect(
 			0,
 			0,
-			width,
-			height,
+			width + 2,
+			height + 2,
 		);
 	}, [height, width]);
 
@@ -108,7 +105,6 @@ export default function Puzzle({
 					c={c}
 					r={r}
 					texture={piecesBundle[`${r}-${c}`]}
-					incrementCountAndCheckPuzzleFinished={incrementCountAndCheckPuzzleFinished}
 					setSelectedPiece={onPieceSelected}
 					message={{
 						from: `${c}_${r}`,

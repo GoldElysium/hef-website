@@ -18,7 +18,6 @@ interface PieceProps {
 	c: number;
 	r: number;
 	texture: Texture;
-	incrementCountAndCheckPuzzleFinished: () => void;
 	setSelectedPiece: (piece: PieceInfo) => void;
 	message?: Message;
 	kronie?: PixiSprite;
@@ -51,8 +50,6 @@ const Piece = React.forwardRef<PieceActions, PieceProps>(({
 	c,
 	r,
 	texture,
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	incrementCountAndCheckPuzzleFinished,
 	setSelectedPiece,
 	message,
 	kronie,
@@ -116,7 +113,7 @@ const Piece = React.forwardRef<PieceActions, PieceProps>(({
 		return deltaX < 100 && deltaY < 100;
 	}
 
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	// TODO: Has some bugs? Snaps while not being near at all.
 	function isNearSidePiece(): IsNearSidePieceRes {
 		const nearData: any = {
 			near: false,

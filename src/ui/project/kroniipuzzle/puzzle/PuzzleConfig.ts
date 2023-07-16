@@ -6,4 +6,4 @@ export const WORLD_HEIGHT = 2160;
 export const SIDEBAR_WIDTH = 400;
 export const PUZZLE_WIDTH = (WORLD_WIDTH - SIDEBAR_WIDTH) / 2;
 export const PIECE_SIZE = PUZZLE_WIDTH / COL_COUNT;
-export const PIECE_MARGIN = PIECE_SIZE / 2;
+export const PIECE_MARGIN = PIECE_SIZE / 4;
