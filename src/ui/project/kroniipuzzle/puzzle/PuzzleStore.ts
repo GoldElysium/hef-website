@@ -2,7 +2,7 @@
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 import { devtools } from 'zustand/middleware';
-import { COL_COUNT, ROW_COUNT } from './PuzzleConfig';
+import { COL_COUNT, PIECE_SIZE, ROW_COUNT } from './PuzzleConfig';
 
 interface State {
 	pieces: {
@@ -24,18 +24,24 @@ interface State {
 				x: number;
 				y: number;
 			}
+			targetPosition: {
+				x: number;
+				y: number;
+			}
 			pieces: string[];
 			correct: boolean;
 		};
 	}
+	correctCount: number;
 }
 
 interface Actions {
 	updatePiecePosition: (key: string) => (newPosition: { x: number; y:number; }) => void;
-	updatePieceLocalPosition: (key: string) => (newPosition: { x: number; y:number; }) => void;
+	updatePieceLocalPosition: (key: string, newPosition: { x: number; y:number; }) => void;
 	updatePieceGroupPosition: (key: string) => (newPosition: { x: number; y:number; }) => void;
-	changePieceGroup: (key: string) => (newGroupKey: string) => void;
-	setCorrect: (key: string) => (val?: boolean) => void;
+	// eslint-disable-next-line max-len
+	changePieceGroup: (key: string) => (newGroupKey: string, positionData: Record<string, { x: number; y:number; }>) => void;
+	setCorrect: (key: string) => () => void;
 }
 
 // TODO: Persist this data, see https://docs.pmnd.rs/zustand/integrations/persisting-store-data
@@ -44,6 +50,7 @@ const usePuzzleStore = create(devtools(
 		const initialState: State = {
 			pieces: {},
 			pieceGroups: {},
+			correctCount: 0,
 		};
 
 		for (let r = 0; r < ROW_COUNT; r++) {
@@ -64,6 +71,10 @@ const usePuzzleStore = create(devtools(
 						x: -1000,
 						y: -1000,
 					},
+					targetPosition: {
+						x: c * PIECE_SIZE,
+						y: r * PIECE_SIZE,
+					},
 					pieces: [`${r}-${c}`],
 					correct: false,
 				};
@@ -75,27 +86,29 @@ const usePuzzleStore = create(devtools(
 			updatePiecePosition: (key) => (newPos) => set((state) => {
 				state.pieces[key].position = newPos;
 			}),
-			updatePieceLocalPosition: (key) => (newPos) => set((state) => {
+			updatePieceLocalPosition: (key, newPos) => set((state) => {
 				state.pieces[key].localPosition = newPos;
 			}),
 			updatePieceGroupPosition: (key: string) => (newPos) => set((state) => {
 				state.pieceGroups[key].position = newPos;
 			}),
-			changePieceGroup: (key) => (newGroupKey) => set((state) => {
+			changePieceGroup: (key) => (newGroupKey, positionData) => set((state) => {
 				const oldGroupKey = state.pieces[key].pieceGroup;
 				const oldGroup = state.pieceGroups[oldGroupKey].pieces;
 
 				// eslint-disable-next-line no-restricted-syntax
 				for (const pieceKey of oldGroup) {
 					state.pieces[pieceKey].pieceGroup = newGroupKey;
+					state.pieces[pieceKey].localPosition = positionData[pieceKey];
 				}
 
 				// Merge everything into the other group and delete the old group
 				state.pieceGroups[newGroupKey].pieces.push(...state.pieceGroups[oldGroupKey].pieces);
 				delete state.pieceGroups[oldGroupKey];
 			}),
-			setCorrect: (key) => (val) => set((state) => {
-				state.pieceGroups[key].correct = val ?? true;
+			setCorrect: (key) => () => set((state) => {
+				state.pieceGroups[key].correct = true;
+				state.correctCount += state.pieceGroups[key].pieces.length;
 			}),
 		} satisfies State & Actions;
 	}),

@@ -4,9 +4,8 @@ import { Project } from 'types/payload-types';
 import { Stage } from '@pixi/react';
 import { useEffect, useState } from 'react';
 import * as PIXI from 'pixi.js';
-// @ts-ignore
 import OS from 'phaser/src/device/OS';
-import PixiPuzzle from './PixiPuzzle';
+import PixiPuzzleContainer from './PixiPuzzleContainer';
 import Message from './puzzle/Message';
 
 interface IProps {
@@ -111,8 +110,9 @@ export default function PixiWrapper({ project, submissions }: IProps) {
 				options={{
 					backgroundColor: 0x5599ff,
 				}}
+				className={!OS.desktop && orientation.startsWith('portrait') ? 'hidden' : ''}
 			>
-				<PixiPuzzle project={project} stageSize={stageSize} submissions={submissions} />
+				<PixiPuzzleContainer project={project} stageSize={stageSize} submissions={submissions} />
 			</Stage>
 		</>
 	);

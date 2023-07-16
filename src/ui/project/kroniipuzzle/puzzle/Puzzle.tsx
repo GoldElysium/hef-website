@@ -1,11 +1,13 @@
 'use client';
 
 /* eslint-disable react/no-array-index-key */
-import React, { useCallback, useEffect, useState } from 'react';
+import React, {
+	useCallback, useEffect, useRef, useState,
+} from 'react';
 import * as PIXI from 'pixi.js';
 import { Sprite as PixiSprite } from 'pixi.js';
 import { Container, Graphics } from '@pixi/react';
-import Piece from './Piece';
+import Piece, { PieceActions } from './Piece';
 import Message from './Message';
 import PieceInfo from './PieceInfo';
 import { COL_COUNT, PIECE_COUNT, ROW_COUNT } from './PuzzleConfig';
@@ -29,7 +31,7 @@ export default function Puzzle({
 	const [assetBundle, setAssetBundle] = useState<null | any>(null);
 	const [piecesBundle, setPiecesBundle] = useState<null | any>(null);
 
-	const puzzlePieces: Record<string, JSX.Element> = {};
+	const puzzlePieces: Record<string, { ref: React.MutableRefObject<any>, piece: JSX.Element }> = {};
 
 	const [count, setCount] = useState(0);
 
@@ -67,6 +69,15 @@ export default function Puzzle({
 				setPiecesBundle(loadedBundle);
 			});
 	}, []);
+	for (let r = 0; r < ROW_COUNT; r++) {
+		for (let c = 0; c < COL_COUNT; c++) {
+			puzzlePieces[`${r}-${c}`] = {
+				// eslint-disable-next-line react-hooks/rules-of-hooks
+				ref: useRef<PieceActions>(),
+				piece: null as any,
+			};
+		}
+	}
 
 	if (!assetBundle || !piecesBundle) return null;
 
@@ -88,7 +99,10 @@ export default function Puzzle({
 			// since the tinting is just for debug purposes
 			kronie.tint = new PIXI.Color([Math.random(), Math.random(), Math.random()]);
 
-			const piece = submissions.length > 0 && (
+			// eslint-disable-next-line react-hooks/rules-of-hooks
+			const pieceRef = puzzlePieces[`${r}-${c}`].ref;
+
+			const piece = (
 				<Piece
 					key={`piece-${r}-${c}`}
 					c={c}
@@ -103,12 +117,16 @@ export default function Puzzle({
 						isRead: false,
 					} satisfies Message}
 					kronie={kronie}
+					ref={pieceRef}
 				/>
 			);
 			if (!piece) {
 				return null;
 			}
-			puzzlePieces[`${r}-${c}`] = piece;
+			puzzlePieces[`${r}-${c}`] = {
+				ref: pieceRef,
+				piece,
+			};
 		}
 	}
 

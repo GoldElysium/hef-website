@@ -1,11 +1,17 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import React, {
+	useEffect, useImperativeHandle, useRef, useState,
+} from 'react';
 import { Container, Sprite, Text } from '@pixi/react';
-import { Sprite as PixiSprite, TextStyle, Texture } from 'pixi.js';
+import {
+	DisplayObject, Sprite as PixiSprite, TextStyle, Texture, Container as PixiContainer,
+} from 'pixi.js';
 import Message from './Message';
 import PieceInfo from './PieceInfo';
-import { COL_COUNT, PIECE_SIZE, ROW_COUNT } from './PuzzleConfig';
+import {
+	COL_COUNT, PIECE_MARGIN, PIECE_SIZE, ROW_COUNT,
+} from './PuzzleConfig';
 import usePuzzleStore from './PuzzleStore';
 
 interface PieceProps {
@@ -18,15 +24,30 @@ interface PieceProps {
 	kronie?: PixiSprite;
 }
 
+export type IsNearSidePieceRes = {
+	near: false;
+} | {
+	near: true;
+	data: {
+		x: number;
+		y: number;
+		side: 'left' | 'top' | 'right' | 'bottom';
+		groupKey: string;
+	}
+};
+
+export interface PieceActions {
+	isNearSidePiece(): IsNearSidePieceRes;
+	updateGlobalPosition(): void;
+	updateLocalPosition(newPosition: { x: number, y: number }): void;
+}
+
 /* TODO:
 	- Change interaction handlers:
 		- Add click handler to select this piece to show the message
-	- Change currentPosition to position inside pieceGroup container
-	- On snap, update global and local position in the store
  */
 
-// eslint-disable-next-line react/function-component-definition
-const Piece: React.FC<PieceProps> = ({
+const Piece = React.forwardRef<PieceActions, PieceProps>(({
 	c,
 	r,
 	texture,
@@ -35,20 +56,11 @@ const Piece: React.FC<PieceProps> = ({
 	setSelectedPiece,
 	message,
 	kronie,
-}) => {
-	function extrapolatePos(index: number): number {
-		return index * PIECE_SIZE;
-	}
-
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	const [currentPosition, setCurrentPosition] = useState({ x: 0, y: 0 });
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	const [targetPosition, setTargetPosition] = useState({
-		x: extrapolatePos(c),
-		y: extrapolatePos(r),
-	});
+}, ref) => {
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [isRead, setIsRead] = useState(false);
+
+	const pieceContainerRef = useRef<PixiContainer<DisplayObject> | null>(null);
 
 	/* eslint-disable @typescript-eslint/no-unused-vars */
 	// Use refs to not trigger re-renders every time these update
@@ -57,19 +69,8 @@ const Piece: React.FC<PieceProps> = ({
 	const pieceTop = useRef(r !== 0 && usePuzzleStore.getState().pieces[`${r - 1}-${c}`]);
 	const pieceRight = useRef(c !== COL_COUNT - 1 && usePuzzleStore.getState().pieces[`${r}-${c + 1}`]);
 	const pieceBottom = useRef(r !== ROW_COUNT - 1 && usePuzzleStore.getState().pieces[`${r + 1}-${c}`]);
-	const [updatePiecePosition, changePieceGroup] = usePuzzleStore((state) => [state.updatePiecePosition(`${r}-${c}`), state.changePieceGroup(`${r}-${c}`)]);
+	const [updatePiecePosition, updatePieceLocalPosition] = usePuzzleStore((state) => [state.updatePiecePosition(`${r}-${c}`), state.updatePieceLocalPosition]);
 	/* eslint-enable */
-
-	// Set initial position in store
-	useEffect(() => {
-		const initialPosition = {
-			x: 0,
-			y: 0,
-		};
-
-		setCurrentPosition(initialPosition);
-		// updatePiecePosition(initialPosition);
-	}, []);
 
 	// Subscribe to all side pieces
 	/* eslint-disable react-hooks/rules-of-hooks,no-return-assign */
@@ -95,6 +96,19 @@ const Piece: React.FC<PieceProps> = ({
 	}
 	/* eslint-enable */
 
+	function updateGlobalPosition() {
+		const container = pieceContainerRef.current!;
+		const calcPos = container.parent!.parent!.toLocal(container.position, container.parent!);
+		updatePiecePosition({
+			x: calcPos.x,
+			y: calcPos.y,
+		});
+	}
+
+	function updateLocalPosition(newPos: { x: number, y: number }) {
+		updatePieceLocalPosition(`${r}-${c}`, newPos);
+	}
+
 	function isNearPosition(currentX: number, currentY: number, targetX: number, targetY: number) {
 		// todo: check this logic. probably too contrived to work consistently for all resolutions
 		const deltaX = Math.abs(currentX - targetX);
@@ -103,23 +117,83 @@ const Piece: React.FC<PieceProps> = ({
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	function isNearSidePiece(x: number, y: number): boolean {
-		let isNear = false;
+	function isNearSidePiece(): IsNearSidePieceRes {
+		const nearData: any = {
+			near: false,
+		};
 
 		if (pieceLeft.current
-			&& isNearPosition(x, y, pieceLeft.current.position.x, pieceLeft.current.position.y)) {
-			isNear = true;
-			// TODO: Snap
+			&& isNearPosition(
+				thisPiece.position.x,
+				thisPiece.position.y,
+				pieceLeft.current.position.x,
+				pieceLeft.current.position.y,
+			)) {
+			nearData.near = true;
+			nearData.data = {
+				x: pieceLeft.current.localPosition.x,
+				y: pieceLeft.current.localPosition.y,
+				side: 'left',
+				groupKey: pieceLeft.current.pieceGroup,
+			};
+		} else if (pieceTop.current
+			&& isNearPosition(
+				thisPiece.position.x,
+				thisPiece.position.y,
+				pieceTop.current.position.x,
+				pieceTop.current.position.y,
+			)) {
+			nearData.near = true;
+			nearData.data = {
+				x: pieceTop.current.localPosition.x,
+				y: pieceTop.current.localPosition.y,
+				side: 'top',
+				groupKey: pieceTop.current.pieceGroup,
+			};
+		} else if (pieceRight.current
+			&& isNearPosition(
+				thisPiece.position.x,
+				thisPiece.position.y,
+				pieceRight.current.position.x,
+				pieceRight.current.position.y,
+			)) {
+			nearData.near = true;
+			nearData.data = {
+				x: pieceRight.current.localPosition.x,
+				y: pieceRight.current.localPosition.y,
+				side: 'right',
+				groupKey: pieceRight.current.pieceGroup,
+			};
+		} else if (pieceBottom.current
+			&& isNearPosition(
+				thisPiece.position.x,
+				thisPiece.position.y,
+				pieceBottom.current.position.x,
+				pieceBottom.current.position.y,
+			)) {
+			nearData.near = true;
+			nearData.data = {
+				x: pieceBottom.current.localPosition.x,
+				y: pieceBottom.current.localPosition.y,
+				side: 'bottom',
+				groupKey: pieceBottom.current.pieceGroup,
+			};
 		}
 
-		return isNear;
+		return nearData;
 	}
+
+	useImperativeHandle(ref, () => ({
+		isNearSidePiece,
+		updateGlobalPosition,
+		updateLocalPosition,
+	}));
 
 	// TODO: Something breaks badly when interaction is enabled on pieces, idk what
 	return (
 		<Container
-			x={0}
-			y={0}
+			x={thisPiece.localPosition.x}
+			y={thisPiece.localPosition.y}
 			// "auto" means non-interactive, "static" means interactive
 			eventMode="auto"
 			onpointertap={() => {
@@ -128,14 +202,15 @@ const Piece: React.FC<PieceProps> = ({
 					sprite: kronie,
 				} as PieceInfo);
 			}}
+			ref={pieceContainerRef}
 		>
 
 			<Sprite
 				texture={texture}
-				x={-PIECE_SIZE / 2}
-				y={-PIECE_SIZE / 2}
-				width={PIECE_SIZE * 2}
-				height={PIECE_SIZE * 2}
+				x={-PIECE_MARGIN}
+				y={-PIECE_MARGIN}
+				width={PIECE_SIZE + 2 * PIECE_MARGIN}
+				height={PIECE_SIZE + 2 * PIECE_MARGIN}
 			/>
 			<Text
 				text={`${c}, ${r}`}
@@ -150,6 +225,7 @@ const Piece: React.FC<PieceProps> = ({
 
 		</Container>
 	);
-};
+});
 
+Piece.displayName = 'Piece';
 export default Piece;

@@ -1,15 +1,16 @@
 'use client';
 
 import { Container } from '@pixi/react';
-import { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FederatedPointerEvent } from 'pixi.js';
 import usePuzzleStore from './PuzzleStore';
 import { COL_COUNT, PIECE_SIZE, ROW_COUNT } from './PuzzleConfig';
 import ViewportContext from '../providers/ViewportContext';
+import { PieceActions } from './Piece';
 
 interface PieceGroupProps {
 	groupKey: string;
-	pieces: Record<string, JSX.Element>;
+	pieces: Record<string, { ref: React.MutableRefObject<PieceActions>, piece: JSX.Element }>;
 }
 
 function getInitialPosX(): number {
@@ -30,8 +31,14 @@ export default function PieceGroup({ groupKey, pieces }: PieceGroupProps) {
 	const { setDisableDragging } = useContext(ViewportContext);
 
 	const thisPieceGroup = usePuzzleStore((state) => state.pieceGroups[groupKey]);
-	const [updatePieceGroupPosition, setCorrect] = usePuzzleStore(
-		(state) => [state.updatePieceGroupPosition(groupKey), state.setCorrect(groupKey)],
+	const [updatePieceGroupPosition, setCorrect,
+		updatePieceLocalPosition, changePieceGroup] = usePuzzleStore(
+		(state) => [
+			state.updatePieceGroupPosition(groupKey),
+			state.setCorrect(groupKey),
+			state.updatePieceLocalPosition,
+			state.changePieceGroup(groupKey),
+		],
 	);
 	/* eslint-enable */
 
@@ -46,12 +53,26 @@ export default function PieceGroup({ groupKey, pieces }: PieceGroupProps) {
 		updatePieceGroupPosition(initialPosition);
 	}, []);
 
+	useEffect(() => {
+		// eslint-disable-next-line no-restricted-syntax
+		for (const pieceKey of thisPieceGroup.pieces) {
+			pieces[pieceKey].ref.current.updateGlobalPosition();
+		}
+	}, []);
+
+	function isNearPosition(currentX: number, currentY: number, targetX: number, targetY: number) {
+		// todo: check this logic. probably too contrived to work consistently for all resolutions
+		const deltaX = Math.abs(currentX - targetX);
+		const deltaY = Math.abs(currentY - targetY);
+		return deltaX < 100 && deltaY < 100;
+	}
+
 	const handleDragStart = (event: FederatedPointerEvent) => {
 		if (dragging || thisPieceGroup.correct) {
 			return;
 		}
 
-		const tempParent = event.target?.parent;
+		const tempParent = event.target!.parent!;
 		if (tempParent != null) {
 			setParent(tempParent);
 		}
@@ -77,11 +98,75 @@ export default function PieceGroup({ groupKey, pieces }: PieceGroupProps) {
 		}
 
 		const { x, y } = event.getLocalPosition(parent);
+		const { targetPosition } = thisPieceGroup;
 
-		// TODO: get position accounting for drag start position
-		const newPos = { x: x - PIECE_SIZE / 2, y: y - PIECE_SIZE / 2 };
-		setCurrentPosition(newPos);
-		updatePieceGroupPosition(newPos);
+		// Check if near target
+		if (isNearPosition(x, y, targetPosition.x, targetPosition.y)) {
+			const newPos = { x: targetPosition.x, y: targetPosition.y };
+			setCurrentPosition(newPos);
+			updatePieceGroupPosition(newPos);
+			setCorrect();
+			// eslint-disable-next-line no-restricted-syntax
+			for (const pieceKey of thisPieceGroup.pieces) {
+				pieces[pieceKey].ref.current.updateGlobalPosition();
+			}
+		} else {
+			let nearData: {
+				x: number;
+				y: number;
+				side: 'left' | 'top' | 'right' | 'bottom';
+				groupKey: string;
+			} | undefined;
+			let nearPieceKey: string;
+			// eslint-disable-next-line no-restricted-syntax
+			for (const pieceKey of thisPieceGroup.pieces) {
+				pieces[pieceKey].ref.current.updateGlobalPosition();
+				const nearRes = pieces[pieceKey].ref.current.isNearSidePiece();
+				if (nearRes.near) {
+					nearData = nearRes.data;
+					nearPieceKey = pieceKey;
+					break;
+				}
+			}
+
+			if (nearData) {
+				const statePieces = usePuzzleStore.getState().pieces;
+				const nearPeace = statePieces[nearPieceKey!];
+				let wantedX = nearData.x;
+
+				if (nearData.side === 'left') {
+					wantedX += PIECE_SIZE;
+				} else if (nearData.side === 'right') {
+					wantedX -= PIECE_SIZE;
+				}
+
+				let wantedY = nearData.y;
+				if (nearData.side === 'top') {
+					wantedY += PIECE_SIZE;
+				} else if (nearData.side === 'bottom') {
+					wantedY -= PIECE_SIZE;
+				}
+
+				const deltaX = wantedX - nearPeace.localPosition.x;
+				const deltaY = wantedY - nearPeace.localPosition.y;
+
+				const positionData: Record<string, { x: number, y: number }> = {};
+				// eslint-disable-next-line no-restricted-syntax
+				for (const pieceKey of thisPieceGroup.pieces) {
+					positionData[pieceKey] = {
+						x: deltaX + statePieces[pieceKey].localPosition.x,
+						y: deltaY + statePieces[pieceKey].localPosition.y,
+					};
+				}
+
+				changePieceGroup(nearData.groupKey, positionData);
+			} else {
+				// TODO: get position accounting for drag start position
+				const newPos = { x: x - PIECE_SIZE / 2, y: y - PIECE_SIZE / 2 };
+				setCurrentPosition(newPos);
+				updatePieceGroupPosition(newPos);
+			}
+		}
 
 		setDragging(false);
 		setDisableDragging(false);
@@ -113,7 +198,7 @@ export default function PieceGroup({ groupKey, pieces }: PieceGroupProps) {
 			touchendoutside={handleDragEnd}
 			zIndex={lastUpdatedAt}
 		>
-			{thisPieceGroup.pieces.map((pieceKey) => pieces[pieceKey])}
+			{thisPieceGroup.pieces.map((pieceKey) => pieces[pieceKey].piece)}
 		</Container>
 	);
 }

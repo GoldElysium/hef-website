@@ -34,7 +34,7 @@ interface IProps {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export default function PixiPuzzle({ project, stageSize, submissions }: IProps) {
+export default function PixiPuzzleContainer({ project, stageSize, submissions }: IProps) {
 	const app = useApp();
 
 	const [showModal, setShowModal] = useState(false);
