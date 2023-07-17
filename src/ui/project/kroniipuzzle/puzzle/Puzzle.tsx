@@ -207,7 +207,6 @@ export default function Puzzle({
 					const coords = flatIndexToSpiralCoordinates(i + (Math.floor(PIECE_COUNT * 0.6) - 10));
 					const [c, r] = coords || [0, 0];
 
-					console.log(groupKey, i, r, c);
 					return (
 						<PieceGroup
 							key={groupKey}
