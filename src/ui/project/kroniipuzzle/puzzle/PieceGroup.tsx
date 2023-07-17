@@ -4,25 +4,21 @@ import { Container } from '@pixi/react';
 import React, { useContext, useEffect, useState } from 'react';
 import { FederatedPointerEvent } from 'pixi.js';
 import usePuzzleStore from './PuzzleStore';
-import { COL_COUNT, PIECE_SIZE, ROW_COUNT } from './PuzzleConfig';
+import { PIECE_SIZE } from './PuzzleConfig';
 import ViewportContext from '../providers/ViewportContext';
 import { PieceActions } from './Piece';
 
 interface PieceGroupProps {
 	groupKey: string;
 	pieces: Record<string, { ref: React.MutableRefObject<PieceActions>, piece: JSX.Element }>;
-}
-
-function getInitialPosX(): number {
-	return Math.floor(Math.random() * PIECE_SIZE * COL_COUNT);
-}
-
-function getInitialPosY(): number {
-	return Math.floor(Math.random() * PIECE_SIZE * ROW_COUNT);
+	initialX: number;
+	initialY: number;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export default function PieceGroup({ groupKey, pieces }: PieceGroupProps) {
+export default function PieceGroup({
+	groupKey, pieces, initialX, initialY,
+}: PieceGroupProps) {
 	/* eslint-disable @typescript-eslint/no-unused-vars */
 	const [dragging, setDragging] = useState(false);
 	const [currentPosition, setCurrentPosition] = useState({ x: -1000, y: -1000 });
@@ -44,13 +40,13 @@ export default function PieceGroup({ groupKey, pieces }: PieceGroupProps) {
 	// Set initial position in store
 	useEffect(() => {
 		const initialPosition = {
-			x: getInitialPosX(),
-			y: getInitialPosY(),
+			x: initialX,
+			y: initialY,
 		};
 
 		setCurrentPosition(initialPosition);
 		updatePieceGroupPosition(initialPosition);
-	}, []);
+	}, [initialX, initialY]);
 
 	useEffect(() => {
 		// eslint-disable-next-line no-restricted-syntax
@@ -87,6 +83,7 @@ export default function PieceGroup({ groupKey, pieces }: PieceGroupProps) {
 		}
 
 		const { x, y } = event.getLocalPosition(parent);
+
 		// todo: get position accounting for drag start position
 		setCurrentPosition({ x: x - PIECE_SIZE / 2, y: y - PIECE_SIZE / 2 });
 	};

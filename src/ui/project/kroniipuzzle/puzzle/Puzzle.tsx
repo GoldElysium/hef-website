@@ -10,7 +10,9 @@ import { Container, Graphics } from '@pixi/react';
 import Piece, { PieceActions } from './Piece';
 import Message from './Message';
 import PieceInfo from './PieceInfo';
-import { COL_COUNT, PIECE_COUNT, ROW_COUNT } from './PuzzleConfig';
+import {
+	COL_COUNT, PIECE_COUNT, PIECE_SIZE, ROW_COUNT,
+} from './PuzzleConfig';
 import usePuzzleStore from './PuzzleStore';
 import PieceGroup from './PieceGroup';
 
@@ -22,6 +24,61 @@ interface PuzzleProps {
 	puzzleFinished: () => void;
 	onPieceSelected: (piece: PieceInfo) => void;
 	submissions: Message[];
+}
+
+function flatIndexToSpiralCoordinates(index: number): [number, number] | null {
+	// todo: these are hard-coded. possibly need to change
+	const centerRow = Math.ceil(ROW_COUNT / 3);
+	const centerCol = Math.ceil(COL_COUNT / 8);
+
+	let x = centerCol;
+	let y = centerRow;
+	let dx = 1;
+	let dy = 0;
+	const initialSideLength = 13;
+	let sideLength = initialSideLength;
+	let stepsInSide = 0;
+	let currentIndex = 0;
+
+	while (currentIndex < index) {
+		x += dx;
+		y += dy;
+		currentIndex += 1;
+
+		stepsInSide += 1;
+
+		if (stepsInSide >= sideLength) {
+			if (dx === 1 && dy === 0) {
+				// Right to Down
+				dx = 0;
+				dy = 1;
+				sideLength -= initialSideLength - 1;
+			} else if (dx === 0 && dy === 1) {
+				// Down to Left
+				dx = -1;
+				dy = 0;
+				sideLength += initialSideLength;
+			} else if (dx === -1 && dy === 0) {
+				// Left to Up
+				dx = 0;
+				dy = -1;
+				sideLength -= initialSideLength - 1;
+			} else if (dx === 0 && dy === -1) {
+				// Up to Right
+				dx = 1;
+				dy = 0;
+				sideLength += initialSideLength;
+			}
+
+			stepsInSide = 0;
+		}
+	}
+
+	if (currentIndex === index) {
+		return [x, y];
+	}
+
+	return null;
 }
 
 export default function Puzzle({
@@ -133,13 +190,35 @@ export default function Puzzle({
 				height={height}
 				draw={drawPuzzleContainer}
 			/>
-			{Object.keys(pieceGroups).map((groupKey) => (
-				<PieceGroup
-					key={groupKey}
-					groupKey={groupKey}
-					pieces={puzzlePieces}
-				/>
-			))}
+			{Object.entries(pieceGroups)
+
+				// todo: this should make things random but can't because index can't be used
+				.sort(() => Math.random() - 0.5)
+
+			// todo: things break when using this index instead of the calculated i
+
+				/* eslint-disable @typescript-eslint/no-unused-vars */
+				.map(([groupKey, _], index) => {
+					const row = parseInt(groupKey.split('-')[0], 10);
+					const col = parseInt(groupKey.split('-')[1], 10);
+					const i = row * COL_COUNT + col;
+
+					// todo: the starting index is hard-coded
+					const coords = flatIndexToSpiralCoordinates(i + (Math.floor(PIECE_COUNT * 0.6) - 10));
+					const [c, r] = coords || [0, 0];
+
+					console.log(groupKey, i, r, c);
+					return (
+						<PieceGroup
+							key={groupKey}
+							groupKey={groupKey}
+							pieces={puzzlePieces}
+							// todo: the adjustment of + and - PIECE_SIZE need tweaking
+							initialX={c * PIECE_SIZE * 1.5 + PIECE_SIZE}
+							initialY={r * PIECE_SIZE * 1.5 - PIECE_SIZE}
+						/>
+					);
+				})}
 		</Container>
 	);
 }
