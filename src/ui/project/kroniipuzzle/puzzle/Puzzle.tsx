@@ -195,8 +195,7 @@ export default function Puzzle({
 				// todo: this should make things random but can't because index can't be used
 				.sort(() => Math.random() - 0.5)
 
-			// todo: things break when using this index instead of the calculated i
-
+				// todo: things break when using this index instead of the calculated i
 				/* eslint-disable @typescript-eslint/no-unused-vars */
 				.map(([groupKey, _], index) => {
 					const row = parseInt(groupKey.split('-')[0], 10);
