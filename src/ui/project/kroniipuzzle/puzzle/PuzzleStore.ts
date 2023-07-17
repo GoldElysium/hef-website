@@ -109,8 +109,14 @@ const usePuzzleStore = create(devtools(
 					state.pieces[pieceKey].localPosition = positionData[pieceKey];
 				}
 
-				// Merge everything into the other group and delete the old group
-				state.pieceGroups[newGroupKey].pieces.push(...state.pieceGroups[oldGroupKey].pieces);
+				// todo: this errors out sometimes. state.pieceGroups[newGroupKey] is undefined
+				try {
+					// Merge everything into the other group and delete the old group
+					state.pieceGroups[newGroupKey].pieces.push(...state.pieceGroups[oldGroupKey].pieces);
+				} catch (e: any) {
+					console.log(`oldGroupKey: ${oldGroupKey}, newGroupKey: ${newGroupKey}`);
+					console.error(e.message);
+				}
 				delete state.pieceGroups[oldGroupKey];
 			}),
 			setCorrect: (key) => () => set((state) => {
