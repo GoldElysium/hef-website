@@ -191,19 +191,11 @@ export default function Puzzle({
 				draw={drawPuzzleContainer}
 			/>
 			{Object.entries(pieceGroups)
-
-				// todo: this should make things random but can't because index can't be used
-				.sort(() => Math.random() - 0.5)
-
-				// todo: things break when using this index instead of the calculated i
 				/* eslint-disable @typescript-eslint/no-unused-vars */
-				.map(([groupKey, _], index) => {
-					const row = parseInt(groupKey.split('-')[0], 10);
-					const col = parseInt(groupKey.split('-')[1], 10);
-					const i = row * COL_COUNT + col;
-
-					// todo: the starting index is hard-coded
-					const coords = flatIndexToSpiralCoordinates(i + (Math.floor(PIECE_COUNT * 0.6) - 10));
+				.map(([groupKey, pieceGroup]) => {
+					const coords = flatIndexToSpiralCoordinates(
+						pieceGroup.randomIndex + (Math.floor(PIECE_COUNT * 0.6) - 10),
+					);
 					const [c, r] = coords || [0, 0];
 
 					return (

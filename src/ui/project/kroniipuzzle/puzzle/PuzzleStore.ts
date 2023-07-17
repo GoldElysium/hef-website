@@ -2,7 +2,9 @@
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 import { devtools } from 'zustand/middleware';
-import { COL_COUNT, PIECE_SIZE, ROW_COUNT } from './PuzzleConfig';
+import {
+	COL_COUNT, PIECE_COUNT, PIECE_SIZE, ROW_COUNT,
+} from './PuzzleConfig';
 
 interface State {
 	pieces: {
@@ -30,6 +32,7 @@ interface State {
 			}
 			pieces: string[];
 			correct: boolean;
+			randomIndex: number;
 		};
 	}
 	correctCount: number;
@@ -52,6 +55,9 @@ const usePuzzleStore = create(devtools(
 			pieceGroups: {},
 			correctCount: 0,
 		};
+
+		const randomIndexArray = Array.from({ length: PIECE_COUNT }, (_, index) => index)
+			.sort(() => Math.random() - 0.5);
 
 		for (let r = 0; r < ROW_COUNT; r++) {
 			for (let c = 0; c < COL_COUNT; c++) {
@@ -77,6 +83,7 @@ const usePuzzleStore = create(devtools(
 					},
 					pieces: [`${r}-${c}`],
 					correct: false,
+					randomIndex: randomIndexArray[r * COL_COUNT + c],
 				};
 			}
 		}
