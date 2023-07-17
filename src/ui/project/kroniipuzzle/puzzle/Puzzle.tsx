@@ -99,16 +99,18 @@ export default function Puzzle({
 		}
 	}, [correctCount]);
 
+	// todo: this should be drawn under the puzzle
 	const drawPuzzleContainer = useCallback((g: PIXI.Graphics) => {
+		const lineWidth = 6;
 		g.clear();
-		g.lineStyle(2, 0xffffff);
+		g.lineStyle(lineWidth, 0xffffff);
 		console.log('Redrawing container');
 
 		g.drawRect(
-			0,
-			0,
-			width + 2,
-			height + 2,
+			lineWidth / 2,
+			lineWidth / 2,
+			width + lineWidth * 2,
+			height + lineWidth * 2,
 		);
 	}, [height, width]);
 
