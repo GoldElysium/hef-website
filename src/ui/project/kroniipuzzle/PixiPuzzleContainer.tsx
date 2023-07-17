@@ -83,8 +83,8 @@ export default function PixiPuzzleContainer({ project, stageSize, submissions }:
 				ref={viewportRef}
 			>
 				<Puzzle
-					x={SIDEBAR_WIDTH + PUZZLE_WIDTH / 2}
-					y={(WORLD_HEIGHT / 2 + PUZZLE_WIDTH / 4) - WORLD_WIDTH / 4}
+					x={SIDEBAR_WIDTH + (PUZZLE_WIDTH * 1.2) / 2}
+					y={(WORLD_HEIGHT / 2 + (PUZZLE_WIDTH * 1.2) / 4) - WORLD_WIDTH / 4}
 					width={PUZZLE_WIDTH}
 					height={PUZZLE_WIDTH / 2}
 					puzzleFinished={() => setShowPuzzleCompleteModal(true)}
