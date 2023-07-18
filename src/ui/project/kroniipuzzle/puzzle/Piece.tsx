@@ -106,7 +106,13 @@ const Piece = React.forwardRef<PieceActions, PieceProps>(({
 		updatePieceLocalPosition(`${r}-${c}`, newPos);
 	}
 
-	function isNearPosition(currentX: number, currentY: number, targetX: number, targetY: number) {
+	function isNearPosition(current: any, target: any) {
+		console.log(JSON.stringify(current), JSON.stringify(target));
+		const currentX = current.position.x;
+		const currentY = current.position.y;
+		const targetX = target.position.x;
+		const targetY = target.position.y;
+
 		// todo: check this logic. probably too contrived to work consistently for all resolutions
 		const deltaX = Math.abs(currentX - targetX);
 		const deltaY = Math.abs(currentY - targetY);
@@ -122,10 +128,8 @@ const Piece = React.forwardRef<PieceActions, PieceProps>(({
 		if (
 			pieceLeft.current
 			&& isNearPosition(
-				thisPiece.position.x,
-				thisPiece.position.y,
-				pieceLeft.current.position.x,
-				pieceLeft.current.position.y,
+				thisPiece,
+				pieceLeft.current,
 			)
 			&& thisPiece.pieceGroup !== pieceLeft.current.pieceGroup
 		) {
@@ -139,10 +143,8 @@ const Piece = React.forwardRef<PieceActions, PieceProps>(({
 		} else if (
 			pieceTop.current
 			&& isNearPosition(
-				thisPiece.position.x,
-				thisPiece.position.y,
-				pieceTop.current.position.x,
-				pieceTop.current.position.y,
+				thisPiece,
+				pieceTop.current,
 			)
 			&& thisPiece.pieceGroup !== pieceTop.current.pieceGroup
 		) {
@@ -156,10 +158,8 @@ const Piece = React.forwardRef<PieceActions, PieceProps>(({
 		} else if (
 			pieceRight.current
 			&& isNearPosition(
-				thisPiece.position.x,
-				thisPiece.position.y,
-				pieceRight.current.position.x,
-				pieceRight.current.position.y,
+				thisPiece,
+				pieceRight.current,
 			)
 			&& thisPiece.pieceGroup !== pieceRight.current.pieceGroup
 		) {
@@ -173,10 +173,8 @@ const Piece = React.forwardRef<PieceActions, PieceProps>(({
 		} else if (
 			pieceBottom.current
 			&& isNearPosition(
-				thisPiece.position.x,
-				thisPiece.position.y,
-				pieceBottom.current.position.x,
-				pieceBottom.current.position.y,
+				thisPiece,
+				pieceBottom.current,
 			)
 			&& thisPiece.pieceGroup !== pieceBottom.current.pieceGroup
 		) {

@@ -21,7 +21,7 @@ export default function PieceGroup({
 }: PieceGroupProps) {
 	/* eslint-disable @typescript-eslint/no-unused-vars */
 	const [dragging, setDragging] = useState(false);
-	const [currentPosition, setCurrentPosition] = useState({ x: -1000, y: -1000 });
+	const [currentPosition, setCurrentPosition] = useState({ x: initialX, y: initialY });
 	const [lastUpdatedAt, setLastUpdatedAt] = useState(Date.now());
 	const [parent, setParent] = useState(null as any);
 	const { setDisableDragging } = useContext(ViewportContext);

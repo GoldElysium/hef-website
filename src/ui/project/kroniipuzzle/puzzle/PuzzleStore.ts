@@ -61,10 +61,14 @@ const usePuzzleStore = create(devtools(
 
 		for (let r = 0; r < ROW_COUNT; r++) {
 			for (let c = 0; c < COL_COUNT; c++) {
+				const index = randomIndexArray[r * COL_COUNT + c];
+				const x = (index % COL_COUNT) * PIECE_SIZE;
+				const y = Math.floor(index / COL_COUNT) * PIECE_SIZE;
+
 				initialState.pieces[`${r}-${c}`] = {
 					position: {
-						x: -1000,
-						y: -1000,
+						x,
+						y,
 					},
 					localPosition: {
 						x: 0,
@@ -74,8 +78,8 @@ const usePuzzleStore = create(devtools(
 				};
 				initialState.pieceGroups[`${r}-${c}`] = {
 					position: {
-						x: -1000,
-						y: -1000,
+						x,
+						y,
 					},
 					targetPosition: {
 						x: c * PIECE_SIZE,
