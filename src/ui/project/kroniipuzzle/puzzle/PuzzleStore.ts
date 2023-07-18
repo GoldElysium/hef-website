@@ -97,10 +97,22 @@ const usePuzzleStore = create(devtools(
 				state.pieces[key].localPosition = newPos;
 			}),
 			updatePieceGroupPosition: (key: string) => (newPos) => set((state) => {
-				state.pieceGroups[key].position = newPos;
+				const pieceGroup = state.pieceGroups[key];
+				const oldPos = pieceGroup.position;
+
+				console.log(JSON.stringify({ oldPos, newPos }));
+				pieceGroup.position = newPos;
 			}),
 			changePieceGroup: (key) => (newGroupKey, positionData) => set((state) => {
 				const oldGroupKey = state.pieces[key].pieceGroup;
+
+				// todo: maybe figure out why this is happening if it continues causing issues
+				// for now just return
+				if (oldGroupKey === newGroupKey) {
+					console.log('attempting to change to the same group. this should not be happening');
+					return;
+				}
+				console.log(`changePieceGroup from ${oldGroupKey} to ${newGroupKey}`);
 				const oldGroup = state.pieceGroups[oldGroupKey].pieces;
 
 				// eslint-disable-next-line no-restricted-syntax
@@ -111,11 +123,14 @@ const usePuzzleStore = create(devtools(
 
 				// todo: this errors out sometimes. state.pieceGroups[newGroupKey] is undefined
 				try {
+					const { pieces } = state.pieceGroups[newGroupKey];
+					const oldPieces = state.pieceGroups[oldGroupKey].pieces;
 					// Merge everything into the other group and delete the old group
-					state.pieceGroups[newGroupKey].pieces.push(...state.pieceGroups[oldGroupKey].pieces);
+					pieces.push(...oldPieces);
 				} catch (e: any) {
 					console.log(`oldGroupKey: ${oldGroupKey}, newGroupKey: ${newGroupKey}`);
-					console.error(e.message);
+					console.error(e);
+					return;
 				}
 				delete state.pieceGroups[oldGroupKey];
 			}),
