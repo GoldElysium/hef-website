@@ -27,8 +27,11 @@ export default function PieceGroup({
 	const { setDisableDragging } = useContext(ViewportContext);
 
 	const thisPieceGroup = usePuzzleStore((state) => state.pieceGroups[groupKey]);
-	const [updatePieceGroupPosition, setCorrect,
-		changePieceGroup] = usePuzzleStore(
+	const [
+		updatePieceGroupPosition,
+		setCorrect,
+		changePieceGroup,
+	] = usePuzzleStore(
 		(state) => [
 			state.updatePieceGroupPosition(groupKey),
 			state.setCorrect(groupKey),
@@ -55,12 +58,102 @@ export default function PieceGroup({
 		}
 	}, []);
 
-	function isNearPosition(currentX: number, currentY: number, targetX: number, targetY: number) {
+	const isNearPosition = (currentX: number, currentY: number, targetX: number, targetY: number) => {
 		// todo: check this logic. probably too contrived to work consistently for all resolutions
 		const deltaX = Math.abs(currentX - targetX);
 		const deltaY = Math.abs(currentY - targetY);
 		return deltaX < 100 && deltaY < 100;
-	}
+	};
+
+	const notNearTargetPositionLogic = (x: number, y: number) => {
+		let nearData: {
+			x: number;
+			y: number;
+			side: 'left' | 'top' | 'right' | 'bottom';
+			groupKey: string;
+		} | undefined;
+		let nearPieceKey: string;
+		const statePieces = usePuzzleStore.getState().pieces;
+
+		// eslint-disable-next-line no-restricted-syntax
+		for (const pieceKey of thisPieceGroup.pieces) {
+			const piece = pieces[pieceKey].ref.current;
+			piece.updateGlobalPosition();
+			const nearRes = piece.isNearAdjacentPiece();
+			if (nearRes.near) {
+				if (nearRes.data.groupKey === statePieces[pieceKey].pieceGroup) {
+					console.log(`encountered same group key when checking nearness. skipping. ${nearRes.data.groupKey}`);
+					// eslint-disable-next-line no-continue
+					continue;
+				}
+				nearData = nearRes.data;
+				nearPieceKey = pieceKey;
+				break;
+			}
+		}
+
+		if (!nearData) {
+			// TODO: get position accounting for drag start position
+			const newPos = { x: x - PIECE_SIZE / 2, y: y - PIECE_SIZE / 2 };
+			setCurrentPosition(newPos);
+			updatePieceGroupPosition(newPos);
+
+			return;
+		}
+
+		const nearPiece = statePieces[nearPieceKey!];
+		let wantedX = nearData.x;
+
+		if (nearData.side === 'left') {
+			wantedX += PIECE_SIZE;
+		} else if (nearData.side === 'right') {
+			wantedX -= PIECE_SIZE;
+		}
+
+		let wantedY = nearData.y;
+		if (nearData.side === 'top') {
+			wantedY += PIECE_SIZE;
+		} else if (nearData.side === 'bottom') {
+			wantedY -= PIECE_SIZE;
+		}
+
+		const deltaX = wantedX - nearPiece.localPosition.x;
+		const deltaY = wantedY - nearPiece.localPosition.y;
+
+		const positionData: Record<string, { x: number; y: number; }> = {};
+		// eslint-disable-next-line no-restricted-syntax
+		for (const pieceKey of thisPieceGroup.pieces) {
+			positionData[pieceKey] = {
+				x: deltaX + statePieces[pieceKey].localPosition.x,
+				y: deltaY + statePieces[pieceKey].localPosition.y,
+			};
+		}
+
+		const oldGroupKey = nearPiece.pieceGroup;
+		const newGroupKey = nearData.groupKey;
+		// todo: maybe figure out why this is happening if it continues causing issues
+		// for now just return
+		if (oldGroupKey === newGroupKey) {
+			console.log(`attempting to change to the same group. this should not be happening. ${oldGroupKey}`);
+			return;
+		}
+		console.log(`changePieceGroup from ${oldGroupKey} to ${newGroupKey}`);
+
+		changePieceGroup(newGroupKey, positionData);
+	};
+
+	const settlePieceGroup = (targetPosition: { x: number, y: number }) => {
+		const newPos = { x: targetPosition.x, y: targetPosition.y };
+		setCurrentPosition(newPos);
+		updatePieceGroupPosition(newPos);
+		setCorrect();
+		// Force to background when correct, otherwise can interfere with other pieces behind it
+		setLastUpdatedAt(-1);
+		// eslint-disable-next-line no-restricted-syntax
+		for (const pieceKey of thisPieceGroup.pieces) {
+			pieces[pieceKey].ref.current.updateGlobalPosition();
+		}
+	};
 
 	const handleDragStart = (event: FederatedPointerEvent) => {
 		if (dragging || thisPieceGroup.correct) {
@@ -98,72 +191,9 @@ export default function PieceGroup({
 
 		// Check if near target
 		if (isNearPosition(x, y, targetPosition.x, targetPosition.y)) {
-			const newPos = { x: targetPosition.x, y: targetPosition.y };
-			setCurrentPosition(newPos);
-			updatePieceGroupPosition(newPos);
-			setCorrect();
-			// Force to background when correct, otherwise can interfere with other pieces behind it
-			setLastUpdatedAt(-1);
-			// eslint-disable-next-line no-restricted-syntax
-			for (const pieceKey of thisPieceGroup.pieces) {
-				pieces[pieceKey].ref.current.updateGlobalPosition();
-			}
+			settlePieceGroup(targetPosition);
 		} else {
-			let nearData: {
-				x: number;
-				y: number;
-				side: 'left' | 'top' | 'right' | 'bottom';
-				groupKey: string;
-			} | undefined;
-			let nearPieceKey: string;
-			// eslint-disable-next-line no-restricted-syntax
-			for (const pieceKey of thisPieceGroup.pieces) {
-				pieces[pieceKey].ref.current.updateGlobalPosition();
-				const nearRes = pieces[pieceKey].ref.current.isNearSidePiece();
-				if (nearRes.near) {
-					nearData = nearRes.data;
-					nearPieceKey = pieceKey;
-					break;
-				}
-			}
-
-			if (nearData) {
-				const statePieces = usePuzzleStore.getState().pieces;
-				const nearPeace = statePieces[nearPieceKey!];
-				let wantedX = nearData.x;
-
-				if (nearData.side === 'left') {
-					wantedX += PIECE_SIZE;
-				} else if (nearData.side === 'right') {
-					wantedX -= PIECE_SIZE;
-				}
-
-				let wantedY = nearData.y;
-				if (nearData.side === 'top') {
-					wantedY += PIECE_SIZE;
-				} else if (nearData.side === 'bottom') {
-					wantedY -= PIECE_SIZE;
-				}
-
-				const deltaX = wantedX - nearPeace.localPosition.x;
-				const deltaY = wantedY - nearPeace.localPosition.y;
-
-				const positionData: Record<string, { x: number, y: number }> = {};
-				// eslint-disable-next-line no-restricted-syntax
-				for (const pieceKey of thisPieceGroup.pieces) {
-					positionData[pieceKey] = {
-						x: deltaX + statePieces[pieceKey].localPosition.x,
-						y: deltaY + statePieces[pieceKey].localPosition.y,
-					};
-				}
-
-				changePieceGroup(nearData.groupKey, positionData);
-			} else {
-				// TODO: get position accounting for drag start position
-				const newPos = { x: x - PIECE_SIZE / 2, y: y - PIECE_SIZE / 2 };
-				setCurrentPosition(newPos);
-				updatePieceGroupPosition(newPos);
-			}
+			notNearTargetPositionLogic(x, y);
 		}
 
 		setDragging(false);

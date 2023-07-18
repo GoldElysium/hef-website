@@ -105,14 +105,6 @@ const usePuzzleStore = create(devtools(
 			}),
 			changePieceGroup: (key) => (newGroupKey, positionData) => set((state) => {
 				const oldGroupKey = state.pieces[key].pieceGroup;
-
-				// todo: maybe figure out why this is happening if it continues causing issues
-				// for now just return
-				if (oldGroupKey === newGroupKey) {
-					console.log('attempting to change to the same group. this should not be happening');
-					return;
-				}
-				console.log(`changePieceGroup from ${oldGroupKey} to ${newGroupKey}`);
 				const oldGroup = state.pieceGroups[oldGroupKey].pieces;
 
 				// eslint-disable-next-line no-restricted-syntax

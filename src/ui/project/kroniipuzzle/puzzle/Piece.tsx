@@ -23,7 +23,7 @@ interface PieceProps {
 	kronie?: PixiSprite;
 }
 
-export type IsNearSidePieceRes = {
+export type IsNearAdjacentPieceRes = {
 	near: false;
 } | {
 	near: true;
@@ -36,7 +36,7 @@ export type IsNearSidePieceRes = {
 };
 
 export interface PieceActions {
-	isNearSidePiece(): IsNearSidePieceRes;
+	isNearAdjacentPiece(): IsNearAdjacentPieceRes;
 	updateGlobalPosition(): void;
 	updateLocalPosition(newPosition: { x: number, y: number }): void;
 }
@@ -114,18 +114,21 @@ const Piece = React.forwardRef<PieceActions, PieceProps>(({
 	}
 
 	// TODO: Has some bugs? Snaps while not being near at all.
-	function isNearSidePiece(): IsNearSidePieceRes {
+	function isNearAdjacentPiece(): IsNearAdjacentPieceRes {
 		const nearData: any = {
 			near: false,
 		};
 
-		if (pieceLeft.current
+		if (
+			pieceLeft.current
 			&& isNearPosition(
 				thisPiece.position.x,
 				thisPiece.position.y,
 				pieceLeft.current.position.x,
 				pieceLeft.current.position.y,
-			)) {
+			)
+			&& thisPiece.pieceGroup !== pieceLeft.current.pieceGroup
+		) {
 			nearData.near = true;
 			nearData.data = {
 				x: pieceLeft.current.localPosition.x,
@@ -133,13 +136,16 @@ const Piece = React.forwardRef<PieceActions, PieceProps>(({
 				side: 'left',
 				groupKey: pieceLeft.current.pieceGroup,
 			};
-		} else if (pieceTop.current
+		} else if (
+			pieceTop.current
 			&& isNearPosition(
 				thisPiece.position.x,
 				thisPiece.position.y,
 				pieceTop.current.position.x,
 				pieceTop.current.position.y,
-			)) {
+			)
+			&& thisPiece.pieceGroup !== pieceTop.current.pieceGroup
+		) {
 			nearData.near = true;
 			nearData.data = {
 				x: pieceTop.current.localPosition.x,
@@ -147,13 +153,16 @@ const Piece = React.forwardRef<PieceActions, PieceProps>(({
 				side: 'top',
 				groupKey: pieceTop.current.pieceGroup,
 			};
-		} else if (pieceRight.current
+		} else if (
+			pieceRight.current
 			&& isNearPosition(
 				thisPiece.position.x,
 				thisPiece.position.y,
 				pieceRight.current.position.x,
 				pieceRight.current.position.y,
-			)) {
+			)
+			&& thisPiece.pieceGroup !== pieceRight.current.pieceGroup
+		) {
 			nearData.near = true;
 			nearData.data = {
 				x: pieceRight.current.localPosition.x,
@@ -161,13 +170,16 @@ const Piece = React.forwardRef<PieceActions, PieceProps>(({
 				side: 'right',
 				groupKey: pieceRight.current.pieceGroup,
 			};
-		} else if (pieceBottom.current
+		} else if (
+			pieceBottom.current
 			&& isNearPosition(
 				thisPiece.position.x,
 				thisPiece.position.y,
 				pieceBottom.current.position.x,
 				pieceBottom.current.position.y,
-			)) {
+			)
+			&& thisPiece.pieceGroup !== pieceBottom.current.pieceGroup
+		) {
 			nearData.near = true;
 			nearData.data = {
 				x: pieceBottom.current.localPosition.x,
@@ -181,7 +193,7 @@ const Piece = React.forwardRef<PieceActions, PieceProps>(({
 	}
 
 	useImperativeHandle(ref, () => ({
-		isNearSidePiece,
+		isNearAdjacentPiece,
 		updateGlobalPosition,
 		updateLocalPosition,
 	}));
