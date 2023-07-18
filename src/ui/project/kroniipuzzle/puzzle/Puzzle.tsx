@@ -95,21 +95,19 @@ const getRandom = (
 	arr: { name: string, weight: number }[],
 ) => {
 	const totalWeight = arr.reduce((sum, item) => sum + item.weight, 0);
-	const randomNum = Math.random() * totalWeight;
+	let randomNum = Math.random() * totalWeight;
 
-	let accumulatedWeight = 0;
-	let selectedIdx = -1;
-
-	arr.some((item, index) => {
-		accumulatedWeight += item.weight;
-		if (randomNum <= accumulatedWeight) {
-			selectedIdx = index;
-			return true;
+	let { name } = arr[arr.length - 1];
+	// eslint-disable-next-line no-restricted-syntax
+	for (const item of arr) {
+		randomNum -= item.weight;
+		if (randomNum <= 0) {
+			name = item.name;
+			break;
 		}
-		return false;
-	});
+	}
 
-	return arr[selectedIdx].name;
+	return name;
 };
 
 export default function Puzzle({
