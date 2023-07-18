@@ -27,7 +27,14 @@ interface PuzzleProps {
 	submissions: Message[];
 }
 
-const SOUND_LOOP_ORDER = ['main_01', 'main_02'];
+const SOUNDS = {
+	intro: 'intro',
+	main1: 'main_01',
+	choir: 'choir',
+	main2: 'main_02',
+	solo: 'solo',
+	drums: 'drums_only',
+};
 
 function flatIndexToSpiralCoordinates(index: number): [number, number] | null {
 	// todo: these are hard-coded. possibly need to change
@@ -83,6 +90,8 @@ function flatIndexToSpiralCoordinates(index: number): [number, number] | null {
 
 	return null;
 }
+
+const getRandom = (arr: string[]) => arr[Math.floor(Math.random() * arr.length)];
 
 export default function Puzzle({
 	// @ts-ignore
@@ -170,19 +179,49 @@ export default function Puzzle({
 			loaded: (_, sound) => loadCallback('solo', sound!),
 			...defaultSettings,
 		});
+
+		Sound.from({
+			url: '/assets/kroniipuzzle/bgm/time_loop_drums_only.ogg',
+			loaded: (_, sound) => loadCallback('drums_only', sound!),
+			...defaultSettings,
+		});
 	}, []);
 
 	useEffect(() => {
 		if (!sounds) return;
 
-		let counter = 0;
+		let sound = SOUNDS.intro;
 
 		const introInstance = sounds.intro.play() as IMediaInstance;
 
 		function nextSound() {
-			console.log(`Playing sound ${counter + 1}/${SOUND_LOOP_ORDER.length}`);
-			const instance = sounds![SOUND_LOOP_ORDER[counter]].play() as IMediaInstance;
-			counter = counter + 1 === SOUND_LOOP_ORDER.length ? 0 : counter + 1;
+			switch (sound) {
+				case SOUNDS.intro:
+					sound = SOUNDS.main1;
+					break;
+				case SOUNDS.main1:
+					sound = getRandom([SOUNDS.choir, SOUNDS.main2, SOUNDS.drums]);
+					break;
+				case SOUNDS.choir:
+					sound = getRandom([SOUNDS.choir, SOUNDS.main2, SOUNDS.drums]);
+					break;
+				case SOUNDS.main2:
+					sound = getRandom([SOUNDS.main1, SOUNDS.solo, SOUNDS.drums]);
+					break;
+				case SOUNDS.solo:
+					sound = getRandom([SOUNDS.main1, SOUNDS.drums]);
+					break;
+				case SOUNDS.drums:
+					sound = getRandom([SOUNDS.main1, SOUNDS.drums]);
+					break;
+				default:
+					// note: this should never happen
+					sound = SOUNDS.main1;
+					break;
+			}
+
+			console.log(`Playing sound ${sound}`);
+			const instance = sounds![sound].play() as IMediaInstance;
 			instance.on('end', () => nextSound());
 		}
 
