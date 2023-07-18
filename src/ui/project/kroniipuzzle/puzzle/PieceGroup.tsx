@@ -129,15 +129,7 @@ export default function PieceGroup({
 			};
 		}
 
-		const oldGroupKey = nearPiece.pieceGroup;
 		const newGroupKey = nearData.groupKey;
-		// todo: maybe figure out why this is happening if it continues causing issues
-		// for now just return
-		if (oldGroupKey === newGroupKey) {
-			console.log(`attempting to change to the same group. this should not be happening. ${oldGroupKey}`);
-			return;
-		}
-		console.log(`changePieceGroup from ${oldGroupKey} to ${newGroupKey}`);
 
 		changePieceGroup(newGroupKey, positionData);
 	};

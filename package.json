@@ -31,6 +31,7 @@
     "@mdi/react": "1.6.1",
     "@pixi/graphics-smooth": "^1.1.0",
     "@pixi/react": "7.1.0",
+    "@pixi/sound": "^5.2.0",
     "daisyui": "3.1.7",
     "date-fns": "2.30.0",
     "escape-html": "1.0.3",
