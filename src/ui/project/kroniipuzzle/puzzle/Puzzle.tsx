@@ -91,7 +91,26 @@ function flatIndexToSpiralCoordinates(index: number): [number, number] | null {
 	return null;
 }
 
-const getRandom = (arr: string[]) => arr[Math.floor(Math.random() * arr.length)];
+const getRandom = (
+	arr: { name: string, weight: number }[],
+) => {
+	const totalWeight = arr.reduce((sum, item) => sum + item.weight, 0);
+	const randomNum = Math.random() * totalWeight;
+
+	let accumulatedWeight = 0;
+	let selectedIdx = -1;
+
+	arr.some((item, index) => {
+		accumulatedWeight += item.weight;
+		if (randomNum <= accumulatedWeight) {
+			selectedIdx = index;
+			return true;
+		}
+		return false;
+	});
+
+	return arr[selectedIdx].name;
+};
 
 export default function Puzzle({
 	// @ts-ignore
@@ -200,19 +219,33 @@ export default function Puzzle({
 					sound = SOUNDS.main1;
 					break;
 				case SOUNDS.main1:
-					sound = getRandom([SOUNDS.choir, SOUNDS.main2, SOUNDS.drums]);
+					sound = getRandom([
+						{ name: SOUNDS.choir, weight: 1 },
+						{ name: SOUNDS.main2, weight: 2 },
+					]);
 					break;
 				case SOUNDS.choir:
-					sound = getRandom([SOUNDS.choir, SOUNDS.main2, SOUNDS.drums]);
+					sound = getRandom([
+						{ name: SOUNDS.choir, weight: 1 },
+						{ name: SOUNDS.main2, weight: 2 },
+					]);
 					break;
 				case SOUNDS.main2:
-					sound = getRandom([SOUNDS.main1, SOUNDS.solo, SOUNDS.drums]);
+					sound = getRandom([
+						{ name: SOUNDS.main1, weight: 2 },
+						{ name: SOUNDS.solo, weight: 1 },
+					]);
 					break;
 				case SOUNDS.solo:
-					sound = getRandom([SOUNDS.main1, SOUNDS.drums]);
+					sound = getRandom([
+						{ name: SOUNDS.main1, weight: 2 },
+						{ name: SOUNDS.drums, weight: 1 },
+					]);
 					break;
 				case SOUNDS.drums:
-					sound = getRandom([SOUNDS.main1, SOUNDS.drums]);
+					sound = getRandom([
+						{ name: SOUNDS.main1, weight: 1 },
+					]);
 					break;
 				default:
 					// note: this should never happen
