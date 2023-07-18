@@ -67,8 +67,7 @@ export default function PixiWrapper({ project, submissions }: IProps) {
 	useEffect(() => {
 		(async () => {
 			await PIXI.Assets.init({ manifest: '/assets/kroniipuzzle/manifest.json' });
-			await PIXI.Assets.loadBundle('puzzle');
-			await PIXI.Assets.loadBundle('pieces', (progress) => {
+			await PIXI.Assets.loadBundle('puzzle', (progress) => {
 				setLoadProgress(progress * 100);
 			});
 
@@ -112,7 +111,11 @@ export default function PixiWrapper({ project, submissions }: IProps) {
 				}}
 				className={!OS.desktop && orientation.startsWith('portrait') ? 'hidden' : ''}
 			>
-				<PixiPuzzleContainer project={project} stageSize={stageSize} submissions={submissions} />
+				<PixiPuzzleContainer
+					project={project}
+					stageSize={stageSize}
+					submissions={submissions}
+				/>
 			</Stage>
 		</>
 	);

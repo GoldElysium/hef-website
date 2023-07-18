@@ -32,6 +32,9 @@ dependencies:
   '@pixi/react':
     specifier: 7.1.0
     version: 7.1.0(@babel/runtime@7.22.6)(@pixi/app@7.2.4)(@pixi/constants@7.2.4)(@pixi/core@7.2.4)(@pixi/display@7.2.4)(@pixi/extensions@7.2.4)(@pixi/graphics@7.2.4)(@pixi/math@7.2.4)(@pixi/mesh-extras@7.2.4)(@pixi/mesh@7.2.4)(@pixi/particle-container@7.2.4)(@pixi/sprite-animated@7.2.4)(@pixi/sprite-tiling@7.2.4)(@pixi/sprite@7.2.4)(@pixi/text-bitmap@7.2.4)(@pixi/text@7.2.4)(@pixi/ticker@7.2.4)(prop-types@15.8.1)(react-dom@18.2.0)(react@18.2.0)
+  '@pixi/sound':
+    specifier: ^5.2.0
+    version: 5.2.0(@pixi/assets@7.2.4)(@pixi/core@7.2.4)
   daisyui:
     specifier: 3.1.7
     version: 3.1.7(postcss@8.4.24)(ts-node@10.9.1)
@@ -3730,6 +3733,16 @@ packages:
       '@pixi/constants': 7.2.4
       '@types/css-font-loading-module': 0.0.7
       ismobilejs: 1.1.1
+    dev: false
+
+  /@pixi/sound@5.2.0(@pixi/assets@7.2.4)(@pixi/core@7.2.4):
+    resolution: {integrity: sha512-biVjh9AGFV8dO6/h55Qc2VPTbO7w6Ag1p5xuz47O9/uKUdzph57JlZz0A8y2Ez0sUAwp59uZKbN2NqpWf0lwRQ==}
+    peerDependencies:
+      '@pixi/assets': ^7.0.0
+      '@pixi/core': ^7.0.0
+    dependencies:
+      '@pixi/assets': 7.2.4(@pixi/core@7.2.4)(@pixi/utils@7.2.4)
+      '@pixi/core': 7.2.4
     dev: false
 
   /@pixi/sprite-animated@7.2.4(@pixi/core@7.2.4)(@pixi/sprite@7.2.4):

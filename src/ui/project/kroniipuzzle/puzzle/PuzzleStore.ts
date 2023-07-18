@@ -102,9 +102,9 @@ const usePuzzleStore = create(devtools(
 			}),
 			updatePieceGroupPosition: (key: string) => (newPos) => set((state) => {
 				const pieceGroup = state.pieceGroups[key];
-				const oldPos = pieceGroup.position;
+				// const oldPos = pieceGroup.position;
 
-				console.log(JSON.stringify({ oldPos, newPos }));
+				// console.log(JSON.stringify({ oldPos, newPos }));
 				pieceGroup.position = newPos;
 			}),
 			changePieceGroup: (key) => (newGroupKey, positionData) => set((state) => {
