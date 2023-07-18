@@ -167,41 +167,30 @@ export default function Puzzle({
 			singleInstance: true,
 		};
 
-		Sound.from({
-			url: '/assets/kroniipuzzle/bgm/time_loop_intro.ogg',
-			loaded: (_, sound) => loadCallback('intro', sound!),
-			...defaultSettings,
-		});
+		const loadSound = (name: string) => {
+			Sound.from({
+				url: `/assets/kroniipuzzle/bgm/time_loop_${name}.ogg`,
+				loaded: (_, sound) => loadCallback(name, sound!),
+				...defaultSettings,
+			});
+		};
 
-		Sound.from({
-			url: '/assets/kroniipuzzle/bgm/time_loop_main_01.ogg',
-			loaded: (_, sound) => loadCallback('main_01', sound!),
-			...defaultSettings,
-		});
+		const names = ['intro', 'main_01', 'main_02', 'choir', 'solo', 'drums_only'];
 
-		Sound.from({
-			url: '/assets/kroniipuzzle/bgm/time_loop_main_02.ogg',
-			loaded: (_, sound) => loadCallback('main_02', sound!),
-			...defaultSettings,
-		});
+		// eslint-disable-next-line no-restricted-syntax
+		for (const name of names) {
+			loadSound(name);
+		}
 
-		Sound.from({
-			url: '/assets/kroniipuzzle/bgm/time_loop_choir.ogg',
-			loaded: (_, sound) => loadCallback('choir', sound!),
-			...defaultSettings,
-		});
-
-		Sound.from({
-			url: '/assets/kroniipuzzle/bgm/time_loop_solo.ogg',
-			loaded: (_, sound) => loadCallback('solo', sound!),
-			...defaultSettings,
-		});
-
-		Sound.from({
-			url: '/assets/kroniipuzzle/bgm/time_loop_drums_only.ogg',
-			loaded: (_, sound) => loadCallback('drums_only', sound!),
-			...defaultSettings,
-		});
+		return () => {
+			// eslint-disable-next-line no-restricted-syntax
+			for (const name of names) {
+				if (loadedSounds[name]) {
+					loadedSounds[name].stop();
+					loadedSounds[name].destroy();
+				}
+			}
+		};
 	}, []);
 
 	useEffect(() => {
