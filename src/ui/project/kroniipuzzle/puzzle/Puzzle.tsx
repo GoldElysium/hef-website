@@ -100,7 +100,8 @@ export default function Puzzle({
 	}, [correctCount]);
 
 	// todo: this should be drawn under the puzzle
-	const drawPuzzleContainer = useCallback((g: PIXI.Graphics) => {
+	// todo: the rect width and height don't seem consisten between renders at page refresh?
+	const drawPuzzleBounds = useCallback((g: PIXI.Graphics) => {
 		const lineWidth = 6;
 		g.clear();
 		g.lineStyle(lineWidth, 0xffffff);
@@ -190,7 +191,7 @@ export default function Puzzle({
 			<Graphics
 				width={width}
 				height={height}
-				draw={drawPuzzleContainer}
+				draw={drawPuzzleBounds}
 			/>
 			{Object.entries(pieceGroups)
 				/* eslint-disable @typescript-eslint/no-unused-vars */
