@@ -45,7 +45,7 @@ function flatIndexToSpiralCoordinates(index: number): [number, number] | null {
 	let y = centerRow;
 	let dx = 1;
 	let dy = 0;
-	const initialSideLength = 13;
+	const initialSideLength = 10;
 	let sideLength = initialSideLength;
 	let stepsInSide = 0;
 	let currentIndex = 0;
@@ -353,7 +353,7 @@ export default function Puzzle({
 			{Object.entries(pieceGroups)
 				.map(([groupKey, pieceGroup]) => {
 					const coords = flatIndexToSpiralCoordinates(
-						pieceGroup.randomIndex + (Math.floor(PIECE_COUNT * 0.6) - 10),
+						pieceGroup.randomIndex + (Math.floor(PIECE_COUNT * 0.35)) + 5,
 					);
 					const [c, r] = coords || [0, 0];
 
@@ -363,8 +363,8 @@ export default function Puzzle({
 							groupKey={groupKey}
 							pieces={puzzlePieces}
 							// todo: the adjustment of + and - PIECE_SIZE need tweaking
-							initialX={c * PIECE_SIZE * 1.5 + PIECE_SIZE}
-							initialY={r * PIECE_SIZE * 1.5 - PIECE_SIZE}
+							initialX={c * PIECE_SIZE * 1.75}
+							initialY={r * PIECE_SIZE * 1.75 - PIECE_SIZE * 2}
 							playTick={() => sounds!.tick.play()}
 							playTock={() => sounds!.tock.play()}
 						/>
