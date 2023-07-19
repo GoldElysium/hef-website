@@ -167,6 +167,7 @@ export default function PieceGroup({
 		setDisableDragging(true);
 		const now = Date.now();
 		setLastUpdatedAt(now);
+		playTick();
 	};
 
 	const handleDragMove = (event: FederatedPointerEvent) => {
