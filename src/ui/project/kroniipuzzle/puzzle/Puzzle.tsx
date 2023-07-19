@@ -194,7 +194,7 @@ export default function Puzzle({
 			loadBgmTrack(name);
 		}
 
-		const sfxTrackNames = ['Tick', 'Tock'];
+		const sfxTrackNames = ['tick', 'tock'];
 
 		// eslint-disable-next-line no-restricted-syntax
 		for (const name of sfxTrackNames) {
@@ -365,8 +365,8 @@ export default function Puzzle({
 							// todo: the adjustment of + and - PIECE_SIZE need tweaking
 							initialX={c * PIECE_SIZE * 1.5 + PIECE_SIZE}
 							initialY={r * PIECE_SIZE * 1.5 - PIECE_SIZE}
-							playTick={() => sounds!.Tick.play()}
-							playTock={() => sounds!.Tock.play()}
+							playTick={() => sounds!.tick.play()}
+							playTock={() => sounds!.tock.play()}
 						/>
 					);
 				})}
