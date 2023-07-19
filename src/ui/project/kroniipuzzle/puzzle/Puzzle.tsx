@@ -163,11 +163,11 @@ export default function Puzzle({
 
 		const defaultSettings = {
 			preload: true,
-			volume: 0.1,
+			volume: 0.05,
 			singleInstance: true,
 		};
 
-		const loadSound = (name: string) => {
+		const loadBgmTrack = (name: string) => {
 			Sound.from({
 				url: `/assets/kroniipuzzle/bgm/time_loop_${name}.ogg`,
 				loaded: (_, sound) => loadCallback(name, sound!),
@@ -175,16 +175,43 @@ export default function Puzzle({
 			});
 		};
 
-		const names = ['intro', 'main_01', 'main_02', 'choir', 'solo', 'drums_only'];
+		const loadSfxTrack = (name: string) => {
+			Sound.from({
+				url: `/assets/kroniipuzzle/sfx/${name}.wav`,
+				loaded: (_, sound) => loadCallback(name, sound!),
+				...{
+					preload: true,
+					volume: 0.5,
+					singleInstance: true,
+				},
+			});
+		};
+
+		const bgmTrackNames = ['intro', 'main_01', 'main_02', 'choir', 'solo', 'drums_only'];
 
 		// eslint-disable-next-line no-restricted-syntax
-		for (const name of names) {
-			loadSound(name);
+		for (const name of bgmTrackNames) {
+			loadBgmTrack(name);
+		}
+
+		const sfxTrackNames = ['Tick', 'Tock'];
+
+		// eslint-disable-next-line no-restricted-syntax
+		for (const name of sfxTrackNames) {
+			loadSfxTrack(name);
 		}
 
 		return () => {
 			// eslint-disable-next-line no-restricted-syntax
-			for (const name of names) {
+			for (const name of bgmTrackNames) {
+				if (loadedSounds[name]) {
+					loadedSounds[name].stop();
+					loadedSounds[name].destroy();
+				}
+			}
+
+			// eslint-disable-next-line no-restricted-syntax
+			for (const name of sfxTrackNames) {
 				if (loadedSounds[name]) {
 					loadedSounds[name].stop();
 					loadedSounds[name].destroy();
@@ -338,6 +365,8 @@ export default function Puzzle({
 							// todo: the adjustment of + and - PIECE_SIZE need tweaking
 							initialX={c * PIECE_SIZE * 1.5 + PIECE_SIZE}
 							initialY={r * PIECE_SIZE * 1.5 - PIECE_SIZE}
+							playTick={() => sounds!.Tick.play()}
+							playTock={() => sounds!.Tock.play()}
 						/>
 					);
 				})}

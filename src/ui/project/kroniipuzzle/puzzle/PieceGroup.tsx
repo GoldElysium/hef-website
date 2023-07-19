@@ -13,11 +13,13 @@ interface PieceGroupProps {
 	pieces: Record<string, { ref: React.MutableRefObject<PieceActions>, piece: JSX.Element }>;
 	initialX: number;
 	initialY: number;
+	playTick: () => void;
+	playTock: () => void;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function PieceGroup({
-	groupKey, pieces, initialX, initialY,
+	groupKey, pieces, initialX, initialY, playTick, playTock,
 }: PieceGroupProps) {
 	/* eslint-disable @typescript-eslint/no-unused-vars */
 	const [dragging, setDragging] = useState(false);
@@ -98,6 +100,7 @@ export default function PieceGroup({
 			setCurrentPosition(newPos);
 			updatePieceGroupPosition(newPos);
 
+			playTick();
 			return;
 		}
 
@@ -132,6 +135,8 @@ export default function PieceGroup({
 		const newGroupKey = nearData.groupKey;
 
 		changePieceGroup(newGroupKey, positionData);
+
+		playTock();
 	};
 
 	const settlePieceGroup = (targetPosition: { x: number, y: number }) => {
@@ -145,6 +150,8 @@ export default function PieceGroup({
 		for (const pieceKey of thisPieceGroup.pieces) {
 			pieces[pieceKey].ref.current.updateGlobalPosition();
 		}
+
+		playTock();
 	};
 
 	const handleDragStart = (event: FederatedPointerEvent) => {
