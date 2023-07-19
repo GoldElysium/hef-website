@@ -100,7 +100,7 @@ export default function PieceGroup({
 			setCurrentPosition(newPos);
 			updatePieceGroupPosition(newPos);
 
-			playTick();
+			playTock();
 			return;
 		}
 
@@ -136,7 +136,7 @@ export default function PieceGroup({
 
 		changePieceGroup(newGroupKey, positionData);
 
-		playTock();
+		playTick();
 	};
 
 	const settlePieceGroup = (targetPosition: { x: number, y: number }) => {
@@ -151,7 +151,7 @@ export default function PieceGroup({
 			pieces[pieceKey].ref.current.updateGlobalPosition();
 		}
 
-		playTock();
+		playTick();
 	};
 
 	const handleDragStart = (event: FederatedPointerEvent) => {
