@@ -82,12 +82,14 @@ export default function PixiWrapper({ project, submissions }: IProps) {
 	// TODO: Proper loading screen
 	if (!ready) {
 		return (
-			<p>
-				Loading...
-				{' '}
-				{loadProgress.toFixed(0)}
-				%
-			</p>
+			<div className="min-h-screen h-full min-w-screen w-full grid place-items-center dark:text-white">
+				<div>
+					<p className="text-lg">
+						Loading...
+					</p>
+					<progress value={loadProgress.toFixed(0)} max={100} className="progress progress-info w-96 max-w-lg" />
+				</div>
+			</div>
 		);
 	}
 
