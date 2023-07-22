@@ -116,6 +116,9 @@ export default function Puzzle({
 }: PuzzleProps) {
 	const [assetBundle, setAssetBundle] = useState<null | any>(null);
 	const [sounds, setSounds] = useState<null | Record<string, Sound>>(null);
+	const [currentBgmInstance, setCurrentBgmInstance] = useState<IMediaInstance>();
+
+	const { volume, muted } = usePuzzleStore((state) => state.audio);
 
 	const puzzlePiecesRefs: Record<string, React.MutableRefObject<PieceActions>> = {};
 
@@ -151,12 +154,14 @@ export default function Puzzle({
 	}, []);
 
 	useEffect(() => {
+		const bgmTrackNames = ['intro', 'main_01', 'main_02', 'choir', 'solo', 'drums_only'];
+		const sfxTrackNames = ['tick', 'tock'];
 		const loadedSounds: Record<string, Sound> = {};
 
 		function loadCallback(name: string, sound: Sound) {
 			loadedSounds[name] = sound;
 			// Very lazy way to check if everything is loaded
-			if (Object.keys(loadedSounds).length === 5) {
+			if (Object.keys(loadedSounds).length === bgmTrackNames.length + sfxTrackNames.length) {
 				setSounds(loadedSounds);
 			}
 		}
@@ -187,14 +192,10 @@ export default function Puzzle({
 			});
 		};
 
-		const bgmTrackNames = ['intro', 'main_01', 'main_02', 'choir', 'solo', 'drums_only'];
-
 		// eslint-disable-next-line no-restricted-syntax
 		for (const name of bgmTrackNames) {
 			loadBgmTrack(name);
 		}
-
-		const sfxTrackNames = ['tick', 'tock'];
 
 		// eslint-disable-next-line no-restricted-syntax
 		for (const name of sfxTrackNames) {
@@ -226,6 +227,7 @@ export default function Puzzle({
 		let sound = SOUNDS.intro;
 
 		const introInstance = sounds.intro.play() as IMediaInstance;
+		setCurrentBgmInstance(introInstance);
 
 		function nextSound() {
 			switch (sound) {
@@ -268,7 +270,8 @@ export default function Puzzle({
 			}
 
 			console.log(`Playing sound ${sound}`);
-			const instance = sounds![sound].play() as IMediaInstance;
+			const instance = sounds![sound].play({ volume }) as IMediaInstance;
+			setCurrentBgmInstance(instance);
 			instance.on('end', () => nextSound());
 		}
 
@@ -276,6 +279,14 @@ export default function Puzzle({
 			nextSound();
 		});
 	}, [sounds]);
+
+	useEffect(() => {
+		currentBgmInstance?.set('volume', volume);
+	}, [volume]);
+
+	useEffect(() => {
+		currentBgmInstance?.set('paused', muted);
+	}, [muted]);
 
 	for (let r = 0; r < ROW_COUNT; r++) {
 		for (let c = 0; c < COL_COUNT; c++) {

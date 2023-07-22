@@ -21,7 +21,6 @@ interface PieceGroupProps {
 export default function PieceGroup({
 	groupKey, pieces, initialX, initialY, playTick, playTock,
 }: PieceGroupProps) {
-	/* eslint-disable @typescript-eslint/no-unused-vars */
 	const [dragging, setDragging] = useState(false);
 	const [currentPosition, setCurrentPosition] = useState({ x: initialX, y: initialY });
 	const [lastUpdatedAt, setLastUpdatedAt] = useState(Date.now());
@@ -40,7 +39,6 @@ export default function PieceGroup({
 			state.changePieceGroup(groupKey),
 		],
 	);
-	/* eslint-enable */
 
 	// Set initial position in store
 	useEffect(() => {

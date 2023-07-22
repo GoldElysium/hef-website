@@ -36,6 +36,10 @@ interface State {
 		};
 	}
 	correctCount: number;
+	audio: {
+		volume: number;
+		muted: boolean;
+	}
 }
 
 interface Actions {
@@ -45,6 +49,8 @@ interface Actions {
 	// eslint-disable-next-line max-len
 	changePieceGroup: (key: string) => (newGroupKey: string, positionData: Record<string, { x: number; y:number; }>) => void;
 	setCorrect: (key: string) => () => void;
+	setVolume: (volume: number) => void;
+	setMuted: (muted: boolean) => void;
 }
 
 // TODO: Persist this data, see https://docs.pmnd.rs/zustand/integrations/persisting-store-data
@@ -54,6 +60,10 @@ const usePuzzleStore = create(devtools(
 			pieces: {},
 			pieceGroups: {},
 			correctCount: 0,
+			audio: {
+				volume: 0.5,
+				muted: false,
+			},
 		};
 
 		const randomIndexArray = Array.from({ length: PIECE_COUNT }, (_, index) => index)
@@ -133,6 +143,12 @@ const usePuzzleStore = create(devtools(
 			setCorrect: (key) => () => set((state) => {
 				state.pieceGroups[key].correct = true;
 				state.correctCount += state.pieceGroups[key].pieces.length;
+			}),
+			setVolume: (volume) => set((state) => {
+				state.audio.volume = volume;
+			}),
+			setMuted: (muted) => set((state) => {
+				state.audio.muted = muted;
 			}),
 		} satisfies State & Actions;
 	}),

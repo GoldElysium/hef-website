@@ -2,11 +2,13 @@
 
 import { Project } from 'types/payload-types';
 import { Stage } from '@pixi/react';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as PIXI from 'pixi.js';
 import OS from 'phaser/src/device/OS';
+import { SpeakerWaveIcon, SpeakerXMarkIcon } from '@heroicons/react/24/solid';
 import PixiPuzzleContainer from './PixiPuzzleContainer';
 import Message from './puzzle/Message';
+import usePuzzleStore from './puzzle/PuzzleStore';
 
 interface IProps {
 	project: Omit<Project, 'flags' | 'devprops'> & {
@@ -29,7 +31,8 @@ export default function PixiWrapper({ project, submissions }: IProps) {
 	const [loadProgress, setLoadProgress] = useState(0);
 	const [orientation, setOrientation] = useState('');
 
-	// TODO: Check if mobile, if so, force landscape and fullscreen like guratanabata.
+	const { volume, muted } = usePuzzleStore((state) => state.audio);
+	const [setVolume, setMuted] = usePuzzleStore((state) => [state.setVolume, state.setMuted]);
 
 	// Resize logic
 	useEffect(() => {
@@ -74,7 +77,6 @@ export default function PixiWrapper({ project, submissions }: IProps) {
 			setReady(true);
 		})();
 	}, []);
-
 	if (!stageSize) return null;
 
 	// TODO: Proper loading screen
@@ -117,6 +119,30 @@ export default function PixiWrapper({ project, submissions }: IProps) {
 					submissions={submissions}
 				/>
 			</Stage>
+
+			<div className="fixed right-4 bottom-4 z-50 text-black dark:text-white bg-skin-card dark:bg-skin-dark-card rounded-lg w-64 h-16 flex justify-between items-center gap-2 px-4 py-2">
+				<label className="swap swap-flip">
+					<input
+						type="checkbox"
+						className="text-black dark:text-white"
+						checked={muted}
+						onChange={() => setMuted(!muted)}
+					/>
+
+					<SpeakerWaveIcon className="swap-off w-6 h-6" />
+					<SpeakerXMarkIcon className="swap-on w-6 h-6" />
+				</label>
+				<input
+					type="range"
+					disabled={muted}
+					max={1}
+					min={0}
+					step={0.05}
+					value={volume}
+					onChange={(e) => setVolume(Number.parseFloat(e.target.value))}
+					className="range range-accent range-s disabled:range-xs"
+				/>
+			</div>
 		</>
 	);
 }
