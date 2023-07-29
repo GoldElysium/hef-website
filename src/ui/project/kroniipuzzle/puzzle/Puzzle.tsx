@@ -131,7 +131,7 @@ export default function Puzzle({
 				loaded: (_, sound) => loadCallback(name, sound!),
 				...{
 					preload: true,
-					volume: 0.5,
+					volume: 0.25,
 					singleInstance: true,
 				},
 			});
