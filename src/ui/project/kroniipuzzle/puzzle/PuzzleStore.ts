@@ -143,7 +143,7 @@ const usePuzzleStore = create(devtools(
 			pieceGroups: {},
 			correctCount: 0,
 			audio: {
-				volume: 0.5,
+				volume: 0.05,
 				muted: false,
 			},
 			shouldLoadPositions: false,
