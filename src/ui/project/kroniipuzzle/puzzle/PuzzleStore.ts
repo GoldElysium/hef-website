@@ -236,7 +236,7 @@ const usePuzzleStore = create(devtools(
 			}),
 			setVolume: (volume) => set((state) => {
 				const oldVolume = state.audio.volume;
-				console.log(`volume set from ${oldVolume} to ${volume}`);
+				console.log(`volume set: from ${oldVolume} to ${volume}`);
 				state.audio.volume = volume;
 				saveStateToLocalStorage(state);
 			}),
