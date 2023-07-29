@@ -111,6 +111,7 @@ export default function Puzzle({
 			}
 		}
 
+		console.log(`initial volume: ${volume}`);
 		const defaultSettings = {
 			preload: true,
 			volume,
