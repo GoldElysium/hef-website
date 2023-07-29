@@ -99,7 +99,7 @@ export default function Puzzle({
 	}, []);
 
 	useEffect(() => {
-		const bgmTrackNames = ['intro', 'main_01', 'main_02', 'choir', 'solo', 'drums_only'];
+		const bgmTrackNames = ['intro', 'main_01', 'main_02', 'choir', 'solo'];
 		const sfxTrackNames = ['tick', 'tock'];
 		const loadedSounds: Record<string, Sound> = {};
 
