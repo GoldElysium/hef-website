@@ -232,9 +232,13 @@ const usePuzzleStore = create(devtools(
 			setCorrect: (key) => () => set((state) => {
 				state.pieceGroups[key].correct = true;
 				state.correctCount += state.pieceGroups[key].pieces.length;
+				saveStateToLocalStorage(state);
 			}),
 			setVolume: (volume) => set((state) => {
+				const oldVolume = state.audio.volume;
+				console.log(`volume set from ${oldVolume} to ${volume}`);
 				state.audio.volume = volume;
+				saveStateToLocalStorage(state);
 			}),
 			setMuted: (muted) => set((state) => {
 				state.audio.muted = muted;
