@@ -12,7 +12,7 @@ import Piece, { PieceActions } from './Piece';
 import Message from './Message';
 import PieceInfo from './PieceInfo';
 import {
-	COL_COUNT, PIECE_COUNT, PIECE_SIZE, ROW_COUNT,
+	COL_COUNT, PIECE_COUNT, ROW_COUNT,
 } from './PuzzleConfig';
 import usePuzzleStore from './PuzzleStore';
 import PieceGroup from './PieceGroup';
@@ -35,61 +35,6 @@ const SOUNDS = {
 	solo: 'solo',
 	drums: 'drums_only',
 };
-
-function flatIndexToSpiralCoordinates(index: number): [number, number] | null {
-	// todo: these are hard-coded. possibly need to change
-	const centerRow = Math.ceil(ROW_COUNT / 3);
-	const centerCol = Math.ceil(COL_COUNT / 8);
-
-	let x = centerCol;
-	let y = centerRow;
-	let dx = 1;
-	let dy = 0;
-	const initialSideLength = 10;
-	let sideLength = initialSideLength;
-	let stepsInSide = 0;
-	let currentIndex = 0;
-
-	while (currentIndex < index) {
-		x += dx;
-		y += dy;
-		currentIndex += 1;
-
-		stepsInSide += 1;
-
-		if (stepsInSide >= sideLength) {
-			if (dx === 1 && dy === 0) {
-				// Right to Down
-				dx = 0;
-				dy = 1;
-				sideLength -= initialSideLength - 1;
-			} else if (dx === 0 && dy === 1) {
-				// Down to Left
-				dx = -1;
-				dy = 0;
-				sideLength += initialSideLength;
-			} else if (dx === -1 && dy === 0) {
-				// Left to Up
-				dx = 0;
-				dy = -1;
-				sideLength -= initialSideLength - 1;
-			} else if (dx === 0 && dy === -1) {
-				// Up to Right
-				dx = 1;
-				dy = 0;
-				sideLength += initialSideLength;
-			}
-
-			stepsInSide = 0;
-		}
-	}
-
-	if (currentIndex === index) {
-		return [x, y];
-	}
-
-	return null;
-}
 
 const getRandom = (
 	arr: { name: string, weight: number }[],
@@ -362,25 +307,18 @@ export default function Puzzle({
 				zIndex={-2}
 			/>
 			{Object.entries(pieceGroups)
-				.map(([groupKey, pieceGroup]) => {
-					const coords = flatIndexToSpiralCoordinates(
-						pieceGroup.randomIndex + (Math.floor(PIECE_COUNT * 0.35)) + 5,
-					);
-					const [c, r] = coords || [0, 0];
-
-					return (
-						<PieceGroup
-							key={groupKey}
-							groupKey={groupKey}
-							pieces={puzzlePieces}
-							// todo: the adjustment of + and - PIECE_SIZE need tweaking
-							initialX={c * PIECE_SIZE * 1.75}
-							initialY={r * PIECE_SIZE * 1.75 - PIECE_SIZE * 2}
-							playTick={() => sounds!.tick.play()}
-							playTock={() => sounds!.tock.play()}
-						/>
-					);
-				})}
+				.map(([groupKey, pieceGroup]) => (
+					<PieceGroup
+						key={groupKey}
+						groupKey={groupKey}
+						pieces={puzzlePieces}
+						// todo: the adjustment of + and - PIECE_SIZE need tweaking
+						initialX={pieceGroup.position.x}
+						initialY={pieceGroup.position.y}
+						playTick={() => sounds!.tick.play()}
+						playTock={() => sounds!.tock.play()}
+					/>
+				))}
 		</Container>
 	);
 }

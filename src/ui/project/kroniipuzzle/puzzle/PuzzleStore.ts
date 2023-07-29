@@ -40,6 +40,7 @@ interface State {
 		volume: number;
 		muted: boolean;
 	}
+	shouldLoadPositions: boolean;
 }
 
 interface Actions {
@@ -51,12 +52,93 @@ interface Actions {
 	setCorrect: (key: string) => () => void;
 	setVolume: (volume: number) => void;
 	setMuted: (muted: boolean) => void;
+	saveState: () => void;
 }
+
+function flatIndexToSpiralCoordinates(index: number): [number, number] | null {
+	// todo: these are hard-coded. possibly need to change
+	const centerRow = Math.ceil(ROW_COUNT / 3);
+	const centerCol = Math.ceil(COL_COUNT / 8);
+
+	let x = centerCol;
+	let y = centerRow;
+	let dx = 1;
+	let dy = 0;
+	const initialSideLength = 10;
+	let sideLength = initialSideLength;
+	let stepsInSide = 0;
+	let currentIndex = 0;
+
+	while (currentIndex < index) {
+		x += dx;
+		y += dy;
+		currentIndex += 1;
+
+		stepsInSide += 1;
+
+		if (stepsInSide >= sideLength) {
+			if (dx === 1 && dy === 0) {
+				// Right to Down
+				dx = 0;
+				dy = 1;
+				sideLength -= initialSideLength - 1;
+			} else if (dx === 0 && dy === 1) {
+				// Down to Left
+				dx = -1;
+				dy = 0;
+				sideLength += initialSideLength;
+			} else if (dx === -1 && dy === 0) {
+				// Left to Up
+				dx = 0;
+				dy = -1;
+				sideLength -= initialSideLength - 1;
+			} else if (dx === 0 && dy === -1) {
+				// Up to Right
+				dx = 1;
+				dy = 0;
+				sideLength += initialSideLength;
+			}
+
+			stepsInSide = 0;
+		}
+	}
+
+	if (currentIndex === index) {
+		return [x, y];
+	}
+
+	return null;
+}
+
+// Function to save the state to localStorage
+const saveStateToLocalStorage = (state: State) => {
+	try {
+		const serializedState = JSON.stringify(state);
+		localStorage.setItem('puzzleState', serializedState);
+		// console.log('Data saved to localStorage');
+	} catch (error) {
+		console.error('Error saving state to localStorage:', error);
+	}
+};
+
+// Function to load the state from localStorage
+const loadStateFromLocalStorage = () => {
+	try {
+		const serializedState = localStorage.getItem('puzzleState');
+		console.log('Data loaded from localStorage:', serializedState);
+		return serializedState ? JSON.parse(serializedState) : undefined;
+	} catch (error) {
+		console.error('Error loading state from localStorage:', error);
+		return undefined;
+	}
+};
 
 // TODO: Persist this data, see https://docs.pmnd.rs/zustand/integrations/persisting-store-data
 const usePuzzleStore = create(devtools(
 	immer<State & Actions>((set) => {
-		const initialState: State = {
+		const loadedState = loadStateFromLocalStorage();
+
+		const initialState: State = loadedState || {
 			pieces: {},
 			pieceGroups: {},
 			correctCount: 0,
@@ -64,42 +146,50 @@ const usePuzzleStore = create(devtools(
 				volume: 0.5,
 				muted: false,
 			},
+			shouldLoadPositions: false,
 		};
 
-		const randomIndexArray = Array.from({ length: PIECE_COUNT }, (_, index) => index)
-			.sort(() => Math.random() - 0.5);
+		console.log(`state ${loadedState ? '' : 'not '}loaded`);
 
-		for (let r = 0; r < ROW_COUNT; r++) {
-			for (let c = 0; c < COL_COUNT; c++) {
-				const index = randomIndexArray[r * COL_COUNT + c];
-				const x = (index % COL_COUNT) * PIECE_SIZE;
-				const y = Math.floor(index / COL_COUNT) * PIECE_SIZE;
+		if (!loadedState) {
+			const randomIndexArray = Array.from({ length: PIECE_COUNT }, (_, index) => index)
+				.sort(() => Math.random() - 0.5);
 
-				initialState.pieces[`${r}-${c}`] = {
-					position: {
-						x,
-						y,
-					},
-					localPosition: {
-						x: 0,
-						y: 0,
-					},
-					pieceGroup: `${r}-${c}`,
-				};
-				initialState.pieceGroups[`${r}-${c}`] = {
-					position: {
-						x,
-						y,
-					},
-					targetPosition: {
-						x: c * PIECE_SIZE,
-						y: r * PIECE_SIZE,
-					},
-					pieces: [`${r}-${c}`],
-					correct: false,
-					randomIndex: randomIndexArray[r * COL_COUNT + c],
-				};
+			for (let r = 0; r < ROW_COUNT; r++) {
+				for (let c = 0; c < COL_COUNT; c++) {
+					const index = randomIndexArray[r * COL_COUNT + c];
+					const [cc, rr] = flatIndexToSpiralCoordinates(index) || [0, 0];
+					const x = cc * PIECE_SIZE * 1.75;
+					const y = rr * PIECE_SIZE * 1.75 - PIECE_SIZE * 2;
+
+					initialState.pieces[`${r}-${c}`] = {
+						position: {
+							x,
+							y,
+						},
+						localPosition: {
+							x: 0,
+							y: 0,
+						},
+						pieceGroup: `${r}-${c}`,
+					};
+					initialState.pieceGroups[`${r}-${c}`] = {
+						position: {
+							x,
+							y,
+						},
+						targetPosition: {
+							x: c * PIECE_SIZE,
+							y: r * PIECE_SIZE,
+						},
+						pieces: [`${r}-${c}`],
+						correct: false,
+						randomIndex: randomIndexArray[r * COL_COUNT + c],
+					};
+				}
 			}
+
+			saveStateToLocalStorage(initialState);
 		}
 
 		return {
@@ -112,9 +202,6 @@ const usePuzzleStore = create(devtools(
 			}),
 			updatePieceGroupPosition: (key: string) => (newPos) => set((state) => {
 				const pieceGroup = state.pieceGroups[key];
-				// const oldPos = pieceGroup.position;
-
-				// console.log(JSON.stringify({ oldPos, newPos }));
 				pieceGroup.position = newPos;
 			}),
 			changePieceGroup: (key) => (newGroupKey, positionData) => set((state) => {
@@ -149,6 +236,10 @@ const usePuzzleStore = create(devtools(
 			}),
 			setMuted: (muted) => set((state) => {
 				state.audio.muted = muted;
+				saveStateToLocalStorage(state);
+			}),
+			saveState: () => set((state) => {
+				saveStateToLocalStorage(state);
 			}),
 		} satisfies State & Actions;
 	}),

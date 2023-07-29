@@ -107,7 +107,6 @@ const Piece = React.forwardRef<PieceActions, PieceProps>(({
 	}
 
 	function isNearPosition(current: any, target: any) {
-		console.log(JSON.stringify(current), JSON.stringify(target));
 		const currentX = current.position.x;
 		const currentY = current.position.y;
 		const targetX = target.position.x;
