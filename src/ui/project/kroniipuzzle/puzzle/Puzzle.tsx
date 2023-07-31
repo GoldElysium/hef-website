@@ -175,7 +175,13 @@ export default function Puzzle({
 
 		let sound = SOUNDS.intro;
 
-		const introInstance = sounds.intro.play() as IMediaInstance;
+		// eslint-disable-next-line max-len
+		const startVolume = usePuzzleStore.getState().audio.volume;
+		const introInstance = sounds.intro.play({ volume: muted ? 0 : startVolume }) as IMediaInstance;
+		if (muted) {
+			introInstance.set('paused', true);
+			introInstance.set('volume', startVolume);
+		}
 		setCurrentBgmInstance(introInstance);
 
 		function nextSound() {
@@ -219,7 +225,8 @@ export default function Puzzle({
 			}
 
 			console.log(`Playing sound ${sound}`);
-			const instance = sounds![sound].play({ volume }) as IMediaInstance;
+			const currentVolume = usePuzzleStore.getState().audio.volume;
+			const instance = sounds![sound].play({ volume: currentVolume }) as IMediaInstance;
 			setCurrentBgmInstance(instance);
 			instance.on('end', () => nextSound());
 		}

@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
-import { devtools } from 'zustand/middleware';
+import { devtools, persist } from 'zustand/middleware';
 import {
 	COL_COUNT, PIECE_COUNT, PIECE_SIZE, ROW_COUNT,
 } from './PuzzleConfig';
@@ -41,6 +41,7 @@ interface State {
 		muted: boolean;
 	}
 	shouldLoadPositions: boolean;
+	_hasHydrated: boolean;
 }
 
 interface Actions {
@@ -52,7 +53,7 @@ interface Actions {
 	setCorrect: (key: string) => () => void;
 	setVolume: (volume: number) => void;
 	setMuted: (muted: boolean) => void;
-	saveState: () => void;
+	setHasHydrated: (state: boolean) => void;
 }
 
 function flatIndexToSpiralCoordinates(index: number): [number, number] | null {
@@ -110,48 +111,21 @@ function flatIndexToSpiralCoordinates(index: number): [number, number] | null {
 	return null;
 }
 
-// Function to save the state to localStorage
-const saveStateToLocalStorage = (state: State) => {
-	try {
-		const serializedState = JSON.stringify(state);
-		localStorage.setItem('puzzleState', serializedState);
-		// console.log('Data saved to localStorage');
-	} catch (error) {
-		console.error('Error saving state to localStorage:', error);
-	}
-};
-
-// Function to load the state from localStorage
-const loadStateFromLocalStorage = () => {
-	try {
-		const serializedState = localStorage.getItem('puzzleState');
-		console.log('Data loaded from localStorage:', serializedState);
-		return serializedState ? JSON.parse(serializedState) : undefined;
-	} catch (error) {
-		console.error('Error loading state from localStorage:', error);
-		return undefined;
-	}
-};
-
-// TODO: Persist this data, see https://docs.pmnd.rs/zustand/integrations/persisting-store-data
 const usePuzzleStore = create(devtools(
-	immer<State & Actions>((set) => {
-		const loadedState = loadStateFromLocalStorage();
+	persist(
+		immer<State & Actions>((set) => {
+			const initialState: State = {
+				pieces: {},
+				pieceGroups: {},
+				correctCount: 0,
+				audio: {
+					volume: 0.05,
+					muted: false,
+				},
+				shouldLoadPositions: false,
+				_hasHydrated: false,
+			};
 
-		const initialState: State = loadedState || {
-			pieces: {},
-			pieceGroups: {},
-			correctCount: 0,
-			audio: {
-				volume: 0.05,
-				muted: false,
-			},
-			shouldLoadPositions: false,
-		};
-
-		console.log(`state ${loadedState ? '' : 'not '}loaded`);
-
-		if (!loadedState) {
 			const randomIndexArray = Array.from({ length: PIECE_COUNT }, (_, index) => index)
 				.sort(() => Math.random() - 0.5);
 
@@ -191,64 +165,65 @@ const usePuzzleStore = create(devtools(
 				}
 			}
 
-			saveStateToLocalStorage(initialState);
-		}
+			return {
+				...initialState,
+				updatePiecePosition: (key) => (newPos) => set((state) => {
+					state.pieces[key].position = newPos;
+				}),
+				updatePieceLocalPosition: (key, newPos) => set((state) => {
+					state.pieces[key].localPosition = newPos;
+				}),
+				updatePieceGroupPosition: (key: string) => (newPos) => set((state) => {
+					const pieceGroup = state.pieceGroups[key];
+					pieceGroup.position = newPos;
+				}),
+				changePieceGroup: (key) => (newGroupKey, positionData) => set((state) => {
+					const oldGroupKey = state.pieces[key].pieceGroup;
+					const oldGroup = state.pieceGroups[oldGroupKey].pieces;
 
-		return {
-			...initialState,
-			updatePiecePosition: (key) => (newPos) => set((state) => {
-				state.pieces[key].position = newPos;
-			}),
-			updatePieceLocalPosition: (key, newPos) => set((state) => {
-				state.pieces[key].localPosition = newPos;
-			}),
-			updatePieceGroupPosition: (key: string) => (newPos) => set((state) => {
-				const pieceGroup = state.pieceGroups[key];
-				pieceGroup.position = newPos;
-			}),
-			changePieceGroup: (key) => (newGroupKey, positionData) => set((state) => {
-				const oldGroupKey = state.pieces[key].pieceGroup;
-				const oldGroup = state.pieceGroups[oldGroupKey].pieces;
+					// eslint-disable-next-line no-restricted-syntax
+					for (const pieceKey of oldGroup) {
+						state.pieces[pieceKey].pieceGroup = newGroupKey;
+						state.pieces[pieceKey].localPosition = positionData[pieceKey];
+					}
 
-				// eslint-disable-next-line no-restricted-syntax
-				for (const pieceKey of oldGroup) {
-					state.pieces[pieceKey].pieceGroup = newGroupKey;
-					state.pieces[pieceKey].localPosition = positionData[pieceKey];
-				}
-
-				// todo: this errors out sometimes. state.pieceGroups[newGroupKey] is undefined
-				try {
-					const { pieces } = state.pieceGroups[newGroupKey];
-					const oldPieces = state.pieceGroups[oldGroupKey].pieces;
-					// Merge everything into the other group and delete the old group
-					pieces.push(...oldPieces);
-				} catch (e: any) {
-					console.log(`oldGroupKey: ${oldGroupKey}, newGroupKey: ${newGroupKey}`);
-					console.error(e);
-					return;
-				}
-				delete state.pieceGroups[oldGroupKey];
-			}),
-			setCorrect: (key) => () => set((state) => {
-				state.pieceGroups[key].correct = true;
-				state.correctCount += state.pieceGroups[key].pieces.length;
-				saveStateToLocalStorage(state);
-			}),
-			setVolume: (volume) => set((state) => {
-				const oldVolume = state.audio.volume;
-				console.log(`volume set: from ${oldVolume} to ${volume}`);
-				state.audio.volume = volume;
-				saveStateToLocalStorage(state);
-			}),
-			setMuted: (muted) => set((state) => {
-				state.audio.muted = muted;
-				saveStateToLocalStorage(state);
-			}),
-			saveState: () => set((state) => {
-				saveStateToLocalStorage(state);
-			}),
-		} satisfies State & Actions;
-	}),
+					// todo: this errors out sometimes. state.pieceGroups[newGroupKey] is undefined
+					try {
+						const { pieces } = state.pieceGroups[newGroupKey];
+						const oldPieces = state.pieceGroups[oldGroupKey].pieces;
+						// Merge everything into the other group and delete the old group
+						pieces.push(...oldPieces);
+					} catch (e: any) {
+						console.log(`oldGroupKey: ${oldGroupKey}, newGroupKey: ${newGroupKey}`);
+						console.error(e);
+						return;
+					}
+					delete state.pieceGroups[oldGroupKey];
+				}),
+				setCorrect: (key) => () => set((state) => {
+					state.pieceGroups[key].correct = true;
+					state.correctCount += state.pieceGroups[key].pieces.length;
+				}),
+				setVolume: (volume) => set((state) => {
+					const oldVolume = state.audio.volume;
+					console.log(`volume set: from ${oldVolume} to ${volume}`);
+					state.audio.volume = volume;
+				}),
+				setMuted: (muted) => set((state) => {
+					state.audio.muted = muted;
+				}),
+				setHasHydrated: (hasHydrated) => set((state) => {
+					state._hasHydrated = hasHydrated;
+				}),
+			} satisfies State & Actions;
+		}),
+		{
+			name: 'puzzle-storage',
+			onRehydrateStorage: () => (state) => {
+				state?.setHasHydrated(true);
+			},
+		},
+	),
 	{
 		store: 'KroniiPuzzle',
 		enabled: process.env.NODE_ENV !== 'production',

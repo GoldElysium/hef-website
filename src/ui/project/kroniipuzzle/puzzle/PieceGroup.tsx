@@ -32,13 +32,11 @@ export default function PieceGroup({
 		updatePieceGroupPosition,
 		setCorrect,
 		changePieceGroup,
-		saveState,
 	] = usePuzzleStore(
 		(state) => [
 			state.updatePieceGroupPosition(groupKey),
 			state.setCorrect(groupKey),
 			state.changePieceGroup(groupKey),
-			state.saveState,
 		],
 	);
 
@@ -58,7 +56,6 @@ export default function PieceGroup({
 		for (const pieceKey of thisPieceGroup.pieces) {
 			pieces[pieceKey].ref.current.updateGlobalPosition();
 		}
-		saveState();
 	}, []);
 
 	const isNearPosition = (currentX: number, currentY: number, targetX: number, targetY: number) => {
@@ -199,7 +196,6 @@ export default function PieceGroup({
 
 		setDragging(false);
 		setDisableDragging(false);
-		saveState();
 	};
 
 	return (
