@@ -8,6 +8,7 @@ import * as PIXI from 'pixi.js';
 import { Sprite as PixiSprite } from 'pixi.js';
 import { Container, Graphics } from '@pixi/react';
 import { IMediaInstance, Sound } from '@pixi/sound';
+import { WebAudioContext } from '@pixi/sound/lib/webaudio';
 import Piece, { PieceActions } from './Piece';
 import Message from './Message';
 import PieceInfo from './PieceInfo';
@@ -104,6 +105,8 @@ export default function Puzzle({
 		const loadedSounds: Record<string, Sound> = {};
 
 		function loadCallback(name: string, sound: Sound) {
+			// eslint-disable-next-line no-param-reassign
+			(sound.context as WebAudioContext).autoPause = false;
 			loadedSounds[name] = sound;
 			// Very lazy way to check if everything is loaded
 			if (Object.keys(loadedSounds).length === bgmTrackNames.length + sfxTrackNames.length) {
