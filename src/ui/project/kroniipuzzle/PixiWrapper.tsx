@@ -33,7 +33,6 @@ export default function PixiWrapper({ project, submissions }: IProps) {
 
 	const { volume, muted } = usePuzzleStore((state) => state.audio);
 	const [setVolume, setMuted] = usePuzzleStore((state) => [state.setVolume, state.setMuted]);
-	const storeHasHydrated = usePuzzleStore((state) => state._hasHydrated);
 
 	// Resize logic
 	useEffect(() => {
@@ -81,7 +80,7 @@ export default function PixiWrapper({ project, submissions }: IProps) {
 	if (!stageSize) return null;
 
 	// TODO: Proper loading screen
-	if (!ready || !storeHasHydrated) {
+	if (!ready) {
 		return (
 			<div className="min-h-screen h-full min-w-screen w-full grid place-items-center dark:text-white">
 				<div>

@@ -41,7 +41,6 @@ interface State {
 		muted: boolean;
 	}
 	shouldLoadPositions: boolean;
-	_hasHydrated: boolean;
 }
 
 interface Actions {
@@ -53,7 +52,6 @@ interface Actions {
 	setCorrect: (key: string) => () => void;
 	setVolume: (volume: number) => void;
 	setMuted: (muted: boolean) => void;
-	setHasHydrated: (state: boolean) => void;
 }
 
 function flatIndexToSpiralCoordinates(index: number): [number, number] | null {
@@ -123,7 +121,6 @@ const usePuzzleStore = create(devtools(
 					muted: false,
 				},
 				shouldLoadPositions: false,
-				_hasHydrated: false,
 			};
 
 			const randomIndexArray = Array.from({ length: PIECE_COUNT }, (_, index) => index)
@@ -212,16 +209,10 @@ const usePuzzleStore = create(devtools(
 				setMuted: (muted) => set((state) => {
 					state.audio.muted = muted;
 				}),
-				setHasHydrated: (hasHydrated) => set((state) => {
-					state._hasHydrated = hasHydrated;
-				}),
 			} satisfies State & Actions;
 		}),
 		{
 			name: 'puzzle-storage',
-			onRehydrateStorage: () => (state) => {
-				state?.setHasHydrated(true);
-			},
 		},
 	),
 	{
