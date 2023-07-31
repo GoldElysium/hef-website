@@ -62,7 +62,7 @@ export default function PieceGroup({
 		// todo: check this logic. probably too contrived to work consistently for all resolutions
 		const deltaX = Math.abs(currentX - targetX);
 		const deltaY = Math.abs(currentY - targetY);
-		return deltaX < 100 && deltaY < 100;
+		return deltaX < 50 && deltaY < 50;
 	};
 
 	const notNearTargetPositionLogic = (x: number, y: number) => {
