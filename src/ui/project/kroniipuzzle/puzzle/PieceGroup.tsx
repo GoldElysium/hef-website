@@ -152,10 +152,20 @@ export default function PieceGroup({
 		playTick();
 	};
 
-	const handleDragStart = (event: FederatedPointerEvent) => {
-		if (dragging || thisPieceGroup.correct) {
-			return;
+	const checkSelectPieces = async (event: FederatedPointerEvent) => {
+		// eslint-disable-next-line no-restricted-syntax
+		for (const pieceKey of thisPieceGroup.pieces) {
+			// eslint-disable-next-line max-len
+			if (pieces[pieceKey].ref.current.checkSelectPiece({ x: event.globalX, y: event.globalY })) break;
 		}
+	};
+
+	const handleDragStart = (event: FederatedPointerEvent) => {
+		if (dragging) return;
+		// TODO: Works, but VERY laggy
+		checkSelectPieces(event);
+
+		if (thisPieceGroup.correct) return;
 
 		const tempParent = event.target!.parent!;
 		if (tempParent != null) {

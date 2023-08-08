@@ -90,7 +90,11 @@ export default function PixiPuzzleContainer({
 					width={PUZZLE_WIDTH}
 					height={PUZZLE_WIDTH / 2}
 					puzzleFinished={() => setShowPuzzleCompleteModal(true)}
-					onPieceSelected={(piece: PieceInfo) => setSelectedPiece(piece)}
+					onPieceSelected={(piece: PieceInfo) => {
+						if (piece.id !== selectedPiece?.id) {
+							setSelectedPiece(piece);
+						}
+					}}
 					submissions={submissions}
 				/>
 			</Viewport>

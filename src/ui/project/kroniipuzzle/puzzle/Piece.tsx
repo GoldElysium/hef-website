@@ -39,6 +39,7 @@ export interface PieceActions {
 	isNearAdjacentPiece(): IsNearAdjacentPieceRes;
 	updateGlobalPosition(): void;
 	updateLocalPosition(newPosition: { x: number, y: number }): void;
+	checkSelectPiece(pos: { x: number, y:number }): boolean;
 }
 
 /* TODO:
@@ -189,25 +190,35 @@ const Piece = React.forwardRef<PieceActions, PieceProps>(({
 		return nearData;
 	}
 
+	function checkSelectPiece(pos: { x: number, y: number }): boolean {
+		if (!pieceContainerRef.current) return false;
+
+		const localPos = pieceContainerRef.current!.toLocal(pos);
+
+		if ((localPos.x >= 5 && localPos.x <= 50) && (localPos.y >= 5 && localPos.y <= 50)) {
+			setSelectedPiece({
+				id: `${r}-${c}`,
+				message,
+				sprite: kronie,
+			} as PieceInfo);
+			return true;
+		}
+
+		console.log(`${r}-${c}`, localPos);
+		return false;
+	}
+
 	useImperativeHandle(ref, () => ({
 		isNearAdjacentPiece,
 		updateGlobalPosition,
 		updateLocalPosition,
+		checkSelectPiece,
 	}));
 
-	// TODO: Something breaks badly when interaction is enabled on pieces, idk what
 	return (
 		<Container
 			x={thisPiece.localPosition.x}
 			y={thisPiece.localPosition.y}
-			// "auto" means non-interactive, "static" means interactive
-			eventMode="auto"
-			onpointertap={() => {
-				setSelectedPiece({
-					message,
-					sprite: kronie,
-				} as PieceInfo);
-			}}
 			ref={pieceContainerRef}
 		>
 

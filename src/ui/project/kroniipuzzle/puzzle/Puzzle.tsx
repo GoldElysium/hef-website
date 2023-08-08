@@ -326,8 +326,8 @@ export default function Puzzle({
 						// todo: the adjustment of + and - PIECE_SIZE need tweaking
 						initialX={pieceGroup.position.x}
 						initialY={pieceGroup.position.y}
-						playTick={() => sounds!.tick.play()}
-						playTock={() => sounds!.tock.play()}
+						playTick={() => sounds?.tick.play()}
+						playTock={() => sounds?.tock.play()}
 					/>
 				))}
 		</Container>
