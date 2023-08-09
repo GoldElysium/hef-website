@@ -2,21 +2,17 @@
 
 /* eslint-disable react/no-array-index-key */
 import React, {
-	ReactElement,
-	useCallback, useEffect, useMemo, useRef, useState,
+	ReactElement, useCallback, useEffect, useMemo, useRef, useState,
 } from 'react';
 import * as PIXI from 'pixi.js';
 import { Sprite as PixiSprite } from 'pixi.js';
 import { Container, Graphics } from '@pixi/react';
 import { IMediaInstance, Sound } from '@pixi/sound';
-import { WebAudioContext } from '@pixi/sound/lib/webaudio';
 import { shallow } from 'zustand/shallow';
 import Piece, { PieceActions } from './Piece';
 import Message from './Message';
 import PieceInfo from './PieceInfo';
-import {
-	COL_COUNT, PIECE_COUNT, ROW_COUNT,
-} from './PuzzleConfig';
+import { COL_COUNT, PIECE_COUNT, ROW_COUNT } from './PuzzleConfig';
 import usePuzzleStore from './PuzzleStore';
 import PieceGroup from './PieceGroup';
 
@@ -83,7 +79,6 @@ export default function Puzzle({
 		const lineWidth = 6;
 		g.clear();
 		g.lineStyle(lineWidth, 0xffffff);
-		console.log('Redrawing container');
 
 		g.drawRect(
 			lineWidth / 2,
@@ -106,8 +101,9 @@ export default function Puzzle({
 		const loadedSounds: Record<string, Sound> = {};
 
 		function loadCallback(name: string, sound: Sound) {
+			// TODO: Sound doubling bug when auto pause is disabled
 			// eslint-disable-next-line no-param-reassign
-			(sound.context as WebAudioContext).autoPause = false;
+			// (sound.context as WebAudioContext).autoPause = false;
 			loadedSounds[name] = sound;
 			// Very lazy way to check if everything is loaded
 			if (Object.keys(loadedSounds).length === bgmTrackNames.length + sfxTrackNames.length) {
@@ -115,7 +111,6 @@ export default function Puzzle({
 			}
 		}
 
-		console.log(`initial volume: ${volume}`);
 		const defaultSettings = {
 			preload: true,
 			volume,
@@ -169,6 +164,7 @@ export default function Puzzle({
 				}
 			}
 		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	useEffect(() => {
@@ -225,24 +221,30 @@ export default function Puzzle({
 					break;
 			}
 
-			console.log(`Playing sound ${sound}`);
 			const currentVolume = usePuzzleStore.getState().audio.volume;
 			const instance = sounds![sound].play({ volume: currentVolume }) as IMediaInstance;
 			setCurrentBgmInstance(instance);
-			instance.on('end', () => nextSound());
+			instance.on('end', () => {
+				instance.destroy();
+				nextSound();
+			});
 		}
 
 		introInstance.on('end', () => {
+			introInstance.destroy();
 			nextSound();
 		});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [sounds]);
 
 	useEffect(() => {
 		currentBgmInstance?.set('volume', volume);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [volume]);
 
 	useEffect(() => {
 		currentBgmInstance?.set('paused', muted);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [muted]);
 
 	for (let r = 0; r < ROW_COUNT; r++) {
@@ -306,6 +308,7 @@ export default function Puzzle({
 		}
 
 		return temp;
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [assetBundle]);
 
 	const groupElements = useMemo(() => {
