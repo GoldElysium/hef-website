@@ -29,18 +29,9 @@ export default function Footer({ flags }: IProps) {
 				</a>
 			</p>
 
-			{/* eslint-disable-next-line max-len */}
-			{/* TODO: Decide between one of the two, Umami is more privacy friendly and will be less blocked as it's self-hosted */}
 			<Script
 				src="https://static.cloudflareinsights.com/beacon.min.js"
 				data-cf-beacon='{"token": "5896757c09e04949bf74e7c34efd419a"}'
-			/>
-			<Script
-				async
-				defer
-				src="https://umami.holoen.fans/umami.js"
-				data-website-id="c381cce3-8dcc-4043-b46d-67b83a8bb80b"
-				data-domains="holoen.fans,www.holoen.fans,astrogirl.space,sanallites.space,www.sanallites.space"
 			/>
 		</div>
 	);
