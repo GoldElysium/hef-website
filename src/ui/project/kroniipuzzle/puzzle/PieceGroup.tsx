@@ -1,8 +1,10 @@
 'use client';
 
 import { Container } from '@pixi/react';
-import React, { useContext, useEffect, useState } from 'react';
-import { FederatedPointerEvent } from 'pixi.js';
+import React, {
+	useContext, useEffect, useRef, useState,
+} from 'react';
+import { Container as PixiContainer, FederatedPointerEvent } from 'pixi.js';
 import usePuzzleStore from './PuzzleStore';
 import { PIECE_SIZE } from './PuzzleConfig';
 import ViewportContext from '../providers/ViewportContext';
@@ -22,9 +24,13 @@ export default function PieceGroup({
 	groupKey, pieces, initialX, initialY, playTick, playTock,
 }: PieceGroupProps) {
 	const [dragging, setDragging] = useState(false);
+	const [dragStartPosition, setDragStartPosition] = useState<{ x: number; y:number } | null>(null);
 	const [currentPosition, setCurrentPosition] = useState({ x: initialX, y: initialY });
 	const [lastUpdatedAt, setLastUpdatedAt] = useState(Date.now());
 	const [parent, setParent] = useState(null as any);
+
+	const containerRef = useRef<PixiContainer>(null);
+
 	const { setDisableDragging } = useContext(ViewportContext);
 
 	const thisPieceGroup = usePuzzleStore((state) => state.pieceGroups[groupKey]);
@@ -59,7 +65,6 @@ export default function PieceGroup({
 	}, []);
 
 	const isNearPosition = (currentX: number, currentY: number, targetX: number, targetY: number) => {
-		// todo: check this logic. probably too contrived to work consistently for all resolutions
 		const deltaX = Math.abs(currentX - targetX);
 		const deltaY = Math.abs(currentY - targetY);
 		return deltaX < 50 && deltaY < 50;
@@ -93,8 +98,7 @@ export default function PieceGroup({
 		}
 
 		if (!nearData) {
-			// TODO: get position accounting for drag start position
-			const newPos = { x: x - PIECE_SIZE / 2, y: y - PIECE_SIZE / 2 };
+			const newPos = { x: x - dragStartPosition!.x, y: y - dragStartPosition!.y };
 			setCurrentPosition(newPos);
 			updatePieceGroupPosition(newPos);
 
@@ -171,6 +175,7 @@ export default function PieceGroup({
 		if (tempParent != null) {
 			setParent(tempParent);
 		}
+		setDragStartPosition(containerRef.current!.toLocal(event.global));
 		setDragging(true);
 		setDisableDragging(true);
 		const now = Date.now();
@@ -185,8 +190,7 @@ export default function PieceGroup({
 
 		const { x, y } = event.getLocalPosition(parent);
 
-		// todo: get position accounting for drag start position
-		setCurrentPosition({ x: x - PIECE_SIZE / 2, y: y - PIECE_SIZE / 2 });
+		setCurrentPosition({ x: x - dragStartPosition!.x, y: y - dragStartPosition!.y });
 	};
 
 	const handleDragEnd = (event: FederatedPointerEvent) => {
@@ -223,6 +227,7 @@ export default function PieceGroup({
 			touchend={handleDragEnd}
 			touchendoutside={handleDragEnd}
 			zIndex={lastUpdatedAt}
+			ref={containerRef}
 		>
 			{thisPieceGroup.pieces.map((pieceKey) => pieces[pieceKey].piece)}
 		</Container>
