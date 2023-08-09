@@ -7,14 +7,14 @@
     "README.md"
   ],
   "imageSize": 100,
-  "commit": true,
-  "commitConvention": "none",
+  "commit": false,
+  "commitConvention": "angular",
   "contributors": [
     {
       "login": "GoldElysium",
       "name": "GoldElysium",
       "avatar_url": "https://avatars.githubusercontent.com/u/48455312?v=4",
-      "profile": "https://discord.gg/HoloRes",
+      "profile": "https://github.com/GoldElysium",
       "contributions": [
         "code",
         "doc",
@@ -36,12 +36,13 @@
     },
     {
       "login": "Edqe14",
-      "name": "Edqe",
+      "name": "Yuka",
       "avatar_url": "https://avatars.githubusercontent.com/u/34704796?v=4",
       "profile": "https://edqe.me/",
       "contributions": [
         "code",
-        "doc"
+        "doc",
+        "design"
       ]
     },
     {
@@ -70,15 +71,6 @@
       "profile": "https://github.com/Toranteru",
       "contributions": [
         "code"
-      ]
-    },
-    {
-      "login": "renovate-bot",
-      "name": "WhiteSource Renovate",
-      "avatar_url": "https://avatars.githubusercontent.com/u/25180681?v=4",
-      "profile": "https://renovate.whitesourcesoftware.com/",
-      "contributions": [
-        "maintenance"
       ]
     },
     {
@@ -144,6 +136,14 @@
       "profile": "https://github.com/apps/allcontributors",
       "contributions": [
         "tool"
+      ]
+    },
+    {
+      "name": "yurapyon",
+      "avatar_url": "https://user-images.githubusercontent.com/48455312/259434530-f714cbcf-d9bb-44a6-b2bc-cee0f97608dd.jpg",
+      "profile": "https://twitter.com/pyonyura",
+      "contributions": [
+        "design"
       ]
     }
   ],
