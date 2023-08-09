@@ -2,7 +2,8 @@
 
 import { Container } from '@pixi/react';
 import React, {
-	useContext, useEffect, useRef, useState,
+	ReactElement,
+	useContext, useEffect, useMemo, useRef, useState,
 } from 'react';
 import { Container as PixiContainer, FederatedPointerEvent } from 'pixi.js';
 import usePuzzleStore from './PuzzleStore';
@@ -12,7 +13,7 @@ import { PieceActions } from './Piece';
 
 interface PieceGroupProps {
 	groupKey: string;
-	pieces: Record<string, { ref: React.MutableRefObject<PieceActions>, piece: JSX.Element }>;
+	pieces: Record<string, { ref: React.MutableRefObject<PieceActions>, piece: ReactElement }>;
 	initialX: number;
 	initialY: number;
 	playTick: () => void;
@@ -64,6 +65,11 @@ export default function PieceGroup({
 		}
 	}, []);
 
+	const pieceElements = useMemo(
+		() => thisPieceGroup.pieces.map((pieceKey) => pieces[pieceKey].piece),
+		[pieces, thisPieceGroup.pieces],
+	);
+
 	const isNearPosition = (currentX: number, currentY: number, targetX: number, targetY: number) => {
 		const deltaX = Math.abs(currentX - targetX);
 		const deltaY = Math.abs(currentY - targetY);
@@ -86,11 +92,6 @@ export default function PieceGroup({
 			piece.updateGlobalPosition();
 			const nearRes = piece.isNearAdjacentPiece();
 			if (nearRes.near) {
-				if (nearRes.data.groupKey === statePieces[pieceKey].pieceGroup) {
-					console.log(`encountered same group key when checking nearness. skipping. ${nearRes.data.groupKey}`);
-					// eslint-disable-next-line no-continue
-					continue;
-				}
 				nearData = nearRes.data;
 				nearPieceKey = pieceKey;
 				break;
@@ -166,7 +167,6 @@ export default function PieceGroup({
 
 	const handleDragStart = (event: FederatedPointerEvent) => {
 		if (dragging) return;
-		// TODO: Works, but VERY laggy
 		checkSelectPieces(event);
 
 		if (thisPieceGroup.correct) return;
@@ -229,7 +229,7 @@ export default function PieceGroup({
 			zIndex={lastUpdatedAt}
 			ref={containerRef}
 		>
-			{thisPieceGroup.pieces.map((pieceKey) => pieces[pieceKey].piece)}
+			{pieceElements}
 		</Container>
 	);
 }

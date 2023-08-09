@@ -2,6 +2,7 @@
 
 /* eslint-disable react/no-array-index-key */
 import React, {
+	ReactElement,
 	useCallback, useEffect, useMemo, useRef, useState,
 } from 'react';
 import * as PIXI from 'pixi.js';
@@ -9,6 +10,7 @@ import { Sprite as PixiSprite } from 'pixi.js';
 import { Container, Graphics } from '@pixi/react';
 import { IMediaInstance, Sound } from '@pixi/sound';
 import { WebAudioContext } from '@pixi/sound/lib/webaudio';
+import { shallow } from 'zustand/shallow';
 import Piece, { PieceActions } from './Piece';
 import Message from './Message';
 import PieceInfo from './PieceInfo';
@@ -69,8 +71,7 @@ export default function Puzzle({
 	const puzzlePiecesRefs: Record<string, React.MutableRefObject<PieceActions>> = {};
 
 	const correctCount = usePuzzleStore((state) => state.correctCount);
-	// TODO: This selector causes unnecessary re-renders when piece groups move
-	const pieceGroups = usePuzzleStore((state) => state.pieceGroups);
+	const pieceGroups = usePuzzleStore((state) => Object.keys(state.pieceGroups), shallow);
 
 	useEffect(() => {
 		if (correctCount >= PIECE_COUNT) {
@@ -254,7 +255,7 @@ export default function Puzzle({
 	const puzzlePieces = useMemo(() => {
 		if (!assetBundle) return null;
 
-		const temp: Record<string, { ref: React.MutableRefObject<any>, piece: JSX.Element }> = {};
+		const temp: Record<string, { ref: React.MutableRefObject<any>, piece: ReactElement }> = {};
 
 		for (let r = 0; r < ROW_COUNT; r++) {
 			for (let c = 0; c < COL_COUNT; c++) {
@@ -307,6 +308,27 @@ export default function Puzzle({
 		return temp;
 	}, [assetBundle]);
 
+	const groupElements = useMemo(() => {
+		if (!puzzlePieces) return null;
+		const groups = usePuzzleStore.getState().pieceGroups;
+
+		return pieceGroups.map((groupKey) => {
+			const { position } = groups[groupKey];
+
+			return (
+				<PieceGroup
+					key={groupKey}
+					groupKey={groupKey}
+					pieces={puzzlePieces}
+					initialX={position.x}
+					initialY={position.y}
+					playTick={() => sounds?.tick.play()}
+					playTock={() => sounds?.tock.play()}
+				/>
+			);
+		});
+	}, [puzzlePieces, pieceGroups, sounds?.tick, sounds?.tock]);
+
 	if (!assetBundle || !puzzlePieces) return null;
 
 	return (
@@ -317,19 +339,7 @@ export default function Puzzle({
 				draw={drawPuzzleBounds}
 				zIndex={-2}
 			/>
-			{Object.entries(pieceGroups)
-				.map(([groupKey, pieceGroup]) => (
-					<PieceGroup
-						key={groupKey}
-						groupKey={groupKey}
-						pieces={puzzlePieces}
-						// todo: the adjustment of + and - PIECE_SIZE need tweaking
-						initialX={pieceGroup.position.x}
-						initialY={pieceGroup.position.y}
-						playTick={() => sounds?.tick.play()}
-						playTock={() => sounds?.tock.play()}
-					/>
-				))}
+			{groupElements}
 		</Container>
 	);
 }

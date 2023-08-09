@@ -37,7 +37,6 @@ export default function PixiWrapper({ project, submissions }: IProps) {
 	// Resize logic
 	useEffect(() => {
 		const onResize = () => {
-			// TODO: properly resize the canvas
 			setStageSize({
 				width: window.innerWidth,
 				height: window.innerHeight,
@@ -79,7 +78,6 @@ export default function PixiWrapper({ project, submissions }: IProps) {
 	}, []);
 	if (!stageSize) return null;
 
-	// TODO: Proper loading screen
 	if (!ready) {
 		return (
 			<div className="min-h-screen h-full min-w-screen w-full grid place-items-center dark:text-white">
@@ -93,10 +91,9 @@ export default function PixiWrapper({ project, submissions }: IProps) {
 		);
 	}
 
-	// TODO: Enforce aspect ratio of 16:9
 	return (
 		<>
-			{!OS.desktop && orientation.startsWith('portrait') && (
+			{!OS.desktop && (orientation.startsWith('portrait') || !document.fullscreenElement) && (
 				<button
 					className="text-center z-10 min-h-screen min-w-screen h-full w-full bg-black text-white absolute"
 					type="button"
@@ -106,6 +103,7 @@ export default function PixiWrapper({ project, submissions }: IProps) {
 						});
 					}}
 				>
+					This app may not work correctly on mobile devices, we recommend using a large screen.
 					Click to screen to fullscreen
 				</button>
 			)}
