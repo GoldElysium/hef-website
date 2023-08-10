@@ -3,6 +3,7 @@ import Navbar from 'ui/Navbar';
 import Footer from 'ui/Footer';
 import PayloadResponse from 'types/PayloadResponse';
 import { Flag, Project } from 'types/payload-types';
+import ProjectHeader from '../../../../../ui/ProjectHeader';
 
 interface IProps {
 	children: React.ReactNode;
@@ -11,7 +12,13 @@ interface IProps {
 	}
 }
 
-async function getFlags(slug: string): Promise<string[]> {
+interface PropsProject {
+	flags: string[];
+	title: string;
+	description: string;
+}
+
+async function getProject(slug: string): Promise<PropsProject | null> {
 	const res = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/projects?where[slug][like]=${slug}&depth=2`, {
 		headers: {
 			'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? undefined,
@@ -19,29 +26,36 @@ async function getFlags(slug: string): Promise<string[]> {
 		} as Record<string, string>,
 	});
 	const parsedRes = (await res.json() as PayloadResponse<Project>);
-	if (parsedRes.totalDocs === 0) return [];
+	if (parsedRes.totalDocs === 0) return null;
 
 	const project = parsedRes.docs[0];
 
-	return (project.flags as Flag[] ?? []).map((flag) => flag.code);
+	return {
+		title: project.title,
+		description: project.shortDescription,
+		flags: (project.flags as Flag[] ?? []).map((flag) => flag.code),
+	};
 }
 
 export default async function RootLayout({ children, params: { slug } }: IProps) {
-	let flags: string[] = [];
+	let project: PropsProject | null = null;
 
 	if (slug) {
-		flags = await getFlags(slug);
+		project = await getProject(slug);
 	}
 
 	return (
 		<>
-			{/* @ts-ignore */}
-			<Navbar flags={flags} />
+			<Navbar flags={project?.flags ?? []} />
+			{
+				project && (
+					<ProjectHeader title={project.title} description={project.description} />
+				)
+			}
 			<main>
 				{children}
 			</main>
-			{/* @ts-ignore */}
-			<Footer flags={flags} />
+			<Footer flags={project?.flags ?? []} />
 		</>
 	);
 }
