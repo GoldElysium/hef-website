@@ -109,6 +109,9 @@ export default async function ProjectPage({ params: { slug, lang } }: IProps) {
 				<div className="flex-grow">
 					<div className="mb-16 mt-4 w-full flex flex-col items-center">
 						<div className="max-w-full w-full sm:!max-w-4xl px-4 break-words md:break-normal">
+							<TextHeader>
+								{t('description')}
+							</TextHeader>
 							<div className="description-body">
 								{DescriptionSerializer(project.description)}
 							</div>
