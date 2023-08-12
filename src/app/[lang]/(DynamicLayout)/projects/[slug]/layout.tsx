@@ -48,7 +48,7 @@ export default async function RootLayout({ children, params: { slug } }: IProps)
 		<>
 			<Navbar flags={project?.flags ?? []} />
 			{
-				project && (
+				project && !project.flags.includes('disableHeader') && (
 					<ProjectHeader title={project.title} description={project.description} />
 				)
 			}
