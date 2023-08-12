@@ -161,7 +161,7 @@ export default function PieceGroup({
 		// eslint-disable-next-line no-restricted-syntax
 		for (const pieceKey of thisPieceGroup.pieces) {
 			// eslint-disable-next-line max-len
-			if (pieces[pieceKey].ref.current.checkSelectPiece({ x: event.globalX, y: event.globalY })) break;
+			if (pieces[pieceKey].ref.current.checkIsSelectedPiece({ x: event.globalX, y: event.globalY })) break;
 		}
 	};
 

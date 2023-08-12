@@ -39,7 +39,7 @@ export interface PieceActions {
 	isNearAdjacentPiece(): IsNearAdjacentPieceRes;
 	updateGlobalPosition(): void;
 	updateLocalPosition(newPosition: { x: number, y: number }): void;
-	checkSelectPiece(pos: { x: number, y:number }): boolean;
+	checkIsSelectedPiece(pos: { x: number, y:number }): boolean;
 }
 
 const Piece = React.forwardRef<PieceActions, PieceProps>(({
@@ -103,10 +103,10 @@ const Piece = React.forwardRef<PieceActions, PieceProps>(({
 	}
 
 	function isNearPosition(current: any, target: any) {
-		const currentX = current.position.x;
-		const currentY = current.position.y;
-		const targetX = target.position.x;
-		const targetY = target.position.y;
+		const currentX = current.position.x + PIECE_SIZE / 2;
+		const currentY = current.position.y + PIECE_SIZE / 2;
+		const targetX = target.position.x + PIECE_SIZE / 2;
+		const targetY = target.position.y + PIECE_SIZE / 2;
 
 		const deltaX = Math.abs(currentX - targetX);
 		const deltaY = Math.abs(currentY - targetY);
@@ -183,7 +183,7 @@ const Piece = React.forwardRef<PieceActions, PieceProps>(({
 		return nearData;
 	}
 
-	function checkSelectPiece(pos: { x: number, y: number }): boolean {
+	function checkIsSelectedPiece(pos: { x: number, y: number }): boolean {
 		if (!pieceContainerRef.current) return false;
 
 		const localPos = pieceContainerRef.current!.toLocal(pos);
@@ -205,7 +205,7 @@ const Piece = React.forwardRef<PieceActions, PieceProps>(({
 		isNearAdjacentPiece,
 		updateGlobalPosition,
 		updateLocalPosition,
-		checkSelectPiece,
+		checkIsSelectedPiece,
 	}));
 
 	return (
