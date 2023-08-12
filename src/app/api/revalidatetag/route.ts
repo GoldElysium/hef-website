@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
 
 	const body = await req.json();
 
-	if (body.tag) {
+	if (!body.tag) {
 		return new NextResponse(undefined, { status: 400 });
 	}
 
