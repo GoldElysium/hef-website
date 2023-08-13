@@ -38,6 +38,10 @@
 				{
 					"name": "time_loop_main_02",
 					"srcs": "/assets/kroniipuzzle/bgm/time_loop_main_02.ogg"
+				},
+				{
+					"name": "back-arrow",
+					"srcs": "/assets/kroniipuzzle/back-arrow.svg"
 				}
 			]
 		}

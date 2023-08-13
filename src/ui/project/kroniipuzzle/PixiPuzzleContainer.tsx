@@ -1,13 +1,13 @@
 'use client';
 
-import { useApp } from '@pixi/react';
+import { Graphics, useApp } from '@pixi/react';
 import { Project } from 'types/payload-types';
 import {
-	useEffect, useMemo, useRef, useState,
+	useCallback, useEffect, useMemo, useRef, useState,
 } from 'react';
-import { UPDATE_PRIORITY } from 'pixi.js';
-import { addStats } from 'pixi-stats';
+import { Graphics as PixiGraphics } from 'pixi.js';
 import type { Viewport as PixiViewport } from 'pixi-viewport';
+import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context';
 import type { StageSize } from './PixiWrapper';
 import Viewport from './pixi/Viewport';
 import Sidebar from './pixi/Sidebar';
@@ -31,11 +31,12 @@ interface IProps {
 	};
 	stageSize: StageSize;
 	submissions: Message[];
+	router: AppRouterInstance
 }
 
 export default function PixiPuzzleContainer({
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	project, stageSize, submissions,
+	project, stageSize, submissions, router,
 }: IProps) {
 	const app = useApp();
 
@@ -55,22 +56,20 @@ export default function PixiPuzzleContainer({
 		[disableDragging],
 	);
 
-	// ! TODO: Remove, only here for Pixi devtools
-	useEffect(() => {
-		// @ts-ignore
-		globalThis.__PIXI_APP__ = app;
-	}, [app]);
-
 	useEffect(() => {
 		app.renderer.resize(stageSize.width, stageSize.height);
 		viewportRef.current?.fit();
 	}, [stageSize]);
 
-	// ! TODO: REMOVE IN PRODUCTION (And don't forget to remove the dependency)
-	useEffect(() => {
-		const stats = addStats(document, app);
-		app.ticker.add(stats.update, stats, UPDATE_PRIORITY.UTILITY);
-	}, []);
+	const drawPuzzleContainer = useCallback((g: PixiGraphics) => {
+		g.beginFill(0x001E47);
+		g.drawRect(SIDEBAR_WIDTH, 0, stageSize.width, stageSize.height);
+		g.endFill();
+		g.beginHole();
+		// eslint-disable-next-line max-len
+		g.drawRoundedRect(SIDEBAR_WIDTH, 16, stageSize.width - SIDEBAR_WIDTH - 16, stageSize.height - 32, 8);
+		g.endHole();
+	}, [stageSize]);
 
 	return (
 		<ViewportContext.Provider value={viewportContextMemo}>
@@ -98,15 +97,20 @@ export default function PixiPuzzleContainer({
 					submissions={submissions}
 				/>
 			</Viewport>
+			<Graphics
+				draw={drawPuzzleContainer}
+			/>
 			<Sidebar
 				width={SIDEBAR_WIDTH}
 				height={stageSize.height}
 				setShowModal={setShowModal}
+				router={router}
 			>
 				<PieceDisplay
-					y={stageSize.height * 0.25}
-					width={SIDEBAR_WIDTH}
-					height={stageSize.height * 0.75}
+					x={16}
+					y={stageSize.height * 0.15}
+					width={SIDEBAR_WIDTH - 32}
+					height={stageSize.height * 0.75 - 16}
 					pieceInfo={selectedPiece}
 				/>
 			</Sidebar>
@@ -117,6 +121,7 @@ export default function PixiPuzzleContainer({
 					y={0}
 					width={stageSize.width}
 					height={stageSize.height}
+					label="Click anywhere to dismiss the preview"
 					onClick={() => { setShowModal(false); }}
 				/>
 			)}

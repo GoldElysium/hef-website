@@ -228,6 +228,7 @@ export default function PieceGroup({
 			touchendoutside={handleDragEnd}
 			zIndex={lastUpdatedAt}
 			ref={containerRef}
+			cursor={thisPieceGroup.correct ? undefined : 'pointer'}
 		>
 			{pieceElements}
 		</Container>

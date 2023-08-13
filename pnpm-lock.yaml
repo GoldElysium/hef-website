@@ -74,9 +74,9 @@ dependencies:
   phaser3-rex-plugins:
     specifier: 1.1.85
     version: 1.1.85
-  pixi-stats:
-    specifier: ^1.2.2
-    version: 1.2.2(pixi.js@7.2.4)
+  pixi-tagged-text:
+    specifier: ^3.14.0
+    version: 3.14.0(pixi.js@7.2.4)
   pixi-viewport:
     specifier: ^5.0.1
     version: 5.0.1
@@ -3195,14 +3195,6 @@ packages:
     resolution: {integrity: sha512-ZXRY4jNvVgSVQ8DL3LTcakaAtXwTVUxE81hslsyD2AtoXW/wVob10HkOJ1X/pAlcI7D+2YoZKg5do8G/w6RYgA==}
     engines: {node: '>=8'}
     dev: true
-
-  /@jacekpietal/gstats@0.1.0(pixi.js@7.2.4):
-    resolution: {integrity: sha512-52ILOmtGRZdunCFXE/wxNaGs/CsP0mF7QbNKvpviSI8cnznognB65zWG2r+k+2SNhYPCDg+FTi3/pj5JSxeh3A==}
-    peerDependencies:
-      pixi.js: '*'
-    dependencies:
-      pixi.js: 7.2.4(@pixi/utils@7.2.4)
-    dev: false
 
   /@jest/schemas@29.6.0:
     resolution: {integrity: sha512-rxLjXyJBTL4LQeJW3aKo0M/+GkCOXsO+8i9Iu7eDb6KwtP65ayoDsitrdPBtujxQ88k4wI2FNYfa6TOGwSn6cQ==}
@@ -7460,7 +7452,6 @@ packages:
 
   /emoji-regex@9.2.2:
     resolution: {integrity: sha512-L18DaJsXSUk2+42pv8mLs5jJT2hqFkFE4j21wOmgbUqsZ2hL72NsUU785g9RXgo3s0ZNgVl42TiHp3ZtOv/Vyg==}
-    dev: true
 
   /emojis-list@3.0.0:
     resolution: {integrity: sha512-/kyM18EfinwXZbno9FyUGeFh87KC8HRQBQGildHZbEuRyWFOmv1U10o9BBp8XVZDVNNuQKyIGIu5ZYAAXJ0V2Q==}
@@ -11083,12 +11074,12 @@ packages:
     resolution: {integrity: sha512-saLsH7WeYYPiD25LDuLRRY/i+6HaPYr6G1OUlN39otzkSTxKnubR9RTxS3/Kk50s1g2JTgFwWQDQyplC5/SHZg==}
     engines: {node: '>= 6'}
 
-  /pixi-stats@1.2.2(pixi.js@7.2.4):
-    resolution: {integrity: sha512-wajlyv3nl/xha7H5TuSHZr+iYclynLilF37H0IWhxsWtTOIF7EAe/oVXyY2nPVY6CE+s2MsB3Te+g9OcofrrAg==}
+  /pixi-tagged-text@3.14.0(pixi.js@7.2.4):
+    resolution: {integrity: sha512-FHFq/gEN/PpN1/sj5nF2Fa2t36GQk73rqJHucFF4RH6NuDF+Q51ugie5ATMnjmIisFpwxw1oUPjuc838M1Su4A==}
     peerDependencies:
-      pixi.js: '*'
+      pixi.js: ^6
     dependencies:
-      '@jacekpietal/gstats': 0.1.0(pixi.js@7.2.4)
+      emoji-regex: 9.2.2
       pixi.js: 7.2.4(@pixi/utils@7.2.4)
     dev: false
 

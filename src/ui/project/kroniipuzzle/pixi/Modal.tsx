@@ -44,12 +44,18 @@ export default function Modal({
 				text={label}
 				style={{
 					fill: 'white',
-					fontSize: 18,
+					fontSize: 20,
+					strokeThickness: 4,
+					letterSpacing: 0.5,
 					fontWeight: 'bold',
+					lineJoin: 'round',
+					dropShadow: false,
+					dropShadowAlpha: 0.25,
+					dropShadowBlur: 4,
 				} as TextStyle}
 				anchor={[0.5, 0.5]}
 				x={width / 2}
-				y={height / 2}
+				y={64}
 			/>
 		</Container>
 	);

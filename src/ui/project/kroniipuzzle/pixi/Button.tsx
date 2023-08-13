@@ -8,11 +8,13 @@ interface ButtonProps {
 	width: number;
 	height: number;
 	label: string;
+	color?: number;
+	radius?: number;
 	onClick?: () => void;
 }
 
 export default function Button({
-	x, y, width, height, label, onClick,
+	x, y, width, height, label, onClick, color = 0x0869EC, radius = 0,
 }: ButtonProps) {
 	const handleClick = () => {
 		if (onClick) {
@@ -21,13 +23,21 @@ export default function Button({
 	};
 
 	return (
-		<Container eventMode={onClick ? 'static' : 'auto'} pointerdown={handleClick} x={x} y={y}>
+		<Container
+			eventMode={onClick ? 'static' : 'auto'}
+			pointerdown={handleClick}
+			x={x}
+			y={y}
+			cursor={onClick ? 'pointer' : undefined}
+		>
 			<Graphics
 				draw={(g: PixiGraphics) => {
 					g.clear();
-					g.beginFill(0x22bb55);
-					g.drawRect(0, 0, width, height);
-					g.endFill();
+					if (color) {
+						g.beginFill(color);
+						g.drawRoundedRect(0, 0, width, height, radius);
+						g.endFill();
+					}
 				}}
 			/>
 			<Text

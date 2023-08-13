@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react';
 import * as PIXI from 'pixi.js';
 import OS from 'phaser/src/device/OS';
 import { SpeakerWaveIcon, SpeakerXMarkIcon } from '@heroicons/react/24/solid';
+import { useRouter } from 'next/navigation';
 import PixiPuzzleContainer from './PixiPuzzleContainer';
 import Message from './puzzle/Message';
 import usePuzzleStore from './puzzle/PuzzleStore';
@@ -26,6 +27,8 @@ export interface StageSize {
 }
 
 export default function PixiWrapper({ project, submissions }: IProps) {
+	const router = useRouter();
+
 	const [stageSize, setStageSize] = useState<StageSize | null>(null);
 	const [ready, setReady] = useState(false);
 	const [loadProgress, setLoadProgress] = useState(0);
@@ -80,7 +83,7 @@ export default function PixiWrapper({ project, submissions }: IProps) {
 
 	if (!ready) {
 		return (
-			<div className="min-h-screen h-full min-w-screen w-full grid place-items-center dark:text-white">
+			<div className="min-h-screen h-full min-w-screen w-full grid place-items-center bg-[#E6F0FF] dark:bg-[#021026] dark:text-white">
 				<div>
 					<p className="text-lg">
 						Loading...
@@ -117,10 +120,11 @@ export default function PixiWrapper({ project, submissions }: IProps) {
 					project={project}
 					stageSize={stageSize}
 					submissions={submissions}
+					router={router}
 				/>
 			</Stage>
 
-			<div className="fixed right-4 bottom-4 z-50 text-black dark:text-white bg-skin-card dark:bg-skin-dark-card rounded-lg w-64 h-16 flex justify-between items-center gap-2 px-4 py-2">
+			<div className="fixed left-6 bottom-6 z-50 text-white bg-[#255494] rounded-lg w-[350px] h-16 flex justify-between items-center gap-2 px-4 py-2">
 				<label className="swap swap-flip">
 					<input
 						type="checkbox"
