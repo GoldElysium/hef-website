@@ -2,11 +2,10 @@
 
 import React, { useCallback, useEffect, useState } from 'react';
 import {
-	Container, Graphics, Text, Sprite,
+	Container, Graphics, Sprite, Text,
 } from '@pixi/react';
-import { Graphics as PixiGraphics, TextStyle } from 'pixi.js';
-import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context';
 import * as PIXI from 'pixi.js';
+import { Graphics as PixiGraphics, TextStyle } from 'pixi.js';
 import Button from './Button';
 import { SIDEBAR_WIDTH } from '../puzzle/PuzzleConfig';
 
@@ -16,12 +15,12 @@ interface SidebarProps {
 	width: number;
 	height: number;
 	setShowModal: (x: boolean) => void;
+	setShowExitModal: (x: boolean) => void;
 	children?: React.ReactNode;
-	router: AppRouterInstance
 }
 
 export default function Sidebar({
-	x, y, width, height, setShowModal, children, router,
+	x, y, width, height, setShowModal, setShowExitModal, children,
 }: SidebarProps) {
 	const [assetBundle, setAssetBundle] = useState<null | any>(null);
 
@@ -47,7 +46,7 @@ export default function Sidebar({
 			{children}
 			<Container
 				eventMode="static"
-				onclick={() => router.back()}
+				onclick={() => setShowExitModal(true)}
 				cursor="pointer"
 				x={16}
 				y={22}

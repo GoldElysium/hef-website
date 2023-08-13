@@ -1,11 +1,13 @@
 'use client';
 
-import { Graphics, useApp } from '@pixi/react';
+import {
+	Container, Graphics, Text, useApp,
+} from '@pixi/react';
 import { Project } from 'types/payload-types';
 import {
 	useCallback, useEffect, useMemo, useRef, useState,
 } from 'react';
-import { Graphics as PixiGraphics } from 'pixi.js';
+import { Graphics as PixiGraphics, TextStyle } from 'pixi.js';
 import type { Viewport as PixiViewport } from 'pixi-viewport';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context';
 import type { StageSize } from './PixiWrapper';
@@ -21,6 +23,7 @@ import Message from './puzzle/Message';
 import {
 	PUZZLE_WIDTH, SIDEBAR_WIDTH, WORLD_HEIGHT, WORLD_WIDTH,
 } from './puzzle/PuzzleConfig';
+import Button from './pixi/Button';
 
 interface IProps {
 	project: Omit<Project, 'flags' | 'devprops'> & {
@@ -41,6 +44,7 @@ export default function PixiPuzzleContainer({
 	const app = useApp();
 
 	const [showModal, setShowModal] = useState(false);
+	const [showExitModal, setShowExitModal] = useState(false);
 	const [showPuzzleCompleteModal, setShowPuzzleCompleteModal] = useState(false);
 	const [disableDragging, setDisableDragging] = useState(false);
 	const [selectedPiece, setSelectedPiece] = useState<PieceInfo | undefined>(undefined);
@@ -62,6 +66,7 @@ export default function PixiPuzzleContainer({
 	}, [stageSize]);
 
 	const drawPuzzleContainer = useCallback((g: PixiGraphics) => {
+		g.clear();
 		g.beginFill(0x001E47);
 		g.drawRect(SIDEBAR_WIDTH, 0, stageSize.width, stageSize.height);
 		g.endFill();
@@ -104,7 +109,7 @@ export default function PixiPuzzleContainer({
 				width={SIDEBAR_WIDTH}
 				height={stageSize.height}
 				setShowModal={setShowModal}
-				router={router}
+				setShowExitModal={setShowExitModal}
 			>
 				<PieceDisplay
 					x={16}
@@ -125,6 +130,53 @@ export default function PixiPuzzleContainer({
 					onClick={() => { setShowModal(false); }}
 				/>
 			)}
+
+			{
+				showExitModal && (
+					<Container>
+						<Graphics
+							draw={(g: PixiGraphics) => {
+								g.clear();
+								g.beginFill(0x222222);
+								g.drawRect(0, 0, stageSize.width, stageSize.height);
+								g.endFill();
+							}}
+						/>
+						<Text
+							text="Are you sure you want to leave?"
+							style={{
+								fill: 'white',
+								fontSize: 32,
+								fontWeight: 'bold',
+								align: 'center',
+							} as TextStyle}
+							x={stageSize.width / 2}
+							y={stageSize.height / 2 - 50}
+							anchor={[0.5, 0.5]}
+							scale={1}
+						/>
+						<Button
+							x={stageSize.width / 2 - 145}
+							y={stageSize.height / 2}
+							width={120}
+							height={60}
+							label="Exit"
+							color={0xAA2222}
+							radius={8}
+							onClick={() => router.back()}
+						/>
+						<Button
+							x={stageSize.width / 2 + 25}
+							y={stageSize.height / 2}
+							width={120}
+							height={60}
+							label="Cancel"
+							radius={8}
+							onClick={() => setShowExitModal(false)}
+						/>
+					</Container>
+				)
+			}
 
 			{showPuzzleCompleteModal && (
 				<PuzzleCompleteModal
