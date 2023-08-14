@@ -110,6 +110,7 @@ export default function PixiWrapper({ project, submissions }: IProps) {
 					Click to screen to fullscreen
 				</button>
 			)}
+
 			<Stage
 				options={{
 					backgroundColor: 0x5f79bc,

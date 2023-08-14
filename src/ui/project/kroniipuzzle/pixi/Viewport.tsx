@@ -1,9 +1,50 @@
+// eslint-disable-next-line max-classes-per-file
 import { PixiComponent } from '@pixi/react';
-import type { Application } from 'pixi.js';
+import type { Application, Rectangle } from 'pixi.js';
 import * as PIXI from 'pixi.js';
-import { Viewport as PixiViewport } from 'pixi-viewport';
+import { InputManager as PixiViewportInputManager, IViewportOptions, Viewport as PixiViewport } from 'pixi-viewport';
 import type * as React from 'react';
 import { MutableRefObject } from 'react';
+import { SIDEBAR_WIDTH } from '../puzzle/PuzzleConfig';
+
+class FixedInputManager extends PixiViewportInputManager {
+	public override handleWheel(event: WheelEvent): void {
+		if (this.viewport.pause || !this.viewport.worldVisible) {
+			return;
+		}
+
+		// only handle wheel events where the mouse is over the viewport
+		const point = this.viewport.toLocal(this.getPointerPosition(event));
+
+		// Modify the function to only zoom whenever the user is not scrolling on the sidebar
+		if (
+			SIDEBAR_WIDTH <= event.x
+			&& this.viewport.left <= point.x
+			&& point.x <= this.viewport.right
+			&& this.viewport.top <= point.y
+			&& point.y <= this.viewport.bottom) {
+			const stop = this.viewport.plugins.wheel(event);
+
+			if (stop && !this.viewport.options.passiveWheel) {
+				event.preventDefault();
+			}
+		}
+	}
+}
+
+class FixedPixiViewport extends PixiViewport {
+	public override readonly input: FixedInputManager;
+
+	constructor(options: IViewportOptions) {
+		super(options);
+		// Destroy the input manager created by the super call
+		// @ts-expect-error
+		this.input.destroy();
+
+		// Create our own
+		this.input = new FixedInputManager(this);
+	}
+}
 
 interface PixiComponentViewportProps {
 	width?: number;
@@ -11,30 +52,35 @@ interface PixiComponentViewportProps {
 	worldWidth?: number;
 	worldHeight?: number;
 	disableDragging?: boolean;
-	app: Application;
-	children?: React.ReactNode;
 	x?: number;
 	y?: number;
+	forceHitArea?: Rectangle | undefined | null;
+	app: Application;
+	children?: React.ReactNode;
 	ref?: MutableRefObject<PixiViewport | null>
 }
 
 const Viewport = PixiComponent('Viewport', {
 	create({
-		width, height, worldWidth, worldHeight, app, ref,
+		width, height, worldWidth, worldHeight, forceHitArea, x, y, app, ref,
 	}: PixiComponentViewportProps) {
 		if (!('events' in app.renderer)) {
 			// @ts-ignore
 			app.renderer.addSystem(PIXI.EventSystem, 'events');
 		}
 
-		const viewport = new PixiViewport({
+		const viewport = new FixedPixiViewport({
 			screenWidth: width,
 			screenHeight: height,
 			worldWidth: worldWidth ?? width,
 			worldHeight: worldHeight ?? height,
+			forceHitArea,
 			ticker: app.ticker,
 			events: app.renderer.events,
+			passiveWheel: true,
 		});
+		if (x) viewport.x = x;
+		if (y) viewport.y = y;
 
 		viewport
 			.drag()
@@ -108,9 +154,17 @@ const Viewport = PixiComponent('Viewport', {
 			ref.current = viewport;
 		}
 	},
+	willUnmount(instance: PixiViewport) {
+		// workaround because the ticker is already destroyed by this point by the stage
+		// eslint-disable-next-line no-param-reassign
+		instance.options.noTicker = true;
+		try {
+			instance.destroy({ children: true, texture: true, baseTexture: true });
+		} catch { /* */ }
+	},
 	config: {
-		destroy: true,
-		destroyChildren: true,
+		destroy: false,
+		destroyChildren: false,
 	},
 });
 

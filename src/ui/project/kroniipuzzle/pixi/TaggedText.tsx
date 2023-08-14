@@ -12,11 +12,12 @@ interface PixiComponentTaggedTextProps {
 	width?: number;
 	height?: number;
 	scale?: IPointData;
+	ref?: React.MutableRefObject<PixiTaggedText | null>;
 }
 
 const TaggedText = PixiComponent('TaggedText', {
 	create({
-		text, styles, options, x, y, width, height, scale,
+		text, styles, options, x, y, width, height, scale, ref,
 	}: PixiComponentTaggedTextProps) {
 		const taggedText = new PixiTaggedText(text, styles, options);
 		taggedText.x = x;
@@ -27,6 +28,11 @@ const TaggedText = PixiComponent('TaggedText', {
 		taggedText.update();
 		taggedText.draw();
 
+		if (ref) {
+			// eslint-disable-next-line no-param-reassign
+			ref.current = taggedText;
+		}
+
 		return taggedText;
 	},
 	applyProps(taggedText, _oldProps, _newProps) {
@@ -34,12 +40,14 @@ const TaggedText = PixiComponent('TaggedText', {
 		const {
 			styles: _oldStyles,
 			options: _oldOptions,
+			ref: _oldRef,
 			...oldProps
 		} = _oldProps;
 
 		const {
 			styles,
 			options: _options,
+			ref,
 			...newProps
 		} = _newProps;
 		/* eslint-enable */
@@ -53,6 +61,11 @@ const TaggedText = PixiComponent('TaggedText', {
 				taggedText[p] = newProps[p]; // eslint-disable-line no-param-reassign
 			}
 		});
+
+		if (ref) {
+			// eslint-disable-next-line no-param-reassign
+			ref.current = taggedText;
+		}
 
 		taggedText.update();
 		taggedText.draw();

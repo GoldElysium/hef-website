@@ -4,7 +4,7 @@ import {
 	Container, Graphics, Text, useApp,
 } from '@pixi/react';
 import { Project } from 'types/payload-types';
-import {
+import React, {
 	useCallback, useEffect, useMemo, useRef, useState,
 } from 'react';
 import { Graphics as PixiGraphics, TextStyle } from 'pixi.js';
@@ -34,7 +34,7 @@ interface IProps {
 	};
 	stageSize: StageSize;
 	submissions: Message[];
-	router: AppRouterInstance
+	router: AppRouterInstance;
 }
 
 export default function PixiPuzzleContainer({
@@ -85,7 +85,6 @@ export default function PixiPuzzleContainer({
 				worldHeight={WORLD_HEIGHT}
 				disableDragging={disableDragging}
 				app={app}
-				x={SIDEBAR_WIDTH}
 				ref={viewportRef}
 			>
 				<Puzzle
@@ -163,7 +162,7 @@ export default function PixiPuzzleContainer({
 							label="Exit"
 							color={0xAA2222}
 							radius={8}
-							onClick={() => router.back()}
+							onClick={() => router.push('/projects')}
 						/>
 						<Button
 							x={stageSize.width / 2 + 25}

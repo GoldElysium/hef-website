@@ -65,6 +65,9 @@ dependencies:
   next-themes:
     specifier: 0.2.1
     version: 0.2.1(next@13.4.8)(react-dom@18.2.0)(react@18.2.0)
+  penner:
+    specifier: ^0.1.3
+    version: 0.1.3
   phaser:
     specifier: 3.55.2
     version: 3.55.2
@@ -74,6 +77,9 @@ dependencies:
   phaser3-rex-plugins:
     specifier: 1.1.85
     version: 1.1.85
+  pixi-scrollbox:
+    specifier: ^2.3.1
+    version: 2.3.1(pixi-viewport@5.0.1)(pixi.js@7.2.4)
   pixi-tagged-text:
     specifier: ^3.14.0
     version: 3.14.0(pixi.js@7.2.4)
@@ -154,6 +160,9 @@ devDependencies:
   '@types/lodash':
     specifier: 4.14.195
     version: 4.14.195
+  '@types/penner':
+    specifier: ^0.1.0
+    version: 0.1.0
   '@types/react':
     specifier: 18.2.14
     version: 18.2.14
@@ -5265,6 +5274,10 @@ packages:
 
   /@types/parse-json@4.0.0:
     resolution: {integrity: sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==}
+
+  /@types/penner@0.1.0:
+    resolution: {integrity: sha512-8rmqhEYFlC3dNVPHpnOe3cTJ7qGWZHaVqhuMr9PWq6BZhdlNkErW+tjRwiJ6LbRk3ZkJYe2dp63Yo2Bsn0X0Xg==}
+    dev: true
 
   /@types/pretty-hrtime@1.0.1:
     resolution: {integrity: sha512-VjID5MJb1eGKthz2qUerWT8+R4b9N+CHvGCzg9fn4kWZgaF9AhdYikQio3R7wV8YY1NsQKPaCwKz1Yff+aHNUQ==}
@@ -11006,6 +11019,10 @@ packages:
     resolution: {integrity: sha512-F3asv42UuXchdzt+xXqfW1OGlVBe+mxa2mqI0pg5yAHZPvFmY3Y6drSf/GQ1A86WgWEN9Kzh/WrgKa6iGcHXLg==}
     dev: true
 
+  /penner@0.1.3:
+    resolution: {integrity: sha512-UzkaC2L6d9J1VzJAFH0TQwuKE/rerpTZkgW6aPLVeu/LdjWn6rnuY9lXcVN1AE9tZVfHrsJ2gZOBsRjpQECNHA==}
+    dev: false
+
   /performance-now@2.1.0:
     resolution: {integrity: sha512-7EAHlyLHI56VEIdK57uwHdHKIaAGbnXPiw0yWbarQZOKaKpvUIgW0jWRVLiatnM+XXlSwsanIBH/hzGMJulMow==}
     dev: false
@@ -11073,6 +11090,17 @@ packages:
   /pirates@4.0.6:
     resolution: {integrity: sha512-saLsH7WeYYPiD25LDuLRRY/i+6HaPYr6G1OUlN39otzkSTxKnubR9RTxS3/Kk50s1g2JTgFwWQDQyplC5/SHZg==}
     engines: {node: '>= 6'}
+
+  /pixi-scrollbox@2.3.1(pixi-viewport@5.0.1)(pixi.js@7.2.4):
+    resolution: {integrity: sha512-xBkOb3LZOFosQ6+k2TxEXKOzI7K1RmjSJXfKVqaErQOnk/e2e0kwCs9rXus/XfrPg1loDtf0c8r0vSbQb6yCiw==}
+    peerDependencies:
+      pixi-viewport: '>=4.3.4'
+      pixi.js: '>=6.0.0'
+    dependencies:
+      penner: 0.1.3
+      pixi-viewport: 5.0.1
+      pixi.js: 7.2.4(@pixi/utils@7.2.4)
+    dev: false
 
   /pixi-tagged-text@3.14.0(pixi.js@7.2.4):
     resolution: {integrity: sha512-FHFq/gEN/PpN1/sj5nF2Fa2t36GQk73rqJHucFF4RH6NuDF+Q51ugie5ATMnjmIisFpwxw1oUPjuc838M1Su4A==}
