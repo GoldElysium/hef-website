@@ -24,6 +24,7 @@ import {
 } from './puzzle/PuzzleConfig';
 import Button from './pixi/Button';
 import Preview from './pixi/Preview';
+import SettingsModal from './pixi/Settings';
 
 interface IProps {
 	project: Omit<Project, 'flags' | 'devprops'> & {
@@ -45,6 +46,7 @@ export default function PixiPuzzleContainer({
 
 	const [showPreview, setShowPreview] = useState(false);
 	const [showExitModal, setShowExitModal] = useState(false);
+	const [showSettingsModal, setShowSettingsModal] = useState(false);
 	const [showPuzzleCompleteModal, setShowPuzzleCompleteModal] = useState(false);
 	const [disableDragging, setDisableDragging] = useState(false);
 	const [selectedPiece, setSelectedPiece] = useState<PieceInfo | undefined>(undefined);
@@ -178,6 +180,16 @@ export default function PixiPuzzleContainer({
 					width={stageSize.width}
 					height={stageSize.height}
 					onClick={() => { setShowPuzzleCompleteModal(false); }}
+				/>
+			)}
+
+			{showSettingsModal && (
+				<SettingsModal
+					x={0}
+					y={0}
+					width={stageSize.width}
+					height={stageSize.height}
+					setShowSettingsModal={setShowSettingsModal}
 				/>
 			)}
 		</ViewportContext.Provider>

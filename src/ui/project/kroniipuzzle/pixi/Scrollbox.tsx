@@ -7,6 +7,7 @@ interface PixiComponentScrollboxProps {
 	boxWidth: number;
 	boxHeight: number;
 	app: PIXI.Application;
+	stopPropagation?: boolean
 	x?: number;
 	y?: number;
 	children?: React.ReactNode;
@@ -15,7 +16,7 @@ interface PixiComponentScrollboxProps {
 
 const Scrollbox = PixiComponent('Scrollbox', {
 	create({
-		boxWidth, boxHeight, x, y, app, ref,
+		boxWidth, boxHeight, x, y, stopPropagation, app, ref,
 	}: PixiComponentScrollboxProps) {
 		const scrollbox = new PixiScrollbox({
 			boxWidth,
@@ -28,6 +29,7 @@ const Scrollbox = PixiComponent('Scrollbox', {
 			// scrollbarBackgroundAlpha: 255,
 			scrollbarOffsetHorizontal: -4,
 			// scrollbarSize: 4,
+			stopPropagation,
 		});
 
 		if (x) scrollbox.x = x;

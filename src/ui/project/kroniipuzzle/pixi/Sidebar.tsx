@@ -106,7 +106,7 @@ export default function Sidebar({
 				y={82}
 				width={150}
 				height={50}
-				label="Settings"
+				label="About"
 				onClick={() => { setShowSettingsModal(true); }}
 				color={0x1c5393}
 				radius={8}

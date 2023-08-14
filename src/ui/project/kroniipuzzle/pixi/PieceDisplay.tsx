@@ -3,8 +3,7 @@ import React, {
 } from 'react';
 import { Graphics as PixiGraphics, TextStyle } from 'pixi.js';
 import {
-	Container,
-	Graphics, Sprite, Text, useApp,
+	Container, Graphics, Sprite, Text, useApp,
 } from '@pixi/react';
 import PixiTaggedText from 'pixi-tagged-text';
 import PieceInfo from '../puzzle/PieceInfo';
@@ -42,13 +41,6 @@ ${congratulations}${favoriteMoment}`;
 
 	const [spriteY, setSpriteY] = useState(height);
 
-	const drawColorForPieceDisplay = useCallback((g: PixiGraphics) => {
-		g.clear();
-		g.beginFill(0xBDD1EC);
-		g.drawRoundedRect(0, 0, width, height, 8);
-		g.endFill();
-	}, [width, height]);
-
 	useEffect(() => {
 		scrollboxRef.current?.update();
 
@@ -60,6 +52,13 @@ ${congratulations}${favoriteMoment}`;
 			scrollboxRef.current?.update();
 		}
 	}, [pieceInfo]);
+
+	const drawColorForPieceDisplay = useCallback((g: PixiGraphics) => {
+		g.clear();
+		g.beginFill(0xBDD1EC);
+		g.drawRoundedRect(0, 0, width, height, 8);
+		g.endFill();
+	}, [width, height]);
 
 	return (
 		<Container
