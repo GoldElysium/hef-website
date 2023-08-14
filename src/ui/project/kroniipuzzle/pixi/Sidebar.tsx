@@ -14,13 +14,14 @@ interface SidebarProps {
 	y?: number;
 	width: number;
 	height: number;
-	setShowModal: (x: boolean) => void;
-	setShowExitModal: (x: boolean) => void;
+	setShowPreview: (val: boolean) => void;
+	setShowExitModal: (val: boolean) => void;
+	setShowSettingsModal: (val: boolean) => void;
 	children?: React.ReactNode;
 }
 
 export default function Sidebar({
-	x, y, width, height, setShowModal, setShowExitModal, children,
+	x, y, width, height, setShowPreview, setShowExitModal, setShowSettingsModal, children,
 }: SidebarProps) {
 	const [assetBundle, setAssetBundle] = useState<null | any>(null);
 
@@ -64,7 +65,7 @@ export default function Sidebar({
 				/>
 				<Container
 					anchor={[0.5, 0.5]}
-					x={18}
+					x={22}
 					y={10}
 				>
 					{
@@ -81,7 +82,7 @@ export default function Sidebar({
 					<Text
 						x={24}
 						y={0}
-						text="Back"
+						text="Exit"
 						style={{
 							fill: 'white',
 							fontSize: 16,
@@ -96,7 +97,18 @@ export default function Sidebar({
 				width={150}
 				height={50}
 				label="Preview"
-				onClick={() => { setShowModal(true); }}
+				onClick={() => { setShowPreview(true); }}
+				radius={8}
+			/>
+
+			<Button
+				x={SIDEBAR_WIDTH - 166}
+				y={82}
+				width={150}
+				height={50}
+				label="Settings"
+				onClick={() => { setShowSettingsModal(true); }}
+				color={0x1c5393}
 				radius={8}
 			/>
 		</Container>

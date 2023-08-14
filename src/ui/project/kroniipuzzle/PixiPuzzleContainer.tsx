@@ -13,7 +13,6 @@ import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context';
 import type { StageSize } from './PixiWrapper';
 import Viewport from './pixi/Viewport';
 import Sidebar from './pixi/Sidebar';
-import Modal from './pixi/Modal';
 import Puzzle from './puzzle/Puzzle';
 import ViewportContext from './providers/ViewportContext';
 import PuzzleCompleteModal from './pixi/PuzzleCompleteModal';
@@ -24,6 +23,7 @@ import {
 	PUZZLE_WIDTH, SIDEBAR_WIDTH, WORLD_HEIGHT, WORLD_WIDTH,
 } from './puzzle/PuzzleConfig';
 import Button from './pixi/Button';
+import Preview from './pixi/Preview';
 
 interface IProps {
 	project: Omit<Project, 'flags' | 'devprops'> & {
@@ -43,7 +43,7 @@ export default function PixiPuzzleContainer({
 }: IProps) {
 	const app = useApp();
 
-	const [showModal, setShowModal] = useState(false);
+	const [showPreview, setShowPreview] = useState(false);
 	const [showExitModal, setShowExitModal] = useState(false);
 	const [showPuzzleCompleteModal, setShowPuzzleCompleteModal] = useState(false);
 	const [disableDragging, setDisableDragging] = useState(false);
@@ -107,8 +107,9 @@ export default function PixiPuzzleContainer({
 			<Sidebar
 				width={SIDEBAR_WIDTH}
 				height={stageSize.height}
-				setShowModal={setShowModal}
+				setShowPreview={setShowPreview}
 				setShowExitModal={setShowExitModal}
+				setShowSettingsModal={setShowSettingsModal}
 			>
 				<PieceDisplay
 					x={16}
@@ -119,15 +120,8 @@ export default function PixiPuzzleContainer({
 				/>
 			</Sidebar>
 
-			{showModal && (
-				<Modal
-					x={0}
-					y={0}
-					width={stageSize.width}
-					height={stageSize.height}
-					label="Click anywhere to dismiss the preview"
-					onClick={() => { setShowModal(false); }}
-				/>
+			{showPreview && (
+				<Preview setShowPreview={setShowPreview} />
 			)}
 
 			{
