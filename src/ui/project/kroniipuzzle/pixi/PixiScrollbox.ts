@@ -420,6 +420,8 @@ export default class PixiScrollbox extends PIXI.Container implements Scrollbox {
      * @private
      */
 	_drawScrollbars() {
+		this.content.x = 0;
+
 		// eslint-disable-next-line no-nested-ternary
 		this._isScrollbarHorizontal = this.overflowX === 'scroll' ? true : ['hidden', 'none'].indexOf(this.overflowX) !== -1 ? false : this.scrollWidth > this.options.boxWidth!;
 		// eslint-disable-next-line no-nested-ternary

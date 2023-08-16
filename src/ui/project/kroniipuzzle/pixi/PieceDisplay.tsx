@@ -119,7 +119,7 @@ ${congratulations}${favoriteMoment}`;
 								fontSize: 24,
 							},
 						}}
-						x={0}
+						x={16}
 						y={16}
 						width={width - 32}
 						height={height - 16}
@@ -132,7 +132,7 @@ ${congratulations}${favoriteMoment}`;
 					<>
 						<Sprite
 							texture={pieceInfo?.sprite?.texture}
-							x={0}
+							x={16}
 							y={Math.max(height - pieceInfo.sprite.texture.height / 2 - 32, spriteY + 75)}
 							width={pieceInfo.sprite.texture.width}
 							height={pieceInfo.sprite.texture.height}
@@ -140,7 +140,7 @@ ${congratulations}${favoriteMoment}`;
 							tint={pieceInfo.sprite.tint}
 						/>
 						<Graphics
-							x={0}
+							x={16}
 							y={Math.max(height - pieceInfo.sprite.texture.height / 2 - 32, spriteY)}
 							draw={(g) => {
 								g.clear();

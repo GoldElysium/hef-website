@@ -7,7 +7,7 @@ import { Project } from 'types/payload-types';
 import React, {
 	useCallback, useEffect, useMemo, useRef, useState,
 } from 'react';
-import { Graphics as PixiGraphics, TextStyle } from 'pixi.js';
+import { Graphics as PixiGraphics, Renderer, TextStyle } from 'pixi.js';
 import type { Viewport as PixiViewport } from 'pixi-viewport';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context';
 import type { StageSize } from './PixiWrapper';
@@ -62,6 +62,10 @@ export default function PixiPuzzleContainer({
 		),
 		[disableDragging],
 	);
+
+	useEffect(() => {
+		(app.renderer as Renderer).framebuffer.blit();
+	}, []);
 
 	useEffect(() => {
 		app.renderer.resize(stageSize.width, stageSize.height);

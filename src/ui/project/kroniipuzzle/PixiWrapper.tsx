@@ -115,6 +115,7 @@ export default function PixiWrapper({ project, submissions }: IProps) {
 			<Stage
 				options={{
 					backgroundColor: 0x5f79bc,
+					antialias: true,
 				}}
 				className={`${!OS.desktop && orientation.startsWith('portrait') ? 'hidden' : ''} cursor-none`}
 			>

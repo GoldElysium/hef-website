@@ -19,20 +19,6 @@ interface SettingsModalProps {
 	setShowSettingsModal: (val: boolean) => void;
 }
 
-// TODO: Fix masking
-function createMask() {
-	/* const g = new PixiGraphics();
-    g.clear();
-    g.beginFill(0x000000);
-    g.drawCircle(64, 64, 64);
-    g.endFill();
-    return g; */
-	return undefined;
-}
-
-const pfpMask = createMask();
-
-// TODO: Move to HTMLText
 export default function SettingsModal({
 	x, y, width, height, setShowSettingsModal,
 }: SettingsModalProps) {
@@ -165,6 +151,7 @@ export default function SettingsModal({
 						boxWidth={700}
 						boxHeight={864}
 						app={app}
+						overflowY="scroll"
 						stopPropagation
 					>
 						<Text
@@ -206,7 +193,6 @@ export default function SettingsModal({
 										image="https://cdn.holoen.fans/hefw/media/400.webp"
 										width={128}
 										height={128}
-										mask={pfpMask}
 									/>
 									<Text
 										text="Empikuro"
@@ -228,7 +214,6 @@ export default function SettingsModal({
 										image="https://cdn.holoen.fans/hefw/media/400.webp"
 										width={128}
 										height={128}
-										mask={pfpMask}
 									/>
 									<Text
 										text="helicobtor"
@@ -250,7 +235,6 @@ export default function SettingsModal({
 										image="https://cdn.holoen.fans/hefw/media/400.webp"
 										width={128}
 										height={128}
-										mask={pfpMask}
 									/>
 									<Text
 										text="Zaめ"
@@ -295,7 +279,6 @@ export default function SettingsModal({
 										image="https://cdn.holoen.fans/hefw/media/400.webp"
 										width={128}
 										height={128}
-										mask={pfpMask}
 									/>
 									<Text
 										text="george"
@@ -317,7 +300,6 @@ export default function SettingsModal({
 										image="https://cdn.holoen.fans/hefw/media/400.webp"
 										width={128}
 										height={128}
-										mask={pfpMask}
 									/>
 									<Text
 										text="GoldElysium"
@@ -362,7 +344,6 @@ export default function SettingsModal({
 										image="https://cdn.holoen.fans/hefw/media/400.webp"
 										width={128}
 										height={128}
-										mask={pfpMask}
 									/>
 									<Text
 										text="Agiri"
@@ -384,7 +365,6 @@ export default function SettingsModal({
 										image="https://cdn.holoen.fans/hefw/media/400.webp"
 										width={128}
 										height={128}
-										mask={pfpMask}
 									/>
 									<Text
 										text="Ant"
@@ -406,7 +386,6 @@ export default function SettingsModal({
 										image="https://cdn.holoen.fans/hefw/media/400.webp"
 										width={128}
 										height={128}
-										mask={pfpMask}
 									/>
 									<Text
 										text="Freyja"
@@ -428,7 +407,6 @@ export default function SettingsModal({
 										image="https://cdn.holoen.fans/hefw/media/400.webp"
 										width={128}
 										height={128}
-										mask={pfpMask}
 									/>
 									<Text
 										text="Hassan"
@@ -457,7 +435,6 @@ export default function SettingsModal({
 										image="https://cdn.holoen.fans/hefw/media/400.webp"
 										width={128}
 										height={128}
-										mask={pfpMask}
 									/>
 									<Text
 										text="kler.yy"
@@ -479,7 +456,6 @@ export default function SettingsModal({
 										image="https://cdn.holoen.fans/hefw/media/400.webp"
 										width={128}
 										height={128}
-										mask={pfpMask}
 									/>
 									<Text
 										text="Lucy"
@@ -501,7 +477,6 @@ export default function SettingsModal({
 										image="https://cdn.holoen.fans/hefw/media/400.webp"
 										width={128}
 										height={128}
-										mask={pfpMask}
 									/>
 									<Text
 										text="patatas"
@@ -546,7 +521,6 @@ export default function SettingsModal({
 										image="https://cdn.holoen.fans/hefw/media/400.webp"
 										width={128}
 										height={128}
-										mask={pfpMask}
 									/>
 									<Text
 										text="Adarin"
@@ -568,7 +542,6 @@ export default function SettingsModal({
 										image="https://cdn.holoen.fans/hefw/media/400.webp"
 										width={128}
 										height={128}
-										mask={pfpMask}
 									/>
 									<Text
 										text="Bacon Strips"
@@ -590,7 +563,6 @@ export default function SettingsModal({
 										image="https://cdn.holoen.fans/hefw/media/400.webp"
 										width={128}
 										height={128}
-										mask={pfpMask}
 									/>
 									<Text
 										text="メガネ Crow"
@@ -612,7 +584,6 @@ export default function SettingsModal({
 										image="https://cdn.holoen.fans/hefw/media/400.webp"
 										width={128}
 										height={128}
-										mask={pfpMask}
 									/>
 									<Text
 										text="Empikuro"
@@ -641,7 +612,6 @@ export default function SettingsModal({
 										image="https://cdn.holoen.fans/hefw/media/400.webp"
 										width={128}
 										height={128}
-										mask={pfpMask}
 									/>
 									<Text
 										text="Erasor"
@@ -663,7 +633,6 @@ export default function SettingsModal({
 										image="https://cdn.holoen.fans/hefw/media/400.webp"
 										width={128}
 										height={128}
-										mask={pfpMask}
 									/>
 									<Text
 										text="eus_ing"
@@ -685,7 +654,6 @@ export default function SettingsModal({
 										image="https://cdn.holoen.fans/hefw/media/400.webp"
 										width={128}
 										height={128}
-										mask={pfpMask}
 									/>
 									<Text
 										text="Fongban"
@@ -707,7 +675,6 @@ export default function SettingsModal({
 										image="https://cdn.holoen.fans/hefw/media/400.webp"
 										width={128}
 										height={128}
-										mask={pfpMask}
 									/>
 									<Text
 										text="GULS"
@@ -736,7 +703,6 @@ export default function SettingsModal({
 										image="https://cdn.holoen.fans/hefw/media/400.webp"
 										width={128}
 										height={128}
-										mask={pfpMask}
 									/>
 									<Text
 										text="Mameng"
@@ -758,7 +724,6 @@ export default function SettingsModal({
 										image="https://cdn.holoen.fans/hefw/media/400.webp"
 										width={128}
 										height={128}
-										mask={pfpMask}
 									/>
 									<Text
 										text="Oddnumber"
@@ -780,7 +745,6 @@ export default function SettingsModal({
 										image="https://cdn.holoen.fans/hefw/media/400.webp"
 										width={128}
 										height={128}
-										mask={pfpMask}
 									/>
 									<Text
 										text="ONAiR"
@@ -802,7 +766,6 @@ export default function SettingsModal({
 										image="https://cdn.holoen.fans/hefw/media/400.webp"
 										width={128}
 										height={128}
-										mask={pfpMask}
 									/>
 									<Text
 										text="Parkoach"
@@ -831,7 +794,6 @@ export default function SettingsModal({
 										image="https://cdn.holoen.fans/hefw/media/400.webp"
 										width={128}
 										height={128}
-										mask={pfpMask}
 									/>
 									<Text
 										text="TAKA"
@@ -853,7 +815,6 @@ export default function SettingsModal({
 										image="https://cdn.holoen.fans/hefw/media/400.webp"
 										width={128}
 										height={128}
-										mask={pfpMask}
 									/>
 									<Text
 										text="Underdatv"
@@ -875,7 +836,6 @@ export default function SettingsModal({
 										image="https://cdn.holoen.fans/hefw/media/400.webp"
 										width={128}
 										height={128}
-										mask={pfpMask}
 									/>
 									<Text
 										text="Vyragami"
@@ -897,7 +857,6 @@ export default function SettingsModal({
 										image="https://cdn.holoen.fans/hefw/media/400.webp"
 										width={128}
 										height={128}
-										mask={pfpMask}
 									/>
 									<Text
 										text="Zenya"
@@ -942,7 +901,6 @@ export default function SettingsModal({
 										image="https://cdn.holoen.fans/hefw/media/400.webp"
 										width={128}
 										height={128}
-										mask={pfpMask}
 									/>
 									<Text
 										text="J.Kim"
@@ -987,7 +945,6 @@ export default function SettingsModal({
 										image="https://cdn.holoen.fans/hefw/media/400.webp"
 										width={128}
 										height={128}
-										mask={pfpMask}
 									/>
 									<Text
 										text="끌나(rjseka7758)"
