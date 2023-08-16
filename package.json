@@ -29,6 +29,7 @@
     "@heroicons/react": "2.0.18",
     "@mdi/js": "7.2.96",
     "@mdi/react": "1.6.1",
+    "@pixi/gif": "^2.1.0",
     "@pixi/graphics-smooth": "^1.1.0",
     "@pixi/react": "7.1.0",
     "@pixi/sound": "^5.2.0",

@@ -26,6 +26,9 @@ dependencies:
   '@mdi/react':
     specifier: 1.6.1
     version: 1.6.1
+  '@pixi/gif':
+    specifier: ^2.1.0
+    version: 2.1.0(@pixi/assets@7.2.4)(@pixi/core@7.2.4)(@pixi/display@7.2.4)(@pixi/sprite@7.2.4)
   '@pixi/graphics-smooth':
     specifier: ^1.1.0
     version: 1.1.0(@pixi/core@7.2.4)(@pixi/display@7.2.4)(@pixi/graphics@7.2.4)
@@ -3589,6 +3592,21 @@ packages:
       '@pixi/core': 7.2.4
     dependencies:
       '@pixi/core': 7.2.4
+    dev: false
+
+  /@pixi/gif@2.1.0(@pixi/assets@7.2.4)(@pixi/core@7.2.4)(@pixi/display@7.2.4)(@pixi/sprite@7.2.4):
+    resolution: {integrity: sha512-g0xVMgHzPdq7bX3UmUR5tiFpMP07u4reCEgSRKLwNQ95AnpRzQq3QtTsKosYMTrE9zZfr7TWlwdx1rFKs28SeA==}
+    engines: {node: '>=16', npm: '>=8', yarn: please-use-npm}
+    peerDependencies:
+      '@pixi/assets': ^7.0.0
+      '@pixi/core': ^7.0.0
+      '@pixi/display': ^7.0.0
+      '@pixi/sprite': ^7.0.0
+    dependencies:
+      '@pixi/assets': 7.2.4(@pixi/core@7.2.4)(@pixi/utils@7.2.4)
+      '@pixi/core': 7.2.4
+      '@pixi/display': 7.2.4(@pixi/core@7.2.4)
+      '@pixi/sprite': 7.2.4(@pixi/core@7.2.4)(@pixi/display@7.2.4)
     dev: false
 
   /@pixi/graphics-smooth@1.1.0(@pixi/core@7.2.4)(@pixi/display@7.2.4)(@pixi/graphics@7.2.4):

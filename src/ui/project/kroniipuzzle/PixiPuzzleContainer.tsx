@@ -25,6 +25,7 @@ import {
 import Button from './pixi/Button';
 import Preview from './pixi/Preview';
 import SettingsModal from './pixi/Settings';
+import Cursor from './pixi/Cursor';
 
 interface IProps {
 	project: Omit<Project, 'flags' | 'devprops'> & {
@@ -192,6 +193,8 @@ export default function PixiPuzzleContainer({
 					setShowSettingsModal={setShowSettingsModal}
 				/>
 			)}
+
+			<Cursor />
 		</ViewportContext.Provider>
 	);
 }

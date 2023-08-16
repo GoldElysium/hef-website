@@ -1,5 +1,6 @@
 'use client';
 
+import '@pixi/gif';
 import { Project } from 'types/payload-types';
 import { Stage } from '@pixi/react';
 import React, { useEffect, useState } from 'react';
@@ -115,7 +116,7 @@ export default function PixiWrapper({ project, submissions }: IProps) {
 				options={{
 					backgroundColor: 0x5f79bc,
 				}}
-				className={!OS.desktop && orientation.startsWith('portrait') ? 'hidden' : ''}
+				className={`${!OS.desktop && orientation.startsWith('portrait') ? 'hidden' : ''} cursor-none`}
 			>
 				<PixiPuzzleContainer
 					project={project}

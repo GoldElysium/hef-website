@@ -42,6 +42,14 @@
 				{
 					"name": "back-arrow",
 					"srcs": "/assets/kroniipuzzle/back-arrow.svg"
+				},
+				{
+					"name": "cursor-default",
+					"srcs": "/assets/kroniipuzzle/cursor-default.gif"
+				},
+				{
+					"name": "cursor-pointer",
+					"srcs": "/assets/kroniipuzzle/cursor-pointer.gif"
 				}
 			]
 		}
