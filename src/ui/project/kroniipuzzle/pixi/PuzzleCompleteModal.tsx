@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
 	Container, Graphics, Text,
 } from '@pixi/react';
+import * as PIXI from 'pixi.js';
 import { Graphics as PixiGraphics, TextStyle } from 'pixi.js';
+import AnimatedGIF from './AnimatedGIF';
 
 interface ModalProps {
 	x: number;
@@ -15,6 +17,15 @@ interface ModalProps {
 export default function Modal({
 	x, y, width, height, onClick,
 }: ModalProps) {
+	const [assetBundle, setAssetBundle] = useState<null | any>(null);
+
+	useEffect(() => {
+		PIXI.Assets.loadBundle('puzzle')
+			.then((loadedBundle) => {
+				setAssetBundle(loadedBundle);
+			});
+	}, []);
+
 	const handleClick = () => {
 		if (onClick) {
 			onClick();
@@ -41,6 +52,14 @@ export default function Modal({
 				anchor={[0.5, 0.5]}
 				x={width / 2}
 				y={height / 2}
+			/>
+			<AnimatedGIF
+				gif={assetBundle.congrats_kronii}
+				x={100}
+				y={100}
+				width={1992}
+				height={1125}
+				visible
 			/>
 		</Container>
 	);

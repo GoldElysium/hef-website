@@ -44,6 +44,10 @@
 					"srcs": "/assets/kroniipuzzle/back-arrow.svg"
 				},
 				{
+					"name": "congrats_kronii",
+					"srcs": "/assets/kroniipuzzle/congrats_kronii.gif"
+				},
+				{
 					"name": "cursor-default",
 					"srcs": "/assets/kroniipuzzle/cursor-default.gif"
 				},
