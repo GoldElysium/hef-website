@@ -80,6 +80,14 @@ export default function PixiWrapper({ project, submissions }: IProps) {
 			setReady(true);
 		})();
 	}, []);
+
+	useEffect(() => {
+		// @ts-ignore
+		if (typeof InstallTrigger !== 'undefined') {
+			alert("Hello there!\nIt seems like you're one of the few others using Firefox. Sadly this game is known to perform quite poorly on Firefox, so we recommend you use Chrome/Edge to play this.");
+		}
+	}, []);
+
 	if (!stageSize) return null;
 
 	if (!ready) {
