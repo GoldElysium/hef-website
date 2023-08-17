@@ -56,6 +56,7 @@ export default function PieceGroup({
 
 		setCurrentPosition(initialPosition);
 		updatePieceGroupPosition(initialPosition);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [initialX, initialY]);
 
 	useEffect(() => {
@@ -67,6 +68,7 @@ export default function PieceGroup({
 		} else {
 			setCurrentPosition({ x: thisPieceGroup.position.x, y: thisPieceGroup.position.y });
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [thisPieceGroup.correct]);
 
 	useEffect(() => {
@@ -74,6 +76,7 @@ export default function PieceGroup({
 		for (const pieceKey of thisPieceGroup.pieces) {
 			pieces[pieceKey].ref.current.updateGlobalPosition();
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	const pieceElements = useMemo(

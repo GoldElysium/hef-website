@@ -1,11 +1,9 @@
 'use client';
 
-import React, {
-	useEffect, useImperativeHandle, useRef, useState,
-} from 'react';
+import React, { useEffect, useImperativeHandle, useRef } from 'react';
 import { Container, Sprite, Text } from '@pixi/react';
 import {
-	DisplayObject, Sprite as PixiSprite, TextStyle, Texture, Container as PixiContainer,
+	Container as PixiContainer, DisplayObject, Sprite as PixiSprite, TextStyle, Texture,
 } from 'pixi.js';
 import Message from './Message';
 import PieceInfo from './PieceInfo';
@@ -50,9 +48,6 @@ const Piece = React.forwardRef<PieceActions, PieceProps>(({
 	message,
 	kronie,
 }, ref) => {
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	const [isRead, setIsRead] = useState(false);
-
 	const pieceContainerRef = useRef<PixiContainer<DisplayObject> | null>(null);
 
 	/* eslint-disable @typescript-eslint/no-unused-vars */
@@ -70,21 +65,25 @@ const Piece = React.forwardRef<PieceActions, PieceProps>(({
 	if (c !== 0) {
 		useEffect(() => usePuzzleStore.subscribe(
 			(state) => (pieceLeft.current = state.pieces[`${r}-${c - 1}`]),
+			// eslint-disable-next-line react-hooks/exhaustive-deps
 		), []);
 	}
 	if (r !== 0) {
 		useEffect(() => usePuzzleStore.subscribe(
 			(state) => (pieceTop.current = state.pieces[`${r - 1}-${c}`]),
+			// eslint-disable-next-line react-hooks/exhaustive-deps
 		), []);
 	}
 	if (c !== COL_COUNT - 1) {
 		useEffect(() => usePuzzleStore.subscribe(
 			(state) => (pieceRight.current = state.pieces[`${r}-${c + 1}`]),
+			// eslint-disable-next-line react-hooks/exhaustive-deps
 		), []);
 	}
 	if (r !== ROW_COUNT - 1) {
 		useEffect(() => usePuzzleStore.subscribe(
 			(state) => (pieceBottom.current = state.pieces[`${r + 1}-${c}`]),
+			// eslint-disable-next-line react-hooks/exhaustive-deps
 		), []);
 	}
 	/* eslint-enable */
