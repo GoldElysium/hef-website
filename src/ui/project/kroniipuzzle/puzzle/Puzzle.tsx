@@ -7,7 +7,7 @@ import React, {
 import * as PIXI from 'pixi.js';
 import { Sprite as PixiSprite } from 'pixi.js';
 import { Container, Graphics } from '@pixi/react';
-import { IMediaInstance, Sound } from '@pixi/sound';
+import { IMediaInstance, Sound/* , sound as PixiSound */ } from '@pixi/sound';
 import { shallow } from 'zustand/shallow';
 import Piece, { PieceActions } from './Piece';
 import Message from './Message';
@@ -89,6 +89,9 @@ export default function Puzzle({
 	}, [height, width]);
 
 	useEffect(() => {
+		// TODO: Sound doubling bug when auto pause is disabled
+		// PixiSound.disableAutoPause = true;
+
 		PIXI.Assets.loadBundle('puzzle')
 			.then((loadedBundle) => {
 				setAssetBundle(loadedBundle);
@@ -101,9 +104,6 @@ export default function Puzzle({
 		const loadedSounds: Record<string, Sound> = {};
 
 		function loadCallback(name: string, sound: Sound) {
-			// TODO: Sound doubling bug when auto pause is disabled
-			// eslint-disable-next-line no-param-reassign
-			// (sound.context as WebAudioContext).autoPause = false;
 			loadedSounds[name] = sound;
 			// Very lazy way to check if everything is loaded
 			if (Object.keys(loadedSounds).length === bgmTrackNames.length + sfxTrackNames.length) {
