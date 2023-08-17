@@ -30,6 +30,7 @@ export default function Cursor() {
 		app.stage.on('pointermove', (e: FederatedPointerEvent) => {
 			setCursorLocation({ x: e.x, y: e.y });
 		});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	if (!assetBundle) return null;

@@ -65,11 +65,13 @@ export default function PixiPuzzleContainer({
 
 	useEffect(() => {
 		(app.renderer as Renderer).framebuffer.blit();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	useEffect(() => {
 		app.renderer.resize(stageSize.width, stageSize.height);
 		viewportRef.current?.fit();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [stageSize]);
 
 	const drawPuzzleContainer = useCallback((g: PixiGraphics) => {

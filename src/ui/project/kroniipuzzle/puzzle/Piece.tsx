@@ -196,7 +196,6 @@ const Piece = React.forwardRef<PieceActions, PieceProps>(({
 			return true;
 		}
 
-		console.log(`${r}-${c}`, localPos);
 		return false;
 	}
 

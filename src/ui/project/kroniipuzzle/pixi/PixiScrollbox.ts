@@ -556,7 +556,6 @@ export default class PixiScrollbox extends PIXI.Container implements Scrollbox {
      * @private
      */
 	scrollbarDown(e: FederatedPointerEvent) {
-		console.log('Here? scrollbarDown');
 		const local = this.toLocal(e.global);
 		if (this.isScrollbarHorizontal) {
 			if (local.y > this.boxHeight - this.scrollbarSize) {
