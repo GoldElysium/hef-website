@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
 	Container, Graphics, Text,
 } from '@pixi/react';
@@ -25,6 +25,25 @@ export default function Modal({
 				setAssetBundle(loadedBundle);
 			});
 	}, []);
+
+	const {
+		gifWidth, gifHeight, gifX, gifY,
+	} = useMemo(() => {
+		const calcWidth = window.innerWidth > window.innerHeight
+			? (window.innerHeight / 1125) * 1922
+			: window.innerWidth;
+
+		const calcHeight = window.innerWidth > window.innerHeight
+			? window.innerHeight
+			: (window.innerWidth / 1922) * 1125;
+
+		return {
+			gifWidth: calcWidth,
+			gifHeight: calcHeight,
+			gifX: (window.innerWidth - calcWidth) / 2,
+			gifY: (window.innerHeight - calcHeight) / 2,
+		};
+	}, [window.innerWidth, window.innerHeight]);
 
 	const handleClick = () => {
 		if (onClick) {
@@ -53,14 +72,15 @@ export default function Modal({
 				x={width / 2}
 				y={height / 2}
 			/>
-			<AnimatedGIF
-				gif={assetBundle.congrats_kronii}
-				x={100}
-				y={100}
-				width={1992}
-				height={1125}
-				visible
-			/>
+			{assetBundle && (
+				<AnimatedGIF
+					x={-x + gifX}
+					y={-y + gifY}
+					gif={assetBundle.congrats_kronii}
+					width={gifWidth}
+					height={gifHeight}
+				/>
+			)}
 		</Container>
 	);
 }

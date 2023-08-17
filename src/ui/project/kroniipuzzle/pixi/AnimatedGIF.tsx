@@ -6,7 +6,7 @@ import { AnimatedGIF as PixiAnimatedGIF } from '@pixi/gif';
 interface PixiComponentAnimatedGIFProps {
 	width?: number;
 	height?: number;
-	gif: PixiAnimatedGIF
+	gif: PixiAnimatedGIF;
 	x?: number;
 	y?: number;
 	visible?: boolean;
@@ -36,7 +36,7 @@ const AnimatedGIF = PixiComponent('AnimatedGIF', {
 
 		return animatedGIF;
 	},
-	applyProps(animatedGif, _oldProps, _newProps) {
+	applyProps(animatedGIF, _oldProps, _newProps) {
 		/* eslint-disable @typescript-eslint/naming-convention */
 		const {
 			ref: _oldRef,
@@ -53,18 +53,18 @@ const AnimatedGIF = PixiComponent('AnimatedGIF', {
 		} = _newProps;
 
 		// eslint-disable-next-line no-param-reassign
-		animatedGif.visible = visible ?? true;
+		animatedGIF.visible = visible ?? true;
 
 		Object.keys(newProps).forEach((p) => {
 			// @ts-ignore
 			if (oldProps[p] !== newProps[p]) {
 				// @ts-ignore
-				animatedGif[p] = newProps[p]; // eslint-disable-line no-param-reassign
+				animatedGIF[p] = newProps[p]; // eslint-disable-line no-param-reassign
 			}
 		});
 
 		if (ref) {
-			ref.current = animatedGif;
+			ref.current = animatedGIF;
 		}
 	},
 	config: {
