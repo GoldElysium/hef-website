@@ -52,6 +52,7 @@ interface Actions {
 	setCorrect: (key: string) => () => void;
 	setVolume: (volume: number) => void;
 	setMuted: (muted: boolean) => void;
+	reset: () => void;
 }
 
 function flatIndexToSpiralCoordinates(index: number): [number, number] | null {
@@ -208,6 +209,47 @@ const usePuzzleStore = create(devtools(
 				}),
 				setMuted: (muted) => set((state) => {
 					state.audio.muted = muted;
+				}),
+				reset: () => set((state) => {
+					const newRandomIndexArray = Array.from({ length: PIECE_COUNT }, (_, index) => index)
+						.sort(() => Math.random() - 0.5);
+
+					for (let r = 0; r < ROW_COUNT; r++) {
+						for (let c = 0; c < COL_COUNT; c++) {
+							const index = newRandomIndexArray[r * COL_COUNT + c];
+							const [cc, rr] = flatIndexToSpiralCoordinates(
+								index + (Math.floor(PIECE_COUNT * 0.35)) + 5,
+							) || [0, 0];
+							const x = cc * PIECE_SIZE * 1.75;
+							const y = rr * PIECE_SIZE * 1.75 - PIECE_SIZE * 2;
+
+							state.pieces[`${r}-${c}`] = {
+								position: {
+									x,
+									y,
+								},
+								localPosition: {
+									x: 0,
+									y: 0,
+								},
+								pieceGroup: `${r}-${c}`,
+							};
+							state.pieceGroups[`${r}-${c}`] = {
+								position: {
+									x,
+									y,
+								},
+								targetPosition: {
+									x: c * PIECE_SIZE,
+									y: r * PIECE_SIZE,
+								},
+								pieces: [`${r}-${c}`],
+								correct: false,
+								randomIndex: randomIndexArray[r * COL_COUNT + c],
+							};
+							state.correctCount = 0;
+						}
+					}
 				}),
 			} satisfies State & Actions;
 		}),

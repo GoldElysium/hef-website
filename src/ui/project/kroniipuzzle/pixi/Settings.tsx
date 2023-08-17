@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import {
 	Container, Graphics, Sprite, Text, useApp,
 } from '@pixi/react';
@@ -8,6 +8,8 @@ import { Graphics as PixiGraphics, TextStyle } from 'pixi.js';
 import TaggedText from './TaggedText';
 import Button from './Button';
 import Scrollbox from './Scrollbox';
+import usePuzzleStore from '../puzzle/PuzzleStore';
+import { COL_COUNT, ROW_COUNT } from '../puzzle/PuzzleConfig';
 
 const AboutText = 'Lorem ipsum';
 
@@ -23,6 +25,7 @@ export default function SettingsModal({
 	x, y, width, height, setShowSettingsModal,
 }: SettingsModalProps) {
 	const app = useApp();
+	const [message, setMessage] = useState<string | null>(null);
 
 	return (
 		<Container
@@ -117,7 +120,9 @@ export default function SettingsModal({
 						color={0xAA2222}
 						label="Reset puzzle"
 						onClick={() => {
-							// TODO
+							const puzzleState = usePuzzleStore.getState();
+							puzzleState.reset();
+							setMessage('Puzzle has been reset!');
 						}}
 					/>
 					<Button
@@ -129,9 +134,40 @@ export default function SettingsModal({
 						color={0xAA2222}
 						label="Cheat (Complete puzzle)"
 						onClick={() => {
-							// TODO
+							const puzzleState = usePuzzleStore.getState();
+
+							usePuzzleStore.setState(() => {
+								const pieceGroups: typeof puzzleState.pieceGroups = {};
+
+								// eslint-disable-next-line no-restricted-syntax
+								for (const key of Object.keys(puzzleState.pieceGroups)) {
+									pieceGroups[key] = {
+										...puzzleState.pieceGroups[key],
+										position: puzzleState.pieceGroups[key].targetPosition,
+										correct: true,
+									};
+								}
+
+								return {
+									pieceGroups,
+									correctCount: ROW_COUNT * COL_COUNT,
+								};
+							});
+
+							setMessage('Auto finished the puzzle.');
 						}}
 					/>
+					{message && (
+						<Text
+							text={message}
+							style={{
+								fontSize: 20,
+							} as TextStyle}
+							x={350}
+							y={262}
+							anchor={[0.5, 0]}
+						/>
+					)}
 				</Container>
 				<Container
 					x={32}

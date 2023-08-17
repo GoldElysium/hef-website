@@ -59,6 +59,17 @@ export default function PieceGroup({
 	}, [initialX, initialY]);
 
 	useEffect(() => {
+		if (thisPieceGroup.correct) {
+			setCurrentPosition({
+				x: thisPieceGroup.targetPosition.x,
+				y: thisPieceGroup.targetPosition.y,
+			});
+		} else {
+			setCurrentPosition({ x: thisPieceGroup.position.x, y: thisPieceGroup.position.y });
+		}
+	}, [thisPieceGroup.correct]);
+
+	useEffect(() => {
 		// eslint-disable-next-line no-restricted-syntax
 		for (const pieceKey of thisPieceGroup.pieces) {
 			pieces[pieceKey].ref.current.updateGlobalPosition();
