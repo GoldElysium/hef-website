@@ -45,6 +45,7 @@ export default function Modal({
 			gifX: (window.innerWidth - calcWidth) / 2,
 			gifY: (window.innerHeight - calcHeight) / 2,
 		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [window.innerWidth, window.innerHeight]);
 
 	return (
