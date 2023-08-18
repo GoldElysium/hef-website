@@ -342,7 +342,7 @@ export default function SettingsModal({
 									y={0}
 								>
 									<Sprite
-										image="https://cdn.holoen.fans/hefw/media/400.webp"
+										image="/assets/kroniipuzzle/avatars/george.webp"
 										width={128}
 										height={128}
 									/>
@@ -352,10 +352,20 @@ export default function SettingsModal({
 											fontWeight: 'bold',
 											fontSize: 16,
 										} as TextStyle}
-										x={64}
+										x={56}
 										y={140}
 										anchor={[0.5, 0]}
 										scale={[1, 1]}
+									/>
+									<Sprite
+										image="/assets/kroniipuzzle/twitter.svg"
+										width={18}
+										height={18}
+										y={140}
+										x={90}
+										eventMode="static"
+										cursor="pointer"
+										onpointertap={() => window.open('https://twitter.com/j1george_', '_blank', 'noopener')}
 									/>
 								</Container>
 								<Container
@@ -651,10 +661,20 @@ export default function SettingsModal({
 											fontWeight: 'bold',
 											fontSize: 16,
 										} as TextStyle}
-										x={64}
+										x={54}
 										y={140}
 										anchor={[0.5, 0]}
 										scale={[1, 1]}
+									/>
+									<Sprite
+										image="/assets/kroniipuzzle/twitter.svg"
+										width={18}
+										height={18}
+										y={140}
+										x={88}
+										eventMode="static"
+										cursor="pointer"
+										onpointertap={() => window.open('https://twitter.com/adklelele', '_blank', 'noopener')}
 									/>
 								</Container>
 							</Container>
