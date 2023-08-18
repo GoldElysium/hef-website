@@ -141,13 +141,11 @@ export default async function ProjectPage({ project }: ProjectPageProps) {
 				)}
 
 				<div className="flex flex-col h-full min-h-screen bg-skin-background-1 dark:bg-skin-dark-background-1">
-					{!project.flags?.includes('disableHeader') && (
-						<Header
-							title={project.title ?? 'unknown'}
-							description={project.shortDescription ?? ''}
-							background={project.flags?.includes('sanaSendoff') ? '/assets/sanasendoff/background.png' : undefined}
-						/>
-					)}
+					<Header
+						title={project.title ?? 'unknown'}
+						description={project.shortDescription ?? ''}
+						background={project.flags?.includes('sanaSendoff') ? '/assets/sanasendoff/background.png' : undefined}
+					/>
 					<div className="flex-grow pb-16">
 						<div className="my-32 w-full flex flex-col items-center">
 							<div className="max-w-4xl w-full mx-4 break-words md:break-normal">
