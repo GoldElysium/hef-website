@@ -194,7 +194,7 @@ export default function SettingsModal({
 							text="Credits"
 							style={{
 								fontWeight: 'bold',
-								fontSize: 36,
+								fontSize: 40,
 							} as TextStyle}
 							x={350}
 							y={32}
@@ -208,7 +208,7 @@ export default function SettingsModal({
 								text="Organizers:"
 								style={{
 									fontWeight: 'bold',
-									fontSize: 20,
+									fontSize: 22,
 								} as TextStyle}
 								x={350}
 								y={0}
@@ -226,7 +226,7 @@ export default function SettingsModal({
 									y={0}
 								>
 									<Sprite
-										image="https://cdn.holoen.fans/hefw/media/400.webp"
+										image="/assets/kroniipuzzle/avatars/empikuro.webp"
 										width={128}
 										height={128}
 									/>
@@ -236,10 +236,20 @@ export default function SettingsModal({
 											fontWeight: 'bold',
 											fontSize: 16,
 										} as TextStyle}
-										x={64}
+										x={52}
 										y={140}
 										anchor={[0.5, 0]}
 										scale={[1, 1]}
+									/>
+									<Sprite
+										image="/assets/kroniipuzzle/twitter.svg"
+										width={18}
+										height={18}
+										y={140}
+										x={96}
+										eventMode="static"
+										cursor="pointer"
+										onpointertap={() => window.open('https://twitter.com/EmpiKuro', '_blank', 'noopener')}
 									/>
 								</Container>
 								<Container
@@ -247,7 +257,7 @@ export default function SettingsModal({
 									y={0}
 								>
 									<Sprite
-										image="https://cdn.holoen.fans/hefw/media/400.webp"
+										image="/assets/kroniipuzzle/avatars/helicobtor.webp"
 										width={128}
 										height={128}
 									/>
@@ -257,10 +267,20 @@ export default function SettingsModal({
 											fontWeight: 'bold',
 											fontSize: 16,
 										} as TextStyle}
-										x={64}
+										x={52}
 										y={140}
 										anchor={[0.5, 0]}
 										scale={[1, 1]}
+									/>
+									<Sprite
+										image="/assets/kroniipuzzle/twitter.svg"
+										width={18}
+										height={18}
+										y={140}
+										x={98}
+										eventMode="static"
+										cursor="pointer"
+										onpointertap={() => window.open('https://twitter.com/helicobtor', '_blank', 'noopener')}
 									/>
 								</Container>
 								<Container
@@ -268,7 +288,7 @@ export default function SettingsModal({
 									y={0}
 								>
 									<Sprite
-										image="https://cdn.holoen.fans/hefw/media/400.webp"
+										image="/assets/kroniipuzzle/avatars/zame.webp"
 										width={128}
 										height={128}
 									/>
@@ -278,10 +298,20 @@ export default function SettingsModal({
 											fontWeight: 'bold',
 											fontSize: 16,
 										} as TextStyle}
-										x={64}
+										x={58}
 										y={140}
 										anchor={[0.5, 0]}
 										scale={[1, 1]}
+									/>
+									<Sprite
+										image="/assets/kroniipuzzle/twitter.svg"
+										width={18}
+										height={18}
+										y={140}
+										x={80}
+										eventMode="static"
+										cursor="pointer"
+										onpointertap={() => window.open('https://twitter.com/Ztynz1', '_blank', 'noopener')}
 									/>
 								</Container>
 							</Container>
@@ -294,7 +324,7 @@ export default function SettingsModal({
 								text="Programmers:"
 								style={{
 									fontWeight: 'bold',
-									fontSize: 20,
+									fontSize: 23,
 								} as TextStyle}
 								x={350}
 								y={0}
@@ -333,7 +363,7 @@ export default function SettingsModal({
 									y={0}
 								>
 									<Sprite
-										image="https://cdn.holoen.fans/hefw/media/400.webp"
+										image="/assets/kroniipuzzle/avatars/GoldElysium.webp"
 										width={128}
 										height={128}
 									/>
@@ -343,10 +373,20 @@ export default function SettingsModal({
 											fontWeight: 'bold',
 											fontSize: 16,
 										} as TextStyle}
-										x={64}
+										x={54}
 										y={140}
 										anchor={[0.5, 0]}
 										scale={[1, 1]}
+									/>
+									<Sprite
+										image="/assets/kroniipuzzle/github.svg"
+										width={18}
+										height={18}
+										y={140}
+										x={108}
+										eventMode="static"
+										cursor="pointer"
+										onpointertap={() => window.open('https://github.com/GoldElysium', '_blank', 'noopener')}
 									/>
 								</Container>
 							</Container>
@@ -359,7 +399,7 @@ export default function SettingsModal({
 								text="Assistants:"
 								style={{
 									fontWeight: 'bold',
-									fontSize: 20,
+									fontSize: 23,
 								} as TextStyle}
 								x={350}
 								y={0}
@@ -377,20 +417,30 @@ export default function SettingsModal({
 									y={0}
 								>
 									<Sprite
-										image="https://cdn.holoen.fans/hefw/media/400.webp"
+										image="/assets/kroniipuzzle/avatars/Agiri.webp"
 										width={128}
 										height={128}
 									/>
 									<Text
-										text="Agiri"
+										text="『あぎり』"
 										style={{
 											fontWeight: 'bold',
 											fontSize: 16,
 										} as TextStyle}
-										x={64}
+										x={52}
 										y={140}
 										anchor={[0.5, 0]}
 										scale={[1, 1]}
+									/>
+									<Sprite
+										image="/assets/kroniipuzzle/twitter.svg"
+										width={18}
+										height={18}
+										y={140}
+										x={92}
+										eventMode="static"
+										cursor="pointer"
+										onpointertap={() => window.open('https://twitter.com/Akahito_San', '_blank', 'noopener')}
 									/>
 								</Container>
 								<Container
@@ -398,7 +448,7 @@ export default function SettingsModal({
 									y={0}
 								>
 									<Sprite
-										image="https://cdn.holoen.fans/hefw/media/400.webp"
+										image="/assets/kroniipuzzle/avatars/Ant.webp"
 										width={128}
 										height={128}
 									/>
@@ -408,10 +458,20 @@ export default function SettingsModal({
 											fontWeight: 'bold',
 											fontSize: 16,
 										} as TextStyle}
-										x={64}
+										x={56}
 										y={140}
 										anchor={[0.5, 0]}
 										scale={[1, 1]}
+									/>
+									<Sprite
+										image="/assets/kroniipuzzle/twitter.svg"
+										width={18}
+										height={18}
+										y={140}
+										x={80}
+										eventMode="static"
+										cursor="pointer"
+										onpointertap={() => window.open('https://twitter.com/Antzk_3', '_blank', 'noopener')}
 									/>
 								</Container>
 								<Container
@@ -419,7 +479,7 @@ export default function SettingsModal({
 									y={0}
 								>
 									<Sprite
-										image="https://cdn.holoen.fans/hefw/media/400.webp"
+										image="/assets/kroniipuzzle/avatars/freyja.webp"
 										width={128}
 										height={128}
 									/>
@@ -429,10 +489,20 @@ export default function SettingsModal({
 											fontWeight: 'bold',
 											fontSize: 16,
 										} as TextStyle}
-										x={64}
+										x={56}
 										y={140}
 										anchor={[0.5, 0]}
 										scale={[1, 1]}
+									/>
+									<Sprite
+										image="/assets/kroniipuzzle/twitter.svg"
+										width={18}
+										height={18}
+										y={140}
+										x={86}
+										eventMode="static"
+										cursor="pointer"
+										onpointertap={() => window.open('https://twitter.com/FreyjaBK', '_blank', 'noopener')}
 									/>
 								</Container>
 								<Container
@@ -445,15 +515,25 @@ export default function SettingsModal({
 										height={128}
 									/>
 									<Text
-										text="Hassan"
+										text="Hasaan"
 										style={{
 											fontWeight: 'bold',
 											fontSize: 16,
 										} as TextStyle}
-										x={64}
+										x={52}
 										y={140}
 										anchor={[0.5, 0]}
 										scale={[1, 1]}
+									/>
+									<Sprite
+										image="/assets/kroniipuzzle/twitter.svg"
+										width={18}
+										height={18}
+										y={140}
+										x={86}
+										eventMode="static"
+										cursor="pointer"
+										onpointertap={() => window.open('https://twitter.com/HasaanMohammed', '_blank', 'noopener')}
 									/>
 								</Container>
 							</Container>
@@ -464,7 +544,7 @@ export default function SettingsModal({
 								scale={[1, 1]}
 							>
 								<Container
-									x={-224}
+									x={-304}
 									y={0}
 								>
 									<Sprite
@@ -478,18 +558,59 @@ export default function SettingsModal({
 											fontWeight: 'bold',
 											fontSize: 16,
 										} as TextStyle}
-										x={64}
+										x={52}
 										y={140}
 										anchor={[0.5, 0]}
 										scale={[1, 1]}
 									/>
+									<Sprite
+										image="/assets/kroniipuzzle/twitter.svg"
+										width={18}
+										height={18}
+										y={140}
+										x={86}
+										eventMode="static"
+										cursor="pointer"
+										onpointertap={() => window.open('https://twitter.com/Kurea_yy', '_blank', 'noopener')}
+									/>
 								</Container>
 								<Container
-									x={-64}
+									x={-144}
 									y={0}
 								>
 									<Sprite
-										image="https://cdn.holoen.fans/hefw/media/400.webp"
+										image="/assets/kroniipuzzle/avatars/Kyono.webp"
+										width={128}
+										height={128}
+									/>
+									<Text
+										text="Kyono"
+										style={{
+											fontWeight: 'bold',
+											fontSize: 16,
+										} as TextStyle}
+										x={52}
+										y={140}
+										anchor={[0.5, 0]}
+										scale={[1, 1]}
+									/>
+									<Sprite
+										image="/assets/kroniipuzzle/twitter.svg"
+										width={18}
+										height={18}
+										y={140}
+										x={86}
+										eventMode="static"
+										cursor="pointer"
+										onpointertap={() => window.open('https://twitter.com/KyoKMonnoK', '_blank', 'noopener')}
+									/>
+								</Container>
+								<Container
+									x={16}
+									y={0}
+								>
+									<Sprite
+										image="/assets/kroniipuzzle/avatars/Lucy.webp"
 										width={128}
 										height={128}
 									/>
@@ -499,18 +620,28 @@ export default function SettingsModal({
 											fontWeight: 'bold',
 											fontSize: 16,
 										} as TextStyle}
-										x={64}
+										x={56}
 										y={140}
 										anchor={[0.5, 0]}
 										scale={[1, 1]}
 									/>
+									<Sprite
+										image="/assets/kroniipuzzle/twitter.svg"
+										width={18}
+										height={18}
+										y={140}
+										x={82}
+										eventMode="static"
+										cursor="pointer"
+										onpointertap={() => window.open('https://twitter.com/SirLuciMx', '_blank', 'noopener')}
+									/>
 								</Container>
 								<Container
-									x={96}
+									x={176}
 									y={0}
 								>
 									<Sprite
-										image="https://cdn.holoen.fans/hefw/media/400.webp"
+										image="/assets/kroniipuzzle/avatars/patatas.webp"
 										width={128}
 										height={128}
 									/>
@@ -536,7 +667,7 @@ export default function SettingsModal({
 								text="Artists:"
 								style={{
 									fontWeight: 'bold',
-									fontSize: 20,
+									fontSize: 22,
 								} as TextStyle}
 								x={350}
 								y={0}
@@ -554,7 +685,7 @@ export default function SettingsModal({
 									y={0}
 								>
 									<Sprite
-										image="https://cdn.holoen.fans/hefw/media/400.webp"
+										image="/assets/kroniipuzzle/avatars/Adarin.webp"
 										width={128}
 										height={128}
 									/>
@@ -564,10 +695,20 @@ export default function SettingsModal({
 											fontWeight: 'bold',
 											fontSize: 16,
 										} as TextStyle}
-										x={64}
+										x={52}
 										y={140}
 										anchor={[0.5, 0]}
 										scale={[1, 1]}
+									/>
+									<Sprite
+										image="/assets/kroniipuzzle/twitter.svg"
+										width={18}
+										height={18}
+										y={140}
+										x={86}
+										eventMode="static"
+										cursor="pointer"
+										onpointertap={() => window.open('https://twitter.com/AdarinSinner', '_blank', 'noopener')}
 									/>
 								</Container>
 								<Container
@@ -580,15 +721,25 @@ export default function SettingsModal({
 										height={128}
 									/>
 									<Text
-										text="Bacon Strips"
+										text="Bacon Strips MA"
 										style={{
 											fontWeight: 'bold',
-											fontSize: 16,
+											fontSize: 12,
 										} as TextStyle}
-										x={64}
-										y={140}
+										x={52}
+										y={142}
 										anchor={[0.5, 0]}
 										scale={[1, 1]}
+									/>
+									<Sprite
+										image="/assets/kroniipuzzle/twitter.svg"
+										width={18}
+										height={18}
+										y={140}
+										x={106}
+										eventMode="static"
+										cursor="pointer"
+										onpointertap={() => window.open('https://twitter.com/Bacon_Strips_MA', '_blank', 'noopener')}
 									/>
 								</Container>
 								<Container
@@ -596,7 +747,7 @@ export default function SettingsModal({
 									y={0}
 								>
 									<Sprite
-										image="https://cdn.holoen.fans/hefw/media/400.webp"
+										image="/assets/kroniipuzzle/avatars/crow.webp"
 										width={128}
 										height={128}
 									/>
@@ -606,10 +757,20 @@ export default function SettingsModal({
 											fontWeight: 'bold',
 											fontSize: 16,
 										} as TextStyle}
-										x={64}
+										x={52}
 										y={140}
 										anchor={[0.5, 0]}
 										scale={[1, 1]}
+									/>
+									<Sprite
+										image="/assets/kroniipuzzle/twitter.svg"
+										width={18}
+										height={18}
+										y={140}
+										x={106}
+										eventMode="static"
+										cursor="pointer"
+										onpointertap={() => window.open('https://twitter.com/foureyed_crow', '_blank', 'noopener')}
 									/>
 								</Container>
 								<Container
@@ -617,7 +778,7 @@ export default function SettingsModal({
 									y={0}
 								>
 									<Sprite
-										image="https://cdn.holoen.fans/hefw/media/400.webp"
+										image="/assets/kroniipuzzle/avatars/empikuro.webp"
 										width={128}
 										height={128}
 									/>
@@ -627,10 +788,20 @@ export default function SettingsModal({
 											fontWeight: 'bold',
 											fontSize: 16,
 										} as TextStyle}
-										x={64}
+										x={52}
 										y={140}
 										anchor={[0.5, 0]}
 										scale={[1, 1]}
+									/>
+									<Sprite
+										image="/assets/kroniipuzzle/twitter.svg"
+										width={18}
+										height={18}
+										y={140}
+										x={96}
+										eventMode="static"
+										cursor="pointer"
+										onpointertap={() => window.open('https://twitter.com/EmpiKuro', '_blank', 'noopener')}
 									/>
 								</Container>
 							</Container>
@@ -650,15 +821,25 @@ export default function SettingsModal({
 										height={128}
 									/>
 									<Text
-										text="Erasor"
+										text="Erasopepero"
 										style={{
 											fontWeight: 'bold',
-											fontSize: 16,
+											fontSize: 14,
 										} as TextStyle}
-										x={64}
+										x={52}
 										y={140}
 										anchor={[0.5, 0]}
 										scale={[1, 1]}
+									/>
+									<Sprite
+										image="/assets/kroniipuzzle/twitter.svg"
+										width={18}
+										height={18}
+										y={140}
+										x={100}
+										eventMode="static"
+										cursor="pointer"
+										onpointertap={() => window.open('https://twitter.com/erasopepero232', '_blank', 'noopener')}
 									/>
 								</Container>
 								<Container
@@ -676,10 +857,20 @@ export default function SettingsModal({
 											fontWeight: 'bold',
 											fontSize: 16,
 										} as TextStyle}
-										x={64}
+										x={52}
 										y={140}
 										anchor={[0.5, 0]}
 										scale={[1, 1]}
+									/>
+									<Sprite
+										image="/assets/kroniipuzzle/twitter.svg"
+										width={18}
+										height={18}
+										y={140}
+										x={90}
+										eventMode="static"
+										cursor="pointer"
+										onpointertap={() => window.open('https://twitter.com/eus_ing', '_blank', 'noopener')}
 									/>
 								</Container>
 								<Container
@@ -687,7 +878,7 @@ export default function SettingsModal({
 									y={0}
 								>
 									<Sprite
-										image="https://cdn.holoen.fans/hefw/media/400.webp"
+										image="/assets/kroniipuzzle/avatars/Fongban.webp"
 										width={128}
 										height={128}
 									/>
@@ -697,10 +888,20 @@ export default function SettingsModal({
 											fontWeight: 'bold',
 											fontSize: 16,
 										} as TextStyle}
-										x={64}
+										x={52}
 										y={140}
 										anchor={[0.5, 0]}
 										scale={[1, 1]}
+									/>
+									<Sprite
+										image="/assets/kroniipuzzle/twitter.svg"
+										width={18}
+										height={18}
+										y={140}
+										x={90}
+										eventMode="static"
+										cursor="pointer"
+										onpointertap={() => window.open('https://twitter.com/Fongban_illust', '_blank', 'noopener')}
 									/>
 								</Container>
 								<Container
@@ -708,7 +909,7 @@ export default function SettingsModal({
 									y={0}
 								>
 									<Sprite
-										image="https://cdn.holoen.fans/hefw/media/400.webp"
+										image="/assets/kroniipuzzle/avatars/GULS.webp"
 										width={128}
 										height={128}
 									/>
@@ -718,10 +919,20 @@ export default function SettingsModal({
 											fontWeight: 'bold',
 											fontSize: 16,
 										} as TextStyle}
-										x={64}
+										x={52}
 										y={140}
 										anchor={[0.5, 0]}
 										scale={[1, 1]}
+									/>
+									<Sprite
+										image="/assets/kroniipuzzle/twitter.svg"
+										width={18}
+										height={18}
+										y={140}
+										x={90}
+										eventMode="static"
+										cursor="pointer"
+										onpointertap={() => window.open('https://twitter.com/UM_mk_2', '_blank', 'noopener')}
 									/>
 								</Container>
 							</Container>
@@ -736,7 +947,7 @@ export default function SettingsModal({
 									y={0}
 								>
 									<Sprite
-										image="https://cdn.holoen.fans/hefw/media/400.webp"
+										image="/assets/kroniipuzzle/avatars/mameng.webp"
 										width={128}
 										height={128}
 									/>
@@ -746,10 +957,20 @@ export default function SettingsModal({
 											fontWeight: 'bold',
 											fontSize: 16,
 										} as TextStyle}
-										x={64}
+										x={52}
 										y={140}
 										anchor={[0.5, 0]}
 										scale={[1, 1]}
+									/>
+									<Sprite
+										image="/assets/kroniipuzzle/twitter.svg"
+										width={18}
+										height={18}
+										y={140}
+										x={90}
+										eventMode="static"
+										cursor="pointer"
+										onpointertap={() => window.open('https://twitter.com/brmameng', '_blank', 'noopener')}
 									/>
 								</Container>
 								<Container
@@ -757,7 +978,7 @@ export default function SettingsModal({
 									y={0}
 								>
 									<Sprite
-										image="https://cdn.holoen.fans/hefw/media/400.webp"
+										image="/assets/kroniipuzzle/avatars/oddnumber.webp"
 										width={128}
 										height={128}
 									/>
@@ -767,10 +988,20 @@ export default function SettingsModal({
 											fontWeight: 'bold',
 											fontSize: 16,
 										} as TextStyle}
-										x={64}
+										x={52}
 										y={140}
 										anchor={[0.5, 0]}
 										scale={[1, 1]}
+									/>
+									<Sprite
+										image="/assets/kroniipuzzle/twitter.svg"
+										width={18}
+										height={18}
+										y={140}
+										x={104}
+										eventMode="static"
+										cursor="pointer"
+										onpointertap={() => window.open('https://twitter.com/oddnumberr_', '_blank', 'noopener')}
 									/>
 								</Container>
 								<Container
@@ -788,10 +1019,20 @@ export default function SettingsModal({
 											fontWeight: 'bold',
 											fontSize: 16,
 										} as TextStyle}
-										x={64}
+										x={52}
 										y={140}
 										anchor={[0.5, 0]}
 										scale={[1, 1]}
+									/>
+									<Sprite
+										image="/assets/kroniipuzzle/twitter.svg"
+										width={18}
+										height={18}
+										y={140}
+										x={86}
+										eventMode="static"
+										cursor="pointer"
+										onpointertap={() => window.open('https://twitter.com/onairr27', '_blank', 'noopener')}
 									/>
 								</Container>
 								<Container
@@ -809,10 +1050,20 @@ export default function SettingsModal({
 											fontWeight: 'bold',
 											fontSize: 16,
 										} as TextStyle}
-										x={64}
+										x={52}
 										y={140}
 										anchor={[0.5, 0]}
 										scale={[1, 1]}
+									/>
+									<Sprite
+										image="/assets/kroniipuzzle/twitter.svg"
+										width={18}
+										height={18}
+										y={140}
+										x={96}
+										eventMode="static"
+										cursor="pointer"
+										onpointertap={() => window.open('https://twitter.com/qkrdydzl', '_blank', 'noopener')}
 									/>
 								</Container>
 							</Container>
@@ -837,10 +1088,20 @@ export default function SettingsModal({
 											fontWeight: 'bold',
 											fontSize: 16,
 										} as TextStyle}
-										x={64}
+										x={52}
 										y={140}
 										anchor={[0.5, 0]}
 										scale={[1, 1]}
+									/>
+									<Sprite
+										image="/assets/kroniipuzzle/twitter.svg"
+										width={18}
+										height={18}
+										y={140}
+										x={84}
+										eventMode="static"
+										cursor="pointer"
+										onpointertap={() => window.open('https://twitter.com/TokiameTaka', '_blank', 'noopener')}
 									/>
 								</Container>
 								<Container
@@ -848,7 +1109,7 @@ export default function SettingsModal({
 									y={0}
 								>
 									<Sprite
-										image="https://cdn.holoen.fans/hefw/media/400.webp"
+										image="/assets/kroniipuzzle/avatars/underdatv.webp"
 										width={128}
 										height={128}
 									/>
@@ -858,10 +1119,20 @@ export default function SettingsModal({
 											fontWeight: 'bold',
 											fontSize: 16,
 										} as TextStyle}
-										x={64}
+										x={52}
 										y={140}
 										anchor={[0.5, 0]}
 										scale={[1, 1]}
+									/>
+									<Sprite
+										image="/assets/kroniipuzzle/twitter.svg"
+										width={18}
+										height={18}
+										y={140}
+										x={96}
+										eventMode="static"
+										cursor="pointer"
+										onpointertap={() => window.open('https://twitter.com/underdatv', '_blank', 'noopener')}
 									/>
 								</Container>
 								<Container
@@ -879,10 +1150,20 @@ export default function SettingsModal({
 											fontWeight: 'bold',
 											fontSize: 16,
 										} as TextStyle}
-										x={64}
+										x={52}
 										y={140}
 										anchor={[0.5, 0]}
 										scale={[1, 1]}
+									/>
+									<Sprite
+										image="/assets/kroniipuzzle/twitter.svg"
+										width={18}
+										height={18}
+										y={140}
+										x={96}
+										eventMode="static"
+										cursor="pointer"
+										onpointertap={() => window.open('https://twitter.com/vyragami', '_blank', 'noopener')}
 									/>
 								</Container>
 								<Container
@@ -900,10 +1181,20 @@ export default function SettingsModal({
 											fontWeight: 'bold',
 											fontSize: 16,
 										} as TextStyle}
-										x={64}
+										x={52}
 										y={140}
 										anchor={[0.5, 0]}
 										scale={[1, 1]}
+									/>
+									<Sprite
+										image="/assets/kroniipuzzle/twitter.svg"
+										width={18}
+										height={18}
+										y={140}
+										x={82}
+										eventMode="static"
+										cursor="pointer"
+										onpointertap={() => window.open('https://twitter.com/Zenya_3d', '_blank', 'noopener')}
 									/>
 								</Container>
 							</Container>
@@ -916,7 +1207,7 @@ export default function SettingsModal({
 								text="Audio:"
 								style={{
 									fontWeight: 'bold',
-									fontSize: 20,
+									fontSize: 22,
 								} as TextStyle}
 								x={350}
 								y={0}
@@ -944,10 +1235,20 @@ export default function SettingsModal({
 											fontWeight: 'bold',
 											fontSize: 16,
 										} as TextStyle}
-										x={64}
+										x={52}
 										y={140}
 										anchor={[0.5, 0]}
 										scale={[1, 1]}
+									/>
+									<Sprite
+										image="/assets/kroniipuzzle/twitter.svg"
+										width={18}
+										height={18}
+										y={140}
+										x={82}
+										eventMode="static"
+										cursor="pointer"
+										onpointertap={() => window.open('https://twitter.com/jkimsketches', '_blank', 'noopener')}
 									/>
 								</Container>
 							</Container>
@@ -960,7 +1261,7 @@ export default function SettingsModal({
 								text="Animations:"
 								style={{
 									fontWeight: 'bold',
-									fontSize: 20,
+									fontSize: 22,
 								} as TextStyle}
 								x={350}
 								y={0}
@@ -978,7 +1279,7 @@ export default function SettingsModal({
 									y={0}
 								>
 									<Sprite
-										image="https://cdn.holoen.fans/hefw/media/400.webp"
+										image="/assets/kroniipuzzle/avatars/rjseka.webp"
 										width={128}
 										height={128}
 									/>
@@ -988,17 +1289,103 @@ export default function SettingsModal({
 											fontWeight: 'bold',
 											fontSize: 16,
 										} as TextStyle}
-										x={64}
+										x={50}
 										y={140}
 										anchor={[0.5, 0]}
 										scale={[1, 1]}
+									/>
+									<Sprite
+										image="/assets/kroniipuzzle/twitter.svg"
+										width={18}
+										height={18}
+										y={140}
+										x={120}
+										eventMode="static"
+										cursor="pointer"
+										onpointertap={() => window.open('https://twitter.com/rjseka7758', '_blank', 'noopener')}
 									/>
 								</Container>
 							</Container>
 						</Container>
 
+						<Text
+							y={2250}
+							x={350}
+							anchor={[0.5, 0]}
+							scale={[1, 1]}
+							text="And special thanks to all the Kronies!"
+							style={{
+								fontWeight: 'bold',
+								fontSize: 24,
+							} as TextStyle}
+						/>
+
+						<Text
+							y={2340}
+							x={350}
+							anchor={[0.5, 0]}
+							scale={[1, 1]}
+							text="Organized by:"
+							style={{
+								fontWeight: 'bold',
+								fontSize: 22,
+							} as TextStyle}
+						/>
 						<Graphics
-							y={2300}
+							y={2395}
+							x={350}
+							anchor={[0.5, 0]}
+							draw={(g) => {
+								g.clear();
+								g.lineStyle(2, 0x001E47, 0.8);
+								g.moveTo(-88, 0);
+								g.lineTo(88, 0);
+							}}
+						/>
+						<Text
+							y={2376}
+							x={350}
+							anchor={[0.5, 0]}
+							scale={[1, 1]}
+							text="Kronii's Clock Tower"
+							style={{
+								fontWeight: 'bold',
+								fontSize: 18,
+								fill: '#001E47',
+							} as TextStyle}
+							eventMode="static"
+							cursor="pointer"
+							onpointertap={() => window.open('https://twitter.com/Kronii_KCT', '_blank', 'noopener')}
+						/>
+						<Graphics
+							y={2423}
+							x={350}
+							anchor={[0.5, 0]}
+							draw={(g) => {
+								g.clear();
+								g.lineStyle(2, 0x001E47, 0.8);
+								g.moveTo(-80, 0);
+								g.lineTo(80, 0);
+							}}
+						/>
+						<Text
+							y={2404}
+							x={350}
+							anchor={[0.5, 0]}
+							scale={[1, 1]}
+							text="Kronii's Time Vault"
+							style={{
+								fontWeight: 'bold',
+								fontSize: 18,
+								fill: '#001E47',
+							} as TextStyle}
+							eventMode="static"
+							cursor="pointer"
+							onpointertap={() => window.open('https://twitter.com/KroniiTimeVault', '_blank', 'noopener')}
+						/>
+
+						<Graphics
+							y={2600}
 							draw={(g) => {
 								g.beginFill(0);
 								g.drawRect(0, 0, 0, 0);

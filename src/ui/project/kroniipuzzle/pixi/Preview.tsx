@@ -98,7 +98,7 @@ export default function PuzzlePreview({
 				width={24}
 				height={24}
 				eventMode="static"
-				onclick={() => window.open('/assets/kroniipuzzle/puzzle.png', '_blank')}
+				onclick={() => window.open('/assets/kroniipuzzle/puzzle.png', '_blank', 'noopener')}
 				cursor="pointer"
 			/>
 

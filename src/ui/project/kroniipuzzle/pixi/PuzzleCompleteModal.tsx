@@ -1,21 +1,23 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import {
-	Container, Graphics, Text,
+	Container, Graphics, Sprite, Text,
 } from '@pixi/react';
 import * as PIXI from 'pixi.js';
 import { Graphics as PixiGraphics, TextStyle } from 'pixi.js';
 import AnimatedGIF from './AnimatedGIF';
+import Button from './Button';
 
 interface ModalProps {
 	x: number;
 	y: number;
 	width: number;
 	height: number;
-	onClick?: () => void;
+	closeModal: () => void;
+	openSettings: () => void;
 }
 
 export default function Modal({
-	x, y, width, height, onClick,
+	x, y, width, height, closeModal, openSettings,
 }: ModalProps) {
 	const [assetBundle, setAssetBundle] = useState<null | any>(null);
 
@@ -45,14 +47,8 @@ export default function Modal({
 		};
 	}, [window.innerWidth, window.innerHeight]);
 
-	const handleClick = () => {
-		if (onClick) {
-			onClick();
-		}
-	};
-
 	return (
-		<Container eventMode={onClick ? 'static' : 'auto'} pointerdown={handleClick} x={x} y={y}>
+		<Container x={x} y={y}>
 			<Graphics
 				draw={(g: PixiGraphics) => {
 					g.clear();
@@ -65,12 +61,21 @@ export default function Modal({
 				text="Happy 2 Year Anniversary, Kronii!"
 				style={{
 					fill: 'white',
-					fontSize: 30,
+					fontSize: 40,
 					fontWeight: 'bold',
 				} as TextStyle}
 				anchor={[0.5, 0.5]}
 				x={width / 2}
 				y={height / 2}
+			/>
+			<Button
+				x={width / 2 - 110}
+				y={height / 2 + 40}
+				width={220}
+				height={60}
+				radius={16}
+				label="Credits / reset puzzle"
+				onClick={openSettings}
 			/>
 			{assetBundle && (
 				<AnimatedGIF
@@ -81,6 +86,29 @@ export default function Modal({
 					height={gifHeight}
 				/>
 			)}
+
+			<Container
+				x={width - 64}
+				y={32}
+				eventMode="static"
+				onclick={() => closeModal()}
+				cursor="pointer"
+			>
+				<Graphics
+					draw={(g) => {
+						g.clear();
+						g.beginFill(0xBDD1EC);
+						g.drawCircle(16, 16, 20);
+						g.endFill();
+					}}
+				/>
+				<Sprite
+					image="/assets/kroniipuzzle/x-mark.svg"
+					tint={0x000000}
+					width={32}
+					height={32}
+				/>
+			</Container>
 		</Container>
 	);
 }
