@@ -141,11 +141,11 @@ ${congratulations}${favoriteMoment}`;
 						/>
 						<Graphics
 							x={16}
-							y={Math.max(height - pieceInfo.sprite.texture.height / 2 - 32, spriteY)}
+							y={Math.max(height - pieceInfo.sprite.texture.height / 2 - 32, spriteY + 75)}
 							draw={(g) => {
 								g.clear();
 								g.beginFill(0, 1);
-								g.drawRect(0, 0, 0, (pieceInfo.sprite.texture.height / 2) * 1.05);
+								g.drawRect(0, 0, 0, (pieceInfo.sprite.texture.height / 2) * 1.08);
 							}}
 						/>
 					</>
