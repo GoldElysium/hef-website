@@ -558,7 +558,7 @@ export default function SettingsModal({
 									y={0}
 								>
 									<Sprite
-										image="https://cdn.holoen.fans/hefw/media/400.webp"
+										image="/assets/kroniipuzzle/avatars/kler.webp"
 										width={128}
 										height={128}
 									/>
@@ -1191,7 +1191,7 @@ export default function SettingsModal({
 									y={0}
 								>
 									<Sprite
-										image="https://cdn.holoen.fans/hefw/media/400.webp"
+										image="/assets/kroniipuzzle/avatars/zenya.webp"
 										width={128}
 										height={128}
 									/>
