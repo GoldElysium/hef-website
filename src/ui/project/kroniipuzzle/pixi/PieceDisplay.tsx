@@ -98,6 +98,26 @@ ${congratulations}${favoriteMoment}`;
 						scale={1}
 					/>
 				)}
+				{!pieceInfo?.message && !pieceInfo?.sprite && (
+					<Text
+						text="No puzzle piece has no message"
+						style={{
+							align: 'center',
+							fontSize: 25,
+							fontWeight: 'bold',
+							wordWrap: true,
+							wordWrapWidth: width - 32,
+						} as TextStyle}
+						y={height / 2}
+						x={width / 2}
+						width={width - 32}
+						anchor={{
+							x: 0.5,
+							y: 0.5,
+						}}
+						scale={1}
+					/>
+				)}
 				{text
 				&& (
 					<TaggedText
@@ -133,7 +153,9 @@ ${congratulations}${favoriteMoment}`;
 						<Sprite
 							texture={pieceInfo?.sprite?.texture}
 							x={16}
-							y={Math.max(height - pieceInfo.sprite.texture.height / 2 - 32, spriteY + 75)}
+							y={pieceInfo.message
+								? Math.max(height - pieceInfo.sprite.texture.height / 2 - 32, spriteY + 75)
+								: 16}
 							width={pieceInfo.sprite.texture.width}
 							height={pieceInfo.sprite.texture.height}
 							scale={[0.5, 0.5]}
@@ -141,7 +163,9 @@ ${congratulations}${favoriteMoment}`;
 						/>
 						<Graphics
 							x={16}
-							y={Math.max(height - pieceInfo.sprite.texture.height / 2 - 32, spriteY + 75)}
+							y={pieceInfo.message
+								? Math.max(height - pieceInfo.sprite.texture.height / 2 - 32, spriteY + 75)
+								: 16}
 							draw={(g) => {
 								g.clear();
 								g.beginFill(0, 1);
