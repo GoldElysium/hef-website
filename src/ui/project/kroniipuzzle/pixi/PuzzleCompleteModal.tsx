@@ -92,7 +92,7 @@ export default function Modal({
 				x={width - 64}
 				y={32}
 				eventMode="static"
-				onclick={() => closeModal()}
+				onclick={closeModal}
 				cursor="pointer"
 			>
 				<Graphics

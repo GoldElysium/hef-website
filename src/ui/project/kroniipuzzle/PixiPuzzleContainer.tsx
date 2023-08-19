@@ -187,10 +187,7 @@ export default function PixiPuzzleContainer({
 					width={stageSize.width}
 					height={stageSize.height}
 					closeModal={() => setShowPuzzleCompleteModal(false)}
-					openSettings={() => {
-						setShowPuzzleCompleteModal(false);
-						setShowSettingsModal(true);
-					}}
+					openSettings={() => setShowSettingsModal(true)}
 				/>
 			)}
 
