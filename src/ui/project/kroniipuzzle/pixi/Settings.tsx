@@ -520,7 +520,7 @@ export default function SettingsModal({
 									y={0}
 								>
 									<Sprite
-										image="https://cdn.holoen.fans/hefw/media/400.webp"
+										image="/assets/kroniipuzzle/avatars/hasaan.webp"
 										width={128}
 										height={128}
 									/>
@@ -736,7 +736,7 @@ export default function SettingsModal({
 									y={0}
 								>
 									<Sprite
-										image="https://cdn.holoen.fans/hefw/media/400.webp"
+										image="/assets/kroniipuzzle/avatars/bacon.webp"
 										width={128}
 										height={128}
 									/>
@@ -836,7 +836,7 @@ export default function SettingsModal({
 									y={0}
 								>
 									<Sprite
-										image="https://cdn.holoen.fans/hefw/media/400.webp"
+										image="/assets/kroniipuzzle/avatars/era.webp"
 										width={128}
 										height={128}
 									/>
@@ -867,7 +867,7 @@ export default function SettingsModal({
 									y={0}
 								>
 									<Sprite
-										image="https://cdn.holoen.fans/hefw/media/400.webp"
+										image="/assets/kroniipuzzle/avatars/eus.webp"
 										width={128}
 										height={128}
 									/>
@@ -1029,7 +1029,7 @@ export default function SettingsModal({
 									y={0}
 								>
 									<Sprite
-										image="https://cdn.holoen.fans/hefw/media/400.webp"
+										image="/assets/kroniipuzzle/avatars/onair.webp"
 										width={128}
 										height={128}
 									/>
@@ -1098,7 +1098,7 @@ export default function SettingsModal({
 									y={0}
 								>
 									<Sprite
-										image="https://cdn.holoen.fans/hefw/media/400.webp"
+										image="/assets/kroniipuzzle/avatars/taka.webp"
 										width={128}
 										height={128}
 									/>
