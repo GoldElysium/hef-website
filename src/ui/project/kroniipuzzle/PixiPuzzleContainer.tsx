@@ -103,7 +103,7 @@ export default function PixiPuzzleContainer({
 			width: 377,
 			height: 768,
 		},
-	}), [window.innerWidth, window.innerHeight]);
+	}), [window.innerWidth, window.innerHeight, assetBundle]);
 
 	return (
 		<ViewportContext.Provider value={viewportContextMemo}>
