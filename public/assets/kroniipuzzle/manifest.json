@@ -65,11 +65,11 @@
 				},
 				{
 					"name": "sideKronii3",
-					"srcs": "/assets/kroniipuzzle/side_Kronii-3.gif"
+					"srcs": "/assets/kroniipuzzle/side_Kronii-3-2.gif"
 				},
 				{
 					"name": "sideKronii4",
-					"srcs": "/assets/kroniipuzzle/side_Kronii-4.gif"
+					"srcs": "/assets/kroniipuzzle/side_Kronii-4-2.gif"
 				}
 			]
 		}
