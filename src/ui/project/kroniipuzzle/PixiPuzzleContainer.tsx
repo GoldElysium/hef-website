@@ -107,24 +107,28 @@ export default function PixiPuzzleContainer({
 				y: window.innerHeight - (768 * sideKronii1Scale),
 				width: (377 * sideKronii1Scale),
 				height: (768 * sideKronii1Scale),
+				intermittance: 34000,
 			},
 			sideKronii2: {
 				x: SIDEBAR_WIDTH,
 				y: window.innerHeight - (235 * sideKronii2Scale),
 				width: (506 * sideKronii2Scale),
 				height: (235 * sideKronii2Scale),
+				intermittance: 55000,
 			},
 			sideKronii3: {
 				x: SIDEBAR_WIDTH + ((window.innerWidth - SIDEBAR_WIDTH) * 0.1),
 				y: 0,
 				width: (694 * sideKronii3Scale),
 				height: (678 * sideKronii3Scale),
+				intermittance: 89000,
 			},
 			sideKronii4: {
 				x: SIDEBAR_WIDTH + ((window.innerWidth - SIDEBAR_WIDTH) * 0.7),
 				y: 0,
 				width: (808 * sideKronii4Scale),
 				height: (653 * sideKronii4Scale),
+				intermittance: 144000,
 			},
 		};
 	}, [window.innerWidth, window.innerHeight]);

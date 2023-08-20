@@ -11,11 +11,12 @@ interface PixiComponentAnimatedGIFProps {
 	y?: number;
 	visible?: boolean;
 	ref?: MutableRefObject<PixiAnimatedGIF | null>;
+	intermittance?: number;
 }
 
 const AnimatedGIF = PixiComponent('AnimatedGIF', {
 	create({
-		width, height, gif, x, y, visible, ref,
+		width, height, gif, x, y, visible, ref, intermittance,
 	}: PixiComponentAnimatedGIFProps) {
 		const animatedGIF = gif;
 
@@ -24,6 +25,20 @@ const AnimatedGIF = PixiComponent('AnimatedGIF', {
 		if (width) animatedGIF.width = width;
 		if (height) animatedGIF.height = height;
 		if (visible) animatedGIF.visible = visible;
+
+		if (intermittance) {
+			animatedGIF.stop();
+
+			setTimeout(() => {
+				animatedGIF.play();
+			}, intermittance);
+
+			animatedGIF.onComplete = () => {
+				setTimeout(() => {
+					animatedGIF.play();
+				}, intermittance);
+			};
+		}
 
 		animatedGIF.hitArea = {
 			contains: () => false,
