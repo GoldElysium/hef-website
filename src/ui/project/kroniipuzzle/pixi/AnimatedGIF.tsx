@@ -29,6 +29,7 @@ const AnimatedGIF = PixiComponent('AnimatedGIF', {
 		if (intermittance) {
 			animatedGIF.loop = false;
 			animatedGIF.stop();
+			animatedGIF.currentFrame = 1;
 
 			setTimeout(() => {
 				animatedGIF.play();
