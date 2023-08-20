@@ -7,6 +7,7 @@ import { Project } from 'types/payload-types';
 import React, {
 	useCallback, useEffect, useMemo, useRef, useState,
 } from 'react';
+import * as PIXI from 'pixi.js';
 import { Graphics as PixiGraphics, Renderer, TextStyle } from 'pixi.js';
 import type { Viewport as PixiViewport } from 'pixi-viewport';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context';
@@ -26,6 +27,7 @@ import Button from './pixi/Button';
 import Preview from './pixi/Preview';
 import SettingsModal from './pixi/Settings';
 import Cursor from './pixi/Cursor';
+import AnimatedGIF from './pixi/AnimatedGIF';
 
 interface IProps {
 	project: Omit<Project, 'flags' | 'devprops'> & {
@@ -51,6 +53,7 @@ export default function PixiPuzzleContainer({
 	const [showPuzzleCompleteModal, setShowPuzzleCompleteModal] = useState(false);
 	const [disableDragging, setDisableDragging] = useState(false);
 	const [selectedPiece, setSelectedPiece] = useState<PieceInfo | undefined>(undefined);
+	const [assetBundle, setAssetBundle] = useState<null | any>(null);
 	const viewportRef = useRef<PixiViewport | null>(null);
 
 	const viewportContextMemo = useMemo(
@@ -74,6 +77,13 @@ export default function PixiPuzzleContainer({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [stageSize]);
 
+	useEffect(() => {
+		PIXI.Assets.loadBundle('puzzle')
+			.then((loadedBundle) => {
+				setAssetBundle(loadedBundle);
+			});
+	}, []);
+
 	const drawPuzzleContainer = useCallback((g: PixiGraphics) => {
 		g.clear();
 		g.beginFill(0x001E47);
@@ -84,6 +94,16 @@ export default function PixiPuzzleContainer({
 		g.drawRoundedRect(SIDEBAR_WIDTH, 16, stageSize.width - SIDEBAR_WIDTH - 16, stageSize.height - 32, 8);
 		g.endHole();
 	}, [stageSize]);
+
+	const gifs = useMemo(() => ({
+		sideKronii1: {
+			gif: assetBundle.sideKronii1,
+			x: window.innerWidth - 377,
+			y: 0,
+			width: 377,
+			height: 768,
+		},
+	}), [window.innerWidth, window.innerHeight]);
 
 	return (
 		<ViewportContext.Provider value={viewportContextMemo}>
@@ -128,6 +148,16 @@ export default function PixiPuzzleContainer({
 					pieceInfo={selectedPiece}
 				/>
 			</Sidebar>
+
+			{assetBundle && (
+				<AnimatedGIF
+					x={gifs.sideKronii1.x}
+					y={gifs.sideKronii1.y}
+					gif={gifs.sideKronii1.gif}
+					width={gifs.sideKronii1.width}
+					height={gifs.sideKronii1.height}
+				/>
+			)}
 
 			{showPreview && (
 				<Preview setShowPreview={setShowPreview} />
