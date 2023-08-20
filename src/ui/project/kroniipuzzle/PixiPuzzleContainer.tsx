@@ -95,14 +95,25 @@ export default function PixiPuzzleContainer({
 		g.endHole();
 	}, [stageSize]);
 
-	const gifs = useMemo(() => ({
-		sideKronii1: {
-			x: window.innerWidth - 377,
-			y: 0,
-			width: 377,
-			height: 768,
-		},
-	}), [window.innerWidth, window.innerHeight]);
+	const gifs = useMemo(() => {
+		const sideKronii1Scale = 0.25;
+		const sideKronii2Scale = 0.25;
+
+		return {
+			sideKronii1: {
+				x: window.innerWidth - (377 * sideKronii1Scale),
+				y: window.innerHeight - (768 * sideKronii1Scale),
+				width: (377 * sideKronii1Scale),
+				height: (768 * sideKronii1Scale),
+			},
+			sideKronii2: {
+				x: SIDEBAR_WIDTH,
+				y: window.innerHeight - (235 * sideKronii2Scale),
+				width: (506 * sideKronii2Scale),
+				height: (235 * sideKronii2Scale),
+			},
+		};
+	}, [window.innerWidth, window.innerHeight]);
 
 	return (
 		<ViewportContext.Provider value={viewportContextMemo}>
