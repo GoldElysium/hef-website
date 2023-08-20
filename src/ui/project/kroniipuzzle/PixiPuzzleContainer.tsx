@@ -97,13 +97,12 @@ export default function PixiPuzzleContainer({
 
 	const gifs = useMemo(() => ({
 		sideKronii1: {
-			gif: assetBundle.sideKronii1,
 			x: window.innerWidth - 377,
 			y: 0,
 			width: 377,
 			height: 768,
 		},
-	}), [window.innerWidth, window.innerHeight, assetBundle]);
+	}), [window.innerWidth, window.innerHeight]);
 
 	return (
 		<ViewportContext.Provider value={viewportContextMemo}>
@@ -153,7 +152,7 @@ export default function PixiPuzzleContainer({
 				<AnimatedGIF
 					x={gifs.sideKronii1.x}
 					y={gifs.sideKronii1.y}
-					gif={gifs.sideKronii1.gif}
+					gif={assetBundle.sideKronii1}
 					width={gifs.sideKronii1.width}
 					height={gifs.sideKronii1.height}
 				/>
