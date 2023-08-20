@@ -54,6 +54,22 @@
 				{
 					"name": "cursor-pointer",
 					"srcs": "/assets/kroniipuzzle/cursor-pointer.gif"
+				},
+				{
+					"name": "sideKronii1",
+					"srcs": "/assets/kroniipuzzle/side_Kronii-1.gif"
+				},
+				{
+					"name": "sideKronii2",
+					"srcs": "/assets/kroniipuzzle/side_Kronii-2.gif"
+				},
+				{
+					"name": "sideKronii3",
+					"srcs": "/assets/kroniipuzzle/side_Kronii-3.gif"
+				},
+				{
+					"name": "sideKronii4",
+					"srcs": "/assets/kroniipuzzle/side_Kronii-4.gif"
 				}
 			]
 		}
