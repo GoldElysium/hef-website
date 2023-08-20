@@ -27,6 +27,7 @@ const AnimatedGIF = PixiComponent('AnimatedGIF', {
 		if (visible) animatedGIF.visible = visible;
 
 		if (intermittance) {
+			animatedGIF.loop = false;
 			animatedGIF.stop();
 
 			setTimeout(() => {
