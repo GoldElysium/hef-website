@@ -160,13 +160,22 @@ export default function PixiPuzzleContainer({
 			</Sidebar>
 
 			{assetBundle && (
-				<AnimatedGIF
-					x={gifs.sideKronii1.x}
-					y={gifs.sideKronii1.y}
-					gif={assetBundle.sideKronii1}
-					width={gifs.sideKronii1.width}
-					height={gifs.sideKronii1.height}
-				/>
+				<>
+					<AnimatedGIF
+						x={gifs.sideKronii1.x}
+						y={gifs.sideKronii1.y}
+						gif={assetBundle.sideKronii1}
+						width={gifs.sideKronii1.width}
+						height={gifs.sideKronii1.height}
+					/>
+					<AnimatedGIF
+						x={gifs.sideKronii2.x}
+						y={gifs.sideKronii2.y}
+						gif={assetBundle.sideKronii2}
+						width={gifs.sideKronii2.width}
+						height={gifs.sideKronii2.height}
+					/>
+				</>
 			)}
 
 			{showPreview && (
