@@ -115,13 +115,13 @@ export default function PixiPuzzleContainer({
 				height: (235 * sideKronii2Scale),
 			},
 			sideKronii3: {
-				x: (window.innerWidth * 0.1) - (694 * sideKronii3Scale),
+				x: SIDEBAR_WIDTH + ((window.innerWidth - SIDEBAR_WIDTH) * 0.1) - (694 * sideKronii3Scale),
 				y: 0,
 				width: (694 * sideKronii3Scale),
 				height: (678 * sideKronii3Scale),
 			},
 			sideKronii4: {
-				x: (window.innerWidth * 0.7) - (808 * sideKronii4Scale),
+				x: SIDEBAR_WIDTH + ((window.innerWidth - SIDEBAR_WIDTH) * 0.7) - (808 * sideKronii4Scale),
 				y: 0,
 				width: (808 * sideKronii4Scale),
 				height: (653 * sideKronii4Scale),
