@@ -98,6 +98,8 @@ export default function PixiPuzzleContainer({
 	const gifs = useMemo(() => {
 		const sideKronii1Scale = 0.25;
 		const sideKronii2Scale = 0.25;
+		const sideKronii3Scale = 0.25;
+		const sideKronii4Scale = 0.25;
 
 		return {
 			sideKronii1: {
@@ -111,6 +113,18 @@ export default function PixiPuzzleContainer({
 				y: window.innerHeight - (235 * sideKronii2Scale),
 				width: (506 * sideKronii2Scale),
 				height: (235 * sideKronii2Scale),
+			},
+			sideKronii3: {
+				x: (window.innerWidth * 0.2) - (694 * sideKronii3Scale),
+				y: 0,
+				width: (694 * sideKronii3Scale),
+				height: (678 * sideKronii3Scale),
+			},
+			sideKronii4: {
+				x: (window.innerWidth * 0.2) - (808 * sideKronii4Scale),
+				y: 0,
+				width: (808 * sideKronii4Scale),
+				height: (653 * sideKronii4Scale),
 			},
 		};
 	}, [window.innerWidth, window.innerHeight]);
