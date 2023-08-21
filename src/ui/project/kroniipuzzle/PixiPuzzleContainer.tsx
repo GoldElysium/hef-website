@@ -3,14 +3,14 @@
 import {
 	Container, Graphics, Text, useApp,
 } from '@pixi/react';
-import { Project } from 'types/payload-types';
 import React, {
 	useCallback, useEffect, useMemo, useRef, useState,
 } from 'react';
 import * as PIXI from 'pixi.js';
 import { Graphics as PixiGraphics, Renderer, TextStyle } from 'pixi.js';
 import type { Viewport as PixiViewport } from 'pixi-viewport';
-import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context';
+import type { AppRouterInstance } from 'next/dist/shared/lib/app-router-context';
+import { Submission } from 'types/payload-types';
 import type { StageSize } from './PixiWrapper';
 import Viewport from './pixi/Viewport';
 import Sidebar from './pixi/Sidebar';
@@ -19,7 +19,6 @@ import ViewportContext from './providers/ViewportContext';
 import PuzzleCompleteModal from './pixi/PuzzleCompleteModal';
 import PieceDisplay from './pixi/PieceDisplay';
 import PieceInfo from './puzzle/PieceInfo';
-import Message from './puzzle/Message';
 import {
 	PUZZLE_WIDTH, SIDEBAR_WIDTH, WORLD_HEIGHT, WORLD_WIDTH,
 } from './puzzle/PuzzleConfig';
@@ -28,22 +27,18 @@ import Preview from './pixi/Preview';
 import SettingsModal from './pixi/Settings';
 import Cursor from './pixi/Cursor';
 import AnimatedGIF from './pixi/AnimatedGIF';
+import usePuzzleStore from './puzzle/PuzzleStore';
+import PuzzleStartModal from './pixi/PuzzleStartModal';
 
 interface IProps {
-	project: Omit<Project, 'flags' | 'devprops'> & {
-		flags: string[];
-		devprops: {
-			[key: string]: string;
-		};
-	};
 	stageSize: StageSize;
-	submissions: Message[];
+	submissions: Submission[];
 	router: AppRouterInstance;
+	setShowAllSubmissions: (val: boolean) => void;
 }
 
 export default function PixiPuzzleContainer({
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	project, stageSize, submissions, router,
+	stageSize, submissions, router, setShowAllSubmissions,
 }: IProps) {
 	const app = useApp();
 
@@ -52,8 +47,10 @@ export default function PixiPuzzleContainer({
 	const [showSettingsModal, setShowSettingsModal] = useState(false);
 	const [showPuzzleCompleteModal, setShowPuzzleCompleteModal] = useState(false);
 	const [disableDragging, setDisableDragging] = useState(false);
-	const [selectedPiece, setSelectedPiece] = useState<PieceInfo | undefined>(undefined);
 	const [assetBundle, setAssetBundle] = useState<null | any>(null);
+	const [selectedPiece, setSelectedPiece] = useState<PieceInfo | undefined>(undefined);
+
+	const showPuzzleStartModal = usePuzzleStore((state) => state.firstLoad);
 	const viewportRef = useRef<PixiViewport | null>(null);
 
 	const viewportContextMemo = useMemo(
@@ -127,6 +124,7 @@ export default function PixiPuzzleContainer({
 				height: (653 * sideKronii4Scale),
 			},
 		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [window.innerWidth, window.innerHeight]);
 
 	return (
@@ -261,6 +259,16 @@ export default function PixiPuzzleContainer({
 				)
 			}
 
+			{showPuzzleStartModal && (
+				<PuzzleStartModal
+					width={stageSize.width}
+					height={stageSize.height}
+					closeModal={() => {
+						usePuzzleStore.getState().setFirstLoad(false);
+					}}
+				/>
+			)}
+
 			{showPuzzleCompleteModal && (
 				<PuzzleCompleteModal
 					x={0}
@@ -279,6 +287,7 @@ export default function PixiPuzzleContainer({
 					width={stageSize.width}
 					height={stageSize.height}
 					setShowSettingsModal={setShowSettingsModal}
+					setShowAllSubmissions={setShowAllSubmissions}
 				/>
 			)}
 

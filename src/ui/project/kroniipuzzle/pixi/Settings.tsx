@@ -9,13 +9,7 @@ import TaggedText from './TaggedText';
 import Button from './Button';
 import Scrollbox from './Scrollbox';
 import usePuzzleStore from '../puzzle/PuzzleStore';
-import { COL_COUNT, ROW_COUNT } from '../puzzle/PuzzleConfig';
-
-const AboutText = `Hello there fellow Kronie!
-Thank you for your contributions to getting us to Kronii’s second anniversary, and let us hope for more fun and exciting things in the future! What you are about to come across here is a collaboration project between two fancords known as Kronii’s Clock Tower (KCT) and Kronii’s Time Vault (KTV). The project consists of an online puzzle made from scratch, with original art featuring numerous Kronii artists you may be familiar with, as well as each of your very own personalized Kronies. Your thoughtful messages will be found on the back of each puzzle piece, and can each be viewed by selecting a puzzle piece. This project was made possible by everyone from both servers, as well as participation from others like HEFS. 
-
-To our beloved Time Warden: Congratulations on your 2nd anniversary! Can you believe it? It’s been 2 years already?! You really can fly huh… But don’t worry, there’s always room for more timeless memories! I hope we haven’t puzzled you with our level of devotion… Don’t worry, there’s no missing pieces this time for you to piece together! Alright, I’ll stop. Thank you for everything, and here’s to another year!
-`;
+import { ABOUT_TEXT, COL_COUNT, ROW_COUNT } from '../puzzle/PuzzleConfig';
 
 interface SettingsModalProps {
 	x: number;
@@ -23,10 +17,11 @@ interface SettingsModalProps {
 	width: number;
 	height: number;
 	setShowSettingsModal: (val: boolean) => void;
+	setShowAllSubmissions: (val: boolean) => void;
 }
 
 export default function SettingsModal({
-	x, y, width, height, setShowSettingsModal,
+	x, y, width, height, setShowSettingsModal, setShowAllSubmissions,
 }: SettingsModalProps) {
 	const app = useApp();
 	const [message, setMessage] = useState<string | null>(null);
@@ -57,41 +52,56 @@ export default function SettingsModal({
 							g.endFill();
 						}}
 					/>
-					<Text
-						text="About"
-						style={{
-							fontWeight: 'bold',
-							fontSize: 24,
-						} as TextStyle}
-						x={350}
-						y={32}
-						anchor={[0.5, 0]}
-					/>
-					<TaggedText
-						text={AboutText}
-						styles={{
-							default: {
-								fill: 'black',
-								fontSize: 20,
-								wordWrap: true,
-								wordWrapWidth: 636,
-							},
-							b: {
+					<Scrollbox
+						boxWidth={700}
+						boxHeight={400}
+						app={app}
+						overflowY="scroll"
+						stopPropagation
+					>
+						<Text
+							text="About"
+							style={{
 								fontWeight: 'bold',
-							},
-							i: {
-								fontStyle: 'italic',
-							},
-							h: {
 								fontSize: 24,
-							},
-						}}
-						x={32}
-						y={64}
-						width={636}
-						height={304}
-						scale={{ x: 1, y: 1 }}
-					/>
+							} as TextStyle}
+							x={350}
+							y={32}
+							anchor={[0.5, 0]}
+						/>
+						<TaggedText
+							text={ABOUT_TEXT}
+							styles={{
+								default: {
+									fill: 'black',
+									fontSize: 18,
+									wordWrap: true,
+									wordWrapWidth: 636,
+								},
+								b: {
+									fontWeight: 'bold',
+								},
+								i: {
+									fontStyle: 'italic',
+								},
+								h: {
+									fontSize: 24,
+								},
+							}}
+							x={32}
+							y={64}
+							width={636}
+							scale={{ x: 1, y: 1 }}
+						/>
+						<Graphics
+							y={500}
+							draw={(g) => {
+								g.beginFill(0);
+								g.drawRect(0, 0, 0, 0);
+								g.endFill();
+							}}
+						/>
+					</Scrollbox>
 				</Container>
 				<Container
 					x={-732}
@@ -116,7 +126,7 @@ export default function SettingsModal({
 						anchor={[0.5, 0]}
 					/>
 					<Button
-						x={275}
+						x={180}
 						y={96}
 						width={150}
 						height={60}
@@ -126,6 +136,21 @@ export default function SettingsModal({
 						onClick={() => {
 							const puzzleState = usePuzzleStore.getState();
 							puzzleState.reset();
+							setMessage('Puzzle has been reset!');
+						}}
+					/>
+					<Button
+						x={370}
+						y={96}
+						width={150}
+						height={60}
+						radius={12}
+						color={0xAA2222}
+						label="Full reset"
+						onClick={() => {
+							const puzzleState = usePuzzleStore.getState();
+							puzzleState.reset();
+							puzzleState.setFirstLoad(true);
 							setMessage('Puzzle has been reset!');
 						}}
 					/>
@@ -161,6 +186,15 @@ export default function SettingsModal({
 							setMessage('Auto finished the puzzle.');
 						}}
 					/>
+					<Button
+						x={225}
+						y={280}
+						width={250}
+						height={60}
+						radius={12}
+						label="See all submissions"
+						onClick={() => setShowAllSubmissions(true)}
+					/>
 					{message && (
 						<Text
 							text={message}
@@ -168,7 +202,7 @@ export default function SettingsModal({
 								fontSize: 20,
 							} as TextStyle}
 							x={350}
-							y={262}
+							y={352}
 							anchor={[0.5, 0]}
 						/>
 					)}
@@ -1249,7 +1283,7 @@ export default function SettingsModal({
 									y={0}
 								>
 									<Sprite
-										image="https://cdn.holoen.fans/hefw/media/400.webp"
+										image="/assets/kroniipuzzle/avatars/kim.webp"
 										width={128}
 										height={128}
 									/>

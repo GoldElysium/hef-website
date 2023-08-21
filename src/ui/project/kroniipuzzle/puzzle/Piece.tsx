@@ -3,7 +3,7 @@
 import React, { useEffect, useImperativeHandle, useRef } from 'react';
 import { Container, Sprite, Text } from '@pixi/react';
 import {
-	Container as PixiContainer, DisplayObject, Sprite as PixiSprite, TextStyle, Texture,
+	Container as PixiContainer, DisplayObject, TextStyle, Texture,
 } from 'pixi.js';
 import Message from './Message';
 import PieceInfo from './PieceInfo';
@@ -18,7 +18,6 @@ interface PieceProps {
 	texture: Texture;
 	setSelectedPiece: (piece: PieceInfo) => void;
 	message?: Message;
-	kronie?: PixiSprite;
 }
 
 export type IsNearAdjacentPieceRes = {
@@ -46,7 +45,6 @@ const Piece = React.forwardRef<PieceActions, PieceProps>(({
 	texture,
 	setSelectedPiece,
 	message,
-	kronie,
 }, ref) => {
 	const pieceContainerRef = useRef<PixiContainer<DisplayObject> | null>(null);
 
@@ -191,7 +189,6 @@ const Piece = React.forwardRef<PieceActions, PieceProps>(({
 			setSelectedPiece({
 				id: `${r}-${c}`,
 				message,
-				sprite: kronie,
 			} as PieceInfo);
 			return true;
 		}

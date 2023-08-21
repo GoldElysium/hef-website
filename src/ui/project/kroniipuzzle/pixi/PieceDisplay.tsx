@@ -98,9 +98,9 @@ ${congratulations}${favoriteMoment}`;
 						scale={1}
 					/>
 				)}
-				{!pieceInfo?.message && !pieceInfo?.sprite && (
+				{pieceInfo && !pieceInfo.message && (
 					<Text
-						text="No puzzle piece has no message"
+						text="This puzzle piece has no message"
 						style={{
 							align: 'center',
 							fontSize: 25,
@@ -147,29 +147,27 @@ ${congratulations}${favoriteMoment}`;
 						ref={taggedTextRef}
 					/>
 				)}
-				{pieceInfo?.sprite
+				{pieceInfo?.message?.kronie
 				&& (
 					<>
 						<Sprite
-							texture={pieceInfo?.sprite?.texture}
+							image={pieceInfo.message.kronie}
 							x={16}
 							y={pieceInfo.message
-								? Math.max(height - pieceInfo.sprite.texture.height / 2 - 32, spriteY + 75)
+								? Math.max(height - 250, spriteY + 75)
 								: 16}
-							width={pieceInfo.sprite.texture.width}
-							height={pieceInfo.sprite.texture.height}
-							scale={[0.5, 0.5]}
-							tint={pieceInfo.sprite.tint}
+							width={200}
+							height={200}
 						/>
 						<Graphics
 							x={16}
 							y={pieceInfo.message
-								? Math.max(height - pieceInfo.sprite.texture.height / 2 - 32, spriteY + 75)
+								? Math.max(height - 250, spriteY + 75)
 								: 16}
 							draw={(g) => {
 								g.clear();
 								g.beginFill(0, 1);
-								g.drawRect(0, 0, 0, (pieceInfo.sprite.texture.height / 2) * 1.08);
+								g.drawRect(0, 0, 0, 74);
 							}}
 						/>
 					</>

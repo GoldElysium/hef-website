@@ -5,19 +5,11 @@
 			"assets": [
 				{
 					"name": "background",
-					"srcs": "/assets/kroniipuzzle/puzzle.png"
-				},
-				{
-					"name": "background-half",
-					"srcs": "/assets/kroniipuzzle/puzzle_half_size.png"
-				},
-				{
-					"name": "background-quarter",
-					"srcs": "/assets/kroniipuzzle/puzzle_quarter_size.png"
+					"srcs": "/assets/kroniipuzzle/puzzle.webp"
 				},
 				{
 					"name": "kronie",
-					"srcs": "/assets/kroniipuzzle/kronie.png"
+					"srcs": "/assets/kroniipuzzle/kronie.webp"
 				},
 				{
 					"name": "pieces",

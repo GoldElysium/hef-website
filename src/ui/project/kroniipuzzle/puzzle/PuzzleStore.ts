@@ -41,6 +41,7 @@ interface State {
 		muted: boolean;
 	}
 	shouldLoadPositions: boolean;
+	firstLoad: boolean,
 }
 
 interface Actions {
@@ -53,6 +54,7 @@ interface Actions {
 	setVolume: (volume: number) => void;
 	setMuted: (muted: boolean) => void;
 	reset: () => void;
+	setFirstLoad: (val: boolean) => void;
 }
 
 function flatIndexToSpiralCoordinates(index: number): [number, number] | null {
@@ -122,6 +124,7 @@ const usePuzzleStore = create(devtools(
 					muted: false,
 				},
 				shouldLoadPositions: false,
+				firstLoad: true,
 			};
 
 			const randomIndexArray = Array.from({ length: PIECE_COUNT }, (_, index) => index)
@@ -250,6 +253,9 @@ const usePuzzleStore = create(devtools(
 							state.correctCount = 0;
 						}
 					}
+				}),
+				setFirstLoad: (val) => set((state) => {
+					state.firstLoad = val;
 				}),
 			} satisfies State & Actions;
 		}),

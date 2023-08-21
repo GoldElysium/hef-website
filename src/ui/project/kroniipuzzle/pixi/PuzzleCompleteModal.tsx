@@ -16,7 +16,7 @@ interface ModalProps {
 	openSettings: () => void;
 }
 
-export default function Modal({
+export default function PuzzleCompleteModal({
 	x, y, width, height, closeModal, openSettings,
 }: ModalProps) {
 	const [assetBundle, setAssetBundle] = useState<null | any>(null);

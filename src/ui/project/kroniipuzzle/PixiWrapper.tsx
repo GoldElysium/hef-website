@@ -1,7 +1,7 @@
 'use client';
 
 import '@pixi/gif';
-import { Project } from 'types/payload-types';
+import { Project, Submission } from 'types/payload-types';
 import { Stage } from '@pixi/react';
 import React, { useEffect, useState } from 'react';
 import * as PIXI from 'pixi.js';
@@ -9,8 +9,8 @@ import OS from 'phaser/src/device/OS';
 import { SpeakerWaveIcon, SpeakerXMarkIcon } from '@heroicons/react/24/solid';
 import { useRouter } from 'next/navigation';
 import PixiPuzzleContainer from './PixiPuzzleContainer';
-import Message from './puzzle/Message';
 import usePuzzleStore from './puzzle/PuzzleStore';
+import SubmissionsModal from './SubmissionsModal';
 
 interface IProps {
 	project: Omit<Project, 'flags' | 'devprops'> & {
@@ -19,7 +19,7 @@ interface IProps {
 			[key: string]: string;
 		};
 	};
-	submissions: Message[];
+	submissions: Submission[];
 }
 
 export interface StageSize {
@@ -34,6 +34,7 @@ export default function PixiWrapper({ project, submissions }: IProps) {
 	const [ready, setReady] = useState(false);
 	const [loadProgress, setLoadProgress] = useState(0);
 	const [orientation, setOrientation] = useState('');
+	const [showAllSubmissions, setShowAllSubmissions] = useState(false);
 
 	const { volume, muted } = usePuzzleStore((state) => state.audio);
 	const [setVolume, setMuted] = usePuzzleStore((state) => [state.setVolume, state.setMuted]);
@@ -106,6 +107,14 @@ export default function PixiWrapper({ project, submissions }: IProps) {
 
 	return (
 		<>
+			{showAllSubmissions && (
+				<SubmissionsModal
+					submissions={submissions}
+					project={project}
+					closeModal={() => setShowAllSubmissions(false)}
+				/>
+			)}
+
 			{!OS.desktop && (orientation.startsWith('portrait') || !document.fullscreenElement) && (
 				<button
 					className="text-center z-10 min-h-screen min-w-screen h-full w-full bg-black text-white absolute"
@@ -126,13 +135,13 @@ export default function PixiWrapper({ project, submissions }: IProps) {
 					backgroundColor: 0x5f79bc,
 					antialias: true,
 				}}
-				className={`${!OS.desktop && orientation.startsWith('portrait') ? 'hidden' : ''} cursor-none`}
+				className={`${((!OS.desktop && orientation.startsWith('portrait')) || showAllSubmissions) ? 'hidden' : ''} cursor-none`}
 			>
 				<PixiPuzzleContainer
-					project={project}
 					stageSize={stageSize}
 					submissions={submissions}
 					router={router}
+					setShowAllSubmissions={setShowAllSubmissions}
 				/>
 			</Stage>
 

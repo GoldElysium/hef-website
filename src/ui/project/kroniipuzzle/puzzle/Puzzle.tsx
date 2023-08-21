@@ -5,10 +5,10 @@ import React, {
 	ReactElement, useCallback, useEffect, useMemo, useRef, useState,
 } from 'react';
 import * as PIXI from 'pixi.js';
-import { Sprite as PixiSprite } from 'pixi.js';
 import { Container, Graphics } from '@pixi/react';
-import { IMediaInstance, Sound/* , sound as PixiSound */ } from '@pixi/sound';
+import { IMediaInstance, Sound } from '@pixi/sound';
 import { shallow } from 'zustand/shallow';
+import { Submission, SubmissionMedia } from 'types/payload-types';
 import Piece, { PieceActions } from './Piece';
 import Message from './Message';
 import PieceInfo from './PieceInfo';
@@ -23,7 +23,7 @@ interface PuzzleProps {
 	height: number;
 	puzzleFinished: () => void;
 	onPieceSelected: (piece: PieceInfo) => void;
-	submissions: Message[];
+	submissions: Submission[];
 }
 
 const SOUNDS = {
@@ -73,6 +73,7 @@ export default function Puzzle({
 		if (correctCount >= PIECE_COUNT) {
 			puzzleFinished();
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [correctCount]);
 
 	const drawPuzzleBounds = useCallback((g: PIXI.Graphics) => {
@@ -261,21 +262,7 @@ export default function Puzzle({
 
 		for (let r = 0; r < ROW_COUNT; r++) {
 			for (let c = 0; c < COL_COUNT; c++) {
-				// TODO: Remove this type coercion in prod
-				const message = submissions[r * COL_COUNT + c] as unknown as string;
-
-				const words = message.split(' ');
-				const midpoint = Math.floor(words.length / 2);
-
-				const congrats = words.slice(0, midpoint).join(' ');
-				const congratulations = congrats + (congrats[congrats.length - 1] !== '.' ? '.' : '');
-				const f = words.slice(midpoint).join(' ');
-				const favoriteMoment = f.charAt(0).toUpperCase() + f.slice(1);
-				const kronie = new PixiSprite(assetBundle.kronie);
-
-				// todo: this doesn't stick for some reason. not really an issue though
-				// since the tinting is just for debug purposes
-				kronie.tint = new PIXI.Color([Math.random(), Math.random(), Math.random()]);
+				const message = submissions[r * COL_COUNT + c];
 
 				const pieceRef = puzzlePiecesRefs[`${r}-${c}`];
 
@@ -286,13 +273,13 @@ export default function Puzzle({
 						r={r}
 						texture={assetBundle.pieces.textures[`${r}-${c}`]}
 						setSelectedPiece={onPieceSelected}
-						message={{
+						message={message ? {
 							from: `${c}_${r}`,
-							congratulations,
-							favoriteMoment,
-							isRead: false,
-						} satisfies Message}
-						kronie={kronie}
+							congratulations: message.devprops?.find((prop) => prop.key === 'congratulations')?.value,
+							favoriteMoment: message.devprops?.find((prop) => prop.key === 'favoriteMoment')?.value,
+							kronie: message.media && message.media.length > 0
+								? (message.media[0].image as SubmissionMedia).url : undefined,
+						} satisfies Message : undefined}
 						ref={pieceRef}
 					/>
 				);
