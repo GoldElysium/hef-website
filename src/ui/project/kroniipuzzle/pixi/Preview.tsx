@@ -74,7 +74,7 @@ export default function PuzzlePreview({
 				}}
 			/>
 			<Sprite
-				image="/assets/kroniipuzzle/puzzle.png"
+				image="/assets/kroniipuzzle/puzzle.webp"
 				x={8}
 				y={41}
 				width={434}
