@@ -30,13 +30,18 @@ const AnimatedGIF = PixiComponent('AnimatedGIF', {
 			animatedGIF.loop = false;
 			animatedGIF.stop();
 			animatedGIF.currentFrame = 1;
+			animatedGIF.visible = false;
 
 			setTimeout(() => {
+				animatedGIF.visible = true;
 				animatedGIF.play();
 			}, intermittance);
 
 			animatedGIF.onComplete = () => {
+				animatedGIF.visible = false;
+
 				setTimeout(() => {
+					animatedGIF.visible = true;
 					animatedGIF.play();
 				}, intermittance);
 			};
