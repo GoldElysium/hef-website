@@ -126,9 +126,6 @@ const Piece = React.forwardRef<PieceActions, PieceProps>(({
 			)
 			&& thisPiece.pieceGroup !== pieceLeft.current.pieceGroup
 		) {
-			console.log({
-				cLeft: !pieceGroups[pieceLeft.current.pieceGroup].correct,
-			});
 			nearData.near = true;
 			nearData.data = {
 				x: pieceLeft.current.localPosition.x,
@@ -145,9 +142,6 @@ const Piece = React.forwardRef<PieceActions, PieceProps>(({
 			)
 			&& thisPiece.pieceGroup !== pieceTop.current.pieceGroup
 		) {
-			console.log({
-				cTop: !pieceGroups[pieceTop.current.pieceGroup].correct,
-			});
 			nearData.near = true;
 			nearData.data = {
 				x: pieceTop.current.localPosition.x,
@@ -164,9 +158,6 @@ const Piece = React.forwardRef<PieceActions, PieceProps>(({
 			)
 			&& thisPiece.pieceGroup !== pieceRight.current.pieceGroup
 		) {
-			console.log({
-				cLeft: !pieceGroups[pieceRight.current.pieceGroup].correct,
-			});
 			nearData.near = true;
 			nearData.data = {
 				x: pieceRight.current.localPosition.x,
@@ -183,9 +174,6 @@ const Piece = React.forwardRef<PieceActions, PieceProps>(({
 			)
 			&& thisPiece.pieceGroup !== pieceBottom.current.pieceGroup
 		) {
-			console.log({
-				cLeft: !pieceGroups[pieceBottom.current.pieceGroup].correct,
-			});
 			nearData.near = true;
 			nearData.data = {
 				x: pieceBottom.current.localPosition.x,
