@@ -24,13 +24,12 @@ const AnimatedGIF = PixiComponent('AnimatedGIF', {
 		if (y) animatedGIF.y = y;
 		if (width) animatedGIF.width = width;
 		if (height) animatedGIF.height = height;
-		if (visible) animatedGIF.visible = visible;
+		if (visible) animatedGIF.visible = visible && !intermittance;
 
 		if (intermittance) {
 			animatedGIF.loop = false;
 			animatedGIF.stop();
 			animatedGIF.currentFrame = 1;
-			animatedGIF.visible = false;
 
 			setTimeout(() => {
 				animatedGIF.visible = true;
