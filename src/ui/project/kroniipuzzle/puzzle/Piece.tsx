@@ -56,6 +56,8 @@ const Piece = React.forwardRef<PieceActions, PieceProps>(({
 	const pieceRight = useRef(c !== COL_COUNT - 1 && usePuzzleStore.getState().pieces[`${r}-${c + 1}`]);
 	const pieceBottom = useRef(r !== ROW_COUNT - 1 && usePuzzleStore.getState().pieces[`${r + 1}-${c}`]);
 	const [updatePiecePosition, updatePieceLocalPosition] = usePuzzleStore((state) => [state.updatePiecePosition(`${r}-${c}`), state.updatePieceLocalPosition]);
+	const pieceGroups = usePuzzleStore((state) => state.pieceGroups);
+
 	/* eslint-enable */
 
 	// Subscribe to all side pieces
@@ -117,12 +119,16 @@ const Piece = React.forwardRef<PieceActions, PieceProps>(({
 
 		if (
 			pieceLeft.current
+			&& !pieceGroups[pieceLeft.current.pieceGroup].correct
 			&& isNearPosition(
 				thisPiece,
 				pieceLeft.current,
 			)
 			&& thisPiece.pieceGroup !== pieceLeft.current.pieceGroup
 		) {
+			console.log({
+				cLeft: !pieceGroups[pieceLeft.current.pieceGroup].correct,
+			});
 			nearData.near = true;
 			nearData.data = {
 				x: pieceLeft.current.localPosition.x,
@@ -132,12 +138,16 @@ const Piece = React.forwardRef<PieceActions, PieceProps>(({
 			};
 		} else if (
 			pieceTop.current
+			&& !pieceGroups[pieceTop.current.pieceGroup].correct
 			&& isNearPosition(
 				thisPiece,
 				pieceTop.current,
 			)
 			&& thisPiece.pieceGroup !== pieceTop.current.pieceGroup
 		) {
+			console.log({
+				cTop: !pieceGroups[pieceTop.current.pieceGroup].correct,
+			});
 			nearData.near = true;
 			nearData.data = {
 				x: pieceTop.current.localPosition.x,
@@ -147,12 +157,16 @@ const Piece = React.forwardRef<PieceActions, PieceProps>(({
 			};
 		} else if (
 			pieceRight.current
+			&& !pieceGroups[pieceRight.current.pieceGroup].correct
 			&& isNearPosition(
 				thisPiece,
 				pieceRight.current,
 			)
 			&& thisPiece.pieceGroup !== pieceRight.current.pieceGroup
 		) {
+			console.log({
+				cLeft: !pieceGroups[pieceRight.current.pieceGroup].correct,
+			});
 			nearData.near = true;
 			nearData.data = {
 				x: pieceRight.current.localPosition.x,
@@ -162,12 +176,16 @@ const Piece = React.forwardRef<PieceActions, PieceProps>(({
 			};
 		} else if (
 			pieceBottom.current
+			&& !pieceGroups[pieceBottom.current.pieceGroup].correct
 			&& isNearPosition(
 				thisPiece,
 				pieceBottom.current,
 			)
 			&& thisPiece.pieceGroup !== pieceBottom.current.pieceGroup
 		) {
+			console.log({
+				cLeft: !pieceGroups[pieceBottom.current.pieceGroup].correct,
+			});
 			nearData.near = true;
 			nearData.data = {
 				x: pieceBottom.current.localPosition.x,
