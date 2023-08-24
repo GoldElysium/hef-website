@@ -84,8 +84,8 @@ export default function Puzzle({
 		g.drawRect(
 			lineWidth / 2 - 1,
 			lineWidth / 2 - 1,
-			width - lineWidth / 2,
-			height - lineWidth / 2,
+			width - lineWidth / 4,
+			height - lineWidth / 4,
 		);
 	}, [height, width]);
 
