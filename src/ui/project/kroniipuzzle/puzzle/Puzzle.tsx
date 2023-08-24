@@ -82,8 +82,8 @@ export default function Puzzle({
 		g.lineStyle(lineWidth, 0xffffff);
 
 		g.drawRect(
-			-lineWidth,
-			-lineWidth,
+			-lineWidth / 2,
+			-lineWidth / 2,
 			width + lineWidth,
 			height + lineWidth,
 		);
