@@ -222,6 +222,8 @@ const Piece = React.forwardRef<PieceActions, PieceProps>(({
 				width={PIECE_SIZE + 2 * PIECE_MARGIN}
 				height={PIECE_SIZE + 2 * PIECE_MARGIN}
 			/>
+
+			{/* todo: remove this */}
 			<Text
 				text={`${c}, ${r}`}
 				style={{
