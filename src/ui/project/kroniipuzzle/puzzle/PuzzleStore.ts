@@ -136,7 +136,7 @@ const usePuzzleStore = create(devtools(
 					const [cc, rr] = flatIndexToSpiralCoordinates(
 						index + (Math.floor(PIECE_COUNT * 0.35)) + 36,
 					) || [0, 0];
-					const x = cc * PIECE_SIZE * 1.75 - PIECE_SIZE * 2;
+					const x = cc * PIECE_SIZE * 1.75 - PIECE_SIZE * 2.5;
 					const y = rr * PIECE_SIZE * 1.75 - PIECE_SIZE * 2.5;
 
 					initialState.pieces[`${r}-${c}`] = {
@@ -223,8 +223,8 @@ const usePuzzleStore = create(devtools(
 							const [cc, rr] = flatIndexToSpiralCoordinates(
 								index + (Math.floor(PIECE_COUNT * 0.35)) + 36,
 							) || [0, 0];
-							const x = cc * PIECE_SIZE * 1.75;
-							const y = rr * PIECE_SIZE * 1.75 - PIECE_SIZE * 2;
+							const x = cc * PIECE_SIZE * 1.75 - PIECE_SIZE * 2.5;
+							const y = rr * PIECE_SIZE * 1.75 - PIECE_SIZE * 2.5;
 
 							state.pieces[`${r}-${c}`] = {
 								position: {
