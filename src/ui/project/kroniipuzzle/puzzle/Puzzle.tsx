@@ -82,10 +82,10 @@ export default function Puzzle({
 		g.lineStyle(lineWidth, 0xffffff);
 
 		g.drawRect(
-			lineWidth / 2 - 1,
-			lineWidth / 2 - 1,
-			width - lineWidth / 4,
-			height - lineWidth / 4,
+			lineWidth / 2,
+			lineWidth / 2,
+			width - lineWidth / 2,
+			height - lineWidth / 2,
 		);
 	}, [height, width]);
 
