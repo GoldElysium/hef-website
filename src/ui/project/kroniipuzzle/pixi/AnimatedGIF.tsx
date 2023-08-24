@@ -29,6 +29,9 @@ const AnimatedGIF = PixiComponent('AnimatedGIF', {
 		if (intermittance) {
 			animatedGIF.loop = false;
 
+			// note: this is to get rid of the "peeking" animations on initial run
+			animatedGIF.play();
+
 			setTimeout(() => {
 				animatedGIF.visible = true;
 				animatedGIF.play();
