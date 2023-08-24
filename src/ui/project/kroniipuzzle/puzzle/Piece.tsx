@@ -219,8 +219,8 @@ const Piece = React.forwardRef<PieceActions, PieceProps>(({
 				texture={texture}
 				x={-PIECE_MARGIN}
 				y={-PIECE_MARGIN}
-				width={PIECE_SIZE + 2 * PIECE_MARGIN}
-				height={PIECE_SIZE + 2 * PIECE_MARGIN}
+				width={PIECE_SIZE + 2 * PIECE_MARGIN + 1}
+				height={PIECE_SIZE + 2 * PIECE_MARGIN + 1}
 			/>
 
 			{/* todo: remove this */}
