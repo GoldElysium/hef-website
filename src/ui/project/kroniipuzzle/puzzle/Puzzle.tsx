@@ -274,7 +274,7 @@ export default function Puzzle({
 						texture={assetBundle.pieces.textures[`${r}-${c}`]}
 						setSelectedPiece={onPieceSelected}
 						message={message ? {
-							from: `${c}_${r}`,
+							from: message.author,
 							congratulations: message.devprops?.find((prop) => prop.key === 'congratulations')?.value,
 							favoriteMoment: message.devprops?.find((prop) => prop.key === 'favoriteMoment')?.value,
 							kronie: message.media && message.media.length > 0

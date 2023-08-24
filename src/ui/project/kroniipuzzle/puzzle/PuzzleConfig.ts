@@ -1,5 +1,5 @@
-export const ROW_COUNT = 18;
-export const COL_COUNT = 36;
+export const ROW_COUNT = 12;
+export const COL_COUNT = 24;
 export const PIECE_COUNT = COL_COUNT * ROW_COUNT;
 export const WORLD_WIDTH = 3840;
 export const WORLD_HEIGHT = 2160;
