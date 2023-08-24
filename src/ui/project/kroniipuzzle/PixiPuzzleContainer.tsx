@@ -139,7 +139,7 @@ export default function PixiPuzzleContainer({
 				ref={viewportRef}
 			>
 				<Puzzle
-					x={SIDEBAR_WIDTH + PUZZLE_WIDTH / 2}
+					x={SIDEBAR_WIDTH + PUZZLE_WIDTH}
 					y={(WORLD_HEIGHT / 2 + (PUZZLE_WIDTH * 1.2) / 4) - WORLD_WIDTH / 4}
 					width={PUZZLE_WIDTH}
 					height={PUZZLE_WIDTH / 2}
