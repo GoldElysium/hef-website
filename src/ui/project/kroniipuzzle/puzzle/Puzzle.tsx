@@ -77,13 +77,13 @@ export default function Puzzle({
 	}, [correctCount]);
 
 	const drawPuzzleBounds = useCallback((g: PIXI.Graphics) => {
-		const lineWidth = 6;
+		const lineWidth = 8;
 		g.clear();
 		g.lineStyle(lineWidth, 0xffffff);
 
 		g.drawRect(
-			lineWidth / 2,
-			lineWidth / 2,
+			lineWidth / 2 - 1,
+			lineWidth / 2 - 1,
 			width - lineWidth / 2,
 			height - lineWidth / 2,
 		);
