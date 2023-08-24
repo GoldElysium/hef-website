@@ -134,10 +134,10 @@ const usePuzzleStore = create(devtools(
 				for (let c = 0; c < COL_COUNT; c++) {
 					const index = randomIndexArray[r * COL_COUNT + c];
 					const [cc, rr] = flatIndexToSpiralCoordinates(
-						index + (Math.floor(PIECE_COUNT * 0.35)) + 5,
+						index + (Math.floor(PIECE_COUNT * 0.35)) + 36,
 					) || [0, 0];
-					const x = cc * PIECE_SIZE * 1.75;
-					const y = rr * PIECE_SIZE * 1.75 - PIECE_SIZE * 2;
+					const x = cc * PIECE_SIZE * 1.75 - PIECE_SIZE;
+					const y = rr * PIECE_SIZE * 1.75 - PIECE_SIZE;
 
 					initialState.pieces[`${r}-${c}`] = {
 						position: {
@@ -221,7 +221,7 @@ const usePuzzleStore = create(devtools(
 						for (let c = 0; c < COL_COUNT; c++) {
 							const index = newRandomIndexArray[r * COL_COUNT + c];
 							const [cc, rr] = flatIndexToSpiralCoordinates(
-								index + (Math.floor(PIECE_COUNT * 0.35)) + 5,
+								index + (Math.floor(PIECE_COUNT * 0.35)) + 36,
 							) || [0, 0];
 							const x = cc * PIECE_SIZE * 1.75;
 							const y = rr * PIECE_SIZE * 1.75 - PIECE_SIZE * 2;
