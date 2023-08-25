@@ -113,7 +113,7 @@ export default function PieceGroup({
 		}
 
 		if (!nearData) {
-			const newPos = { x: x - dragStartPosition!.x, y: y - dragStartPosition!.y };
+			const newPos = { x, y };
 			setCurrentPosition(newPos);
 			updatePieceGroupPosition(newPos);
 
@@ -213,13 +213,15 @@ export default function PieceGroup({
 		}
 
 		const { x, y } = event.getLocalPosition(parent);
+		const actualX = x - dragStartPosition!.x;
+		const actualY = y - dragStartPosition!.y;
 		const { targetPosition } = thisPieceGroup;
 
 		// Check if near target
-		if (isNearPosition(x, y, targetPosition.x, targetPosition.y)) {
+		if (isNearPosition(actualX, actualY, targetPosition.x, targetPosition.y)) {
 			settlePieceGroup(targetPosition);
 		} else {
-			notNearTargetPositionLogic(x, y);
+			notNearTargetPositionLogic(actualX, actualY);
 		}
 
 		setDragging(false);
