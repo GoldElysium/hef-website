@@ -56,6 +56,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/apps/allcontributors"><img src="https://avatars.githubusercontent.com/in/23186?v=4?s=100" width="100px;" alt="allcontributors[bot]"/><br /><sub><b>allcontributors[bot]</b></sub></a><br /><a href="#tool-allcontributors[bot]" title="Tools">🔧</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://twitter.com/pyonyura"><img src="https://user-images.githubusercontent.com/48455312/259434530-f714cbcf-d9bb-44a6-b2bc-cee0f97608dd.jpg?s=100" width="100px;" alt="yurapyon"/><br /><sub><b>yurapyon</b></sub></a><br /><a href="#design" title="Design">🎨</a></td>
     </tr>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/j1george"><img src="https://avatars.githubusercontent.com/u/8826818?v=4?s=100" width="100px;" alt="George Jone"/><br /><sub><b>George Jone</b></sub></a><br /><a href="https://github.com/GoldElysium/hef-website/commits?author=j1george" title="Code">💻</a></td>
+    </tr>
   </tbody>
 </table>
 
