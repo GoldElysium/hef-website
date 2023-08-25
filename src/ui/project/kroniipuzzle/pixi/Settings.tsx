@@ -9,7 +9,7 @@ import TaggedText from './TaggedText';
 import Button from './Button';
 import Scrollbox from './Scrollbox';
 import usePuzzleStore from '../puzzle/PuzzleStore';
-import { ABOUT_TEXT, COL_COUNT, ROW_COUNT } from '../puzzle/PuzzleConfig';
+import { ABOUT_TEXT } from '../puzzle/PuzzleConfig';
 
 interface SettingsModalProps {
 	x: number;
@@ -154,38 +154,6 @@ export default function SettingsModal({
 							puzzleState.setFirstLoad(true);
 							setMessage('Puzzle has been reset!');
 							window.location.reload();
-						}}
-					/>
-					<Button
-						x={225}
-						y={188}
-						width={250}
-						height={60}
-						radius={12}
-						color={0xAA2222}
-						label="Cheat (Complete puzzle)"
-						onClick={() => {
-							const puzzleState = usePuzzleStore.getState();
-
-							usePuzzleStore.setState(() => {
-								const pieceGroups: typeof puzzleState.pieceGroups = {};
-
-								// eslint-disable-next-line no-restricted-syntax
-								for (const key of Object.keys(puzzleState.pieceGroups)) {
-									pieceGroups[key] = {
-										...puzzleState.pieceGroups[key],
-										position: puzzleState.pieceGroups[key].targetPosition,
-										correct: true,
-									};
-								}
-
-								return {
-									pieceGroups,
-									correctCount: ROW_COUNT * COL_COUNT,
-								};
-							});
-
-							setMessage('Auto finished the puzzle.');
 						}}
 					/>
 					<Button

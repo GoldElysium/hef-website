@@ -99,16 +99,45 @@ const Piece = React.forwardRef<PieceActions, PieceProps>(({
 		updatePieceLocalPosition(`${r}-${c}`, newPos);
 	}
 
-	function isNearPosition(current: any, target: any) {
-		const currentX = current.position.x + PIECE_SIZE / 2;
-		const currentY = current.position.y + PIECE_SIZE / 2;
-		const targetX = target.position.x + PIECE_SIZE / 2;
-		const targetY = target.position.y + PIECE_SIZE / 2;
+	function isNearPosition(current: any, target: any, dir: string) {
+		let xShift = 0;
+		let yShift = 0;
+		let xShiftTarget = 0;
+		let yShiftTarget = 0;
+
+		switch (dir) {
+			case 'left':
+				yShift = PIECE_SIZE / 2;
+				xShiftTarget = PIECE_SIZE;
+				yShiftTarget = PIECE_SIZE / 2;
+				break;
+			case 'right':
+				xShift = PIECE_SIZE;
+				yShift = PIECE_SIZE / 2;
+				yShiftTarget = PIECE_SIZE / 2;
+				break;
+			case 'top':
+				xShift = PIECE_SIZE / 2;
+				xShiftTarget = PIECE_SIZE / 2;
+				yShiftTarget = PIECE_SIZE;
+				break;
+			case 'bottom':
+				xShift = PIECE_SIZE / 2;
+				yShift = PIECE_SIZE;
+				xShiftTarget = PIECE_SIZE / 2;
+				break;
+			default: break;
+		}
+
+		const currentX = current.position.x + xShift;
+		const currentY = current.position.y + yShift;
+		const targetX = target.position.x + xShiftTarget;
+		const targetY = target.position.y + yShiftTarget;
 
 		const deltaX = Math.abs(currentX - targetX);
 		const deltaY = Math.abs(currentY - targetY);
 
-		return deltaX < 90 && deltaY < 90;
+		return deltaX < 20 && deltaY < 20;
 	}
 
 	function isNearAdjacentPiece(): IsNearAdjacentPieceRes {
@@ -122,6 +151,7 @@ const Piece = React.forwardRef<PieceActions, PieceProps>(({
 			&& isNearPosition(
 				thisPiece,
 				pieceLeft.current,
+				'left',
 			)
 			&& thisPiece.pieceGroup !== pieceLeft.current.pieceGroup
 		) {
@@ -138,6 +168,7 @@ const Piece = React.forwardRef<PieceActions, PieceProps>(({
 			&& isNearPosition(
 				thisPiece,
 				pieceTop.current,
+				'top',
 			)
 			&& thisPiece.pieceGroup !== pieceTop.current.pieceGroup
 		) {
@@ -154,6 +185,7 @@ const Piece = React.forwardRef<PieceActions, PieceProps>(({
 			&& isNearPosition(
 				thisPiece,
 				pieceRight.current,
+				'right',
 			)
 			&& thisPiece.pieceGroup !== pieceRight.current.pieceGroup
 		) {
@@ -170,6 +202,7 @@ const Piece = React.forwardRef<PieceActions, PieceProps>(({
 			&& isNearPosition(
 				thisPiece,
 				pieceBottom.current,
+				'bottom',
 			)
 			&& thisPiece.pieceGroup !== pieceBottom.current.pieceGroup
 		) {
