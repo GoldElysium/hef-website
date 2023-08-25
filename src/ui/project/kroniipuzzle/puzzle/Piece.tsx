@@ -224,8 +224,8 @@ const Piece = React.forwardRef<PieceActions, PieceProps>(({
 		const localPos = pieceContainerRef.current!.toLocal(pos);
 
 		if (
-			(localPos.x >= 5 && localPos.x <= (PIECE_SIZE / 2))
-			&& (localPos.y >= 5 && localPos.y <= (PIECE_SIZE / 2))
+			(localPos.x >= -10 && localPos.x <= 85)
+			&& (localPos.y >= -10 && localPos.y <= 85)
 		) {
 			setSelectedPiece({
 				id: `${r}-${c}`,
