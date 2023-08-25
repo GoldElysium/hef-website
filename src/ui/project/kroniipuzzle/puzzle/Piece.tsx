@@ -141,11 +141,6 @@ const Piece = React.forwardRef<PieceActions, PieceProps>(({
 	}
 
 	function isNearAdjacentPiece(): IsNearAdjacentPieceRes {
-		setSelectedPiece({
-			id: `${r}-${c}`,
-			message,
-		} as PieceInfo);
-
 		const nearData: any = {
 			near: false,
 		};
@@ -228,7 +223,14 @@ const Piece = React.forwardRef<PieceActions, PieceProps>(({
 
 		const localPos = pieceContainerRef.current!.toLocal(pos);
 
-		if ((localPos.x >= 5 && localPos.x <= 50) && (localPos.y >= 5 && localPos.y <= 50)) {
+		if (
+			(localPos.x >= 5 && localPos.x <= (PIECE_SIZE / 2))
+			&& (localPos.y >= 5 && localPos.y <= (PIECE_SIZE / 2))
+		) {
+			setSelectedPiece({
+				id: `${r}-${c}`,
+				message,
+			} as PieceInfo);
 			return true;
 		}
 
