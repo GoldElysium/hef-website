@@ -7,7 +7,6 @@ import React, { useEffect, useState } from 'react';
 import * as PIXI from 'pixi.js';
 import OS from 'phaser/src/device/OS';
 import { SpeakerWaveIcon, SpeakerXMarkIcon } from '@heroicons/react/24/solid';
-import { useRouter } from 'next/navigation';
 import PixiPuzzleContainer from './PixiPuzzleContainer';
 import usePuzzleStore from './puzzle/PuzzleStore';
 import SubmissionsModal from './SubmissionsModal';
@@ -28,8 +27,6 @@ export interface StageSize {
 }
 
 export default function PixiWrapper({ project, submissions }: IProps) {
-	const router = useRouter();
-
 	const [stageSize, setStageSize] = useState<StageSize | null>(null);
 	const [ready, setReady] = useState(false);
 	const [loadProgress, setLoadProgress] = useState(0);
@@ -148,7 +145,6 @@ export default function PixiWrapper({ project, submissions }: IProps) {
 				<PixiPuzzleContainer
 					stageSize={stageSize}
 					submissions={submissions}
-					router={router}
 					setShowAllSubmissions={setShowAllSubmissions}
 				/>
 			</Stage>

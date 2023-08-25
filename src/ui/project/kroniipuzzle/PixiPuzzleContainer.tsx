@@ -9,7 +9,6 @@ import React, {
 import * as PIXI from 'pixi.js';
 import { Graphics as PixiGraphics, Renderer, TextStyle } from 'pixi.js';
 import type { Viewport as PixiViewport } from 'pixi-viewport';
-import type { AppRouterInstance } from 'next/dist/shared/lib/app-router-context';
 import { Submission } from 'types/payload-types';
 import type { StageSize } from './PixiWrapper';
 import Viewport from './pixi/Viewport';
@@ -33,12 +32,11 @@ import PuzzleStartModal from './pixi/PuzzleStartModal';
 interface IProps {
 	stageSize: StageSize;
 	submissions: Submission[];
-	router: AppRouterInstance;
 	setShowAllSubmissions: (val: boolean) => void;
 }
 
 export default function PixiPuzzleContainer({
-	stageSize, submissions, router, setShowAllSubmissions,
+	stageSize, submissions, setShowAllSubmissions,
 }: IProps) {
 	const app = useApp();
 
@@ -244,7 +242,9 @@ export default function PixiPuzzleContainer({
 							label="Exit"
 							color={0xAA2222}
 							radius={8}
-							onClick={() => router.push('/projects')}
+							onClick={() => {
+								window.location.href = '/projects';
+							}}
 						/>
 						<Button
 							x={stageSize.width / 2 + 25}
