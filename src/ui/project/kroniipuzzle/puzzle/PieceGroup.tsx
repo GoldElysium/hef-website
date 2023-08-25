@@ -87,7 +87,7 @@ export default function PieceGroup({
 	const isNearPosition = (currentX: number, currentY: number, targetX: number, targetY: number) => {
 		const deltaX = Math.abs(currentX - targetX);
 		const deltaY = Math.abs(currentY - targetY);
-		return deltaX < 75 && deltaY < 75;
+		return deltaX < 65 && deltaY < 65;
 	};
 
 	const notNearTargetPositionLogic = (x: number, y: number) => {
