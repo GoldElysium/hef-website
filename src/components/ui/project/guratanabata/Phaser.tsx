@@ -83,7 +83,7 @@ export default function PhaserGame({
 	return (
 		<div>
 			{isMobile && !hideText && <p className="text-center">Tap the canvas to fullscreen</p>}
-			<div id={id ?? 'game'} className="w-screen h-screen overflow-hidden" />
+			<div id={id ?? 'game'} className="h-screen w-screen overflow-hidden" />
 		</div>
 	);
 }

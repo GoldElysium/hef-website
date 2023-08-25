@@ -1,22 +1,22 @@
+const defaultTheme = require('tailwindcss/defaultTheme')
+
 function withOpacity(variableName) {
-	return ({ opacityValue }) => {
-		if (opacityValue !== undefined) {
-			return `rgba(var(${variableName}), ${opacityValue})`
-		}
-		return `rgb(var(${variableName}))`
-	}
+	return `rgb(var(${variableName}) / <alpha-value>)`;
 }
 
+/** @type {import('tailwindcss').Config} */
 module.exports = {
 	content: [
 		'./src/app/**/*.{js,ts,jsx,tsx}',
-		'./src/ui/**/*.{js,ts,jsx,tsx}',
 		'./src/pages/**/*.{js,ts,jsx,tsx}',
 		'./src/components/**/*.{js,ts,jsx,tsx}',
 	],
 	darkMode: 'class',
 	theme: {
 		extend: {
+			fontFamily: {
+				sans: ['var(--font-nunito)', ...defaultTheme.fontFamily.sans]
+			},
 			maxWidth: {
 				'1/12': '8.333333%',
 				'2/12': '16.666667%',
@@ -35,39 +35,66 @@ module.exports = {
 			},
 			textColor: {
 				skin: {
-					'primary-1': withOpacity('--color-primary-1'),
-					'secondary-1': withOpacity('--color-secondary-1'),
+					background: withOpacity('--color-background'),
+					primary: withOpacity('--color-primary'),
+					'primary-foreground': withOpacity('--color-primary-foreground'),
+					secondary: withOpacity('--color-secondary'),
+					'secondary-foreground': withOpacity('--color-secondary-foreground'),
+					accent: withOpacity('--color-accent'),
+					text: withOpacity('--color-text'),
+					header: withOpacity('--color-header'),
+					'header-foreground': withOpacity('--color-header-foreground'),
+					heading: withOpacity('--color-heading'),
 					'link': withOpacity('--color-link'),
-					'dark-primary-1': withOpacity('--color-dark-primary-1'),
-					'dark-secondary-1': withOpacity('--color-dark-secondary-1'),
-					'dark-link': withOpacity('--color-dark-link'),
+
+					'background-dark': withOpacity('--color-background-dark'),
+					'primary-dark': withOpacity('--color-primary-dark'),
+					'primary-foreground-dark': withOpacity('--color-primary-foreground-dark'),
+					'secondary-dark': withOpacity('--color-secondary-dark'),
+					'secondary-foreground-dark': withOpacity('--color-secondary-foreground-dark'),
+					'accent-dark': withOpacity('--color-accent-dark'),
+					'text-dark': withOpacity('--color-text-dark'),
+					'header-dark': withOpacity('--color-header-dark'),
+					'header-foreground-dark': withOpacity('--color-header-foreground-dark'),
+					'heading-dark': withOpacity('--color-heading-dark'),
+					'link-dark': withOpacity('--color-link-dark'),
+
+					'holoen-red': withOpacity('--color-holoen-red'),
 				}
 			},
 			backgroundColor: {
 				skin: {
-					'background-1': withOpacity('--color-background-1'),
-					'background-2': withOpacity('--color-background-2'),
-					'card': withOpacity('--color-card'),
-					'dark-background-1': withOpacity('--color-dark-background-1'),
-					'dark-background-2': withOpacity('--color-dark-background-2'),
-					'dark-card': withOpacity('--color-dark-card'),
-
-					'primary-1': withOpacity('--color-primary-1'),
-					'secondary-1': withOpacity('--color-secondary-1'),
+					background: withOpacity('--color-background'),
+					primary: withOpacity('--color-primary'),
+					'primary-foreground': withOpacity('--color-primary-foreground'),
+					secondary: withOpacity('--color-secondary'),
+					'secondary-foreground': withOpacity('--color-secondary-foreground'),
+					accent: withOpacity('--color-accent'),
+					text: withOpacity('--color-text'),
+					header: withOpacity('--color-header'),
+					'header-foreground': withOpacity('--color-header-foreground'),
+					heading: withOpacity('--color-heading'),
 					'link': withOpacity('--color-link'),
-					'dark-primary-1': withOpacity('--color-dark-primary-1'),
-					'dark-secondary-1': withOpacity('--color-dark-secondary-1'),
-					'dark-link': withOpacity('--color-dark-link'),
+
+					'background-dark': withOpacity('--color-background-dark'),
+					'primary-dark': withOpacity('--color-primary-dark'),
+					'primary-foreground-dark': withOpacity('--color-primary-foreground-dark'),
+					'secondary-dark': withOpacity('--color-secondary-dark'),
+					'secondary-foreground-dark': withOpacity('--color-secondary-foreground-dark'),
+					'accent-dark': withOpacity('--color-accent-dark'),
+					'text-dark': withOpacity('--color-text-dark'),
+					'header-dark': withOpacity('--color-header-dark'),
+					'header-foreground-dark': withOpacity('--color-header-foreground-dark'),
+					'heading-dark': withOpacity('--color-heading-dark'),
+					'link-dark': withOpacity('--color-link-dark'),
+
+					'holoen-red': withOpacity('--color-holoen-red'),
+					'icon-primary': 'rgb(var(--color-icon-primary))',
+					'icon-secondary': 'rgb(var(--color-icon-secondary))',
 				}
 			},
 			borderColor: {
 				skin: {
-					'primary-1': withOpacity('--color-primary-1'),
-					'secondary-1': withOpacity('--color-secondary-1'),
-					'link': withOpacity('--color-link'),
-					'dark-primary-1': withOpacity('--color-dark-primary-1'),
-					'dark-secondary-1': withOpacity('--color-dark-secondary-1'),
-					'dark-link': withOpacity('--color-dark-link'),
 				}
 			},
 			zIndex: {

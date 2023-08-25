@@ -1,8 +1,8 @@
-import Card from 'components/ui/Card';
-import TextHeader from 'components/ui/TextHeader';
+import Card from 'components/ui/old/Card';
+import TextHeader from 'components/ui/old/TextHeader';
 import { Project } from 'types/payload-types';
 import PayloadResponse from 'types/PayloadResponse';
-import Header from 'components/ui/Header';
+import Header from 'components/ui/old/Header';
 import { Metadata } from 'next';
 import useTranslation from 'lib/i18n/server';
 import { Language } from 'lib/i18n/languages';
@@ -71,21 +71,21 @@ export default async function Page({ params: { lang } }: IProps) {
 	const pastProjects = formatProjects(past, lang);
 
 	return (
-		<div className="flex flex-col h-full min-h-screen bg-skin-background-1 dark:bg-skin-dark-background-1">
+		<div className="bg-skin-background-1 dark:bg-skin-dark-background-1 flex h-full min-h-screen flex-col">
 			<Header
 				title="Projects"
 				description="A list of all the projects organized by Hololive EN Fan servers!"
 			/>
-			<div className="flex-grow">
-				<div className="my-16 w-full flex flex-col items-center">
-					<div className="max-w-4xl mx-4">
+			<div className="grow">
+				<div className="my-16 flex w-full flex-col items-center">
+					<div className="mx-4 max-w-4xl">
 						<div>
 							<TextHeader>{t('ongoing')}</TextHeader>
-							<div className="flex flex-col text-center sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center">
+							<div className="flex flex-col text-center sm:-mx-2 sm:flex-row sm:flex-wrap sm:justify-center">
 								{ongoingProjects.length > 0 ? (
 									ongoingProjects
 								) : (
-									<div className="font-bold text-2xl mt-4 text-black dark:text-white">
+									<div className="mt-4 text-2xl font-bold text-black dark:text-white">
 										{t('none')}
 									</div>
 								)}
@@ -93,11 +93,11 @@ export default async function Page({ params: { lang } }: IProps) {
 						</div>
 						<div className="mt-10">
 							<TextHeader>{t('past')}</TextHeader>
-							<div className="flex flex-col text-center sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center">
+							<div className="flex flex-col text-center sm:-mx-2 sm:flex-row sm:flex-wrap sm:justify-center">
 								{pastProjects.length > 0 ? (
 									pastProjects
 								) : (
-									<div className="font-bold text-2xl mt-4 text-black dark:text-white">
+									<div className="mt-4 text-2xl font-bold text-black dark:text-white">
 										{t('none')}
 									</div>
 								)}

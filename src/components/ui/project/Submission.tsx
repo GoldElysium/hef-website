@@ -1,6 +1,6 @@
 import { Submission as ISubmission, SubmissionMedia } from 'types/payload-types';
-import ReactPlayerWrapper from 'components/ui/project/ReactPlayerWrapper';
-import Image from 'components/ui/Image';
+import ReactPlayerWrapper from 'components/ui/project/util/ReactPlayerWrapper';
+import Image from 'components/ui/old/Image';
 import useTranslation from 'lib/i18n/server';
 import { Language } from 'lib/i18n/languages';
 import SubmissionGallery from './SubmissionGallery';
@@ -15,11 +15,11 @@ export default async function Submission({ submission, index, lang }: IProps) {
 	const { t } = await useTranslation(lang, 'project', 'submission');
 
 	return (
-		<div className="w-full max-h-full text-black dark:text-white">
-			<div className="w-full flex mt-4 h-14">
+		<div className="max-h-full w-full text-black dark:text-white">
+			<div className="mt-4 flex h-14 w-full">
 				{submission.srcIcon && (
 					<Image
-						className="object-cover w-14 h-14 rounded-full"
+						className="h-14 w-14 rounded-full object-cover"
 						src={submission.srcIcon.url!}
 						width={
 							submission.srcIcon.width! < 56 ? submission.srcIcon.width : 56
@@ -33,17 +33,17 @@ export default async function Submission({ submission, index, lang }: IProps) {
 					/>
 				)}
 				{submission.author && (
-					<div className="text-lg mt-3 ml-4">
+					<div className="ml-4 mt-3 text-lg">
 						{t('author')}
 						{submission.author}
 					</div>
 				)}
-				<div className="flex-grow" />
+				<div className="grow" />
 				{index !== undefined && (
-					<p className="text-xl mt-3 mr-4">{`#${index + 1}`}</p>
+					<p className="mr-4 mt-3 text-xl">{`#${index + 1}`}</p>
 				)}
 			</div>
-			<div className="w-full mt-3">
+			<div className="mt-3 w-full">
 				{
 					submission.media.length === 1 && (
 						<>
@@ -54,13 +54,13 @@ export default async function Submission({ submission, index, lang }: IProps) {
 									url={submission.media[0].url!}
 									controls
 									light
-									className="mb-4 mt-4"
+									className="my-4"
 								/>
 							)}
 							{submission.media[0].type === 'image' && (
-								<div className="mt-4 mb-2 w-full h-full max-h-[750px] flex justify-center">
+								<div className="mb-2 mt-4 flex h-full max-h-[750px] w-full justify-center">
 									<Image
-										className="max-w-10/12 object-contain mb-4"
+										className="mb-4 max-w-10/12 object-contain"
 										src={submission.media[0].image.url!}
 										width={
 											submission.media[0].image.width! < 1024
@@ -99,7 +99,7 @@ export default async function Submission({ submission, index, lang }: IProps) {
 								if (media.type === 'image') {
 									return (
 										<Image
-											className="max-w-10/12 object-contain mb-4"
+											className="mb-4 max-w-10/12 object-contain"
 											key={media.id!}
 											src={media.image.url!}
 											width={
@@ -122,7 +122,7 @@ export default async function Submission({ submission, index, lang }: IProps) {
 					)
 				}
 				{submission.message && (
-					<p className="mx-4 mb-4 w-auto h-full overflow-auto whitespace-pre-line dark:text-gray-300">
+					<p className="mx-4 mb-4 h-full w-auto overflow-auto whitespace-pre-line dark:text-gray-300">
 						{submission.message}
 					</p>
 				)}

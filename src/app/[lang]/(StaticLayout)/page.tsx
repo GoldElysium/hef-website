@@ -2,9 +2,9 @@ import { Language } from 'lib/i18n/languages';
 import useTranslation from 'lib/i18n/server';
 import { Guild, Media, Project } from 'types/payload-types';
 import PayloadResponse from 'types/PayloadResponse';
-import Card from 'components/ui/Card';
-import Hero from 'components/ui/Hero';
-import TextHeader from 'components/ui/TextHeader';
+import Card from 'components/ui/old/Card';
+import Header from 'components/ui/Header';
+import TextHeader from 'components/ui/old/TextHeader';
 
 interface IProps {
 	params: {
@@ -102,18 +102,18 @@ export default async function Page({ params: { lang } }: IProps) {
 	));
 
 	return (
-		<div className="flex flex-col h-full min-h-screen bg-skin-background-1 dark:bg-skin-dark-background-1">
-			<Hero title={t('hero.title')} description={t('hero.description')} />
-			<div className="flex-grow">
-				<div className="my-16 w-full flex flex-col items-center">
-					<div className="max-w-4xl mx-4 sm:mx-0">
+		<div className="flex h-full min-h-screen flex-col bg-skin-background text-skin-text dark:bg-skin-background-dark dark:text-skin-text-dark">
+			<Header title={t('hero.title')} description={t('hero.description')} />
+			<div className="grow">
+				<div className="my-16 flex w-full flex-col items-center">
+					<div className="mx-4 max-w-4xl sm:mx-0">
 						<div>
 							<TextHeader>{t('page.featured')}</TextHeader>
-							<div className="flex flex-col text-center sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center">
+							<div className="flex flex-col text-center sm:-mx-2 sm:flex-row sm:flex-wrap sm:justify-center">
 								{featuredProjectsHtml.length > 0 ? (
 									featuredProjectsHtml
 								) : (
-									<div className="font-bold text-2xl mt-4 text-black dark:text-white">
+									<div className="mt-4 text-2xl font-bold text-black dark:text-white">
 										{t('page.none')}
 									</div>
 								)}
@@ -121,11 +121,11 @@ export default async function Page({ params: { lang } }: IProps) {
 						</div>
 						<div className="mt-10">
 							<TextHeader>{t('page.servers')}</TextHeader>
-							<div className="flex flex-col text-center sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center">
+							<div className="flex flex-col text-center sm:-mx-2 sm:flex-row sm:flex-wrap sm:justify-center">
 								{guildHtml.length > 0 ? (
 									guildHtml
 								) : (
-									<div className="font-bold text-2xl mt-4 text-black dark:text-white">
+									<div className="mt-4 text-2xl font-bold text-black dark:text-white">
 										{t('page.none')}
 									</div>
 								)}

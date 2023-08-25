@@ -1,5 +1,5 @@
 import ProjectDescription from 'components/ui/project/experimental/sana/Description';
-import DescriptionSerializer from 'components/ui/DescriptionSerializer';
+import DescriptionSerializer from 'components/ui/project/util/DescriptionSerializer';
 import ProjectGallery from 'components/ui/project/Gallery';
 import ProjectLinks from 'components/ui/project/experimental/sana/Links';
 import { Project } from 'types/payload-types';
@@ -16,7 +16,7 @@ export interface ProjectAboutProps {
 export default function ProjectAbout({ project }: ProjectAboutProps) {
 	if (project.flags?.includes('bigAbout')) {
 		return (
-			<p className="flex justify-center content-center text-black dark:text-white dark:text-opacity-80 text-3xl text-center my-16">
+			<p className="my-16 flex content-center justify-center text-center text-3xl text-black dark:text-white dark:text-opacity-80">
 				{DescriptionSerializer(project.description)}
 			</p>
 		);

@@ -31,14 +31,14 @@ export default function ProjectCredits({ credits }: ProjectCreditsProps) {
 		})), [credits]);
 
 	return (
-		<div className="flex flex-col w-full h-full text-black dark:text-white px-5 lg:px-0">
+		<div className="flex h-full w-full flex-col px-5 text-black dark:text-white lg:px-0">
 			{(organizers.length > 0) && (
-				<div className="flex flex-col w-full">
-					<div className="flex flex-row my-8 w-full text-2xl font-bold border-b-2
-                          text-center sm:text-left mb-6 text-skin-primary-1
-                          dark:text-skin-dark-primary-1 border-skin-primary-1
-                          border-opacity-30 dark:border-skin-dark-primary-1
-                          dark:border-opacity-40"
+				<div className="flex w-full flex-col">
+					<div className="text-skin-primary-1 dark:text-skin-dark-primary-1 border-skin-primary-1 dark:border-skin-dark-primary-1 my-8 mb-6 flex
+                          w-full flex-row border-b-2 border-opacity-30
+                          text-center text-2xl
+                          font-bold dark:border-opacity-40
+                          sm:text-left"
 					>
 						<h3>{organizers.length > 1 ? 'Organizers' : 'Organizer'}</h3>
 					</div>
@@ -51,12 +51,12 @@ export default function ProjectCredits({ credits }: ProjectCreditsProps) {
 				</div>
 			)}
 			{(artists.length > 0) && (
-				<div className="flex flex-col w-full">
-					<div className="flex flex-row my-8 w-full text-2xl font-bold border-b-2
-                          text-center sm:text-left mb-6 text-skin-primary-1
-                          dark:text-skin-dark-primary-1 border-skin-primary-1
-                          border-opacity-30 dark:border-skin-dark-primary-1
-                          dark:border-opacity-40"
+				<div className="flex w-full flex-col">
+					<div className="text-skin-primary-1 dark:text-skin-dark-primary-1 border-skin-primary-1 dark:border-skin-dark-primary-1 my-8 mb-6 flex
+                          w-full flex-row border-b-2 border-opacity-30
+                          text-center text-2xl
+                          font-bold dark:border-opacity-40
+                          sm:text-left"
 					>
 						<h3>{artists.length > 1 ? 'Artists' : 'Artist'}</h3>
 					</div>
@@ -69,12 +69,12 @@ export default function ProjectCredits({ credits }: ProjectCreditsProps) {
 				</div>
 			)}
 			{(musicians.length > 0) && (
-				<div className="flex flex-col w-full">
-					<div className="flex flex-row my-8 w-full text-2xl font-bold border-b-2
-                          text-center sm:text-left mb-6 text-skin-primary-1
-                          dark:text-skin-dark-primary-1 border-skin-primary-1
-                          border-opacity-30 dark:border-skin-dark-primary-1
-                          dark:border-opacity-40"
+				<div className="flex w-full flex-col">
+					<div className="text-skin-primary-1 dark:text-skin-dark-primary-1 border-skin-primary-1 dark:border-skin-dark-primary-1 my-8 mb-6 flex
+                          w-full flex-row border-b-2 border-opacity-30
+                          text-center text-2xl
+                          font-bold dark:border-opacity-40
+                          sm:text-left"
 					>
 						<h3>{musicians.length > 1 ? 'Musicians' : 'Musician'}</h3>
 					</div>
@@ -87,12 +87,12 @@ export default function ProjectCredits({ credits }: ProjectCreditsProps) {
 				</div>
 			)}
 			{(coders.length > 0) && (
-				<div className="flex flex-col w-full">
-					<div className="flex flex-row my-8 w-full text-2xl font-bold border-b-2
-                          text-center sm:text-left mb-6 text-skin-primary-1
-                          dark:text-skin-dark-primary-1 border-skin-primary-1
-                          border-opacity-30 dark:border-skin-dark-primary-1
-                          dark:border-opacity-40"
+				<div className="flex w-full flex-col">
+					<div className="text-skin-primary-1 dark:text-skin-dark-primary-1 border-skin-primary-1 dark:border-skin-dark-primary-1 my-8 mb-6 flex
+                          w-full flex-row border-b-2 border-opacity-30
+                          text-center text-2xl
+                          font-bold dark:border-opacity-40
+                          sm:text-left"
 					>
 						<h3>{coders.length > 1 ? 'Code Monkeys' : 'Code Monkey'}</h3>
 					</div>

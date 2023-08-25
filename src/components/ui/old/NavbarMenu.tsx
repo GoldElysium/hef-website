@@ -17,7 +17,7 @@ export default function NavbarMenu() {
 	return (
 		<Menu as="div">
 			<Menu.Button>
-				<Bars3Icon onClick={() => { setMenuOpen(!menuOpen); }} className="h-10 w-10 -mb-1 text-white sm:hidden" />
+				<Bars3Icon onClick={() => { setMenuOpen(!menuOpen); }} className="-mb-1 h-10 w-10 text-white sm:hidden" />
 			</Menu.Button>
 			<Transition
 				show={menuOpen}
@@ -30,16 +30,16 @@ export default function NavbarMenu() {
 				leaveTo="transform opacity-0 scale-95"
 			>
 
-				<Menu.Items static className="absolute top-10 w-32 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none mr-2 dark:bg-skin-dark-background-2">
+				<Menu.Items static className="dark:bg-skin-dark-background-2 absolute top-10 mr-2 w-32 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
 					<div className="px-2 py-1">
 						<Menu.Item>
 							<Link
 								href={localizePathname(locale, '/')}
 								hrefLang={locale}
 								type="button"
-								className="flex rounded-md items-center w-full"
+								className="flex w-full items-center rounded-md"
 							>
-								<HomeIcon className="h-6 w-6 text-skin-primary-1 mr-2" />
+								<HomeIcon className="text-skin-primary-1 mr-2 h-6 w-6" />
 								{t('home')}
 							</Link>
 						</Menu.Item>
@@ -49,9 +49,9 @@ export default function NavbarMenu() {
 								href={localizePathname(locale, '/projects')}
 								hrefLang={locale}
 								type="button"
-								className="flex rounded-md items-center w-full mt-1"
+								className="mt-1 flex w-full items-center rounded-md"
 							>
-								<ListBulletIcon className="h-6 w-6 text-skin-primary-1 mr-2" />
+								<ListBulletIcon className="text-skin-primary-1 mr-2 h-6 w-6" />
 								{t('projects')}
 							</Link>
 						</Menu.Item>

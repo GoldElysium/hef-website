@@ -15,7 +15,7 @@ export default function DarkModeToggle() {
 	if (!mounted) {
 		// Return non-working toggle before client-side hydration
 		return (
-			<div className="flex flex-nowrap align-middle items-center">
+			<div className="flex flex-nowrap items-center align-middle">
 				<label className="switch ml-6">
 					<input
 						type="checkbox"
@@ -27,14 +27,14 @@ export default function DarkModeToggle() {
 				<img
 					src="/img/nightMode.svg"
 					alt="Night Mode Icon"
-					className="inline w-8 h-auto ml-2"
+					className="ml-2 inline h-auto w-8"
 				/>
 			</div>
 		);
 	}
 
 	return (
-		<div className="flex flex-nowrap align-middle items-center">
+		<div className="flex flex-nowrap items-center align-middle">
 			<label className="switch ml-6">
 				<input
 					type="checkbox"
@@ -48,7 +48,7 @@ export default function DarkModeToggle() {
 			<img
 				src="/img/nightMode.svg"
 				alt="Night Mode Icon"
-				className="inline w-8 h-auto ml-2"
+				className="ml-2 inline h-auto w-8"
 			/>
 		</div>
 	);

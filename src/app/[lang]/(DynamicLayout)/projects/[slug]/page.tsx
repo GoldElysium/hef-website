@@ -1,15 +1,15 @@
 import {
 	Flag, Guild, Media, Project,
 } from 'types/payload-types';
-import DescriptionSerializer from 'components/ui/DescriptionSerializer';
-import TextHeader from 'components/ui/TextHeader';
+import DescriptionSerializer from 'components/ui/project/util/DescriptionSerializer';
+import TextHeader from 'components/ui/old/TextHeader';
 import PayloadResponse from 'types/PayloadResponse';
 import Submissions from 'components/ui/project/Submissions';
 import Gallery from 'components/ui/project/Gallery';
 import ExperimentalProjectPage from 'components/ui/project/experimental/sana/Page';
 import PhaserSubmissionWrapper from 'components/ui/project/guratanabata/PhaserSubmissionWrapper';
 import { notFound } from 'next/navigation';
-import { getImageUrl } from 'components/ui/Image';
+import { getImageUrl } from 'components/ui/old/Image';
 import { Metadata } from 'next';
 import useTranslation from 'lib/i18n/server';
 import { Language } from 'lib/i18n/languages';
@@ -115,10 +115,10 @@ export default async function ProjectPage({ params: { slug, lang } }: IProps) {
 
 	return (
 		<div className={themeStyle}>
-			<div className="flex flex-col h-full min-h-screen bg-skin-background-1 dark:bg-skin-dark-background-1">
-				<div className="flex-grow">
-					<div className="mb-16 mt-4 w-full flex flex-col items-center">
-						<div className="max-w-full w-full sm:!max-w-4xl px-4 break-words md:break-normal">
+			<div className="bg-skin-background-1 dark:bg-skin-dark-background-1 flex h-full min-h-screen flex-col">
+				<div className="grow">
+					<div className="mb-16 mt-4 flex w-full flex-col items-center">
+						<div className="w-full max-w-full break-words px-4 sm:!max-w-4xl md:break-normal">
 							<TextHeader>
 								{t('description')}
 							</TextHeader>
@@ -137,7 +137,7 @@ export default async function ProjectPage({ params: { slug, lang } }: IProps) {
 										{project.links && project.links.map((link) => (
 											<div
 												key={`link-${link.name}-${link.url}`}
-												className="rounded-3xl font-bold w-[6rem] h-10 flex items-center justify-center mt-4 content-end bg-skin-secondary-1 dark:bg-skin-dark-secondary-1 text-white hover:text-opacity-70"
+												className="bg-skin-secondary-1 dark:bg-skin-dark-secondary-1 mt-4 flex h-10 w-[6rem] content-end items-center justify-center rounded-3xl font-bold text-white hover:text-opacity-70"
 											>
 												<a href={link.url} target="_blank" rel="noreferrer">
 													{link.name}

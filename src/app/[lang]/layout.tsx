@@ -1,11 +1,12 @@
 import 'styles/globals.css';
-import DarkModeProvider from 'components/ui/DarkModeProvider';
+import DarkModeProvider from 'components/contexts/DarkModeProvider';
 import { Metadata } from 'next';
 import { dir } from 'i18next';
 import LocaleContextProvider from 'components/contexts/LocaleContextProvider';
 import useTranslation from 'lib/i18n/server';
 import { Language } from 'lib/i18n/languages';
 import { languages } from 'lib/i18n/settings';
+import { Nunito } from 'next/font/google';
 
 interface IProps {
 	children: React.ReactNode;
@@ -14,6 +15,11 @@ interface IProps {
 	}
 }
 
+const nunito = Nunito({
+	variable: '--font-nunito',
+	subsets: ['latin'],
+});
+
 export default async function RootLayout({
 	children,
 	params: {
@@ -21,7 +27,7 @@ export default async function RootLayout({
 	},
 }: IProps) {
 	return (
-		<html lang={lang} dir={dir(lang)} suppressHydrationWarning>
+		<html lang={lang} dir={dir(lang)} className={nunito.variable} suppressHydrationWarning>
 			<head />
 			<body>
 				<DarkModeProvider>
@@ -60,14 +66,14 @@ export async function generateMetadata({ params: { lang } }: IProps): Promise<Me
 		openGraph: {
 			title,
 			description,
-			images: 'https://holoen.fans/img/logo.png',
+			images: 'https://holoen.fans/img/icon_bg.png',
 			type: 'website',
 			siteName: title,
 		},
 		twitter: {
 			title,
 			description,
-			images: 'https://holoen.fans/img/logo.png',
+			images: 'https://holoen.fans/img/icon_bg.png',
 			site: '@HEF_Website',
 			card: 'summary_large_image',
 		},

@@ -4,7 +4,7 @@ import { Fragment, Suspense, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import useSWR, { Fetcher } from 'swr';
 import { Notice as APINoticeBanner } from 'types/payload-types';
-import DescriptionSerializer from 'components/ui/DescriptionSerializer';
+import DescriptionSerializer from 'components/ui/project/util/DescriptionSerializer';
 import { useLocale } from 'components/contexts/LocaleContext';
 import useTranslation from 'lib/i18n/client';
 import { Language } from 'lib/i18n/languages';
@@ -34,14 +34,14 @@ export default function NoticeBanner() {
 	return (
 		<div>
 			<div
-				className="h-16 min-w-screen max-w-screen overflow-none flex justify-center items-center gap-4 bg-[#FFE5DA] py-2 px-2"
+				className="min-w-screen max-w-screen overflow-none flex h-16 items-center justify-center gap-4 bg-[#FFE5DA] p-2"
 			>
-				<span className="text-[#323232] md:text-lg font-semibold">
+				<span className="font-semibold text-[#323232] md:text-lg">
 					{data.description}
 				</span>
 				<button
 					type="button"
-					className="px-4 py-2 bg-[#EF4444] hover:bg-red-400 text-white rounded-full md:text-lg"
+					className="rounded-full bg-[#EF4444] px-4 py-2 text-white hover:bg-red-400 md:text-lg"
 					onClick={() => setDialogOpen(true)}
 				>
 					{t('open')}
@@ -75,16 +75,16 @@ export default function NoticeBanner() {
 									leaveTo="opacity-0 scale-95"
 								>
 									<Dialog.Panel
-										className="w-full max-w-4xl transform overflow-hidden rounded-2xl p-6 text-left align-middle shadow-xl transition-all bg-white dark:bg-skin-dark-background-2"
+										className="dark:bg-skin-dark-background-2 w-full max-w-4xl overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all"
 									>
 										<Dialog.Title
 											as="h3"
-											className="text-lg md:text-2xl font-semibold leading-6 text-black dark:text-white"
+											className="text-lg font-semibold leading-6 text-black dark:text-white md:text-2xl"
 										>
 											{data.description}
 										</Dialog.Title>
 										<div className="mt-4">
-											<p className="md:text-lg text-[#323232]">
+											<p className="text-[#323232] md:text-lg">
 												{DescriptionSerializer(data.message)}
 											</p>
 										</div>
@@ -92,7 +92,7 @@ export default function NoticeBanner() {
 										<div className="mt-6">
 											<button
 												type="button"
-												className="inline-flex justify-center rounded-full border border-transparent bg-[#EF4444] hover:bg-red-400 text-white px-4 py-2 font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
+												className="inline-flex justify-center rounded-full border border-transparent bg-[#EF4444] px-4 py-2 font-medium text-white hover:bg-red-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
 												onClick={() => setDialogOpen(false)}
 											>
 												{t('close')}

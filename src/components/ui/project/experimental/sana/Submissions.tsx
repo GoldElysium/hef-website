@@ -23,11 +23,11 @@ interface ISubmissionProps {
 
 function SubmissionElement({ project, submission, index }: ISubmissionProps) {
 	return (
-		<div className="w-full max-h-full text-black dark:text-white" key={submission.id}>
-			<div className="w-full flex mt-4 h-14">
+		<div className="max-h-full w-full text-black dark:text-white" key={submission.id}>
+			<div className="mt-4 flex h-14 w-full">
 				{submission.srcIcon && (
 					<Image
-						className="object-cover w-14 h-14 rounded-full"
+						className="h-14 w-14 rounded-full object-cover"
 						src={submission.srcIcon.url!}
 						width={
 							submission.srcIcon.width! < 56 ? submission.srcIcon.width : 56
@@ -41,21 +41,21 @@ function SubmissionElement({ project, submission, index }: ISubmissionProps) {
 					/>
 				)}
 				{submission.author && (
-					<div className="text-lg mt-3 ml-4">
+					<div className="ml-4 mt-3 text-lg">
 						From:
 						{' '}
 						<span className="font-bold">{submission.author}</span>
 					</div>
 				)}
-				<div className="flex-grow" />
-				<p className="text-xl mt-3 mr-4">{`#${index + 1}`}</p>
+				<div className="grow" />
+				<p className="mr-4 mt-3 text-xl">{`#${index + 1}`}</p>
 			</div>
-			<div className="w-full mt-3">
+			<div className="mt-3 w-full">
 				{
 					submission.media.length === 1 && (
 						<>
 							{submission.media[0].type === 'video' && (
-								<div className="mb-4 w-full h-[300px] flex justify-center">
+								<div className="mb-4 flex h-[300px] w-full justify-center">
 									<ReactPlayer
 										width="83%"
 										height="300px"
@@ -66,9 +66,9 @@ function SubmissionElement({ project, submission, index }: ISubmissionProps) {
 								</div>
 							)}
 							{submission.media[0].type === 'image' && (
-								<div className="mt-4 mb-2 w-full h-full max-h-[750px] flex justify-center">
+								<div className="mb-2 mt-4 flex h-full max-h-[750px] w-full justify-center">
 									<Image
-										className="max-w-10/12 object-contain mb-4"
+										className="mb-4 max-w-10/12 object-contain"
 										src={submission.media[0].image.url!}
 										width={
 											submission.media[0].image.width! < 1024
@@ -107,7 +107,7 @@ function SubmissionElement({ project, submission, index }: ISubmissionProps) {
 								if (media.type === 'image') {
 									return (
 										<Image
-											className="max-w-10/12 object-contain mb-4"
+											className="mb-4 max-w-10/12 object-contain"
 											key={media.id!}
 											src={media.image.url!}
 											width={
@@ -130,7 +130,7 @@ function SubmissionElement({ project, submission, index }: ISubmissionProps) {
 					)
 				}
 				{submission.message && (
-					<p className={`mx-4 mb-4 w-auto h-full overflow-auto whitespace-pre-line dark:text-gray-300 ${project?.flags?.includes('sanaSendoff') ? 'sana-message' : ''}`}>
+					<p className={`mx-4 mb-4 h-full w-auto overflow-auto whitespace-pre-line dark:text-gray-300 ${project?.flags?.includes('sanaSendoff') ? 'sana-message' : ''}`}>
 						<span className="relative">{submission.message}</span>
 					</p>
 				)}
@@ -175,13 +175,13 @@ function Submissions({ submissions, project }: IProps) {
 						dataLength={shownSubmissions.length}
 						next={showMore}
 						hasMore={hasMore}
-						loader={<p className="text-black dark:text-white text-center mt-4">Loading...</p>}
+						loader={<p className="mt-4 text-center text-black dark:text-white">Loading...</p>}
 						scrollThreshold="600px"
 					>
 						{(!project?.flags?.includes('tiledSubmissions') && (
-							<div className="w-full h-full flex justify-center">
+							<div className="flex h-full w-full justify-center">
 								<div
-									className={`sm:w-11/12 md:w-10/12 h-full ${project?.flags?.includes('sanaSendoff') ? 'w-full' : ''}`}
+									className={`h-full sm:w-11/12 md:w-10/12 ${project?.flags?.includes('sanaSendoff') ? 'w-full' : ''}`}
 								>
 									{shownSubmissions.map((submission, index) => (
 										<SubmissionElement
@@ -194,8 +194,8 @@ function Submissions({ submissions, project }: IProps) {
 								</div>
 							</div>
 						)) || (
-							<div className="w-full h-full flex flex-wrap justify-center content-center">
-								<div className="sm:w-11/12 md:w-10/12 flex flex-wrap">
+							<div className="flex h-full w-full flex-wrap content-center justify-center">
+								<div className="flex flex-wrap sm:w-11/12 md:w-10/12">
 									{shownSubmissions.map((submission, index) => (
 										<div className="min-w-80 w-1/2" key={submission.id}>
 											<SubmissionElement

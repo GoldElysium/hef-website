@@ -121,15 +121,15 @@ export default function ProjectBackgroundMusic({ backgroundMusic }: ProjectBackg
 		return (
 			<div
 				className={
-					`${(hidden) ? 'opacity-0 translate-y-16' : ''} fixed bottom-4 left-4 z-50 transition-all duration-500 motion-reduce:transition-none text-black dark:text-white bg-skin-card dark:bg-skin-dark-card px-4 rounded-lg`
+					`${(hidden) ? 'translate-y-16 opacity-0' : ''} bg-skin-card dark:bg-skin-dark-card fixed bottom-4 left-4 z-50 rounded-lg px-4 text-black transition-all duration-500 motion-reduce:transition-none dark:text-white`
 				}
 			>
-				<div className="relative w-128 h-16 flex justify-center items-center gap-2">
-					<ExclamationCircleIcon className="w-6 h-6" />
+				<div className="w-128 relative flex h-16 items-center justify-center gap-2">
+					<ExclamationCircleIcon className="h-6 w-6" />
 					Your browser has denied audio playback
 					<button
 						type="button"
-						className="mx-4 text-skin-primary-1 darK:text-skin-primary-1"
+						className="text-skin-primary-1 darK:text-skin-primary-1 mx-4"
 						onClick={() => {
 							setHidden(true);
 							setTimeout(() => setDismissed(true), 1000);
@@ -154,7 +154,7 @@ export default function ProjectBackgroundMusic({ backgroundMusic }: ProjectBackg
 				<source src={backgroundMusic} type="audio/mp3" />
 			</audio>
 			<div
-				className={`${(hidden) ? 'opacity-0 translate-y-16' : ''} fixed bottom-4 left-4 z-50 transition-all motion-reduce:transition-none text-black dark:text-white bg-skin-card dark:bg-skin-dark-card rounded-lg w-64 h-16 flex justify-between items-center gap-2 px-4 py-2`}
+				className={`${(hidden) ? 'translate-y-16 opacity-0' : ''} bg-skin-card dark:bg-skin-dark-card fixed bottom-4 left-4 z-50 flex h-16 w-64 items-center justify-between gap-2 rounded-lg px-4 py-2 text-black transition-all motion-reduce:transition-none dark:text-white`}
 			>
 				<label className="swap swap-flip">
 					<input
@@ -165,8 +165,8 @@ export default function ProjectBackgroundMusic({ backgroundMusic }: ProjectBackg
 						onFocus={() => setHidden(false)}
 					/>
 
-					<SpeakerWaveIcon className="swap-off w-6 h-6" />
-					<SpeakerXMarkIcon className="swap-on w-6 h-6" />
+					<SpeakerWaveIcon className="swap-off h-6 w-6" />
+					<SpeakerXMarkIcon className="swap-on h-6 w-6" />
 				</label>
 				<input
 					type="range"
@@ -177,7 +177,7 @@ export default function ProjectBackgroundMusic({ backgroundMusic }: ProjectBackg
 					value={volume}
 					onChange={(e) => setVolume(Number.parseFloat(e.target.value))}
 					onFocus={() => setHidden(false)}
-					className="range range-accent range-s disabled:range-xs"
+					className="range-s range range-accent disabled:range-xs"
 				/>
 			</div>
 		</>

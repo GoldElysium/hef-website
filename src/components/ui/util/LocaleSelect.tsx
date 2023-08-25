@@ -21,7 +21,7 @@ export default function LocaleSelect() {
 					<Menu.Button className="inline-flex w-full justify-center rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
 						<LanguageIcon height={24} />
 						<ChevronDownIcon
-							className="ml-2 -mr-1 h-5 w-5 text-white"
+							className="-mr-1 ml-2 h-5 w-5 text-white"
 							aria-hidden="true"
 						/>
 					</Menu.Button>
@@ -35,8 +35,8 @@ export default function LocaleSelect() {
 					leaveFrom="transform opacity-100 scale-100"
 					leaveTo="transform opacity-0 scale-95"
 				>
-					<Menu.Items className="absolute top-10 w-32 origin-top-right bg-skin-background-1 divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none mr-2 dark:bg-skin-dark-background-1">
-						<div className="px-1 py-1 ">
+					<Menu.Items className="bg-skin-background-1 dark:bg-skin-dark-background-1 absolute top-10 mr-2 w-32 origin-top-right divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+						<div className="p-1 ">
 							{Object.values(Languages).map((language) => (
 								<Menu.Item key={language.id}>
 									{({ active }) => {
@@ -52,7 +52,7 @@ export default function LocaleSelect() {
 												href={localizePathname(language.id, pathName)}
 												hrefLang={language.id}
 												type="button"
-												className={`${style} flex rounded-md items-center w-full px-2 py-2 text-black dark:text-white`}
+												className={`${style} flex w-full items-center rounded-md p-2 text-black dark:text-white`}
 											>
 												<img
 													loading="lazy"

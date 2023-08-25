@@ -4,7 +4,7 @@ import {
 import PayloadResponse from 'types/PayloadResponse';
 // eslint-disable-next-line import/no-cycle
 import PhaserWrapper from 'components/ui/project/guratanabata/PhaserWrapper';
-import { getImageUrl } from 'components/ui/Image';
+import { getImageUrl } from 'components/ui/old/Image';
 
 interface IProps {
 	project: Omit<Project, 'flags' | 'devprops'> & {

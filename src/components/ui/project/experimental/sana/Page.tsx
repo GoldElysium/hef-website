@@ -1,7 +1,7 @@
 import {
 	Guild, Project, Submission as ISubmission, Submission, SubmissionMedia,
 } from 'types/payload-types';
-import Header from 'components/ui/Header';
+import Header from 'components/ui/old/Header';
 import ProjectSubmissions from 'components/ui/project/experimental/sana/Submissions';
 import ProjectAbout from 'components/ui/project/experimental/sana/About';
 import ProjectBackgroundMusic from 'components/ui/project/experimental/sana/BackgroundMusic';
@@ -11,7 +11,7 @@ import ProjectTabs from 'components/ui/project/experimental/sana/Tabs';
 import ProjectTimeline from 'components/ui/project/experimental/sana/Timeline';
 import DarkModeFlag from 'components/ui/project/experimental/sana/DarkModeFlag';
 import PayloadResponse from 'types/PayloadResponse';
-import { getImageUrl } from '../../../Image';
+import { getImageUrl } from '../../../old/Image';
 
 const GUILD_TO_OSHI = Object.assign(Object.create(null), {
 	'CGeclp7hLj-lpprbhKxX5': 'calli',
@@ -140,15 +140,15 @@ export default async function ProjectPage({ project }: ProjectPageProps) {
 					<ProjectBackgroundMusic backgroundMusic={project.devprops.backgroundMusic!} />
 				)}
 
-				<div className="flex flex-col h-full min-h-screen bg-skin-background-1 dark:bg-skin-dark-background-1">
+				<div className="bg-skin-background-1 dark:bg-skin-dark-background-1 flex h-full min-h-screen flex-col">
 					<Header
 						title={project.title ?? 'unknown'}
 						description={project.shortDescription ?? ''}
 						background={project.flags?.includes('sanaSendoff') ? '/assets/sanasendoff/background.png' : undefined}
 					/>
-					<div className="flex-grow pb-16">
-						<div className="my-32 w-full flex flex-col items-center">
-							<div className="max-w-4xl w-full mx-4 break-words md:break-normal">
+					<div className="grow pb-16">
+						<div className="my-32 flex w-full flex-col items-center">
+							<div className="mx-4 w-full max-w-4xl break-words md:break-normal">
 								{(!project.flags?.includes('disableTabs') && (
 									<ProjectTabs defaultTab="About">
 										<ProjectTab label="About">
