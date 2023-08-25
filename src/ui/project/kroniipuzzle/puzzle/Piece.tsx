@@ -1,10 +1,8 @@
 'use client';
 
 import React, { useEffect, useImperativeHandle, useRef } from 'react';
-import { Container, Sprite, Text } from '@pixi/react';
-import {
-	Container as PixiContainer, DisplayObject, TextStyle, Texture,
-} from 'pixi.js';
+import { Container, Sprite } from '@pixi/react';
+import { Container as PixiContainer, DisplayObject, Texture } from 'pixi.js';
 import Message from './Message';
 import PieceInfo from './PieceInfo';
 import {
@@ -223,19 +221,6 @@ const Piece = React.forwardRef<PieceActions, PieceProps>(({
 				width={PIECE_SIZE + 2 * PIECE_MARGIN}
 				height={PIECE_SIZE + 2 * PIECE_MARGIN}
 			/>
-
-			{/* todo: remove this */}
-			<Text
-				text={`${c}, ${r}`}
-				style={{
-					fill: 'white',
-					fontSize: 25,
-				} as TextStyle}
-				x={PIECE_SIZE / 4}
-				y={PIECE_SIZE / 4}
-				scale={0.2}
-			/>
-
 		</Container>
 	);
 });

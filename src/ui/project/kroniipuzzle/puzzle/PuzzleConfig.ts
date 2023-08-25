@@ -8,7 +8,6 @@ export const PUZZLE_WIDTH = WORLD_WIDTH / 2;
 export const PIECE_SIZE = PUZZLE_WIDTH / COL_COUNT;
 export const PIECE_MARGIN = PIECE_SIZE / 4.1;
 
-// todo: jank ass padding
 export const ABOUT_TEXT = `Hello there fellow Kronie!
 Thank you for your contributions to getting us to Kronii’s second anniversary, and let us hope for more fun and exciting things in the future! What you are about to come across here is a collaboration project between two fancords known as Kronii’s Clock Tower (KCT) and Kronii’s Time Vault (KTV). The project consists of an online puzzle made from scratch, with original art featuring numerous Kronii artists you may be familiar with, as well as each of your very own personalized Kronies. Your thoughtful messages will be found on the back of each puzzle piece, and can each be viewed by selecting a puzzle piece. This project was made possible by everyone from both servers, as well as participation from others like HEFS. 
 

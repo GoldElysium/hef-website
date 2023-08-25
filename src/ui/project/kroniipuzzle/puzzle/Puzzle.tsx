@@ -89,7 +89,7 @@ export default function Puzzle({
 	}, [height, width]);
 
 	useEffect(() => {
-		// TODO: Sound doubling bug when auto pause is disabled
+		// Sound doubling bug when auto pause is disabled
 		// PixiSound.disableAutoPause = true;
 
 		PIXI.Assets.loadBundle('puzzle')
