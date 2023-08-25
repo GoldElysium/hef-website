@@ -109,7 +109,8 @@ const Piece = React.forwardRef<PieceActions, PieceProps>(({
 
 		const deltaX = Math.abs(currentX - targetX);
 		const deltaY = Math.abs(currentY - targetY);
-		return deltaX < 80 && deltaY < 80;
+
+		return deltaX < 90 && deltaY < 90;
 	}
 
 	function isNearAdjacentPiece(): IsNearAdjacentPieceRes {
