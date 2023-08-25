@@ -126,6 +126,14 @@ export default function PixiWrapper({ project, submissions }: IProps) {
 
 	return (
 		<>
+			{showAllSubmissions && (
+				<SubmissionsModal
+					submissions={submissions}
+					project={project}
+					closeModal={() => setShowAllSubmissions(false)}
+				/>
+			)}
+
 			{!OS.desktop && (orientation.startsWith('portrait') || !document.fullscreenElement) && (
 				<button
 					className="text-center z-10 min-h-screen min-w-screen h-full w-full bg-black text-white absolute"
@@ -139,14 +147,6 @@ export default function PixiWrapper({ project, submissions }: IProps) {
 					This app may not work correctly on mobile devices, we recommend using a large screen.
 					Click to screen to fullscreen
 				</button>
-			)}
-
-			{showAllSubmissions && (
-				<SubmissionsModal
-					submissions={submissions}
-					project={project}
-					closeModal={() => setShowAllSubmissions(false)}
-				/>
 			)}
 
 			<Stage
