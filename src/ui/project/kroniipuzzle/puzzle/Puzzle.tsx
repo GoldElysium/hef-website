@@ -32,7 +32,6 @@ const SOUNDS = {
 	choir: 'choir',
 	main2: 'main_02',
 	solo: 'solo',
-	drums: 'drums_only',
 };
 
 const getRandom = (
@@ -206,15 +205,7 @@ export default function Puzzle({
 					]);
 					break;
 				case SOUNDS.solo:
-					sound = getRandom([
-						{ name: SOUNDS.main1, weight: 2 },
-						{ name: SOUNDS.drums, weight: 1 },
-					]);
-					break;
-				case SOUNDS.drums:
-					sound = getRandom([
-						{ name: SOUNDS.main1, weight: 1 },
-					]);
+					sound = SOUNDS.main1;
 					break;
 				default:
 					// note: this should never happen

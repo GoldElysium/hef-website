@@ -87,6 +87,14 @@ export default function PixiWrapper({ project, submissions }: IProps) {
 		if (typeof InstallTrigger !== 'undefined') {
 			// eslint-disable-next-line no-alert
 			alert("Hello there!\nIt seems like you're one of the few others using Firefox. Sadly this game is known to perform quite poorly on Firefox, so we recommend you use Chrome/Edge to play this.");
+		} else if (
+			// @ts-ignore
+			!window.chrome
+			// @ts-ignore
+			|| typeof window.opr !== 'undefined'
+		) {
+			// eslint-disable-next-line no-alert
+			alert("Unsupported browser\nIt seems like you're not using Chrome or Edge, your browser has not been tested and you may encounter issues while playing. We recommend you use Chrome/Edge to play this");
 		}
 	}, []);
 
@@ -162,7 +170,7 @@ export default function PixiWrapper({ project, submissions }: IProps) {
 					disabled={muted}
 					max={1}
 					min={0}
-					step={0.05}
+					step={0.01}
 					value={volume}
 					onChange={(e) => setVolume(Number.parseFloat(e.target.value))}
 					className="range range-accent range-s disabled:range-xs"
