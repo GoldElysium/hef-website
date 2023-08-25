@@ -143,6 +143,7 @@ export default function PixiPuzzleContainer({
 					height={PUZZLE_WIDTH / 2}
 					puzzleFinished={() => setShowPuzzleCompleteModal(true)}
 					onPieceSelected={(piece: PieceInfo) => {
+						console.log({ piece, selectedPiece });
 						if (piece.id !== selectedPiece?.id) {
 							setSelectedPiece(piece);
 						}
