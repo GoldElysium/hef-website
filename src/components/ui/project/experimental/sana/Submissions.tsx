@@ -2,7 +2,7 @@
 
 import React from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import TextHeader from 'ui/project/experimental/sana/TextHeader';
+import TextHeader from 'components/ui/project/experimental/sana/TextHeader';
 import {
 	Project, Submission as ISubmission, Submission, SubmissionMedia,
 } from 'types/payload-types';

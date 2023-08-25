@@ -5,7 +5,7 @@ import { Bars3Icon } from '@heroicons/react/24/solid';
 import React, { Fragment, useState } from 'react';
 import Link from 'next/link';
 import { HomeIcon, ListBulletIcon } from '@heroicons/react/24/outline';
-import { useLocale } from 'contexts/LocaleContext';
+import { useLocale } from 'components/contexts/LocaleContext';
 import localizePathname from 'lib/util/localizePathname';
 import useTranslation from 'lib/i18n/client';
 

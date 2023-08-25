@@ -1,4 +1,4 @@
-import Submission from 'ui/project/Submission';
+import Submission from 'components/ui/project/Submission';
 import { Project } from 'types/payload-types';
 import useTranslation from 'lib/i18n/server';
 import { Language } from 'lib/i18n/languages';

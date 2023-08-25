@@ -40,7 +40,7 @@ class Splash extends Phaser.Scene {
 			.setScale(0.75)
 			.setInteractive({ pixelPerfect: true, cursor: 'pointer' })
 			.once('pointerup', () => {
-				(this.scene.get('default') as import('./').default).exiting = true;
+				(this.scene.get('default') as import('./index').default).exiting = true;
 				this.game.scale.stopFullscreen();
 				this.game.destroy(true);
 				window.location.href = '/';

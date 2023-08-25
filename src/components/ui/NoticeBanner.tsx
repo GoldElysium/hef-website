@@ -4,8 +4,8 @@ import { Fragment, Suspense, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import useSWR, { Fetcher } from 'swr';
 import { Notice as APINoticeBanner } from 'types/payload-types';
-import DescriptionSerializer from 'ui/DescriptionSerializer';
-import { useLocale } from 'contexts/LocaleContext';
+import DescriptionSerializer from 'components/ui/DescriptionSerializer';
+import { useLocale } from 'components/contexts/LocaleContext';
 import useTranslation from 'lib/i18n/client';
 import { Language } from 'lib/i18n/languages';
 

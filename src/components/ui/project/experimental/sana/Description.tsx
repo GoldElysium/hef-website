@@ -1,5 +1,5 @@
-import TextHeader from 'ui/project/experimental/sana/TextHeader';
-import DescriptionSerializer from 'ui/DescriptionSerializer';
+import TextHeader from 'components/ui/project/experimental/sana/TextHeader';
+import DescriptionSerializer from 'components/ui/DescriptionSerializer';
 
 export default function Description({ description }: { description: any[] }) {
 	return (

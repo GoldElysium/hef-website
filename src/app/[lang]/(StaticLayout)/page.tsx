@@ -2,9 +2,9 @@ import { Language } from 'lib/i18n/languages';
 import useTranslation from 'lib/i18n/server';
 import { Guild, Media, Project } from 'types/payload-types';
 import PayloadResponse from 'types/PayloadResponse';
-import Card from 'ui/Card';
-import Hero from 'ui/Hero';
-import TextHeader from 'ui/TextHeader';
+import Card from 'components/ui/Card';
+import Hero from 'components/ui/Hero';
+import TextHeader from 'components/ui/TextHeader';
 
 interface IProps {
 	params: {
