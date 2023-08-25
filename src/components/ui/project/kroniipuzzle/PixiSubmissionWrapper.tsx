@@ -1,7 +1,7 @@
 import { Project, Submission, SubmissionMedia } from 'types/payload-types';
 import dynamic from 'next/dynamic';
 import fetchSubmissions from 'lib/fetchSubmissions';
-import { getImageUrl } from 'ui/Image';
+import { getImageUrl } from 'components/ui/Image';
 
 interface IProps {
 	project: Omit<Project, 'flags' | 'devprops'> & {

@@ -1,6 +1,6 @@
 import 'styles/sana-timeline.css';
-import Navbar from 'ui/Navbar';
-import Footer from 'ui/Footer';
+import Navbar from 'components/ui/Navbar';
+import Footer from 'components/ui/Footer';
 import PayloadResponse from 'types/PayloadResponse';
 import { Flag, Project } from 'types/payload-types';
 import ProjectHeader from 'ui/ProjectHeader';

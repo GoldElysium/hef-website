@@ -1,15 +1,15 @@
 import {
 	Guild, Project, Submission as ISubmission, Submission, SubmissionMedia,
 } from 'types/payload-types';
-import Header from 'ui/Header';
-import ProjectSubmissions from 'ui/project/experimental/sana/Submissions';
-import ProjectAbout from 'ui/project/experimental/sana/About';
-import ProjectBackgroundMusic from 'ui/project/experimental/sana/BackgroundMusic';
-import ProjectCredits from 'ui/project/experimental/sana/Credits';
-import ProjectTab from 'ui/project/experimental/sana/Tab';
-import ProjectTabs from 'ui/project/experimental/sana/Tabs';
-import ProjectTimeline from 'ui/project/experimental/sana/Timeline';
-import DarkModeFlag from 'ui/project/experimental/sana/DarkModeFlag';
+import Header from 'components/ui/Header';
+import ProjectSubmissions from 'components/ui/project/experimental/sana/Submissions';
+import ProjectAbout from 'components/ui/project/experimental/sana/About';
+import ProjectBackgroundMusic from 'components/ui/project/experimental/sana/BackgroundMusic';
+import ProjectCredits from 'components/ui/project/experimental/sana/Credits';
+import ProjectTab from 'components/ui/project/experimental/sana/Tab';
+import ProjectTabs from 'components/ui/project/experimental/sana/Tabs';
+import ProjectTimeline from 'components/ui/project/experimental/sana/Timeline';
+import DarkModeFlag from 'components/ui/project/experimental/sana/DarkModeFlag';
 import PayloadResponse from 'types/PayloadResponse';
 import { getImageUrl } from '../../../Image';
 

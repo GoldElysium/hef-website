@@ -1,8 +1,8 @@
-import Card from 'ui/Card';
-import TextHeader from 'ui/TextHeader';
+import Card from 'components/ui/Card';
+import TextHeader from 'components/ui/TextHeader';
 import { Project } from 'types/payload-types';
 import PayloadResponse from 'types/PayloadResponse';
-import Header from 'ui/Header';
+import Header from 'components/ui/Header';
 import { Metadata } from 'next';
 import useTranslation from 'lib/i18n/server';
 import { Language } from 'lib/i18n/languages';

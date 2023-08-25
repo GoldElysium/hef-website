@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 import { Menu, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/24/solid';
 import { Fragment } from 'react';
-import { useLocale } from 'contexts/LocaleContext';
+import { useLocale } from 'components/contexts/LocaleContext';
 import localizePathname from 'lib/util/localizePathname';
 import { Languages } from 'lib/i18n/languages';
 import { LanguageIcon } from '@heroicons/react/24/outline';

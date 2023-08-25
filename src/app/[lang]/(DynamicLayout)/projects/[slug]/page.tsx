@@ -1,19 +1,19 @@
 import {
 	Flag, Guild, Media, Project,
 } from 'types/payload-types';
-import DescriptionSerializer from 'ui/DescriptionSerializer';
-import TextHeader from 'ui/TextHeader';
+import DescriptionSerializer from 'components/ui/DescriptionSerializer';
+import TextHeader from 'components/ui/TextHeader';
 import PayloadResponse from 'types/PayloadResponse';
-import Submissions from 'ui/project/Submissions';
-import Gallery from 'ui/project/Gallery';
-import ExperimentalProjectPage from 'ui/project/experimental/sana/Page';
-import PhaserSubmissionWrapper from 'ui/project/guratanabata/PhaserSubmissionWrapper';
+import Submissions from 'components/ui/project/Submissions';
+import Gallery from 'components/ui/project/Gallery';
+import ExperimentalProjectPage from 'components/ui/project/experimental/sana/Page';
+import PhaserSubmissionWrapper from 'components/ui/project/guratanabata/PhaserSubmissionWrapper';
 import { notFound } from 'next/navigation';
-import { getImageUrl } from 'ui/Image';
+import { getImageUrl } from 'components/ui/Image';
 import { Metadata } from 'next';
 import useTranslation from 'lib/i18n/server';
 import { Language } from 'lib/i18n/languages';
-import PixiSubmissionWrapper from 'ui/project/kroniipuzzle/PixiSubmissionWrapper';
+import PixiSubmissionWrapper from 'components/ui/project/kroniipuzzle/PixiSubmissionWrapper';
 
 // ID's for both production and development databases
 // TODO: Replace with Payload data

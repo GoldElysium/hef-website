@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useMemo, useState } from 'react';
-import { LocaleContext } from 'contexts/LocaleContext';
+import { LocaleContext } from 'components/contexts/LocaleContext';
 import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import { getOptions } from 'lib/i18n/settings';
@@ -17,7 +17,7 @@ i18next
 	.use(initReactI18next)
 	.use(
 		resourcesToBackend(
-			(lng: string, ns: string) => import(`../../public/locales/${lng}/${ns}.json`),
+			(lng: string, ns: string) => import(`../../../public/locales/${lng}/${ns}.json`),
 		),
 	)
 	.init({

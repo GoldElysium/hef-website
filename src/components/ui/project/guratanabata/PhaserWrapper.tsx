@@ -1,9 +1,9 @@
 'use client';
 
-import BlurBackground from 'ui/project/guratanabata/BlurBackground';
+import BlurBackground from 'components/ui/project/guratanabata/BlurBackground';
 import { createRef, useMemo } from 'react';
 // eslint-disable-next-line import/no-cycle
-import Phaser from 'ui/project/guratanabata/Phaser';
+import Phaser from 'components/ui/project/guratanabata/Phaser';
 
 export default function PhaserWrapper({ data }: { data?: object } = { data: {} }) {
 	const ref = useMemo(() => createRef<BlurBackground>(), []);

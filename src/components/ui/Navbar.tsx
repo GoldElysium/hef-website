@@ -1,12 +1,12 @@
 'use client';
 
-import { useLocale } from 'contexts/LocaleContext';
+import { useLocale } from 'components/contexts/LocaleContext';
 import useTranslation from 'lib/i18n/client';
 import localizePathname from 'lib/util/localizePathname';
 import Link from 'next/link';
-import DarkModeToggle from 'ui/DarkModeToggle';
-import NavbarMenu from 'ui/NavbarMenu';
-import NoticeBanner from 'ui/NoticeBanner';
+import DarkModeToggle from 'components/ui/DarkModeToggle';
+import NavbarMenu from 'components/ui/NavbarMenu';
+import NoticeBanner from 'components/ui/NoticeBanner';
 import LocaleSelect from './LocaleSelect';
 
 interface IProps {

@@ -1,8 +1,8 @@
 import 'styles/globals.css';
-import DarkModeProvider from 'ui/DarkModeProvider';
+import DarkModeProvider from 'components/ui/DarkModeProvider';
 import { Metadata } from 'next';
 import { dir } from 'i18next';
-import LocaleContextProvider from 'ui/LocaleContextProvider';
+import LocaleContextProvider from 'components/contexts/LocaleContextProvider';
 import useTranslation from 'lib/i18n/server';
 import { Language } from 'lib/i18n/languages';
 import { languages } from 'lib/i18n/settings';
