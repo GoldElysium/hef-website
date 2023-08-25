@@ -124,67 +124,73 @@ export default function PixiWrapper({ project, submissions }: IProps) {
 	}
 
 	return (
+
+		// eslint-disable-next-line react/jsx-no-useless-fragment
 		<>
-			{(iOS() || !OS.desktop) && (orientation.startsWith('portrait') || !document.fullscreenElement) && (
-				<button
-					className="text-center z-10 min-h-screen min-w-screen h-full w-full bg-black text-white absolute"
-					type="button"
-					onClick={() => {
-						document.documentElement.requestFullscreen().then(() => {
-							window.screen.orientation.lock('landscape');
-						});
-					}}
-				>
-					This app may not work correctly on mobile devices, we recommend using a large screen.
-					Click to screen to fullscreen
-				</button>
+			{!iOS() && (
+				<>
+					{!OS.desktop && (orientation.startsWith('portrait') || !document.fullscreenElement) && (
+						<button
+							className="text-center z-10 min-h-screen min-w-screen h-full w-full bg-black text-white absolute"
+							type="button"
+							onClick={() => {
+								document.documentElement.requestFullscreen().then(() => {
+									window.screen.orientation.lock('landscape');
+								});
+							}}
+						>
+							This app may not work correctly on mobile devices, we recommend using a large screen.
+							Click to screen to fullscreen
+						</button>
+					)}
+
+					{showAllSubmissions && (
+						<SubmissionsModal
+							submissions={submissions}
+							project={project}
+							closeModal={() => setShowAllSubmissions(false)}
+						/>
+					)}
+
+					<Stage
+						options={{
+							backgroundColor: 0x5f79bc,
+							antialias: true,
+						}}
+						className={`${((!OS.desktop && orientation.startsWith('portrait')) || showAllSubmissions) ? 'hidden' : ''} cursor-none`}
+					>
+						<PixiPuzzleContainer
+							stageSize={stageSize}
+							submissions={submissions}
+							setShowAllSubmissions={setShowAllSubmissions}
+						/>
+					</Stage>
+
+					<div className="fixed left-6 bottom-6 z-50 text-white bg-[#255494] rounded-lg w-[350px] h-16 flex justify-between items-center gap-2 px-4 py-2">
+						<label className="swap swap-flip">
+							<input
+								type="checkbox"
+								className="text-black dark:text-white"
+								checked={muted}
+								onChange={() => setMuted(!muted)}
+							/>
+
+							<SpeakerWaveIcon className="swap-off w-6 h-6" />
+							<SpeakerXMarkIcon className="swap-on w-6 h-6" />
+						</label>
+						<input
+							type="range"
+							disabled={muted}
+							max={1}
+							min={0}
+							step={0.01}
+							value={volume}
+							onChange={(e) => setVolume(Number.parseFloat(e.target.value))}
+							className="range range-accent range-s disabled:range-xs"
+						/>
+					</div>
+				</>
 			)}
-
-			{showAllSubmissions && (
-				<SubmissionsModal
-					submissions={submissions}
-					project={project}
-					closeModal={() => setShowAllSubmissions(false)}
-				/>
-			)}
-
-			<Stage
-				options={{
-					backgroundColor: 0x5f79bc,
-					antialias: true,
-				}}
-				className={`${((!OS.desktop && orientation.startsWith('portrait')) || showAllSubmissions) ? 'hidden' : ''} cursor-none`}
-			>
-				<PixiPuzzleContainer
-					stageSize={stageSize}
-					submissions={submissions}
-					setShowAllSubmissions={setShowAllSubmissions}
-				/>
-			</Stage>
-
-			<div className="fixed left-6 bottom-6 z-50 text-white bg-[#255494] rounded-lg w-[350px] h-16 flex justify-between items-center gap-2 px-4 py-2">
-				<label className="swap swap-flip">
-					<input
-						type="checkbox"
-						className="text-black dark:text-white"
-						checked={muted}
-						onChange={() => setMuted(!muted)}
-					/>
-
-					<SpeakerWaveIcon className="swap-off w-6 h-6" />
-					<SpeakerXMarkIcon className="swap-on w-6 h-6" />
-				</label>
-				<input
-					type="range"
-					disabled={muted}
-					max={1}
-					min={0}
-					step={0.01}
-					value={volume}
-					onChange={(e) => setVolume(Number.parseFloat(e.target.value))}
-					className="range range-accent range-s disabled:range-xs"
-				/>
-			</div>
 		</>
 	);
 }
