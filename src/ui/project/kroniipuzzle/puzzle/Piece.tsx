@@ -99,11 +99,30 @@ const Piece = React.forwardRef<PieceActions, PieceProps>(({
 		updatePieceLocalPosition(`${r}-${c}`, newPos);
 	}
 
-	function isNearPosition(current: any, target: any) {
-		const currentX = current.position.x + PIECE_SIZE / 2;
-		const currentY = current.position.y + PIECE_SIZE / 2;
-		const targetX = target.position.x + PIECE_SIZE / 2;
-		const targetY = target.position.y + PIECE_SIZE / 2;
+	function isNearPosition(current: any, target: any, dir: string) {
+		let xShift = 0;
+		let yShift = 0;
+
+		switch (dir) {
+			case 'left':
+				xShift = -PIECE_MARGIN;
+				break;
+			case 'right':
+				xShift = PIECE_MARGIN;
+				break;
+			case 'top':
+				yShift = -PIECE_MARGIN;
+				break;
+			case 'bottom':
+				yShift = PIECE_MARGIN;
+				break;
+			default: break;
+		}
+
+		const currentX = current.position.x + PIECE_SIZE / 2 + xShift;
+		const currentY = current.position.y + PIECE_SIZE / 2 + yShift;
+		const targetX = target.position.x + PIECE_SIZE / 2 - xShift;
+		const targetY = target.position.y + PIECE_SIZE / 2 - yShift;
 
 		const deltaX = Math.abs(currentX - targetX);
 		const deltaY = Math.abs(currentY - targetY);
@@ -122,6 +141,7 @@ const Piece = React.forwardRef<PieceActions, PieceProps>(({
 			&& isNearPosition(
 				thisPiece,
 				pieceLeft.current,
+				'left',
 			)
 			&& thisPiece.pieceGroup !== pieceLeft.current.pieceGroup
 		) {
@@ -138,6 +158,7 @@ const Piece = React.forwardRef<PieceActions, PieceProps>(({
 			&& isNearPosition(
 				thisPiece,
 				pieceTop.current,
+				'top',
 			)
 			&& thisPiece.pieceGroup !== pieceTop.current.pieceGroup
 		) {
@@ -154,6 +175,7 @@ const Piece = React.forwardRef<PieceActions, PieceProps>(({
 			&& isNearPosition(
 				thisPiece,
 				pieceRight.current,
+				'right',
 			)
 			&& thisPiece.pieceGroup !== pieceRight.current.pieceGroup
 		) {
@@ -170,6 +192,7 @@ const Piece = React.forwardRef<PieceActions, PieceProps>(({
 			&& isNearPosition(
 				thisPiece,
 				pieceBottom.current,
+				'bottom',
 			)
 			&& thisPiece.pieceGroup !== pieceBottom.current.pieceGroup
 		) {
