@@ -110,9 +110,22 @@ export default function PixiWrapper({ project, submissions }: IProps) {
 		);
 	}
 
+	function iOS() {
+		return [
+			'iPad Simulator',
+			'iPhone Simulator',
+			'iPod Simulator',
+			'iPad',
+			'iPhone',
+			'iPod',
+		].includes(navigator.platform)
+		// iPad on iOS 13 detection
+		|| (navigator.userAgent.includes('Mac') && 'ontouchend' in document);
+	}
+
 	return (
 		<>
-			{!OS.desktop && (orientation.startsWith('portrait') || !document.fullscreenElement) && (
+			{(iOS() || !OS.desktop) && (orientation.startsWith('portrait') || !document.fullscreenElement) && (
 				<button
 					className="text-center z-10 min-h-screen min-w-screen h-full w-full bg-black text-white absolute"
 					type="button"
