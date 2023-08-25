@@ -137,6 +137,7 @@ export default function SettingsModal({
 							const puzzleState = usePuzzleStore.getState();
 							puzzleState.reset();
 							setMessage('Puzzle has been reset!');
+							window.location.reload();
 						}}
 					/>
 					<Button
@@ -152,6 +153,7 @@ export default function SettingsModal({
 							puzzleState.reset();
 							puzzleState.setFirstLoad(true);
 							setMessage('Puzzle has been reset!');
+							window.location.reload();
 						}}
 					/>
 					<Button
