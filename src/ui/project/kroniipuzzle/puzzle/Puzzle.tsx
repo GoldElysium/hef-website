@@ -295,7 +295,7 @@ export default function Puzzle({
 
 		return temp;
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [assetBundle, puzzlePiecesRefs]);
+	}, [assetBundle]);
 
 	const groupElements = useMemo(() => {
 		if (!puzzlePieces) return null;
