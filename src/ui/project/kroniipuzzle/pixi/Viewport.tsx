@@ -87,8 +87,22 @@ const Viewport = PixiComponent('Viewport', {
 			.pinch()
 			.decelerate()
 			.wheel()
-			.bounce()
-			.clamp({ direction: 'all' })
+			.bounce({
+				// @ts-ignore
+				bounceBox: {
+					x: -viewport.worldWidth,
+					width: viewport.worldWidth * 2,
+					y: -viewport.worldHeight,
+					height: viewport.worldHeight * 2,
+				},
+			})
+			.clamp({
+				left: -(viewport.worldWidth / 2),
+				right: viewport.worldWidth * 1.5,
+				top: -(viewport.worldHeight / 2),
+				bottom: viewport.worldHeight * 1.5,
+				underflow: 'none',
+			})
 			.clampZoom({ minScale: 0.2, maxScale: 10 });
 
 		if (ref) {

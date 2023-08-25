@@ -4,7 +4,7 @@ export const PIECE_COUNT = COL_COUNT * ROW_COUNT;
 export const WORLD_WIDTH = 3840;
 export const WORLD_HEIGHT = 1920;
 export const SIDEBAR_WIDTH = 400;
-export const PUZZLE_WIDTH = (WORLD_WIDTH - SIDEBAR_WIDTH) / 2;
+export const PUZZLE_WIDTH = WORLD_WIDTH / 2;
 export const PIECE_SIZE = PUZZLE_WIDTH / COL_COUNT;
 export const PIECE_MARGIN = PIECE_SIZE / 4.1;
 

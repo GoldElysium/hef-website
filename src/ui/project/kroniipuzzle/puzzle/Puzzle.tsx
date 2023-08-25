@@ -224,10 +224,18 @@ export default function Puzzle({
 
 			const currentVolume = usePuzzleStore.getState().audio.volume;
 			const instance = sounds![sound].play({ volume: currentVolume }) as IMediaInstance;
+
+			const timer = setInterval(() => {
+				if (instance.progress === 1) {
+					nextSound();
+				}
+			}, 5000);
+
 			setCurrentBgmInstance(instance);
 			instance.on('end', () => {
 				instance.destroy();
 				nextSound();
+				clearInterval(timer);
 			});
 		}
 
