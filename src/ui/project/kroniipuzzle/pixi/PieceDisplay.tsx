@@ -55,7 +55,7 @@ ${congratulations}${favoriteMoment}`;
 
 	const drawColorForPieceDisplay = useCallback((g: PixiGraphics) => {
 		g.clear();
-		g.beginFill(0xBDD1EC);
+		g.beginFill(0x95AED0);
 		g.drawRoundedRect(0, 0, width, height, 8);
 		g.endFill();
 	}, [width, height]);
