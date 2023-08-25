@@ -24,6 +24,9 @@ async function getProject(slug: string): Promise<PropsProject | null> {
 			'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? undefined,
 			Authorization: process.env.PAYLOAD_API_KEY ? `users API-Key ${process.env.PAYLOAD_API_KEY}` : undefined,
 		} as Record<string, string>,
+		next: {
+			tags: [slug],
+		},
 	});
 	const parsedRes = (await res.json() as PayloadResponse<Project>);
 	if (parsedRes.totalDocs === 0) return null;

@@ -13,6 +13,7 @@ import { getImageUrl } from 'ui/Image';
 import { Metadata } from 'next';
 import useTranslation from 'lib/i18n/server';
 import { Language } from 'lib/i18n/languages';
+import PixiSubmissionWrapper from 'ui/project/kroniipuzzle/PixiSubmissionWrapper';
 
 // ID's for both production and development databases
 // TODO: Replace with Payload data
@@ -46,6 +47,9 @@ async function fetchProject(slug: string, lang: Language): Promise<ProjectData |
 			'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? undefined,
 			Authorization: process.env.PAYLOAD_API_KEY ? `users API-Key ${process.env.PAYLOAD_API_KEY}` : undefined,
 		} as Record<string, string>,
+		next: {
+			tags: [slug],
+		},
 	});
 
 	const res = (await projectRes.json() as PayloadResponse<Project>);
@@ -97,6 +101,12 @@ export default async function ProjectPage({ params: { slug, lang } }: IProps) {
 	if (project.flags?.includes('guratanabata')) {
 		return (
 			<PhaserSubmissionWrapper project={project} />
+		);
+	}
+
+	if (project.flags?.includes('kronii-puzzle')) {
+		return (
+			<PixiSubmissionWrapper project={project} />
 		);
 	}
 
@@ -195,6 +205,9 @@ export async function generateMetadata({ params: { slug, lang } }: IProps): Prom
 			'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? undefined,
 			Authorization: process.env.PAYLOAD_API_KEY ? `users API-Key ${process.env.PAYLOAD_API_KEY}` : undefined,
 		} as Record<string, string>,
+		next: {
+			tags: [slug],
+		},
 	});
 	const parsedProjectRes = (await projectRes.json() as PayloadResponse<Project>);
 	if (parsedProjectRes.totalDocs === 0) return notFound();

@@ -1,0 +1,69 @@
+{
+	"bundles": [
+		{
+			"name": "puzzle",
+			"assets": [
+				{
+					"name": "background",
+					"srcs": "/assets/kroniipuzzle/puzzle.webp"
+				},
+				{
+					"name": "kronie",
+					"srcs": "/assets/kroniipuzzle/kronie.webp"
+				},
+				{
+					"name": "pieces",
+					"srcs": "/assets/kroniipuzzle/pieceAtlas.json"
+				},
+				{
+					"name": "time_loop_choir",
+					"srcs": "/assets/kroniipuzzle/bgm/time_loop_choir.ogg"
+				},
+				{
+					"name": "time_loop_intro",
+					"srcs": "/assets/kroniipuzzle/bgm/time_loop_intro.ogg"
+				},
+				{
+					"name": "time_loop_main_01",
+					"srcs": "/assets/kroniipuzzle/bgm/time_loop_main_01.ogg"
+				},
+				{
+					"name": "time_loop_main_02",
+					"srcs": "/assets/kroniipuzzle/bgm/time_loop_main_02.ogg"
+				},
+				{
+					"name": "back-arrow",
+					"srcs": "/assets/kroniipuzzle/back-arrow.svg"
+				},
+				{
+					"name": "congrats_kronii",
+					"srcs": "/assets/kroniipuzzle/congrats_kronii.gif"
+				},
+				{
+					"name": "cursor-default",
+					"srcs": "/assets/kroniipuzzle/cursor-default.gif"
+				},
+				{
+					"name": "cursor-pointer",
+					"srcs": "/assets/kroniipuzzle/cursor-pointer.gif"
+				},
+				{
+					"name": "sideKronii1",
+					"srcs": "/assets/kroniipuzzle/side_Kronii-1.gif"
+				},
+				{
+					"name": "sideKronii2",
+					"srcs": "/assets/kroniipuzzle/side_Kronii-2.gif"
+				},
+				{
+					"name": "sideKronii3",
+					"srcs": "/assets/kroniipuzzle/side_Kronii-3-2.gif"
+				},
+				{
+					"name": "sideKronii4",
+					"srcs": "/assets/kroniipuzzle/side_Kronii-4-2.gif"
+				}
+			]
+		}
+	]
+}
