@@ -102,32 +102,42 @@ const Piece = React.forwardRef<PieceActions, PieceProps>(({
 	function isNearPosition(current: any, target: any, dir: string) {
 		let xShift = 0;
 		let yShift = 0;
+		let xShiftTarget = 0;
+		let yShiftTarget = 0;
 
 		switch (dir) {
 			case 'left':
-				xShift = -PIECE_MARGIN;
+				yShift = PIECE_SIZE / 2;
+				xShiftTarget = PIECE_SIZE;
+				yShiftTarget = PIECE_SIZE / 2;
 				break;
 			case 'right':
-				xShift = PIECE_MARGIN;
+				xShift = PIECE_SIZE;
+				yShift = PIECE_SIZE / 2;
+				yShiftTarget = PIECE_SIZE / 2;
 				break;
 			case 'top':
-				yShift = -PIECE_MARGIN;
+				xShift = PIECE_SIZE / 2;
+				xShiftTarget = PIECE_SIZE / 2;
+				yShiftTarget = PIECE_SIZE;
 				break;
 			case 'bottom':
-				yShift = PIECE_MARGIN;
+				xShift = PIECE_SIZE / 2;
+				yShift = PIECE_SIZE;
+				xShiftTarget = PIECE_SIZE / 2;
 				break;
 			default: break;
 		}
 
-		const currentX = current.position.x + PIECE_SIZE / 2 + xShift;
-		const currentY = current.position.y + PIECE_SIZE / 2 + yShift;
-		const targetX = target.position.x + PIECE_SIZE / 2 - xShift;
-		const targetY = target.position.y + PIECE_SIZE / 2 - yShift;
+		const currentX = current.position.x + xShift;
+		const currentY = current.position.y + yShift;
+		const targetX = target.position.x + xShiftTarget;
+		const targetY = target.position.y + yShiftTarget;
 
 		const deltaX = Math.abs(currentX - targetX);
 		const deltaY = Math.abs(currentY - targetY);
 
-		return deltaX < 50 && deltaY < 50;
+		return deltaX < 20 && deltaY < 20;
 	}
 
 	function isNearAdjacentPiece(): IsNearAdjacentPieceRes {
