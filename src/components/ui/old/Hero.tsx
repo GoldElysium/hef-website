@@ -5,10 +5,10 @@ interface IProps {
 
 export default function Hero({ title, description }: IProps) {
 	return (
-		<div className="w-full px-4 py-2 flex justify-center h-52 items-center bg-skin-background-2 dark:bg-skin-dark-background-2">
-			<div className="max-w-4xl flex flex-col sm:flex-row justify-between w-full sm:items-end">
+		<div className="bg-skin-background-2 dark:bg-skin-dark-background-2 flex h-52 w-full items-center justify-center px-4 py-2">
+			<div className="flex w-full max-w-4xl flex-col justify-between sm:flex-row sm:items-end">
 				<div className="flex flex-col">
-					<h1 className="text-2xl text-bold text-white">
+					<h1 className="text-bold text-2xl text-white">
 						{title}
 					</h1>
 					<p className="text-white text-opacity-80">

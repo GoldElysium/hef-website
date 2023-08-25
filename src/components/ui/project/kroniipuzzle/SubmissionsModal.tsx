@@ -15,13 +15,13 @@ interface IProps {
 
 export default function SubmissionsModal({ project, submissions, closeModal }: IProps) {
 	return (
-		<div className="z-20 left-0 absolute w-full min-h-screen bg-[#E6F0FF] dark:bg-[#021026]">
+		<div className="absolute left-0 z-20 min-h-screen w-full bg-[#E6F0FF] dark:bg-[#021026]">
 			<div className="mx-auto md:max-w-2xl">
-				<h1 className="mt-8 mb-4 pb-2 text-[#0869EC] dark:text-[#4C98FF] font-bold text-4xl border-[#0869EC] dark:border-[#4C98FF] border-opacity-30 border-b-2 relative flex items-center justify-center">
+				<h1 className="relative mb-4 mt-8 flex items-center justify-center border-b-2 border-[#0869EC] border-opacity-30 pb-2 text-4xl font-bold text-[#0869EC] dark:border-[#4C98FF] dark:text-[#4C98FF]">
 					<button
 						type="button"
 						onClick={closeModal}
-						className="absolute left-0 text-lg text-white bg-[#0869EC] dark:bg-[#216FD9] px-4 py-2 rounded-lg flex items-center gap-2"
+						className="absolute left-0 flex items-center gap-2 rounded-lg bg-[#0869EC] px-4 py-2 text-lg text-white dark:bg-[#216FD9]"
 					>
 						<ArrowLeftIcon className="h-6 w-6" />
 						Back

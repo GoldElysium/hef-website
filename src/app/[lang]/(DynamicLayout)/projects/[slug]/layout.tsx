@@ -1,9 +1,9 @@
 import 'styles/sana-timeline.css';
-import Navbar from 'components/ui/Navbar';
-import Footer from 'components/ui/Footer';
+import Navbar from 'components/ui/old/Navbar';
+import Footer from 'components/ui/old/Footer';
 import PayloadResponse from 'types/PayloadResponse';
 import { Flag, Project } from 'types/payload-types';
-import ProjectHeader from '../../../../../components/ui/ProjectHeader';
+import ProjectHeader from '../../../../../components/ui/old/ProjectHeader';
 
 interface IProps {
 	children: React.ReactNode;

@@ -99,12 +99,12 @@ export default function PixiWrapper({ project, submissions }: IProps) {
 
 	if (!ready) {
 		return (
-			<div className="min-h-screen h-full min-w-screen w-full grid place-items-center bg-[#E6F0FF] dark:bg-[#021026] dark:text-white">
+			<div className="min-w-screen grid h-full min-h-screen w-full place-items-center bg-[#E6F0FF] dark:bg-[#021026] dark:text-white">
 				<div>
 					<p className="text-lg">
 						Loading...
 					</p>
-					<progress value={loadProgress.toFixed(0)} max={100} className="progress progress-info w-96 max-w-lg" />
+					<progress value={loadProgress.toFixed(0)} max={100} className="progress-info progress w-96 max-w-lg" />
 				</div>
 			</div>
 		);
@@ -122,7 +122,7 @@ export default function PixiWrapper({ project, submissions }: IProps) {
 
 			{!OS.desktop && (orientation.startsWith('portrait') || !document.fullscreenElement) && (
 				<button
-					className="text-center z-10 min-h-screen min-w-screen h-full w-full bg-black text-white absolute"
+					className="min-w-screen absolute z-10 h-full min-h-screen w-full bg-black text-center text-white"
 					type="button"
 					onClick={() => {
 						document.documentElement.requestFullscreen().then(() => {
@@ -149,7 +149,7 @@ export default function PixiWrapper({ project, submissions }: IProps) {
 				/>
 			</Stage>
 
-			<div className="fixed left-6 bottom-6 z-50 text-white bg-[#255494] rounded-lg w-[350px] h-16 flex justify-between items-center gap-2 px-4 py-2">
+			<div className="fixed bottom-6 left-6 z-50 flex h-16 w-[350px] items-center justify-between gap-2 rounded-lg bg-[#255494] px-4 py-2 text-white">
 				<label className="swap swap-flip">
 					<input
 						type="checkbox"
@@ -158,8 +158,8 @@ export default function PixiWrapper({ project, submissions }: IProps) {
 						onChange={() => setMuted(!muted)}
 					/>
 
-					<SpeakerWaveIcon className="swap-off w-6 h-6" />
-					<SpeakerXMarkIcon className="swap-on w-6 h-6" />
+					<SpeakerWaveIcon className="swap-off h-6 w-6" />
+					<SpeakerXMarkIcon className="swap-on h-6 w-6" />
 				</label>
 				<input
 					type="range"
@@ -169,7 +169,7 @@ export default function PixiWrapper({ project, submissions }: IProps) {
 					step={0.01}
 					value={volume}
 					onChange={(e) => setVolume(Number.parseFloat(e.target.value))}
-					className="range range-accent range-s disabled:range-xs"
+					className="range-s range range-accent disabled:range-xs"
 				/>
 			</div>
 		</>

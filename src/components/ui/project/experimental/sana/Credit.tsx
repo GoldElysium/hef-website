@@ -25,13 +25,13 @@ export default function ProjectCredit({ credit }: ProjectCreditProps) {
 	}, [credit]);
 
 	return (
-		<div className="flex flex-col justify-start items-center mx-8 my-4 w-32 h-max text-black dark:text-white">
+		<div className="mx-8 my-4 flex h-max w-32 flex-col items-center justify-start text-black dark:text-white">
 			{/* Below eslint error is caused by "Profile picture" */}
 			{/* eslint-disable-next-line jsx-a11y/img-redundant-alt */}
-			<img className="inline w-32 m-4 rounded-full" src={credit.pfp} alt={`Profile picture of ${credit.user}`} />
+			<img className="m-4 inline w-32 rounded-full" src={credit.pfp} alt={`Profile picture of ${credit.user}`} />
 
-			<div className="flex flex-col justify-center items-start h-full">
-				<div className="flex flex-col justify-center items-center md:flex-row h-full">
+			<div className="flex h-full flex-col items-start justify-center">
+				<div className="flex h-full flex-col items-center justify-center md:flex-row">
 					<span className="text-2xl">{credit.user}</span>
 					<span className="flex flex-row items-center">
 						{socials.map(({ type, link }, index) => (

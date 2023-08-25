@@ -67,14 +67,14 @@ export default function SubmissionsWithFilter({ submissions, filterOptions }: IP
 	return (
 		<>
 			<h2
-				className="text-2xl font-bold border-b-2 text-center sm:text-left mb-6
-			text-skin-primary-1 dark:text-skin-dark-primary-1 border-skin-primary-1 border-opacity-30 dark:border-skin-dark-primary-1 dark:border-opacity-40
-			flex justify-between items-center pb-2"
+				className="text-skin-primary-1 dark:text-skin-dark-primary-1 border-skin-primary-1 dark:border-skin-dark-primary-1 mb-6 flex
+			items-center justify-between border-b-2 border-opacity-30 pb-2 text-center
+			text-2xl font-bold dark:border-opacity-40 sm:text-left"
 			>
 				Submissions
 				<button
 					type="button"
-					className="px-4 py-2 bg-[#EF4444] hover:bg-red-400 text-white rounded-full text-sm flex gap-1.5 items-center"
+					className="flex items-center gap-1.5 rounded-full bg-[#EF4444] px-4 py-2 text-sm text-white hover:bg-red-400"
 					onClick={() => setFilterMenuOpen(!filterMenuOpen)}
 				>
 					<FunnelIcon className="h-4 w-4" />
@@ -92,9 +92,9 @@ export default function SubmissionsWithFilter({ submissions, filterOptions }: IP
 					leaveTo="opacity-0"
 					show={filterMenuOpen}
 				>
-					<div className="bg-white text-black dark:bg-skin-dark-background-2 dark:text-gray-300 w-full py-4 px-8 rounded-md">
+					<div className="dark:bg-skin-dark-background-2 w-full rounded-md bg-white px-8 py-4 text-black dark:text-gray-300">
 						<p className="font-bold">Current filter</p>
-						<div className="flex gap-4 items-center">
+						<div className="flex items-center gap-4">
 							<span>Submission type:</span>
 							<Listbox
 								value={filter.type ?? []}
@@ -117,7 +117,7 @@ export default function SubmissionsWithFilter({ submissions, filterOptions }: IP
 										leaveFrom="opacity-100"
 										leaveTo="opacity-0"
 									>
-										<Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm z-50">
+										<Listbox.Options className="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
 											{['Messages', 'Images', 'Videos'].map((type) => (
 												<Listbox.Option
 													key={`type-filter-${type}`}
@@ -155,7 +155,7 @@ export default function SubmissionsWithFilter({ submissions, filterOptions }: IP
 							for (const key in filterOptions) {
 								if (Object.hasOwnProperty.call(filterOptions, key)) {
 									filters.push(
-										<div className="flex gap-4 items-center" key={key}>
+										<div className="flex items-center gap-4" key={key}>
 											<span>
 												{key}
 												:
@@ -181,7 +181,7 @@ export default function SubmissionsWithFilter({ submissions, filterOptions }: IP
 														leaveFrom="opacity-100"
 														leaveTo="opacity-0"
 													>
-														<Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm z-50">
+														<Listbox.Options className="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
 															{filterOptions[key].map((value) => (
 																<Listbox.Option
 																	key={`${key}-filter-${value}`}
@@ -222,8 +222,8 @@ export default function SubmissionsWithFilter({ submissions, filterOptions }: IP
 					</div>
 				</Transition>
 				<div className="w-full max-w-full overflow-auto">
-					<div className="w-full h-full flex justify-center">
-						<div className="sm:w-11/12 md:w-10/12 h-full">
+					<div className="flex h-full w-full justify-center">
+						<div className="h-full sm:w-11/12 md:w-10/12">
 							{shownSubmissions.map((submission) => submission.el)}
 						</div>
 					</div>

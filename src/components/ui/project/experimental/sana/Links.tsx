@@ -13,8 +13,8 @@ export default function ProjectLinks({ links }: ProjectLinksProps) {
 				{links.map((link, index) => (
 					<div
 						key={`project-link-${index}` /* eslint-disable-line react/no-array-index-key */}
-						className="rounded-3xl font-bold w-[6rem] h-10 flex items-center justify-center mt-4
-            content-end bg-skin-secondary-1 dark:bg-skin-dark-secondary-1 text-white
+						className="bg-skin-secondary-1 dark:bg-skin-dark-secondary-1 mt-4 flex h-10 w-[6rem] content-end items-center
+            justify-center rounded-3xl font-bold text-white
             hover:text-opacity-70"
 					>
 						<a href={link.url} target="_blank" rel="noreferrer">

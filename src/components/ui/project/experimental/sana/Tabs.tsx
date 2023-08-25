@@ -40,7 +40,7 @@ export default function ProjectTabs({ defaultTab, children }: ProjectTabsProps) 
 
 	return (
 		<ProjectTabsContext.Provider value={providerValue}>
-			<div className="flex flex-row flex-wrap justify-evenly content-center my-4">{children}</div>
+			<div className="my-4 flex flex-row flex-wrap content-center justify-evenly">{children}</div>
 			<div>{child}</div>
 		</ProjectTabsContext.Provider>
 	);

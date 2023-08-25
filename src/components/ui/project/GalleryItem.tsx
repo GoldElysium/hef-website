@@ -30,7 +30,7 @@ export default function GalleryItem({ media, index }: GalleryItemProps) {
 	if (media[index].type === 'image') {
 		return (
 			<Image
-				className="max-w-full max-h-full object-contain"
+				className="max-h-full max-w-full object-contain"
 				key={media[index].id!}
 				src={media[index].media.url!}
 				width={

@@ -23,8 +23,8 @@ export default async function Submissions({ project, lang }: IProps) {
 		return (
 			<div className="flex flex-col items-center pt-2">
 				<div className="w-full max-w-full overflow-auto">
-					<div className="w-full h-full flex flex-wrap justify-center content-center">
-						<div className="sm:w-11/12 md:w-10/12 flex flex-wrap">
+					<div className="flex h-full w-full flex-wrap content-center justify-center">
+						<div className="flex flex-wrap sm:w-11/12 md:w-10/12">
 							{submissions.map((submission, index) => (
 								<div className="min-w-80 w-1/2" key={submission.id}>
 									<Submission
@@ -84,9 +84,9 @@ export default async function Submissions({ project, lang }: IProps) {
 	return (
 		<div className="flex flex-col items-center pt-2">
 			<div className="w-full max-w-full overflow-auto">
-				<div className="w-full h-full flex justify-center">
+				<div className="flex h-full w-full justify-center">
 					<div
-						className={`sm:w-11/12 md:w-10/12 h-full ${project.flags.includes('sanaSendoff') ? 'w-full' : 'max-w-full'}`}
+						className={`h-full sm:w-11/12 md:w-10/12 ${project.flags.includes('sanaSendoff') ? 'w-full' : 'max-w-full'}`}
 					>
 						{submissions.map((submission, index) => (
 							<Submission

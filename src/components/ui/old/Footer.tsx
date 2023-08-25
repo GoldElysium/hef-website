@@ -10,14 +10,14 @@ export default function Footer({ flags }: IProps) {
 
 	return (
 		<div
-			className="flex w-full h-24 px-4 sm:px-8 justify-center items-center bg-skin-background-2 dark:bg-skin-dark-background-2"
+			className="bg-skin-background-2 dark:bg-skin-dark-background-2 flex h-24 w-full items-center justify-center px-4 sm:px-8"
 			style={{
 				backgroundImage: flags.includes('sanaSendoff') ? 'url(/assets/sanasendoff/background.png)' : undefined,
 			}}
 		>
-			<p className="text-center flex items-center text-white text-opacity-70">
+			<p className="flex items-center text-center text-white text-opacity-70">
 				Made with&nbsp;
-				<HeartIcon className="w-4 h-4 text-white" />
+				<HeartIcon className="h-4 w-4 text-white" />
 				&nbsp;by&nbsp;
 				<a
 					href="https://github.com/GoldElysium/hefs-website#contributors-"

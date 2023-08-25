@@ -1,7 +1,7 @@
 'use client';
 
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
-import TextHeader from 'components/ui/TextHeader';
+import TextHeader from 'components/ui/old/TextHeader';
 import GalleryItem from 'components/ui/project/GalleryItem';
 import { useState } from 'react';
 import { Media, Project } from 'types/payload-types';
@@ -22,15 +22,15 @@ export default function Gallery({ project }: IProps) {
 		<div className="mt-4">
 			<TextHeader>Gallery</TextHeader>
 			<div className="flex flex-col items-center pt-2">
-				<div className="w-full h-52 sm:w-8/12 sm:h-96">
+				<div className="h-52 w-full sm:h-96 sm:w-8/12">
 					<GalleryItem media={project.media} index={currentMediaIndex} />
 				</div>
-				<div className="flex mt-2 font-bold items-center justify-center text-center">
+				<div className="mt-2 flex items-center justify-center text-center font-bold">
 					<ChevronLeftIcon
 						className={
 							currentMediaIndex > 0
 								? 'h-8 w-8 cursor-pointer text-black dark:text-white'
-								: 'h-8 w-8 text-skin-primary-1 text-opacity-30 dark:text-skin-dark-primary-1 dark:text-opacity-30'
+								: 'text-skin-primary-1 dark:text-skin-dark-primary-1 h-8 w-8 text-opacity-30 dark:text-opacity-30'
 						}
 						onClick={() => {
 							if (currentMediaIndex > 0) {
@@ -48,7 +48,7 @@ export default function Gallery({ project }: IProps) {
 							currentMediaIndex + 1
 							< (project.media ? project.media.length : 0)
 								? 'h-8 w-8 cursor-pointer text-black dark:text-white'
-								: 'h-8 w-8 text-skin-primary-1 text-opacity-30 dark:text-skin-dark-primary-1 dark:text-opacity-30'
+								: 'text-skin-primary-1 dark:text-skin-dark-primary-1 h-8 w-8 text-opacity-30 dark:text-opacity-30'
 						}
 						onClick={() => {
 							if (
