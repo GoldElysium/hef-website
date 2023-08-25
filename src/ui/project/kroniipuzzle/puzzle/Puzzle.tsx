@@ -113,7 +113,7 @@ export default function Puzzle({
 
 		const defaultSettings = {
 			preload: true,
-			volume,
+			volume: 0.25,
 			singleInstance: true,
 		};
 
