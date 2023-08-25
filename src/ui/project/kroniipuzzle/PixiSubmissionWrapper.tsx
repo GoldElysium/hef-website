@@ -41,8 +41,8 @@ async function fetchSubmissionsWithProxy(project: { id: string }) {
 					...item.image!,
 					url: getImageUrl({
 						src: item.image!.url!,
-						width: 400,
-						height: 400,
+						width: 200,
+						height: 200,
 						quality: 80,
 						action: 'resize',
 					}),

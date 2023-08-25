@@ -156,8 +156,7 @@ ${congratulations}${favoriteMoment}`;
 							y={pieceInfo.message
 								? Math.max(height - 250, spriteY + 75)
 								: 16}
-							width={200}
-							height={200}
+							scale={[1, 1]}
 						/>
 						<Graphics
 							x={16}
