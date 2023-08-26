@@ -3,6 +3,7 @@ declare module 'phaser/src/device/OS' {
 		desktop: boolean;
 		iOS: boolean;
 		iPad: boolean;
+		macOS: boolean;
 	}
 
 	const OS: OSType;
