@@ -41,7 +41,7 @@ interface ProjectData {
 }
 
 async function fetchProject(slug: string, lang: Language): Promise<ProjectData | null> {
-	// Fetch locale for the page, CMS will fallback to EN for any fields not translated
+	// Fetch locale for the page, CMS will fall back to EN for any fields not translated
 	const projectRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/projects?where[slug][like]=${slug}&depth=2&locale=${lang}&fallback-locale=en`, {
 		headers: {
 			'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? undefined,

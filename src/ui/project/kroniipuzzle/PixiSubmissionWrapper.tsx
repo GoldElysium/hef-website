@@ -24,7 +24,7 @@ interface ISubmission extends Submission {
 	media?: MediaItem[];
 }
 
-async function fetchSubmissionsWithProxy(project: { id: string }) {
+async function fetchSubmissionsWithProxy(project: { id: string, slug: string }) {
 	const submissions = await fetchSubmissions(project);
 
 	return submissions.map((submission) => {

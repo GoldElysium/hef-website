@@ -13,7 +13,7 @@ interface ISubmission extends Submission {
 	media?: MediaItem[];
 }
 
-export default async function fetchSubmissions(project: { id: string }) {
+export default async function fetchSubmissions(project: { id: string, slug: string }) {
 	// Create an array for all the submissions
 	let moreSubmissions = true;
 	let page = 1;
@@ -26,6 +26,9 @@ export default async function fetchSubmissions(project: { id: string }) {
 				'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? undefined,
 				Authorization: process.env.PAYLOAD_API_KEY ? `users API-Key ${process.env.PAYLOAD_API_KEY}` : undefined,
 			} as Record<string, string>,
+			next: {
+				tags: [project.slug],
+			},
 		});
 		const body: PayloadResponse<Submission> = await submissionsRes.json();
 
@@ -38,6 +41,9 @@ export default async function fetchSubmissions(project: { id: string }) {
 						'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? undefined,
 						Authorization: process.env.PAYLOAD_API_KEY ? `users API-Key ${process.env.PAYLOAD_API_KEY}` : undefined,
 					} as Record<string, string>,
+					next: {
+						tags: [project.slug],
+					},
 				});
 				// eslint-disable-next-line no-param-reassign
 				submission.srcIcon = await mediaFetch.json();
@@ -55,6 +61,9 @@ export default async function fetchSubmissions(project: { id: string }) {
 						'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? undefined,
 						Authorization: process.env.PAYLOAD_API_KEY ? `users API-Key ${process.env.PAYLOAD_API_KEY}` : undefined,
 					} as Record<string, string>,
+					next: {
+						tags: [project.slug],
+					},
 				});
 				mediaDocs[index] = {
 					...item,
