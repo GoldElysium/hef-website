@@ -18,7 +18,7 @@ export default function PixiRejectWrapper({ project, submissions }: IProps) {
 	// @ts-ignore
 	if ((OS.macOS && !window.chrome) || OS.iOS || OS.iPad) {
 		return (
-			<div className="text-center grid place-items-center text-lg font-bold min-h-screen min-w-screen h-full w-full bg-black text-white absolute">
+			<div className="min-w-screen absolute grid h-full min-h-screen w-full place-items-center bg-black text-center text-lg font-bold text-white">
 				Mobile Apple devices and desktop Safari are unsupported.
 				Please use a desktop with Chrome to play this.
 			</div>
