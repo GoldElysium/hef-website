@@ -9,7 +9,7 @@ export default function Header({ title, description }: IProps) {
 			className="text-skin-header-foreground dark:text-skin-header-foreground-dark"
 		>
 			<div
-				className="grid h-72 w-full place-items-center bg-skin-header px-4 py-2 dark:bg-skin-header-dark"
+				className="grid h-72 w-full place-items-center bg-skin-header px-4 py-2 pt-12 dark:bg-skin-header-dark"
 			>
 				<div className="grid w-full max-w-4xl place-items-center text-center">
 					<div className="flex flex-col gap-4">

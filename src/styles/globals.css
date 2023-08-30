@@ -27,6 +27,20 @@
     --color-header-foreground-dark: 252 252 252;
     --color-heading-dark: 254 203 203;
     --color-link-dark: 254 203 203;
+
+    --color-holoen-red: #EF4444;
+    --color-icon-primary: #FFFFFF;
+    --color-icon-secondary: var(--color-holoen-red);
+  }
+
+  .icon-default {
+    --color-icon-primary: var(--color-holoen-red);
+    --color-icon-secondary: #FFFFFF;
+  }
+
+  .icon-alt {
+    --color-icon-primary: #FFFFFF;
+    --color-icon-secondary: var(--color-holoen-red);
   }
 }
 
@@ -71,19 +85,6 @@
     box-shadow: 0 0 4px #999;
     -webkit-transition: .4s;
     transition: .4s;
-  }
-
-  :root {
-    --color-holoen-red: #EF4444;
-    --color-icon-primary: #FFFFFF;
-    --color-icon-secondary: var(--color-holoen-red);
-  }
-
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --color-icon-primary: var(--color-holoen-red);
-      --color-icon-secondary: #FFFFFF;
-    }
   }
 
   /* input:checked + .slider {
