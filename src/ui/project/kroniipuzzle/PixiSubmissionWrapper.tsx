@@ -24,7 +24,7 @@ interface ISubmission extends Submission {
 	media?: MediaItem[];
 }
 
-async function fetchSubmissionsWithProxy(project: { id: string }) {
+async function fetchSubmissionsWithProxy(project: { id: string, slug: string }) {
 	const submissions = await fetchSubmissions(project);
 
 	return submissions.map((submission) => {
@@ -59,11 +59,11 @@ async function fetchSubmissionsWithProxy(project: { id: string }) {
 export default async function PixiSubmissionWrapper({ project }: IProps) {
 	const submissions = await fetchSubmissionsWithProxy(project);
 
-	const PixiWrapper = dynamic(() => import('./PixiWrapper'), {
+	const PixiRejectWrapper = dynamic(() => import('./PixiRejectWrapper'), {
 		ssr: false,
 	});
 
 	return (
-		<PixiWrapper project={project} submissions={submissions} />
+		<PixiRejectWrapper project={project} submissions={submissions} />
 	);
 }
