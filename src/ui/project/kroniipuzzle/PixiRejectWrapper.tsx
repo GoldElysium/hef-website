@@ -15,7 +15,8 @@ interface IProps {
 }
 
 export default function PixiRejectWrapper({ project, submissions }: IProps) {
-	if (OS.macOS || (!OS.desktop && (OS.iOS || OS.iPad))) {
+	// @ts-ignore
+	if ((OS.macOS && !window.chrome) || OS.iOS || OS.iPad) {
 		return (
 			<div className="text-center grid place-items-center text-lg font-bold min-h-screen min-w-screen h-full w-full bg-black text-white absolute">
 				Mobile Apple devices and desktop Safari are unsupported.
