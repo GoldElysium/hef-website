@@ -5,7 +5,8 @@
 	},
 	"nav": {
 		"home": "Home",
-		"projects": "Projects"
+		"projects": "Projects",
+		"about": "About"
 	},
 	"notice-banner": {
 		"open": "Read more",
