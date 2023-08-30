@@ -4,10 +4,12 @@ import { useLocale } from 'components/contexts/LocaleContext';
 import useTranslation from 'lib/i18n/client';
 import localizePathname from 'lib/util/localizePathname';
 import Link from 'next/link';
-import DarkModeToggle from 'components/ui/old/DarkModeToggle';
-import NavbarMenu from 'components/ui/old/NavbarMenu';
+import DarkModeToggle from 'components/ui/DarkModeToggle';
 import NoticeBanner from 'components/ui/old/NoticeBanner';
 import LocaleSelect from 'components/ui/util/LocaleSelect';
+import { useState } from 'react';
+import { Slant as Hamburger } from 'hamburger-react';
+import MobileNav from './MobileNav';
 
 interface IProps {
 	flags: string[];
@@ -71,6 +73,9 @@ export default function Navbar({ flags }: IProps) {
 	if (flags.includes('disableNavbar')) return null;
 
 	// eslint-disable-next-line react-hooks/rules-of-hooks
+	const [navMobileOpen, setNavMobileOpen] = useState(false);
+
+	// eslint-disable-next-line react-hooks/rules-of-hooks
 	const { locale } = useLocale();
 	// eslint-disable-next-line react-hooks/rules-of-hooks
 	const { t } = useTranslation('layout', 'nav');
@@ -80,41 +85,53 @@ export default function Navbar({ flags }: IProps) {
 			{/* TODO: Make this ISR */}
 			<NoticeBanner />
 			<div className="flex h-20 w-full items-center justify-between bg-skin-header px-4 text-skin-header-foreground dark:bg-skin-header-dark dark:text-skin-header-foreground-dark sm:px-8">
-				<div>
-					<div className="relative flex sm:hidden">
-						<Link href="/">
-							<Icon />
-						</Link>
+				<div className="relative flex w-full items-center justify-between sm:hidden">
+					<Link
+						href="/"
+						className="rounded-lg focus:outline-none focus:ring-2 focus:ring-white/80"
+						aria-label="Home"
+					>
+						<Icon />
+					</Link>
 
-						<NavbarMenu />
-					</div>
+					<Hamburger
+						toggled={navMobileOpen}
+						toggle={setNavMobileOpen}
+					/>
+				</div>
 
-					<div className="hidden items-center space-x-4 text-lg sm:flex">
-						<Link href="/">
-							<Icon />
-						</Link>
-
+				<div className="hidden w-full items-center justify-between sm:flex">
+					<nav className="flex items-center space-x-4 text-lg">
 						<Link
-							href={localizePathname(locale, '/')}
-							hrefLang={locale}
-							className="font-semibold text-white hover:text-opacity-80"
+							href="/"
+							className="rounded-lg focus:outline-none focus:ring-2 focus:ring-white/80"
+							aria-label="Home"
 						>
-							{t('home')}
+							<Icon />
 						</Link>
+
 						<Link
 							href={localizePathname(locale, '/projects')}
 							hrefLang={locale}
-							className="font-semibold text-white hover:text-opacity-80"
+							className="rounded-lg px-2 py-1 font-semibold text-white hover:text-opacity-80 focus:outline-none focus:ring-2 focus:ring-white/80"
 						>
 							{t('projects')}
 						</Link>
+						<Link
+							href={localizePathname(locale, '/about')}
+							hrefLang={locale}
+							className="rounded-lg px-2 py-1 font-semibold text-white hover:text-opacity-80 focus:outline-none focus:ring-2 focus:ring-white/80"
+						>
+							{t('about')}
+						</Link>
+					</nav>
+					<div className="flex flex-row">
+						<LocaleSelect />
+						<DarkModeToggle />
 					</div>
 				</div>
-				<div className="flex flex-row">
-					<LocaleSelect />
-					<DarkModeToggle />
-				</div>
 			</div>
+			{navMobileOpen && <MobileNav />}
 		</>
 	);
 }

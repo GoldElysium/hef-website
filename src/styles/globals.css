@@ -19,7 +19,7 @@
     --color-background-dark: 20 3 3;
     --color-primary-dark: 159 15 15;
     --color-primary-foreground-dark: 252 252 252;
-    --color-secondar-darky: 140 56 56;
+    --color-secondary-dark: 140 56 56;
     --color-secondary-foreground-dark: 252 252 252;
     --color-accent-dark: 147 83 83;
     --color-text-dark: 253 236 236;
@@ -110,6 +110,10 @@
     border-radius: 50%;
   }
 }
+
+/** {
+  @apply transition-colors duration-300 motion-reduce:transition-none;
+}*/
 
 .description-body {
   background-color: inherit !important;

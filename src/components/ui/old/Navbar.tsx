@@ -4,7 +4,7 @@ import { useLocale } from 'components/contexts/LocaleContext';
 import useTranslation from 'lib/i18n/client';
 import localizePathname from 'lib/util/localizePathname';
 import Link from 'next/link';
-import DarkModeToggle from 'components/ui/old/DarkModeToggle';
+import DarkModeToggle from 'components/ui/DarkModeToggle';
 import NavbarMenu from 'components/ui/old/NavbarMenu';
 import NoticeBanner from 'components/ui/old/NoticeBanner';
 import LocaleSelect from '../util/LocaleSelect';

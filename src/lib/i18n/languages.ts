@@ -4,6 +4,7 @@
  * Icons: https://cdnjs.com/libraries/twemoji/14.0.2
  */
 export const Languages = {
+	// TODO: Use correct codes in links, so "ja" for japanese.
 	english: {
 		id: 'en',
 		name: 'English',

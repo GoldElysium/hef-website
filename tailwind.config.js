@@ -4,6 +4,34 @@ function withOpacity(variableName) {
 	return `rgb(var(${variableName}) / <alpha-value>)`;
 }
 
+const themeColors = {
+	background: withOpacity('--color-background'),
+	primary: withOpacity('--color-primary'),
+	'primary-foreground': withOpacity('--color-primary-foreground'),
+	secondary: withOpacity('--color-secondary'),
+	'secondary-foreground': withOpacity('--color-secondary-foreground'),
+	accent: withOpacity('--color-accent'),
+	text: withOpacity('--color-text'),
+	header: withOpacity('--color-header'),
+	'header-foreground': withOpacity('--color-header-foreground'),
+	heading: withOpacity('--color-heading'),
+	'link': withOpacity('--color-link'),
+
+	'background-dark': withOpacity('--color-background-dark'),
+	'primary-dark': withOpacity('--color-primary-dark'),
+	'primary-foreground-dark': withOpacity('--color-primary-foreground-dark'),
+	'secondary-dark': withOpacity('--color-secondary-dark'),
+	'secondary-foreground-dark': withOpacity('--color-secondary-foreground-dark'),
+	'accent-dark': withOpacity('--color-accent-dark'),
+	'text-dark': withOpacity('--color-text-dark'),
+	'header-dark': withOpacity('--color-header-dark'),
+	'header-foreground-dark': withOpacity('--color-header-foreground-dark'),
+	'heading-dark': withOpacity('--color-heading-dark'),
+	'link-dark': withOpacity('--color-link-dark'),
+
+	'holoen-red': withOpacity('--color-holoen-red'),
+}
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
 	content: [
@@ -34,64 +62,13 @@ module.exports = {
 				'submissionGrid': '100px auto',
 			},
 			textColor: {
-				skin: {
-					background: withOpacity('--color-background'),
-					primary: withOpacity('--color-primary'),
-					'primary-foreground': withOpacity('--color-primary-foreground'),
-					secondary: withOpacity('--color-secondary'),
-					'secondary-foreground': withOpacity('--color-secondary-foreground'),
-					accent: withOpacity('--color-accent'),
-					text: withOpacity('--color-text'),
-					header: withOpacity('--color-header'),
-					'header-foreground': withOpacity('--color-header-foreground'),
-					heading: withOpacity('--color-heading'),
-					'link': withOpacity('--color-link'),
-
-					'background-dark': withOpacity('--color-background-dark'),
-					'primary-dark': withOpacity('--color-primary-dark'),
-					'primary-foreground-dark': withOpacity('--color-primary-foreground-dark'),
-					'secondary-dark': withOpacity('--color-secondary-dark'),
-					'secondary-foreground-dark': withOpacity('--color-secondary-foreground-dark'),
-					'accent-dark': withOpacity('--color-accent-dark'),
-					'text-dark': withOpacity('--color-text-dark'),
-					'header-dark': withOpacity('--color-header-dark'),
-					'header-foreground-dark': withOpacity('--color-header-foreground-dark'),
-					'heading-dark': withOpacity('--color-heading-dark'),
-					'link-dark': withOpacity('--color-link-dark'),
-
-					'holoen-red': withOpacity('--color-holoen-red'),
-				}
+				skin: themeColors,
 			},
 			backgroundColor: {
-				skin: {
-					background: withOpacity('--color-background'),
-					primary: withOpacity('--color-primary'),
-					'primary-foreground': withOpacity('--color-primary-foreground'),
-					secondary: withOpacity('--color-secondary'),
-					'secondary-foreground': withOpacity('--color-secondary-foreground'),
-					accent: withOpacity('--color-accent'),
-					text: withOpacity('--color-text'),
-					header: withOpacity('--color-header'),
-					'header-foreground': withOpacity('--color-header-foreground'),
-					heading: withOpacity('--color-heading'),
-					'link': withOpacity('--color-link'),
-
-					'background-dark': withOpacity('--color-background-dark'),
-					'primary-dark': withOpacity('--color-primary-dark'),
-					'primary-foreground-dark': withOpacity('--color-primary-foreground-dark'),
-					'secondary-dark': withOpacity('--color-secondary-dark'),
-					'secondary-foreground-dark': withOpacity('--color-secondary-foreground-dark'),
-					'accent-dark': withOpacity('--color-accent-dark'),
-					'text-dark': withOpacity('--color-text-dark'),
-					'header-dark': withOpacity('--color-header-dark'),
-					'header-foreground-dark': withOpacity('--color-header-foreground-dark'),
-					'heading-dark': withOpacity('--color-heading-dark'),
-					'link-dark': withOpacity('--color-link-dark'),
-
-					'holoen-red': withOpacity('--color-holoen-red'),
-					'icon-primary': 'rgb(var(--color-icon-primary))',
-					'icon-secondary': 'rgb(var(--color-icon-secondary))',
-				}
+				skin: themeColors,
+			},
+			fill: {
+				skin: themeColors,
 			},
 			borderColor: {
 				skin: {
