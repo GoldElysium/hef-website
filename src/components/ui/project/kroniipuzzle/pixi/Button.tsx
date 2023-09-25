@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Graphics, Text } from '@pixi/react';
-import { Graphics as PixiGraphics, TextStyle } from 'pixi.js';
+import { TextStyle } from 'pixi.js';
 
 interface ButtonProps {
 	x: number;
@@ -31,7 +31,7 @@ export default function Button({
 			cursor={onClick ? 'pointer' : undefined}
 		>
 			<Graphics
-				draw={(g: PixiGraphics) => {
+				draw={(g) => {
 					g.clear();
 					if (color) {
 						g.beginFill(color);
