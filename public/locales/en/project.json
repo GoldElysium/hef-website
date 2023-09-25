@@ -9,7 +9,7 @@
 		"end": "You have reached the end!"
 	},
 	"submission": {
-		"author": "From: {{author}}",
+		"author": "From: ",
 		"invalid-media": "Invalid media"
 	}
 }

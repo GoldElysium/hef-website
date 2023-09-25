@@ -8,7 +8,7 @@
 		"end": "終わりました"
 	},
 	"submission": {
-		"author": "著者:{{author}}",
+		"author": "著者:",
 		"invalid-media": "不正なメディア"
 	}
 }
