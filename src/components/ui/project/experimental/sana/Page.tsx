@@ -1,5 +1,5 @@
 import {
-	Guild, Project, Submission as ISubmission, Submission, SubmissionMedia,
+	Project, Submission as ISubmission, Submission, SubmissionMedia,
 } from '@/types/payload-types';
 import Header from '@/components/ui/old/Header';
 import ProjectSubmissions from '@/components/ui/project/experimental/sana/Submissions';
@@ -11,40 +11,8 @@ import ProjectTabs from '@/components/ui/project/experimental/sana/Tabs';
 import ProjectTimeline from '@/components/ui/project/experimental/sana/Timeline';
 import DarkModeFlag from '@/components/ui/project/experimental/sana/DarkModeFlag';
 import PayloadResponse from '@/types/PayloadResponse';
-import { getImageUrl } from '../../../old/Image';
-
-const GUILD_TO_OSHI = Object.assign(Object.create(null), {
-	'CGeclp7hLj-lpprbhKxX5': 'calli',
-	hirD8XHurcDYFoNQOFh7p: 'calli',
-	jnTqYPtoPDKlvXKuBcHuo: 'kiara',
-	J9600ROFekClHLwtzquhd: 'kiara',
-	rZNhEJYuseKIKkeSaUSD6: 'ina',
-	rWykVp0wwqJfqVOiiwuHC: 'ina',
-	BSq6epH_Y1ffq0j1ZWOLT: 'gura',
-	'0RdYs2xMNnjmHpIX3CvH6': 'gura',
-	mnFswH44ZCTyQiC8LPgRH: 'ame',
-	pnJc6y2SRMbNunt1vOUkR: 'ame',
-	'hpTi3BFuM46B5SBCyrc-5': 'irys',
-	LHYI_i9eFfDYXksaKKxLB: 'irys',
-	RYpamVJXs76uWEept42Td: 'sana',
-	'94mdRp-j2N8spCx-6UyRE': 'sana',
-	h_LNkS8pI64naLiWSafDj: 'fauna',
-	'BPyt7-SyXPhyTR9m5i6P2': 'fauna',
-	B5vtBaIkfuys1Ln3XMoOY: 'kronii',
-	'-JoyPM46syqox0jp7NXG5': 'kronii',
-	'-ew0gw2u7gk8GdFyxP1-u': 'kronii',
-	_0S7wwTwY17pDkHzWF9QH: 'kronii',
-	vCy2Gob7GNK3SOFufaV7K: 'mumei',
-	c8FUeIsD1jP6a4xUMBubS: 'mumei',
-	lTv1XHPYI8tt7Lzh7g6qk: 'mumei',
-	CesQIHnCRvh9RWkhC_XN_: 'mumei',
-	VkCh1E0PGq8swBN3h7sse: 'bae',
-	jBX00De0x_fJWg7UhDkOK: 'bae',
-
-	// Payload ID's
-	'62f23b24333a65054af560d9': 'sana',
-	'63209a0af2be5d1c9590fb62': 'sana',
-});
+import { getImageUrl } from '@/components/ui/old/Image';
+import Footer from '@/components/ui/old/Footer';
 
 export interface ProjectPageProps {
 	project: Omit<Project, 'flags' | 'devprops'> & {
@@ -133,9 +101,7 @@ export default async function ProjectPage({ project }: ProjectPageProps) {
 		<>
 			<DarkModeFlag project={project} />
 
-			{/* Hypothetically this could label the div with a nonexistant 'theme-' */}
-			{/* class but CSS just ignores nonexistant classes, so who cares? */}
-			<div className={`theme-${GUILD_TO_OSHI[(project.organizer as Guild).id]}`}>
+			<div className="theme-sana">
 				{project.devprops.backgroundMusic && (
 					<ProjectBackgroundMusic backgroundMusic={project.devprops.backgroundMusic!} />
 				)}
@@ -260,6 +226,7 @@ export default async function ProjectPage({ project }: ProjectPageProps) {
 							</div>
 						</div>
 					</div>
+					<Footer flags={['sanaSendoff']} />
 				</div>
 			</div>
 		</>

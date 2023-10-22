@@ -116,13 +116,15 @@ export default function Navbar({ flags, noticeBanner }: IProps) {
 						>
 							{t('projects')}
 						</Link>
-						<Link
+						{/* eslint-disable */}
+						{/* <Link
 							href={localizePathname(locale, '/about')}
 							hrefLang={locale}
 							className="rounded-lg px-2 py-1 font-semibold text-white hover:text-opacity-80 focus:outline-none focus:ring-2 focus:ring-white/80"
 						>
 							{t('about')}
-						</Link>
+						</Link> */}
+						{/* eslint-enable */}
 					</nav>
 					<div className="flex flex-row">
 						<LocaleSelect />
