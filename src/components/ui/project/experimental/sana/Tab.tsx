@@ -3,7 +3,7 @@
 import {
 	ReactNode, useEffect, createContext, useContext, useMemo,
 } from 'react';
-import { ProjectTabsContext } from 'components/ui/project/experimental/sana/Tabs';
+import { ProjectTabsContext } from '@/components/ui/project/experimental/sana/Tabs';
 
 export const ProjectTabContext = createContext<ProjectTabContext | null>(null);
 

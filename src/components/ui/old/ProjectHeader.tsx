@@ -1,5 +1,5 @@
 import 'server-only';
-import { Project } from 'types/payload-types';
+import { Project } from '@/types/payload-types';
 
 interface IProps {
 	title: string;

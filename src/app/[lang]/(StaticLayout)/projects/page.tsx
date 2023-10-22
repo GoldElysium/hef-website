@@ -1,11 +1,10 @@
-import Card from 'components/ui/old/Card';
-import TextHeader from 'components/ui/old/TextHeader';
-import { Project } from 'types/payload-types';
-import PayloadResponse from 'types/PayloadResponse';
-import Header from 'components/ui/old/Header';
+import Card from '@/components/ui/old/Card';
+import { Project } from '@/types/payload-types';
+import PayloadResponse from '@/types/PayloadResponse';
+import Header from '@/components/ui/Header';
 import { Metadata } from 'next';
-import useTranslation from 'lib/i18n/server';
-import { Language } from 'lib/i18n/languages';
+import useTranslation from '@/lib/i18n/server';
+import { Language } from '@/lib/i18n/languages';
 
 interface IProps {
 	params: {
@@ -63,46 +62,24 @@ function formatProjects(projects: Project[], lang: Language): JSX.Element[] {
 export default async function Page({ params: { lang } }: IProps) {
 	const { t } = await useTranslation(lang, 'projects', 'page');
 	const projects = await fetchProjects(lang);
-
-	const ongoing = projects.filter((project: Project) => project.status === 'ongoing');
-	const ongoingProjects = formatProjects(ongoing, lang);
-
-	const past = projects.filter((project: Project) => project.status === 'past');
-	const pastProjects = formatProjects(past, lang);
+	const projectsHtml = formatProjects(projects, lang);
 
 	return (
-		<div className="bg-skin-background-1 dark:bg-skin-dark-background-1 flex h-full min-h-screen flex-col">
+		<div className="flex h-full min-h-screen flex-col bg-skin-background dark:bg-skin-background-dark">
 			<Header
 				title="Projects"
 				description="A list of all the projects organized by Hololive EN Fan servers!"
 			/>
 			<div className="grow">
-				<div className="my-16 flex w-full flex-col items-center">
-					<div className="mx-4 max-w-4xl">
-						<div>
-							<TextHeader>{t('ongoing')}</TextHeader>
-							<div className="flex flex-col text-center sm:-mx-2 sm:flex-row sm:flex-wrap sm:justify-center">
-								{ongoingProjects.length > 0 ? (
-									ongoingProjects
-								) : (
-									<div className="mt-4 text-2xl font-bold text-black dark:text-white">
-										{t('none')}
-									</div>
-								)}
+				<div className="my-16 flex w-full flex-col items-center px-4 sm:px-56">
+					<div className="grid grid-cols-2 gap-6">
+						{projectsHtml.length > 0 ? (
+							projectsHtml
+						) : (
+							<div className="mt-4 text-2xl font-bold text-black dark:text-white">
+								{t('none')}
 							</div>
-						</div>
-						<div className="mt-10">
-							<TextHeader>{t('past')}</TextHeader>
-							<div className="flex flex-col text-center sm:-mx-2 sm:flex-row sm:flex-wrap sm:justify-center">
-								{pastProjects.length > 0 ? (
-									pastProjects
-								) : (
-									<div className="mt-4 text-2xl font-bold text-black dark:text-white">
-										{t('none')}
-									</div>
-								)}
-							</div>
-						</div>
+						)}
 					</div>
 				</div>
 			</div>

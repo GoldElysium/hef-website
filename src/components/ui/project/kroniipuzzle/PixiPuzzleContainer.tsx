@@ -9,7 +9,7 @@ import React, {
 import * as PIXI from 'pixi.js';
 import { Graphics as PixiGraphics, Renderer, TextStyle } from 'pixi.js';
 import type { Viewport as PixiViewport } from 'pixi-viewport';
-import { Submission } from 'types/payload-types';
+import { Submission } from '@/types/payload-types';
 import type { StageSize } from './PixiWrapper';
 import Viewport from './pixi/Viewport';
 import Sidebar from './pixi/Sidebar';

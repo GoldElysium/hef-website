@@ -1,9 +1,9 @@
 'use client';
 
-import { Media, Project } from 'types/payload-types';
+import { Media, Project } from '@/types/payload-types';
 import ReactPlayer from 'react-player';
 import Image from 'next/image';
-import useTranslation from 'lib/i18n/client';
+import useTranslation from '@/lib/i18n/client';
 
 interface GalleryItemProps {
 	media: Array<Omit<Required<Project>['media'][number], 'media'> & { media: Media }>;

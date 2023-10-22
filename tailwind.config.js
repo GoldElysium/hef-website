@@ -71,8 +71,10 @@ module.exports = {
 				skin: themeColors,
 			},
 			borderColor: {
-				skin: {
-				}
+				skin: themeColors,
+			},
+			stroke: {
+				skin: themeColors,
 			},
 			zIndex: {
 				'-1': '-1',

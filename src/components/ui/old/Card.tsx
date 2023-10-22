@@ -1,7 +1,7 @@
-import { Language } from 'lib/i18n/languages';
-import localizePathname from 'lib/util/localizePathname';
+import { Language } from '@/lib/i18n/languages';
+import localizePathname from '@/lib/util/localizePathname';
 import Link from 'next/link';
-import Image from 'components/ui/old/Image';
+import Image from '@/components/ui/old/Image';
 
 interface IProps {
 	/* eslint-disable react/require-default-props */

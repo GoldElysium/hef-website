@@ -1,10 +1,10 @@
 import {
 	Project, Submission as ISubmission, Submission, SubmissionMedia,
-} from 'types/payload-types';
-import PayloadResponse from 'types/PayloadResponse';
+} from '@/types/payload-types';
+import PayloadResponse from '@/types/PayloadResponse';
 // eslint-disable-next-line import/no-cycle
-import PhaserWrapper from 'components/ui/project/guratanabata/PhaserWrapper';
-import { getImageUrl } from 'components/ui/old/Image';
+import PhaserWrapper from '@/components/ui/project/guratanabata/PhaserWrapper';
+import { getImageUrl } from '@/components/ui/old/Image';
 
 interface IProps {
 	project: Omit<Project, 'flags' | 'devprops'> & {

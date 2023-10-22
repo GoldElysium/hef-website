@@ -1,4 +1,4 @@
-import { Project, Submission } from 'types/payload-types';
+import { Project, Submission } from '@/types/payload-types';
 import { ArrowLeftIcon } from '@heroicons/react/20/solid';
 import Submissions from '../experimental/sana/Submissions';
 

@@ -1,7 +1,7 @@
 'use client';
 
 import '@pixi/gif';
-import { Project, Submission } from 'types/payload-types';
+import { Project, Submission } from '@/types/payload-types';
 import { Stage } from '@pixi/react';
 import React, { useEffect, useState } from 'react';
 import * as PIXI from 'pixi.js';

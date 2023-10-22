@@ -2,7 +2,7 @@
 
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 import { ReactNode, useState } from 'react';
-import { Submission as ISubmission, SubmissionMedia } from 'types/payload-types';
+import { Submission as ISubmission, SubmissionMedia } from '@/types/payload-types';
 
 interface IProps {
 	submission: Omit<ISubmission, 'media' | 'srcIcon'> & { media: Array<Required<ISubmission>['media'][number] & { image: SubmissionMedia }>; srcIcon: SubmissionMedia };

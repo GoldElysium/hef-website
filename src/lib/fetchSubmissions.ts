@@ -1,5 +1,5 @@
-import { Submission, SubmissionMedia } from 'types/payload-types';
-import PayloadResponse from 'types/PayloadResponse';
+import { Submission, SubmissionMedia } from '@/types/payload-types';
+import PayloadResponse from '@/types/PayloadResponse';
 
 interface MediaItem {
 	type: 'image' | 'video';

@@ -1,6 +1,6 @@
 'use client';
 
-import { Submission } from 'types/payload-types';
+import { Submission } from '@/types/payload-types';
 import React, { ReactNode, useEffect, useState } from 'react';
 import { CheckIcon, ChevronUpDownIcon, FunnelIcon } from '@heroicons/react/20/solid';
 import { Listbox, Transition } from '@headlessui/react';

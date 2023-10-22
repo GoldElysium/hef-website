@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { match } from '@formatjs/intl-localematcher';
-import getLanguagesFromHeaders from 'lib/util/middleware';
-import { fallbackLanguage, languages } from 'lib/i18n/settings';
+import getLanguagesFromHeaders from '@/lib/util/middleware';
+import { fallbackLanguage, languages } from '@/lib/i18n/settings';
 
 function getLocaleFromPathname(pathName: string) {
 	return languages.find(

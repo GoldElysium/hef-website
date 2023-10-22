@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 // eslint-disable-next-line import/no-cycle
-import { TanabataSubmission } from 'components/ui/project/guratanabata/PhaserSubmissionWrapper';
+import { TanabataSubmission } from '@/components/ui/project/guratanabata/PhaserSubmissionWrapper';
 
 const PAPER_SLIDES = [
 	'paperslide1',

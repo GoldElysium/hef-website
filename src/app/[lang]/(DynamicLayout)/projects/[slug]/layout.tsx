@@ -1,14 +1,17 @@
-import 'styles/sana-timeline.css';
-import Navbar from 'components/ui/old/Navbar';
-import Footer from 'components/ui/old/Footer';
-import PayloadResponse from 'types/PayloadResponse';
-import { Flag, Project } from 'types/payload-types';
-import ProjectHeader from 'components/ui/old/ProjectHeader';
+import '@/styles/sana-timeline.css';
+import Navbar from '@/components/ui/Navbar';
+import Footer from '@/components/ui/Footer';
+import PayloadResponse from '@/types/PayloadResponse';
+import { Flag, Project } from '@/types/payload-types';
+import ProjectHeader from '@/components/ui/old/ProjectHeader';
+import NoticeBannerWrapper from '@/components/ui/NoticeBannerWrapper';
+import { Language } from '@/lib/i18n/languages';
 
 interface IProps {
 	children: React.ReactNode;
 	params: {
 		slug?: string;
+		lang: Language;
 	}
 }
 
@@ -42,7 +45,7 @@ async function getProject(slug: string): Promise<PropsProject | null> {
 	};
 }
 
-export default async function RootLayout({ children, params: { slug } }: IProps) {
+export default async function RootLayout({ children, params: { slug, lang } }: IProps) {
 	let project: PropsProject | null = null;
 
 	if (slug) {
@@ -51,7 +54,12 @@ export default async function RootLayout({ children, params: { slug } }: IProps)
 
 	return (
 		<>
-			<Navbar flags={project?.flags ?? []} />
+			<Navbar
+				flags={project?.flags ?? []}
+				noticeBanner={
+					<NoticeBannerWrapper lang={lang} />
+				}
+			/>
 			{
 				project && !project.flags.includes('disableHeader') && (
 					<ProjectHeader

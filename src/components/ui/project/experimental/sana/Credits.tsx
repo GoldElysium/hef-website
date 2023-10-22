@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import ProjectCredit from 'components/ui/project/experimental/sana/Credit';
+import ProjectCredit from '@/components/ui/project/experimental/sana/Credit';
 
 export interface ProjectCreditsProps {
 	credits: {

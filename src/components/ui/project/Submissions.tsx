@@ -1,8 +1,8 @@
-import Submission from 'components/ui/project/Submission';
-import { Project } from 'types/payload-types';
-import useTranslation from 'lib/i18n/server';
-import { Language } from 'lib/i18n/languages';
-import fetchSubmissions from 'lib/fetchSubmissions';
+import Submission from '@/components/ui/project/Submission';
+import { Project } from '@/types/payload-types';
+import useTranslation from '@/lib/i18n/server';
+import { Language } from '@/lib/i18n/languages';
+import fetchSubmissions from '@/lib/fetchSubmissions';
 import SubmissionsWithFilter from './experimental/submissionsFilter/SubmissionsWithFilter';
 
 interface IProps {

@@ -1,18 +1,18 @@
 'use client';
 
-import { useLocale } from 'components/contexts/LocaleContext';
-import useTranslation from 'lib/i18n/client';
-import localizePathname from 'lib/util/localizePathname';
+import { useLocale } from '@/components/contexts/LocaleContext';
+import useTranslation from '@/lib/i18n/client';
+import localizePathname from '@/lib/util/localizePathname';
 import Link from 'next/link';
-import DarkModeToggle from 'components/ui/DarkModeToggle';
-import NoticeBanner from 'components/ui/old/NoticeBanner';
-import LocaleSelect from 'components/ui/util/LocaleSelect';
-import { useState } from 'react';
+import DarkModeToggle from '@/components/ui/DarkModeToggle';
+import LocaleSelect from '@/components/ui/util/LocaleSelect';
+import { ReactNode, useState } from 'react';
 import { Slant as Hamburger } from 'hamburger-react';
 import MobileNav from './MobileNav';
 
 interface IProps {
 	flags: string[];
+	noticeBanner: ReactNode;
 }
 
 function Icon({ className }: { className?: string }) {
@@ -69,7 +69,7 @@ function Icon({ className }: { className?: string }) {
 	);
 }
 
-export default function Navbar({ flags }: IProps) {
+export default function Navbar({ flags, noticeBanner }: IProps) {
 	if (flags.includes('disableNavbar')) return null;
 
 	// eslint-disable-next-line react-hooks/rules-of-hooks
@@ -82,8 +82,7 @@ export default function Navbar({ flags }: IProps) {
 
 	return (
 		<>
-			{/* TODO: Make this ISR */}
-			<NoticeBanner />
+			{noticeBanner}
 			<div className="flex h-20 w-full items-center justify-between bg-skin-header px-4 text-skin-header-foreground dark:bg-skin-header-dark dark:text-skin-header-foreground-dark sm:px-8">
 				<div className="relative flex w-full items-center justify-between sm:hidden">
 					<Link

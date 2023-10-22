@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
-import { Project } from 'types/payload-types';
-import PayloadResponse from 'types/PayloadResponse';
+import { Project } from '@/types/payload-types';
+import PayloadResponse from '@/types/PayloadResponse';
 
 export async function GET() {
 	let projects: Project[] = [];

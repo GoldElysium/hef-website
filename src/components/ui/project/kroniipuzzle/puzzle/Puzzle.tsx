@@ -8,7 +8,7 @@ import * as PIXI from 'pixi.js';
 import { Container, Graphics } from '@pixi/react';
 import { IMediaInstance, Sound } from '@pixi/sound';
 import { shallow } from 'zustand/shallow';
-import { Submission, SubmissionMedia } from 'types/payload-types';
+import { Submission, SubmissionMedia } from '@/types/payload-types';
 import Piece, { PieceActions } from './Piece';
 import Message from './Message';
 import PieceInfo from './PieceInfo';

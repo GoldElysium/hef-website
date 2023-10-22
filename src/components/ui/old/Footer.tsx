@@ -9,7 +9,7 @@ export default function Footer({ flags }: IProps) {
 	if (flags.includes('disableFooter')) return null;
 
 	return (
-		<div
+		<footer
 			className="bg-skin-background-2 dark:bg-skin-dark-background-2 flex h-24 w-full items-center justify-center px-4 sm:px-8"
 			style={{
 				backgroundImage: flags.includes('sanaSendoff') ? 'url(/assets/sanasendoff/background.png)' : undefined,
@@ -33,6 +33,6 @@ export default function Footer({ flags }: IProps) {
 				src="https://static.cloudflareinsights.com/beacon.min.js"
 				data-cf-beacon='{"token": "5896757c09e04949bf74e7c34efd419a"}'
 			/>
-		</div>
+		</footer>
 	);
 }

@@ -1,6 +1,9 @@
 {
 	"page": {
-		"featured": "特徴プロジェクト",
+		"featured": {
+			"left": "特徴プロジェクト",
+			"right": ""
+		},
 		"servers": "EN サーバー",
 		"none": "なし"
 	},

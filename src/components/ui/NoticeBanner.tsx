@@ -2,34 +2,13 @@
 
 import { Fragment, Suspense, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import useSWR, { Fetcher } from 'swr';
 import { Notice as APINoticeBanner } from '@/types/payload-types';
 import DescriptionSerializer from '@/components/ui/project/util/DescriptionSerializer';
-import { useLocale } from '@/components/contexts/LocaleContext';
 import useTranslation from '@/lib/i18n/client';
-import { Language } from '@/lib/i18n/languages';
 
-/* TODO: fetch locale */
-const fetcher: Fetcher<APINoticeBanner> = (lang: string) => fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/globals/notice?locale=${lang}`).then((res) => res.json());
-
-function useNoticeBanner(lang: Language) {
-	// eslint-disable-next-line max-len
-	const { data, error } = useSWR<APINoticeBanner>([lang], fetcher, { refreshInterval: 10 * 60 * 1000 });
-	return {
-		data,
-		isLoading: !error && !data,
-		isError: error,
-	};
-}
-
-export default function NoticeBanner() {
-	const { locale } = useLocale();
+export default function NoticeBanner({ data }: { data: APINoticeBanner }) {
 	const { t } = useTranslation('layout', 'notice-banner');
-	const { data, isError, isLoading } = useNoticeBanner(locale);
 	const [dialogOpen, setDialogOpen] = useState(false);
-
-	// eslint-disable-next-line max-len
-	if (isLoading || isError || !data || !data.enabled || !data.message || !data.description) return null;
 
 	return (
 		<div>
@@ -85,7 +64,7 @@ export default function NoticeBanner() {
 										</Dialog.Title>
 										<div className="mt-4">
 											<p className="text-[#323232] md:text-lg">
-												{DescriptionSerializer(data.message)}
+												{DescriptionSerializer(data.message as any)}
 											</p>
 										</div>
 

@@ -9,7 +9,7 @@ import BBCodeTextPlugin from 'phaser3-rex-plugins/plugins/bbcodetext-plugin';
 import AwaitLoaderPlugin from 'phaser3-rex-plugins/plugins/awaitloader-plugin';
 import { Plugin as NineSlicePlugin } from 'phaser3-nineslice';
 // eslint-disable-next-line import/no-cycle
-import { TanabataSubmission } from 'components/ui/project/guratanabata/PhaserSubmissionWrapper';
+import { TanabataSubmission } from '@/components/ui/project/guratanabata/PhaserSubmissionWrapper';
 
 import GoogleFontsPlugin from './plugins/gfonts';
 import UIPl from './plugins/ui';

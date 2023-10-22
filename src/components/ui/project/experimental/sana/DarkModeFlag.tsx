@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { useTheme } from 'next-themes';
-import { Project } from 'types/payload-types';
+import { Project } from '@/types/payload-types';
 
 export interface ProjectPageProps {
 	project: Omit<Project, 'flags' | 'devprops'> & {

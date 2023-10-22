@@ -1,6 +1,6 @@
 'use client';
 
-import { Project, Submission } from 'types/payload-types';
+import { Project, Submission } from '@/types/payload-types';
 import OS from 'phaser/src/device/OS';
 import PixiWrapper from './PixiWrapper';
 

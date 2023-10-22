@@ -5,9 +5,9 @@ import { Bars3Icon } from '@heroicons/react/24/solid';
 import React, { Fragment, useState } from 'react';
 import Link from 'next/link';
 import { HomeIcon, ListBulletIcon } from '@heroicons/react/24/outline';
-import { useLocale } from 'components/contexts/LocaleContext';
-import localizePathname from 'lib/util/localizePathname';
-import useTranslation from 'lib/i18n/client';
+import { useLocale } from '@/components/contexts/LocaleContext';
+import localizePathname from '@/lib/util/localizePathname';
+import useTranslation from '@/lib/i18n/client';
 
 export default function NavbarMenu() {
 	const [menuOpen, setMenuOpen] = useState(false);
@@ -30,7 +30,7 @@ export default function NavbarMenu() {
 				leaveTo="transform opacity-0 scale-95"
 			>
 
-				<Menu.Items static className="dark:bg-skin-dark-background-2 absolute top-10 mr-2 w-32 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+				<Menu.Items static className="dark:bg-skin-dark-background-2 absolute top-10 mr-2 w-32 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
 					<div className="px-2 py-1">
 						<Menu.Item>
 							<Link

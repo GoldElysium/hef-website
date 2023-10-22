@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ChevronDownIcon } from '@heroicons/react/24/solid';
-import localizePathname from 'lib/util/localizePathname';
+import localizePathname from '@/lib/util/localizePathname';
 import { LanguageIcon } from '@heroicons/react/24/outline';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 

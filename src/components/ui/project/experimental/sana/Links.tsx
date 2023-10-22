@@ -1,5 +1,5 @@
-import TextHeader from 'components/ui/project/experimental/sana/TextHeader';
-import { Project } from 'types/payload-types';
+import TextHeader from '@/components/ui/project/experimental/sana/TextHeader';
+import { Project } from '@/types/payload-types';
 
 export interface ProjectLinksProps {
 	links: Exclude<Project['links'], undefined>;

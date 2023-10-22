@@ -1,10 +1,10 @@
 'use client';
 
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
-import TextHeader from 'components/ui/old/TextHeader';
-import GalleryItem from 'components/ui/project/GalleryItem';
+import TextHeader from '@/components/ui/old/TextHeader';
+import GalleryItem from '@/components/ui/project/GalleryItem';
 import { useState } from 'react';
-import { Media, Project } from 'types/payload-types';
+import { Media, Project } from '@/types/payload-types';
 
 interface IProps {
 	project: Omit<Project, 'flags' | 'devprops' | 'media'> & {

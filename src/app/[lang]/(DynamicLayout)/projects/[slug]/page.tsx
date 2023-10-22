@@ -1,19 +1,19 @@
 import {
 	Flag, Guild, Media, Project,
-} from 'types/payload-types';
-import DescriptionSerializer from 'components/ui/project/util/DescriptionSerializer';
-import TextHeader from 'components/ui/old/TextHeader';
-import PayloadResponse from 'types/PayloadResponse';
-import Submissions from 'components/ui/project/Submissions';
-import Gallery from 'components/ui/project/Gallery';
-import ExperimentalProjectPage from 'components/ui/project/experimental/sana/Page';
-import PhaserSubmissionWrapper from 'components/ui/project/guratanabata/PhaserSubmissionWrapper';
+} from '@/types/payload-types';
+import DescriptionSerializer from '@/components/ui/project/util/DescriptionSerializer';
+import TextHeader from '@/components/ui/old/TextHeader';
+import PayloadResponse from '@/types/PayloadResponse';
+import Submissions from '@/components/ui/project/Submissions';
+import Gallery from '@/components/ui/project/Gallery';
+import ExperimentalProjectPage from '@/components/ui/project/experimental/sana/Page';
+import PhaserSubmissionWrapper from '@/components/ui/project/guratanabata/PhaserSubmissionWrapper';
 import { notFound } from 'next/navigation';
-import { getImageUrl } from 'components/ui/old/Image';
+import { getImageUrl } from '@/components/ui/old/Image';
 import { Metadata } from 'next';
-import useTranslation from 'lib/i18n/server';
-import { Language } from 'lib/i18n/languages';
-import PixiSubmissionWrapper from 'components/ui/project/kroniipuzzle/PixiSubmissionWrapper';
+import useTranslation from '@/lib/i18n/server';
+import { Language } from '@/lib/i18n/languages';
+import PixiSubmissionWrapper from '@/components/ui/project/kroniipuzzle/PixiSubmissionWrapper';
 
 // ID's for both production and development databases
 // TODO: Replace with Payload data
@@ -169,7 +169,7 @@ export async function generateStaticParams({ params: { lang } }: IProps) {
 
 	async function fetchNextProjects() {
 		// Fetch next page
-		const projectsRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/projects?depth=0&limit=100&page=${page}&depth=0&locale=${lang}&fallback-locale=en`, {
+		const projectsRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/projects?depth=0&limit=100&page=${page}&depth=0&localelocale=${lang}&fallback-locale=en`, {
 			headers: {
 				'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? undefined,
 				Authorization: process.env.PAYLOAD_API_KEY ? `users API-Key ${process.env.PAYLOAD_API_KEY}` : undefined,

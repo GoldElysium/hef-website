@@ -6,8 +6,20 @@ module.exports = {
 		'plugin:tailwindcss/recommended',
 		'plugin:storybook/recommended',
 	],
+	plugins: ['@typescript-eslint', 'import'],
 	parserOptions: {
 		project: './tsconfig.json'
+	},
+	settings: {
+		'import/parsers': {
+			'@typescript-eslint/parser': ['.ts', '.tsx'],
+		},
+		'import/resolver': {
+			typescript: {
+				alwaysTryTypes: true,
+				project: './tsconfig.json'
+			},
+		},
 	},
 	rules: {
 		'no-tabs': 'off',

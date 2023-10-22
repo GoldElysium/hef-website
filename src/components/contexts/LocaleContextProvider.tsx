@@ -1,12 +1,12 @@
 'use client';
 
 import React, { useMemo, useState } from 'react';
-import { LocaleContext } from 'components/contexts/LocaleContext';
+import { LocaleContext } from '@/components/contexts/LocaleContext';
 import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import { getOptions } from 'lib/i18n/settings';
+import { getOptions } from '@/lib/i18n/settings';
 import resourcesToBackend from 'i18next-resources-to-backend';
-import { Language } from 'lib/i18n/languages';
+import { Language } from '@/lib/i18n/languages';
 
 interface IProps {
 	children: React.ReactNode

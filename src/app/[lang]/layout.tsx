@@ -1,11 +1,11 @@
-import 'styles/globals.css';
-import DarkModeProvider from 'components/contexts/DarkModeProvider';
+import '@/styles/globals.css';
+import DarkModeProvider from '@/components/contexts/DarkModeProvider';
 import { Metadata } from 'next';
 import { dir } from 'i18next';
-import LocaleContextProvider from 'components/contexts/LocaleContextProvider';
-import useTranslation from 'lib/i18n/server';
-import { Language } from 'lib/i18n/languages';
-import { languages } from 'lib/i18n/settings';
+import LocaleContextProvider from '@/components/contexts/LocaleContextProvider';
+import useTranslation from '@/lib/i18n/server';
+import { Language } from '@/lib/i18n/languages';
+import { languages } from '@/lib/i18n/settings';
 import { Nunito } from 'next/font/google';
 
 interface IProps {

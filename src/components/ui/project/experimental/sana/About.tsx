@@ -1,8 +1,8 @@
-import ProjectDescription from 'components/ui/project/experimental/sana/Description';
-import DescriptionSerializer from 'components/ui/project/util/DescriptionSerializer';
-import ProjectGallery from 'components/ui/project/Gallery';
-import ProjectLinks from 'components/ui/project/experimental/sana/Links';
-import { Project } from 'types/payload-types';
+import ProjectDescription from '@/components/ui/project/experimental/sana/Description';
+import DescriptionSerializer from '@/components/ui/project/util/DescriptionSerializer';
+import ProjectGallery from '@/components/ui/project/Gallery';
+import ProjectLinks from '@/components/ui/project/experimental/sana/Links';
+import { Project } from '@/types/payload-types';
 
 export interface ProjectAboutProps {
 	project: Omit<Project, 'flags' | 'devprops'> & {

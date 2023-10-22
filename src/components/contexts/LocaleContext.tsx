@@ -1,7 +1,7 @@
 'use client';
 
-import { Language } from 'lib/i18n/languages';
-import { fallbackLanguage } from 'lib/i18n/settings';
+import { Language } from '@/lib/i18n/languages';
+import { fallbackLanguage } from '@/lib/i18n/settings';
 import React from 'react';
 
 type LocaleContextType = {

@@ -1,6 +1,9 @@
 {
 	"page": {
-		"featured": "Featured projects",
+		"featured": {
+			"left": "Featured",
+			"right": " Projects"
+		},
 		"servers": "EN Servers",
 		"none": "None"
 	},
