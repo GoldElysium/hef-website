@@ -59,6 +59,7 @@ export default async function RootLayout({ children, params: { slug, lang } }: I
 				noticeBanner={
 					<NoticeBannerWrapper lang={lang} />
 				}
+				locale={lang}
 			/>
 			{
 				project && !project.flags.includes('disableHeader') && (

@@ -18,6 +18,7 @@ export default function RootLayout({ children, params: { lang } }: IProps) {
 				noticeBanner={
 					<NoticeBannerWrapper lang={lang} />
 				}
+				locale={lang}
 			/>
 			<main>
 				{children}

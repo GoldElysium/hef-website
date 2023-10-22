@@ -95,7 +95,7 @@ export default async function Page({ params: { lang } }: IProps) {
 	)); */
 
 	return (
-		<div className="flex h-full min-h-screen flex-col bg-skin-background text-skin-text dark:bg-skin-background-dark dark:text-skin-text-dark">
+		<div className="flex h-full min-h-screen flex-col overflow-hidden bg-skin-background text-skin-text dark:bg-skin-background-dark dark:text-skin-text-dark">
 			<Header title={t('hero.title')} description={t('hero.description')} />
 			<div className="grow">
 				<div className="my-16 flex w-full flex-col items-center px-4 sm:px-56">

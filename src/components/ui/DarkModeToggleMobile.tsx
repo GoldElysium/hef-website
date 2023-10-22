@@ -4,7 +4,7 @@ import { useTheme } from 'next-themes';
 import * as Switch from '@radix-ui/react-switch';
 import { useEffect, useState } from 'react';
 
-export default function DarkModeToggle() {
+export default function DarkModeToggleMobile() {
 	const { resolvedTheme, setTheme } = useTheme();
 	const [mounted, setMounted] = useState(false);
 
@@ -15,6 +15,11 @@ export default function DarkModeToggle() {
 	if (!mounted) {
 		return (
 			<div className="ml-6 flex flex-nowrap items-center gap-2 align-middle">
+				<img
+					src="/img/nightMode.svg"
+					alt="Night Mode Icon"
+					className="inline h-auto w-8"
+				/>
 				<Switch.Root
 					checked={false}
 					className="h-10 w-[4.25rem] rounded-full bg-black/40 px-2"
@@ -22,17 +27,17 @@ export default function DarkModeToggle() {
 				>
 					<Switch.Thumb className="block h-6 w-6 rounded-full bg-white/80 transition-transform duration-150 data-[state=checked]:translate-x-[1.75rem] motion-reduce:transition-none" />
 				</Switch.Root>
-				<img
-					src="/img/nightMode.svg"
-					alt="Night Mode Icon"
-					className="inline h-auto w-8"
-				/>
 			</div>
 		);
 	}
 
 	return (
 		<div className="ml-6 flex flex-nowrap items-center gap-2 align-middle">
+			<img
+				src="/img/nightMode.svg"
+				alt="Night Mode Icon"
+				className="inline h-auto w-8"
+			/>
 			<Switch.Root
 				checked={resolvedTheme === 'dark'}
 				onCheckedChange={() => {
@@ -42,11 +47,6 @@ export default function DarkModeToggle() {
 			>
 				<Switch.Thumb className="block h-6 w-6 rounded-full bg-white/80 transition-transform duration-150 data-[state=checked]:translate-x-[1.75rem] motion-reduce:transition-none" />
 			</Switch.Root>
-			<img
-				src="/img/nightMode.svg"
-				alt="Night Mode Icon"
-				className="inline h-auto w-8"
-			/>
 		</div>
 	);
 }
