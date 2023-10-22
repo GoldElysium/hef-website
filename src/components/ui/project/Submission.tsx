@@ -34,7 +34,8 @@ export default async function Submission({ submission, index, lang }: IProps) {
 				)}
 				{submission.author && (
 					<div className="ml-4 mt-3 text-lg">
-						{t('author', { author: submission.author })}
+						{t('author')}
+						{submission.author}
 					</div>
 				)}
 				<div className="grow" />

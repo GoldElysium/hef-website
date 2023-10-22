@@ -3,7 +3,7 @@ import Navbar from 'components/ui/old/Navbar';
 import Footer from 'components/ui/old/Footer';
 import PayloadResponse from 'types/PayloadResponse';
 import { Flag, Project } from 'types/payload-types';
-import ProjectHeader from '../../../../../components/ui/old/ProjectHeader';
+import ProjectHeader from 'components/ui/old/ProjectHeader';
 
 interface IProps {
 	children: React.ReactNode;
@@ -16,6 +16,7 @@ interface PropsProject {
 	flags: string[];
 	title: string;
 	description: string;
+	devprops: Project['devprops'];
 }
 
 async function getProject(slug: string): Promise<PropsProject | null> {
@@ -37,6 +38,7 @@ async function getProject(slug: string): Promise<PropsProject | null> {
 		title: project.title,
 		description: project.shortDescription,
 		flags: (project.flags as Flag[] ?? []).map((flag) => flag.code),
+		devprops: project.devprops,
 	};
 }
 
@@ -52,7 +54,11 @@ export default async function RootLayout({ children, params: { slug } }: IProps)
 			<Navbar flags={project?.flags ?? []} />
 			{
 				project && !project.flags.includes('disableHeader') && (
-					<ProjectHeader title={project.title} description={project.description} />
+					<ProjectHeader
+						title={project.title}
+						description={project.description}
+						devprops={project.devprops}
+					/>
 				)
 			}
 			<main>

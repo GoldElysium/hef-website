@@ -62,7 +62,7 @@ export default function PixiPuzzleContainer({
 	);
 
 	useEffect(() => {
-		(app.renderer as Renderer).framebuffer.blit();
+		(app.renderer as unknown as Renderer).framebuffer.blit();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
