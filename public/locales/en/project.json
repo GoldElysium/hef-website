@@ -1,6 +1,9 @@
 {
 	"page": {
-		"description": "Description",
+		"description": {
+			"left": "About this",
+			"right": " Project"
+		},
 		"links": "Links",
 		"submissions": "Submissions",
 		"loading": "Loading submissions..."

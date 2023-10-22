@@ -1,10 +1,10 @@
-import Card from '@/components/ui/old/Card';
 import { Project } from '@/types/payload-types';
 import PayloadResponse from '@/types/PayloadResponse';
 import Header from '@/components/ui/Header';
 import { Metadata } from 'next';
 import useTranslation from '@/lib/i18n/server';
 import { Language } from '@/lib/i18n/languages';
+import ProjectCard from '@/components/ui/ProjectCard';
 
 interface IProps {
 	params: {
@@ -46,15 +46,11 @@ async function fetchProjects(lang: Language): Promise<Project[]> {
 }
 
 function formatProjects(projects: Project[], lang: Language): JSX.Element[] {
-	return projects.map((project: Project) => (
-		<Card
+	return projects.map((project) => (
+		<ProjectCard
 			key={project.id}
-			title={project.title}
-			description={project.shortDescription}
-			button="View"
-			url={`/projects/${project.slug}`}
+			project={project}
 			lang={lang}
-			internal
 		/>
 	));
 }
@@ -72,7 +68,7 @@ export default async function Page({ params: { lang } }: IProps) {
 			/>
 			<div className="grow">
 				<div className="my-16 flex w-full flex-col items-center px-4 sm:px-56">
-					<div className="grid grid-cols-2 gap-6">
+					<div className="grid w-full grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
 						{projectsHtml.length > 0 ? (
 							projectsHtml
 						) : (

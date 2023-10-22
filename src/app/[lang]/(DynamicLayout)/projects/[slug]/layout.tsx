@@ -3,7 +3,7 @@ import Navbar from '@/components/ui/Navbar';
 import Footer from '@/components/ui/Footer';
 import PayloadResponse from '@/types/PayloadResponse';
 import { Flag, Project } from '@/types/payload-types';
-import ProjectHeader from '@/components/ui/old/ProjectHeader';
+import Header from '@/components/ui/Header';
 import NoticeBannerWrapper from '@/components/ui/NoticeBannerWrapper';
 import { Language } from '@/lib/i18n/languages';
 
@@ -62,7 +62,7 @@ export default async function RootLayout({ children, params: { slug, lang } }: I
 			/>
 			{
 				project && !project.flags.includes('disableHeader') && (
-					<ProjectHeader
+					<Header
 						title={project.title}
 						description={project.description}
 						devprops={project.devprops}

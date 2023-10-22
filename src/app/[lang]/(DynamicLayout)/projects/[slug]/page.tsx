@@ -14,6 +14,7 @@ import { Metadata } from 'next';
 import useTranslation from '@/lib/i18n/server';
 import { Language } from '@/lib/i18n/languages';
 import PixiSubmissionWrapper from '@/components/ui/project/kroniipuzzle/PixiSubmissionWrapper';
+import { ArrowTopRightOnSquareIcon } from '@heroicons/react/20/solid';
 
 // ID's for both production and development databases
 // TODO: Replace with Payload data
@@ -115,14 +116,17 @@ export default async function ProjectPage({ params: { slug, lang } }: IProps) {
 
 	return (
 		<div className={themeStyle}>
-			<div className="bg-skin-background-1 dark:bg-skin-dark-background-1 flex h-full min-h-screen flex-col">
+			<div className="flex h-full min-h-screen flex-col bg-skin-background dark:bg-skin-background-dark">
 				<div className="grow">
-					<div className="mb-16 mt-4 flex w-full flex-col items-center">
+					<div className="my-16 flex w-full flex-col items-center px-4 sm:px-56">
 						<div className="w-full max-w-full break-words px-4 sm:!max-w-4xl md:break-normal">
 							<TextHeader>
-								{t('description')}
+								{t('description.left')}
+								<span className="text-skin-heading">
+									{t('description.right')}
+								</span>
 							</TextHeader>
-							<div className="description-body">
+							<div className="description-body text-lg">
 								{DescriptionSerializer(project.description)}
 							</div>
 							{(project.media?.length ?? 0) > 0 && (
@@ -137,11 +141,12 @@ export default async function ProjectPage({ params: { slug, lang } }: IProps) {
 										{project.links && project.links.map((link) => (
 											<div
 												key={`link-${link.name}-${link.url}`}
-												className="bg-skin-secondary-1 dark:bg-skin-dark-secondary-1 mt-4 flex h-10 w-[6rem] content-end items-center justify-center rounded-3xl font-bold text-white hover:text-opacity-70"
+												className="mt-4 flex h-10 cursor-pointer content-end items-center justify-center gap-2 rounded-3xl bg-skin-primary px-4 font-bold text-white hover:underline dark:bg-skin-primary-dark"
 											>
 												<a href={link.url} target="_blank" rel="noreferrer">
 													{link.name}
 												</a>
+												<ArrowTopRightOnSquareIcon className="h-6 w-6" />
 											</div>
 										))}
 									</div>
@@ -150,7 +155,13 @@ export default async function ProjectPage({ params: { slug, lang } }: IProps) {
 							{/* TODO: Move submissions to separate tab */}
 							<div className="mt-4">
 								{!(project.flags.includes('disableTabs') || project.flags.includes('filterableSubmissions')) && (
-									<TextHeader>Submissions</TextHeader>
+									<TextHeader>
+										Community
+										<span className="text-skin-heading">
+											{' '}
+											Submissions
+										</span>
+									</TextHeader>
 								)}
 								<Submissions project={project} lang={lang} />
 							</div>

@@ -15,7 +15,7 @@ export default function ProjectFeaturedCard({ project, lang }: IProps) {
 				backgroundImage: `url(${getImageUrl({
 					src: 'https://cdn.holoen.fans/hefw/media/usgs-hoS3dzgpHzw-unsplash.jpg',
 					width: 800,
-					quality: 90,
+					quality: 75,
 					action: 'resize',
 				})})`,
 			}}
@@ -28,7 +28,7 @@ export default function ProjectFeaturedCard({ project, lang }: IProps) {
 						<span className="text-lg text-white">
 							{project.title}
 						</span>
-						<ButtonLink text="View" url={`/projects/${project.slug}`} lang={lang} internal />
+						<ButtonLink text="View" url={`/projects/${project.slug}`} lang={lang} internal forceLightMode />
 					</div>
 				</div>
 			</div>

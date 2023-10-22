@@ -12,7 +12,7 @@ export default function Footer({ flags }: IProps) {
 		<>
 			<footer>
 				<svg
-					className="w-full bg-skin-background text-skin-header dark:bg-skin-background-dark dark:text-skin-header-dark"
+					className="-mb-1 w-full bg-skin-background text-skin-header dark:bg-skin-background-dark dark:text-skin-header-dark"
 					viewBox="0 0 1920 83"
 					fill="none"
 					xmlns="http://www.w3.org/2000/svg"
