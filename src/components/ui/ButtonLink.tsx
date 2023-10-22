@@ -8,10 +8,11 @@ interface IProps {
 	internal?: boolean;
 	lang: Language;
 	forceLightMode?: boolean;
+	className?: string;
 }
 
 export default function ButtonLink({
-	url, internal, lang, text, forceLightMode,
+	url, internal, lang, text, forceLightMode, className,
 }: IProps) {
 	return (
 		internal ? (
@@ -19,7 +20,7 @@ export default function ButtonLink({
 				href={localizePathname(lang, url)}
 				hrefLang={lang}
 				className={`flex h-10 cursor-pointer content-end items-center justify-center rounded-3xl bg-skin-primary px-4
-					font-bold text-white hover:text-opacity-70 ${forceLightMode ? '' : 'dark:bg-skin-primary-dark'}`}
+					font-bold text-white hover:text-opacity-70 ${forceLightMode ? '' : 'dark:bg-skin-primary-dark'} ${className}`}
 			>
 				{text}
 			</Link>

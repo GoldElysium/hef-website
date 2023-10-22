@@ -5,6 +5,7 @@ import Header from '@/components/ui/Header';
 import TextHeader from '@/components/ui/old/TextHeader';
 import { Language } from '@/lib/i18n/languages';
 import ProjectFeaturedCard from '@/components/ui/ProjectFeaturedCard';
+import ButtonLink from '@/components/ui/ButtonLink';
 
 interface IProps {
 	params: {
@@ -115,6 +116,7 @@ export default async function Page({ params: { lang } }: IProps) {
 							)}
 						</div>
 					</div>
+					<ButtonLink className="mt-4 px-8 py-6 text-lg" text="All projects" url="/projects" lang={lang} internal />
 
 					{/* eslint-disable */}
 						{/*
