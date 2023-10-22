@@ -15,7 +15,7 @@ export default function ProjectHeader({ title, description, devprops }: IProps) 
 			className="text-skin-header-foreground dark:text-skin-header-foreground-dark"
 		>
 			<div
-				className="grid h-72 w-full place-items-center bg-skin-header px-4 py-2 dark:bg-skin-header-dark md:pt-12"
+				className="grid h-72 w-full place-items-center bg-skin-header bg-cover bg-center bg-no-repeat px-4 py-2 dark:bg-skin-header-dark md:pt-12"
 				style={background ? {
 					backgroundImage: background ? `url(${background.value})` : undefined,
 					height: '16rem',
