@@ -116,16 +116,39 @@ export default async function ProjectPage({ params: { slug, lang } }: IProps) {
 
 	return (
 		<div className={themeStyle}>
-			<div className="flex h-full min-h-screen flex-col bg-skin-background dark:bg-skin-background-dark">
+			<div className="flex h-full min-h-screen flex-col bg-skin-background text-skin-text dark:bg-skin-background-dark dark:text-skin-text-dark">
 				<div className="grow">
 					<div className="my-16 flex w-full flex-col items-center px-4 sm:px-56">
 						<div className="w-full max-w-full break-words px-4 sm:!max-w-4xl md:break-normal">
-							<TextHeader>
-								{t('description.left')}
-								<span className="text-skin-heading">
-									{t('description.right')}
-								</span>
-							</TextHeader>
+							<div className="flex justify-between">
+								<TextHeader>
+									{t('description.left')}
+									<span className="text-skin-heading dark:text-skin-heading-dark">
+										{t('description.right')}
+									</span>
+								</TextHeader>
+								<div className="flex flex-col text-right">
+									<span className="font-semibold">
+										Organized by:
+										{' '}
+										<span className="text-skin-heading dark:text-skin-heading-dark">
+											{(project.organizer as Guild).name}
+										</span>
+									</span>
+									<span>
+										Released on:
+										{' '}
+										{
+											(new Intl.DateTimeFormat('en-GB', {
+												year: 'numeric',
+												month: 'long',
+												day: 'numeric',
+											})
+												.format(new Date(project.date)))
+										}
+									</span>
+								</div>
+							</div>
 							<div className="description-body text-lg">
 								{DescriptionSerializer(project.description)}
 							</div>
@@ -157,7 +180,7 @@ export default async function ProjectPage({ params: { slug, lang } }: IProps) {
 								{!(project.flags.includes('disableTabs') || project.flags.includes('filterableSubmissions')) && (
 									<TextHeader>
 										Community
-										<span className="text-skin-heading">
+										<span className="text-skin-heading dark:text-skin-heading-dark">
 											{' '}
 											Submissions
 										</span>

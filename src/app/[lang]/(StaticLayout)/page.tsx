@@ -101,7 +101,7 @@ export default async function Page({ params: { lang } }: IProps) {
 					<div className="w-full">
 						<TextHeader>
 							{t('page.featured.left')}
-							<span className="text-skin-heading">
+							<span className="text-skin-heading dark:text-skin-heading-dark">
 								{t('page.featured.right')}
 							</span>
 						</TextHeader>
