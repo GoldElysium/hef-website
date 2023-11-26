@@ -37,7 +37,7 @@
     "@radix-ui/react-dialog": "^1.0.5",
     "@radix-ui/react-dropdown-menu": "^2.0.5",
     "@radix-ui/react-switch": "^1.0.3",
-    "daisyui": "3.1.7",
+    "daisyui": "3.9.4",
     "date-fns": "2.30.0",
     "escape-html": "1.0.3",
     "hamburger-react": "^2.5.0",

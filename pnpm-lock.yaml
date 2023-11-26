@@ -51,8 +51,8 @@ dependencies:
     specifier: ^1.0.3
     version: 1.0.3(@types/react@18.2.14)(react-dom@18.2.0)(react@18.2.0)
   daisyui:
-    specifier: 3.1.7
-    version: 3.1.7(postcss@8.4.24)(ts-node@10.9.1)
+    specifier: 3.9.4
+    version: 3.9.4(ts-node@10.9.1)
   date-fns:
     specifier: 2.30.0
     version: 2.30.0
@@ -7707,11 +7707,9 @@ packages:
   /csstype@3.1.2:
     resolution: {integrity: sha512-I7K1Uu0MBPzaFKg4nI5Q7Vs2t+3gWWW648spaF+Rg7pI9ds18Ugn+lvg4SHczUdKlHI5LWBXyqfS8+DufyBsgQ==}
 
-  /daisyui@3.1.7(postcss@8.4.24)(ts-node@10.9.1):
-    resolution: {integrity: sha512-VQhaunQlB7Buo+AbE+S3i6H/eYknKEuKVHG67y7sbG58uEjeLK6n2rojG3YE7fwoOss6ldbUL8Oy0MyoJi0CHw==}
+  /daisyui@3.9.4(ts-node@10.9.1):
+    resolution: {integrity: sha512-fvi2RGH4YV617/6DntOVGcOugOPym9jTGWW2XySb5ZpvdWO4L7bEG77VHirrnbRUEWvIEVXkBpxUz2KFj0rVnA==}
     engines: {node: '>=16.9.0'}
-    peerDependencies:
-      postcss: ^8
     dependencies:
       colord: 2.9.3
       css-selector-tokenizer: 0.8.0
