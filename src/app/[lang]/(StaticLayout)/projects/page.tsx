@@ -67,7 +67,7 @@ export default async function Page({ params: { lang } }: IProps) {
 				description="A list of all the projects organized by Hololive EN Fan servers!"
 			/>
 			<div className="grow">
-				<div className="my-16 flex w-full flex-col items-center px-4 sm:px-56">
+				<div className="my-16 flex w-full flex-col items-center px-4 md:px-16 lg:px-24 2xl:px-56">
 					<div className="grid w-full grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
 						{projectsHtml.length > 0 ? (
 							projectsHtml

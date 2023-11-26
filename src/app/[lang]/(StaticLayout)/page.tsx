@@ -98,7 +98,7 @@ export default async function Page({ params: { lang } }: IProps) {
 		<div className="flex h-full min-h-screen flex-col overflow-hidden bg-skin-background text-skin-text dark:bg-skin-background-dark dark:text-skin-text-dark">
 			<Header title={t('hero.title')} description={t('hero.description')} />
 			<div className="grow">
-				<div className="my-16 flex w-full flex-col items-center px-4 sm:px-56">
+				<div className="my-16 flex w-full flex-col items-center px-4 md:px-16 lg:px-24 2xl:px-56">
 					<div className="w-full">
 						<TextHeader>
 							{t('page.featured.left')}
@@ -106,7 +106,7 @@ export default async function Page({ params: { lang } }: IProps) {
 								{t('page.featured.right')}
 							</span>
 						</TextHeader>
-						<div className="grid h-[40rem] gap-6 md:h-[24rem] md:grid-cols-3">
+						<div className="grid h-[40rem] gap-6 md:grid-cols-2 lg:h-[24rem] lg:grid-cols-3">
 							{featuredProjectsHtml.length > 0 ? (
 								featuredProjectsHtml
 							) : (
