@@ -1,11 +1,11 @@
 {
 	"head": {
 		"title": "HoloENファンウェブサイト - プロジェクト",
-		"description": "全部プロジェクト"
+		"description": "HoloEnのファンサーバーによる企画の一覧"
 	},
 	"page": {
 		"ongoing": "進行中のプロジェクト",
-		"past": "終わったプロジェクトのリスト",
+		"past": "終了したプロジェクト",
 		"none": "なし"
 	}
 }
