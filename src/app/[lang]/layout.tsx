@@ -28,7 +28,9 @@ export default async function RootLayout({
 }: IProps) {
 	return (
 		<html lang={lang} dir={dir(lang)} className={nunito.variable} suppressHydrationWarning>
-			<head />
+			<head>
+				<link href="/favicon.svg" rel="icon" type="image/svg+xml" />
+			</head>
 			<body>
 				<DarkModeProvider>
 					<LocaleContextProvider lang={lang}>
