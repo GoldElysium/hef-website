@@ -203,7 +203,6 @@ const usePuzzleStore = createWithEqualityFn(persist(
 				state.correctCount += state.pieceGroups[key].pieces.length;
 			}),
 			setVolume: (volume) => set((state) => {
-				const oldVolume = state.audio.volume;
 				state.audio.volume = volume;
 			}),
 			setMuted: (muted) => set((state) => {

@@ -36,17 +36,20 @@ export default function ProjectCredit({ credit }: ProjectCreditProps) {
 					<span className="flex flex-row items-center">
 						{socials.map(({ type, link }, index) => (
 							((type === 'youtube') && (
-								// eslint-disable-next-line react/no-array-index-key
+								// eslint-disable-next-line max-len
+								// eslint-disable-next-line react/no-array-index-key,jsx-a11y/control-has-associated-label
 								<a className="ml-2 cursor-pointer" href={`https://youtube.com/${link}`} key={`credit-link-${index}`}>
 									<Icon path={mdiYoutube} title="Youtube Channel" size={1} />
 								</a>
 							)) || ((type === 'twitter') && (
-								// eslint-disable-next-line react/no-array-index-key
+								// eslint-disable-next-line max-len
+								// eslint-disable-next-line react/no-array-index-key,jsx-a11y/control-has-associated-label
 								<a className="ml-2 cursor-pointer" href={`https://twitter.com/${link}`} key={`credit-link-${index}`}>
 									<Icon path={mdiTwitter} title="Twitter Account" size={1} />
 								</a>
 							)) || ((type === 'github') && (
-								// eslint-disable-next-line react/no-array-index-key
+								// eslint-disable-next-line max-len
+								// eslint-disable-next-line react/no-array-index-key,jsx-a11y/control-has-associated-label
 								<a className="ml-2 cursor-pointer" href={`https://github.com/${link}`} key={`credit-link-${index}`}>
 									<Icon path={mdiGithub} title="GitHub Profile" size={1} />
 								</a>

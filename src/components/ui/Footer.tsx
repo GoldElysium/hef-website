@@ -1,5 +1,4 @@
 import { HeartIcon } from '@heroicons/react/24/solid';
-import Script from 'next/script';
 
 interface IProps {
 	flags: string[];
