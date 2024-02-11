@@ -129,8 +129,6 @@ export default function PixiPuzzleContainer({
 
 	return (
 		<ViewportContext.Provider value={viewportContextMemo}>
-			<Cursor />
-
 			<Viewport
 				width={stageSize.width}
 				height={stageSize.height}
@@ -294,6 +292,8 @@ export default function PixiPuzzleContainer({
 					setShowAllSubmissions={setShowAllSubmissions}
 				/>
 			)}
+
+			<Cursor />
 		</ViewportContext.Provider>
 	);
 }
