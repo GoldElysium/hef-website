@@ -13,12 +13,12 @@ interface PixiComponentScrollboxProps {
 	x?: number;
 	y?: number;
 	children?: React.ReactNode;
-	ref?: React.MutableRefObject<PixiScrollbox | null>;
+	scrollboxRef?: React.MutableRefObject<PixiScrollbox | null>;
 }
 
 const Scrollbox = PixiComponent('Scrollbox', {
 	create({
-		boxWidth, boxHeight, x, y, overflowY, stopPropagation, app, ref,
+		boxWidth, boxHeight, x, y, overflowY, stopPropagation, app, scrollboxRef,
 	}: PixiComponentScrollboxProps) {
 		const scrollbox = new PixiScrollbox({
 			boxWidth,
@@ -39,9 +39,9 @@ const Scrollbox = PixiComponent('Scrollbox', {
 		if (x) scrollbox.x = x;
 		if (y) scrollbox.y = y;
 
-		if (ref) {
+		if (scrollboxRef) {
 			// eslint-disable-next-line no-param-reassign
-			ref.current = scrollbox;
+			scrollboxRef.current = scrollbox;
 		}
 
 		return scrollbox;
@@ -50,13 +50,13 @@ const Scrollbox = PixiComponent('Scrollbox', {
 		/* eslint-disable @typescript-eslint/naming-convention */
 		const {
 			children: oldChildren,
-			ref: _oldRef,
+			scrollboxRef: _oldRef,
 			...oldProps
 		} = _oldProps;
 		/* eslint-enable */
 		const {
 			children: newChildren,
-			ref,
+			scrollboxRef,
 			...newProps
 		} = _newProps;
 
@@ -68,8 +68,8 @@ const Scrollbox = PixiComponent('Scrollbox', {
 			}
 		});
 
-		if (ref) {
-			ref.current = scrollbox;
+		if (scrollboxRef) {
+			scrollboxRef.current = scrollbox;
 		}
 
 		scrollbox.update();

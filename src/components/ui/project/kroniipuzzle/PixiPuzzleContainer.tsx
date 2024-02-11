@@ -63,6 +63,8 @@ export default function PixiPuzzleContainer({
 
 	useEffect(() => {
 		(app.renderer as unknown as Renderer).framebuffer.blit();
+		// @ts-ignore
+		globalThis.__PIXI_APP__ = app;
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
@@ -127,6 +129,8 @@ export default function PixiPuzzleContainer({
 
 	return (
 		<ViewportContext.Provider value={viewportContextMemo}>
+			<Cursor />
+
 			<Viewport
 				width={stageSize.width}
 				height={stageSize.height}
@@ -134,7 +138,7 @@ export default function PixiPuzzleContainer({
 				worldHeight={WORLD_HEIGHT}
 				disableDragging={disableDragging}
 				app={app}
-				ref={viewportRef}
+				viewportRef={viewportRef}
 			>
 				<Puzzle
 					x={SIDEBAR_WIDTH + PUZZLE_WIDTH / 2}
@@ -290,8 +294,6 @@ export default function PixiPuzzleContainer({
 					setShowAllSubmissions={setShowAllSubmissions}
 				/>
 			)}
-
-			<Cursor />
 		</ViewportContext.Provider>
 	);
 }

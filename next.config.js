@@ -8,14 +8,16 @@ const nextConfig = {
 		loader: 'custom',
 		loaderFile: './imageLoader.js',
 		unoptimized: true,
-	}
+	},
+	transpilePackages: ['@pixi/gif']
 };
 
 // Injected content via Sentry wizard below
 
 const { withSentryConfig } = require("@sentry/nextjs");
 
-module.exports = withSentryConfig(
+// Disable Sentry in development
+module.exports = process.env.NODE_ENV === 'production' ? withSentryConfig(
   nextConfig,
   {
     // For all available options, see:
@@ -33,12 +35,6 @@ module.exports = withSentryConfig(
     // Upload a larger set of source maps for prettier stack traces (increases build time)
     widenClientFileUpload: true,
 
-    // Transpiles SDK to be compatible with IE11 (increases bundle size)
-    transpileClientSDK: true,
-
-    // Routes browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers (increases server load)
-    tunnelRoute: "/monitoring",
-
     // Hides source maps from generated client bundles
     hideSourceMaps: true,
 
@@ -51,4 +47,4 @@ module.exports = withSentryConfig(
     // https://vercel.com/docs/cron-jobs
     automaticVercelMonitors: true,
   }
-);
+) : nextConfig;

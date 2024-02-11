@@ -28,7 +28,7 @@ export default function Footer({ flags }: IProps) {
 					<span className="flex items-center whitespace-pre-wrap text-center text-lg font-semibold text-white">
 						Made with
 						{' '}
-						<HeartIcon className="h-4 w-4 text-white" />
+						<HeartIcon className="size-4 text-white" />
 						{' '}
 						by
 						{' '}
@@ -44,10 +44,10 @@ export default function Footer({ flags }: IProps) {
 				</div>
 
 			</footer>
-			<Script
+			{/* <Script
 				src="https://static.cloudflareinsights.com/beacon.min.js"
 				data-cf-beacon='{"token": "5896757c09e04949bf74e7c34efd419a"}'
-			/>
+			/> */}
 		</>
 	);
 }
