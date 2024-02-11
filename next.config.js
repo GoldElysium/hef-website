@@ -8,8 +8,7 @@ const nextConfig = {
 		loader: 'custom',
 		loaderFile: './imageLoader.js',
 		unoptimized: true,
-	},
-	transpilePackages: ['@pixi/gif']
+	}
 };
 
 // Injected content via Sentry wizard below
