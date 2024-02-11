@@ -65,7 +65,7 @@ export default function PuzzleStartModal({
 					}}
 				/>
 				<Sprite
-					image="/assets/kroniipuzzle/x-mark.svg"
+					image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/x-mark.svg"
 					tint={0x000000}
 					width={32}
 					height={32}

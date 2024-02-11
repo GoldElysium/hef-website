@@ -70,7 +70,7 @@ export default function PixiWrapper({ project, submissions }: IProps) {
 
 	useEffect(() => {
 		(async () => {
-			await PIXI.Assets.init({ manifest: '/assets/kroniipuzzle/manifest.json' });
+			await PIXI.Assets.init({ manifest: 'https://cdn.holoen.fans/hefw/assets/kroniipuzzle/manifest.json' });
 			await PIXI.Assets.loadBundle('puzzle', (progress) => {
 				setLoadProgress(progress * 100);
 			});

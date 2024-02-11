@@ -74,14 +74,14 @@ export default function PuzzlePreview({
 				}}
 			/>
 			<Sprite
-				image="/assets/kroniipuzzle/puzzle.webp"
+				image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/puzzle.webp"
 				x={8}
 				y={41}
 				width={434}
 				height={217}
 			/>
 			<Sprite
-				image="/assets/kroniipuzzle/x-mark.svg"
+				image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/x-mark.svg"
 				x={418}
 				y={8}
 				width={24}
@@ -92,13 +92,13 @@ export default function PuzzlePreview({
 			/>
 
 			<Sprite
-				image="/assets/kroniipuzzle/pop.svg"
+				image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/pop.svg"
 				x={386}
 				y={8}
 				width={24}
 				height={24}
 				eventMode="static"
-				onclick={() => window.open('/assets/kroniipuzzle/puzzle.webp', '_blank', 'noopener')}
+				onclick={() => window.open('https://cdn.holoen.fans/hefw/assets/kroniipuzzle/puzzle.webp', '_blank', 'noopener')}
 				cursor="pointer"
 			/>
 

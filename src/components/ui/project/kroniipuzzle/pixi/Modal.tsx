@@ -33,7 +33,7 @@ export default function Modal({
 				}}
 			/>
 			<Sprite
-				image="/assets/kroniipuzzle/puzzle.webp"
+				image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/puzzle.webp"
 				x={width / 2}
 				y={height / 2}
 				width={Math.min(width, height * 2)}

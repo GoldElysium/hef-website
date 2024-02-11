@@ -234,7 +234,7 @@ export default function SettingsModal({
 									y={0}
 								>
 									<Sprite
-										image="/assets/kroniipuzzle/avatars/empikuro.webp"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/avatars/empikuro.webp"
 										width={128}
 										height={128}
 									/>
@@ -250,7 +250,7 @@ export default function SettingsModal({
 										scale={[1, 1]}
 									/>
 									<Sprite
-										image="/assets/kroniipuzzle/twitter.svg"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/twitter.svg"
 										width={18}
 										height={18}
 										y={140}
@@ -265,7 +265,7 @@ export default function SettingsModal({
 									y={0}
 								>
 									<Sprite
-										image="/assets/kroniipuzzle/avatars/helicobtor.webp"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/avatars/helicobtor.webp"
 										width={128}
 										height={128}
 									/>
@@ -281,7 +281,7 @@ export default function SettingsModal({
 										scale={[1, 1]}
 									/>
 									<Sprite
-										image="/assets/kroniipuzzle/twitter.svg"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/twitter.svg"
 										width={18}
 										height={18}
 										y={140}
@@ -296,7 +296,7 @@ export default function SettingsModal({
 									y={0}
 								>
 									<Sprite
-										image="/assets/kroniipuzzle/avatars/zame.webp"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/avatars/zame.webp"
 										width={128}
 										height={128}
 									/>
@@ -312,7 +312,7 @@ export default function SettingsModal({
 										scale={[1, 1]}
 									/>
 									<Sprite
-										image="/assets/kroniipuzzle/twitter.svg"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/twitter.svg"
 										width={18}
 										height={18}
 										y={140}
@@ -350,7 +350,7 @@ export default function SettingsModal({
 									y={0}
 								>
 									<Sprite
-										image="/assets/kroniipuzzle/avatars/george.webp"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/avatars/george.webp"
 										width={128}
 										height={128}
 									/>
@@ -366,7 +366,7 @@ export default function SettingsModal({
 										scale={[1, 1]}
 									/>
 									<Sprite
-										image="/assets/kroniipuzzle/twitter.svg"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/twitter.svg"
 										width={18}
 										height={18}
 										y={140}
@@ -381,7 +381,7 @@ export default function SettingsModal({
 									y={0}
 								>
 									<Sprite
-										image="/assets/kroniipuzzle/avatars/GoldElysium.webp"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/avatars/GoldElysium.webp"
 										width={128}
 										height={128}
 									/>
@@ -397,7 +397,7 @@ export default function SettingsModal({
 										scale={[1, 1]}
 									/>
 									<Sprite
-										image="/assets/kroniipuzzle/github.svg"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/github.svg"
 										width={18}
 										height={18}
 										y={140}
@@ -435,7 +435,7 @@ export default function SettingsModal({
 									y={0}
 								>
 									<Sprite
-										image="/assets/kroniipuzzle/avatars/Agiri.webp"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/avatars/Agiri.webp"
 										width={128}
 										height={128}
 									/>
@@ -451,7 +451,7 @@ export default function SettingsModal({
 										scale={[1, 1]}
 									/>
 									<Sprite
-										image="/assets/kroniipuzzle/twitter.svg"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/twitter.svg"
 										width={18}
 										height={18}
 										y={140}
@@ -466,7 +466,7 @@ export default function SettingsModal({
 									y={0}
 								>
 									<Sprite
-										image="/assets/kroniipuzzle/avatars/Ant.webp"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/avatars/Ant.webp"
 										width={128}
 										height={128}
 									/>
@@ -482,7 +482,7 @@ export default function SettingsModal({
 										scale={[1, 1]}
 									/>
 									<Sprite
-										image="/assets/kroniipuzzle/twitter.svg"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/twitter.svg"
 										width={18}
 										height={18}
 										y={140}
@@ -497,7 +497,7 @@ export default function SettingsModal({
 									y={0}
 								>
 									<Sprite
-										image="/assets/kroniipuzzle/avatars/freyja.webp"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/avatars/freyja.webp"
 										width={128}
 										height={128}
 									/>
@@ -513,7 +513,7 @@ export default function SettingsModal({
 										scale={[1, 1]}
 									/>
 									<Sprite
-										image="/assets/kroniipuzzle/twitter.svg"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/twitter.svg"
 										width={18}
 										height={18}
 										y={140}
@@ -528,7 +528,7 @@ export default function SettingsModal({
 									y={0}
 								>
 									<Sprite
-										image="/assets/kroniipuzzle/avatars/hasaan.webp"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/avatars/hasaan.webp"
 										width={128}
 										height={128}
 									/>
@@ -544,7 +544,7 @@ export default function SettingsModal({
 										scale={[1, 1]}
 									/>
 									<Sprite
-										image="/assets/kroniipuzzle/twitter.svg"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/twitter.svg"
 										width={18}
 										height={18}
 										y={140}
@@ -566,7 +566,7 @@ export default function SettingsModal({
 									y={0}
 								>
 									<Sprite
-										image="/assets/kroniipuzzle/avatars/kler.webp"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/avatars/kler.webp"
 										width={128}
 										height={128}
 									/>
@@ -582,7 +582,7 @@ export default function SettingsModal({
 										scale={[1, 1]}
 									/>
 									<Sprite
-										image="/assets/kroniipuzzle/twitter.svg"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/twitter.svg"
 										width={18}
 										height={18}
 										y={140}
@@ -597,7 +597,7 @@ export default function SettingsModal({
 									y={0}
 								>
 									<Sprite
-										image="/assets/kroniipuzzle/avatars/Kyono.webp"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/avatars/Kyono.webp"
 										width={128}
 										height={128}
 									/>
@@ -613,7 +613,7 @@ export default function SettingsModal({
 										scale={[1, 1]}
 									/>
 									<Sprite
-										image="/assets/kroniipuzzle/twitter.svg"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/twitter.svg"
 										width={18}
 										height={18}
 										y={140}
@@ -628,7 +628,7 @@ export default function SettingsModal({
 									y={0}
 								>
 									<Sprite
-										image="/assets/kroniipuzzle/avatars/Lucy.webp"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/avatars/Lucy.webp"
 										width={128}
 										height={128}
 									/>
@@ -644,7 +644,7 @@ export default function SettingsModal({
 										scale={[1, 1]}
 									/>
 									<Sprite
-										image="/assets/kroniipuzzle/twitter.svg"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/twitter.svg"
 										width={18}
 										height={18}
 										y={140}
@@ -659,7 +659,7 @@ export default function SettingsModal({
 									y={0}
 								>
 									<Sprite
-										image="/assets/kroniipuzzle/avatars/patatas.webp"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/avatars/patatas.webp"
 										width={128}
 										height={128}
 									/>
@@ -675,7 +675,7 @@ export default function SettingsModal({
 										scale={[1, 1]}
 									/>
 									<Sprite
-										image="/assets/kroniipuzzle/twitter.svg"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/twitter.svg"
 										width={18}
 										height={18}
 										y={140}
@@ -713,7 +713,7 @@ export default function SettingsModal({
 									y={0}
 								>
 									<Sprite
-										image="/assets/kroniipuzzle/avatars/Adarin.webp"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/avatars/Adarin.webp"
 										width={128}
 										height={128}
 									/>
@@ -729,7 +729,7 @@ export default function SettingsModal({
 										scale={[1, 1]}
 									/>
 									<Sprite
-										image="/assets/kroniipuzzle/twitter.svg"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/twitter.svg"
 										width={18}
 										height={18}
 										y={140}
@@ -744,7 +744,7 @@ export default function SettingsModal({
 									y={0}
 								>
 									<Sprite
-										image="/assets/kroniipuzzle/avatars/bacon.webp"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/avatars/bacon.webp"
 										width={128}
 										height={128}
 									/>
@@ -760,7 +760,7 @@ export default function SettingsModal({
 										scale={[1, 1]}
 									/>
 									<Sprite
-										image="/assets/kroniipuzzle/twitter.svg"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/twitter.svg"
 										width={18}
 										height={18}
 										y={140}
@@ -775,7 +775,7 @@ export default function SettingsModal({
 									y={0}
 								>
 									<Sprite
-										image="/assets/kroniipuzzle/avatars/crow.webp"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/avatars/crow.webp"
 										width={128}
 										height={128}
 									/>
@@ -791,7 +791,7 @@ export default function SettingsModal({
 										scale={[1, 1]}
 									/>
 									<Sprite
-										image="/assets/kroniipuzzle/twitter.svg"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/twitter.svg"
 										width={18}
 										height={18}
 										y={140}
@@ -806,7 +806,7 @@ export default function SettingsModal({
 									y={0}
 								>
 									<Sprite
-										image="/assets/kroniipuzzle/avatars/empikuro.webp"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/avatars/empikuro.webp"
 										width={128}
 										height={128}
 									/>
@@ -822,7 +822,7 @@ export default function SettingsModal({
 										scale={[1, 1]}
 									/>
 									<Sprite
-										image="/assets/kroniipuzzle/twitter.svg"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/twitter.svg"
 										width={18}
 										height={18}
 										y={140}
@@ -844,7 +844,7 @@ export default function SettingsModal({
 									y={0}
 								>
 									<Sprite
-										image="/assets/kroniipuzzle/avatars/era.webp"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/avatars/era.webp"
 										width={128}
 										height={128}
 									/>
@@ -860,7 +860,7 @@ export default function SettingsModal({
 										scale={[1, 1]}
 									/>
 									<Sprite
-										image="/assets/kroniipuzzle/twitter.svg"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/twitter.svg"
 										width={18}
 										height={18}
 										y={140}
@@ -875,7 +875,7 @@ export default function SettingsModal({
 									y={0}
 								>
 									<Sprite
-										image="/assets/kroniipuzzle/avatars/eus.webp"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/avatars/eus.webp"
 										width={128}
 										height={128}
 									/>
@@ -891,7 +891,7 @@ export default function SettingsModal({
 										scale={[1, 1]}
 									/>
 									<Sprite
-										image="/assets/kroniipuzzle/twitter.svg"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/twitter.svg"
 										width={18}
 										height={18}
 										y={140}
@@ -906,7 +906,7 @@ export default function SettingsModal({
 									y={0}
 								>
 									<Sprite
-										image="/assets/kroniipuzzle/avatars/Fongban.webp"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/avatars/Fongban.webp"
 										width={128}
 										height={128}
 									/>
@@ -922,7 +922,7 @@ export default function SettingsModal({
 										scale={[1, 1]}
 									/>
 									<Sprite
-										image="/assets/kroniipuzzle/twitter.svg"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/twitter.svg"
 										width={18}
 										height={18}
 										y={140}
@@ -937,7 +937,7 @@ export default function SettingsModal({
 									y={0}
 								>
 									<Sprite
-										image="/assets/kroniipuzzle/avatars/GULS.webp"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/avatars/GULS.webp"
 										width={128}
 										height={128}
 									/>
@@ -953,7 +953,7 @@ export default function SettingsModal({
 										scale={[1, 1]}
 									/>
 									<Sprite
-										image="/assets/kroniipuzzle/twitter.svg"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/twitter.svg"
 										width={18}
 										height={18}
 										y={140}
@@ -975,7 +975,7 @@ export default function SettingsModal({
 									y={0}
 								>
 									<Sprite
-										image="/assets/kroniipuzzle/avatars/mameng.webp"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/avatars/mameng.webp"
 										width={128}
 										height={128}
 									/>
@@ -991,7 +991,7 @@ export default function SettingsModal({
 										scale={[1, 1]}
 									/>
 									<Sprite
-										image="/assets/kroniipuzzle/twitter.svg"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/twitter.svg"
 										width={18}
 										height={18}
 										y={140}
@@ -1006,7 +1006,7 @@ export default function SettingsModal({
 									y={0}
 								>
 									<Sprite
-										image="/assets/kroniipuzzle/avatars/oddnumber.webp"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/avatars/oddnumber.webp"
 										width={128}
 										height={128}
 									/>
@@ -1022,7 +1022,7 @@ export default function SettingsModal({
 										scale={[1, 1]}
 									/>
 									<Sprite
-										image="/assets/kroniipuzzle/twitter.svg"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/twitter.svg"
 										width={18}
 										height={18}
 										y={140}
@@ -1037,7 +1037,7 @@ export default function SettingsModal({
 									y={0}
 								>
 									<Sprite
-										image="/assets/kroniipuzzle/avatars/onair.webp"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/avatars/onair.webp"
 										width={128}
 										height={128}
 									/>
@@ -1053,7 +1053,7 @@ export default function SettingsModal({
 										scale={[1, 1]}
 									/>
 									<Sprite
-										image="/assets/kroniipuzzle/twitter.svg"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/twitter.svg"
 										width={18}
 										height={18}
 										y={140}
@@ -1068,7 +1068,7 @@ export default function SettingsModal({
 									y={0}
 								>
 									<Sprite
-										image="/assets/kroniipuzzle/avatars/Parkoach.webp"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/avatars/Parkoach.webp"
 										width={128}
 										height={128}
 									/>
@@ -1084,7 +1084,7 @@ export default function SettingsModal({
 										scale={[1, 1]}
 									/>
 									<Sprite
-										image="/assets/kroniipuzzle/twitter.svg"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/twitter.svg"
 										width={18}
 										height={18}
 										y={140}
@@ -1106,7 +1106,7 @@ export default function SettingsModal({
 									y={0}
 								>
 									<Sprite
-										image="/assets/kroniipuzzle/avatars/taka.webp"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/avatars/taka.webp"
 										width={128}
 										height={128}
 									/>
@@ -1122,7 +1122,7 @@ export default function SettingsModal({
 										scale={[1, 1]}
 									/>
 									<Sprite
-										image="/assets/kroniipuzzle/twitter.svg"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/twitter.svg"
 										width={18}
 										height={18}
 										y={140}
@@ -1137,7 +1137,7 @@ export default function SettingsModal({
 									y={0}
 								>
 									<Sprite
-										image="/assets/kroniipuzzle/avatars/underdatv.webp"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/avatars/underdatv.webp"
 										width={128}
 										height={128}
 									/>
@@ -1153,7 +1153,7 @@ export default function SettingsModal({
 										scale={[1, 1]}
 									/>
 									<Sprite
-										image="/assets/kroniipuzzle/twitter.svg"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/twitter.svg"
 										width={18}
 										height={18}
 										y={140}
@@ -1168,7 +1168,7 @@ export default function SettingsModal({
 									y={0}
 								>
 									<Sprite
-										image="/assets/kroniipuzzle/avatars/VYRA.webp"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/avatars/VYRA.webp"
 										width={128}
 										height={128}
 									/>
@@ -1184,7 +1184,7 @@ export default function SettingsModal({
 										scale={[1, 1]}
 									/>
 									<Sprite
-										image="/assets/kroniipuzzle/twitter.svg"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/twitter.svg"
 										width={18}
 										height={18}
 										y={140}
@@ -1199,7 +1199,7 @@ export default function SettingsModal({
 									y={0}
 								>
 									<Sprite
-										image="/assets/kroniipuzzle/avatars/zenya.webp"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/avatars/zenya.webp"
 										width={128}
 										height={128}
 									/>
@@ -1215,7 +1215,7 @@ export default function SettingsModal({
 										scale={[1, 1]}
 									/>
 									<Sprite
-										image="/assets/kroniipuzzle/twitter.svg"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/twitter.svg"
 										width={18}
 										height={18}
 										y={140}
@@ -1253,7 +1253,7 @@ export default function SettingsModal({
 									y={0}
 								>
 									<Sprite
-										image="/assets/kroniipuzzle/avatars/kim.webp"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/avatars/kim.webp"
 										width={128}
 										height={128}
 									/>
@@ -1269,7 +1269,7 @@ export default function SettingsModal({
 										scale={[1, 1]}
 									/>
 									<Sprite
-										image="/assets/kroniipuzzle/twitter.svg"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/twitter.svg"
 										width={18}
 										height={18}
 										y={140}
@@ -1307,7 +1307,7 @@ export default function SettingsModal({
 									y={0}
 								>
 									<Sprite
-										image="/assets/kroniipuzzle/avatars/rjseka.webp"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/avatars/rjseka.webp"
 										width={128}
 										height={128}
 									/>
@@ -1323,7 +1323,7 @@ export default function SettingsModal({
 										scale={[1, 1]}
 									/>
 									<Sprite
-										image="/assets/kroniipuzzle/twitter.svg"
+										image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/twitter.svg"
 										width={18}
 										height={18}
 										y={140}
@@ -1439,7 +1439,7 @@ export default function SettingsModal({
 					}}
 				/>
 				<Sprite
-					image="/assets/kroniipuzzle/x-mark.svg"
+					image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/x-mark.svg"
 					tint={0x000000}
 					width={32}
 					height={32}

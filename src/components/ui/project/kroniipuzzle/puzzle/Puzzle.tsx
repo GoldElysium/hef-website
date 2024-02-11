@@ -119,7 +119,7 @@ export default function Puzzle({
 
 		const loadBgmTrack = (name: string) => {
 			Sound.from({
-				url: `/assets/kroniipuzzle/bgm/time_loop_${name}.ogg`,
+				url: `https://cdn.holoen.fans/hefw/assets/kroniipuzzle/bgm/time_loop_${name}.ogg`,
 				loaded: (_, sound) => loadCallback(name, sound!),
 				...defaultSettings,
 			});
@@ -127,7 +127,7 @@ export default function Puzzle({
 
 		const loadSfxTrack = (name: string) => {
 			Sound.from({
-				url: `/assets/kroniipuzzle/sfx/${name}.wav`,
+				url: `https://cdn.holoen.fans/hefw/assets/kroniipuzzle/sfx/${name}.wav`,
 				loaded: (_, sound) => loadCallback(name, sound!),
 				...{
 					preload: true,
