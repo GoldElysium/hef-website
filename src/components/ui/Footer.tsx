@@ -1,4 +1,5 @@
 import { HeartIcon } from '@heroicons/react/24/solid';
+import Script from 'next/script';
 
 interface IProps {
 	flags: string[];
@@ -26,9 +27,7 @@ export default function Footer({ flags }: IProps) {
 				<div className="flex h-24 w-full items-center justify-center bg-skin-header px-4 text-skin-header-foreground dark:bg-skin-header-dark dark:text-skin-header-foreground-dark sm:px-8">
 					<span className="flex items-center whitespace-pre-wrap text-center text-lg font-semibold text-white">
 						Made with
-						{' '}
-						<HeartIcon className="size-4 text-white" />
-						{' '}
+						<HeartIcon className="mx-1 size-4 text-white" />
 						by
 						{' '}
 						<a
@@ -43,10 +42,10 @@ export default function Footer({ flags }: IProps) {
 				</div>
 
 			</footer>
-			{/* <Script
+			<Script
 				src="https://static.cloudflareinsights.com/beacon.min.js"
 				data-cf-beacon='{"token": "5896757c09e04949bf74e7c34efd419a"}'
-			/> */}
+			/>
 		</>
 	);
 }
