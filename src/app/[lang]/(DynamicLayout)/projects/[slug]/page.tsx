@@ -15,6 +15,7 @@ import useTranslation from '@/lib/i18n/server';
 import { Language } from '@/lib/i18n/languages';
 import PixiSubmissionWrapper from '@/components/ui/project/kroniipuzzle/PixiSubmissionWrapper';
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/20/solid';
+import KroniiMap from '@/components/ui/project/kroniimap/KroniiMap';
 
 // ID's for both production and development databases
 // TODO: Replace with Payload data
@@ -111,6 +112,12 @@ export default async function ProjectPage({ params: { slug, lang } }: IProps) {
 		);
 	}
 
+	if (project.flags?.includes('kronii-map-bd-2024')) {
+		return (
+			<KroniiMap project={project} />
+		);
+	}
+
 	// eslint-disable-next-line react-hooks/rules-of-hooks
 	const { t } = await useTranslation(lang, 'project', 'page');
 
@@ -169,7 +176,7 @@ export default async function ProjectPage({ params: { slug, lang } }: IProps) {
 												<a href={link.url} target="_blank" rel="noreferrer">
 													{link.name}
 												</a>
-												<ArrowTopRightOnSquareIcon className="h-6 w-6" />
+												<ArrowTopRightOnSquareIcon className="size-6" />
 											</div>
 										))}
 									</div>
