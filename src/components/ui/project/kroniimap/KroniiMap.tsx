@@ -6,7 +6,6 @@ import {
 // @ts-ignore
 import { geoRobinson } from 'd3-geo-projection';
 import { Project } from '@/types/payload-types';
-import { useState } from 'react';
 
 const geoUrl =	'https://cdn.holoen.fans/hefw/assets/kroniimap/ne_10m_admin_0_countries.json';
 
@@ -19,6 +18,7 @@ interface IProps {
 	};
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function KroniiMap({ project }: IProps) {
 	return (
 		<div className="bg-[#E6F0FF]">
