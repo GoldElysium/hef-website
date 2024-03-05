@@ -6,6 +6,7 @@ import {
 // @ts-ignore
 import { geoRobinson } from 'd3-geo-projection';
 import { Project } from '@/types/payload-types';
+import { useTheme } from 'next-themes';
 
 const geoUrl =	'https://cdn.holoen.fans/hefw/assets/kroniimap/ne_10m_admin_0_countries.json';
 
@@ -20,8 +21,10 @@ interface IProps {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function KroniiMap({ project }: IProps) {
+	const { resolvedTheme } = useTheme();
+
 	return (
-		<div className="bg-[#E6F0FF]">
+		<div className="bg-skin-background dark:bg-skin-background-dark">
 			<ComposableMap
 				projection={geoRobinson()}
 				width={980}
@@ -33,7 +36,7 @@ export default function KroniiMap({ project }: IProps) {
 							<Geography
 								key={geo.rsmKey}
 								geography={geo}
-								fill="#255494"
+								fill={resolvedTheme === 'dark' ? '#EEEEEE' : '#255494'}
 								className="focus:outline-0"
 								style={{ pressed: {} }}
 							/>
