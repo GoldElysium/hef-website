@@ -12,7 +12,7 @@ interface IProps {
 
 export default function RootLayout({ children, params: { lang } }: IProps) {
 	return (
-		<>
+		<body>
 			<Navbar
 				flags={[]}
 				noticeBanner={
@@ -24,6 +24,6 @@ export default function RootLayout({ children, params: { lang } }: IProps) {
 				{children}
 			</main>
 			<Footer flags={[]} />
-		</>
+		</body>
 	);
 }

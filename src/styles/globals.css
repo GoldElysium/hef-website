@@ -2,46 +2,70 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  :root {
-    --color-background: 254 240 240;
-    --color-primary: 239 68 68;
-    --color-primary-foreground: 252 252 252;
-    --color-secondary: 238 206 206;
-    --color-secondary-foreground: 252 252 252;
-    --color-accent: 166 48 48;
-    --color-text: 48 48 48;
-    --color-header: 239 68 68;
-    --color-header-foreground: 252 252 252;
-    --color-heading: 239 68 68;
-    --color-link: 210 20 20;
 
-    --color-background-dark: 20 3 3;
-    --color-primary-dark: 159 15 15;
-    --color-primary-foreground-dark: 252 252 252;
-    --color-secondary-dark: 140 56 56;
-    --color-secondary-foreground-dark: 252 252 252;
-    --color-accent-dark: 147 83 83;
-    --color-text-dark: 253 236 236;
-    --color-header-dark: 140 52 52;
-    --color-header-foreground-dark: 252 252 252;
-    --color-heading-dark: 254 203 203;
-    --color-link-dark: 254 203 203;
+:root {
+  --color-background: 254 240 240;
+  --color-primary: 239 68 68;
+  --color-primary-foreground: 252 252 252;
+  --color-secondary: 238 206 206;
+  --color-secondary-foreground: 252 252 252;
+  --color-accent: 166 48 48;
+  --color-text: 48 48 48;
+  --color-header: 239 68 68;
+  --color-header-foreground: 252 252 252;
+  --color-heading: 210 20 20;
+  --color-link: 210 20 20;
 
-    --color-holoen-red: #EF4444;
-    --color-icon-primary: #FFFFFF;
-    --color-icon-secondary: var(--color-holoen-red);
-  }
+  --color-background-dark: 20 3 3;
+  --color-primary-dark: 159 15 15;
+  --color-primary-foreground-dark: 252 252 252;
+  --color-secondary-dark: 140 56 56;
+  --color-secondary-foreground-dark: 252 252 252;
+  --color-accent-dark: 147 83 83;
+  --color-text-dark: 253 236 236;
+  --color-header-dark: 140 52 52;
+  --color-header-foreground-dark: 252 252 252;
+  --color-heading-dark: 254 203 203;
+  --color-link-dark: 254 203 203;
 
-  .icon-default {
-    --color-icon-primary: var(--color-holoen-red);
-    --color-icon-secondary: #FFFFFF;
-  }
+  --color-holoen-red: #EF4444;
 
-  .icon-alt {
-    --color-icon-primary: #FFFFFF;
-    --color-icon-secondary: var(--color-holoen-red);
-  }
+  --color-icon-primary: #FFFFFF;
+  --color-icon-secondary: var(--color-holoen-red);
+
+  --color-icon-primary-dark: #FFFFFF;
+  --color-icon-secondary-dark: var(--color-holoen-red);
+}
+
+.skin-kronii {
+  --color-background: 230 240 255;
+  --color-primary: 8 105 236;
+  --color-primary-foreground: 255 255 255;
+  --color-secondary: 189 209 236;
+  --color-secondary-foreground: 0 0 0;
+  --color-secondary-heading: 0 30 71;
+  --color-text: 47 47 47;
+  --color-header: 41 110 204;
+  --color-header-foreground: 252 252 252;
+  --color-heading: 8 105 236;
+  --color-link: 8 105 236;
+
+  --color-background-dark: 2 16 38;
+  --color-primary-dark: 33 111 217;
+  --color-primary-foreground-dark: 255 255 255;
+  --color-secondary-dark: 37 84 148;
+  --color-secondary-foreground-dark: 255 255 255;
+  --color-secondary-heading-dark: 217 233 255;
+  --color-text-dark: 238 238 238;
+  --color-header-dark: 54 73 178;
+  --color-header-foreground-dark: 233 233 233;
+  --color-heading-dark: 76 152 255;
+  --color-link-dark: 33 111 217;
+
+  --color-icon-primary: var(--color-holoen-red);
+  --color-icon-secondary: #FFFFFF;
+  --color-icon-primary-dark: #FFFFFF;
+  --color-icon-secondary-dark: var(--color-holoen-red);
 }
 
 @layer components {

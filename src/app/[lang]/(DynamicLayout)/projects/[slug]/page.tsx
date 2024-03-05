@@ -17,15 +17,6 @@ import PixiSubmissionWrapper from '@/components/ui/project/kroniipuzzle/PixiSubm
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/20/solid';
 import KroniiMap from '@/components/ui/project/kroniimap/KroniiMap';
 
-// ID's for both production and development databases
-// TODO: Replace with Payload data
-const ID_TO_STYLE_MAP = new Map<string, string>();
-ID_TO_STYLE_MAP.set('62c16ca2b919eb349a6b09ba', 'theme-ina');
-
-// Development testing ID's
-ID_TO_STYLE_MAP.set('62c9442ff1ee39aa37afc4c7', 'theme-ina');
-ID_TO_STYLE_MAP.set('63209a0af2be5d1c9590fb62', 'theme-sana');
-
 interface IProps {
 	params: {
 		slug: string;
@@ -92,8 +83,6 @@ export default async function ProjectPage({ params: { slug, lang } }: IProps) {
 
 	// const ref = useMemo(() => createRef<BlurBackground>(), []);
 
-	const themeStyle = ID_TO_STYLE_MAP.get((project.organizer as Guild).id);
-
 	if (project.flags?.includes('experimental')) {
 		return (
 			<ExperimentalProjectPage project={project} />
@@ -122,7 +111,7 @@ export default async function ProjectPage({ params: { slug, lang } }: IProps) {
 	const { t } = await useTranslation(lang, 'project', 'page');
 
 	return (
-		<div className={themeStyle}>
+		<div>
 			<div className="flex h-full min-h-screen flex-col bg-skin-background text-skin-text dark:bg-skin-background-dark dark:text-skin-text-dark">
 				<div className="grow">
 					<div className="my-16 flex w-full flex-col items-center px-4 md:px-16 lg:px-24 2xl:px-56">
@@ -139,7 +128,7 @@ export default async function ProjectPage({ params: { slug, lang } }: IProps) {
 										Organized by:
 										{' '}
 										<span className="text-skin-heading dark:text-skin-heading-dark">
-											{(project.organizer as Guild).name}
+											{(project.organizers as Guild[]).map((guild) => guild.name).join(', ')}
 										</span>
 									</span>
 									<span>

@@ -31,13 +31,11 @@ export default async function RootLayout({
 			<head>
 				<link href="/favicon.svg" rel="icon" type="image/svg+xml" />
 			</head>
-			<body>
-				<DarkModeProvider>
-					<LocaleContextProvider lang={lang}>
-						{children}
-					</LocaleContextProvider>
-				</DarkModeProvider>
-			</body>
+			<DarkModeProvider>
+				<LocaleContextProvider lang={lang}>
+					{children}
+				</LocaleContextProvider>
+			</DarkModeProvider>
 		</html>
 	);
 }
