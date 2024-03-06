@@ -15,7 +15,7 @@ import useTranslation from '@/lib/i18n/server';
 import { Language } from '@/lib/i18n/languages';
 import PixiSubmissionWrapper from '@/components/ui/project/kroniipuzzle/PixiSubmissionWrapper';
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/20/solid';
-import KroniiMap from '@/components/ui/project/kroniimap/KroniiMap';
+import KroniiMapSubmissionWrapper from '@/components/ui/project/kroniimap/KroniiMapSubmissionsWrapper';
 
 interface IProps {
 	params: {
@@ -103,7 +103,7 @@ export default async function ProjectPage({ params: { slug, lang } }: IProps) {
 
 	if (project.flags?.includes('kronii-map-bd-2024')) {
 		return (
-			<KroniiMap project={project} />
+			<KroniiMapSubmissionWrapper project={project} />
 		);
 	}
 
