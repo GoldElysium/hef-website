@@ -13,14 +13,14 @@ export default function NoticeBanner({ data }: { data: APINoticeBanner }) {
 	return (
 		<div>
 			<div
-				className="min-w-screen max-w-screen overflow-none flex h-16 items-center justify-center gap-4 bg-[#FFE5DA] p-2"
+				className="min-w-screen max-w-screen overflow-none flex h-16 items-center justify-center gap-4 bg-skin-secondary p-2 text-skin-secondary-foreground dark:bg-skin-secondary-dark dark:text-skin-secondary-foreground-dark"
 			>
-				<span className="font-semibold text-[#323232] md:text-lg">
+				<span className="font-semibold  md:text-lg">
 					{data.description}
 				</span>
 				<button
 					type="button"
-					className="rounded-full bg-[#EF4444] px-4 py-2 text-white hover:bg-red-400 md:text-lg"
+					className="rounded-full bg-skin-primary px-4 py-2 text-skin-primary-foreground hover:bg-skin-primary/80 dark:bg-skin-primary-dark dark:text-skin-primary-foreground-dark dark:hover:bg-skin-primary-dark/80 md:text-lg"
 					onClick={() => setDialogOpen(true)}
 				>
 					{t('open')}
@@ -54,16 +54,16 @@ export default function NoticeBanner({ data }: { data: APINoticeBanner }) {
 									leaveTo="opacity-0 scale-95"
 								>
 									<Dialog.Panel
-										className="dark:bg-skin-dark-background-2 w-full max-w-4xl overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all"
+										className="w-full max-w-4xl overflow-hidden rounded-2xl bg-skin-secondary p-6 text-left align-middle text-skin-secondary-foreground shadow-xl transition-all dark:bg-skin-background-dark dark:text-skin-secondary-foreground-dark"
 									>
 										<Dialog.Title
 											as="h3"
-											className="text-lg font-semibold leading-6 text-black dark:text-white md:text-2xl"
+											className="text-lg font-semibold leading-6 md:text-2xl"
 										>
 											{data.description}
 										</Dialog.Title>
 										<div className="mt-4">
-											<p className="text-[#323232] md:text-lg">
+											<p className="md:text-lg">
 												{DescriptionSerializer(data.message as any)}
 											</p>
 										</div>
@@ -71,7 +71,7 @@ export default function NoticeBanner({ data }: { data: APINoticeBanner }) {
 										<div className="mt-6">
 											<button
 												type="button"
-												className="inline-flex justify-center rounded-full border border-transparent bg-[#EF4444] px-4 py-2 font-medium text-white hover:bg-red-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
+												className="inline-flex justify-center rounded-full border border-transparent bg-skin-primary px-4 py-2 font-medium text-white  hover:bg-skin-primary/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2 dark:bg-skin-primary-dark dark:hover:bg-skin-primary-dark/80"
 												onClick={() => setDialogOpen(false)}
 											>
 												{t('close')}
