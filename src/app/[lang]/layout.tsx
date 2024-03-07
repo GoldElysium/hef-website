@@ -1,5 +1,4 @@
 import '@/styles/globals.css';
-import DarkModeProvider from '@/components/contexts/DarkModeProvider';
 import type { Metadata } from 'next';
 import { dir } from 'i18next';
 import LocaleContextProvider from '@/components/contexts/LocaleContextProvider';
@@ -31,11 +30,9 @@ export default async function RootLayout({
 			<head>
 				<link href="/favicon.svg" rel="icon" type="image/svg+xml" />
 			</head>
-			<DarkModeProvider>
-				<LocaleContextProvider lang={lang}>
-					{children}
-				</LocaleContextProvider>
-			</DarkModeProvider>
+			<LocaleContextProvider lang={lang}>
+				{children}
+			</LocaleContextProvider>
 		</html>
 	);
 }

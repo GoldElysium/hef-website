@@ -6,6 +6,7 @@ import { Flag, Project } from '@/types/payload-types';
 import Header from '@/components/ui/Header';
 import NoticeBannerWrapper from '@/components/ui/NoticeBannerWrapper';
 import { Language } from '@/lib/i18n/languages';
+import DarkModeProvider from '@/components/contexts/DarkModeProvider';
 
 interface IProps {
 	children: React.ReactNode;
@@ -56,26 +57,28 @@ export default async function RootLayout({ children, params: { slug, lang } }: I
 
 	return (
 		<body className={project ? `skin-${project.skin}` : undefined}>
-			<Navbar
-				flags={project?.flags ?? []}
-				noticeBanner={
-					<NoticeBannerWrapper lang={lang} />
+			<DarkModeProvider>
+				<Navbar
+					flags={project?.flags ?? []}
+					noticeBanner={
+						<NoticeBannerWrapper lang={lang} />
+					}
+					locale={lang}
+				/>
+				{
+					project && !project.flags.includes('disableHeader') && (
+						<Header
+							title={project.title}
+							description={project.description}
+							devprops={project.devprops}
+						/>
+					)
 				}
-				locale={lang}
-			/>
-			{
-				project && !project.flags.includes('disableHeader') && (
-					<Header
-						title={project.title}
-						description={project.description}
-						devprops={project.devprops}
-					/>
-				)
-			}
-			<main>
-				{children}
-			</main>
-			<Footer flags={project?.flags ?? []} />
+				<main>
+					{children}
+				</main>
+				<Footer flags={project?.flags ?? []} />
+			</DarkModeProvider>
 		</body>
 	);
 }
