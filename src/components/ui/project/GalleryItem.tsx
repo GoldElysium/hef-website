@@ -34,7 +34,7 @@ export default function GalleryItem({ media, index }: GalleryItemProps) {
 				key={media[index].id!}
 				src={media[index].media.url!}
 				width={
-					media[index].media.width! < 1024 ? media[index].media.width : 1024
+					media[index].media.width! < 1024 ? media[index].media.width! : 1024
 				}
 				height={
 					media[index].media.width! < 1024
