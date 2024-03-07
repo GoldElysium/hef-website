@@ -30,7 +30,7 @@ export default function Gallery({ project }: IProps) {
 						className={
 							currentMediaIndex > 0
 								? 'size-8 cursor-pointer text-black dark:text-white'
-								: 'text-skin-primary-1 dark:text-skin-dark-primary-1 size-8 text-opacity-30 dark:text-opacity-30'
+								: 'dark:text-skin-dark-primary size-8 text-skin-primary text-opacity-30 dark:text-opacity-30'
 						}
 						onClick={() => {
 							if (currentMediaIndex > 0) {
@@ -48,7 +48,7 @@ export default function Gallery({ project }: IProps) {
 							currentMediaIndex + 1
 							< (project.media ? project.media.length : 0)
 								? 'size-8 cursor-pointer text-black dark:text-white'
-								: 'text-skin-primary-1 dark:text-skin-dark-primary-1 size-8 text-opacity-30 dark:text-opacity-30'
+								: 'dark:text-skin-dark-primary size-8 text-skin-primary text-opacity-30 dark:text-opacity-30'
 						}
 						onClick={() => {
 							if (

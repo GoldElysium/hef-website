@@ -1,15 +1,15 @@
 import { Submission, SubmissionMedia } from '@/types/payload-types';
 import PayloadResponse from '@/types/PayloadResponse';
 
-interface MediaItem {
+export interface MediaItem {
 	type: 'image' | 'video';
-	subtype?: 'artwork' | 'picture' | 'other';
+	subtype?: 'artwork' | 'picture' | 'other' | null;
 	image?: SubmissionMedia;
-	url?: string;
-	id?: string;
+	url?: string | null;
+	id?: string | null;
 }
 
-interface ISubmission extends Submission {
+export interface ISubmission extends Submission {
 	media?: MediaItem[];
 }
 

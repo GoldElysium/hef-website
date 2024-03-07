@@ -10,7 +10,7 @@ export default function ProjectLinks({ links }: ProjectLinksProps) {
 		<div className="mt-4">
 			<TextHeader>Links</TextHeader>
 			<div className="flex justify-center space-x-6 px-4 sm:px-0">
-				{links.map((link, index) => (
+				{(links ?? []).map((link, index) => (
 					<div
 						key={`project-link-${index}` /* eslint-disable-line react/no-array-index-key */}
 						className="bg-skin-secondary-1 dark:bg-skin-dark-secondary-1 mt-4 flex h-10 w-[6rem] content-end items-center

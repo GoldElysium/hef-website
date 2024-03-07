@@ -21,7 +21,7 @@ export default function Card({
 	return (
 		<div className="mt-4 w-full sm:w-1/3">
 			<div
-				className="bg-skin-card dark:bg-skin-dark-card border-skin-primary-1 dark:border-skin-dark-primary-1 flex h-full flex-col items-center justify-between rounded-lg border-b-4
+				className="bg-skin-card dark:bg-skin-dark-card dark:border-skin-dark-primary flex h-full flex-col items-center justify-between rounded-lg border-b-4 border-skin-primary
 			 p-8 sm:mx-2 sm:p-3 md:p-8"
 			>
 				<div className="flex flex-col items-center">

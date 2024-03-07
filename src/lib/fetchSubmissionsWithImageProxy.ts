@@ -1,18 +1,5 @@
-import { Submission, SubmissionMedia } from '@/types/payload-types';
-import fetchSubmissions from '@/lib/fetchSubmissions';
+import fetchSubmissions, { ISubmission } from '@/lib/fetchSubmissions';
 import { getImageUrl } from '@/components/ui/old/Image';
-
-interface MediaItem {
-	type: 'image' | 'video';
-	subtype?: 'artwork' | 'picture' | 'other';
-	image?: SubmissionMedia;
-	url?: string;
-	id?: string;
-}
-
-interface ISubmission extends Submission {
-	media?: MediaItem[];
-}
 
 // eslint-disable-next-line max-len
 export default async function fetchSubmissionsWithImageProxy(project: { id: string, slug: string }) {

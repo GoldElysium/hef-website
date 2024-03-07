@@ -42,7 +42,7 @@ export default function MobileNav({ noticeBanner }: IProps) {
 				/>
 			</Dialog.Trigger>
 			<Dialog.Portal>
-				<Dialog.Overlay className="fixed inset-0 z-40 h-full w-full bg-skin-header/50 backdrop-blur-2xl dark:bg-skin-header-dark/50 dark:text-skin-header-foreground" />
+				<Dialog.Overlay className="fixed inset-0 z-40 size-full bg-skin-header/50 backdrop-blur-2xl dark:bg-skin-header-dark/50 dark:text-skin-header-foreground" />
 				<Dialog.Content className="fixed inset-0 z-50 text-skin-header-foreground dark:text-skin-header-foreground-dark">
 					{noticeBanner}
 					<div className="flex h-20 w-full items-center justify-between bg-skin-header px-4 text-skin-header-foreground dark:bg-skin-header-dark dark:text-skin-header-foreground-dark sm:px-8">
@@ -64,7 +64,7 @@ export default function MobileNav({ noticeBanner }: IProps) {
 							/>
 						</div>
 					</div>
-					<div className="relative grid h-full w-full place-items-center px-12 font-semibold">
+					<div className="relative grid size-full place-items-center px-12 font-semibold">
 						<div className="flex w-full justify-between">
 							<nav className="flex flex-col gap-4 text-2xl">
 								<Link
