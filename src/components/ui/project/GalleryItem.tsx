@@ -6,7 +6,7 @@ import Image from 'next/image';
 import useTranslation from '@/lib/i18n/client';
 
 interface GalleryItemProps {
-	media: Array<Omit<Required<Project>['media'][number], 'media'> & { media: Media }>;
+	media: Array<Omit<NonNullable<Required<Project>['media']>[number], 'media'> & { media: Media }>
 	index: number;
 }
 
