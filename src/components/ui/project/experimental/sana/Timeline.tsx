@@ -12,7 +12,7 @@ function Link({ href, children }: { href: string, children?: ReactNode }) {
 
 export default function ProjectTimeline() {
 	useEffect(() => {
-		const items = document.querySelectorAll('.timeline li');
+		const items = document.querySelectorAll('#sana-timeline li');
 
 		// check if an element is in viewport
 		// http://stackoverflow.com/questions/123999/how-to-tell-if-a-dom-element-is-visible-in-the-current-viewport
@@ -56,7 +56,7 @@ export default function ProjectTimeline() {
 
 	// Timeline design from https://codepen.io/tutsplus/details/QNeJgR
 	return (
-		<div className={timelineStyles.timeline}>
+		<div className={timelineStyles.timeline} id="sana-timeline">
 			<ul>
 				<li>
 					<div>
