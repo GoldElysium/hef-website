@@ -31,21 +31,27 @@ interface IProps {
 
 interface IMapMarkerProps {
 	coordinates: [number, number];
+	img: string;
+	initialSize: number;
+	scaler: number;
+	className?: string;
 	onClick?: () => void;
 }
 
-function MapMarker({ coordinates, onClick }: IMapMarkerProps) {
+function ScaledMarker({
+	coordinates, onClick, img, initialSize, scaler, className,
+}: IMapMarkerProps) {
 	const panZoom = useZoomPanContext();
 
 	return (
 		<Marker coordinates={coordinates} onClick={onClick}>
 			<image
-				href="https://cdn.holoen.fans/hefw/assets/kroniimap/kronii-wave.gif"
-				height={5 / Math.max(panZoom.k as number / 6, 1)}
-				width={5 / Math.max(panZoom.k as number / 6, 1)}
-				x={-2.5 / Math.max(panZoom.k as number / 6, 1)}
-				y={-2.5 / Math.max(panZoom.k as number / 6, 1)}
-				className="cursor-pointer"
+				href={img}
+				height={initialSize / Math.max(panZoom.k as number / scaler, 1)}
+				width={initialSize / Math.max(panZoom.k as number / scaler, 1)}
+				x={-(initialSize / 2) / Math.max(panZoom.k as number / scaler, 1)}
+				y={-(initialSize / 2) / Math.max(panZoom.k as number / scaler, 1)}
+				className={`${className} ${onClick ? 'cursor-pointer' : ''}`}
 			/>
 		</Marker>
 	);
@@ -111,8 +117,12 @@ export default function KroniiMap({ submissions, markerMap }: IProps) {
 							/>
 						))}
 					</Geographies>
+
 					{Object.values(markerMap).map((entry) => (
-						<MapMarker
+						<ScaledMarker
+							img="https://cdn.holoen.fans/hefw/assets/kroniimap/kronii-wave.gif"
+							initialSize={5}
+							scaler={6}
 							coordinates={entry.pos}
 							onClick={() => {
 								setSubmissionIndex(0);
@@ -125,15 +135,85 @@ export default function KroniiMap({ submissions, markerMap }: IProps) {
 							key={entry.id}
 						/>
 					))}
+
 					<Marker coordinates={[-41, 30]}>
 						<text textAnchor="middle" fontSize={8} fill={resolvedTheme === 'dark' ? '#EEEEEE' : '#255494'}>
 							<tspan x={0}>Scroll to zoom</tspan>
 							<tspan x={0} y="1.2em">Left mouse button to pan</tspan>
 						</text>
 					</Marker>
-					<Marker coordinates={[-36, 10]}>
-						<image href="https://cdn.holoen.fans/hefw/assets/kroniimap/kronie-boat.gif" height="6" width="6" />
-					</Marker>
+
+					<ScaledMarker
+						img="https://cdn.holoen.fans/hefw/assets/kroniimap/kronie-boat.gif"
+						initialSize={8}
+						scaler={4}
+						coordinates={[-36, 10]}
+					/>
+					<ScaledMarker
+						img="https://cdn.holoen.fans/hefw/assets/kroniimap/kronie-plane.gif"
+						initialSize={8}
+						scaler={4}
+						coordinates={[3, 55]}
+						className="-rotate-12 scale-x-[-1]"
+					/>
+					<ScaledMarker
+						img="https://cdn.holoen.fans/hefw/assets/kroniimap/kronie-plane.gif"
+						initialSize={8}
+						scaler={4}
+						coordinates={[-48, 38]}
+						className="rotate-12"
+					/>
+					<ScaledMarker
+						img="https://cdn.holoen.fans/hefw/assets/kroniimap/kronie-boat.gif"
+						initialSize={8}
+						scaler={4}
+						coordinates={[56, -5]}
+					/>
+					<ScaledMarker
+						img="https://cdn.holoen.fans/hefw/assets/kroniimap/kronie-boat.gif"
+						initialSize={8}
+						scaler={4}
+						coordinates={[136, 40]}
+					/>
+					<ScaledMarker
+						img="https://cdn.holoen.fans/hefw/assets/kroniimap/kronie-plane.gif"
+						initialSize={8}
+						scaler={4}
+						coordinates={[103, -27]}
+						className="rotate-12"
+					/>
+					<ScaledMarker
+						img="https://cdn.holoen.fans/hefw/assets/kroniimap/kronie-boat.gif"
+						initialSize={8}
+						scaler={4}
+						coordinates={[-15, 35]}
+					/>
+					<ScaledMarker
+						img="https://cdn.holoen.fans/hefw/assets/kroniimap/kronie-plane.gif"
+						initialSize={8}
+						scaler={4}
+						coordinates={[-129, 40]}
+						className="-rotate-12 scale-x-[-1]"
+					/>
+					<ScaledMarker
+						img="https://cdn.holoen.fans/hefw/assets/kroniimap/kronie-boat.gif"
+						initialSize={8}
+						scaler={4}
+						coordinates={[-40, -75]}
+					/>
+					<ScaledMarker
+						img="https://cdn.holoen.fans/hefw/assets/kroniimap/kronie-boat.gif"
+						initialSize={8}
+						scaler={4}
+						coordinates={[-78, 15]}
+					/>
+					<ScaledMarker
+						img="https://cdn.holoen.fans/hefw/assets/kroniimap/kronie-plane.gif"
+						initialSize={8}
+						scaler={4}
+						coordinates={[90, 13]}
+						className="-rotate-12 scale-x-[-1]"
+					/>
 				</ZoomableGroup>
 			</ComposableMap>
 
