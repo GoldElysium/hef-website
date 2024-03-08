@@ -1,7 +1,8 @@
 import { Project } from '@/types/payload-types';
 import dynamic from 'next/dynamic';
-import fetchSubmissionsWithImageProxy from '@/lib/fetchSubmissionsWithImageProxy';
 import { MarkerMap } from '@/components/ui/project/kroniimap/KroniiMap';
+import fetchSubmissions, { ISubmission } from '@/lib/fetchSubmissions';
+import { getImageUrl } from '@/components/ui/old/Image';
 
 interface IProps {
 	project: Omit<Project, 'flags' | 'devprops'> & {
@@ -12,6 +13,40 @@ interface IProps {
 	};
 }
 
+async function fetchSubmissionsWithImageProxy(project: { id: string, slug: string }) {
+	const submissions = await fetchSubmissions(project);
+
+	return submissions.map((submission) => {
+		const mediaDocs: ISubmission['media'] = [];
+
+		(submission.media ?? []).forEach((item, index) => {
+			if (item.type !== 'image') {
+				mediaDocs[index] = item;
+				return;
+			}
+
+			mediaDocs[index] = {
+				...item,
+				image: {
+					...item.image!,
+					url: getImageUrl({
+						src: item.image!.url!,
+						width: 1280,
+						height: 720,
+						quality: 80,
+						action: 'resize',
+					}),
+				},
+			};
+		});
+
+		return {
+			...submission,
+			media: mediaDocs,
+		} satisfies ISubmission;
+	});
+}
+
 export default async function KroniiMapSubmissionWrapper({ project }: IProps) {
 	const submissions = await fetchSubmissionsWithImageProxy(project);
 
@@ -20,12 +55,9 @@ export default async function KroniiMapSubmissionWrapper({ project }: IProps) {
 		const markerPosProp = submission.devprops.find((prop) => prop.key === 'markerPos');
 		if (!markerPosProp) throw new Error(`Invalid submission found: ${submission.id}`);
 
-		const markerPos = JSON.parse(markerPosProp.value) as [number, number];
-
 		return {
 			...submission,
-			marker: markerPos,
-			markerId: markerPos.join(';'),
+			markerId: markerPosProp.value,
 		};
 	});
 
@@ -33,9 +65,11 @@ export default async function KroniiMapSubmissionWrapper({ project }: IProps) {
 
 	parsedSubmissions.forEach((submission) => {
 		if (!markerMap[submission.markerId]) {
+			const posSplit = submission.markerId.split(';');
+
 			markerMap[submission.markerId] = {
 				id: submission.markerId,
-				pos: submission.marker,
+				pos: [Number.parseFloat(posSplit[0]), Number.parseFloat(posSplit[1])],
 				submissions: [submission.id],
 			};
 		} else {
@@ -43,11 +77,11 @@ export default async function KroniiMapSubmissionWrapper({ project }: IProps) {
 		}
 	});
 
-	const KroniiMap = dynamic(() => import('./KroniiMap'), {
+	const Tabs = dynamic(() => import('./Tabs'), {
 		ssr: false,
 	});
 
 	return (
-		<KroniiMap project={project} submissions={submissions} markerMap={markerMap} />
+		<Tabs project={project} submissions={submissions} markerMap={markerMap} />
 	);
 }

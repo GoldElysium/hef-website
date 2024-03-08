@@ -1,6 +1,6 @@
 import { Project, Submission } from '@/types/payload-types';
 import { ArrowLeftIcon } from '@heroicons/react/20/solid';
-import Submissions from '../experimental/sana/Submissions';
+import Submissions from '@/components/ui/project/experimental/sana/Submissions';
 
 interface IProps {
 	submissions?: Submission[];

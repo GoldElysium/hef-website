@@ -10,10 +10,6 @@ import { useTheme } from 'next-themes';
 
 const geoUrl =	'https://cdn.holoen.fans/hefw/assets/kroniimap/ne_10m_admin_0_countries.json';
 
-export interface KroniiMapSubmission extends Submission {
-	marker: [number, number];
-}
-
 export interface MarkerMap {
 	[key: string]: {
 		id: string;
@@ -48,36 +44,43 @@ export default function KroniiMap({ project, submissions, markerMap }: IProps) {
 	}, [submissions]); */
 
 	return (
-		<div className="bg-skin-background dark:bg-skin-background-dark">
-			<ComposableMap
-				projection={geoRobinson()}
-				width={980}
-				height={493}
-			>
-				<ZoomableGroup>
-					<Geographies geography={geoUrl}>
-						{({ geographies }: { geographies: any[] }) => geographies.map((geo) => (
-							<Geography
-								key={geo.rsmKey}
-								geography={geo}
-								fill={resolvedTheme === 'dark' ? '#EEEEEE' : '#255494'}
-								className="focus:outline-0"
-								style={{ pressed: {} }}
-							/>
-						))}
-					</Geographies>
-					{Object.values(markerMap).map((entry) => {
-						console.log(entry);
-						// TODO: handle showing submissions
+		<ComposableMap
+			projection={geoRobinson()}
+			width={980}
+			height={493}
+		>
+			<ZoomableGroup>
+				<Geographies geography={geoUrl}>
+					{({ geographies }: { geographies: any[] }) => geographies.map((geo) => (
+						<Geography
+							key={geo.rsmKey}
+							geography={geo}
+							fill={resolvedTheme === 'dark' ? '#EEEEEE' : '#255494'}
+							className="focus:outline-0"
+							style={{ pressed: {} }}
+						/>
+					))}
+				</Geographies>
+				{Object.values(markerMap).map((entry) => {
+					console.log('');
+					// TODO: handle showing submissions
 
-						return (
-							<Marker coordinates={entry.pos} key={entry.id}>
-								<circle r={1} fill="#F53" />
-							</Marker>
-						);
-					})}
-				</ZoomableGroup>
-			</ComposableMap>
-		</div>
+					return (
+						<Marker coordinates={entry.pos} key={entry.id}>
+							<circle r={1} fill="#F53" />
+						</Marker>
+					);
+				})}
+				<Marker coordinates={[-41, 30]}>
+					<text textAnchor="middle" fontSize={8} fill={resolvedTheme === 'dark' ? '#EEEEEE' : '#255494'}>
+						<tspan x={0}>Scroll to zoom</tspan>
+						<tspan x={0} y="1.2em">Left mouse button to pan</tspan>
+					</text>
+				</Marker>
+				<Marker coordinates={[-36, 10]}>
+					<image href="https://cdn.holoen.fans/hefw/assets/kroniimap/kronie-boat.gif" height="6" width="6" />
+				</Marker>
+			</ZoomableGroup>
+		</ComposableMap>
 	);
 }
