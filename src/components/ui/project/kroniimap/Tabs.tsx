@@ -118,7 +118,6 @@ export default function Tabs({ project, submissions, markerMap }: IProps) {
 					if (selectedTab === 'map') {
 						return (
 							<KroniiMap
-								project={project}
 								submissions={submissions}
 								markerMap={markerMap}
 							/>
