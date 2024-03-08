@@ -4,6 +4,7 @@
 /* eslint-disable max-len */
 
 import { ReactNode, useEffect } from 'react';
+import timelineStyles from '@/styles/sana-timeline.module.css';
 
 function Link({ href, children }: { href: string, children?: ReactNode }) {
 	return <a href={href} target="_blank" rel="noreferrer noopener">{children}</a>;
@@ -55,7 +56,7 @@ export default function ProjectTimeline() {
 
 	// Timeline design from https://codepen.io/tutsplus/details/QNeJgR
 	return (
-		<div className="timeline">
+		<div className={timelineStyles.timeline}>
 			<ul>
 				<li>
 					<div>

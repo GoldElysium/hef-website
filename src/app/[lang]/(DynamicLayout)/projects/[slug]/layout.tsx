@@ -1,4 +1,3 @@
-import '@/styles/sana-timeline.css';
 import Navbar from '@/components/ui/Navbar';
 import Footer from '@/components/ui/Footer';
 import PayloadResponse from '@/types/PayloadResponse';
