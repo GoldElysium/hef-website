@@ -1,6 +1,8 @@
 'use client';
 
-import { Guild, Project, Submission } from '@/types/payload-types';
+import {
+	Guild, Project, Submission as ISubmission, SubmissionMedia,
+} from '@/types/payload-types';
 import { useState } from 'react';
 import TextHeader from '@/components/ui/old/TextHeader';
 import DescriptionSerializer from '@/components/ui/project/util/DescriptionSerializer';
@@ -15,7 +17,7 @@ interface IProps {
 			[key: string]: string;
 		};
 	};
-	submissions: Submission[];
+	submissions: Array<Omit<ISubmission, 'media' | 'srcIcon'> & { media: Array<NonNullable<Required<ISubmission>['media']>[number] & { image: SubmissionMedia }>; srcIcon: SubmissionMedia }>;
 	markerMap: MarkerMap;
 }
 
@@ -69,7 +71,7 @@ export default function Tabs({ project, submissions, markerMap }: IProps) {
 				</button>
 			</div>
 
-			<div>
+			<div className="w-full">
 				{(() => {
 					if (selectedTab === 'about') {
 						return (
@@ -125,10 +127,14 @@ export default function Tabs({ project, submissions, markerMap }: IProps) {
 					}
 					if (selectedTab === 'submissions') {
 						return (
-							<Submissions
-								project={project}
-								submissions={submissions}
-							/>
+							<div className="flex w-full justify-center">
+								<div className="max-w-4xl">
+									<Submissions
+										project={project}
+										submissions={submissions}
+									/>
+								</div>
+							</div>
 						);
 					}
 

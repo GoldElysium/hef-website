@@ -1,4 +1,4 @@
-import { Project } from '@/types/payload-types';
+import { Project, SubmissionMedia } from '@/types/payload-types';
 import dynamic from 'next/dynamic';
 import { MarkerMap } from '@/components/ui/project/kroniimap/KroniiMap';
 import fetchSubmissions, { ISubmission } from '@/lib/fetchSubmissions';
@@ -13,15 +13,17 @@ interface IProps {
 	};
 }
 
+type Submission = Omit<ISubmission, 'media' | 'srcIcon'> & { media: Array<NonNullable<Required<ISubmission>['media']>[number] & { image: SubmissionMedia }>; srcIcon: SubmissionMedia };
+
 async function fetchSubmissionsWithImageProxy(project: { id: string, slug: string }) {
 	const submissions = await fetchSubmissions(project);
 
 	return submissions.map((submission) => {
-		const mediaDocs: ISubmission['media'] = [];
+		const mediaDocs: Submission['media'] = [];
 
 		(submission.media ?? []).forEach((item, index) => {
 			if (item.type !== 'image') {
-				mediaDocs[index] = item;
+				mediaDocs[index] = item as any;
 				return;
 			}
 
@@ -43,7 +45,7 @@ async function fetchSubmissionsWithImageProxy(project: { id: string, slug: strin
 		return {
 			...submission,
 			media: mediaDocs,
-		} satisfies ISubmission;
+		} as Submission;
 	});
 }
 
