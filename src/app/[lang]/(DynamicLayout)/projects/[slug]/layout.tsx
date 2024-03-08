@@ -7,6 +7,7 @@ import Header from '@/components/ui/Header';
 import NoticeBannerWrapper from '@/components/ui/NoticeBannerWrapper';
 import { Language } from '@/lib/i18n/languages';
 import DarkModeProvider from '@/components/contexts/DarkModeProvider';
+import skins from '@/styles/skins.module.css';
 
 interface IProps {
 	children: React.ReactNode;
@@ -56,7 +57,7 @@ export default async function RootLayout({ children, params: { slug, lang } }: I
 	}
 
 	return (
-		<body className={project ? `skin-${project.skin}` : undefined}>
+		<body className={project ? skins[project.skin] ?? undefined : undefined}>
 			<DarkModeProvider>
 				<Navbar
 					flags={project?.flags ?? []}

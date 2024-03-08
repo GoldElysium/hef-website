@@ -3,11 +3,12 @@
 import {
 	Guild, Project, Submission as ISubmission, SubmissionMedia,
 } from '@/types/payload-types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import TextHeader from '@/components/ui/old/TextHeader';
 import DescriptionSerializer from '@/components/ui/project/util/DescriptionSerializer';
 import Submissions from '@/components/ui/project/experimental/sana/Submissions';
 import useTranslation from '@/lib/i18n/client';
+import { useTheme } from 'next-themes';
 import KroniiMap, { MarkerMap } from './KroniiMap';
 
 interface IProps {
@@ -23,7 +24,13 @@ interface IProps {
 
 export default function Tabs({ project, submissions, markerMap }: IProps) {
 	const [selectedTab, setSelectedTab] = useState('about');
+	const { setTheme } = useTheme();
 	const { t } = useTranslation('project', 'page');
+
+	useEffect(() => {
+		// Enforce light mode on load
+		setTheme('light');
+	}, []);
 
 	return (
 		<div className="bg-skin-background text-skin-text dark:bg-skin-background-dark dark:text-skin-text-dark">

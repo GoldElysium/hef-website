@@ -241,13 +241,13 @@ export default function KroniiMap({ submissions, markerMap }: IProps) {
 
 									{openSubmissions.length > 1 && (
 										<div
-											className="flex items-center justify-center rounded-md bg-skin-secondary px-2 py-1 text-center font-bold"
+											className="flex items-center justify-center rounded-md bg-skin-secondary px-2 py-1 text-center font-bold dark:bg-skin-secondary-dark"
 										>
 											<ChevronLeftIcon
 												className={
 													submissionIndex > 0
-														? 'dark:text-skin-text-dark-dark size-8 cursor-pointer text-skin-text'
-														: 'dark:text-skin-dark-primary size-8 text-skin-primary text-opacity-30 dark:text-opacity-30'
+														? 'size-8 cursor-pointer text-skin-secondary-foreground dark:text-skin-secondary-foreground-dark'
+														: 'size-8 text-skin-secondary-foreground text-opacity-30 dark:text-skin-secondary-foreground-dark dark:text-opacity-30'
 												}
 												onClick={() => {
 													if (submissionIndex > 0) {
@@ -255,7 +255,7 @@ export default function KroniiMap({ submissions, markerMap }: IProps) {
 													}
 												}}
 											/>
-											<span className="text-black dark:text-white">
+											<span className="text-skin-secondary-foreground dark:text-skin-secondary-foreground-dark">
 												{submissionIndex + 1}
 												/
 												{openSubmissions.length}
@@ -263,8 +263,8 @@ export default function KroniiMap({ submissions, markerMap }: IProps) {
 											<ChevronRightIcon
 												className={
 													submissionIndex + 1 < openSubmissions.length
-														? 'dark:text-skin-text-dark-dark size-8 cursor-pointer text-skin-text'
-														: 'dark:text-skin-dark-primary size-8 text-skin-primary text-opacity-30 dark:text-opacity-30'
+														? 'size-8 cursor-pointer text-skin-secondary-foreground dark:text-skin-secondary-foreground-dark'
+														: 'size-8 text-skin-secondary-foreground text-opacity-30 dark:text-skin-secondary-foreground-dark dark:text-opacity-30'
 												}
 												onClick={() => {
 													if (
