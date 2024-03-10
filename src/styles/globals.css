@@ -29,10 +29,10 @@
 
   --color-holoen-red: #EF4444;
 
-  --color-icon-primary: #FFFFFF;
+  --color-icon-primary: #FFF;
   --color-icon-secondary: var(--color-holoen-red);
 
-  --color-icon-primary-dark: #FFFFFF;
+  --color-icon-primary-dark: #FFF;
   --color-icon-secondary-dark: var(--color-holoen-red);
 }
 

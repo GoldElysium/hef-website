@@ -1,6 +1,3 @@
-
-
-
 .fuwamoco {
     --color-background: 249 241 228;
     --color-primary: 34 137 224;
@@ -27,8 +24,8 @@
     --color-link-dark: 115 191 255;
 
     --color-icon-primary: var(--color-holoen-red);
-    --color-icon-secondary: #FFFFFF;
-    --color-icon-primary-dark: #FFFFFF;
+    --color-icon-secondary: #FFF;
+    --color-icon-primary-dark: #FFF;
     --color-icon-secondary-dark: var(--color-holoen-red);
 }
 
@@ -58,8 +55,8 @@
     --color-link-dark: 250 175 209;
 
     --color-icon-primary: var(--color-holoen-red);
-    --color-icon-secondary: #FFFFFF;
-    --color-icon-primary-dark: #FFFFFF;
+    --color-icon-secondary: #FFF;
+    --color-icon-primary-dark: #FFF;
     --color-icon-secondary-dark: var(--color-holoen-red);
 }
 
@@ -89,8 +86,8 @@
     --color-link-dark: 115 191 255;
 
     --color-icon-primary: var(--color-holoen-red);
-    --color-icon-secondary: #FFFFFF;
-    --color-icon-primary-dark: #FFFFFF;
+    --color-icon-secondary: #FFF;
+    --color-icon-primary-dark: #FFF;
     --color-icon-secondary-dark: var(--color-holoen-red);
 }
 
@@ -120,8 +117,8 @@
     --color-link-dark: 178 207 255;
 
     --color-icon-primary: var(--color-holoen-red);
-    --color-icon-secondary: #FFFFFF;
-    --color-icon-primary-dark: #FFFFFF;
+    --color-icon-secondary: #FFF;
+    --color-icon-primary-dark: #FFF;
     --color-icon-secondary-dark: var(--color-holoen-red);
 }
 
@@ -151,8 +148,8 @@
     --color-link-dark: 241 145 242;
 
     --color-icon-primary: var(--color-holoen-red);
-    --color-icon-secondary: #FFFFFF;
-    --color-icon-primary-dark: #FFFFFF;
+    --color-icon-secondary: #FFF;
+    --color-icon-primary-dark: #FFF;
     --color-icon-secondary-dark: var(--color-holoen-red);
 }
 
@@ -182,8 +179,8 @@
     --color-link-dark: 206 179 229;
 
     --color-icon-primary: var(--color-holoen-red);
-    --color-icon-secondary: #FFFFFF;
-    --color-icon-primary-dark: #FFFFFF;
+    --color-icon-secondary: #FFF;
+    --color-icon-primary-dark: #FFF;
     --color-icon-secondary-dark: var(--color-holoen-red);
 }
 
@@ -212,10 +209,10 @@
     --color-heading-dark: 255 160 153;
     --color-link-dark: 255 160 153;
 
-    --color-icon-primary: #FFFFFF;
+    --color-icon-primary: #FFF;
     --color-icon-secondary: var(--color-holoen-red);
     --color-icon-primary-dark: var(--color-holoen-red);
-    --color-icon-secondary-dark: #FFFFFF;
+    --color-icon-secondary-dark: #FFF;
 }
 
 .mumei {
@@ -242,8 +239,8 @@
     --color-link-dark: 115 197 209;
 
     --color-icon-primary: var(--color-holoen-red);
-    --color-icon-secondary: #FFFFFF;
-    --color-icon-primary-dark: #FFFFFF;
+    --color-icon-secondary: #FFF;
+    --color-icon-primary-dark: #FFF;
     --color-icon-secondary-dark: var(--color-holoen-red);
 }
 
@@ -273,8 +270,8 @@
     --color-link-dark: 76 152 255;
 
     --color-icon-primary: var(--color-holoen-red);
-    --color-icon-secondary: #FFFFFF;
-    --color-icon-primary-dark: #FFFFFF;
+    --color-icon-secondary: #FFF;
+    --color-icon-primary-dark: #FFF;
     --color-icon-secondary-dark: var(--color-holoen-red);
 }
 
@@ -304,8 +301,8 @@
     --color-link-dark: 140 204 102;
 
     --color-icon-primary: var(--color-holoen-red);
-    --color-icon-secondary: #FFFFFF;
-    --color-icon-primary-dark: #FFFFFF;
+    --color-icon-secondary: #FFF;
+    --color-icon-primary-dark: #FFF;
     --color-icon-secondary-dark: var(--color-holoen-red);
 }
 
@@ -335,8 +332,8 @@
     --color-link-dark: 242 215 196;
 
     --color-icon-primary: var(--color-holoen-red);
-    --color-icon-secondary: #FFFFFF;
-    --color-icon-primary-dark: #FFFFFF;
+    --color-icon-secondary: #FFF;
+    --color-icon-primary-dark: #FFF;
     --color-icon-secondary-dark: var(--color-holoen-red);
 }
 
@@ -363,10 +360,10 @@
     --color-heading-dark: 255 191 210;
     --color-link-dark: 255 191 210;
 
-    --color-icon-primary: #FFFFFF;
+    --color-icon-primary: #FFF;
     --color-icon-secondary: var(--color-holoen-red);
     --color-icon-primary-dark: var(--color-holoen-red);
-    --color-icon-secondary-dark: #FFFFFF;
+    --color-icon-secondary-dark: #FFF;
 }
 
 .mori {
@@ -392,10 +389,10 @@
     --color-heading-dark: 242 109 117;
     --color-link-dark: 242 109 117;
 
-    --color-icon-primary: #FFFFFF;
+    --color-icon-primary: #FFF;
     --color-icon-secondary: var(--color-holoen-red);
     --color-icon-primary-dark: var(--color-holoen-red);
-    --color-icon-secondary-dark: #FFFFFF;
+    --color-icon-secondary-dark: #FFF;
 }
 
 .kiara {
@@ -419,10 +416,10 @@
     --color-heading-dark: 250 106 62;
     --color-link-dark: 250 106 62;
 
-    --color-icon-primary: #FFFFFF;
+    --color-icon-primary: #FFF;
     --color-icon-secondary: var(--color-holoen-red);
     --color-icon-primary-dark: var(--color-holoen-red);
-    --color-icon-secondary-dark: #FFFFFF;
+    --color-icon-secondary-dark: #FFF;
 }
 
 .gura {
@@ -445,8 +442,8 @@
     --color-link-dark: 149 182 245;
 
     --color-icon-primary: var(--color-holoen-red);
-    --color-icon-secondary: #FFFFFF;
-    --color-icon-primary-dark: #FFFFFF;
+    --color-icon-secondary: #FFF;
+    --color-icon-primary-dark: #FFF;
     --color-icon-secondary-dark: var(--color-holoen-red);
 }
 
@@ -474,8 +471,8 @@
     --color-link-dark: 242 215 181;
 
     --color-icon-primary: var(--color-holoen-red);
-    --color-icon-secondary: #FFFFFF;
-    --color-icon-primary-dark: #FFFFFF;
+    --color-icon-secondary: #FFF;
+    --color-icon-primary-dark: #FFF;
     --color-icon-secondary-dark: var(--color-holoen-red);
 }
 
@@ -497,7 +494,7 @@
     --color-link-dark: 219 204 255;
 
     --color-icon-primary: var(--color-holoen-red);
-    --color-icon-secondary: #FFFFFF;
-    --color-icon-primary-dark: #FFFFFF;
+    --color-icon-secondary: #FFF;
+    --color-icon-primary-dark: #FFF;
     --color-icon-secondary-dark: var(--color-holoen-red);
 }

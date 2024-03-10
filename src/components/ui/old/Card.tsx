@@ -4,7 +4,6 @@ import Link from 'next/link';
 import Image from '@/components/ui/old/Image';
 
 interface IProps {
-	/* eslint-disable react/require-default-props */
 	img?: string,
 	title: string,
 	description: string,
@@ -12,7 +11,6 @@ interface IProps {
 	url: string,
 	internal?: boolean,
 	lang: Language
-	/* eslint-enable */
 }
 
 export default function Card({
