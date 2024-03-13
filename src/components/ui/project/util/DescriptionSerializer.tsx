@@ -49,6 +49,10 @@ const serialize = (children: any[]) => children.map((node, i) => {
 	}
 
 	switch (node.type) {
+		case 'upload':
+			return (
+				<img key={`description-img-${i}`} src={node.value.url} className="my-2 max-h-64 w-full max-w-full object-contain" alt="" />
+			);
 		case 'h1':
 			return (
 				<h1 key={`description-h1-${i}`} className="my-8 text-center text-3xl font-semibold text-skin-text dark:text-skin-text-dark sm:text-5xl">

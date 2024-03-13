@@ -79,11 +79,33 @@ export default async function KroniiMapSubmissionWrapper({ project }: IProps) {
 		}
 	});
 
+	const descriptionWithProxy = project.description.map((node) => {
+		if (node.type !== 'upload') return node;
+		// @ts-ignore
+		return {
+			...node,
+			value: {
+				...node.value as any,
+				url: getImageUrl({
+					src: (node.value as any).url,
+					width: 1920,
+					height: 1080,
+					quality: 80,
+					action: 'resize',
+				}),
+			},
+		};
+	});
+
 	const Tabs = dynamic(() => import('./Tabs'), {
 		ssr: false,
 	});
 
 	return (
-		<Tabs project={project} submissions={submissions} markerMap={markerMap} />
+		<Tabs
+			project={{ ...project, description: descriptionWithProxy }}
+			submissions={submissions}
+			markerMap={markerMap}
+		/>
 	);
 }
