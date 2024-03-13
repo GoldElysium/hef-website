@@ -36,7 +36,7 @@ export default function ProjectTab({ label, children }: ProjectTabProps) {
 			{/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions */}
 			<h2
 				className={
-					`text-skin-primary-1 dark:text-skin-dark-primary-1 mx-4 select-none text-center text-2xl ${
+					`dark:text-skin-dark-primary mx-4 select-none text-center text-2xl text-skin-primary ${
 						(childrenWrapper === child) ? 'font-bold' : ''}`
 				}
 				onClick={(e) => e.button === 0 && setChild(childrenWrapper)}

@@ -40,12 +40,12 @@ export default class BlurBackground extends React.Component<{}, IState> {
 		return (
 			<div id="blur-background" className="fixed -z-1 h-screen w-screen overflow-hidden bg-black">
 				<img
-					className="absolute h-full w-full scale-125 object-cover blur-xl"
+					className="absolute size-full scale-125 object-cover blur-xl"
 					src={currentImage!}
 					alt=""
 				/>
 				{(targetImage !== null)
-					&& (<img className="blur-background-target absolute h-full w-full scale-125 object-cover blur-xl" src={targetImage} alt="" />)}
+					&& (<img className="blur-background-target absolute size-full scale-125 object-cover blur-xl" src={targetImage} alt="" />)}
 			</div>
 		);
 	}

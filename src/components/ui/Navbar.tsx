@@ -49,7 +49,7 @@ export default async function Navbar({ flags, noticeBanner, locale }: IProps) {
 						<Link
 							href={localizePathname(locale, '/projects')}
 							hrefLang={locale}
-							className="rounded-lg px-2 py-1 font-semibold text-white hover:text-opacity-80 focus:outline-none focus:ring-2 focus:ring-white/80"
+							className="rounded-lg px-2 py-1 font-semibold hover:text-opacity-80 focus:outline-none focus:ring-2 focus:ring-white/80"
 						>
 							{t('projects')}
 						</Link>

@@ -27,9 +27,7 @@ export default function Footer({ flags }: IProps) {
 				<div className="flex h-24 w-full items-center justify-center bg-skin-header px-4 text-skin-header-foreground dark:bg-skin-header-dark dark:text-skin-header-foreground-dark sm:px-8">
 					<span className="flex items-center whitespace-pre-wrap text-center text-lg font-semibold text-white">
 						Made with
-						{' '}
-						<HeartIcon className="h-4 w-4 text-white" />
-						{' '}
+						<HeartIcon className="mx-1 size-4 text-white" />
 						by
 						{' '}
 						<a

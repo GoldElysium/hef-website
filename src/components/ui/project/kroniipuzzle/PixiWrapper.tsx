@@ -70,7 +70,7 @@ export default function PixiWrapper({ project, submissions }: IProps) {
 
 	useEffect(() => {
 		(async () => {
-			await PIXI.Assets.init({ manifest: '/assets/kroniipuzzle/manifest.json' });
+			await PIXI.Assets.init({ manifest: 'https://cdn.holoen.fans/hefw/assets/kroniipuzzle/manifest.json' });
 			await PIXI.Assets.loadBundle('puzzle', (progress) => {
 				setLoadProgress(progress * 100);
 			});
@@ -91,7 +91,7 @@ export default function PixiWrapper({ project, submissions }: IProps) {
 			|| typeof window.opr !== 'undefined'
 		) {
 			// eslint-disable-next-line no-alert
-			alert("Unsupported browser\nIt seems like you're not using Chrome or Edge, your browser has not been tested and you may encounter issues while playing. We recommend you use Chrome/Edge to play this");
+			alert("Unsupported browser\nIt seems like you're not using Chrome or Edge, your browser has not been tested and you may encounter issues while playing. We recommend you use Chrome/Edge to play this.");
 		}
 	}, []);
 
@@ -99,12 +99,12 @@ export default function PixiWrapper({ project, submissions }: IProps) {
 
 	if (!ready) {
 		return (
-			<div className="min-w-screen grid h-full min-h-screen w-full place-items-center bg-[#E6F0FF] dark:bg-[#021026] dark:text-white">
+			<div className="min-w-screen grid size-full min-h-screen place-items-center bg-[#E6F0FF] dark:bg-[#021026] dark:text-white">
 				<div>
 					<p className="text-lg">
 						Loading...
 					</p>
-					<progress value={loadProgress.toFixed(0)} max={100} className="progress-info progress w-96 max-w-lg" />
+					<progress value={loadProgress.toFixed(0)} max={100} className="progress progress-info w-96 max-w-lg" />
 				</div>
 			</div>
 		);
@@ -122,12 +122,15 @@ export default function PixiWrapper({ project, submissions }: IProps) {
 
 			{!OS.desktop && (orientation.startsWith('portrait') || !document.fullscreenElement) && (
 				<button
-					className="min-w-screen absolute z-10 h-full min-h-screen w-full bg-black text-center text-white"
+					className="min-w-screen absolute z-10 size-full min-h-screen bg-black text-center text-white"
 					type="button"
 					onClick={() => {
-						document.documentElement.requestFullscreen().then(() => {
+						document.documentElement.requestFullscreen();
+						try {
+							// @ts-expect-error Chromium Android only
 							window.screen.orientation.lock('landscape');
-						});
+							// eslint-disable-next-line no-empty
+						} catch {}
 					}}
 				>
 					This app may not work correctly on mobile devices, we recommend using a large screen.
@@ -158,8 +161,8 @@ export default function PixiWrapper({ project, submissions }: IProps) {
 						onChange={() => setMuted(!muted)}
 					/>
 
-					<SpeakerWaveIcon className="swap-off h-6 w-6" />
-					<SpeakerXMarkIcon className="swap-on h-6 w-6" />
+					<SpeakerWaveIcon className="swap-off size-6" />
+					<SpeakerXMarkIcon className="swap-on size-6" />
 				</label>
 				<input
 					type="range"

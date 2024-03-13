@@ -17,7 +17,7 @@ export default function Footer({ flags }: IProps) {
 		>
 			<p className="flex items-center text-center text-white text-opacity-70">
 				Made with&nbsp;
-				<HeartIcon className="h-4 w-4 text-white" />
+				<HeartIcon className="size-4 text-white" />
 				&nbsp;by&nbsp;
 				<a
 					href="https://github.com/GoldElysium/hefs-website#contributors-"

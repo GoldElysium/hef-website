@@ -15,15 +15,7 @@ import useTranslation from '@/lib/i18n/server';
 import { Language } from '@/lib/i18n/languages';
 import PixiSubmissionWrapper from '@/components/ui/project/kroniipuzzle/PixiSubmissionWrapper';
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/20/solid';
-
-// ID's for both production and development databases
-// TODO: Replace with Payload data
-const ID_TO_STYLE_MAP = new Map<string, string>();
-ID_TO_STYLE_MAP.set('62c16ca2b919eb349a6b09ba', 'theme-ina');
-
-// Development testing ID's
-ID_TO_STYLE_MAP.set('62c9442ff1ee39aa37afc4c7', 'theme-ina');
-ID_TO_STYLE_MAP.set('63209a0af2be5d1c9590fb62', 'theme-sana');
+import KroniiMapSubmissionWrapper from '@/components/ui/project/kroniimap/KroniiMapSubmissionsWrapper';
 
 interface IProps {
 	params: {
@@ -91,8 +83,6 @@ export default async function ProjectPage({ params: { slug, lang } }: IProps) {
 
 	// const ref = useMemo(() => createRef<BlurBackground>(), []);
 
-	const themeStyle = ID_TO_STYLE_MAP.get((project.organizer as Guild).id);
-
 	if (project.flags?.includes('experimental')) {
 		return (
 			<ExperimentalProjectPage project={project} />
@@ -111,11 +101,17 @@ export default async function ProjectPage({ params: { slug, lang } }: IProps) {
 		);
 	}
 
+	if (project.flags?.includes('kronii-map-bd-2024')) {
+		return (
+			<KroniiMapSubmissionWrapper project={project} />
+		);
+	}
+
 	// eslint-disable-next-line react-hooks/rules-of-hooks
 	const { t } = await useTranslation(lang, 'project', 'page');
 
 	return (
-		<div className={themeStyle}>
+		<div>
 			<div className="flex h-full min-h-screen flex-col bg-skin-background text-skin-text dark:bg-skin-background-dark dark:text-skin-text-dark">
 				<div className="grow">
 					<div className="my-16 flex w-full flex-col items-center px-4 md:px-16 lg:px-24 2xl:px-56">
@@ -132,7 +128,7 @@ export default async function ProjectPage({ params: { slug, lang } }: IProps) {
 										Organized by:
 										{' '}
 										<span className="text-skin-heading dark:text-skin-heading-dark">
-											{(project.organizer as Guild).name}
+											{(project.organizers as Guild[]).map((guild) => guild.name).join(', ')}
 										</span>
 									</span>
 									<span>
@@ -169,7 +165,7 @@ export default async function ProjectPage({ params: { slug, lang } }: IProps) {
 												<a href={link.url} target="_blank" rel="noreferrer">
 													{link.name}
 												</a>
-												<ArrowTopRightOnSquareIcon className="h-6 w-6" />
+												<ArrowTopRightOnSquareIcon className="size-6" />
 											</div>
 										))}
 									</div>

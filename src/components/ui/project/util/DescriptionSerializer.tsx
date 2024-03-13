@@ -49,6 +49,10 @@ const serialize = (children: any[]) => children.map((node, i) => {
 	}
 
 	switch (node.type) {
+		case 'upload':
+			return (
+				<img key={`description-img-${i}`} src={node.value.url} className="my-2 max-h-64 w-full max-w-full object-contain" alt="" />
+			);
 		case 'h1':
 			return (
 				<h1 key={`description-h1-${i}`} className="my-8 text-center text-3xl font-semibold text-skin-text dark:text-skin-text-dark sm:text-5xl">
@@ -73,7 +77,7 @@ const serialize = (children: any[]) => children.map((node, i) => {
 					<h2 key={`description-h4-${i}`} className="dark:text-skin-text-darkmy-2 text-lg font-semibold text-skin-text">
 						{serialize(node.children)}
 					</h2>
-					<div className="bg-skin-primary-1 dark:bg-skin-dark-primary-1 my-2 h-0.5 w-full opacity-30" />
+					<div className="dark:bg-skin-dark-primary my-2 h-0.5 w-full bg-skin-primary opacity-30" />
 				</>
 			);
 		case 'h5':
@@ -82,7 +86,7 @@ const serialize = (children: any[]) => children.map((node, i) => {
 					<h2 key={`description-h5-${i}`} className="dark:text-skin-text-darkmy-2 text-base font-semibold text-skin-text">
 						{serialize(node.children)}
 					</h2>
-					<div className="bg-skin-primary-1 dark:bg-skin-dark-primary-1 my-2 h-0.5 w-full opacity-30" />
+					<div className="dark:bg-skin-dark-primary my-2 h-0.5 w-full bg-skin-primary opacity-30" />
 				</>
 			);
 		case 'h6':
@@ -91,7 +95,7 @@ const serialize = (children: any[]) => children.map((node, i) => {
 					<h2 key={`description-h6-${i}`} className="dark:text-skin-text-darkmy-2 text-base font-semibold text-skin-text">
 						{serialize(node.children)}
 					</h2>
-					<div className="bg-skin-primary-1 dark:bg-skin-dark-primary-1 my-2 h-0.5 w-full opacity-30" />
+					<div className="dark:bg-skin-dark-primary my-2 h-0.5 w-full bg-skin-primary opacity-30" />
 				</>
 			);
 		case 'quote':

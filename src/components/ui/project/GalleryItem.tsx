@@ -6,7 +6,7 @@ import Image from 'next/image';
 import useTranslation from '@/lib/i18n/client';
 
 interface GalleryItemProps {
-	media: Array<Omit<Required<Project>['media'][number], 'media'> & { media: Media }>;
+	media: Array<Omit<NonNullable<Required<Project>['media']>[number], 'media'> & { media: Media }>
 	index: number;
 }
 
@@ -34,7 +34,7 @@ export default function GalleryItem({ media, index }: GalleryItemProps) {
 				key={media[index].id!}
 				src={media[index].media.url!}
 				width={
-					media[index].media.width! < 1024 ? media[index].media.width : 1024
+					media[index].media.width! < 1024 ? media[index].media.width! : 1024
 				}
 				height={
 					media[index].media.width! < 1024

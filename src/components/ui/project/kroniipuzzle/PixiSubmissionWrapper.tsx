@@ -1,6 +1,6 @@
-import { Project, Submission, SubmissionMedia } from '@/types/payload-types';
+import { Project } from '@/types/payload-types';
 import dynamic from 'next/dynamic';
-import fetchSubmissions from '@/lib/fetchSubmissions';
+import fetchSubmissions, { ISubmission } from '@/lib/fetchSubmissions';
 import { getImageUrl } from '@/components/ui/old/Image';
 
 interface IProps {
@@ -12,24 +12,13 @@ interface IProps {
 	};
 }
 
-interface MediaItem {
-	type: 'image' | 'video';
-	subtype?: 'artwork' | 'picture' | 'other';
-	image?: SubmissionMedia;
-	url?: string;
-	id?: string;
-}
-
-interface ISubmission extends Submission {
-	media?: MediaItem[];
-}
-
-async function fetchSubmissionsWithProxy(project: { id: string, slug: string }) {
+async function fetchSubmissionsWithImageProxy(project: { id: string, slug: string }) {
 	const submissions = await fetchSubmissions(project);
 
 	return submissions.map((submission) => {
 		const mediaDocs: ISubmission['media'] = [];
-		(submission.media ?? []).map(async (item, index) => {
+
+		(submission.media ?? []).forEach((item, index) => {
 			if (item.type !== 'image') {
 				mediaDocs[index] = item;
 				return;
@@ -53,11 +42,12 @@ async function fetchSubmissionsWithProxy(project: { id: string, slug: string }) 
 		return {
 			...submission,
 			media: mediaDocs,
-		};
+		} satisfies ISubmission;
 	});
 }
+
 export default async function PixiSubmissionWrapper({ project }: IProps) {
-	const submissions = await fetchSubmissionsWithProxy(project);
+	const submissions = await fetchSubmissionsWithImageProxy(project);
 
 	const PixiRejectWrapper = dynamic(() => import('./PixiRejectWrapper'), {
 		ssr: false,

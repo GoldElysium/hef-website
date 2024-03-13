@@ -4,7 +4,6 @@ import { Submission } from '@/types/payload-types';
 import React, { ReactNode, useEffect, useState } from 'react';
 import { CheckIcon, ChevronUpDownIcon, FunnelIcon } from '@heroicons/react/20/solid';
 import { Listbox, Transition } from '@headlessui/react';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { debounce } from 'lodash';
 
 interface IProps {
@@ -67,9 +66,9 @@ export default function SubmissionsWithFilter({ submissions, filterOptions }: IP
 	return (
 		<>
 			<h2
-				className="text-skin-primary-1 dark:text-skin-dark-primary-1 border-skin-primary-1 dark:border-skin-dark-primary-1 mb-6 flex
-			items-center justify-between border-b-2 border-opacity-30 pb-2 text-center
-			text-2xl font-bold dark:border-opacity-40 sm:text-left"
+				className="dark:text-skin-dark-primary dark:border-skin-dark-primary/40 mb-6 flex items-center justify-between
+			border-b-2 border-skin-primary/30 pb-2 text-center text-2xl
+			font-bold text-skin-primary sm:text-left"
 			>
 				Submissions
 				<button
@@ -77,7 +76,7 @@ export default function SubmissionsWithFilter({ submissions, filterOptions }: IP
 					className="flex items-center gap-1.5 rounded-full bg-[#EF4444] px-4 py-2 text-sm text-white hover:bg-red-400"
 					onClick={() => setFilterMenuOpen(!filterMenuOpen)}
 				>
-					<FunnelIcon className="h-4 w-4" />
+					<FunnelIcon className="size-4" />
 					Filter
 				</button>
 			</h2>
@@ -106,7 +105,7 @@ export default function SubmissionsWithFilter({ submissions, filterOptions }: IP
 										<span className="block truncate text-black">{filter.type?.length > 0 ? filter.type.join(', ') : 'All'}</span>
 										<span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
 											<ChevronUpDownIcon
-												className="h-5 w-5"
+												className="size-5"
 												aria-hidden="true"
 											/>
 										</span>
@@ -117,7 +116,7 @@ export default function SubmissionsWithFilter({ submissions, filterOptions }: IP
 										leaveFrom="opacity-100"
 										leaveTo="opacity-0"
 									>
-										<Listbox.Options className="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+										<Listbox.Options className="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
 											{['Messages', 'Images', 'Videos'].map((type) => (
 												<Listbox.Option
 													key={`type-filter-${type}`}
@@ -137,7 +136,7 @@ export default function SubmissionsWithFilter({ submissions, filterOptions }: IP
 															</span>
 															{selected ? (
 																<span className="absolute inset-y-0 left-0 flex items-center pl-3 text-red-600">
-																	<CheckIcon className="h-5 w-5" aria-hidden="true" />
+																	<CheckIcon className="size-5" aria-hidden="true" />
 																</span>
 															) : null}
 														</>
@@ -170,7 +169,7 @@ export default function SubmissionsWithFilter({ submissions, filterOptions }: IP
 														<span className="block truncate text-black">{filter[key]?.length > 0 ? filter[key].join(', ') : 'All'}</span>
 														<span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
 															<ChevronUpDownIcon
-																className="h-5 w-5"
+																className="size-5"
 																aria-hidden="true"
 															/>
 														</span>
@@ -181,7 +180,7 @@ export default function SubmissionsWithFilter({ submissions, filterOptions }: IP
 														leaveFrom="opacity-100"
 														leaveTo="opacity-0"
 													>
-														<Listbox.Options className="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+														<Listbox.Options className="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
 															{filterOptions[key].map((value) => (
 																<Listbox.Option
 																	key={`${key}-filter-${value}`}
@@ -201,7 +200,7 @@ export default function SubmissionsWithFilter({ submissions, filterOptions }: IP
 																			</span>
 																			{selected ? (
 																				<span className="absolute inset-y-0 left-0 flex items-center pl-3 text-red-600">
-																					<CheckIcon className="h-5 w-5" aria-hidden="true" />
+																					<CheckIcon className="size-5" aria-hidden="true" />
 																				</span>
 																			) : null}
 																		</>
@@ -222,7 +221,7 @@ export default function SubmissionsWithFilter({ submissions, filterOptions }: IP
 					</div>
 				</Transition>
 				<div className="w-full max-w-full overflow-auto">
-					<div className="flex h-full w-full justify-center">
+					<div className="flex size-full justify-center">
 						<div className="h-full sm:w-11/12 md:w-10/12">
 							{shownSubmissions.map((submission) => submission.el)}
 						</div>

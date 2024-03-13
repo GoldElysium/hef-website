@@ -2,46 +2,38 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  :root {
-    --color-background: 254 240 240;
-    --color-primary: 239 68 68;
-    --color-primary-foreground: 252 252 252;
-    --color-secondary: 238 206 206;
-    --color-secondary-foreground: 252 252 252;
-    --color-accent: 166 48 48;
-    --color-text: 48 48 48;
-    --color-header: 239 68 68;
-    --color-header-foreground: 252 252 252;
-    --color-heading: 239 68 68;
-    --color-link: 210 20 20;
+:root {
+  --color-background: 254 240 240;
+  --color-primary: 239 68 68;
+  --color-primary-foreground: 252 252 252;
+  --color-secondary: 238 206 206;
+  --color-secondary-foreground: 48 48 48;
+  --color-accent: 166 48 48;
+  --color-text: 48 48 48;
+  --color-header: 239 68 68;
+  --color-header-foreground: 252 252 252;
+  --color-heading: 210 20 20;
+  --color-link: 210 20 20;
 
-    --color-background-dark: 20 3 3;
-    --color-primary-dark: 159 15 15;
-    --color-primary-foreground-dark: 252 252 252;
-    --color-secondary-dark: 140 56 56;
-    --color-secondary-foreground-dark: 252 252 252;
-    --color-accent-dark: 147 83 83;
-    --color-text-dark: 253 236 236;
-    --color-header-dark: 140 52 52;
-    --color-header-foreground-dark: 252 252 252;
-    --color-heading-dark: 254 203 203;
-    --color-link-dark: 254 203 203;
+  --color-background-dark: 20 3 3;
+  --color-primary-dark: 159 15 15;
+  --color-primary-foreground-dark: 252 252 252;
+  --color-secondary-dark: 140 56 56;
+  --color-secondary-foreground-dark: 252 252 252;
+  --color-accent-dark: 147 83 83;
+  --color-text-dark: 253 236 236;
+  --color-header-dark: 140 52 52;
+  --color-header-foreground-dark: 252 252 252;
+  --color-heading-dark: 254 203 203;
+  --color-link-dark: 254 203 203;
 
-    --color-holoen-red: #EF4444;
-    --color-icon-primary: #FFFFFF;
-    --color-icon-secondary: var(--color-holoen-red);
-  }
+  --color-holoen-red: #EF4444;
 
-  .icon-default {
-    --color-icon-primary: var(--color-holoen-red);
-    --color-icon-secondary: #FFFFFF;
-  }
+  --color-icon-primary: #FFF;
+  --color-icon-secondary: var(--color-holoen-red);
 
-  .icon-alt {
-    --color-icon-primary: #FFFFFF;
-    --color-icon-secondary: var(--color-holoen-red);
-  }
+  --color-icon-primary-dark: #FFF;
+  --color-icon-secondary-dark: var(--color-holoen-red);
 }
 
 @layer components {

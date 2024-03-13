@@ -19,7 +19,7 @@ export interface TanabataSubmission {
 	id: string;
 	author: string;
 	type: 'text' | 'image' | 'video';
-	message?: string;
+	message?: string | null;
 	media?: {
 		full: string;
 		thumbnail: string;

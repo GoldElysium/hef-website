@@ -74,7 +74,7 @@ ${congratulations}${favoriteMoment}`;
 				boxWidth={width}
 				boxHeight={height - 16}
 				app={app}
-				ref={scrollboxRef}
+				scrollboxRef={scrollboxRef}
 				x={0}
 				y={8}
 			>

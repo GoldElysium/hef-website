@@ -12,7 +12,7 @@ interface IProps {
 		devprops: {
 			[key: string]: string;
 		};
-		media: Array<Omit<Required<Project>['media'][number], 'media'> & { media: Media }>
+		media: Array<Omit<NonNullable<Required<Project>['media']>[number], 'media'> & { media: Media }>
 	};
 }
 export default function Gallery({ project }: IProps) {
@@ -29,8 +29,8 @@ export default function Gallery({ project }: IProps) {
 					<ChevronLeftIcon
 						className={
 							currentMediaIndex > 0
-								? 'h-8 w-8 cursor-pointer text-black dark:text-white'
-								: 'text-skin-primary-1 dark:text-skin-dark-primary-1 h-8 w-8 text-opacity-30 dark:text-opacity-30'
+								? 'size-8 cursor-pointer text-black dark:text-white'
+								: 'dark:text-skin-dark-primary size-8 text-skin-primary text-opacity-30 dark:text-opacity-30'
 						}
 						onClick={() => {
 							if (currentMediaIndex > 0) {
@@ -47,8 +47,8 @@ export default function Gallery({ project }: IProps) {
 						className={
 							currentMediaIndex + 1
 							< (project.media ? project.media.length : 0)
-								? 'h-8 w-8 cursor-pointer text-black dark:text-white'
-								: 'text-skin-primary-1 dark:text-skin-dark-primary-1 h-8 w-8 text-opacity-30 dark:text-opacity-30'
+								? 'size-8 cursor-pointer text-black dark:text-white'
+								: 'dark:text-skin-dark-primary size-8 text-skin-primary text-opacity-30 dark:text-opacity-30'
 						}
 						onClick={() => {
 							if (

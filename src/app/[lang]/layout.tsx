@@ -1,6 +1,5 @@
 import '@/styles/globals.css';
-import DarkModeProvider from '@/components/contexts/DarkModeProvider';
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
 import { dir } from 'i18next';
 import LocaleContextProvider from '@/components/contexts/LocaleContextProvider';
 import useTranslation from '@/lib/i18n/server';
@@ -28,14 +27,12 @@ export default async function RootLayout({
 }: IProps) {
 	return (
 		<html lang={lang} dir={dir(lang)} className={nunito.variable} suppressHydrationWarning>
-			<head />
-			<body>
-				<DarkModeProvider>
-					<LocaleContextProvider lang={lang}>
-						{children}
-					</LocaleContextProvider>
-				</DarkModeProvider>
-			</body>
+			<head>
+				<link href="/favicon.svg" rel="icon" type="image/svg+xml" />
+			</head>
+			<LocaleContextProvider lang={lang}>
+				{children}
+			</LocaleContextProvider>
 		</html>
 	);
 }

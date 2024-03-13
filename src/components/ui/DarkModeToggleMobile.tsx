@@ -25,7 +25,7 @@ export default function DarkModeToggleMobile() {
 					className="h-10 w-[4.25rem] rounded-full bg-black/40 px-2"
 					disabled
 				>
-					<Switch.Thumb className="block h-6 w-6 rounded-full bg-white/80 transition-transform duration-150 data-[state=checked]:translate-x-[1.75rem] motion-reduce:transition-none" />
+					<Switch.Thumb className="block size-6 rounded-full bg-white/80 transition-transform duration-150 data-[state=checked]:translate-x-[1.75rem] motion-reduce:transition-none" />
 				</Switch.Root>
 			</div>
 		);
@@ -45,7 +45,7 @@ export default function DarkModeToggleMobile() {
 				}}
 				className="h-10 w-[4.25rem] rounded-full bg-black/40 px-2"
 			>
-				<Switch.Thumb className="block h-6 w-6 rounded-full bg-white/80 transition-transform duration-150 data-[state=checked]:translate-x-[1.75rem] motion-reduce:transition-none" />
+				<Switch.Thumb className="block size-6 rounded-full bg-white/80 transition-transform duration-150 data-[state=checked]:translate-x-[1.75rem] motion-reduce:transition-none" />
 			</Switch.Root>
 		</div>
 	);

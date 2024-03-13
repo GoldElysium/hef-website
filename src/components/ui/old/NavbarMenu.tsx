@@ -17,7 +17,7 @@ export default function NavbarMenu() {
 	return (
 		<Menu as="div">
 			<Menu.Button>
-				<Bars3Icon onClick={() => { setMenuOpen(!menuOpen); }} className="-mb-1 h-10 w-10 text-white sm:hidden" />
+				<Bars3Icon onClick={() => { setMenuOpen(!menuOpen); }} className="-mb-1 size-10 text-white sm:hidden" />
 			</Menu.Button>
 			<Transition
 				show={menuOpen}
@@ -39,7 +39,7 @@ export default function NavbarMenu() {
 								type="button"
 								className="flex w-full items-center rounded-md"
 							>
-								<HomeIcon className="text-skin-primary-1 mr-2 h-6 w-6" />
+								<HomeIcon className="mr-2 size-6 text-skin-primary" />
 								{t('home')}
 							</Link>
 						</Menu.Item>
@@ -51,7 +51,7 @@ export default function NavbarMenu() {
 								type="button"
 								className="mt-1 flex w-full items-center rounded-md"
 							>
-								<ListBulletIcon className="text-skin-primary-1 mr-2 h-6 w-6" />
+								<ListBulletIcon className="mr-2 size-6 text-skin-primary" />
 								{t('projects')}
 							</Link>
 						</Menu.Item>

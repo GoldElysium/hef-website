@@ -125,11 +125,11 @@ export default function ProjectBackgroundMusic({ backgroundMusic }: ProjectBackg
 				}
 			>
 				<div className="w-128 relative flex h-16 items-center justify-center gap-2">
-					<ExclamationCircleIcon className="h-6 w-6" />
+					<ExclamationCircleIcon className="size-6" />
 					Your browser has denied audio playback
 					<button
 						type="button"
-						className="text-skin-primary-1 darK:text-skin-primary-1 mx-4"
+						className="darK:text-skin-primary mx-4 text-skin-primary"
 						onClick={() => {
 							setHidden(true);
 							setTimeout(() => setDismissed(true), 1000);
@@ -165,8 +165,8 @@ export default function ProjectBackgroundMusic({ backgroundMusic }: ProjectBackg
 						onFocus={() => setHidden(false)}
 					/>
 
-					<SpeakerWaveIcon className="swap-off h-6 w-6" />
-					<SpeakerXMarkIcon className="swap-on h-6 w-6" />
+					<SpeakerWaveIcon className="swap-off size-6" />
+					<SpeakerXMarkIcon className="swap-on size-6" />
 				</label>
 				<input
 					type="range"

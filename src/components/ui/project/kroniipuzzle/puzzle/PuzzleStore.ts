@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import { create } from 'zustand';
+import { createWithEqualityFn } from 'zustand/traditional';
 import { immer } from 'zustand/middleware/immer';
 import { persist } from 'zustand/middleware';
 import {
@@ -111,7 +111,7 @@ function flatIndexToSpiralCoordinates(index: number): [number, number] | null {
 	return null;
 }
 
-const usePuzzleStore = create(persist(
+const usePuzzleStore = createWithEqualityFn(persist(
 	immer<State & Actions>((set) => {
 		const initialState: State = {
 			pieces: {},
@@ -193,7 +193,6 @@ const usePuzzleStore = create(persist(
 					// Merge everything into the other group and delete the old group
 					pieces.push(...oldPieces);
 				} catch (e: any) {
-					console.log(`oldGroupKey: ${oldGroupKey}, newGroupKey: ${newGroupKey}`);
 					console.error(e);
 					return;
 				}
@@ -204,8 +203,6 @@ const usePuzzleStore = create(persist(
 				state.correctCount += state.pieceGroups[key].pieces.length;
 			}),
 			setVolume: (volume) => set((state) => {
-				const oldVolume = state.audio.volume;
-				console.log(`volume set: from ${oldVolume} to ${volume}`);
 				state.audio.volume = volume;
 			}),
 			setMuted: (muted) => set((state) => {

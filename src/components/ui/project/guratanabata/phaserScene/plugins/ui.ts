@@ -61,8 +61,11 @@ export default class UI extends Phaser.Plugins.ScenePlugin {
 		if (!this.scene.game.device.os.desktop) {
 			// @ts-expect-error
 			try { ScreenOrientation.lock('landscape'); } catch {} // eslint-disable-line no-empty
-			// eslint-disable-next-line no-empty
-			try { window.screen.orientation.lock('landscape'); } catch {}
+			try {
+				// @ts-expect-error Chromium Android only
+				window.screen.orientation.lock('landscape');
+				// eslint-disable-next-line no-empty
+			} catch {}
 		}
 	}
 

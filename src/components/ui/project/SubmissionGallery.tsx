@@ -5,7 +5,7 @@ import { ReactNode, useState } from 'react';
 import { Submission as ISubmission, SubmissionMedia } from '@/types/payload-types';
 
 interface IProps {
-	submission: Omit<ISubmission, 'media' | 'srcIcon'> & { media: Array<Required<ISubmission>['media'][number] & { image: SubmissionMedia }>; srcIcon: SubmissionMedia };
+	submission: Omit<ISubmission, 'media' | 'srcIcon'> & { media: Array<NonNullable<Required<ISubmission>['media']>[number] & { image: SubmissionMedia }>; srcIcon: SubmissionMedia };
 	elements: ReactNode[];
 }
 
@@ -15,15 +15,15 @@ export default function SubmissionGallery({ submission, elements }: IProps) {
 	return (
 		<div className="mt-4">
 			<div className="flex flex-col items-center pt-2">
-				<div className="mb-2 mt-4 flex h-full max-h-[750px] w-full justify-center">
+				<div className="mb-2 mt-4 flex size-full max-h-[750px] justify-center">
 					{elements[currentMediaIndex]}
 				</div>
 				<div className="mt-2 flex items-center justify-center text-center font-bold">
 					<ChevronLeftIcon
 						className={
 							currentMediaIndex > 0
-								? 'h-8 w-8 cursor-pointer text-black dark:text-white'
-								: 'text-skin-primary-1 dark:text-skin-dark-primary-1 h-8 w-8 text-opacity-30 dark:text-opacity-30'
+								? 'size-8 cursor-pointer text-black dark:text-white'
+								: 'dark:text-skin-dark-primary size-8 text-skin-primary text-opacity-30 dark:text-opacity-30'
 						}
 						onClick={() => {
 							if (currentMediaIndex > 0) {
@@ -39,8 +39,8 @@ export default function SubmissionGallery({ submission, elements }: IProps) {
 					<ChevronRightIcon
 						className={
 							currentMediaIndex + 1 < submission.media.length
-								? 'h-8 w-8 cursor-pointer text-black dark:text-white'
-								: 'text-skin-primary-1 dark:text-skin-dark-primary-1 h-8 w-8 text-opacity-30 dark:text-opacity-30'
+								? 'size-8 cursor-pointer text-black dark:text-white'
+								: 'dark:text-skin-dark-primary size-8 text-skin-primary text-opacity-30 dark:text-opacity-30'
 						}
 						onClick={() => {
 							if (

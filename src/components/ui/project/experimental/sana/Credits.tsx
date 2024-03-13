@@ -31,13 +31,13 @@ export default function ProjectCredits({ credits }: ProjectCreditsProps) {
 		})), [credits]);
 
 	return (
-		<div className="flex h-full w-full flex-col px-5 text-black dark:text-white lg:px-0">
+		<div className="flex size-full flex-col px-5 text-black dark:text-white lg:px-0">
 			{(organizers.length > 0) && (
 				<div className="flex w-full flex-col">
-					<div className="text-skin-primary-1 dark:text-skin-dark-primary-1 border-skin-primary-1 dark:border-skin-dark-primary-1 my-8 mb-6 flex
-                          w-full flex-row border-b-2 border-opacity-30
-                          text-center text-2xl
-                          font-bold dark:border-opacity-40
+					<div className="dark:text-skin-dark-primary dark:border-skin-dark-primary/40 my-8 mb-6 flex w-full flex-row
+                          border-b-2 border-skin-primary/30 text-center
+                          text-2xl font-bold
+                          text-skin-primary
                           sm:text-left"
 					>
 						<h3>{organizers.length > 1 ? 'Organizers' : 'Organizer'}</h3>
@@ -52,10 +52,10 @@ export default function ProjectCredits({ credits }: ProjectCreditsProps) {
 			)}
 			{(artists.length > 0) && (
 				<div className="flex w-full flex-col">
-					<div className="text-skin-primary-1 dark:text-skin-dark-primary-1 border-skin-primary-1 dark:border-skin-dark-primary-1 my-8 mb-6 flex
-                          w-full flex-row border-b-2 border-opacity-30
-                          text-center text-2xl
-                          font-bold dark:border-opacity-40
+					<div className="dark:text-skin-dark-primary dark:border-skin-dark-primary/40 my-8 mb-6 flex w-full flex-row
+                          border-b-2 border-skin-primary/30 text-center
+                          text-2xl font-bold
+                          text-skin-primary
                           sm:text-left"
 					>
 						<h3>{artists.length > 1 ? 'Artists' : 'Artist'}</h3>
@@ -70,10 +70,10 @@ export default function ProjectCredits({ credits }: ProjectCreditsProps) {
 			)}
 			{(musicians.length > 0) && (
 				<div className="flex w-full flex-col">
-					<div className="text-skin-primary-1 dark:text-skin-dark-primary-1 border-skin-primary-1 dark:border-skin-dark-primary-1 my-8 mb-6 flex
-                          w-full flex-row border-b-2 border-opacity-30
-                          text-center text-2xl
-                          font-bold dark:border-opacity-40
+					<div className="dark:text-skin-dark-primary dark:border-skin-dark-primary/40 my-8 mb-6 flex w-full flex-row
+                          border-b-2 border-skin-primary/30 text-center
+                          text-2xl font-bold
+                          text-skin-primary
                           sm:text-left"
 					>
 						<h3>{musicians.length > 1 ? 'Musicians' : 'Musician'}</h3>
@@ -88,10 +88,10 @@ export default function ProjectCredits({ credits }: ProjectCreditsProps) {
 			)}
 			{(coders.length > 0) && (
 				<div className="flex w-full flex-col">
-					<div className="text-skin-primary-1 dark:text-skin-dark-primary-1 border-skin-primary-1 dark:border-skin-dark-primary-1 my-8 mb-6 flex
-                          w-full flex-row border-b-2 border-opacity-30
-                          text-center text-2xl
-                          font-bold dark:border-opacity-40
+					<div className="dark:text-skin-dark-primary dark:border-skin-dark-primary/40 my-8 mb-6 flex w-full flex-row
+                          border-b-2 border-skin-primary/30 text-center
+                          text-2xl font-bold
+                          text-skin-primary
                           sm:text-left"
 					>
 						<h3>{coders.length > 1 ? 'Code Monkeys' : 'Code Monkey'}</h3>

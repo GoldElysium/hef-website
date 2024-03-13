@@ -1,7 +1,6 @@
 // eslint-disable-next-line max-classes-per-file
-import { PixiComponent } from '@pixi/react';
+import { PixiComponent, applyDefaultProps } from '@pixi/react';
 import type { Application, Rectangle } from 'pixi.js';
-import * as PIXI from 'pixi.js';
 import { InputManager as PixiViewportInputManager, IViewportOptions, Viewport as PixiViewport } from 'pixi-viewport';
 import type * as React from 'react';
 import { MutableRefObject } from 'react';
@@ -57,18 +56,13 @@ interface PixiComponentViewportProps {
 	forceHitArea?: Rectangle | undefined | null;
 	app: Application;
 	children?: React.ReactNode;
-	ref?: MutableRefObject<PixiViewport | null>
+	viewportRef?: MutableRefObject<PixiViewport | null>
 }
 
 const Viewport = PixiComponent('Viewport', {
 	create({
-		width, height, worldWidth, worldHeight, forceHitArea, x, y, app, ref,
+		width, height, worldWidth, worldHeight, forceHitArea, x, y, app, viewportRef,
 	}: PixiComponentViewportProps) {
-		if (!('events' in app.renderer)) {
-			// @ts-ignore
-			app.renderer.addSystem(PIXI.EventSystem, 'events');
-		}
-
 		const viewport = new FixedPixiViewport({
 			screenWidth: width,
 			screenHeight: height,
@@ -105,9 +99,9 @@ const Viewport = PixiComponent('Viewport', {
 			})
 			.clampZoom({ minScale: 0.2, maxScale: 10 });
 
-		if (ref) {
+		if (viewportRef) {
 			// eslint-disable-next-line no-param-reassign
-			ref.current = viewport;
+			viewportRef.current = viewport;
 		}
 
 		return viewport;
@@ -121,7 +115,7 @@ const Viewport = PixiComponent('Viewport', {
 			height: oldHeight,
 			worldWidth: oldWorldWidth,
 			worldHeight: oldWorldHeight,
-			ref: _oldRef,
+			viewportRef: _oldRef,
 			...oldProps
 		} = _oldProps;
 		/* eslint-enable */
@@ -132,7 +126,7 @@ const Viewport = PixiComponent('Viewport', {
 			height,
 			worldWidth,
 			worldHeight,
-			ref,
+			viewportRef,
 			...newProps
 		} = _newProps;
 
@@ -156,16 +150,10 @@ const Viewport = PixiComponent('Viewport', {
 			viewport.plugins.resume('drag');
 		}
 
-		Object.keys(newProps).forEach((p) => {
-			// @ts-ignore
-			if (oldProps[p] !== newProps[p]) {
-				// @ts-ignore
-				viewport[p] = newProps[p]; // eslint-disable-line no-param-reassign
-			}
-		});
+		applyDefaultProps(viewport, oldProps, newProps);
 
-		if (ref) {
-			ref.current = viewport;
+		if (viewportRef) {
+			viewportRef.current = viewport;
 		}
 	},
 	willUnmount(instance: PixiViewport) {

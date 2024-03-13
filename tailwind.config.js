@@ -1,4 +1,5 @@
-const defaultTheme = require('tailwindcss/defaultTheme')
+const defaultTheme = require('tailwindcss/defaultTheme');
+const plugin = require('tailwindcss/plugin');
 
 function withOpacity(variableName) {
 	return `rgb(var(${variableName}) / <alpha-value>)`;
@@ -84,5 +85,7 @@ module.exports = {
 	variants: {
 		extend: {},
 	},
-	plugins: [require('daisyui')],
+	plugins: [
+		require('daisyui'),
+	],
 };

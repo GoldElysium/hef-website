@@ -20,7 +20,7 @@ export default function LocaleSelect() {
 				>
 					<LanguageIcon height={24} />
 					<ChevronDownIcon
-						className="-mr-1 ml-2 h-5 w-5 text-white"
+						className="-mr-1 ml-2 size-5 text-white"
 						aria-hidden="true"
 					/>
 				</button>

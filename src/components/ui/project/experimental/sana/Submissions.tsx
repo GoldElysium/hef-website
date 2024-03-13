@@ -17,7 +17,7 @@ interface ISubmissionProps {
 			[key: string]: string;
 		};
 	};
-	submission: Omit<ISubmission, 'media' | 'srcIcon'> & { media: Array<Required<ISubmission>['media'][number] & { image: SubmissionMedia }>; srcIcon: SubmissionMedia };
+	submission: Omit<ISubmission, 'media' | 'srcIcon'> & { media: Array<NonNullable<Required<ISubmission>['media']>[number] & { image: SubmissionMedia }>; srcIcon: SubmissionMedia };
 	index: number;
 }
 
@@ -27,10 +27,10 @@ function SubmissionElement({ project, submission, index }: ISubmissionProps) {
 			<div className="mt-4 flex h-14 w-full">
 				{submission.srcIcon && (
 					<Image
-						className="h-14 w-14 rounded-full object-cover"
+						className="size-14 rounded-full object-cover"
 						src={submission.srcIcon.url!}
 						width={
-							submission.srcIcon.width! < 56 ? submission.srcIcon.width : 56
+							submission.srcIcon.width! < 56 ? submission.srcIcon.width! : 56
 						}
 						height={
 							submission.srcIcon.width! < 56
@@ -66,13 +66,13 @@ function SubmissionElement({ project, submission, index }: ISubmissionProps) {
 								</div>
 							)}
 							{submission.media[0].type === 'image' && (
-								<div className="mb-2 mt-4 flex h-full max-h-[750px] w-full justify-center">
+								<div className="mb-2 mt-4 flex size-full max-h-[750px] justify-center">
 									<Image
 										className="mb-4 max-w-10/12 object-contain"
 										src={submission.media[0].image.url!}
 										width={
 											submission.media[0].image.width! < 1024
-												? submission.media[0].image.width : 1024
+												? submission.media[0].image.width! : 1024
 										}
 										height={
 											submission.media[0].image.width! < 1024
@@ -111,7 +111,7 @@ function SubmissionElement({ project, submission, index }: ISubmissionProps) {
 											key={media.id!}
 											src={media.image.url!}
 											width={
-												media.image.width! < 1024 ? media.image.width : 1024
+												media.image.width! < 1024 ? media.image.width! : 1024
 											}
 											height={
 												media.image.width! < 1024
@@ -179,7 +179,7 @@ function Submissions({ submissions, project }: IProps) {
 						scrollThreshold="600px"
 					>
 						{(!project?.flags?.includes('tiledSubmissions') && (
-							<div className="flex h-full w-full justify-center">
+							<div className="flex size-full justify-center">
 								<div
 									className={`h-full sm:w-11/12 md:w-10/12 ${project?.flags?.includes('sanaSendoff') ? 'w-full' : ''}`}
 								>
@@ -194,10 +194,10 @@ function Submissions({ submissions, project }: IProps) {
 								</div>
 							</div>
 						)) || (
-							<div className="flex h-full w-full flex-wrap content-center justify-center">
+							<div className="flex size-full flex-wrap content-center justify-center">
 								<div className="flex flex-wrap sm:w-11/12 md:w-10/12">
 									{shownSubmissions.map((submission, index) => (
-										<div className="min-w-80 w-1/2" key={submission.id}>
+										<div className="w-1/2 min-w-80" key={submission.id}>
 											<SubmissionElement
 												project={project}
 												submission={submission as any}
