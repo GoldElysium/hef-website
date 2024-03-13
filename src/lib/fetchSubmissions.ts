@@ -88,7 +88,7 @@ export default async function fetchSubmissions(project: { id: string, slug: stri
 		await fetchNextSubmissions();
 	}
 
-	console.log(`Fetched ${submissions.length} submissions for: ${project.slug} (${project.id})`);
 	console.log(submissions);
+	console.log(`Fetched ${submissions.length} submissions for: ${project.slug} (${project.id})`);
 	return submissions;
 }
