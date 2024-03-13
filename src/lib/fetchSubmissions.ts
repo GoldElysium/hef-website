@@ -14,6 +14,7 @@ export interface ISubmission extends Submission {
 }
 
 export default async function fetchSubmissions(project: { id: string, slug: string }) {
+	console.log(`Fetching submissions for: ${project.slug} (${project.id})`);
 	// Create an array for all the submissions
 	let moreSubmissions = true;
 	let page = 1;
@@ -87,5 +88,7 @@ export default async function fetchSubmissions(project: { id: string, slug: stri
 		await fetchNextSubmissions();
 	}
 
+	console.log(`Fetched ${submissions.length} submissions for: ${project.slug} (${project.id})`);
+	console.log(submissions);
 	return submissions;
 }
