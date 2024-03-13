@@ -291,7 +291,7 @@ export default function KroniiMap({ submissions, markerMap }: IProps) {
 																: currentSubmission.media![currentSubmission.media!.length - 1].image.url!
 														}
 														alt="Kronie"
-														className="size-16"
+														className="size-16 object-contain"
 													/>
 												)
 											}
@@ -317,7 +317,7 @@ export default function KroniiMap({ submissions, markerMap }: IProps) {
 												</p>
 											</div>
 										</div>
-										<p>
+										<p className="break-words">
 											{currentSubmission.message}
 										</p>
 										{

@@ -1,5 +1,5 @@
 import '@/styles/globals.css';
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { dir } from 'i18next';
 import LocaleContextProvider from '@/components/contexts/LocaleContextProvider';
 import useTranslation from '@/lib/i18n/server';
@@ -59,7 +59,6 @@ export async function generateMetadata({ params: { lang } }: IProps): Promise<Me
 			},
 		},
 		keywords: ['hololive en', 'hef', 'hololive fan', 'hololive en fan', 'hololive'],
-		themeColor: '#FF3D3D',
 		openGraph: {
 			title,
 			description,
@@ -81,3 +80,7 @@ export async function generateMetadata({ params: { lang } }: IProps): Promise<Me
 		},
 	};
 }
+
+export const viewport: Viewport = {
+	themeColor: '#FF3D3D',
+};
