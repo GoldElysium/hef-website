@@ -109,7 +109,7 @@ export interface Project {
 		[k: string]: unknown;
 	}[];
 	organizers: (string | Guild)[];
-	status: 'draft' | 'ongoing' | 'past';
+	status: 'draft' | 'submissions-open' | 'submissions-closed' | 'ongoing' | 'past';
 	links?:
 		| {
 		name: string;
@@ -267,6 +267,25 @@ export interface Form {
 	isSubmissionForm: 'true' | 'false';
 	project?: (string | null) | Project;
 	status: 'open' | 'closed';
+	skin:
+		| 'holoEN'
+		| 'ina'
+		| 'amelia'
+		| 'gura'
+		| 'kiara'
+		| 'mori'
+		| 'irys'
+		| 'sana'
+		| 'fauna'
+		| 'kronii'
+		| 'mumei'
+		| 'baelz'
+		| 'shiori'
+		| 'bijou'
+		| 'nerissa'
+		| 'fuwawa'
+		| 'mococo'
+		| 'fuwamoco';
 	form:
 		| {
 		[k: string]: unknown;

@@ -20,6 +20,9 @@ dependencies:
   '@heroicons/react':
     specifier: 2.1.1
     version: 2.1.1(react@18.2.0)
+  '@marsidev/react-turnstile':
+    specifier: ^0.5.3
+    version: 0.5.3(react-dom@18.2.0)(react@18.2.0)
   '@mdi/js':
     specifier: 7.4.47
     version: 7.4.47
@@ -2330,6 +2333,16 @@ packages:
   /@juggle/resize-observer@3.4.0:
     resolution: {integrity: sha512-dfLbk+PwWvFzSxwk3n5ySL0hfBog779o8h68wK/7/APo/7cgyWp5jcXockbxdk5kFRkbeXWm4Fbi9FrdN381sA==}
     dev: true
+
+  /@marsidev/react-turnstile@0.5.3(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-lx3p2/56esPt8Ksr37K8uhPt/K4Mg8xaIfCV8MPKmE/1X4aHesRqZok1+L1ySQwsdWoEe5+KJOhBXka8lFBwNg==}
+    peerDependencies:
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
 
   /@mdi/js@7.4.47:
     resolution: {integrity: sha512-KPnNOtm5i2pMabqZxpUz7iQf+mfrYZyKCZ8QNz85czgEt7cuHcGorWfdzUMWYA0SD+a6Hn4FmJ+YhzzzjkTZrQ==}
