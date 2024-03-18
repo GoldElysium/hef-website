@@ -102,7 +102,7 @@ export default function Tabs({ project, submissions, markerMap }: IProps) {
 														</span>
 													</span>
 													<span>
-														Released on:
+														Event date:
 														{' '}
 														{
 															(new Intl.DateTimeFormat('en-GB', {

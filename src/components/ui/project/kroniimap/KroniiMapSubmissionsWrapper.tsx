@@ -88,9 +88,8 @@ export default async function KroniiMapSubmissionWrapper({ project }: IProps) {
 				...node.value as any,
 				url: getImageUrl({
 					src: (node.value as any).url,
-					width: 1920,
-					height: 1080,
-					quality: 80,
+					width: 8000,
+					quality: 90,
 					action: 'resize',
 				}),
 			},

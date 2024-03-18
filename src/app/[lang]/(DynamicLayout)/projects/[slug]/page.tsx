@@ -132,7 +132,7 @@ export default async function ProjectPage({ params: { slug, lang } }: IProps) {
 										</span>
 									</span>
 									<span>
-										Released on:
+										Event date:
 										{' '}
 										{
 											(new Intl.DateTimeFormat('en-GB', {

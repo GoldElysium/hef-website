@@ -1,19 +1,20 @@
-import { NextRequest, NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
 
 // eslint-disable-next-line import/prefer-default-export
-export async function POST(req: NextRequest) {
+export async function POST(req: Request) {
 	if (req.headers.get('Authorization') !== process.env.REVALIDATE_SECRET) {
-		return new NextResponse(undefined, { status: 401 });
+		return new Response(undefined, { status: 401 });
 	}
 
 	const body = await req.json();
 
 	if (!body.path) {
-		return new NextResponse(undefined, { status: 400 });
+		return new Response(undefined, { status: 400 });
 	}
 
-	revalidatePath(body.path, 'layout');
+	revalidatePath(body.path);
 
-	return new NextResponse();
+	return new Response();
 }
+
+export const dynamic = 'force-dynamic';
