@@ -190,7 +190,7 @@ const usePuzzleStore = createWithEqualityFn(persist(
 				try {
 					const { pieces } = state.pieceGroups[newGroupKey];
 					const oldPieces = state.pieceGroups[oldGroupKey].pieces;
-					// Merge everything into the other group and delete the old group
+					// Merge everything into the other group and delete the legacy group
 					pieces.push(...oldPieces);
 				} catch (e: any) {
 					console.error(e);

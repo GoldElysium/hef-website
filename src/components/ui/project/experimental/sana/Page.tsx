@@ -1,7 +1,7 @@
 import {
 	Project, Submission as ISubmission, Submission, SubmissionMedia,
 } from '@/types/payload-types';
-import Header from '@/components/ui/old/Header';
+import Header from '@/components/ui/legacy/Header';
 import ProjectSubmissions from '@/components/ui/project/experimental/sana/Submissions';
 import ProjectAbout from '@/components/ui/project/experimental/sana/About';
 import ProjectBackgroundMusic from '@/components/ui/project/experimental/sana/BackgroundMusic';
@@ -11,8 +11,8 @@ import ProjectTabs from '@/components/ui/project/experimental/sana/Tabs';
 import ProjectTimeline from '@/components/ui/project/experimental/sana/Timeline';
 import DarkModeFlag from '@/components/ui/project/experimental/sana/DarkModeFlag';
 import PayloadResponse from '@/types/PayloadResponse';
-import { getImageUrl } from '@/components/ui/old/Image';
-import Footer from '@/components/ui/old/Footer';
+import { getImageUrl } from '@/components/ui/legacy/Image';
+import Footer from '@/components/ui/legacy/Footer';
 
 export interface ProjectPageProps {
 	project: Omit<Project, 'flags' | 'devprops'> & {
