@@ -2,14 +2,14 @@ import {
 	Flag, Guild, Media, Project,
 } from '@/types/payload-types';
 import DescriptionSerializer from '@/components/ui/project/util/DescriptionSerializer';
-import TextHeader from '@/components/ui/old/TextHeader';
+import TextHeader from '@/components/ui/legacy/TextHeader';
 import PayloadResponse from '@/types/PayloadResponse';
 import Submissions from '@/components/ui/project/Submissions';
 import Gallery from '@/components/ui/project/Gallery';
 import ExperimentalProjectPage from '@/components/ui/project/experimental/sana/Page';
 import PhaserSubmissionWrapper from '@/components/ui/project/guratanabata/PhaserSubmissionWrapper';
 import { notFound } from 'next/navigation';
-import { getImageUrl } from '@/components/ui/old/Image';
+import { getImageUrl } from '@/components/ui/legacy/Image';
 import { Metadata } from 'next';
 import useTranslation from '@/lib/i18n/server';
 import { Language } from '@/lib/i18n/languages';

@@ -2,7 +2,7 @@ import useTranslation from '@/lib/i18n/server';
 import { Guild, Media, Project } from '@/types/payload-types';
 import PayloadResponse from '@/types/PayloadResponse';
 import Header from '@/components/ui/Header';
-import TextHeader from '@/components/ui/old/TextHeader';
+import TextHeader from '@/components/ui/legacy/TextHeader';
 import { Language } from '@/lib/i18n/languages';
 import ProjectFeaturedCard from '@/components/ui/ProjectFeaturedCard';
 import ButtonLink from '@/components/ui/ButtonLink';

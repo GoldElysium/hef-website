@@ -4,7 +4,7 @@ import {
 	Guild, Project, Submission as ISubmission, SubmissionMedia,
 } from '@/types/payload-types';
 import { useEffect, useState } from 'react';
-import TextHeader from '@/components/ui/old/TextHeader';
+import TextHeader from '@/components/ui/legacy/TextHeader';
 import DescriptionSerializer from '@/components/ui/project/util/DescriptionSerializer';
 import Submissions from '@/components/ui/project/experimental/sana/Submissions';
 import useTranslation from '@/lib/i18n/client';

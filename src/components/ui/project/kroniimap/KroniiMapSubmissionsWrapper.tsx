@@ -2,7 +2,7 @@ import { Project, SubmissionMedia } from '@/types/payload-types';
 import dynamic from 'next/dynamic';
 import { MarkerMap } from '@/components/ui/project/kroniimap/KroniiMap';
 import fetchSubmissions, { ISubmission } from '@/lib/fetchSubmissions';
-import { getImageUrl } from '@/components/ui/old/Image';
+import { getImageUrl } from '@/components/ui/legacy/Image';
 
 interface IProps {
 	project: Omit<Project, 'flags' | 'devprops'> & {
