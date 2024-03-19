@@ -121,7 +121,7 @@ export default function KroniiMap({ submissions, markerMap }: IProps) {
 					{Object.values(markerMap).map((entry) => (
 						<ScaledMarker
 							img="https://cdn.holoen.fans/hefw/assets/kroniimap/kronii-wave.gif"
-							initialSize={5}
+							initialSize={entry.submissions.length > 1 ? 6 : 4}
 							scaler={6}
 							coordinates={entry.pos}
 							onClick={() => {

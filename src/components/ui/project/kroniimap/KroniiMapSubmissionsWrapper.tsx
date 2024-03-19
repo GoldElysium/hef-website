@@ -68,12 +68,24 @@ export default async function KroniiMapSubmissionWrapper({ project }: IProps) {
 	parsedSubmissions.forEach((submission) => {
 		if (!markerMap[submission.markerId]) {
 			const posSplit = submission.markerId.split(';');
+			// eslint-disable-next-line max-len
+			const pos: [number, number] = [Number.parseFloat(posSplit[0]), Number.parseFloat(posSplit[1])];
 
-			markerMap[submission.markerId] = {
-				id: submission.markerId,
-				pos: [Number.parseFloat(posSplit[0]), Number.parseFloat(posSplit[1])],
-				submissions: [submission.id],
-			};
+			const close = Object.values(markerMap)
+				.find((marker) => {
+					const [x, y] = marker.pos;
+					return Math.abs(x - pos[0]) < 0.05 && Math.abs(y - pos[1]) < 0.05;
+				});
+
+			if (close) {
+				markerMap[close.id].submissions.push(submission.id);
+			} else {
+				markerMap[submission.markerId] = {
+					id: submission.markerId,
+					pos,
+					submissions: [submission.id],
+				};
+			}
 		} else {
 			markerMap[submission.markerId].submissions.push(submission.id);
 		}
