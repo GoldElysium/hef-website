@@ -20,7 +20,7 @@ export default function Footer({ flags }: IProps) {
 				<HeartIcon className="size-4 text-white" />
 				&nbsp;by&nbsp;
 				<a
-					href="https://github.com/GoldElysium/hefs-website#contributors-"
+					href="https://github.com/GoldElysium/hef-website#contributors-"
 					target="_blank"
 					className="underline"
 					rel="noreferrer"
