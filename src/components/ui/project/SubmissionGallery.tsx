@@ -1,7 +1,7 @@
 'use client';
 
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
-import { ReactNode, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { Submission as ISubmission, SubmissionMedia } from '@/types/payload-types';
 
 interface IProps {
@@ -11,6 +11,10 @@ interface IProps {
 
 export default function SubmissionGallery({ submission, elements }: IProps) {
 	const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
+
+	useEffect(() => {
+		setCurrentMediaIndex(0);
+	}, [submission, elements]);
 
 	return (
 		<div className="mt-4">
