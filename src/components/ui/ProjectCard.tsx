@@ -1,5 +1,5 @@
 import { Project } from '@/types/payload-types';
-import { getImageUrl } from '@/components/ui/old/Image';
+import { getImageUrl } from '@/components/ui/legacy/Image';
 import ButtonLink from '@/components/ui/ButtonLink';
 import { Language } from '@/lib/i18n/languages';
 

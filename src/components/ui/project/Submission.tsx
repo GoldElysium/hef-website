@@ -1,6 +1,6 @@
 import { Submission as ISubmission, SubmissionMedia } from '@/types/payload-types';
 import ReactPlayerWrapper from '@/components/ui/project/util/ReactPlayerWrapper';
-import Image from '@/components/ui/old/Image';
+import Image from '@/components/ui/legacy/Image';
 import useTranslation from '@/lib/i18n/server';
 import { Language } from '@/lib/i18n/languages';
 import SubmissionGallery from './SubmissionGallery';
