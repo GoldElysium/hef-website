@@ -19,6 +19,10 @@ async function fetchSubmissionsWithImageProxy(project: { id: string, slug: strin
 	const submissions = await fetchSubmissions(project);
 
 	return submissions.map((submission) => {
+		if (submission.devprops?.find((prop) => prop.key === 'bypassImgProxy')) {
+			return submission as Submission;
+		}
+
 		const mediaDocs: Submission['media'] = [];
 
 		(submission.media ?? []).forEach((item, index) => {
