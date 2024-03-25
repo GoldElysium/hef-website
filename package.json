@@ -101,7 +101,7 @@
     "eslint-plugin-react-hooks": "4.6.0",
     "eslint-plugin-storybook": "0.6.15",
     "eslint-plugin-tailwindcss": "^3.14.2",
-    "husky": "9.0.10",
+    "husky": "9.0.11",
     "lint-staged": "15.2.2",
     "phaser3spectorjs": "^0.0.8",
     "postcss": "8.4.35",
