@@ -3,7 +3,7 @@ import ReaderSidebar from './ReaderSidebar';
 
 function IrysManga() {
 	return (
-		<div>
+		<div className="flex h-screen">
 			<Reader />
 			<ReaderSidebar />
 		</div>
