@@ -11,14 +11,14 @@ function ReaderSidebar() {
 		setPage,
 		chapter,
 		setChapter,
-		isEnglish,
-		setIsEnglish,
+		language,
+		setLanguage,
 		leftToRight,
 		setLeftToRight,
 		headerHidden,
 		setHeaderHidden,
-		isLightTheme,
-		setIsLightTheme,
+		readerTheme,
+		setReaderTheme,
 		manga,
 	} = useMangaContext();
 	return (
@@ -44,12 +44,12 @@ function ReaderSidebar() {
 					className="btn"
 					type="button"
 					onClick={() => {
-						setIsEnglish((prev) => !prev);
+						setLanguage(language === 'EN' ? 'JP' : 'EN');
 					}}
 				>
 					Language:
 					{' '}
-					{isEnglish ? 'English' : '日本語'}
+					{language === 'EN' ? 'English' : '日本語'}
 				</button>
 			</div>
 			<div className="divider" />
@@ -108,11 +108,13 @@ function ReaderSidebar() {
 				<button
 					className="btn"
 					type="button"
-					onClick={() => setIsLightTheme((prev) => !prev)}
+					onClick={() => setReaderTheme(
+						readerTheme === 'light' ? 'dark' : 'light',
+					)}
 				>
 					Theme:
 					{' '}
-					{isLightTheme ? 'Light' : 'Dark'}
+					{readerTheme === 'light' ? 'Light' : 'Dark'}
 				</button>
 			</div>
 		</div>

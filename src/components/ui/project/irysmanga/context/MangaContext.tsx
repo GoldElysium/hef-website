@@ -5,8 +5,8 @@ import dummyMangaInfo, { MangaInfo } from '../utils/types';
 
 // Define the type for the context value
 interface MangaContextProps {
-	isEnglish: boolean;
-	setIsEnglish: React.Dispatch<React.SetStateAction<boolean>>;
+	language: string;
+	setLanguage: React.Dispatch<React.SetStateAction<string>>;
 
 	page: number;
 	setPage: React.Dispatch<React.SetStateAction<number>>;
@@ -22,8 +22,8 @@ interface MangaContextProps {
 	headerHidden: boolean;
 	setHeaderHidden: React.Dispatch<React.SetStateAction<boolean>>;
 
-	isLightTheme: boolean;
-	setIsLightTheme: React.Dispatch<React.SetStateAction<boolean>>;
+	readerTheme: string;
+	setReaderTheme: React.Dispatch<React.SetStateAction<string>>;
 
 	manga: MangaInfo;
 	setManga: React.Dispatch<React.SetStateAction<MangaInfo>>;
@@ -37,7 +37,7 @@ const MangaContext = createContext<MangaContextProps | undefined>(undefined);
 export const MangaProvider: React.FC<{ children: React.ReactNode }> = ({
     children,
 }) => {
-    const [isEnglish, setIsEnglish] = useState(true);
+    const [language, setLanguage] = useState("EN");
     const [singlePageMode, setSinglePageMode] = useState(false);
     const [fitHeightMode, setFitHeightMode] = useState(false);
 
@@ -47,12 +47,12 @@ export const MangaProvider: React.FC<{ children: React.ReactNode }> = ({
     const [leftToRight, setLeftToRight] = useState(true);
     const [headerHidden, setHeaderHidden] = useState(true);
 
-    const [isLightTheme, setIsLightTheme] = useState(true);
+    const [readerTheme, setReaderTheme] = useState("dark");
 
     const contextValue = useMemo(
         () => ({
-            isEnglish,
-            setIsEnglish,
+            language,
+            setLanguage,
             page,
             setPage,
             chapter,
@@ -65,20 +65,20 @@ export const MangaProvider: React.FC<{ children: React.ReactNode }> = ({
             setLeftToRight,
             headerHidden,
             setHeaderHidden,
-            isLightTheme,
-            setIsLightTheme,
+            readerTheme,
+            setReaderTheme,
             manga,
             setManga,
         }),
         [
-            isEnglish,
+            language,
             page,
             chapter,
             singlePageMode,
             fitHeightMode,
             leftToRight,
             headerHidden,
-            isLightTheme,
+            readerTheme,
             manga,
         ]
     );
