@@ -11,7 +11,7 @@ interface IProps {
 	children: React.ReactNode;
 	params: {
 		lang: Language;
-	}
+	};
 }
 
 const nunito = Nunito({
@@ -21,18 +21,24 @@ const nunito = Nunito({
 
 export default async function RootLayout({
 	children,
-	params: {
-		lang,
-	},
+	params: { lang },
 }: IProps) {
 	return (
-		<html lang={lang} dir={dir(lang)} className={nunito.variable} suppressHydrationWarning>
+		<html
+			lang={lang}
+			dir={dir(lang)}
+			className={nunito.variable}
+			suppressHydrationWarning
+		>
 			<head>
 				<link href="/favicon.svg" rel="icon" type="image/svg+xml" />
 			</head>
-			<LocaleContextProvider lang={lang}>
-				{children}
-			</LocaleContextProvider>
+			{/* remove body tag after dev */}
+			<body>
+				<LocaleContextProvider lang={lang}>
+					{children}
+				</LocaleContextProvider>
+			</body>
 		</html>
 	);
 }
@@ -41,7 +47,9 @@ export async function generateStaticParams() {
 	return languages.map((language) => ({ lang: language }));
 }
 
-export async function generateMetadata({ params: { lang } }: IProps): Promise<Metadata> {
+export async function generateMetadata({
+	params: { lang },
+}: IProps): Promise<Metadata> {
 	// eslint-disable-next-line react-hooks/rules-of-hooks
 	const { t } = await useTranslation(lang, 'layout', 'head');
 
@@ -58,7 +66,13 @@ export async function generateMetadata({ params: { lang } }: IProps): Promise<Me
 				ja: '/jp',
 			},
 		},
-		keywords: ['hololive en', 'hef', 'hololive fan', 'hololive en fan', 'hololive'],
+		keywords: [
+			'hololive en',
+			'hef',
+			'hololive fan',
+			'hololive en fan',
+			'hololive',
+		],
 		openGraph: {
 			title,
 			description,
