@@ -20,6 +20,7 @@ import {
 } from '@atelier-disko/payload-lexical-react-renderer';
 import fetchSubmissions from '@/lib/fetchSubmissions';
 import { RandomSubmissions } from '@/app/[lang]/(DynamicLayout)/projects/[slug]/submissions/page';
+import ButtonLink from '@/components/ui/ButtonLink';
 
 interface IProps {
 	params: {
@@ -161,7 +162,7 @@ export default async function ProjectPage({ params: { slug, lang } }: IProps) {
 									{project.links && project.links.map((link) => (
 										<div
 											key={`link-${link.name}-${link.url}`}
-											className="mt-4 flex h-10 cursor-pointer content-end items-center justify-center gap-2 rounded-3xl bg-skin-primary px-4 font-bold text-white hover:underline dark:bg-skin-primary-dark"
+											className="mt-4 flex h-10 cursor-pointer content-end items-center justify-center gap-2 rounded-lg bg-skin-primary px-4 font-bold text-skin-primary-foreground-dark hover:underline dark:bg-skin-primary-dark dark:text-skin-primary-foreground-dark"
 										>
 											<a href={link.url} target="_blank" rel="noreferrer">
 												{link.name}
@@ -186,12 +187,7 @@ export default async function ProjectPage({ params: { slug, lang } }: IProps) {
 								<RandomSubmissions submissions={submissions} />
 							</div>
 							<div className="flex justify-center">
-								<a
-									className="flex w-fit items-center gap-2 rounded-lg bg-skin-primary px-4 py-2 text-lg text-skin-primary-foreground dark:bg-skin-primary-dark dark:text-skin-primary-foreground-dark"
-									href={`/projects/${slug}/submissions`}
-								>
-									See all submissions
-								</a>
+								<ButtonLink text="See all submissions" url={`/projects/${slug}/submissions`} lang={lang} internal />
 							</div>
 						</div>
 					</div>

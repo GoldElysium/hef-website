@@ -10,6 +10,7 @@ import ReactPlayerWrapper from '@/components/ui/project/util/ReactPlayerWrapper'
 import SubmissionGallery from '@/components/ui/project/SubmissionGallery';
 import { ChevronRightIcon } from '@heroicons/react/24/outline';
 import { ArrowLeftIcon, LinkIcon } from '@heroicons/react/20/solid';
+import ButtonLink from '@/components/ui/ButtonLink';
 
 interface IProps {
 	params: {
@@ -141,13 +142,15 @@ export default async function SubmissionsPage({ params: { slug, lang } }: IProps
 			<div className="grow">
 				<div className="my-16 flex w-full flex-col items-center px-4 md:px-16 lg:px-24 2xl:px-56">
 					<div className="w-full max-w-full break-words px-4 md:break-normal">
-						<a
-							className="mb-8 flex w-fit items-center gap-2 rounded-lg bg-skin-primary px-4 py-2 text-lg text-skin-primary-foreground dark:bg-skin-primary-dark dark:text-skin-primary-foreground-dark"
-							href={`/projects/${slug}`}
+						<ButtonLink
+							className="mb-8 w-fit"
+							url={`/projects/${slug}`}
+							lang={lang}
+							internal
 						>
 							<ArrowLeftIcon className="size-6" />
 							Go back
-						</a>
+						</ButtonLink>
 
 						<TextHeader>
 							Random
