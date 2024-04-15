@@ -4,8 +4,9 @@ import { Language } from '@/lib/i18n/languages';
 import PayloadResponse from '@/types/PayloadResponse';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
+import FormRunner from '@/app/[lang]/(DynamicLayout)/forms/[id]/FormRunner';
 
-interface IForm {
+export interface IForm {
 	name: string;
 	description: string;
 	isSubmissionForm: boolean;
@@ -21,7 +22,7 @@ interface IProps {
 	};
 }
 
-async function fetchForm(id: string, lang: Language): Promise<IForm | null> {
+export async function fetchForm(id: string, lang: Language): Promise<IForm | null> {
 	const res = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/forms?where[id][equals]=${id}&depth=0&locale=${lang}&fallback-locale=en`, {
 		headers: {
 			'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? undefined,
@@ -56,7 +57,11 @@ export default async function FormPage({ params: { id, lang } }: IProps) {
 	return (
 		<div className="flex h-full min-h-screen flex-col bg-skin-background text-skin-text dark:bg-skin-background-dark dark:text-skin-text-dark">
 			<div className="grow">
-				<p>Hello World!</p>
+				<div className="my-16 flex w-full flex-col items-center px-4 md:px-16 lg:px-24 2xl:px-56">
+					<div className="w-full max-w-full break-words px-4 md:break-normal">
+						<FormRunner form={form} id={id} />
+					</div>
+				</div>
 			</div>
 		</div>
 	);
@@ -130,7 +135,6 @@ export async function generateMetadata({ params: { id, lang } }: IProps): Promis
 			title: name,
 			description,
 			siteName: 'HoloEN Fan Website',
-			// eslint-disable-next-line max-len
 		},
 		twitter: {
 			title: name,
