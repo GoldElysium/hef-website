@@ -34,7 +34,7 @@ async function fetchSubmissionsWithImageProxy(project: { id: string, slug: strin
 			mediaDocs[index] = {
 				...item,
 				image: {
-					...item.image!,
+					...item.image as SubmissionMedia,
 					url: getImageUrl({
 						src: item.image!.url!,
 						width: 1280,
@@ -95,7 +95,7 @@ export default async function KroniiMapSubmissionWrapper({ project }: IProps) {
 		}
 	});
 
-	const descriptionWithProxy = project.description.map((node) => {
+	const descriptionWithProxy = project.description.root.children.map((node) => {
 		if (node.type !== 'upload') return node;
 		// @ts-ignore
 		return {
@@ -118,7 +118,7 @@ export default async function KroniiMapSubmissionWrapper({ project }: IProps) {
 
 	return (
 		<Tabs
-			project={{ ...project, description: descriptionWithProxy }}
+			project={{ ...project, description: { root: { children: descriptionWithProxy } } } as any}
 			submissions={submissions}
 			markerMap={markerMap}
 		/>

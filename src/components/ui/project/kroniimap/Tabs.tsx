@@ -5,10 +5,13 @@ import {
 } from '@/types/payload-types';
 import { useEffect, useState } from 'react';
 import TextHeader from '@/components/ui/legacy/TextHeader';
-import DescriptionSerializer from '@/components/ui/project/util/DescriptionSerializer';
 import Submissions from '@/components/ui/project/experimental/sana/Submissions';
 import useTranslation from '@/lib/i18n/client';
 import { useTheme } from 'next-themes';
+import {
+	PayloadLexicalReactRenderer,
+	PayloadLexicalReactRendererContent,
+} from '@atelier-disko/payload-lexical-react-renderer';
 import KroniiMap, { MarkerMap } from './KroniiMap';
 
 interface IProps {
@@ -133,7 +136,9 @@ export default function Tabs({ project, submissions, markerMap }: IProps) {
 												</div>
 											</div>
 											<div className="description-body text-lg">
-												{DescriptionSerializer(project.description)}
+												<PayloadLexicalReactRenderer
+													content={project.description as PayloadLexicalReactRendererContent}
+												/>
 											</div>
 										</div>
 									</div>

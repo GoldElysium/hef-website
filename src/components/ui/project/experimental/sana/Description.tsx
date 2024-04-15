@@ -1,12 +1,17 @@
 import TextHeader from '@/components/ui/project/experimental/sana/TextHeader';
-import DescriptionSerializer from '@/components/ui/project/util/DescriptionSerializer';
+import {
+	PayloadLexicalReactRenderer,
+	PayloadLexicalReactRendererContent,
+} from '@atelier-disko/payload-lexical-react-renderer';
 
-export default function Description({ description }: { description: any[] }) {
+export default function Description({ description }: { description: any }) {
 	return (
 		<div>
 			<TextHeader>Description</TextHeader>
 			<div className="description-body">
-				{DescriptionSerializer(description)}
+				<PayloadLexicalReactRenderer
+					content={description as PayloadLexicalReactRendererContent}
+				/>
 			</div>
 		</div>
 
