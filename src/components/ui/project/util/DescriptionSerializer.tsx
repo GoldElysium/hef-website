@@ -61,20 +61,20 @@ const serialize = (children: any[]) => children.map((node, i) => {
 			);
 		case 'h2':
 			return (
-				<h2 key={`description-h2-${i}`} className="dark:text-skin-text-darkmy-4 text-xl font-semibold text-skin-text sm:text-2xl">
+				<h2 key={`description-h2-${i}`} className="my-4 text-xl font-semibold text-skin-text dark:text-skin-text-dark sm:text-2xl">
 					{serialize(node.children)}
 				</h2>
 			);
 		case 'h3':
 			return (
-				<h2 key={`description-h3-${i}`} className="dark:text-skin-text-darkmy-4 text-lg font-semibold text-skin-text sm:text-xl">
+				<h2 key={`description-h3-${i}`} className="my-4 text-lg font-semibold text-skin-text dark:text-skin-text-dark sm:text-xl">
 					{serialize(node.children)}
 				</h2>
 			);
 		case 'h4':
 			return (
 				<>
-					<h2 key={`description-h4-${i}`} className="dark:text-skin-text-darkmy-2 text-lg font-semibold text-skin-text">
+					<h2 key={`description-h4-${i}`} className="my-2 text-lg font-semibold text-skin-text dark:text-skin-text-dark">
 						{serialize(node.children)}
 					</h2>
 					<div className="dark:bg-skin-dark-primary my-2 h-0.5 w-full bg-skin-primary opacity-30" />
@@ -83,7 +83,7 @@ const serialize = (children: any[]) => children.map((node, i) => {
 		case 'h5':
 			return (
 				<>
-					<h2 key={`description-h5-${i}`} className="dark:text-skin-text-darkmy-2 text-base font-semibold text-skin-text">
+					<h2 key={`description-h5-${i}`} className="my-2 text-base font-semibold text-skin-text dark:text-skin-text-dark">
 						{serialize(node.children)}
 					</h2>
 					<div className="dark:bg-skin-dark-primary my-2 h-0.5 w-full bg-skin-primary opacity-30" />
@@ -92,7 +92,7 @@ const serialize = (children: any[]) => children.map((node, i) => {
 		case 'h6':
 			return (
 				<>
-					<h2 key={`description-h6-${i}`} className="dark:text-skin-text-darkmy-2 text-base font-semibold text-skin-text">
+					<h2 key={`description-h6-${i}`} className="my-2 text-base font-semibold text-skin-text dark:text-skin-text-dark">
 						{serialize(node.children)}
 					</h2>
 					<div className="dark:bg-skin-dark-primary my-2 h-0.5 w-full bg-skin-primary opacity-30" />

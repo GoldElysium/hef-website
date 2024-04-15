@@ -57,6 +57,7 @@ export interface User {
  */
 export interface Media {
 	id: string;
+	prefix?: string | null;
 	updatedAt: string;
 	createdAt: string;
 	url?: string | null;
@@ -87,6 +88,7 @@ export interface Guild {
  */
 export interface SubmissionMedia {
 	id: string;
+	prefix?: string | null;
 	updatedAt: string;
 	createdAt: string;
 	url?: string | null;
@@ -106,8 +108,20 @@ export interface Project {
 	slug: string;
 	shortDescription: string;
 	description: {
+		root: {
+			type: string;
+			children: {
+				type: string;
+				version: number;
+				[k: string]: unknown;
+			}[];
+			direction: ('ltr' | 'rtl') | null;
+			format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+			indent: number;
+			version: number;
+		};
 		[k: string]: unknown;
-	}[];
+	};
 	organizers: (string | Guild)[];
 	status: 'draft' | 'submissions-open' | 'submissions-closed' | 'ongoing' | 'past';
 	links?:
@@ -130,6 +144,7 @@ export interface Project {
 	ogImage?: string | Media | null;
 	'submission-url'?: string | null;
 	collaborators?: (string | User)[] | null;
+	hasSubmissions?: boolean | null;
 	skin:
 		| 'holoEN'
 		| 'ina'
@@ -228,8 +243,20 @@ export interface Event {
 	}[];
 	backgroundImage?: string | EventMedia | null;
 	content: {
+		root: {
+			type: string;
+			children: {
+				type: string;
+				version: number;
+				[k: string]: unknown;
+			}[];
+			direction: ('ltr' | 'rtl') | null;
+			format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+			indent: number;
+			version: number;
+		};
 		[k: string]: unknown;
-	}[];
+	};
 	devprops?:
 		| {
 		key: string;
@@ -247,6 +274,7 @@ export interface Event {
 export interface EventMedia {
 	id: string;
 	alt?: string | null;
+	prefix?: string | null;
 	updatedAt: string;
 	createdAt: string;
 	url?: string | null;
@@ -267,25 +295,6 @@ export interface Form {
 	isSubmissionForm: 'true' | 'false';
 	project?: (string | null) | Project;
 	status: 'open' | 'closed';
-	skin:
-		| 'holoEN'
-		| 'ina'
-		| 'amelia'
-		| 'gura'
-		| 'kiara'
-		| 'mori'
-		| 'irys'
-		| 'sana'
-		| 'fauna'
-		| 'kronii'
-		| 'mumei'
-		| 'baelz'
-		| 'shiori'
-		| 'bijou'
-		| 'nerissa'
-		| 'fuwawa'
-		| 'mococo'
-		| 'fuwamoco';
 	form:
 		| {
 		[k: string]: unknown;
@@ -375,11 +384,21 @@ export interface Notice {
 	id: string;
 	enabled?: boolean | null;
 	description?: string | null;
-	message?:
-		| {
+	message?: {
+		root: {
+			type: string;
+			children: {
+				type: string;
+				version: number;
+				[k: string]: unknown;
+			}[];
+			direction: ('ltr' | 'rtl') | null;
+			format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+			indent: number;
+			version: number;
+		};
 		[k: string]: unknown;
-	}[]
-		| null;
+	} | null;
 	updatedAt?: string | null;
 	createdAt?: string | null;
 }

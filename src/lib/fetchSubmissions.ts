@@ -1,4 +1,4 @@
-import { Submission, SubmissionMedia } from '@/types/payload-types';
+import { Submission as IPayloadSubmission, SubmissionMedia } from '@/types/payload-types';
 import PayloadResponse from '@/types/PayloadResponse';
 
 export interface MediaItem {
@@ -9,9 +9,7 @@ export interface MediaItem {
 	id?: string | null;
 }
 
-export interface ISubmission extends Submission {
-	media?: MediaItem[];
-}
+export type ISubmission = Omit<IPayloadSubmission, 'media' | 'srcIcon'> & { media: Array<NonNullable<Required<IPayloadSubmission>['media']>[number] & { image: SubmissionMedia }>; srcIcon: SubmissionMedia };
 
 export default async function fetchSubmissions(project: { id: string, slug: string }) {
 	// Create an array for all the submissions
@@ -30,7 +28,7 @@ export default async function fetchSubmissions(project: { id: string, slug: stri
 				tags: [project.slug],
 			},
 		});
-		const body: PayloadResponse<Submission> = await submissionsRes.json();
+		const body: PayloadResponse<IPayloadSubmission> = await submissionsRes.json();
 
 		// Process submissions
 		const tasks = body.docs.map(async (submission) => {
@@ -52,7 +50,7 @@ export default async function fetchSubmissions(project: { id: string, slug: stri
 			const mediaDocs: ISubmission['media'] = [];
 			await Promise.all((submission.media ?? []).map(async (item, index) => {
 				if (item.type !== 'image') {
-					mediaDocs[index] = item as MediaItem;
+					mediaDocs[index] = item as ISubmission['media'][number];
 					return;
 				}
 

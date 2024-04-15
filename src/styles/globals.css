@@ -93,6 +93,40 @@
     transform: translateX(22px);
   }
 
+  .description-body {
+    h1 {
+      @apply my-8 text-center text-3xl font-semibold text-skin-text dark:text-skin-text-dark sm:text-5xl;
+    }
+
+    h2 {
+      @apply my-4 text-xl font-semibold text-skin-text dark:text-skin-text-dark sm:text-2xl;
+    }
+
+    h3 {
+      @apply my-4 text-lg font-semibold text-skin-text dark:text-skin-text-dark sm:text-xl;
+    }
+
+    h4 {
+      @apply my-2 text-lg font-semibold text-skin-text dark:text-skin-text-dark;
+    }
+
+    h5 {
+      @apply my-2 text-base font-semibold text-skin-text dark:text-skin-text-dark;
+    }
+
+    h6 {
+      @apply my-2 text-base font-semibold text-skin-text dark:text-skin-text-dark;
+    }
+
+    p, blockquote, ul, ol, li {
+      @apply text-black dark:text-gray-300;
+    }
+
+    :link {
+      @apply text-skin-link dark:text-skin-link-dark;
+    }
+  }
+
   /* Rounded sliders */
   .slider.round {
     border-radius: 34px;
