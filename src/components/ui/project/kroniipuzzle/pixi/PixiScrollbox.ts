@@ -138,6 +138,7 @@ export default class PixiScrollbox extends PIXI.Container implements Scrollbox {
 			stopPropagation: this.options.stopPropagation,
 			screenWidth: this.options.boxWidth,
 			screenHeight: this.options.boxHeight,
+			// @ts-ignore
 			ticker: this.options.app.ticker,
 			events: this.options.app.renderer.events,
 		}));

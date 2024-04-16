@@ -5,7 +5,7 @@ import { Language } from '@/lib/i18n/languages';
 import DarkModeProvider from '@/components/contexts/DarkModeProvider';
 import skins from '@/styles/skins.module.css';
 import Header from '@/components/ui/Header';
-import { fetchForm } from '@/app/[lang]/(DynamicLayout)/forms/[id]/page';
+import fetchForm from '@/lib/fetchForm';
 
 interface IProps {
 	children: React.ReactNode;
