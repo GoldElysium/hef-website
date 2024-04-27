@@ -1,7 +1,7 @@
 import React, {
 	createContext, useState, useContext, useMemo,
 } from 'react';
-import dummyMangaInfo, { MangaInfo } from '../utils/types';
+import { MangaInfo, generateDummyManga } from '../utils/types';
 
 // Define the type for the context value
 interface MangaContextProps {
@@ -41,7 +41,7 @@ export const MangaProvider: React.FC<{ children: React.ReactNode }> = ({
     const [singlePageMode, setSinglePageMode] = useState(false);
     const [fitHeightMode, setFitHeightMode] = useState(false);
 
-    const [manga, setManga] = useState(dummyMangaInfo);
+    const [manga, setManga] = useState(generateDummyManga());
     const [page, setPage] = useState(0);
     const [chapter, setChapter] = useState(0);
     const [leftToRight, setLeftToRight] = useState(true);

@@ -8,9 +8,7 @@ function ReaderSidebar() {
 		fitHeightMode,
 		setFitHeightMode,
 		page,
-		setPage,
 		chapter,
-		setChapter,
 		language,
 		setLanguage,
 		leftToRight,
@@ -55,24 +53,8 @@ function ReaderSidebar() {
 			<div className="divider" />
 			{/* Chapter and page seletion */}
 			<div className="flex flex-col items-center gap-2">
-				<SelectBox
-					value={page}
-					label="Page"
-					maxValue={manga.chapters[chapter].pageCount}
-					manga={manga}
-					currentChapterValue={chapter}
-					pageSetFunction={setPage}
-					chapterSetFunction={setChapter}
-				/>
-				<SelectBox
-					value={chapter}
-					label="Chapter"
-					maxValue={manga.chapterCount}
-					manga={manga}
-					currentChapterValue={chapter}
-					pageSetFunction={setPage}
-					chapterSetFunction={setChapter}
-				/>
+				<SelectBox value={page} label="Page" />
+				<SelectBox value={chapter} label="Chapter" />
 			</div>
 			<div className="divider" />
 			{/* Reader settings */}

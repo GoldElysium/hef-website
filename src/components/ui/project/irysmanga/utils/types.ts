@@ -1,5 +1,5 @@
 export interface Page {
-	// image blob of a page
+	imageBlob: string; // temporary representation
 }
 
 export interface Chapter {
@@ -13,16 +13,42 @@ export interface MangaInfo {
 	chapters: Chapter[];
 }
 
-// dummy data
-const dummyChapters: Chapter[] = Array.from({ length: 10 }, (_, index) => ({
-	title: `Chapter ${index + 1}`,
-	pageCount: 10,
-	pages: [],
-}));
+//  Dummy data
+// Function to generate a dummy manga
+export function generateDummyManga(): MangaInfo {
+	const src = '/assets/irysmanga/tmp/';
+	const manga: MangaInfo = {
+		chapterCount: 4,
+		chapters: [
+			{
+				title: 'Chapter 1',
+				pageCount: 1,
+				pages: [{ imageBlob: `${src}1-1.jpg` }],
+			},
+			{
+				title: 'Chapter 2',
+				pageCount: 1,
+				pages: [{ imageBlob: `${src}2-1.jpg` }],
+			},
+			{
+				title: 'Chapter 3',
+				pageCount: 2,
+				pages: [
+					{ imageBlob: `${src}3-1.jpg` },
+					{ imageBlob: `${src}3-2.jpg` },
+				],
+			},
+			{
+				title: 'Chapter 4',
+				pageCount: 3,
+				pages: [
+					{ imageBlob: `${src}4-1.jpg` },
+					{ imageBlob: `${src}4-2.jpg` },
+					{ imageBlob: `${src}4-3.jpg` },
+				],
+			},
+		],
+	};
 
-const dummyMangaInfo: MangaInfo = {
-	chapterCount: dummyChapters.length,
-	chapters: dummyChapters,
-};
-
-export default dummyMangaInfo;
+	return manga;
+}
