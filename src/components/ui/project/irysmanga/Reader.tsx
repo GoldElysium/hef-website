@@ -50,10 +50,11 @@ function Reader() {
 		}
 		const containerRect = containerRef.current.getBoundingClientRect();
 		const imgRect = pageRefs.current[page].getBoundingClientRect();
-		if (imgRect.bottom < containerRect.top) {
+		const offset = 100;
+		if (imgRect.bottom - offset <= containerRect.top) {
 			pageScrolled.current = true;
 			setPage(page + 1);
-		} else if (imgRect.top > containerRect.bottom) {
+		} else if (imgRect.top + offset >= containerRect.bottom) {
 			pageScrolled.current = true;
 			setPage(page - 1);
 		}
