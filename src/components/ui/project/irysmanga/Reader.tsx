@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useMangaContext } from './context/MangaContext';
 import { handlePageNavigation } from './utils/helper';
 
@@ -18,13 +18,11 @@ function Reader() {
 	const containerRef = useRef<HTMLDivElement>(null);
 	const pageRefs = useRef<HTMLImageElement[]>([]);
 	const pageScrolled = useRef(false);
-	const [scrollBarSet, setScrollBarSet] = useState(false);
+	const scriptedScroll = useRef(false);
 
 	const pageGap = 10;
 	const imgClasses = classNames('page-img m-auto', {
 		'h-full': fitHeightMode,
-		visible: scrollBarSet,
-		invisible: !scrollBarSet,
 	});
 	const containerClasses = classNames(
 		`w-9/12 h-full bg-slate-600 hover:cursor-pointer overflow-y-auto flex flex-col gap-[${pageGap}px]`,
@@ -36,6 +34,7 @@ function Reader() {
 		}
 		if (!singlePageMode && !pageScrolled.current) {
 			if (containerRef.current) {
+				scriptedScroll.current = true;
 				const targetImg = pageRefs.current[page];
 				if (targetImg) {
 					containerRef.current.scrollTop = targetImg.offsetTop - containerRef.current.offsetTop;
@@ -45,27 +44,18 @@ function Reader() {
 		pageScrolled.current = false;
 	};
 	const handleScroll = () => {
-		if (!containerRef.current) {
+		if (!containerRef.current || scriptedScroll.current) {
+			scriptedScroll.current = false;
 			return;
 		}
-		const { scrollTop } = containerRef.current;
-		const pageIndex = pageRefs.current.findIndex((img) => {
-			if (
-				img
-                && img.offsetTop !== undefined
-                && img.clientHeight !== undefined
-			) {
-				return (
-					img.offsetTop <= scrollTop
-                    && img.offsetTop + img.clientHeight > scrollTop
-				);
-			}
-			return false;
-		});
-
-		if (pageIndex !== -1 && pageIndex !== page) {
+		const containerRect = containerRef.current.getBoundingClientRect();
+		const imgRect = pageRefs.current[page].getBoundingClientRect();
+		if (imgRect.bottom < containerRect.top) {
 			pageScrolled.current = true;
-			setPage(pageIndex);
+			setPage(page + 1);
+		} else if (imgRect.top > containerRect.bottom) {
+			pageScrolled.current = true;
+			setPage(page - 1);
 		}
 	};
 
@@ -75,10 +65,12 @@ function Reader() {
 
 		const position = clientX - left;
 		const threshold = width / 2;
+		scriptedScroll.current = true;
 		if (position < threshold) {
 			if (leftToRight) {
 				handlePageNavigation(
 					page - 1,
+					singlePageMode,
 					setPage,
 					setChapter,
 					chapter,
@@ -87,6 +79,7 @@ function Reader() {
 			} else {
 				handlePageNavigation(
 					page + 1,
+					singlePageMode,
 					setPage,
 					setChapter,
 					chapter,
@@ -96,6 +89,7 @@ function Reader() {
 		} else if (leftToRight) {
 			handlePageNavigation(
 				page + 1,
+				singlePageMode,
 				setPage,
 				setChapter,
 				chapter,
@@ -104,6 +98,7 @@ function Reader() {
 		} else {
 			handlePageNavigation(
 				page - 1,
+				singlePageMode,
 				setPage,
 				setChapter,
 				chapter,
@@ -114,47 +109,40 @@ function Reader() {
 
 	useEffect(() => {
 		handleScrollTop();
-	}, [page]);
+	}, [page, chapter, singlePageMode]);
 
-	useEffect(() => {
-		setScrollBarSet(false);
-		if (containerRef.current) {
-			setTimeout(() => {
-				handleScrollTop();
-				setScrollBarSet(true);
-				console.log('loaded');
-			}, 500);
-		}
-	}, [chapter]);
-
-	let displayedPages;
+	let displayedPages: React.JSX.Element[] = [];
 	if (manga && manga.chapters[chapter]) {
 		const currentChapter = manga.chapters[chapter];
-		const maxPageCount = singlePageMode ? 1 : currentChapter.pageCount;
+		const maxPageCount = currentChapter.pageCount;
 		const currentPages = currentChapter.pages;
 
-		if (singlePageMode) {
-			displayedPages = (
-				<img
-					key={page}
-					src={currentPages[page].imageBlob}
-					className={imgClasses}
-					alt={`Page ${page + 1}`}
-				/>
-			);
-		} else {
-			/* eslint-disable */
+		/* eslint-disable */
+        if (singlePageMode) {
             displayedPages = Array.from({ length: maxPageCount }, (_, i) => (
                 <img
                     key={i}
                     ref={(el) => (pageRefs.current[i] = el as HTMLImageElement)}
                     src={currentPages[i].imageBlob}
-                    className={imgClasses}
+                    className={imgClasses.concat(
+                        i === page ? " block" : " hidden"
+                    )}
                     alt={`Page ${i + 1}`}
                 />
             ));
-            // eslint-enable
+        } else {
+            displayedPages = Array.from({ length: maxPageCount }, (_, i) => (
+                <img
+                    key={i}
+                    ref={(el) => (pageRefs.current[i] = el as HTMLImageElement)}
+                    src={currentPages[i].imageBlob}
+                    className={imgClasses.concat(" block")}
+                    alt={`Page ${i + 1}`}
+                />
+            ));
         }
+
+        // eslint-enable
     }
     /* eslint-disable */
     return (

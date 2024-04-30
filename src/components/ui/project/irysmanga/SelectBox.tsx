@@ -8,7 +8,7 @@ interface SelectBoxProps {
 
 function SelectBox({ value, label }: SelectBoxProps) {
 	const {
-		setPage, chapter, setChapter, manga,
+		setPage, chapter, setChapter, manga, singlePageMode,
 	} = useMangaContext();
 	/* eslint-disable */
     let maxValue =
@@ -21,6 +21,7 @@ function SelectBox({ value, label }: SelectBoxProps) {
         if (label === "Page") {
             handlePageNavigation(
                 selectedValue,
+                singlePageMode,
                 setPage,
                 setChapter,
                 chapter,
