@@ -21,11 +21,14 @@ function Reader() {
 	const scriptedScroll = useRef(false);
 
 	const pageGap = 10;
-	const imgClasses = classNames('page-img m-auto', {
-		'h-full': fitHeightMode,
-	});
+	const imgClasses = classNames(
+		'page-img m-auto object-cover max-w-full transition-height duration-[150ms] ease-in-out ',
+		{
+			'h-full': fitHeightMode,
+		},
+	);
 	const containerClasses = classNames(
-		`w-9/12 h-full bg-slate-600 hover:cursor-pointer overflow-y-auto flex flex-col gap-[${pageGap}px]`,
+		`grow h-full bg-slate-600 hover:cursor-pointer overflow-y-auto flex flex-col gap-[${pageGap}px]`,
 	);
 
 	const handleScrollTop = () => {

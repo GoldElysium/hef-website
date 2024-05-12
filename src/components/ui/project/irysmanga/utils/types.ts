@@ -9,6 +9,7 @@ export interface Chapter {
 }
 
 export interface MangaInfo {
+	title: string;
 	chapterCount: number;
 	chapters: Chapter[];
 }
@@ -18,6 +19,7 @@ export interface MangaInfo {
 export function generateDummyManga(): MangaInfo {
 	const src = '/assets/irysmanga/tmp/';
 	const manga: MangaInfo = {
+		title: 'BroRys BL Manga',
 		chapterCount: 4,
 		chapters: [
 			{

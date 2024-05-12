@@ -35,7 +35,7 @@ function SelectBox({ value, label }: SelectBoxProps) {
         }
     }
     return (
-        <div className="flex justify-center w-full">
+        <div className="flex justify-center w-full gap-2">
             <button
                 className="btn"
                 aria-label="left-page"
