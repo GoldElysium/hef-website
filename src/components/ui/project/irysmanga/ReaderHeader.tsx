@@ -3,12 +3,13 @@ import classNames from 'classnames';
 import { Bars3Icon } from '@heroicons/react/24/solid';
 import ReaderSidebar from './ReaderSidebar';
 import { useMangaContext } from './context/MangaContext';
+import './styles/styles.css';
 
-function ReaderSiderContainer() {
+function ReaderHeader() {
 	const { page, chapter, manga } = useMangaContext();
-	const currentChapter = manga.chapters[chapter];
 	const [openSidebar, setOpenSidebar] = useState(true);
 	const [openTopbar, setOpenTopbar] = useState(true);
+
 	const squareBtn = classNames('bg-slate-900 border-white border px-2');
 	const topBarClasses = classNames(
 		'relative flex flex-col items-center w-full gap-1 md:hidden transition-all duration-500 py-4',
@@ -20,11 +21,12 @@ function ReaderSiderContainer() {
 			'py-[0px]': !openTopbar,
 		},
 	);
+	const currentChapter = manga.chapters[chapter];
 	return (
 		<>
 			{!openTopbar && (
 				<Bars3Icon
-					className="absolute right-0 top-0 mr-4 mt-2 cursor-pointer md:hidden"
+					className="barIcon absolute right-0 top-0 mr-4 mt-2 md:hidden"
 					width={50}
 					onClick={() => setOpenTopbar(true)}
 				/>
@@ -49,8 +51,7 @@ function ReaderSiderContainer() {
                 </div>
                 {openTopbar && (
                     <Bars3Icon
-                        className="absolute bottom-0 right-0 mb-2 mr-2 cursor-pointer"
-                        color="#FFFFFF"
+                        className="absolute bottom-0 right-0 mb-2 mr-2 barIcon"
                         width={20}
                         onClick={() => setOpenTopbar(false)}
                     ></Bars3Icon>
@@ -65,4 +66,4 @@ function ReaderSiderContainer() {
 	);
 }
 
-export default ReaderSiderContainer;
+export default ReaderHeader;

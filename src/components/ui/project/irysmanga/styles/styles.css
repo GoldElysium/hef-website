@@ -1,0 +1,3 @@
+.barIcon {
+    @apply cursor-pointer transition-opacity ease-linear duration-100 opacity-50 hover:opacity-100;
+}

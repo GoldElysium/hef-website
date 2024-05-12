@@ -1,3 +1,4 @@
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 import { useMangaContext } from './context/MangaContext';
 import { handlePageNavigation } from './utils/helper';
 
@@ -10,14 +11,16 @@ function SelectBox({ value, label }: SelectBoxProps) {
 	const {
 		setPage, chapter, setChapter, manga, singlePageMode,
 	} = useMangaContext();
+
 	/* eslint-disable */
     let maxValue =
         label === "Page"
             ? manga.chapters[chapter].pageCount
             : manga.chapterCount;
     // eslint-enable
+
     function handleSelectValue(selectedValue: number) {
-        const maxChapterCount = manga.chapterCount - 1;
+        const maxChapterIndex = manga.chapterCount - 1;
         if (label === "Page") {
             handlePageNavigation(
                 selectedValue,
@@ -29,11 +32,12 @@ function SelectBox({ value, label }: SelectBoxProps) {
             );
             return;
         }
-        if (selectedValue >= 0 && selectedValue <= maxChapterCount) {
+        if (selectedValue >= 0 && selectedValue <= maxChapterIndex) {
             setPage(0);
             setChapter(selectedValue);
         }
     }
+
     return (
         <div className="flex justify-center w-full gap-2">
             <button
@@ -42,7 +46,7 @@ function SelectBox({ value, label }: SelectBoxProps) {
                 type="button"
                 onClick={() => handleSelectValue(value - 1)}
             >
-                <img src="/assets/irysmanga/left.svg" width={20} alt="" />
+                <ChevronLeftIcon width={20} />
             </button>
             <select
                 value={value}
@@ -63,7 +67,7 @@ function SelectBox({ value, label }: SelectBoxProps) {
                 type="button"
                 onClick={() => handleSelectValue(value + 1)}
             >
-                <img src="/assets/irysmanga/right.svg" width={20} alt="" />
+                <ChevronRightIcon width={20} />
             </button>
         </div>
     );

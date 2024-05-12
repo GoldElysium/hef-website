@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import { Bars3Icon } from '@heroicons/react/24/solid';
+import { BookOpenIcon, DocumentIcon } from '@heroicons/react/24/outline';
 import SelectBox from './SelectBox';
 import { useMangaContext } from './context/MangaContext';
 
@@ -11,21 +12,22 @@ interface Props {
 function ReaderSidebar({ openSidebar, setOpenSidebar }: Props) {
 	const {
 		singlePageMode,
-		setSinglePageMode,
-		fitHeightMode,
-		setFitHeightMode,
 		page,
 		chapter,
+		fitHeightMode,
 		language,
-		setLanguage,
 		leftToRight,
-		setLeftToRight,
 		headerHidden,
-		setHeaderHidden,
 		readerTheme,
-		setReaderTheme,
 		manga,
+		setSinglePageMode,
+		setFitHeightMode,
+		setLanguage,
+		setLeftToRight,
+		setHeaderHidden,
+		setReaderTheme,
 	} = useMangaContext();
+
 	const containerClasses = classNames(
 		'flex flex-col px-4 py-2 -z--1 absolute md:static bg-slate-800 transition-all duration-[150ms] ease-in-out overflow-y-auto h-full ',
 		{
@@ -40,36 +42,28 @@ function ReaderSidebar({ openSidebar, setOpenSidebar }: Props) {
 		<>
 			{!openSidebar && (
 				<Bars3Icon
-					className="absolute ml-2 mt-2 hidden cursor-pointer md:block"
+					className="barIcon absolute ml-2 mt-2 hidden md:block"
 					onClick={() => setOpenSidebar(true)}
 					width={50}
 				/>
 			)}
 			<div className={containerClasses}>
-				{/* Manga info */}
 				<Bars3Icon
 					color="#FFFFFF"
 					onClick={() => setOpenSidebar(false)}
 					width={30}
-					className="absolute right-0 mr-2 cursor-pointer"
+					className="barIcon absolute right-0 mr-2"
 				/>
+				{/* Manga info */}
 				<div className="400 flex flex-col gap-2">
 					<div className="flex items-center gap-1">
-						<img
-							src="/assets/irysmanga/title.svg"
-							width={30}
-							alt=""
-						/>
+						<BookOpenIcon width={30} />
 						<strong className=" whitespace-nowrap">
 							{manga.title}
 						</strong>
 					</div>
 					<div className="flex items-center gap-1">
-						<img
-							src="/assets/irysmanga/chapter.svg"
-							width={30}
-							alt=""
-						/>
+						<DocumentIcon width={30} />
 						<strong className=" whitespace-nowrap">
 							{manga.chapters[chapter].title}
 						</strong>

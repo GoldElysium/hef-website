@@ -20,7 +20,6 @@ function Reader() {
 	const pageScrolled = useRef(false);
 	const scriptedScroll = useRef(false);
 
-	const pageGap = 10;
 	const imgClasses = classNames(
 		'page-img m-auto object-cover max-w-full transition-height duration-[150ms] ease-in-out ',
 		{
@@ -28,9 +27,10 @@ function Reader() {
 		},
 	);
 	const containerClasses = classNames(
-		`grow h-full bg-slate-600 hover:cursor-pointer overflow-y-auto flex flex-col gap-[${pageGap}px]`,
+		'grow h-full bg-slate-600 hover:cursor-pointer overflow-y-auto flex flex-col gap-[10px]',
 	);
 
+	// Sets the scrollbar to the correct position on page change
 	const handleScrollTop = () => {
 		if (singlePageMode && containerRef.current) {
 			containerRef.current.scrollTop = 0;
@@ -46,6 +46,8 @@ function Reader() {
 		}
 		pageScrolled.current = false;
 	};
+
+	// Update the page counter when the user scrolls
 	const handleScroll = () => {
 		if (!containerRef.current || scriptedScroll.current) {
 			scriptedScroll.current = false;
@@ -63,6 +65,7 @@ function Reader() {
 		}
 	};
 
+	// Handle page turn on click
 	const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
 		const { clientX, target } = event;
 		const { left, width } = (target as HTMLElement).getBoundingClientRect();
@@ -148,6 +151,7 @@ function Reader() {
 
         // eslint-enable
     }
+
     /* eslint-disable */
     return (
         <div

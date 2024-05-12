@@ -15,7 +15,6 @@ export interface MangaInfo {
 }
 
 //  Dummy data
-// Function to generate a dummy manga
 export function generateDummyManga(): MangaInfo {
 	const src = '/assets/irysmanga/tmp/';
 	const manga: MangaInfo = {
