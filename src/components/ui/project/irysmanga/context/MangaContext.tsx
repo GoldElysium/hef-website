@@ -43,7 +43,7 @@ export const MangaProvider: React.FC<{ children: React.ReactNode }> = ({
 
     const [manga, setManga] = useState(generateDummyManga());
     const [page, setPage] = useState(0);
-    const [chapter, setChapter] = useState(0);
+    const [chapter, setChapter] = useState(3);
     const [leftToRight, setLeftToRight] = useState(true);
     const [headerHidden, setHeaderHidden] = useState(true);
 

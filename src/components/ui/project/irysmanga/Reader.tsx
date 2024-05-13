@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import React, { useEffect, useRef } from 'react';
 import { useMangaContext } from './context/MangaContext';
 import { handlePageNavigation } from './utils/helper';
+import ProgressBar from './ProgressBar';
 
 function Reader() {
 	const {
@@ -21,13 +22,13 @@ function Reader() {
 	const scriptedScroll = useRef(false);
 
 	const imgClasses = classNames(
-		'page-img m-auto object-cover max-w-full transition-height duration-[150ms] ease-in-out ',
+		'page-img m-auto object-cover max-w-full transition-height duration-[150ms] ease-in-out h-[700px]',
 		{
 			'h-full': fitHeightMode,
 		},
 	);
 	const containerClasses = classNames(
-		'grow h-full bg-slate-600 hover:cursor-pointer overflow-y-auto flex flex-col gap-[10px]',
+		'grow h-full bg-slate-600 hover:cursor-pointer overflow-y-auto flex flex-col gap-[10px] relative',
 	);
 
 	// Sets the scrollbar to the correct position on page change
@@ -162,6 +163,9 @@ function Reader() {
             ref={containerRef}
         >
             {displayedPages}
+            <div className="sticky bottom-0 w-full">
+                <ProgressBar></ProgressBar>
+            </div>
         </div>
     );
     // eslint-enable

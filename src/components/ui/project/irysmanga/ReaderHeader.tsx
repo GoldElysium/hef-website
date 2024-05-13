@@ -12,7 +12,7 @@ function ReaderHeader() {
 
 	const squareBtn = classNames('bg-slate-900 border-white border px-2');
 	const topBarClasses = classNames(
-		'relative flex flex-col items-center w-full gap-1 md:hidden transition-all duration-500 py-4',
+		'relative flex flex-col items-center w-full gap-1 md:hidden transition-all duration-500 py-4 ',
 		{
 			'translate-y-0': openTopbar,
 			'h-[120px]': openTopbar,
@@ -26,7 +26,7 @@ function ReaderHeader() {
 		<>
 			{!openTopbar && (
 				<Bars3Icon
-					className="barIcon absolute right-0 top-0 mr-4 mt-2 md:hidden"
+					className="barIcon absolute right-0 top-0 z-10 mr-4 mt-2 md:hidden"
 					width={50}
 					onClick={() => setOpenTopbar(true)}
 				/>

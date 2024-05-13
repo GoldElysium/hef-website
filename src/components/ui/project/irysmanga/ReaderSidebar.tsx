@@ -29,7 +29,7 @@ function ReaderSidebar({ openSidebar, setOpenSidebar }: Props) {
 	} = useMangaContext();
 
 	const containerClasses = classNames(
-		'flex flex-col px-4 py-2 -z--1 absolute md:static bg-slate-800 transition-all duration-[150ms] ease-in-out overflow-y-auto h-full ',
+		'flex flex-col px-4 py-2  absolute md:static bg-slate-800 transition-all duration-[150ms] ease-in-out overflow-y-auto h-full z-10',
 		{
 			'w-[379px]': openSidebar,
 			'translate-x-0': openSidebar,
@@ -42,14 +42,13 @@ function ReaderSidebar({ openSidebar, setOpenSidebar }: Props) {
 		<>
 			{!openSidebar && (
 				<Bars3Icon
-					className="barIcon absolute ml-2 mt-2 hidden md:block"
+					className="barIcon absolute z-10 ml-2 mt-2 hidden md:block"
 					onClick={() => setOpenSidebar(true)}
 					width={50}
 				/>
 			)}
 			<div className={containerClasses}>
 				<Bars3Icon
-					color="#FFFFFF"
 					onClick={() => setOpenSidebar(false)}
 					width={30}
 					className="barIcon absolute right-0 mr-2"

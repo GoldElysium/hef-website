@@ -1,3 +1,23 @@
 .barIcon {
-    @apply cursor-pointer transition-opacity ease-linear duration-100 opacity-50 hover:opacity-100;
+    @apply transition-opacity duration-100 ease-linear opacity-50 cursor-pointer hover:opacity-100;
+}
+
+.progress-bar {
+    @apply overflow-hidden h-[20px] w-[100%] bg-gray-400 rounded-lg sticky z-10;
+}
+
+.progress-sth {
+    @apply absolute top-0 left-0 h-full transition-all duration-300 ease-in-out bg-gray-700;
+}
+
+.progress-sections {
+    @apply flex justify-between w-full h-full;
+}
+
+.progress-section {
+    @apply flex h-full cursor-pointer;
+}
+
+.progress-section.active {
+    background-color: #007bff;
 }
