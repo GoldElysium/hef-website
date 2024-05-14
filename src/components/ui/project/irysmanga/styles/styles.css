@@ -3,11 +3,11 @@
 }
 
 .progress-bar {
-    @apply overflow-hidden h-[20px] w-[100%] bg-gray-400 rounded-lg sticky z-10;
+    @apply overflow-hidden h-[20px] w-[100%] bg-gray-400 rounded-lg sticky z-10 hidden md:block;
 }
 
 .progress-sth {
-    @apply absolute top-0 left-0 h-full transition-all duration-300 ease-in-out bg-gray-700;
+    @apply absolute top-0 left-0 h-full transition-all duration-300 ease-in-out bg-gray-800;
 }
 
 .progress-sections {
@@ -15,9 +15,9 @@
 }
 
 .progress-section {
-    @apply flex h-full cursor-pointer;
+    @apply z-10 flex h-full cursor-pointer grow;
 }
 
 .progress-section.active {
-    background-color: #007bff;
+    @apply bg-gray-600;
 }

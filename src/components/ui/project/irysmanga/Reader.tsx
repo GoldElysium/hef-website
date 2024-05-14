@@ -22,7 +22,7 @@ function Reader() {
 	const scriptedScroll = useRef(false);
 
 	const imgClasses = classNames(
-		'page-img m-auto object-cover max-w-full transition-height duration-[150ms] ease-in-out h-[700px]',
+		'page-img m-auto object-cover max-w-full transition-height duration-[150ms] ease-in-out',
 		{
 			'h-full': fitHeightMode,
 		},
