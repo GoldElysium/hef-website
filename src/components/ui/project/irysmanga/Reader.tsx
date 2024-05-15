@@ -14,6 +14,7 @@ function Reader() {
 		chapter,
 		manga,
 		leftToRight,
+		language,
 	} = useMangaContext();
 
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -22,7 +23,7 @@ function Reader() {
 	const scriptedScroll = useRef(false);
 
 	const imgClasses = classNames(
-		'page-img m-auto object-cover max-w-full transition-height duration-[150ms] ease-in-out',
+		'page-img m-auto object-cover max-w-full transition-height duration-[150ms] ease-in-out max-w-[1000px]',
 		{
 			'h-full': fitHeightMode,
 		},
@@ -131,7 +132,7 @@ function Reader() {
                 <img
                     key={i}
                     ref={(el) => (pageRefs.current[i] = el as HTMLImageElement)}
-                    src={currentPages[i].imageBlob}
+                    src={currentPages[i][language as "EN" | "JP"]}
                     className={imgClasses.concat(
                         i === page ? " block" : " hidden"
                     )}
@@ -143,7 +144,7 @@ function Reader() {
                 <img
                     key={i}
                     ref={(el) => (pageRefs.current[i] = el as HTMLImageElement)}
-                    src={currentPages[i].imageBlob}
+                    src={currentPages[i][language as "EN" | "JP"]}
                     className={imgClasses.concat(" block")}
                     alt={`Page ${i + 1}`}
                 />

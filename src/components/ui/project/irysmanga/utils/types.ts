@@ -1,5 +1,6 @@
 export interface Page {
-	imageBlob: string; // temporary representation
+	EN: string;
+	JP: string;
 }
 
 export interface Chapter {
@@ -16,39 +17,32 @@ export interface MangaInfo {
 
 //  Dummy data
 export function generateDummyManga(): MangaInfo {
-	const src = '/assets/irysmanga/tmp/';
+	// const src = "/assets/irysmanga/tmp/";
+	const tmpChapters: Chapter[] = [];
+	const tmpChapterCount = 2;
+	for (let i = 1; i <= tmpChapterCount; ++i) {
+		const tmpPages: Page[] = [];
+		const tmp = 11;
+		for (let j = 1; j <= 10; ++j) {
+			tmpPages.push({
+				EN: `https://alt.hololive.tv/wp-content/uploads/2022/${tmp}/en${
+					i + 1
+				}_0${j}.jpg`,
+				JP: `https://alt.hololive.tv/wp-content/uploads/2022/${tmp}/jp${
+					i + 1
+				}_0${j}.jpg`,
+			});
+		}
+		tmpChapters.push({
+			title: `Chapter ${i}`,
+			pageCount: 10,
+			pages: tmpPages,
+		});
+	}
 	const manga: MangaInfo = {
 		title: 'BroRys BL Manga',
-		chapterCount: 4,
-		chapters: [
-			{
-				title: 'Chapter 1',
-				pageCount: 1,
-				pages: [{ imageBlob: `${src}1-1.jpg` }],
-			},
-			{
-				title: 'Chapter 2',
-				pageCount: 1,
-				pages: [{ imageBlob: `${src}2-1.jpg` }],
-			},
-			{
-				title: 'Chapter 3',
-				pageCount: 2,
-				pages: [
-					{ imageBlob: `${src}3-1.jpg` },
-					{ imageBlob: `${src}3-2.jpg` },
-				],
-			},
-			{
-				title: 'Chapter 4',
-				pageCount: 3,
-				pages: [
-					{ imageBlob: `${src}4-1.jpg` },
-					{ imageBlob: `${src}4-2.jpg` },
-					{ imageBlob: `${src}4-3.jpg` },
-				],
-			},
-		],
+		chapterCount: tmpChapterCount,
+		chapters: tmpChapters,
 	};
 
 	return manga;

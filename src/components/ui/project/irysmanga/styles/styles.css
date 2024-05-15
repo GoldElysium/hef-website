@@ -3,7 +3,11 @@
 }
 
 .progress-bar {
-    @apply overflow-hidden h-[20px] w-[100%] bg-gray-400 rounded-lg sticky z-10 hidden md:block;
+    @apply overflow-hidden h-[10px] w-[100%] bg-gray-400 rounded-lg sticky z-10 hidden md:block opacity-50 transition-all duration-100 ease-linear;
+}
+
+.progress-bar:hover {
+    @apply opacity-100;
 }
 
 .progress-sth {

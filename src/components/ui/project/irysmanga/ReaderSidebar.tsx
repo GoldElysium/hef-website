@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import { Bars3Icon } from '@heroicons/react/24/solid';
 import { BookOpenIcon, DocumentIcon } from '@heroicons/react/24/outline';
+import { useRef } from 'react';
 import SelectBox from './SelectBox';
 import { useMangaContext } from './context/MangaContext';
 
@@ -27,6 +28,7 @@ function ReaderSidebar({ openSidebar, setOpenSidebar }: Props) {
 		setHeaderHidden,
 		setReaderTheme,
 	} = useMangaContext();
+	const modalRef = useRef<HTMLDialogElement>(null);
 
 	const containerClasses = classNames(
 		'flex flex-col px-4 py-2  absolute md:static bg-slate-800 transition-all duration-[150ms] ease-in-out overflow-y-auto h-full z-10',
@@ -67,7 +69,11 @@ function ReaderSidebar({ openSidebar, setOpenSidebar }: Props) {
 							{manga.chapters[chapter].title}
 						</strong>
 					</div>
-					<button className="btn whitespace-nowrap" type="button">
+					<button
+						className="btn whitespace-nowrap"
+						type="button"
+						onClick={() => modalRef.current?.showModal()}
+					>
 						Details
 					</button>
 					<button
@@ -132,6 +138,19 @@ function ReaderSidebar({ openSidebar, setOpenSidebar }: Props) {
 					</button>
 				</div>
 			</div>
+
+			<dialog id="info_modal" className="modal" ref={modalRef}>
+				<div className="modal-box">
+					<h3>Info and credits</h3>
+					<div className="modal-action">
+						<form method="dialog">
+							<button className="btn" type="button">
+								Close
+							</button>
+						</form>
+					</div>
+				</div>
+			</dialog>
 		</>
 	);
 }
