@@ -1,0 +1,19 @@
+{
+    "details": "デテール",
+    "chapter": "チャプター",
+    "language": "言語",
+    "chosen_language": "日本語",
+    "page": "ページ",
+    "long_strip": "長いストリップ",
+    "single_page": "シングルページ",
+    "fit_width": "幅に合わせる",
+    "fit_height": "高さに合わせる",
+    "ltr": "左から右へ",
+    "rtl": "右から左へ",
+    "header_hidden": "ヘッダーを隠す",
+    "header_shown": "ヘッダーを示す",
+    "theme": "テーマ",
+    "dark": "ダーク",
+    "light": "ライト",
+    "menu": "メヌー"
+}

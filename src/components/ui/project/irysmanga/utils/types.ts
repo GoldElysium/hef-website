@@ -1,6 +1,6 @@
 export interface Page {
-	EN: string;
-	JP: string;
+	en: string;
+	jp: string;
 }
 
 export interface Chapter {
@@ -25,10 +25,10 @@ export function generateDummyManga(): MangaInfo {
 		const tmp = 11;
 		for (let j = 1; j <= 10; ++j) {
 			tmpPages.push({
-				EN: `https://alt.hololive.tv/wp-content/uploads/2022/${tmp}/en${
+				en: `https://alt.hololive.tv/wp-content/uploads/2022/${tmp}/en${
 					i + 1
 				}_0${j}.jpg`,
-				JP: `https://alt.hololive.tv/wp-content/uploads/2022/${tmp}/jp${
+				jp: `https://alt.hololive.tv/wp-content/uploads/2022/${tmp}/jp${
 					i + 1
 				}_0${j}.jpg`,
 			});

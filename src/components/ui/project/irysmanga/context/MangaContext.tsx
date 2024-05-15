@@ -5,8 +5,8 @@ import { MangaInfo, generateDummyManga } from '../utils/types';
 
 // Define the type for the context value
 interface MangaContextProps {
-	language: string;
-	setLanguage: React.Dispatch<React.SetStateAction<string>>;
+	language: 'en' | 'jp';
+	setLanguage: React.Dispatch<React.SetStateAction<'en' | 'jp'>>;
 
 	page: number;
 	setPage: React.Dispatch<React.SetStateAction<number>>;
@@ -37,7 +37,7 @@ const MangaContext = createContext<MangaContextProps | undefined>(undefined);
 export const MangaProvider: React.FC<{ children: React.ReactNode }> = ({
     children,
 }) => {
-    const [language, setLanguage] = useState("EN");
+    const [language, setLanguage] = useState("en" as "en" | "jp");
     const [singlePageMode, setSinglePageMode] = useState(false);
     const [fitHeightMode, setFitHeightMode] = useState(false);
 

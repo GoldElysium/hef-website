@@ -1,7 +1,8 @@
 import classNames from 'classnames';
 import { Bars3Icon } from '@heroicons/react/24/solid';
 import { BookOpenIcon, DocumentIcon } from '@heroicons/react/24/outline';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
+import useTranslation from '@/lib/i18n/client';
 import SelectBox from './SelectBox';
 import { useMangaContext } from './context/MangaContext';
 
@@ -29,6 +30,10 @@ function ReaderSidebar({ openSidebar, setOpenSidebar }: Props) {
 		setReaderTheme,
 	} = useMangaContext();
 	const modalRef = useRef<HTMLDialogElement>(null);
+	const { t, i18n } = useTranslation('reader');
+	useEffect(() => {
+		i18n.changeLanguage(language);
+	}, [language, i18n]);
 
 	const containerClasses = classNames(
 		'flex flex-col px-4 py-2  absolute md:static bg-slate-800 transition-all duration-[150ms] ease-in-out overflow-y-auto h-full z-10',
@@ -74,25 +79,25 @@ function ReaderSidebar({ openSidebar, setOpenSidebar }: Props) {
 						type="button"
 						onClick={() => modalRef.current?.showModal()}
 					>
-						Details
+						{t('details')}
 					</button>
 					<button
 						className="btn whitespace-nowrap"
 						type="button"
 						onClick={() => {
-							setLanguage(language === 'EN' ? 'JP' : 'EN');
+							setLanguage(language === 'en' ? 'jp' : 'en');
 						}}
 					>
-						Language:
-						{' '}
-						{language === 'EN' ? 'English' : '日本語'}
+						{t('language')}
+						{': '}
+						{t('chosen_language')}
 					</button>
 				</div>
 				<div className="divider" />
 				{/* Chapter and page seletion */}
 				<div className="flex flex-col items-center gap-2">
-					<SelectBox value={page} label="Page" />
-					<SelectBox value={chapter} label="Chapter" />
+					<SelectBox value={page} label="page" />
+					<SelectBox value={chapter} label="chapter" />
 				</div>
 				<div className="divider" />
 				{/* Reader settings */}
@@ -102,28 +107,28 @@ function ReaderSidebar({ openSidebar, setOpenSidebar }: Props) {
 						type="button"
 						onClick={() => setSinglePageMode((prev) => !prev)}
 					>
-						{singlePageMode ? 'Single Page' : 'Long Strip'}
+						{singlePageMode ? t('single_page') : t('long_strip')}
 					</button>
 					<button
 						className="btn whitespace-nowrap"
 						type="button"
 						onClick={() => setFitHeightMode((prev) => !prev)}
 					>
-						{fitHeightMode ? 'Fit Height' : 'Fit Width'}
+						{fitHeightMode ? t('fit_height') : t('fit_width')}
 					</button>
 					<button
 						className="btn whitespace-nowrap"
 						type="button"
 						onClick={() => setLeftToRight((prev) => !prev)}
 					>
-						{leftToRight ? 'Left To Right' : 'Right To Left'}
+						{leftToRight ? t('ltr') : t('rtl')}
 					</button>
 					<button
 						className="btn whitespace-nowrap"
 						type="button"
 						onClick={() => setHeaderHidden((prev) => !prev)}
 					>
-						{headerHidden ? 'Header Hidden' : 'Header Shown'}
+						{headerHidden ? t('header_hidden') : t('header_shown')}
 					</button>
 					<button
 						className="btn whitespace-nowrap"
@@ -132,9 +137,10 @@ function ReaderSidebar({ openSidebar, setOpenSidebar }: Props) {
 							readerTheme === 'light' ? 'dark' : 'light',
 						)}
 					>
-						Theme:
+						{t('theme')}
+						:
 						{' '}
-						{readerTheme === 'light' ? 'Light' : 'Dark'}
+						{readerTheme === 'light' ? t('light') : t('dark')}
 					</button>
 				</div>
 			</div>
@@ -144,14 +150,14 @@ function ReaderSidebar({ openSidebar, setOpenSidebar }: Props) {
 					<h3>Info and credits</h3>
 					<div className="modal-action">
 						<form method="dialog">
-							<button className="btn" type="button">
-								Close
-							</button>
-						</form>
-					</div>
-				</div>
-			</dialog>
-		</>
+							{/* eslint-disable */}
+                            <button className="btn">Close</button>
+                            {/* // eslint-enable */}
+                        </form>
+                    </div>
+                </div>
+            </dialog>
+        </>
 	);
 }
 

@@ -1,27 +1,29 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
+import useTranslation from '@/lib/i18n/client';
 import { useMangaContext } from './context/MangaContext';
 import { handlePageNavigation } from './utils/helper';
 
 interface SelectBoxProps {
 	value: number;
-	label: string;
+	label: 'page' | 'chapter';
 }
 
 function SelectBox({ value, label }: SelectBoxProps) {
+	const { t } = useTranslation('reader');
 	const {
 		setPage, chapter, setChapter, manga, singlePageMode,
 	} = useMangaContext();
 
 	/* eslint-disable */
     let maxValue =
-        label === "Page"
+        label === "page"
             ? manga.chapters[chapter].pageCount
             : manga.chapterCount;
     // eslint-enable
 
     function handleSelectValue(selectedValue: number) {
         const maxChapterIndex = manga.chapterCount - 1;
-        if (label === "Page") {
+        if (label === "page") {
             handlePageNavigation(
                 selectedValue,
                 singlePageMode,
@@ -57,7 +59,7 @@ function SelectBox({ value, label }: SelectBoxProps) {
             >
                 {Array.from({ length: maxValue }, (_, index) => (
                     <option key={label + index.toString()} value={index}>
-                        {label} {index + 1}
+                        {t(label)} {index + 1}
                     </option>
                 ))}
             </select>

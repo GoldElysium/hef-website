@@ -23,7 +23,7 @@ function Reader() {
 	const scriptedScroll = useRef(false);
 
 	const imgClasses = classNames(
-		'page-img m-auto object-cover max-w-full transition-height duration-[150ms] ease-in-out max-w-[1000px]',
+		'page-img m-auto object-cover transition-height duration-[150ms] ease-in-out max-w-[1000px]',
 		{
 			'h-full': fitHeightMode,
 		},
@@ -118,7 +118,7 @@ function Reader() {
 
 	useEffect(() => {
 		handleScrollTop();
-	}, [page, chapter, singlePageMode]);
+	}, [page, chapter, singlePageMode, handleScrollTop]);
 
 	let displayedPages: React.JSX.Element[] = [];
 	if (manga && manga.chapters[chapter]) {
@@ -132,7 +132,7 @@ function Reader() {
                 <img
                     key={i}
                     ref={(el) => (pageRefs.current[i] = el as HTMLImageElement)}
-                    src={currentPages[i][language as "EN" | "JP"]}
+                    src={currentPages[i][language]}
                     className={imgClasses.concat(
                         i === page ? " block" : " hidden"
                     )}
@@ -144,7 +144,7 @@ function Reader() {
                 <img
                     key={i}
                     ref={(el) => (pageRefs.current[i] = el as HTMLImageElement)}
-                    src={currentPages[i][language as "EN" | "JP"]}
+                    src={currentPages[i][language]}
                     className={imgClasses.concat(" block")}
                     alt={`Page ${i + 1}`}
                 />

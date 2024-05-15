@@ -1,3 +1,4 @@
+import useTranslation from '@/lib/i18n/client';
 import { useState } from 'react';
 import classNames from 'classnames';
 import { Bars3Icon } from '@heroicons/react/24/solid';
@@ -9,6 +10,7 @@ function ReaderHeader() {
 	const { page, chapter, manga } = useMangaContext();
 	const [openSidebar, setOpenSidebar] = useState(true);
 	const [openTopbar, setOpenTopbar] = useState(true);
+	const { t } = useTranslation('reader');
 
 	const squareBtn = classNames('bg-slate-900 border-white border px-2');
 	const topBarClasses = classNames(
@@ -37,16 +39,16 @@ function ReaderHeader() {
                 <strong>{currentChapter.title}</strong>
                 <div className="flex gap-2">
                     <div className={squareBtn}>
-                        Chapter {chapter + 1} / {manga.chapterCount}
+                        {t("chapter")} {chapter + 1} / {manga.chapterCount}
                     </div>
                     <div className={squareBtn}>
-                        Page {page + 1} / {currentChapter.pageCount}
+                        {t("page")} {page + 1} / {currentChapter.pageCount}
                     </div>
                     <div
                         className={squareBtn + " cursor-pointer"}
                         onClick={() => setOpenSidebar(true)}
                     >
-                        Menu
+                        {t("menu")}
                     </div>
                 </div>
                 {openTopbar && (
