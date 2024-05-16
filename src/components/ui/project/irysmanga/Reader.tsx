@@ -3,6 +3,7 @@ import React, { useEffect, useRef } from 'react';
 import { useMangaContext } from './context/MangaContext';
 import { handlePageNavigation } from './utils/helper';
 import ProgressBar from './ProgressBar';
+import { getMangaDataOrThrow } from './utils/types';
 
 function Reader() {
 	const {
@@ -83,6 +84,7 @@ function Reader() {
 					setPage,
 					setChapter,
 					chapter,
+					language,
 					manga,
 				);
 			} else {
@@ -92,6 +94,7 @@ function Reader() {
 					setPage,
 					setChapter,
 					chapter,
+					language,
 					manga,
 				);
 			}
@@ -102,6 +105,7 @@ function Reader() {
 				setPage,
 				setChapter,
 				chapter,
+				language,
 				manga,
 			);
 		} else {
@@ -111,6 +115,7 @@ function Reader() {
 				setPage,
 				setChapter,
 				chapter,
+				language,
 				manga,
 			);
 		}
@@ -121,8 +126,9 @@ function Reader() {
 	}, [page, chapter, singlePageMode, handleScrollTop]);
 
 	let displayedPages: React.JSX.Element[] = [];
-	if (manga && manga.chapters[chapter]) {
-		const currentChapter = manga.chapters[chapter];
+	const mangaData = getMangaDataOrThrow(manga, language);
+	if (mangaData.chapters[chapter]) {
+		const currentChapter = mangaData.chapters[chapter];
 		const maxPageCount = currentChapter.pageCount;
 		const currentPages = currentChapter.pages;
 
@@ -132,7 +138,7 @@ function Reader() {
                 <img
                     key={i}
                     ref={(el) => (pageRefs.current[i] = el as HTMLImageElement)}
-                    src={currentPages[i][language]}
+                    src={currentPages[i]}
                     className={imgClasses.concat(
                         i === page ? " block" : " hidden"
                     )}
@@ -144,7 +150,7 @@ function Reader() {
                 <img
                     key={i}
                     ref={(el) => (pageRefs.current[i] = el as HTMLImageElement)}
-                    src={currentPages[i][language]}
+                    src={currentPages[i]}
                     className={imgClasses.concat(" block")}
                     alt={`Page ${i + 1}`}
                 />
