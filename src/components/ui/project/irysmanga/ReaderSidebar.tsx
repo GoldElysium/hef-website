@@ -5,6 +5,7 @@ import { useEffect, useRef } from 'react';
 import useTranslation from '@/lib/i18n/client';
 import SelectBox from './SelectBox';
 import { useMangaContext } from './context/MangaContext';
+import { getMangaDataOrThrow } from './utils/types';
 
 interface Props {
 	openSidebar: boolean;
@@ -45,6 +46,7 @@ function ReaderSidebar({ openSidebar, setOpenSidebar }: Props) {
 			'px-[0px]': !openSidebar,
 		},
 	);
+	const mangaData = getMangaDataOrThrow(manga, language);
 	return (
 		<>
 			{!openSidebar && (
@@ -65,13 +67,13 @@ function ReaderSidebar({ openSidebar, setOpenSidebar }: Props) {
 					<div className="flex items-center gap-1">
 						<BookOpenIcon width={30} />
 						<strong className=" whitespace-nowrap">
-							{manga.title}
+							{mangaData.title}
 						</strong>
 					</div>
 					<div className="flex items-center gap-1">
 						<DocumentIcon width={30} />
 						<strong className=" whitespace-nowrap">
-							{manga.chapters[chapter].title}
+							{mangaData.chapters[chapter].title}
 						</strong>
 					</div>
 					<button

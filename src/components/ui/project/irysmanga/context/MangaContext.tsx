@@ -1,7 +1,7 @@
 import React, {
 	createContext, useState, useContext, useMemo,
 } from 'react';
-import { MangaInfo, generateDummyManga } from '../utils/types';
+import { Manga, generateDummyManga } from '../utils/types';
 
 // Define the type for the context value
 interface MangaContextProps {
@@ -25,8 +25,8 @@ interface MangaContextProps {
 	readerTheme: string;
 	setReaderTheme: React.Dispatch<React.SetStateAction<string>>;
 
-	manga: MangaInfo;
-	setManga: React.Dispatch<React.SetStateAction<MangaInfo>>;
+	manga: Manga;
+	setManga: React.Dispatch<React.SetStateAction<Manga>>;
 }
 
 // Creating a context object

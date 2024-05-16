@@ -4,10 +4,13 @@ import classNames from 'classnames';
 import { Bars3Icon } from '@heroicons/react/24/solid';
 import ReaderSidebar from './ReaderSidebar';
 import { useMangaContext } from './context/MangaContext';
+import { getMangaDataOrThrow } from './utils/types';
 import './styles/styles.css';
 
 function ReaderHeader() {
-	const { page, chapter, manga } = useMangaContext();
+	const {
+		page, chapter, manga, language,
+	} = useMangaContext();
 	const [openSidebar, setOpenSidebar] = useState(true);
 	const [openTopbar, setOpenTopbar] = useState(true);
 	const { t } = useTranslation('reader');
@@ -23,7 +26,9 @@ function ReaderHeader() {
 			'py-[0px]': !openTopbar,
 		},
 	);
-	const currentChapter = manga.chapters[chapter];
+
+	const mangaData = getMangaDataOrThrow(manga, language);
+	const currentChapter = mangaData.chapters[chapter];
 	return (
 		<>
 			{!openTopbar && (
@@ -39,7 +44,7 @@ function ReaderHeader() {
                 <strong>{currentChapter.title}</strong>
                 <div className="flex gap-2">
                     <div className={squareBtn}>
-                        {t("chapter")} {chapter + 1} / {manga.chapterCount}
+                        {t("chapter")} {chapter + 1} / {mangaData.chapterCount}
                     </div>
                     <div className={squareBtn}>
                         {t("page")} {page + 1} / {currentChapter.pageCount}

@@ -1,4 +1,4 @@
-import { MangaInfo } from './types';
+import { Manga, getMangaDataOrThrow } from './types';
 /* eslint-disable */
 export const handlePageNavigation = (
     selectedPage: number,
@@ -6,13 +6,15 @@ export const handlePageNavigation = (
     setPage: React.Dispatch<React.SetStateAction<number>>,
     setChapter: React.Dispatch<React.SetStateAction<number>>,
     chapter: number,
-    manga: MangaInfo
+    language: string,
+    manga: Manga
 ) => {
-    let currentChapter = manga.chapters[chapter];
+    let mangaData = getMangaDataOrThrow(manga, language);
+    let currentChapter = mangaData.chapters[chapter];
     // Case: Change to the previous chapter if the page index is < 0
-    if (selectedPage < 0 && chapter > 0 && chapter <= manga.chapterCount) {
+    if (selectedPage < 0 && chapter > 0 && chapter <= mangaData.chapterCount) {
         if (singlePageMode) {
-            setPage(manga.chapters[chapter - 1].pageCount - 1);
+            setPage(mangaData.chapters[chapter - 1].pageCount - 1);
         } else {
             setPage(0);
         }
@@ -22,7 +24,7 @@ export const handlePageNavigation = (
     else if (
         selectedPage >= currentChapter.pageCount &&
         chapter >= 0 &&
-        chapter < manga.chapterCount - 1
+        chapter < mangaData.chapterCount - 1
     ) {
         setPage(0);
         setChapter((prev) => prev + 1);
