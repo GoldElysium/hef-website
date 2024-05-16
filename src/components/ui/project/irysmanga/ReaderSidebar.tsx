@@ -73,7 +73,7 @@ function ReaderSidebar({ openSidebar, setOpenSidebar }: Props) {
 					<div className="flex items-center gap-1">
 						<DocumentIcon width={30} />
 						<strong className=" whitespace-nowrap">
-							{mangaData.chapters[chapter].title}
+							{mangaData.chapters[chapter].title ? mangaData.chapters[chapter].title : `${t('chapter')} ${chapter + 1}`}
 						</strong>
 					</div>
 					<button

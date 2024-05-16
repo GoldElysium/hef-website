@@ -73,14 +73,14 @@ export function generateDummyManga(): Manga {
 		}
 		tmpMangaData[0].chapters.push(
 			{
-				title: `Chapter ${i}`,
+				title: `#${i}`,
 				pageCount: 10,
 				pages: enTmpPages,
 			},
 		);
 		tmpMangaData[1].chapters.push(
 			{
-				title: `Chapter ${i}`,
+				title: '',
 				pageCount: 10,
 				pages: jpTmpPages,
 			},

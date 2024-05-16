@@ -44,6 +44,16 @@ function SelectBox({ value, label }: SelectBoxProps) {
         }
     }
 
+    let labelList : string[] = [];
+    if (label === "chapter") {
+        labelList = Array.from(Array(maxValue).keys()).map(key => 
+            mangaData.chapters[key].title ? mangaData.chapters[key].title : `${t(label)} ${key + 1}`
+        );
+    }
+    else {
+        labelList = Array.from(Array(maxValue).keys()).map(key => `${t(label)} ${key + 1}`);
+    }
+
     return (
         <div className="flex justify-center w-full gap-2">
             <button
@@ -61,9 +71,9 @@ function SelectBox({ value, label }: SelectBoxProps) {
                     handleSelectValue(parseInt(e.target.value, 10))
                 }
             >
-                {Array.from({ length: maxValue }, (_, index) => (
+                {Array.from(labelList, (fmtLabel, index) => (
                     <option key={label + index.toString()} value={index}>
-                        {t(label)} {index + 1}
+                        {fmtLabel}
                     </option>
                 ))}
             </select>
