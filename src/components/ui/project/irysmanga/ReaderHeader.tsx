@@ -40,7 +40,7 @@ function ReaderHeader() {
 			)}
 			{/* eslint-disable */}
             <div className={topBarClasses}>
-                <strong>{manga.title}</strong>
+                <strong>{mangaData.title}</strong>
                 <strong>{currentChapter.title}</strong>
                 <div className="flex gap-2">
                     <div className={squareBtn}>
