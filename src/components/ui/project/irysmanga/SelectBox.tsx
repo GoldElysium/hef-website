@@ -12,9 +12,8 @@ interface SelectBoxProps {
 function SelectBox({ value, label }: SelectBoxProps) {
 	const { t } = useTranslation('reader');
 	const {
-		language, setPage, chapter, setChapter, manga, singlePageMode,
+		language, setPage, chapter, setChapter, manga, pageLayout,
 	} = useMangaContext();
-
 	const mangaData = getMangaDataOrThrow(manga, language);
 
 	/* eslint-disable */
@@ -29,7 +28,7 @@ function SelectBox({ value, label }: SelectBoxProps) {
         if (label === "page") {
             handlePageNavigation(
                 selectedValue,
-                singlePageMode,
+                pageLayout,
                 setPage,
                 setChapter,
                 chapter,
@@ -44,14 +43,17 @@ function SelectBox({ value, label }: SelectBoxProps) {
         }
     }
 
-    let labelList : string[] = [];
+    let labelList: string[] = [];
     if (label === "chapter") {
-        labelList = Array.from(Array(maxValue).keys()).map(key => 
-            mangaData.chapters[key].title ? mangaData.chapters[key].title : `${t(label)} ${key + 1}`
+        labelList = Array.from(Array(maxValue).keys()).map((key) =>
+            mangaData.chapters[key].title
+                ? mangaData.chapters[key].title
+                : `${t(label)} ${key + 1}`
         );
-    }
-    else {
-        labelList = Array.from(Array(maxValue).keys()).map(key => `${t(label)} ${key + 1}`);
+    } else {
+        labelList = Array.from(Array(maxValue).keys()).map(
+            (key) => `${t(label)} ${key + 1}`
+        );
     }
 
     return (
@@ -66,7 +68,7 @@ function SelectBox({ value, label }: SelectBoxProps) {
             </button>
             <select
                 value={value}
-                className="select grow"
+                className="select grow min-w-[100px]"
                 onChange={(e) =>
                     handleSelectValue(parseInt(e.target.value, 10))
                 }

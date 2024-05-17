@@ -28,6 +28,22 @@ export type Manga = {
 	data: Map<string, MangaData>; // Maps ISO language codes to correct data.
 };
 
+// Reader settings types
+export const layoutOptions = ['single', 'long', 'double'] as const;
+export type LayoutOptions = (typeof layoutOptions)[number];
+
+export const fitModes = ['height', 'width', 'original'] as const;
+export type FitMode = (typeof fitModes)[number];
+
+export const languages = ['en', 'jp'] as const;
+export type Language = (typeof languages)[number];
+
+export const pageLayouts = ['single', 'long'] as const;
+export type PageLayout = (typeof pageLayouts)[number];
+
+export const readerThemes = ['dark', 'light'] as const;
+export type ReaderTheme = (typeof readerThemes)[number];
+
 // Returns the correct MangaData object for a given language. If there is no such manga data
 // for the given language, throw an error.
 export function getMangaDataOrThrow(manga: Manga, language: string): MangaData {
@@ -68,23 +84,27 @@ export function generateDummyManga(): Manga {
 		const jpTmpPages: string[] = [];
 		const tmp = 11;
 		for (let j = 1; j <= 10; ++j) {
-			enTmpPages.push(`https://alt.hololive.tv/wp-content/uploads/2022/${tmp}/en${i + 1}_0${j}.jpg`);
-			jpTmpPages.push(`https://alt.hololive.tv/wp-content/uploads/2022/${tmp}/jp${i + 1}_0${j}.jpg`);
+			enTmpPages.push(
+				`https://alt.hololive.tv/wp-content/uploads/2022/${tmp}/en${
+					i + 1
+				}_0${j}.jpg`,
+			);
+			jpTmpPages.push(
+				`https://alt.hololive.tv/wp-content/uploads/2022/${tmp}/jp${
+					i + 1
+				}_0${j}.jpg`,
+			);
 		}
-		tmpMangaData[0].chapters.push(
-			{
-				title: `#${i}`,
-				pageCount: 10,
-				pages: enTmpPages,
-			},
-		);
-		tmpMangaData[1].chapters.push(
-			{
-				title: '',
-				pageCount: 10,
-				pages: jpTmpPages,
-			},
-		);
+		tmpMangaData[0].chapters.push({
+			title: `#${i}`,
+			pageCount: 10,
+			pages: enTmpPages,
+		});
+		tmpMangaData[1].chapters.push({
+			title: '',
+			pageCount: 10,
+			pages: jpTmpPages,
+		});
 	}
 
 	const manga: Manga = {
@@ -92,8 +112,10 @@ export function generateDummyManga(): Manga {
 		publishedDate: new Date('2024-01-16'),
 		authors: [],
 		artists: [],
-		data: new Map([['en', tmpMangaData[0]], ['jp', tmpMangaData[1]]]),
+		data: new Map([
+			['en', tmpMangaData[0]],
+			['jp', tmpMangaData[1]],
+		]),
 	};
-
 	return manga;
 }

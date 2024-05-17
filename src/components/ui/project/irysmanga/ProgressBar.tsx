@@ -21,29 +21,31 @@ function ProgressBar() {
 	};
 
 	/* eslint-disable */
-	const pageSections = [];
-	for (let i = 0; i < pageCount; i++) {
-		const isActive = i < page;
-		const sectionClasses = isActive
-			? "progress-section active"
-			: "progress-section";
+    const pageSections = [];
+    for (let i = 0; i < pageCount; i++) {
+        const isActive = i < page;
+        const sectionClasses = isActive
+            ? "progress-section-tooltip active"
+            : "progress-section-tooltip";
+        /* eslint-disable */
 
-		pageSections.push(
-			<div
-				key={i}
-				className={sectionClasses}
-				onClick={(e) => handlePageSectionClick(e, i)}
-			/>
-		);
-	}
-	// eslint-enable
+        pageSections.push(
+            <div
+                className={sectionClasses}
+                data-tip={i + 1}
+                onClick={(e) => handlePageSectionClick(e, i)}
+            ></div>
+        );
+    }
 
-	return (
-		<div className="progress-bar">
-			<div className="progress-sth" style={{ width: progressWidth }} />
-			<div className="progress-sections">{pageSections}</div>
-		</div>
-	);
+    // eslint-enable
+
+    return (
+        <div className="progress-bar">
+            <div className="progress-meter" style={{ width: progressWidth }} />
+            <div className="progress-sections">{pageSections}</div>
+        </div>
+    );
 }
 
 export default ProgressBar;

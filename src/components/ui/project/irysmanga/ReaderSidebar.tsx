@@ -5,7 +5,14 @@ import { useEffect, useRef } from 'react';
 import useTranslation from '@/lib/i18n/client';
 import SelectBox from './SelectBox';
 import { useMangaContext } from './context/MangaContext';
-import { getMangaDataOrThrow } from './utils/types';
+import {
+	fitModes,
+	getMangaDataOrThrow,
+	languages,
+	pageLayouts,
+	readerThemes,
+} from './utils/types';
+import { getNextOption } from './utils/helper';
 
 interface Props {
 	openSidebar: boolean;
@@ -14,17 +21,17 @@ interface Props {
 
 function ReaderSidebar({ openSidebar, setOpenSidebar }: Props) {
 	const {
-		singlePageMode,
+		pageLayout,
 		page,
 		chapter,
-		fitHeightMode,
+		fitMode,
 		language,
 		leftToRight,
 		headerHidden,
 		readerTheme,
 		manga,
-		setSinglePageMode,
-		setFitHeightMode,
+		setPageLayout,
+		setFitMode,
 		setLanguage,
 		setLeftToRight,
 		setHeaderHidden,
@@ -35,6 +42,7 @@ function ReaderSidebar({ openSidebar, setOpenSidebar }: Props) {
 	useEffect(() => {
 		i18n.changeLanguage(language);
 	}, [language, i18n]);
+	const mangaData = getMangaDataOrThrow(manga, language);
 
 	const containerClasses = classNames(
 		'flex flex-col px-4 py-2  absolute md:static bg-slate-800 transition-all duration-[150ms] ease-in-out overflow-y-auto h-full z-10',
@@ -46,7 +54,6 @@ function ReaderSidebar({ openSidebar, setOpenSidebar }: Props) {
 			'px-[0px]': !openSidebar,
 		},
 	);
-	const mangaData = getMangaDataOrThrow(manga, language);
 	return (
 		<>
 			{!openSidebar && (
@@ -73,7 +80,9 @@ function ReaderSidebar({ openSidebar, setOpenSidebar }: Props) {
 					<div className="flex items-center gap-1">
 						<DocumentIcon width={30} />
 						<strong className=" whitespace-nowrap">
-							{mangaData.chapters[chapter].title ? mangaData.chapters[chapter].title : `${t('chapter')} ${chapter + 1}`}
+							{mangaData.chapters[chapter].title
+								? mangaData.chapters[chapter].title
+								: `${t('chapter')} ${chapter + 1}`}
 						</strong>
 					</div>
 					<button
@@ -87,7 +96,7 @@ function ReaderSidebar({ openSidebar, setOpenSidebar }: Props) {
 						className="btn whitespace-nowrap"
 						type="button"
 						onClick={() => {
-							setLanguage(language === 'en' ? 'jp' : 'en');
+							setLanguage((prev) => getNextOption(prev, languages));
 						}}
 					>
 						{t('language')}
@@ -107,16 +116,16 @@ function ReaderSidebar({ openSidebar, setOpenSidebar }: Props) {
 					<button
 						className="btn whitespace-nowrap"
 						type="button"
-						onClick={() => setSinglePageMode((prev) => !prev)}
+						onClick={() => setPageLayout((prev) => getNextOption(prev, pageLayouts))}
 					>
-						{singlePageMode ? t('single_page') : t('long_strip')}
+						{t(pageLayout)}
 					</button>
 					<button
 						className="btn whitespace-nowrap"
 						type="button"
-						onClick={() => setFitHeightMode((prev) => !prev)}
+						onClick={() => setFitMode((prev) => getNextOption(prev, fitModes))}
 					>
-						{fitHeightMode ? t('fit_height') : t('fit_width')}
+						{t(fitMode)}
 					</button>
 					<button
 						className="btn whitespace-nowrap"
@@ -135,14 +144,11 @@ function ReaderSidebar({ openSidebar, setOpenSidebar }: Props) {
 					<button
 						className="btn whitespace-nowrap"
 						type="button"
-						onClick={() => setReaderTheme(
-							readerTheme === 'light' ? 'dark' : 'light',
-						)}
+						onClick={() => setReaderTheme((prev) => getNextOption(prev, readerThemes))}
 					>
 						{t('theme')}
 						:
-						{' '}
-						{readerTheme === 'light' ? t('light') : t('dark')}
+						{t(readerTheme)}
 					</button>
 				</div>
 			</div>

@@ -7,8 +7,8 @@ import { getMangaDataOrThrow } from './utils/types';
 
 function Reader() {
 	const {
-		singlePageMode,
-		fitHeightMode,
+		pageLayout,
+		fitMode,
 		page,
 		setPage,
 		setChapter,
@@ -23,22 +23,20 @@ function Reader() {
 	const pageScrolled = useRef(false);
 	const scriptedScroll = useRef(false);
 
-	const imgClasses = classNames(
-		'page-img m-auto object-cover transition-height duration-[150ms] ease-in-out max-w-[1000px]',
-		{
-			'h-full': fitHeightMode,
-		},
-	);
+	const imgClasses = classNames('page-img m-auto object-cover', {
+		'h-full': fitMode === 'height',
+		'w-full': fitMode === 'width',
+	});
 	const containerClasses = classNames(
 		'grow h-full bg-slate-600 hover:cursor-pointer overflow-y-auto flex flex-col gap-[10px] relative',
 	);
 
 	// Sets the scrollbar to the correct position on page change
 	const handleScrollTop = () => {
-		if (singlePageMode && containerRef.current) {
+		if (pageLayout === 'single' && containerRef.current) {
 			containerRef.current.scrollTop = 0;
 		}
-		if (!singlePageMode && !pageScrolled.current) {
+		if (pageLayout !== 'single' && !pageScrolled.current) {
 			if (containerRef.current) {
 				scriptedScroll.current = true;
 				const targetImg = pageRefs.current[page];
@@ -80,7 +78,7 @@ function Reader() {
 			if (leftToRight) {
 				handlePageNavigation(
 					page - 1,
-					singlePageMode,
+					pageLayout,
 					setPage,
 					setChapter,
 					chapter,
@@ -90,7 +88,7 @@ function Reader() {
 			} else {
 				handlePageNavigation(
 					page + 1,
-					singlePageMode,
+					pageLayout,
 					setPage,
 					setChapter,
 					chapter,
@@ -101,7 +99,7 @@ function Reader() {
 		} else if (leftToRight) {
 			handlePageNavigation(
 				page + 1,
-				singlePageMode,
+				pageLayout,
 				setPage,
 				setChapter,
 				chapter,
@@ -111,7 +109,7 @@ function Reader() {
 		} else {
 			handlePageNavigation(
 				page - 1,
-				singlePageMode,
+				pageLayout,
 				setPage,
 				setChapter,
 				chapter,
@@ -123,7 +121,7 @@ function Reader() {
 
 	useEffect(() => {
 		handleScrollTop();
-	}, [page, chapter, singlePageMode, handleScrollTop]);
+	}, [page, chapter, pageLayout, handleScrollTop]);
 
 	let displayedPages: React.JSX.Element[] = [];
 	const mangaData = getMangaDataOrThrow(manga, language);
@@ -133,7 +131,7 @@ function Reader() {
 		const currentPages = currentChapter.pages;
 
 		/* eslint-disable */
-        if (singlePageMode) {
+        if (pageLayout) {
             displayedPages = Array.from({ length: maxPageCount }, (_, i) => (
                 <img
                     key={i}
@@ -170,7 +168,7 @@ function Reader() {
             ref={containerRef}
         >
             {displayedPages}
-            <div className="sticky bottom-0 w-full">
+            <div className="sticky bottom-0 left-0 w-full">
                 <ProgressBar></ProgressBar>
             </div>
         </div>

@@ -3,14 +3,14 @@
 }
 
 .progress-bar {
-    @apply overflow-hidden h-[10px] w-[100%] bg-gray-400 rounded-lg sticky z-10 hidden md:block opacity-50 transition-all duration-100 ease-linear;
+    @apply h-[10px] w-[100%] bg-gray-400 rounded-lg sticky z-10 hidden md:block opacity-50 transition-all duration-100 ease-linear;
 }
 
 .progress-bar:hover {
     @apply opacity-100;
 }
 
-.progress-sth {
+.progress-meter {
     @apply absolute top-0 left-0 h-full transition-all duration-300 ease-in-out bg-gray-800;
 }
 
@@ -18,10 +18,18 @@
     @apply flex justify-between w-full h-full;
 }
 
-.progress-section {
-    @apply z-10 flex h-full cursor-pointer grow;
+.progress-section-tooltip:first-of-type {
+    @apply border-l-0;
 }
 
-.progress-section.active {
+.progress-section-tooltip:last-of-type {
+    @apply border-r-0;
+}
+
+.progress-section-tooltip {
+    @apply z-10 flex h-full cursor-pointer grow border-x tooltip tooltip-top tooltip-open hover:bg-gray-700;
+}
+
+.progress-section-tooltip.active {
     @apply bg-gray-600;
 }
