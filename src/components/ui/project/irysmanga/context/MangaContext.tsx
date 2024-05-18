@@ -7,8 +7,8 @@ import {
 	Manga,
 	PageLayout,
 	ReaderTheme,
-	generateDummyManga,
 } from '../utils/types';
+import { generateDummyManga } from '../utils/helper';
 
 // Define the type for the context value
 interface MangaContextProps {

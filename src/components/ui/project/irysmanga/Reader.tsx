@@ -28,7 +28,7 @@ function Reader() {
 		'w-full': fitMode === 'width',
 	});
 	const containerClasses = classNames(
-		'grow h-full bg-slate-600 hover:cursor-pointer overflow-y-auto flex flex-col gap-[10px] relative',
+		'grow h-full hover:cursor-pointer overflow-y-auto flex flex-col gap-[10px] relative',
 	);
 
 	// Sets the scrollbar to the correct position on page change
@@ -131,7 +131,7 @@ function Reader() {
 		const currentPages = currentChapter.pages;
 
 		/* eslint-disable */
-        if (pageLayout) {
+        if (pageLayout === "single") {
             displayedPages = Array.from({ length: maxPageCount }, (_, i) => (
                 <img
                     key={i}

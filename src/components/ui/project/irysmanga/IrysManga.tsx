@@ -2,16 +2,18 @@
 
 import Reader from './Reader';
 import ReaderHeader from './ReaderHeader';
-import { MangaProvider } from './context/MangaContext';
+import { useMangaContext } from './context/MangaContext';
 
 function IrysManga() {
+	const { readerTheme } = useMangaContext();
 	return (
-		<MangaProvider>
-			<div className="flex h-screen flex-col md:flex-row">
-				<ReaderHeader />
-				<Reader />
-			</div>
-		</MangaProvider>
+		<div
+			className="flex h-screen flex-col md:flex-row"
+			data-theme={readerTheme}
+		>
+			<ReaderHeader />
+			<Reader />
+		</div>
 	);
 }
 

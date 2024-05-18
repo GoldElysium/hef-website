@@ -15,7 +15,7 @@ function ReaderHeader() {
 	const [openTopbar, setOpenTopbar] = useState(true);
 	const { t } = useTranslation('reader');
 
-	const squareBtn = classNames('bg-slate-900 border-white border px-2');
+	const squareBtn = classNames('border px-2');
 	const topBarClasses = classNames(
 		'relative flex flex-col items-center w-full gap-1 md:hidden transition-all duration-500 py-4 ',
 		{
