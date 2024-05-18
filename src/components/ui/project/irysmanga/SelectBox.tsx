@@ -68,7 +68,7 @@ function SelectBox({ value, label }: SelectBoxProps) {
             </button>
             <select
                 value={value}
-                className="select grow min-w-[100px]"
+                className="select select-bordered grow min-w-[100px]"
                 onChange={(e) =>
                     handleSelectValue(parseInt(e.target.value, 10))
                 }
