@@ -11,13 +11,10 @@
     "original": "Fit Normal",
     "ltr": "Left To Right",
     "rtl": "Right To Left",
-    "header_hidden": "Header Hidden",
-    "header_shown": "Header Shown",
+    "hidden": "Header Hidden",
+    "shown": "Header Shown",
     "theme": "Theme",
     "dark": "Dark",
     "light": "Light",
-    "cupcake": "Cupcake",
-    "valentine": "Valentine",
-    "aqua": "Aqua",
     "menu": "Menu"
 }

@@ -10,7 +10,6 @@ function ProgressBar() {
 	const { pageCount } = mangaData.chapters[chapter];
 
 	const progressWidth = `${((page + 1) / pageCount) * 100}%`;
-
 	// Handle click on a specific page section
 	const handlePageSectionClick = (
 		event: React.MouseEvent<HTMLDivElement>,

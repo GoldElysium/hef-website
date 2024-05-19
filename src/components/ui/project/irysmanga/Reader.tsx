@@ -14,7 +14,7 @@ function Reader() {
 		setChapter,
 		chapter,
 		manga,
-		leftToRight,
+		direction,
 		language,
 	} = useMangaContext();
 
@@ -28,7 +28,7 @@ function Reader() {
 		'w-full': fitMode === 'width',
 	});
 	const containerClasses = classNames(
-		'grow h-full hover:cursor-pointer overflow-y-auto flex flex-col gap-[10px] relative',
+		'grow h-full hover:cursor-pointer overflow-y-auto flex flex-col gap-[10px] relative bg-base-100',
 	);
 
 	// Sets the scrollbar to the correct position on page change
@@ -75,7 +75,7 @@ function Reader() {
 		const threshold = width / 2;
 		scriptedScroll.current = true;
 		if (position < threshold) {
-			if (leftToRight) {
+			if (direction === 'ltr') {
 				handlePageNavigation(
 					page - 1,
 					pageLayout,
@@ -96,7 +96,7 @@ function Reader() {
 					manga,
 				);
 			}
-		} else if (leftToRight) {
+		} else if (direction === 'ltr') {
 			handlePageNavigation(
 				page + 1,
 				pageLayout,

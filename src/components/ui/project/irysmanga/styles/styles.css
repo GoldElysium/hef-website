@@ -11,7 +11,7 @@
 }
 
 .progress-meter {
-    @apply absolute top-0 left-0 h-full transition-all duration-300 ease-in-out bg-gray-800;
+    @apply absolute top-0 left-0 h-full transition-all duration-300 ease-in-out bg-secondary;
 }
 
 .progress-sections {
@@ -27,9 +27,29 @@
 }
 
 .progress-section-tooltip {
-    @apply z-10 flex h-full cursor-pointer grow border-x tooltip tooltip-top tooltip-open hover:bg-gray-700;
+    @apply z-10 flex h-full cursor-pointer grow border-x tooltip tooltip-top tooltip-open hover:bg-primary;
 }
 
 .progress-section-tooltip.active {
-    @apply bg-gray-600;
+    @apply bg-secondary;
+}
+
+.reader-btn {
+    @apply flex justify-center btn btn-secondary hover:btn-primary;
+}
+
+.select-box-btn {
+    @apply btn btn-secondary hover:btn-primary;
+}
+
+.setting-icon {
+    @apply w-[20px];
+}
+
+.menu-control {
+    @apply h-full p-2 border rounded border-secondary;
+}
+
+.menu-item {
+    @apply h-[50px] hover:bg-primary hover:text-primary-content  flex-col justify-center p-2;
 }

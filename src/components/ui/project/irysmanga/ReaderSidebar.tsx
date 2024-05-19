@@ -1,13 +1,32 @@
 import classNames from 'classnames';
-import { Bars3Icon } from '@heroicons/react/24/solid';
-import { BookOpenIcon, DocumentIcon } from '@heroicons/react/24/outline';
+import { ArrowsUpDownIcon, Bars3Icon } from '@heroicons/react/24/solid';
+import {
+	BookOpenIcon,
+	DocumentIcon,
+	LanguageIcon,
+	ArrowsRightLeftIcon,
+	DevicePhoneMobileIcon,
+	ComputerDesktopIcon,
+	ArrowRightIcon,
+	ArrowLeftIcon,
+	CodeBracketIcon,
+	StopIcon,
+	WindowIcon,
+	SunIcon,
+	MoonIcon,
+	InformationCircleIcon,
+} from '@heroicons/react/24/outline';
 import { useEffect, useRef } from 'react';
 import useTranslation from '@/lib/i18n/client';
 import SelectBox from './SelectBox';
 import { useMangaContext } from './context/MangaContext';
 import {
+	Language,
+	ReaderSetting,
+	directions,
 	fitModes,
 	getMangaDataOrThrow,
+	headerVisibilities,
 	languages,
 	pageLayouts,
 	readerThemes,
@@ -19,6 +38,10 @@ interface Props {
 	setOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+type SettingIcons = {
+	[key in Exclude<ReaderSetting, Language>]: JSX.Element;
+};
+
 function ReaderSidebar({ openSidebar, setOpenSidebar }: Props) {
 	const {
 		pageLayout,
@@ -26,15 +49,15 @@ function ReaderSidebar({ openSidebar, setOpenSidebar }: Props) {
 		chapter,
 		fitMode,
 		language,
-		leftToRight,
-		headerHidden,
+		direction,
+		headerVisibility,
 		readerTheme,
 		manga,
 		setPageLayout,
 		setFitMode,
 		setLanguage,
-		setLeftToRight,
-		setHeaderHidden,
+		setDirection,
+		setHeaderVisibility,
 		setReaderTheme,
 	} = useMangaContext();
 	const modalRef = useRef<HTMLDialogElement>(null);
@@ -45,7 +68,7 @@ function ReaderSidebar({ openSidebar, setOpenSidebar }: Props) {
 	const mangaData = getMangaDataOrThrow(manga, language);
 
 	const containerClasses = classNames(
-		'flex flex-col px-4 py-2  absolute md:static transition-all duration-[150ms] ease-in-out overflow-y-auto h-full z-10 max-h-full',
+		'flex flex-col px-4 py-2  absolute md:static transition-all duration-[150ms] ease-in-out overflow-y-auto h-full z-10 max-h-full bg-inherit',
 		{
 			'w-[379px]': openSidebar,
 			'translate-x-0': openSidebar,
@@ -54,20 +77,39 @@ function ReaderSidebar({ openSidebar, setOpenSidebar }: Props) {
 			'px-[0px]': !openSidebar,
 		},
 	);
+	const settingIcons: SettingIcons = {
+		single: (
+			<ArrowsRightLeftIcon className="setting-icon" />
+		),
+		long: <ArrowsUpDownIcon className="setting-icon" />,
+		height: (
+			<DevicePhoneMobileIcon className="setting-icon" />
+		),
+		width: <CodeBracketIcon className="setting-icon" />,
+		original: (
+			<ComputerDesktopIcon className="setting-icon" />
+		),
+		ltr: <ArrowRightIcon className="setting-icon" />,
+		rtl: <ArrowLeftIcon className="setting-icon" />,
+		hidden: <StopIcon className="setting-icon" />,
+		shown: <WindowIcon className="setting-icon" />,
+		irysLight: <SunIcon className="setting-icon" />,
+		irysDark: <MoonIcon className="setting-icon" />,
+	};
 	return (
 		<>
 			{!openSidebar && (
 				<Bars3Icon
 					className="barIcon absolute z-10 ml-2 mt-2 hidden md:block"
 					onClick={() => setOpenSidebar(true)}
-					width={50}
+					width={30}
 				/>
 			)}
 			<div className={containerClasses}>
 				<Bars3Icon
 					onClick={() => setOpenSidebar(false)}
-					width={30}
 					className="barIcon absolute right-0 mr-2"
+					width={30}
 				/>
 				{/* Manga info */}
 				<div className="400 flex flex-col gap-2">
@@ -86,19 +128,21 @@ function ReaderSidebar({ openSidebar, setOpenSidebar }: Props) {
 						</strong>
 					</div>
 					<button
-						className="btn whitespace-nowrap"
+						className="reader-btn whitespace-nowrap"
 						type="button"
 						onClick={() => modalRef.current?.showModal()}
 					>
+						<InformationCircleIcon className="setting-icon" />
 						{t('details')}
 					</button>
 					<button
-						className="btn whitespace-nowrap"
+						className="reader-btn whitespace-nowrap"
 						type="button"
 						onClick={() => {
 							setLanguage((prev) => getNextOption(prev, languages));
 						}}
 					>
+						<LanguageIcon className="setting-icon" />
 						{t('language')}
 						{': '}
 						{t('chosen_language')}
@@ -114,38 +158,43 @@ function ReaderSidebar({ openSidebar, setOpenSidebar }: Props) {
 				{/* Reader settings */}
 				<div className="flex flex-col gap-2">
 					<button
-						className="btn whitespace-nowrap"
+						className="reader-btn whitespace-nowrap"
 						type="button"
 						onClick={() => setPageLayout((prev) => getNextOption(prev, pageLayouts))}
 					>
+						{settingIcons[pageLayout]}
 						{t(pageLayout)}
 					</button>
 					<button
-						className="btn whitespace-nowrap"
+						className="reader-btn whitespace-nowrap"
 						type="button"
 						onClick={() => setFitMode((prev) => getNextOption(prev, fitModes))}
 					>
+						{settingIcons[fitMode]}
 						{t(fitMode)}
 					</button>
 					<button
-						className="btn whitespace-nowrap"
+						className="reader-btn whitespace-nowrap"
 						type="button"
-						onClick={() => setLeftToRight((prev) => !prev)}
+						onClick={() => setDirection((prev) => getNextOption(prev, directions))}
 					>
-						{leftToRight ? t('ltr') : t('rtl')}
+						{settingIcons[direction]}
+						{t(direction)}
 					</button>
 					<button
-						className="btn whitespace-nowrap"
+						className="reader-btn whitespace-nowrap"
 						type="button"
-						onClick={() => setHeaderHidden((prev) => !prev)}
+						onClick={() => setHeaderVisibility((prev) => getNextOption(prev, headerVisibilities))}
 					>
-						{headerHidden ? t('header_hidden') : t('header_shown')}
+						{settingIcons[headerVisibility]}
+						{t(headerVisibility)}
 					</button>
 					<button
-						className="btn whitespace-nowrap"
+						className="reader-btn whitespace-nowrap"
 						type="button"
 						onClick={() => setReaderTheme((prev) => getNextOption(prev, readerThemes))}
 					>
+						{settingIcons[readerTheme]}
 						{t('theme')}
 						:
 						{t(readerTheme)}

@@ -3,10 +3,13 @@ import React, {
 } from 'react';
 import {
 	FitMode,
+	HeaderVisibility,
 	Language,
 	Manga,
+	PageDirection,
 	PageLayout,
 	ReaderTheme,
+	readerThemes,
 } from '../utils/types';
 import { generateDummyManga } from '../utils/helper';
 
@@ -26,11 +29,11 @@ interface MangaContextProps {
 	fitMode: FitMode;
 	setFitMode: React.Dispatch<React.SetStateAction<FitMode>>;
 
-	leftToRight: boolean;
-	setLeftToRight: React.Dispatch<React.SetStateAction<boolean>>;
+	direction: PageDirection;
+	setDirection: React.Dispatch<React.SetStateAction<PageDirection>>;
 
-	headerHidden: boolean;
-	setHeaderHidden: React.Dispatch<React.SetStateAction<boolean>>;
+	headerVisibility: HeaderVisibility;
+	setHeaderVisibility: React.Dispatch<React.SetStateAction<HeaderVisibility>>;
 
 	readerTheme: ReaderTheme;
 	setReaderTheme: React.Dispatch<React.SetStateAction<ReaderTheme>>;
@@ -53,10 +56,13 @@ export const MangaProvider: React.FC<{ children: React.ReactNode }> = ({
     const [manga, setManga] = useState(generateDummyManga());
     const [page, setPage] = useState(0);
     const [chapter, setChapter] = useState(0);
-    const [leftToRight, setLeftToRight] = useState(true);
-    const [headerHidden, setHeaderHidden] = useState(true);
+    const [direction, setDirection] = useState<PageDirection>("ltr");
+    const [headerVisibility, setHeaderVisibility] =
+        useState<HeaderVisibility>("shown");
 
-    const [readerTheme, setReaderTheme] = useState<ReaderTheme>("dark");
+    const [readerTheme, setReaderTheme] = useState<ReaderTheme>(
+        readerThemes[0]
+    );
 
     const contextValue = useMemo(
         () => ({
@@ -70,10 +76,10 @@ export const MangaProvider: React.FC<{ children: React.ReactNode }> = ({
             setPageLayout,
             fitMode,
             setFitMode,
-            leftToRight,
-            setLeftToRight,
-            headerHidden,
-            setHeaderHidden,
+            direction,
+            setDirection,
+            headerVisibility,
+            setHeaderVisibility,
             readerTheme,
             setReaderTheme,
             manga,
@@ -85,8 +91,8 @@ export const MangaProvider: React.FC<{ children: React.ReactNode }> = ({
             chapter,
             pageLayout,
             fitMode,
-            leftToRight,
-            headerHidden,
+            direction,
+            headerVisibility,
             readerTheme,
             manga,
         ]

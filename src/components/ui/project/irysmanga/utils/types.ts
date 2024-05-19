@@ -29,8 +29,6 @@ export type Manga = {
 };
 
 // Reader settings types
-export const layoutOptions = ['single', 'long', 'double'] as const;
-export type LayoutOptions = (typeof layoutOptions)[number];
 
 export const fitModes = ['height', 'width', 'original'] as const;
 export type FitMode = (typeof fitModes)[number];
@@ -41,14 +39,30 @@ export type Language = (typeof languages)[number];
 export const pageLayouts = ['single', 'long'] as const;
 export type PageLayout = (typeof pageLayouts)[number];
 
+export const directions = ['ltr', 'rtl'] as const;
+export type PageDirection = (typeof directions)[number];
+
+export const headerVisibilities = ['hidden', 'shown'] as const;
+export type HeaderVisibility = (typeof headerVisibilities)[number];
+
 export const readerThemes = [
-	'dark',
-	'light',
-	'cupcake',
-	'valentine',
-	'aqua',
+	// 'dark',
+	// 'light',
+	// 'cupcake',
+	// 'valentine',
+	// 'aqua',
+	'irysLight',
+	'irysDark',
 ] as const;
 export type ReaderTheme = (typeof readerThemes)[number];
+
+export type ReaderSetting =
+    | FitMode
+    | Language
+    | PageLayout
+    | PageDirection
+    | HeaderVisibility
+    | ReaderTheme;
 
 // Returns the correct MangaData object for a given language. If there is no such manga data
 // for the given language, throw an error.
