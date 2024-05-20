@@ -83,36 +83,6 @@ module.exports = {
             zIndex: {
                 "-1": "-1",
             },
-            colors: {
-                irys: {
-                    background: "rgb(242, 228, 232)",
-                    primary: "rgb(140, 18, 54)",
-                    "primary-foreground": "rgb(255, 255, 255)",
-                    secondary: "rgb(235, 188, 202)",
-                    "secondary-foreground": "rgb(0, 0, 0)",
-                    "secondary-heading": "rgb(102, 0, 30)",
-                    text: "rgb(47, 47, 47)",
-                    header: "rgb(140, 18, 54)",
-                    heading: "rgb(140, 18, 54)",
-                    link: "rgb(140, 18, 54)",
-
-                    "background-dark": "rgb(38, 2, 12)",
-                    "primary-dark": "rgb(140, 18, 54)",
-                    "primary-foreground-dark": "rgb(238, 238, 238)",
-                    "secondary-dark": "rgb(140, 56, 81)",
-                    "secondary-foreground-dark": "rgb(238, 238, 238)",
-                    "secondary-heading-dark": "rgb(245, 196, 199)",
-                    "text-dark": "rgb(238, 238, 238)",
-                    "header-dark": "rgb(166, 21, 64)",
-                    "heading-dark": "rgb(255, 191, 210)",
-                    "link-dark": "rgb(255, 191, 210)",
-
-                    "icon-primary": "#FFF",
-                    "icon-secondary": "var(--color-holoen-red)",
-                    "icon-primary-dark": "var(--color-holoen-red)",
-                    "icon-secondary-dark": "#FFF",
-                },
-            },
         },
     },
     variants: {

@@ -2,10 +2,10 @@ import useTranslation from '@/lib/i18n/client';
 import { useState } from 'react';
 import classNames from 'classnames';
 import { Bars3Icon } from '@heroicons/react/24/solid';
-import ReaderSidebar from './ReaderSidebar';
 import { useMangaContext } from './context/MangaContext';
 import { getMangaDataOrThrow } from './utils/types';
 import './styles/styles.css';
+import ReaderSidebar from './ReaderSidebar';
 
 function ReaderHeader() {
 	const {

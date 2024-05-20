@@ -33,6 +33,7 @@ function ProgressBar() {
                 className={sectionClasses}
                 data-tip={i + 1}
                 onClick={(e) => handlePageSectionClick(e, i)}
+                key={`progress ${i}`}
             ></div>
         );
     }
@@ -40,8 +41,11 @@ function ProgressBar() {
     // eslint-enable
 
     return (
-        <div className="progress-bar">
-            <div className="progress-meter" style={{ width: progressWidth }} />
+        <div className="h-[10px] w-[100%] bg-gray-400 rounded-lg sticky z-10 hidden md:block opacity-50 transition-all duration-100 ease-linear hover:opacity-100">
+            <div
+                className=" absolute top-0 left-0 h-full transition-all duration-300 ease-in-out bg-secondary first-of-type:border-l-0 last-of-type:border-r-0"
+                style={{ width: progressWidth }}
+            />
             <div className="progress-sections">{pageSections}</div>
         </div>
     );

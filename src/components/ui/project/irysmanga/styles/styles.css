@@ -2,30 +2,6 @@
     @apply transition-opacity duration-100 ease-linear opacity-50 cursor-pointer hover:opacity-100;
 }
 
-.progress-bar {
-    @apply h-[10px] w-[100%] bg-gray-400 rounded-lg sticky z-10 hidden md:block opacity-50 transition-all duration-100 ease-linear;
-}
-
-.progress-bar:hover {
-    @apply opacity-100;
-}
-
-.progress-meter {
-    @apply absolute top-0 left-0 h-full transition-all duration-300 ease-in-out bg-secondary;
-}
-
-.progress-sections {
-    @apply flex justify-between w-full h-full;
-}
-
-.progress-section-tooltip:first-of-type {
-    @apply border-l-0;
-}
-
-.progress-section-tooltip:last-of-type {
-    @apply border-r-0;
-}
-
 .progress-section-tooltip {
     @apply z-10 flex h-full cursor-pointer grow border-x tooltip tooltip-top tooltip-open hover:bg-primary;
 }
@@ -34,22 +10,10 @@
     @apply bg-secondary;
 }
 
-.reader-btn {
-    @apply flex justify-center btn btn-secondary hover:btn-primary;
-}
-
 .select-box-btn {
     @apply btn btn-secondary hover:btn-primary;
 }
 
 .setting-icon {
     @apply w-[20px];
-}
-
-.menu-control {
-    @apply h-full p-2 border rounded border-secondary;
-}
-
-.menu-item {
-    @apply h-[50px] hover:bg-primary hover:text-primary-content  flex-col justify-center p-2;
 }

@@ -1,19 +1,8 @@
 import classNames from 'classnames';
-import { ArrowsUpDownIcon, Bars3Icon } from '@heroicons/react/24/solid';
+import { Bars3Icon } from '@heroicons/react/24/solid';
 import {
 	BookOpenIcon,
 	DocumentIcon,
-	LanguageIcon,
-	ArrowsRightLeftIcon,
-	DevicePhoneMobileIcon,
-	ComputerDesktopIcon,
-	ArrowRightIcon,
-	ArrowLeftIcon,
-	CodeBracketIcon,
-	StopIcon,
-	WindowIcon,
-	SunIcon,
-	MoonIcon,
 	InformationCircleIcon,
 } from '@heroicons/react/24/outline';
 import { useEffect, useRef } from 'react';
@@ -21,8 +10,6 @@ import useTranslation from '@/lib/i18n/client';
 import SelectBox from './SelectBox';
 import { useMangaContext } from './context/MangaContext';
 import {
-	Language,
-	ReaderSetting,
 	directions,
 	fitModes,
 	getMangaDataOrThrow,
@@ -31,16 +18,12 @@ import {
 	pageLayouts,
 	readerThemes,
 } from './utils/types';
-import { getNextOption } from './utils/helper';
+import SettingButton from './SettingButton';
 
 interface Props {
 	openSidebar: boolean;
 	setOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>;
 }
-
-type SettingIcons = {
-	[key in Exclude<ReaderSetting, Language>]: JSX.Element;
-};
 
 function ReaderSidebar({ openSidebar, setOpenSidebar }: Props) {
 	const {
@@ -68,34 +51,16 @@ function ReaderSidebar({ openSidebar, setOpenSidebar }: Props) {
 	const mangaData = getMangaDataOrThrow(manga, language);
 
 	const containerClasses = classNames(
-		'flex flex-col px-4 py-2  absolute md:static transition-all duration-[150ms] ease-in-out overflow-y-auto h-full z-10 max-h-full bg-inherit',
+		'flex flex-col px-4 py-2 border-accent border-r-2 border bg-base-100 absolute md:static transition-all duration-[150ms] ease-in-out overflow-y-auto h-full z-10 max-h-full bg-inherit',
 		{
-			'w-[379px]': openSidebar,
+			'w-[300px]': openSidebar,
 			'translate-x-0': openSidebar,
 			'-translate-x-full': !openSidebar,
 			'w-[0px]': !openSidebar,
 			'px-[0px]': !openSidebar,
 		},
 	);
-	const settingIcons: SettingIcons = {
-		single: (
-			<ArrowsRightLeftIcon className="setting-icon" />
-		),
-		long: <ArrowsUpDownIcon className="setting-icon" />,
-		height: (
-			<DevicePhoneMobileIcon className="setting-icon" />
-		),
-		width: <CodeBracketIcon className="setting-icon" />,
-		original: (
-			<ComputerDesktopIcon className="setting-icon" />
-		),
-		ltr: <ArrowRightIcon className="setting-icon" />,
-		rtl: <ArrowLeftIcon className="setting-icon" />,
-		hidden: <StopIcon className="setting-icon" />,
-		shown: <WindowIcon className="setting-icon" />,
-		irysLight: <SunIcon className="setting-icon" />,
-		irysDark: <MoonIcon className="setting-icon" />,
-	};
+
 	return (
 		<>
 			{!openSidebar && (
@@ -128,25 +93,20 @@ function ReaderSidebar({ openSidebar, setOpenSidebar }: Props) {
 						</strong>
 					</div>
 					<button
-						className="reader-btn whitespace-nowrap"
+						className="btn btn-secondary justify-between whitespace-nowrap hover:btn-primary"
 						type="button"
 						onClick={() => modalRef.current?.showModal()}
 					>
-						<InformationCircleIcon className="setting-icon" />
 						{t('details')}
+						<InformationCircleIcon className="setting-icon" />
 					</button>
-					<button
-						className="reader-btn whitespace-nowrap"
-						type="button"
-						onClick={() => {
-							setLanguage((prev) => getNextOption(prev, languages));
-						}}
-					>
-						<LanguageIcon className="setting-icon" />
-						{t('language')}
-						{': '}
-						{t('chosen_language')}
-					</button>
+					<SettingButton
+						value={language}
+						valueList={languages}
+						// @ts-ignore
+						setValue={setLanguage}
+						label="language"
+					/>
 				</div>
 				<div className="divider" />
 				{/* Chapter and page seletion */}
@@ -157,48 +117,37 @@ function ReaderSidebar({ openSidebar, setOpenSidebar }: Props) {
 				<div className="divider" />
 				{/* Reader settings */}
 				<div className="flex flex-col gap-2">
-					<button
-						className="reader-btn whitespace-nowrap"
-						type="button"
-						onClick={() => setPageLayout((prev) => getNextOption(prev, pageLayouts))}
-					>
-						{settingIcons[pageLayout]}
-						{t(pageLayout)}
-					</button>
-					<button
-						className="reader-btn whitespace-nowrap"
-						type="button"
-						onClick={() => setFitMode((prev) => getNextOption(prev, fitModes))}
-					>
-						{settingIcons[fitMode]}
-						{t(fitMode)}
-					</button>
-					<button
-						className="reader-btn whitespace-nowrap"
-						type="button"
-						onClick={() => setDirection((prev) => getNextOption(prev, directions))}
-					>
-						{settingIcons[direction]}
-						{t(direction)}
-					</button>
-					<button
-						className="reader-btn whitespace-nowrap"
-						type="button"
-						onClick={() => setHeaderVisibility((prev) => getNextOption(prev, headerVisibilities))}
-					>
-						{settingIcons[headerVisibility]}
-						{t(headerVisibility)}
-					</button>
-					<button
-						className="reader-btn whitespace-nowrap"
-						type="button"
-						onClick={() => setReaderTheme((prev) => getNextOption(prev, readerThemes))}
-					>
-						{settingIcons[readerTheme]}
-						{t('theme')}
-						:
-						{t(readerTheme)}
-					</button>
+					<SettingButton
+						value={pageLayout}
+						valueList={pageLayouts}
+						// @ts-ignore
+						setValue={setPageLayout}
+					/>
+					<SettingButton
+						value={fitMode}
+						valueList={fitModes}
+						// @ts-ignore
+						setValue={setFitMode}
+					/>
+					<SettingButton
+						value={direction}
+						valueList={directions}
+						// @ts-ignore
+						setValue={setDirection}
+					/>
+					<SettingButton
+						value={headerVisibility}
+						valueList={headerVisibilities}
+						// @ts-ignore
+						setValue={setHeaderVisibility}
+					/>
+					<SettingButton
+						value={readerTheme}
+						valueList={readerThemes}
+						// @ts-ignore
+						setValue={setReaderTheme}
+						label="theme"
+					/>
 				</div>
 			</div>
 
