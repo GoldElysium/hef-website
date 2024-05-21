@@ -51,7 +51,7 @@ function ReaderSidebar({ openSidebar, setOpenSidebar }: Props) {
 	const mangaData = getMangaDataOrThrow(manga, language);
 
 	const containerClasses = classNames(
-		'flex flex-col px-4 py-2 border-accent border-r-2 border bg-base-100 absolute md:static transition-all duration-[150ms] ease-in-out overflow-y-auto h-full z-10 max-h-full bg-inherit',
+		'flex flex-col px-4 py-2 border-accent border-r-2 bg-base-100 absolute md:static transition-all duration-[150ms] ease-in-out overflow-y-auto h-full z-10 max-h-full bg-inherit',
 		{
 			'w-[300px]': openSidebar,
 			'translate-x-0': openSidebar,

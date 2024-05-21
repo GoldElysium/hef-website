@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import classNames from 'classnames';
 import { useMangaContext } from './context/MangaContext';
 import { getMangaDataOrThrow } from './utils/types';
 
@@ -9,7 +11,6 @@ function ProgressBar() {
 	const mangaData = getMangaDataOrThrow(manga, language);
 	const { pageCount } = mangaData.chapters[chapter];
 
-	const progressWidth = `${((page + 1) / pageCount) * 100}%`;
 	// Handle click on a specific page section
 	const handlePageSectionClick = (
 		event: React.MouseEvent<HTMLDivElement>,
@@ -23,9 +24,14 @@ function ProgressBar() {
     const pageSections = [];
     for (let i = 0; i < pageCount; i++) {
         const isActive = i < page;
-        const sectionClasses = isActive
-            ? "progress-section-tooltip active"
-            : "progress-section-tooltip";
+        const isSelected = i === page;
+        let sectionClasses = "progress-section-tooltip";
+        if (isActive) {
+            sectionClasses = sectionClasses.concat(" active");
+        }
+        if (isSelected) {
+            sectionClasses = sectionClasses.concat(" selected");
+        }
         /* eslint-disable */
 
         pageSections.push(
@@ -39,15 +45,30 @@ function ProgressBar() {
     }
 
     // eslint-enable
-
+    const [openProgress, setOpenProgress] = useState(false);
+    console.log(openProgress);
     return (
-        <div className="h-[10px] w-[100%] bg-gray-400 rounded-lg sticky z-10 hidden md:block opacity-50 transition-all duration-100 ease-linear hover:opacity-100">
+        <>
             <div
-                className=" absolute top-0 left-0 h-full transition-all duration-300 ease-in-out bg-secondary first-of-type:border-l-0 last-of-type:border-r-0"
-                style={{ width: progressWidth }}
-            />
-            <div className="progress-sections">{pageSections}</div>
-        </div>
+                className="sticky bg-transparent z-10 w-full h-[60px] flex items-end"
+                onMouseEnter={() => setOpenProgress(true)}
+                onMouseLeave={() => setOpenProgress(false)}
+            >
+                <div
+                    className={classNames(
+                        "w-[100%] bg-gray-400 rounded-lg z-10 transition-all duration-100 ease-linear",
+                        {
+                            "h-[20px] opacity-100": openProgress,
+                            "opacity-50 h-[7px] md:h-[10px]": !openProgress,
+                        }
+                    )}
+                >
+                    <div className="flex justify-between w-full h-full">
+                        {pageSections}
+                    </div>
+                </div>
+            </div>
+        </>
     );
 }
 

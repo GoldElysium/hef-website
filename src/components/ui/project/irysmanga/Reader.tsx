@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { useMangaContext } from './context/MangaContext';
 import { handlePageNavigation } from './utils/helper';
 import ProgressBar from './ProgressBar';
@@ -32,7 +32,7 @@ function Reader() {
 	);
 
 	// Sets the scrollbar to the correct position on page change
-	const handleScrollTop = () => {
+	const handleScrollTop = useCallback(() => {
 		if (pageLayout === 'single' && containerRef.current) {
 			containerRef.current.scrollTop = 0;
 		}
@@ -46,7 +46,14 @@ function Reader() {
 			}
 		}
 		pageScrolled.current = false;
-	};
+	}, [
+		pageLayout,
+		containerRef,
+		pageScrolled,
+		page,
+		pageRefs,
+		scriptedScroll,
+	]);
 
 	// Update the page counter when the user scrolls
 	const handleScroll = () => {

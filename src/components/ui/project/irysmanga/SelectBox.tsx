@@ -2,6 +2,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 import useTranslation from '@/lib/i18n/client';
 import Select from 'react-select';
 import { useState } from 'react';
+import classNames from 'classnames';
 import { useMangaContext } from './context/MangaContext';
 import { handlePageNavigation } from './utils/helper';
 import { getMangaDataOrThrow } from './utils/types';
@@ -62,46 +63,6 @@ function SelectBox({ value, label }: SelectBoxProps) {
         label: item,
     }));
 
-    const selectStyles = (open: any) => ({
-        singleValue: (base: any) => ({ ...base, color: "#666" }),
-        menu: (base: any) => ({
-            ...base,
-            marginTop: 0,
-            borderwidth: 10,
-            fontSize: 12,
-            overflow: "hidden",
-            opacity: open ? 1 : 0,
-            transition: "all 0.1s ease-in-out",
-            visibility: open ? "visible" : "hidden",
-        }),
-        menuList: (base: any) => ({
-            "::-webkit-scrollbar": {
-                width: "4px",
-                height: "0px",
-            },
-            "::-webkit-scrollbar-track": {
-                background: "#f1f1f1",
-            },
-            "::-webkit-scrollbar-thumb": {
-                background: "#888",
-            },
-            "::-webkit-scrollbar-thumb:hover": {
-                background: "#555",
-            },
-        }),
-        container: (base: any) => ({
-            ...base,
-            height: "100%",
-        }),
-        control: (base: any) => ({
-            ...base,
-            height: "100%",
-        }),
-        option: (base: any, state: any) => ({
-            ...base,
-            fontSize: "0.9rem",
-        }),
-    });
     const [open, setOpen] = useState(false);
 
     return (
@@ -121,13 +82,36 @@ function SelectBox({ value, label }: SelectBoxProps) {
                     onChange={(selectedOption) =>
                         handleSelectValue(parseInt(selectedOption!.value, 10))
                     }
+                    unstyled
                     options={options}
                     isSearchable={false}
                     onBlur={() => setOpen(false)}
                     menuIsOpen
                     classNamePrefix={"react-select"}
                     className="h-full w-full"
-                    styles={selectStyles(open)}
+                    classNames={{
+                        control: () =>
+                            "rounded-md w-full h-full px-2 bg-secondary hover:cursor-pointer",
+                        singleValue: () => "font-primary-content",
+                        menu: () =>
+                            classNames(
+                                "mt-2 p-1 border border-accent rounded-md transition-all duration-100 ease-in-out  bg-secondary",
+                                {
+                                    "opacity-100 visible": open,
+                                    "opacity-0 invisible": !open,
+                                }
+                            ),
+                        menuList: () => "select-scroll",
+                        option: ({ isFocused, isSelected }) =>
+                            classNames(
+                                "hover:cursor-pointer p-2 font-sm rounded",
+                                {
+                                    "bg-neutral ": isFocused,
+                                    "bg-primary": isSelected,
+                                }
+                            ),
+                    }}
+                    // styles={selectStyles(open)}
                 />
             </div>
 
