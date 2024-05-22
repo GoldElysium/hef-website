@@ -46,7 +46,6 @@ function ProgressBar() {
 
     // eslint-enable
     const [openProgress, setOpenProgress] = useState(false);
-    console.log(openProgress);
     return (
         <>
             <div

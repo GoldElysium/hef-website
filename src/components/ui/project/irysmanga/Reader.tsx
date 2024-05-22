@@ -4,8 +4,13 @@ import { useMangaContext } from './context/MangaContext';
 import { handlePageNavigation } from './utils/helper';
 import ProgressBar from './ProgressBar';
 import { getMangaDataOrThrow } from './utils/types';
+import ReaderHeader from './ReaderHeader';
 
-function Reader() {
+interface Props {
+	setOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+function Reader({ setOpenSidebar }: Props) {
 	const {
 		pageLayout,
 		fitMode,
@@ -23,12 +28,12 @@ function Reader() {
 	const pageScrolled = useRef(false);
 	const scriptedScroll = useRef(false);
 
-	const imgClasses = classNames('page-img m-auto object-cover', {
+	const imgClasses = classNames('m-auto object-cover', {
 		'h-full': fitMode === 'height',
 		'w-full': fitMode === 'width',
 	});
 	const containerClasses = classNames(
-		'grow h-full hover:cursor-pointer overflow-y-auto flex flex-col gap-[10px] relative bg-base-100',
+		'grow hover:cursor-pointer overflow-y-auto flex flex-col gap-[10px] relative pages-container',
 	);
 
 	// Sets the scrollbar to the correct position on page change
@@ -167,15 +172,17 @@ function Reader() {
 
     /* eslint-disable */
     return (
-        <div
-            className={containerClasses}
-            onClick={handleClick}
-            onScroll={handleScroll}
-            id="manga-reader-container"
-            ref={containerRef}
-        >
-            {displayedPages}
-            <div className="sticky bottom-0 left-0 w-full">
+        <div className="flex flex-col h-screen relative grow">
+            <ReaderHeader setOpenSidebar={setOpenSidebar}></ReaderHeader>
+            <div
+                ref={containerRef}
+                className={containerClasses}
+                onClick={handleClick}
+                onScroll={handleScroll}
+            >
+                {displayedPages}
+            </div>
+            <div className="absolute bottom-0 left-0 w-full">
                 <ProgressBar></ProgressBar>
             </div>
         </div>

@@ -51,8 +51,10 @@ export const readerThemes = [
 	// 'cupcake',
 	// 'valentine',
 	// 'aqua',
-	'irysLight',
-	'irysDark',
+	// 'irysLight',
+	// 'irysDark',
+	'dark',
+	'light',
 ] as const;
 export type ReaderTheme = (typeof readerThemes)[number];
 

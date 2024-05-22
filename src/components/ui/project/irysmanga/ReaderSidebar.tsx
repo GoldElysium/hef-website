@@ -51,23 +51,21 @@ function ReaderSidebar({ openSidebar, setOpenSidebar }: Props) {
 	const mangaData = getMangaDataOrThrow(manga, language);
 
 	const containerClasses = classNames(
-		'flex flex-col px-4 py-2 border-accent border-r-2 bg-base-100 absolute md:static transition-all duration-[150ms] ease-in-out overflow-y-auto h-full z-10 max-h-full bg-inherit',
+		'flex flex-col px-4 py-2 absolute right-0 top-0 lg:relative overflow-y-auto h-full z-10 bg-inherit border-l-2',
 		{
-			'w-[300px]': openSidebar,
-			'translate-x-0': openSidebar,
-			'-translate-x-full': !openSidebar,
-			'w-[0px]': !openSidebar,
-			'px-[0px]': !openSidebar,
+			'min-w-[300px] translate-x-0 ': openSidebar,
+			'max-w-[0px] translate-x-full hidden': !openSidebar,
 		},
 	);
 
 	return (
 		<>
-			{!openSidebar && (
+			{!openSidebar && headerVisibility === 'hidden' && (
 				<Bars3Icon
-					className="barIcon absolute z-10 ml-2 mt-2 hidden md:block"
+					className="barIcon absolute right-0 z-10 mr-2 mt-2 hidden md:block"
 					onClick={() => setOpenSidebar(true)}
 					width={30}
+					color="#ff0000"
 				/>
 			)}
 			<div className={containerClasses}>
@@ -93,7 +91,7 @@ function ReaderSidebar({ openSidebar, setOpenSidebar }: Props) {
 						</strong>
 					</div>
 					<button
-						className="btn btn-secondary justify-between whitespace-nowrap hover:btn-primary"
+						className="btn justify-between whitespace-nowrap"
 						type="button"
 						onClick={() => modalRef.current?.showModal()}
 					>

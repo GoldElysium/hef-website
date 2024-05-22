@@ -68,7 +68,7 @@ function SelectBox({ value, label }: SelectBoxProps) {
     return (
         <div className="flex justify-center w-full gap-2">
             <button
-                className="select-box-btn"
+                className="btn"
                 aria-label="left-page"
                 type="button"
                 onClick={() => handleSelectValue(value - 1)}
@@ -91,11 +91,11 @@ function SelectBox({ value, label }: SelectBoxProps) {
                     className="h-full w-full"
                     classNames={{
                         control: () =>
-                            "rounded-md w-full h-full px-2 bg-secondary hover:cursor-pointer",
-                        singleValue: () => "font-primary-content",
+                            "rounded-md w-full h-full px-2 hover:cursor-pointer border border-1",
+                        singleValue: () => "",
                         menu: () =>
                             classNames(
-                                "mt-2 p-1 border border-accent rounded-md transition-all duration-100 ease-in-out  bg-secondary",
+                                "mt-2 p-1 bg-base-100 border rounded-md transition-all duration-100 ease-in-out",
                                 {
                                     "opacity-100 visible": open,
                                     "opacity-0 invisible": !open,
@@ -116,7 +116,7 @@ function SelectBox({ value, label }: SelectBoxProps) {
             </div>
 
             <button
-                className="select-box-btn"
+                className="btn"
                 aria-label="right-page"
                 type="button"
                 onClick={() => handleSelectValue(value + 1)}

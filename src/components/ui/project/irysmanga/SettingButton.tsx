@@ -38,8 +38,8 @@ const settingIcons: SettingIcons = {
 	rtl: <ArrowLeftIcon className="setting-icon" />,
 	hidden: <StopIcon className="setting-icon" />,
 	shown: <WindowIcon className="setting-icon" />,
-	irysLight: <SunIcon className="setting-icon" />,
-	irysDark: <MoonIcon className="setting-icon" />,
+	light: <SunIcon className="setting-icon" />,
+	dark: <MoonIcon className="setting-icon" />,
 	en: <LanguageIcon className="setting-icon" />,
 	jp: <LanguageIcon className="setting-icon" />,
 };
@@ -50,7 +50,7 @@ function SettingButton({
 	const { t } = useTranslation('reader');
 	return (
 		<button
-			className="btn btn-secondary flex justify-between whitespace-nowrap hover:btn-primary"
+			className="btn flex justify-between whitespace-nowrap"
 			type="button"
 			onClick={() => setValue((prev) => getNextOption(prev, valueList))}
 		>

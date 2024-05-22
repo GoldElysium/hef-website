@@ -1,29 +1,24 @@
 import useTranslation from '@/lib/i18n/client';
-import { useState } from 'react';
 import classNames from 'classnames';
-import { Bars3Icon } from '@heroicons/react/24/solid';
 import { useMangaContext } from './context/MangaContext';
 import { getMangaDataOrThrow } from './utils/types';
 import './styles/styles.css';
-import ReaderSidebar from './ReaderSidebar';
 
-function ReaderHeader() {
+interface Props {
+	setOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+function ReaderHeader({ setOpenSidebar }: Props) {
 	const {
-		page, chapter, manga, language,
+		page, chapter, manga, language, headerVisibility,
 	} = useMangaContext();
-	const [openSidebar, setOpenSidebar] = useState(true);
-	const [openTopbar, setOpenTopbar] = useState(true);
 	const { t } = useTranslation('reader');
 
-	const squareBtn = classNames('border px-2');
 	const topBarClasses = classNames(
-		'relative flex flex-col items-center w-full gap-1 md:hidden transition-all duration-500 py-4 ',
+		'flex w-full justify-between items-center p-4 border-b-1',
 		{
-			'translate-y-0': openTopbar,
-			'h-[120px]': openTopbar,
-			'-translate-y-[120px]': !openTopbar,
-			'h-[0px]': !openTopbar,
-			'py-[0px]': !openTopbar,
+			'': headerVisibility === 'shown',
+			'max-h-[0px] hidden': headerVisibility === 'hidden',
 		},
 	);
 
@@ -31,44 +26,40 @@ function ReaderHeader() {
 	const currentChapter = mangaData.chapters[chapter];
 	return (
 		<>
-			{!openTopbar && (
-				<Bars3Icon
-					className="barIcon absolute right-0 top-0 z-10 mr-4 mt-2 md:hidden"
-					width={50}
-					onClick={() => setOpenTopbar(true)}
-				/>
-			)}
 			{/* eslint-disable */}
             <div className={topBarClasses}>
-                <strong>{mangaData.title}</strong>
-                <strong>{currentChapter.title}</strong>
-                <div className="flex gap-2">
-                    <div className={squareBtn}>
-                        {t("chapter")} {chapter + 1} / {mangaData.chapterCount}
-                    </div>
-                    <div className={squareBtn}>
-                        {t("page")} {page + 1} / {currentChapter.pageCount}
-                    </div>
-                    <div
-                        className={squareBtn + " cursor-pointer"}
-                        onClick={() => setOpenSidebar(true)}
-                    >
-                        {t("menu")}
+                <div className="flex gap-2 items-center manga-title-container">
+                    <div className="info-badge">
+                        <strong className="info-badge-title">
+                            {mangaData.title}
+                        </strong>
+                        <strong className="info-badge-content">
+                            {currentChapter.title}
+                        </strong>
                     </div>
                 </div>
-                {openTopbar && (
-                    <Bars3Icon
-                        className="absolute bottom-0 right-0 mb-2 mr-2 barIcon"
-                        width={20}
-                        onClick={() => setOpenTopbar(false)}
-                    ></Bars3Icon>
-                )}
+                <div className="flex gap-2 items-center">
+                    <div className={"info-badge"}>
+                        <span className="info-badge-title">{t("chapter")}</span>
+                        <span className="info-badge-content">
+                            {chapter + 1} / {mangaData.chapterCount}
+                        </span>
+                    </div>
+                    <div className={"info-badge"}>
+                        <span className="info-badge-title">{t("page")}</span>
+                        <span className="info-badge-content">
+                            {page + 1} / {currentChapter.pageCount}
+                        </span>
+                    </div>
+                    <button
+                        className={"btn btn-sm btn-neutral"}
+                        onClick={() => setOpenSidebar((prev) => !prev)}
+                    >
+                        {t("menu")}
+                    </button>
+                </div>
             </div>
             {/* eslint-enable */}
-			<ReaderSidebar
-				openSidebar={openSidebar}
-				setOpenSidebar={setOpenSidebar}
-			/>
 		</>
 	);
 }

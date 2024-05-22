@@ -3,18 +3,14 @@
 }
 
 .progress-section-tooltip {
-    @apply z-10 flex h-full cursor-pointer grow border-x tooltip tooltip-top tooltip-open hover:bg-accent hover:bg-current bg-transparent transition-all duration-100 ease-in-out;
+    @apply z-10 flex h-full cursor-pointer grow border-x tooltip tooltip-top tooltip-open hover:bg-current bg-transparent transition-all duration-100 ease-in-out;
 }
 
 .progress-section-tooltip.active {
-    @apply bg-secondary opacity-100;
+    @apply opacity-100;
 }
 .progress-section-tooltip.selected {
-    @apply bg-primary opacity-100;
-}
-
-.select-box-btn {
-    @apply btn btn-secondary hover:btn-primary;
+    @apply opacity-100;
 }
 
 .setting-icon {
@@ -40,4 +36,43 @@
 
 .select-scroll::-webkit-scrollbar-thumb:hover {
     background: #555;
+}
+
+.pages-container::-webkit-scrollbar {
+    width: 4px;
+    height: 0px;
+}
+
+.pages-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.pages-container::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+.pages-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.info-badge {
+    @apply flex flex-col;
+}
+.info-badge-title {
+    @apply text-xs;
+}
+.info-badge-content {
+    @apply text-sm;
+}
+
+@media (min-width: 530px) {
+    .info-badge {
+        @apply flex-row gap-1;
+    }
+    .info-badge-content {
+        @apply text-base;
+    }
+    .info-badge-title {
+        @apply text-base;
+    }
 }
