@@ -9,7 +9,10 @@ function IrysManga() {
 	const { readerTheme } = useMangaContext();
 	const [openSidebar, setOpenSidebar] = useState(true);
 	return (
-		<div className="flex h-screen min-w-[310px]" data-theme={readerTheme}>
+		<div
+			className="relative flex h-screen min-w-[310px] overflow-hidden"
+			data-theme={readerTheme}
+		>
 			<Reader setOpenSidebar={setOpenSidebar} />
 			<ReaderSidebar
 				openSidebar={openSidebar}

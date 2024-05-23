@@ -5,7 +5,7 @@ import {
 	DocumentIcon,
 	InformationCircleIcon,
 } from '@heroicons/react/24/outline';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import useTranslation from '@/lib/i18n/client';
 import SelectBox from './SelectBox';
 import { useMangaContext } from './context/MangaContext';
@@ -49,13 +49,26 @@ function ReaderSidebar({ openSidebar, setOpenSidebar }: Props) {
 		i18n.changeLanguage(language);
 	}, [language, i18n]);
 	const mangaData = getMangaDataOrThrow(manga, language);
+	const containerRef = useRef<HTMLDivElement>(null);
+	const [containerWidth, setContainerWidth] = useState(0);
 
 	const containerClasses = classNames(
-		'flex flex-col px-4 py-2 absolute right-0 top-0 lg:relative overflow-y-auto h-full z-10 bg-inherit border-l-2',
+		'flex flex-col px-4 py-4 shrink-0 min-w-[300px] overflow-x-hidden absolute right-0 top-0 overflow-y-auto h-full z-10 bg-inherit transition-drawer ease-in-out duration-[150ms]',
 		{
-			'min-w-[300px] translate-x-0 ': openSidebar,
-			'max-w-[0px] translate-x-full hidden': !openSidebar,
+			'translate-x-0 opacity-100': openSidebar,
+			'translate-x-full opacity-0': !openSidebar,
 		},
+	);
+	useEffect(() => {
+		if (openSidebar) {
+			const width = containerRef.current?.getBoundingClientRect().width;
+			setContainerWidth(width!);
+		} else {
+			setContainerWidth(0);
+		}
+	}, [openSidebar]);
+	const fakeContainer = classNames(
+		'h-full shrink-0 transition-drawer ease-in-out duration-[150ms] bg-transparent hidden md:block',
 	);
 
 	return (
@@ -65,10 +78,14 @@ function ReaderSidebar({ openSidebar, setOpenSidebar }: Props) {
 					className="barIcon absolute right-0 z-10 mr-2 mt-2 hidden md:block"
 					onClick={() => setOpenSidebar(true)}
 					width={30}
-					color="#ff0000"
 				/>
 			)}
-			<div className={containerClasses}>
+			<div
+				id="fakeSidebar"
+				className={fakeContainer}
+				style={{ width: `${containerWidth}px` }}
+			/>
+			<div className={containerClasses} ref={containerRef}>
 				<Bars3Icon
 					onClick={() => setOpenSidebar(false)}
 					className="barIcon absolute right-0 mr-2"
@@ -91,7 +108,7 @@ function ReaderSidebar({ openSidebar, setOpenSidebar }: Props) {
 						</strong>
 					</div>
 					<button
-						className="btn justify-between whitespace-nowrap"
+						className="btn justify-between whitespace-nowrap text-nowrap"
 						type="button"
 						onClick={() => modalRef.current?.showModal()}
 					>

@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react';
 import useTranslation from '@/lib/i18n/client';
 import classNames from 'classnames';
 import { useMangaContext } from './context/MangaContext';
@@ -13,13 +14,28 @@ function ReaderHeader({ setOpenSidebar }: Props) {
 		page, chapter, manga, language, headerVisibility,
 	} = useMangaContext();
 	const { t } = useTranslation('reader');
+	const containerRef = useRef<HTMLDivElement>(null);
+	const [containerHeight, setContainerHeight] = useState(0);
 
 	const topBarClasses = classNames(
-		'flex w-full justify-between items-center p-4 border-b-1',
+		'flex w-full min-h-[64px] bg-base-100 shrink-0 justify-between items-center p-4 absolute z-10 transition-drawer ease-in-out duration-[150ms]',
 		{
-			'': headerVisibility === 'shown',
-			'max-h-[0px] hidden': headerVisibility === 'hidden',
+			'translate-y-0 opacity-100': headerVisibility === 'shown',
+			'-translate-y-full opacity-0': headerVisibility === 'hidden',
 		},
+	);
+
+	useEffect(() => {
+		if (headerVisibility === 'shown') {
+			const height = containerRef.current?.getBoundingClientRect().height;
+			setContainerHeight(height!);
+		} else {
+			setContainerHeight(0);
+		}
+	}, [headerVisibility]);
+
+	const fakeContainer = classNames(
+		'shrink-0 transition-drawer ease-in-out duration-[150ms] bg-transparent',
 	);
 
 	const mangaData = getMangaDataOrThrow(manga, language);
@@ -27,7 +43,12 @@ function ReaderHeader({ setOpenSidebar }: Props) {
 	return (
 		<>
 			{/* eslint-disable */}
-            <div className={topBarClasses}>
+            <div
+                id="fakeTopbar"
+                className={fakeContainer}
+                style={{ height: `${containerHeight}px` }}
+            ></div>
+            <div className={topBarClasses} ref={containerRef}>
                 <div className="flex gap-2 items-center manga-title-container">
                     <div className="info-badge">
                         <strong className="info-badge-title">
