@@ -1,0 +1,45 @@
+.header {
+    @apply flex w-full min-h-[64px] bg-base-100 shrink-0 justify-between items-center p-4 absolute z-10 transition-all border-b-[1px] border-neutral;
+}
+
+.headerShown {
+    @apply translate-y-0 opacity-100;
+}
+
+.headerHidden {
+    @apply -translate-y-full opacity-0;
+}
+
+.fakeHeader {
+    @apply shrink-0 transition-all bg-transparent;
+}
+
+.fakeHeaderShown {
+    height: var(--header-height);
+}
+
+.fakeHeaderHidden {
+    height: 0;
+}
+
+.infoBadge {
+    @apply flex flex-col;
+}
+.infoBadgeTitle {
+    @apply text-xs;
+}
+.infoBadgeContent {
+    @apply text-sm;
+}
+
+@media (min-width: 768px) {
+    .infoBadge {
+        @apply flex-row gap-1;
+    }
+    .infoBadgeContent {
+        @apply text-base;
+    }
+    .infoBadgeTitle {
+        @apply text-base;
+    }
+}

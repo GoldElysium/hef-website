@@ -8,6 +8,7 @@ import {
 	Manga,
 	PageDirection,
 	PageLayout,
+	ProgressVisibility,
 	ReaderTheme,
 	readerThemes,
 } from '../utils/types';
@@ -35,6 +36,11 @@ interface MangaContextProps {
 	headerVisibility: HeaderVisibility;
 	setHeaderVisibility: React.Dispatch<React.SetStateAction<HeaderVisibility>>;
 
+	progressVisibility: ProgressVisibility;
+	setProgressVisibility: React.Dispatch<
+	React.SetStateAction<ProgressVisibility>
+	>;
+
 	readerTheme: ReaderTheme;
 	setReaderTheme: React.Dispatch<React.SetStateAction<ReaderTheme>>;
 	manga: Manga;
@@ -58,7 +64,9 @@ export const MangaProvider: React.FC<{ children: React.ReactNode }> = ({
     const [chapter, setChapter] = useState(0);
     const [direction, setDirection] = useState<PageDirection>("ltr");
     const [headerVisibility, setHeaderVisibility] =
-        useState<HeaderVisibility>("shown");
+        useState<HeaderVisibility>("header-shown");
+    const [progressVisibility, setProgressVisibility] =
+        useState<ProgressVisibility>("progress-shown");
 
     const [readerTheme, setReaderTheme] = useState<ReaderTheme>(
         readerThemes[0]
@@ -80,6 +88,8 @@ export const MangaProvider: React.FC<{ children: React.ReactNode }> = ({
             setDirection,
             headerVisibility,
             setHeaderVisibility,
+            progressVisibility,
+            setProgressVisibility,
             readerTheme,
             setReaderTheme,
             manga,
@@ -93,6 +103,7 @@ export const MangaProvider: React.FC<{ children: React.ReactNode }> = ({
             fitMode,
             direction,
             headerVisibility,
+            progressVisibility,
             readerTheme,
             manga,
         ]

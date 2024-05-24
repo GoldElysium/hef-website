@@ -5,7 +5,7 @@ import {
 	DocumentIcon,
 	InformationCircleIcon,
 } from '@heroicons/react/24/outline';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import useTranslation from '@/lib/i18n/client';
 import SelectBox from './SelectBox';
 import { useMangaContext } from './context/MangaContext';
@@ -16,9 +16,11 @@ import {
 	headerVisibilities,
 	languages,
 	pageLayouts,
+	progressVisibilities,
 	readerThemes,
 } from './utils/types';
 import SettingButton from './SettingButton';
+import styles from './styles/Sidebar.module.css';
 
 interface Props {
 	openSidebar: boolean;
@@ -34,6 +36,7 @@ function ReaderSidebar({ openSidebar, setOpenSidebar }: Props) {
 		language,
 		direction,
 		headerVisibility,
+		progressVisibility,
 		readerTheme,
 		manga,
 		setPageLayout,
@@ -41,6 +44,7 @@ function ReaderSidebar({ openSidebar, setOpenSidebar }: Props) {
 		setLanguage,
 		setDirection,
 		setHeaderVisibility,
+		setProgressVisibility,
 		setReaderTheme,
 	} = useMangaContext();
 	const modalRef = useRef<HTMLDialogElement>(null);
@@ -50,42 +54,37 @@ function ReaderSidebar({ openSidebar, setOpenSidebar }: Props) {
 	}, [language, i18n]);
 	const mangaData = getMangaDataOrThrow(manga, language);
 	const containerRef = useRef<HTMLDivElement>(null);
-	const [containerWidth, setContainerWidth] = useState(0);
 
-	const containerClasses = classNames(
-		'flex flex-col px-4 py-4 shrink-0 min-w-[300px] overflow-x-hidden absolute right-0 top-0 overflow-y-auto h-full z-10 bg-inherit transition-drawer ease-in-out duration-[150ms]',
-		{
-			'translate-x-0 opacity-100': openSidebar,
-			'translate-x-full opacity-0': !openSidebar,
-		},
-	);
 	useEffect(() => {
-		if (openSidebar) {
-			const width = containerRef.current?.getBoundingClientRect().width;
-			setContainerWidth(width!);
-		} else {
-			setContainerWidth(0);
-		}
-	}, [openSidebar]);
-	const fakeContainer = classNames(
-		'h-full shrink-0 transition-drawer ease-in-out duration-[150ms] bg-transparent hidden md:block',
-	);
+		const width = containerRef.current?.getBoundingClientRect().width;
+		document.documentElement.style.setProperty(
+			'--sidebar-width',
+			`${width!}px`,
+		);
+	}, []);
 
 	return (
 		<>
-			{!openSidebar && headerVisibility === 'hidden' && (
+			{!openSidebar && headerVisibility === 'header-hidden' && (
 				<Bars3Icon
-					className="barIcon absolute right-0 z-10 mr-2 mt-2 hidden md:block"
+					className="barIcon absolute right-0 z-10 mr-4 mt-2"
 					onClick={() => setOpenSidebar(true)}
 					width={30}
 				/>
 			)}
 			<div
-				id="fakeSidebar"
-				className={fakeContainer}
-				style={{ width: `${containerWidth}px` }}
+				className={classNames(styles.fakeSidebarContainer, {
+					[styles.fakeSidebarContainerOpen]: openSidebar,
+					[styles.fakeSidebarContainerHidden]: !openSidebar,
+				})}
 			/>
-			<div className={containerClasses} ref={containerRef}>
+			<div
+				className={classNames(styles.sidebarContainer, {
+					[styles.sidebarContainerOpen]: openSidebar,
+					[styles.sidebarContainerHidden]: !openSidebar,
+				})}
+				ref={containerRef}
+			>
 				<Bars3Icon
 					onClick={() => setOpenSidebar(false)}
 					className="barIcon absolute right-0 mr-2"
@@ -162,6 +161,12 @@ function ReaderSidebar({ openSidebar, setOpenSidebar }: Props) {
 						// @ts-ignore
 						setValue={setReaderTheme}
 						label="theme"
+					/>
+					<SettingButton
+						value={progressVisibility}
+						valueList={progressVisibilities}
+						// @ts-ignore
+						setValue={setProgressVisibility}
 					/>
 				</div>
 			</div>

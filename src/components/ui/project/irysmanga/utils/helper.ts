@@ -75,7 +75,8 @@ export function generateDummyManga(): Manga {
         const enTmpPages: string[] = [];
         const jpTmpPages: string[] = [];
         const tmp = 11;
-        for (let j = 1; j <= 10; ++j) {
+        const tmpPageCount = 9;
+        for (let j = 1; j <= tmpPageCount; ++j) {
             enTmpPages.push(
                 `https://alt.hololive.tv/wp-content/uploads/2022/${tmp}/en${
                     i + 1
@@ -87,14 +88,20 @@ export function generateDummyManga(): Manga {
                 }_0${j}.jpg`
             );
         }
+        let en_title = "Short title";
+        let jp_title = "短いタイトル";
+        if (i == 2) {
+            en_title = "Super duper long title";
+            jp_title = "めちゃくちゃ長いタイトル";
+        }
         tmpMangaData[0].chapters.push({
-            title: `#${i}`,
-            pageCount: 10,
+            title: en_title,
+            pageCount: tmpPageCount,
             pages: enTmpPages,
         });
         tmpMangaData[1].chapters.push({
-            title: "",
-            pageCount: 10,
+            title: jp_title,
+            pageCount: tmpPageCount,
             pages: jpTmpPages,
         });
     }

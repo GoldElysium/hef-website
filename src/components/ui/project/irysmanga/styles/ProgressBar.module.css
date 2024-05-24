@@ -1,0 +1,58 @@
+.progressOuterContainer {
+    @apply sticky bg-transparent z-10 w-full h-[60px] flex items-end transition-all;
+}
+
+.progressOuterContainerOpen {
+    @apply opacity-100;
+}
+
+.progressOuterContainerClose {
+    @apply opacity-0;
+}
+
+.progressInnerContainer {
+    @apply w-[100%] mr-[4px] flex transition-all;
+}
+
+.progressInnerContainerOpen {
+    @apply h-[20px] opacity-100;
+}
+
+.progressInnerContainerClose {
+    @apply opacity-50 h-[5px];
+}
+
+.numberLabelContainer {
+    @apply h-full min-w-4 px-2 py-1 flex justify-center items-center bg-base-300;
+}
+
+.numberLabel {
+    @apply transition-all;
+}
+
+.numberLabelOpen {
+    @apply opacity-100;
+}
+
+.numberLabelClose {
+    @apply opacity-0;
+}
+
+.progressBarContanier {
+    @apply h-full grow bg-neutral-content transition-all;
+}
+
+.progressSectionsContainer {
+    @apply flex justify-between w-full h-full;
+}
+
+.progressSectionTooltip {
+    @apply z-10 flex h-full cursor-pointer grow border-x tooltip tooltip-top tooltip-open hover:bg-neutral bg-transparent transition-all duration-100 ease-in-out;
+}
+
+.progressSectionTooltipActive {
+    @apply opacity-100 bg-neutral;
+}
+.progressSectionTooltipSelected {
+    @apply opacity-100 bg-neutral;
+}

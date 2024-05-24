@@ -5,6 +5,7 @@ import { handlePageNavigation } from './utils/helper';
 import ProgressBar from './ProgressBar';
 import { getMangaDataOrThrow } from './utils/types';
 import ReaderHeader from './ReaderHeader';
+import styles from './styles/Reader.module.css';
 
 interface Props {
 	setOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>;
@@ -27,14 +28,6 @@ function Reader({ setOpenSidebar }: Props) {
 	const pageRefs = useRef<HTMLImageElement[]>([]);
 	const pageScrolled = useRef(false);
 	const scriptedScroll = useRef(false);
-
-	const imgClasses = classNames('m-auto object-cover', {
-		'h-full': fitMode === 'height',
-		'w-full': fitMode === 'width',
-	});
-	const containerClasses = classNames(
-		'grow hover:cursor-pointer overflow-y-auto flex flex-col gap-[10px] relative pages-container',
-	);
 
 	// Sets the scrollbar to the correct position on page change
 	const handleScrollTop = useCallback(() => {
@@ -149,9 +142,12 @@ function Reader({ setOpenSidebar }: Props) {
                     key={i}
                     ref={(el) => (pageRefs.current[i] = el as HTMLImageElement)}
                     src={currentPages[i]}
-                    className={imgClasses.concat(
-                        i === page ? " block" : " hidden"
-                    )}
+                    className={classNames(styles.page, {
+                        block: i === page,
+                        hidden: i !== page,
+                        [styles.pageHeight]: fitMode === "height",
+                        [styles.pageWidth]: fitMode === "width",
+                    })}
                     alt={`Page ${i + 1}`}
                 />
             ));
@@ -161,7 +157,11 @@ function Reader({ setOpenSidebar }: Props) {
                     key={i}
                     ref={(el) => (pageRefs.current[i] = el as HTMLImageElement)}
                     src={currentPages[i]}
-                    className={imgClasses.concat(" block")}
+                    className={classNames(styles.page, {
+                        block: true,
+                        [styles.pageHeight]: fitMode === "height",
+                        [styles.pageWidth]: fitMode === "width",
+                    })}
                     alt={`Page ${i + 1}`}
                 />
             ));
@@ -176,7 +176,7 @@ function Reader({ setOpenSidebar }: Props) {
             <ReaderHeader setOpenSidebar={setOpenSidebar}></ReaderHeader>
             <div
                 ref={containerRef}
-                className={containerClasses}
+                className={styles.pageContainer}
                 onClick={handleClick}
                 onScroll={handleScroll}
             >

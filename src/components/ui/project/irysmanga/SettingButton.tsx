@@ -12,6 +12,8 @@ import {
 	MoonIcon,
 	ArrowsUpDownIcon,
 	LanguageIcon,
+	Bars2Icon,
+	MinusIcon,
 } from '@heroicons/react/24/outline';
 import useTranslation from '@/lib/i18n/client';
 import { ReaderSetting } from './utils/types';
@@ -36,8 +38,10 @@ const settingIcons: SettingIcons = {
 	original: <ComputerDesktopIcon className="setting-icon" />,
 	ltr: <ArrowRightIcon className="setting-icon" />,
 	rtl: <ArrowLeftIcon className="setting-icon" />,
-	hidden: <StopIcon className="setting-icon" />,
-	shown: <WindowIcon className="setting-icon" />,
+	'header-hidden': <StopIcon className="setting-icon" />,
+	'header-shown': <WindowIcon className="setting-icon" />,
+	'progress-hidden': <MinusIcon className="setting-icon" />,
+	'progress-shown': <Bars2Icon className="setting-icon" />,
 	light: <SunIcon className="setting-icon" />,
 	dark: <MoonIcon className="setting-icon" />,
 	en: <LanguageIcon className="setting-icon" />,

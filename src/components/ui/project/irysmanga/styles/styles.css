@@ -1,82 +1,30 @@
+:root {
+    --header-height: 64px;
+    --sidebar-width: 300px;
+}
+
 .barIcon {
     @apply transition-opacity duration-100 ease-linear opacity-50 cursor-pointer hover:opacity-100;
-}
-
-.progress-section-tooltip {
-    @apply z-10 flex h-full cursor-pointer grow border-x tooltip tooltip-top tooltip-open hover:bg-current bg-transparent transition-all duration-100 ease-in-out;
-}
-
-.progress-section-tooltip.active {
-    @apply opacity-100;
-}
-.progress-section-tooltip.selected {
-    @apply opacity-100;
 }
 
 .setting-icon {
     @apply w-[20px] text-nowrap;
 }
 
-.select-scroll {
-    scroll-behavior: smooth;
-}
-
-.select-scroll::-webkit-scrollbar {
+::-webkit-scrollbar {
     width: 4px;
     height: 0px;
 }
 
-.select-scroll::-webkit-scrollbar-track {
-    background: #f1f1f1;
+::-webkit-scrollbar-track {
+    background: oklch(var(--b2));
 }
 
-.select-scroll::-webkit-scrollbar-thumb {
-    background: #888;
+::-webkit-scrollbar-thumb {
+    background: oklch(var(--bc));
+    opacity: 0;
 }
 
-.select-scroll::-webkit-scrollbar-thumb:hover {
-    background: #555;
-}
-
-.pages-container::-webkit-scrollbar {
-    width: 4px;
-    height: 0px;
-}
-
-.pages-container::-webkit-scrollbar-track {
-    background: #f1f1f1;
-}
-
-.pages-container::-webkit-scrollbar-thumb {
-    background: #888;
-}
-
-.pages-container::-webkit-scrollbar-thumb:hover {
-    background: #555;
-}
-
-.info-badge {
-    @apply flex flex-col;
-}
-.info-badge-title {
-    @apply text-xs;
-}
-.info-badge-content {
-    @apply text-sm;
-}
-
-@media (min-width: 530px) {
-    .info-badge {
-        @apply flex-row gap-1;
-    }
-    .info-badge-content {
-        @apply text-base;
-    }
-    .info-badge-title {
-        @apply text-base;
-    }
-}
-
-.transition-drawer {
-    transition-property: width, transform, height, opacity;
+::-webkit-scrollbar-thumb:hover {
+    background: oklch(var(--bc));
 }

@@ -2,10 +2,11 @@ import { useState } from 'react';
 import classNames from 'classnames';
 import { useMangaContext } from './context/MangaContext';
 import { getMangaDataOrThrow } from './utils/types';
+import styles from './styles/ProgressBar.module.css';
 
 function ProgressBar() {
 	const {
-		language, page, chapter, manga, setPage,
+		language, page, chapter, manga, progressVisibility, setPage,
 	} = useMangaContext();
 
 	const mangaData = getMangaDataOrThrow(manga, language);
@@ -25,12 +26,16 @@ function ProgressBar() {
     for (let i = 0; i < pageCount; i++) {
         const isActive = i < page;
         const isSelected = i === page;
-        let sectionClasses = "progress-section-tooltip";
+        let sectionClasses = styles.progressSectionTooltip;
         if (isActive) {
-            sectionClasses = sectionClasses.concat(" active");
+            sectionClasses = sectionClasses.concat(
+                " " + styles.progressSectionTooltipActive
+            );
         }
         if (isSelected) {
-            sectionClasses = sectionClasses.concat(" selected");
+            sectionClasses = sectionClasses.concat(
+                " " + styles.progressSectionTooltipSelected
+            );
         }
         /* eslint-disable */
 
@@ -49,21 +54,45 @@ function ProgressBar() {
     return (
         <>
             <div
-                className="sticky bg-transparent z-10 w-full h-[60px] flex items-end"
+                className={classNames(styles.progressOuterContainer, {
+                    [styles.progressOuterContainerOpen]:
+                        progressVisibility === "progress-shown",
+                    [styles.progressOuterContainerClose]:
+                        progressVisibility === "progress-hidden",
+                })}
                 onMouseEnter={() => setOpenProgress(true)}
                 onMouseLeave={() => setOpenProgress(false)}
             >
                 <div
-                    className={classNames(
-                        "w-[100%] bg-gray-400 rounded-lg z-10 transition-all duration-100 ease-linear",
-                        {
-                            "h-[20px] opacity-100": openProgress,
-                            "opacity-50 h-[7px] md:h-[10px]": !openProgress,
-                        }
-                    )}
+                    className={classNames(styles.progressInnerContainer, {
+                        [styles.progressInnerContainerOpen]: openProgress,
+                        [styles.progressInnerContainerClose]: !openProgress,
+                    })}
                 >
-                    <div className="flex justify-between w-full h-full">
-                        {pageSections}
+                    <div className={styles.numberLabelContainer}>
+                        <span
+                            className={classNames(styles.numberLabel, {
+                                [styles.numberLabelOpen]: openProgress,
+                                [styles.numberLabelClose]: !openProgress,
+                            })}
+                        >
+                            1
+                        </span>
+                    </div>
+                    <div className={styles.progressBarContanier}>
+                        <div className={styles.progressSectionsContainer}>
+                            {pageSections}
+                        </div>
+                    </div>
+                    <div className={styles.numberLabelContainer}>
+                        <span
+                            className={classNames(styles.numberLabel, {
+                                [styles.numberLabelOpen]: openProgress,
+                                [styles.numberLabelClose]: !openProgress,
+                            })}
+                        >
+                            {pageCount}
+                        </span>
                     </div>
                 </div>
             </div>

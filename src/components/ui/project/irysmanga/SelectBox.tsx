@@ -88,11 +88,12 @@ function SelectBox({ value, label }: SelectBoxProps) {
                     onBlur={() => setOpen(false)}
                     menuIsOpen
                     classNamePrefix={"react-select"}
-                    className="h-full w-full"
+                    className="h-full grow"
                     classNames={{
+                        valueContainer: () => "w-full",
                         control: () =>
                             "rounded-md w-full h-full px-2 hover:cursor-pointer border border-1",
-                        singleValue: () => "",
+                        singleValue: () => "w-full truncate",
                         menu: () =>
                             classNames(
                                 "mt-2 p-1 bg-base-100 border rounded-md transition-all duration-100 ease-in-out",
@@ -101,13 +102,15 @@ function SelectBox({ value, label }: SelectBoxProps) {
                                     "opacity-0 invisible": !open,
                                 }
                             ),
-                        menuList: () => "select-scroll",
+                        menuList: () => "scroll-smooth",
                         option: ({ isFocused, isSelected }) =>
                             classNames(
-                                "hover:cursor-pointer p-2 font-sm rounded",
+                                "hover:cursor-pointer p-2 font-sm rounded truncate",
                                 {
-                                    "bg-neutral ": isFocused,
-                                    "bg-primary": isSelected,
+                                    "bg-neutral text-neutral-content":
+                                        isSelected,
+                                    "hover:bg-neutral hover:text-neutral-content":
+                                        isFocused,
                                 }
                             ),
                     }}

@@ -42,20 +42,16 @@ export type PageLayout = (typeof pageLayouts)[number];
 export const directions = ['ltr', 'rtl'] as const;
 export type PageDirection = (typeof directions)[number];
 
-export const headerVisibilities = ['hidden', 'shown'] as const;
+export const headerVisibilities = ['header-hidden', 'header-shown'] as const;
 export type HeaderVisibility = (typeof headerVisibilities)[number];
 
-export const readerThemes = [
-	// 'dark',
-	// 'light',
-	// 'cupcake',
-	// 'valentine',
-	// 'aqua',
-	// 'irysLight',
-	// 'irysDark',
-	'dark',
-	'light',
+export const progressVisibilities = [
+	'progress-hidden',
+	'progress-shown',
 ] as const;
+export type ProgressVisibility = (typeof progressVisibilities)[number];
+
+export const readerThemes = ['dark', 'light'] as const;
 export type ReaderTheme = (typeof readerThemes)[number];
 
 export type ReaderSetting =
@@ -64,7 +60,8 @@ export type ReaderSetting =
     | PageLayout
     | PageDirection
     | HeaderVisibility
-    | ReaderTheme;
+    | ReaderTheme
+    | ProgressVisibility;
 
 // Returns the correct MangaData object for a given language. If there is no such manga data
 // for the given language, throw an error.

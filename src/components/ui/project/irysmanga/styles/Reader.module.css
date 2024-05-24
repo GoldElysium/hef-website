@@ -1,0 +1,15 @@
+.page {
+    @apply m-auto object-cover;
+}
+
+.pageHeight {
+    @apply h-full;
+}
+
+.pageWidth {
+    @apply w-full;
+}
+
+.pageContainer {
+    @apply grow hover:cursor-pointer overflow-y-auto flex flex-col gap-[10px] relative;
+}
