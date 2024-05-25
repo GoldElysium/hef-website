@@ -18,9 +18,10 @@ export default class TextareaBlock extends Textarea implements IFormNodeBlock {
 				<TextareaFabric
 					id={props.id}
 					styles={{
-						backgroundColor: 'inherit',
+						backgroundColor: '#fff',
 						borderColor: 'inherit',
-						errorColor: 'red',
+						errorColor: '#f00',
+						textColor: '#000',
 					}}
 					value={this.textareaSlot}
 					required={this.required}

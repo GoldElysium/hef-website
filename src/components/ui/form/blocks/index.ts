@@ -12,3 +12,4 @@ import './paragraph';
 import './textarea';
 import './text';
 import './yes-no';
+import './file-upload';

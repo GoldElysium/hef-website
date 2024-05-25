@@ -7,6 +7,7 @@ import {
 	castToBoolean, markdownifyToString, markdownifyToURL, NodeBlock,
 } from '@tripetto/runner';
 import { TOverlayContext, useOverlay } from '@tripetto/runner-fabric/overlay';
+import './blocks';
 
 interface IProps {
 	id: string;
@@ -34,6 +35,8 @@ export interface IFormNodeBlockProps {
 	readonly ariaDescription: JSX.Element | undefined;
 	readonly autoFocus: (element: HTMLElement | null) => void;
 	readonly onSubmit: (() => void) | undefined;
+	readonly focus: ((event: FocusEvent) => void) | undefined;
+	readonly blur: ((event: FocusEvent) => void) | undefined;
 	readonly attachments: IRunnerAttachments | undefined;
 	readonly markdownifyToJSX: (md: string, lineBreaks?: boolean) => JSX.Element;
 	readonly markdownifyToURL: (md: string) => string;
@@ -149,6 +152,7 @@ export default function FormRunner({ id, form }: IProps) {
 													<label
 														className="text-lg font-bold"
 														htmlFor={node.block?.key()}
+														key={node.block?.key('label')}
 													>
 														{markdownifyToJSX(node.props.name, node.context)}
 														{node.block?.required
@@ -168,7 +172,9 @@ export default function FormRunner({ id, form }: IProps) {
 										get description() {
 											return (
 												(node.props.description && (
-													<p>
+													<p
+														key={node.block?.key('description')}
+													>
 														{markdownifyToJSX(node.props.description, node.context)}
 													</p>
 												))
@@ -213,6 +219,8 @@ export default function FormRunner({ id, form }: IProps) {
 												|| undefined
 											);
 										},
+										focus: () => {},
+										blur: () => {},
 										autoFocus: () => {},
 										onSubmit: () => {},
 										// eslint-disable-next-line max-len
