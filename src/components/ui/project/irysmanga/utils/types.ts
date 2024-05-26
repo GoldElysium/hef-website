@@ -22,10 +22,10 @@ export type Contributor = {
 
 export type Manga = {
 	id: string;
-	publishedDate: Date;
+	publishedDate: string; // Publish date must be in ISO8601
 	authors: Contributor[];
 	artists: Contributor[];
-	data: Map<string, MangaData>; // Maps ISO language codes to correct data.
+	data: { readonly [lang: string]: MangaData }; // Maps ISO language codes to correct data.
 };
 
 // Reader settings types
@@ -70,7 +70,7 @@ export function getMangaDataOrThrow(manga: Manga, language: string): MangaData {
 		throw new Error('manga object is undefined/null.');
 	}
 
-	const mangaData = manga.data.get(language);
+	const mangaData = manga.data[language];
 	if (mangaData === undefined) {
 		throw new RangeError(`No manga data for language "${language}".`);
 	}
