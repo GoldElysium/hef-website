@@ -19,7 +19,7 @@ async function fetchProjects(lang: Language): Promise<Project[]> {
 
 	async function fetchNextProjects() {
 		// Fetch next page
-		const projectsRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/projects?limit=100&page=${page}&depth=2&locale=${lang}&fallback-locale=en`, {
+		const projectsRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/projects?limit=100&page=${page}&depth=2&locale=${lang}&fallback-locale=en&where[status][not_equals]=hidden`, {
 			headers: {
 				'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? undefined,
 				Authorization: process.env.PAYLOAD_API_KEY ? `users API-Key ${process.env.PAYLOAD_API_KEY}` : undefined,
