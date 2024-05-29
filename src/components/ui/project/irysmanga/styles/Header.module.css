@@ -32,7 +32,7 @@
     @apply text-sm;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 820px) {
     .infoBadge {
         @apply flex-row gap-1;
     }

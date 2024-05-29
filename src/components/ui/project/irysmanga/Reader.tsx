@@ -9,9 +9,10 @@ import styles from './styles/Reader.module.css';
 
 interface Props {
 	setOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>;
+	containerRef: React.RefObject<HTMLDivElement>;
 }
 
-function Reader({ setOpenSidebar }: Props) {
+function Reader({ setOpenSidebar, containerRef }: Props) {
 	const {
 		pageLayout,
 		fitMode,
@@ -24,24 +25,30 @@ function Reader({ setOpenSidebar }: Props) {
 		language,
 	} = useMangaContext();
 
-	const containerRef = useRef<HTMLDivElement>(null);
+	// const containerRef = useRef<HTMLDivElement>(null);
 	const pageRefs = useRef<HTMLImageElement[]>([]);
 	const pageScrolled = useRef(false);
 	const scriptedScroll = useRef(false);
 
 	// Sets the scrollbar to the correct position on page change
+	const setScollTopToPage = () => {
+		if (containerRef.current) {
+			scriptedScroll.current = true;
+			const targetImg = pageRefs.current[page];
+			if (targetImg) {
+				// eslint-disable-next-line
+                containerRef.current.scrollTop =
+                    targetImg.offsetTop - containerRef.current.offsetTop;
+			}
+		}
+	};
 	const handleScrollTop = useCallback(() => {
 		if (pageLayout === 'single' && containerRef.current) {
-			containerRef.current.scrollTop = 0;
+			// eslint-disable-next-line
+            containerRef.current.scrollTop = 0;
 		}
 		if (pageLayout !== 'single' && !pageScrolled.current) {
-			if (containerRef.current) {
-				scriptedScroll.current = true;
-				const targetImg = pageRefs.current[page];
-				if (targetImg) {
-					containerRef.current.scrollTop = targetImg.offsetTop - containerRef.current.offsetTop;
-				}
-			}
+			setScollTopToPage();
 		}
 		pageScrolled.current = false;
 	}, [
@@ -51,6 +58,7 @@ function Reader({ setOpenSidebar }: Props) {
 		page,
 		pageRefs,
 		scriptedScroll,
+		setScollTopToPage,
 	]);
 
 	// Update the page counter when the user scrolls
@@ -126,7 +134,11 @@ function Reader({ setOpenSidebar }: Props) {
 
 	useEffect(() => {
 		handleScrollTop();
-	}, [page, chapter, pageLayout, handleScrollTop]);
+	}, [page, chapter, pageLayout, handleScrollTop, setScollTopToPage]);
+
+	useEffect(() => {
+		setScollTopToPage();
+	}, [fitMode]);
 
 	let displayedPages: React.JSX.Element[] = [];
 	const mangaData = getMangaDataOrThrow(manga, language);
@@ -172,13 +184,14 @@ function Reader({ setOpenSidebar }: Props) {
 
     /* eslint-disable */
     return (
-        <div className="flex flex-col h-screen relative grow">
+        <div className="flex flex-col h-screen relative grow bg-base-100 transition-colors">
             <ReaderHeader setOpenSidebar={setOpenSidebar}></ReaderHeader>
             <div
                 ref={containerRef}
                 className={styles.pageContainer}
                 onClick={handleClick}
                 onScroll={handleScroll}
+                tabIndex={0}
             >
                 {displayedPages}
             </div>

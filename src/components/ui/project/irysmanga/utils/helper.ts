@@ -39,6 +39,18 @@ export const handlePageNavigation = (
         setPage(selectedPage);
     }
 };
+export const handleChapterNavigation = (
+    setChapter: React.Dispatch<React.SetStateAction<number>>,
+    selectedChapter: number,
+    language: string,
+    manga: Manga
+) => {
+    let mangaData = getMangaDataOrThrow(manga, language);
+    let maxChapterCount = mangaData.chapterCount;
+    if (0 <= selectedChapter && selectedChapter < maxChapterCount) {
+        setChapter(selectedChapter);
+    }
+};
 // eslint-enable
 
 // From the current option, get the next option (based on the index) in an option list

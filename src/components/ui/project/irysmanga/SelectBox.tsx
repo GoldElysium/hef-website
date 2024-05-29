@@ -92,11 +92,11 @@ function SelectBox({ value, label }: SelectBoxProps) {
                     classNames={{
                         valueContainer: () => "w-full",
                         control: () =>
-                            "rounded-md w-full h-full px-2 hover:cursor-pointer border border-1",
+                            "rounded-md w-full h-full px-2 hover:cursor-pointer  bg-base-200 hover:bg-base-300 transition-all",
                         singleValue: () => "w-full truncate",
                         menu: () =>
                             classNames(
-                                "mt-2 p-1 bg-base-100 border rounded-md transition-all duration-100 ease-in-out",
+                                "mt-2 p-1 bg-base-100 border rounded-md transition-all",
                                 {
                                     "opacity-100 visible": open,
                                     "opacity-0 invisible": !open,

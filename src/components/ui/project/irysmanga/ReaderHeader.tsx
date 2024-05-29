@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { useEffect, useRef } from 'react';
 import useTranslation from '@/lib/i18n/client';
 import classNames from 'classnames';
@@ -5,6 +6,7 @@ import { useMangaContext } from './context/MangaContext';
 import { getMangaDataOrThrow } from './utils/types';
 import './styles/styles.css';
 import styles from './styles/Header.module.css';
+import NavIcon from './NavIcon';
 
 interface Props {
 	setOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>;
@@ -24,7 +26,6 @@ function ReaderHeader({ setOpenSidebar }: Props) {
 			`${height!}px`,
 		);
 	}, []);
-
 	const mangaData = getMangaDataOrThrow(manga, language);
 	const currentChapter = mangaData.chapters[chapter];
 	return (
@@ -46,13 +47,14 @@ function ReaderHeader({ setOpenSidebar }: Props) {
                 ref={containerRef}
             >
                 <div className="flex gap-2 items-center">
+                    <Link href={"/"}>
+                        <NavIcon></NavIcon>
+                    </Link>
                     <div className={styles.infoBadge}>
-                        <strong className={styles.infoBadgeTitle}>
-                            {mangaData.title}
-                        </strong>
-                        <strong className={styles.infoBadgeContent}>
+                        <strong className={""}>{mangaData.title}</strong>
+                        {/* <strong className={styles.infoBadgeContent}>
                             {currentChapter.title}
-                        </strong>
+                        </strong> */}
                     </div>
                 </div>
                 <div className="flex gap-2 items-center">
