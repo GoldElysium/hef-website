@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useMangaContext } from './context/MangaContext';
 import { handlePageNavigation } from './utils/helper';
 import ProgressBar from './ProgressBar';
@@ -42,20 +42,12 @@ function Reader({ setOpenSidebar, containerRef }: Props) {
 			}
 		}
 	};
-	const handleScrollTop = useCallback(() => {
+	const handleScrollTop = () => {
 		if (pageLayout !== 'single' && !pageScrolled.current) {
 			setScollTopToPage();
 		}
 		pageScrolled.current = false;
-	}, [
-		pageLayout,
-		containerRef,
-		pageScrolled,
-		page,
-		pageRefs,
-		scriptedScroll,
-		setScollTopToPage,
-	]);
+	};
 
 	// Update the page counter when the user scrolls
 	const handleScroll = () => {
@@ -130,7 +122,7 @@ function Reader({ setOpenSidebar, containerRef }: Props) {
 
 	useEffect(() => {
 		handleScrollTop();
-	}, [page, chapter, pageLayout, handleScrollTop, setScollTopToPage]);
+	}, [page, chapter, pageLayout]);
 
 	useEffect(() => {
 		setScollTopToPage();
