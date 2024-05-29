@@ -43,10 +43,6 @@ function Reader({ setOpenSidebar, containerRef }: Props) {
 		}
 	};
 	const handleScrollTop = useCallback(() => {
-		if (pageLayout === 'single' && containerRef.current) {
-			// eslint-disable-next-line
-            containerRef.current.scrollTop = 0;
-		}
 		if (pageLayout !== 'single' && !pageScrolled.current) {
 			setScollTopToPage();
 		}

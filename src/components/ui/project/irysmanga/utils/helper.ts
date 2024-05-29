@@ -41,6 +41,7 @@ export const handlePageNavigation = (
 };
 export const handleChapterNavigation = (
     setChapter: React.Dispatch<React.SetStateAction<number>>,
+    setPage: React.Dispatch<React.SetStateAction<number>>,
     selectedChapter: number,
     language: string,
     manga: Manga
@@ -48,6 +49,7 @@ export const handleChapterNavigation = (
     let mangaData = getMangaDataOrThrow(manga, language);
     let maxChapterCount = mangaData.chapterCount;
     if (0 <= selectedChapter && selectedChapter < maxChapterCount) {
+        setPage(0);
         setChapter(selectedChapter);
     }
 };

@@ -1,10 +1,10 @@
 import { useEffect, useRef } from 'react';
-import { useMangaContext } from '../context/MangaContext';
+import { useMangaContext } from './context/MangaContext';
 import {
 	getNextOption,
 	handleChapterNavigation,
 	handlePageNavigation,
-} from '../utils/helper';
+} from './utils/helper';
 import {
 	directions,
 	fitModes,
@@ -13,12 +13,14 @@ import {
 	pageLayouts,
 	progressVisibilities,
 	readerThemes,
-} from '../utils/types';
+} from './utils/types';
 
-const useKeyPress = (
-	setOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>,
-	readerContainerRef: React.RefObject<HTMLDivElement>,
-) => {
+interface Props {
+	setOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>;
+	readerContainerRef: React.RefObject<HTMLDivElement>;
+}
+
+function KeyPressHandler({ setOpenSidebar, readerContainerRef }: Props) {
 	const {
 		setPage,
 		setChapter,
@@ -39,26 +41,6 @@ const useKeyPress = (
 	const scrollIntervalRef = useRef<any>();
 	const scrollDirectionRef = useRef<number>();
 
-	const startScrolling = (scrollDirection: number) => {
-		if (!scrollIntervalRef.current) {
-			scrollDirectionRef.current = scrollDirection;
-			scrollIntervalRef.current = setInterval(() => {
-				// eslint-disable-next-line
-                readerContainerRef.current!.scrollTop +=
-                    scrollDirectionRef.current! * 10; // Adjust scrolling speed as needed
-			}, 10); // Adjust interval as needed for smoother scrolling
-		}
-	};
-	const stopScrolling = () => {
-		if (scrollIntervalRef.current) {
-			clearInterval(scrollIntervalRef.current);
-			scrollIntervalRef.current = undefined;
-			scrollDirectionRef.current = undefined;
-		}
-	};
-	const handleKeyRelease = () => {
-		stopScrolling();
-	};
 	useEffect(() => {
 		const handleKeyPress = (event: KeyboardEvent) => {
 			if (event.key === 'ArrowLeft') {
@@ -111,6 +93,7 @@ const useKeyPress = (
 				if (direction === 'ltr') {
 					handleChapterNavigation(
 						setChapter,
+						setPage,
 						chapter - 1,
 						language,
 						manga,
@@ -118,6 +101,7 @@ const useKeyPress = (
 				} else {
 					handleChapterNavigation(
 						setChapter,
+						setPage,
 						chapter + 1,
 						language,
 						manga,
@@ -128,6 +112,7 @@ const useKeyPress = (
 				if (direction === 'ltr') {
 					handleChapterNavigation(
 						setChapter,
+						setPage,
 						chapter + 1,
 						language,
 						manga,
@@ -135,6 +120,7 @@ const useKeyPress = (
 				} else {
 					handleChapterNavigation(
 						setChapter,
+						setPage,
 						chapter - 1,
 						language,
 						manga,
@@ -165,24 +151,11 @@ const useKeyPress = (
 			if (event.key === 'j') {
 				setLanguage((prev) => getNextOption(prev, languages));
 			}
-
-			// Temporary testing for scrolling
-			if (event.key === 'ArrowUp') {
-				event.preventDefault();
-				startScrolling(-1);
-			}
-			if (event.key === 'ArrowDown') {
-				event.preventDefault();
-				startScrolling(1);
-			}
 		};
 
 		window.addEventListener('keydown', handleKeyPress);
-		window.addEventListener('keyup', handleKeyRelease);
 		return () => {
 			window.removeEventListener('keydown', handleKeyPress);
-			window.removeEventListener('keyup', handleKeyRelease);
-			stopScrolling();
 		};
 	}, [
 		chapter,
@@ -196,7 +169,54 @@ const useKeyPress = (
 		setChapter,
 		setPage,
 		setHeaderVisibility,
+		setDirection,
+		setFitMode,
+		setLanguage,
+		setOpenSidebar,
+		setPageLayout,
+		setProgressVisibility,
+		setReaderTheme,
 	]);
-};
+	useEffect(() => {
+		const startScrolling = (scrollDirection: number) => {
+			if (!scrollIntervalRef.current) {
+				scrollDirectionRef.current = scrollDirection;
+				scrollIntervalRef.current = setInterval(() => {
+					// eslint-disable-next-line
+                    readerContainerRef.current!.scrollTop +=
+                        scrollDirectionRef.current! * 10; // Adjust scrolling speed as needed
+				}, 10); // Adjust interval as needed for smoother scrolling
+			}
+		};
+		const stopScrolling = () => {
+			if (scrollIntervalRef.current) {
+				clearInterval(scrollIntervalRef.current);
+				scrollIntervalRef.current = undefined;
+				scrollDirectionRef.current = undefined;
+			}
+		};
+		const handleKeyRelease = () => {
+			stopScrolling();
+		};
+		const handleKeyPressUpDown = (event: KeyboardEvent) => {
+			if (event.key === 'ArrowUp') {
+				event.preventDefault();
+				startScrolling(-1);
+			}
+			if (event.key === 'ArrowDown') {
+				event.preventDefault();
+				startScrolling(1);
+			}
+		};
+		window.addEventListener('keydown', handleKeyPressUpDown);
+		window.addEventListener('keyup', handleKeyRelease);
+		return () => {
+			window.removeEventListener('keydown', handleKeyPressUpDown);
+			window.removeEventListener('keyup', handleKeyRelease);
+			stopScrolling();
+		};
+	}, [readerContainerRef]);
+	return null;
+}
 
-export default useKeyPress;
+export default KeyPressHandler;
