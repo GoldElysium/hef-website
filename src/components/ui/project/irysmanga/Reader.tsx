@@ -120,11 +120,13 @@ function Reader({ setOpenSidebar, containerRef }: Props) {
 		}
 	};
 
-	useEffect(() => {
+	// eslint-disable-next-line
+    useEffect(() => {
 		handleScrollTop();
 	}, [page, chapter, pageLayout]);
 
-	useEffect(() => {
+	// eslint-disable-next-line
+    useEffect(() => {
 		setScollTopToPage();
 	}, [fitMode]);
 
