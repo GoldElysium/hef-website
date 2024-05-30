@@ -6,10 +6,10 @@ import styles from './styles/ProgressBar.module.css';
 
 function ProgressBar() {
 	const {
-		language, page, chapter, manga, progressVisibility, setPage,
+		mangaLanguage, page, chapter, manga, progressVisibility, setPage,
 	} = useMangaContext();
 
-	const mangaData = getMangaDataOrThrow(manga, language);
+	const mangaData = getMangaDataOrThrow(manga, mangaLanguage);
 	const { pageCount } = mangaData.chapters[chapter];
 
 	// Handle click on a specific page section

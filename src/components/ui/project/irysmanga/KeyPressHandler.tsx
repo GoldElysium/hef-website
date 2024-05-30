@@ -29,12 +29,13 @@ function KeyPressHandler({ setOpenSidebar, readerContainerRef }: Props) {
 		setDirection,
 		setProgressVisibility,
 		setReaderTheme,
-		setLanguage,
+		setMangaLanguage,
+		setReaderLanguage,
 		page,
 		chapter,
 		pageLayout,
 		direction,
-		language,
+		mangaLanguage,
 		manga,
 		setHeaderVisibility,
 	} = useMangaContext();
@@ -51,7 +52,7 @@ function KeyPressHandler({ setOpenSidebar, readerContainerRef }: Props) {
 						setPage,
 						setChapter,
 						chapter,
-						language,
+						mangaLanguage,
 						manga,
 					);
 				} else {
@@ -61,7 +62,7 @@ function KeyPressHandler({ setOpenSidebar, readerContainerRef }: Props) {
 						setPage,
 						setChapter,
 						chapter,
-						language,
+						mangaLanguage,
 						manga,
 					);
 				}
@@ -74,7 +75,7 @@ function KeyPressHandler({ setOpenSidebar, readerContainerRef }: Props) {
 						setPage,
 						setChapter,
 						chapter,
-						language,
+						mangaLanguage,
 						manga,
 					);
 				} else {
@@ -84,7 +85,7 @@ function KeyPressHandler({ setOpenSidebar, readerContainerRef }: Props) {
 						setPage,
 						setChapter,
 						chapter,
-						language,
+						mangaLanguage,
 						manga,
 					);
 				}
@@ -95,7 +96,7 @@ function KeyPressHandler({ setOpenSidebar, readerContainerRef }: Props) {
 						setChapter,
 						setPage,
 						chapter - 1,
-						language,
+						mangaLanguage,
 						manga,
 					);
 				} else {
@@ -103,7 +104,7 @@ function KeyPressHandler({ setOpenSidebar, readerContainerRef }: Props) {
 						setChapter,
 						setPage,
 						chapter + 1,
-						language,
+						mangaLanguage,
 						manga,
 					);
 				}
@@ -114,7 +115,7 @@ function KeyPressHandler({ setOpenSidebar, readerContainerRef }: Props) {
 						setChapter,
 						setPage,
 						chapter + 1,
-						language,
+						mangaLanguage,
 						manga,
 					);
 				} else {
@@ -122,7 +123,7 @@ function KeyPressHandler({ setOpenSidebar, readerContainerRef }: Props) {
 						setChapter,
 						setPage,
 						chapter - 1,
-						language,
+						mangaLanguage,
 						manga,
 					);
 				}
@@ -149,7 +150,10 @@ function KeyPressHandler({ setOpenSidebar, readerContainerRef }: Props) {
 				setProgressVisibility((prev) => getNextOption(prev, progressVisibilities));
 			}
 			if (event.key === 'j') {
-				setLanguage((prev) => getNextOption(prev, languages));
+				setMangaLanguage((prev) => getNextOption(prev, languages));
+			}
+			if (event.key === 'k') {
+				setReaderLanguage((prev) => getNextOption(prev, languages));
 			}
 		};
 
@@ -160,7 +164,7 @@ function KeyPressHandler({ setOpenSidebar, readerContainerRef }: Props) {
 	}, [
 		chapter,
 		direction,
-		language,
+		mangaLanguage,
 		manga,
 		page,
 		pageLayout,
@@ -171,7 +175,8 @@ function KeyPressHandler({ setOpenSidebar, readerContainerRef }: Props) {
 		setHeaderVisibility,
 		setDirection,
 		setFitMode,
-		setLanguage,
+		setMangaLanguage,
+		setReaderLanguage,
 		setOpenSidebar,
 		setPageLayout,
 		setProgressVisibility,

@@ -11,11 +11,11 @@ import {
 	SunIcon,
 	MoonIcon,
 	ArrowsUpDownIcon,
-	LanguageIcon,
 	Bars2Icon,
 	MinusIcon,
 } from '@heroicons/react/24/outline';
 import useTranslation from '@/lib/i18n/client';
+import classNames from 'classnames';
 import { ReaderSetting } from './utils/types';
 import { getNextOption } from './utils/helper';
 
@@ -27,7 +27,7 @@ interface Props {
 }
 
 type SettingIcons = {
-	[key in ReaderSetting]: JSX.Element;
+	[key in ReaderSetting]: JSX.Element | null;
 };
 
 const settingIcons: SettingIcons = {
@@ -44,8 +44,8 @@ const settingIcons: SettingIcons = {
 	'progress-shown': <Bars2Icon className="setting-icon" />,
 	light: <SunIcon className="setting-icon" />,
 	dark: <MoonIcon className="setting-icon" />,
-	en: <LanguageIcon className="setting-icon" />,
-	jp: <LanguageIcon className="setting-icon" />,
+	en: null,
+	jp: null,
 };
 
 function SettingButton({
@@ -54,13 +54,17 @@ function SettingButton({
 	const { t } = useTranslation('reader');
 	return (
 		<button
-			className="btn flex justify-between whitespace-nowrap"
+			className={classNames('btn flex whitespace-nowrap flex-1', {
+				'justify-between': settingIcons[value] !== null,
+				'justify-center': settingIcons[value] === null,
+			})}
 			type="button"
 			onClick={() => setValue((prev) => getNextOption(prev, valueList))}
 		>
-			{label ? `${t(label)}: ` : ''}
-			{' '}
-			{t(value)}
+			<div>
+				{label ? `${t(label)}: ` : ''}
+				{t(value)}
+			</div>
 			{settingIcons[value]}
 		</button>
 	);

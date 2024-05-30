@@ -15,9 +15,9 @@ interface SelectBoxProps {
 function SelectBox({ value, label }: SelectBoxProps) {
 	const { t } = useTranslation('reader');
 	const {
-		language, setPage, chapter, setChapter, manga, pageLayout,
+		mangaLanguage, setPage, chapter, setChapter, manga, pageLayout,
 	} = useMangaContext();
-	const mangaData = getMangaDataOrThrow(manga, language);
+	const mangaData = getMangaDataOrThrow(manga, mangaLanguage);
 
 	/* eslint-disable */
     let maxValue =
@@ -35,7 +35,7 @@ function SelectBox({ value, label }: SelectBoxProps) {
                 setPage,
                 setChapter,
                 chapter,
-                language,
+                mangaLanguage,
                 manga
             );
             return;

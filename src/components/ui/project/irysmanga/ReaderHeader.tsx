@@ -14,7 +14,7 @@ interface Props {
 
 function ReaderHeader({ setOpenSidebar }: Props) {
 	const {
-		page, chapter, manga, language, headerVisibility,
+		page, chapter, manga, mangaLanguage, headerVisibility,
 	} = useMangaContext();
 	const { t } = useTranslation('reader');
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -26,7 +26,7 @@ function ReaderHeader({ setOpenSidebar }: Props) {
 			`${height!}px`,
 		);
 	}, []);
-	const mangaData = getMangaDataOrThrow(manga, language);
+	const mangaData = getMangaDataOrThrow(manga, mangaLanguage);
 	const currentChapter = mangaData.chapters[chapter];
 	return (
 		<>

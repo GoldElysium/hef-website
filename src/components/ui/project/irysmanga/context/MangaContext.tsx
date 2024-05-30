@@ -16,8 +16,11 @@ import { generateDummyManga } from '../utils/helper';
 
 // Define the type for the context value
 interface MangaContextProps {
-	language: Language;
-	setLanguage: React.Dispatch<React.SetStateAction<Language>>;
+	readerLanguage: Language;
+	setReaderLanguage: React.Dispatch<React.SetStateAction<Language>>;
+
+	mangaLanguage: Language;
+	setMangaLanguage: React.Dispatch<React.SetStateAction<Language>>;
 
 	page: number;
 	setPage: React.Dispatch<React.SetStateAction<number>>;
@@ -55,7 +58,8 @@ const MangaContext = createContext<MangaContextProps | undefined>(undefined);
 export const MangaProvider: React.FC<{ children: React.ReactNode }> = ({
     children,
 }) => {
-    const [language, setLanguage] = useState<Language>("en");
+    const [readerLanguage, setReaderLanguage] = useState<Language>("en");
+    const [mangaLanguage, setMangaLanguage] = useState<Language>("en");
     const [pageLayout, setPageLayout] = useState<PageLayout>("single");
     const [fitMode, setFitMode] = useState<FitMode>("original");
 
@@ -74,8 +78,10 @@ export const MangaProvider: React.FC<{ children: React.ReactNode }> = ({
 
     const contextValue = useMemo(
         () => ({
-            language,
-            setLanguage,
+            readerLanguage,
+            setReaderLanguage,
+            mangaLanguage,
+            setMangaLanguage,
             page,
             setPage,
             chapter,
@@ -96,7 +102,8 @@ export const MangaProvider: React.FC<{ children: React.ReactNode }> = ({
             setManga,
         }),
         [
-            language,
+            readerLanguage,
+            mangaLanguage,
             page,
             chapter,
             pageLayout,

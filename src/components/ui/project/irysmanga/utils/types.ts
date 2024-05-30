@@ -51,7 +51,7 @@ export const progressVisibilities = [
 ] as const;
 export type ProgressVisibility = (typeof progressVisibilities)[number];
 
-export const readerThemes = ['dark', 'light'] as const;
+export const readerThemes = ['light', 'dark'] as const;
 export type ReaderTheme = (typeof readerThemes)[number];
 
 export type ReaderSetting =

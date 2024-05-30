@@ -33,7 +33,8 @@ function ReaderSidebar({ openSidebar, setOpenSidebar }: Props) {
 		page,
 		chapter,
 		fitMode,
-		language,
+		readerLanguage,
+		mangaLanguage,
 		direction,
 		headerVisibility,
 		progressVisibility,
@@ -41,7 +42,8 @@ function ReaderSidebar({ openSidebar, setOpenSidebar }: Props) {
 		manga,
 		setPageLayout,
 		setFitMode,
-		setLanguage,
+		setReaderLanguage,
+		setMangaLanguage,
 		setDirection,
 		setHeaderVisibility,
 		setProgressVisibility,
@@ -50,9 +52,9 @@ function ReaderSidebar({ openSidebar, setOpenSidebar }: Props) {
 	const modalRef = useRef<HTMLDialogElement>(null);
 	const { t, i18n } = useTranslation('reader');
 	useEffect(() => {
-		i18n.changeLanguage(language);
-	}, [language, i18n]);
-	const mangaData = getMangaDataOrThrow(manga, language);
+		i18n.changeLanguage(readerLanguage);
+	}, [readerLanguage, i18n]);
+	const mangaData = getMangaDataOrThrow(manga, mangaLanguage);
 	const containerRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
@@ -114,13 +116,22 @@ function ReaderSidebar({ openSidebar, setOpenSidebar }: Props) {
 						{t('details')}
 						<InformationCircleIcon className="setting-icon" />
 					</button>
-					<SettingButton
-						value={language}
-						valueList={languages}
-						// @ts-ignore
-						setValue={setLanguage}
-						label="language"
-					/>
+					<div className="flex w-full gap-1">
+						<SettingButton
+							value={mangaLanguage}
+							valueList={languages}
+							// @ts-ignore
+							setValue={setMangaLanguage}
+							label="manga"
+						/>
+						<SettingButton
+							value={readerLanguage}
+							valueList={languages}
+							// @ts-ignore
+							setValue={setReaderLanguage}
+							label="reader"
+						/>
+					</div>
 				</div>
 				<div className="divider" />
 				{/* Chapter and page seletion */}

@@ -22,7 +22,7 @@ function Reader({ setOpenSidebar, containerRef }: Props) {
 		chapter,
 		manga,
 		direction,
-		language,
+		mangaLanguage,
 	} = useMangaContext();
 
 	// const containerRef = useRef<HTMLDivElement>(null);
@@ -83,7 +83,7 @@ function Reader({ setOpenSidebar, containerRef }: Props) {
 					setPage,
 					setChapter,
 					chapter,
-					language,
+					mangaLanguage,
 					manga,
 				);
 			} else {
@@ -93,7 +93,7 @@ function Reader({ setOpenSidebar, containerRef }: Props) {
 					setPage,
 					setChapter,
 					chapter,
-					language,
+					mangaLanguage,
 					manga,
 				);
 			}
@@ -104,7 +104,7 @@ function Reader({ setOpenSidebar, containerRef }: Props) {
 				setPage,
 				setChapter,
 				chapter,
-				language,
+				mangaLanguage,
 				manga,
 			);
 		} else {
@@ -114,7 +114,7 @@ function Reader({ setOpenSidebar, containerRef }: Props) {
 				setPage,
 				setChapter,
 				chapter,
-				language,
+				mangaLanguage,
 				manga,
 			);
 		}
@@ -129,7 +129,7 @@ function Reader({ setOpenSidebar, containerRef }: Props) {
 	}, [fitMode]);
 
 	let displayedPages: React.JSX.Element[] = [];
-	const mangaData = getMangaDataOrThrow(manga, language);
+	const mangaData = getMangaDataOrThrow(manga, mangaLanguage);
 	if (mangaData.chapters[chapter]) {
 		const currentChapter = mangaData.chapters[chapter];
 		const maxPageCount = currentChapter.pageCount;

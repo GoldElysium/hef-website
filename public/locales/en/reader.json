@@ -1,8 +1,10 @@
 {
     "details": "Details",
     "chapter": "Chapter",
-    "language": "Language",
-    "en": "English",
+    "manga": "Manga",
+    "reader": "Reader",
+    "en": "EN",
+    "jp": "JP",
     "page": "Page",
     "long": "Long Strip",
     "single": "Single Page",
