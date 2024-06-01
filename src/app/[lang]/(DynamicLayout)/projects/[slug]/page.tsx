@@ -108,7 +108,7 @@ export default async function ProjectPage({ params: { slug, lang } }: IProps) {
 		);
 	}
 
-	if (project.flags?.includes('irys-manga')) {
+	if (project.flags?.includes('manga-reader')) {
 		return (
 			<IrysMangaSubmissionWrapper project={project} lang={lang} />
 		);

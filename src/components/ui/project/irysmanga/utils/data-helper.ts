@@ -72,8 +72,13 @@ function getDummyManga(): Manga {
 	return manga;
 }
 
+// https://stackoverflow.com/questions/679915/how-do-i-test-for-an-empty-javascript-object
+function objIsEmpty(obj: any): boolean {
+	return Object.keys(obj).length === 0;
+}
+
 export default function getManga(devProps: { [key: string]: string }): Manga {
-	if (process.env.NODE_ENV === 'development' && !process.env.NEXT_PUBLIC_CMS_URL) {
+	if (process.env.NODE_ENV === 'development' && (!process.env.NEXT_PUBLIC_CMS_URL || objIsEmpty(devProps))) {
 		return getDummyManga();
 	}
 
