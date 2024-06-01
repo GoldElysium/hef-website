@@ -10,9 +10,16 @@ import styles from './styles/Reader.module.css';
 interface Props {
 	setOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>;
 	containerRef: React.RefObject<HTMLDivElement>;
+	clickCounter: number;
+	setClickCounter: React.Dispatch<React.SetStateAction<number>>;
 }
 
-function Reader({ setOpenSidebar, containerRef }: Props) {
+function Reader({
+	setOpenSidebar,
+	clickCounter,
+	setClickCounter,
+	containerRef,
+}: Props) {
 	const {
 		pageLayout,
 		fitMode,
@@ -71,6 +78,13 @@ function Reader({ setOpenSidebar, containerRef }: Props) {
 	const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
 		const { clientX, target } = event;
 		const { left, width } = (target as HTMLElement).getBoundingClientRect();
+
+		if (window.innerWidth <= 768) {
+			if (clickCounter < 0) {
+				setClickCounter((prev) => prev + 1);
+				return;
+			}
+		}
 
 		const position = clientX - left;
 		const threshold = width / 2;

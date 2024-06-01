@@ -63,6 +63,25 @@ function ReaderSidebar({ openSidebar, setOpenSidebar }: Props) {
 			'--sidebar-width',
 			`${width!}px`,
 		);
+
+		const handleClickOutside = (event: MouseEvent) => {
+			if (window.innerWidth > 768) {
+				return;
+			}
+			if (
+				containerRef.current
+                && !containerRef.current.contains(event.target as Node)
+			) {
+				setOpenSidebar(false);
+			}
+		};
+
+		// Set your threshold here (e.g., 768 for small screens)
+		document.addEventListener('mousedown', handleClickOutside);
+
+		return () => {
+			document.removeEventListener('mousedown', handleClickOutside);
+		};
 	}, []);
 
 	return (
@@ -89,7 +108,7 @@ function ReaderSidebar({ openSidebar, setOpenSidebar }: Props) {
 			>
 				<Bars3Icon
 					onClick={() => setOpenSidebar(false)}
-					className="barIcon absolute right-0 mr-2"
+					className="barIcon invisible absolute right-0 mr-2 md:visible"
 					width={30}
 				/>
 				{/* Manga info */}
