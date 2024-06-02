@@ -1,6 +1,4 @@
-import {
-	Manga, PageLayout, getMangaDataOrThrow,
-} from './types';
+import { Manga, PageLayout, getMangaDataOrThrow } from './types';
 /* eslint-disable */
 export const handlePageNavigation = (
     selectedPage: number,
@@ -15,11 +13,7 @@ export const handlePageNavigation = (
     let currentChapter = mangaData.chapters[chapter];
     // Case: Change to the previous chapter if the page index is < 0
     if (selectedPage < 0 && chapter > 0 && chapter <= mangaData.chapterCount) {
-        if (pageLayout === "single") {
-            setPage(mangaData.chapters[chapter - 1].pageCount - 1);
-        } else {
-            setPage(0);
-        }
+        setPage(mangaData.chapters[chapter - 1].pageCount - 1);
         setChapter((prev) => prev - 1);
     }
     // Case: Change to the next chapter if the page index is >= currentChapter.pageCount

@@ -53,6 +53,9 @@ function Reader({
 		if (pageLayout !== 'single' && !pageScrolled.current) {
 			setScollTopToPage();
 		}
+		if (pageLayout === 'single') {
+			setScollTopToPage();
+		}
 		pageScrolled.current = false;
 	};
 
