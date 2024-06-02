@@ -1,5 +1,5 @@
 import {
-	MangaData, Manga, PageLayout, getMangaDataOrThrow,
+	Manga, PageLayout, getMangaDataOrThrow,
 } from './types';
 /* eslint-disable */
 export const handlePageNavigation = (
@@ -64,71 +64,3 @@ export const getNextOption = <T extends string>(
     const nextIndex = (currentIndex + 1) % optionList.length;
     return optionList[nextIndex];
 };
-
-//  Dummy data
-export function generateDummyManga(): Manga {
-    const tmpChapterCount = 2;
-    const tmpMangaData: MangaData[] = [
-        {
-            title: "BroRys BL Manga",
-            language: "en",
-            description: "",
-            chapterCount: tmpChapterCount,
-            chapters: [],
-        },
-        {
-            title: "BroRys BL Manga (JP)",
-            language: "jp",
-            description: "",
-            chapterCount: tmpChapterCount,
-            chapters: [],
-        },
-    ];
-
-    for (let i = 1; i <= tmpChapterCount; ++i) {
-        const enTmpPages: string[] = [];
-        const jpTmpPages: string[] = [];
-        const tmp = 11;
-        const tmpPageCount = 9;
-        for (let j = 1; j <= tmpPageCount; ++j) {
-            enTmpPages.push(
-                `https://alt.hololive.tv/wp-content/uploads/2022/${tmp}/en${
-                    i + 1
-                }_0${j}.jpg`
-            );
-            jpTmpPages.push(
-                `https://alt.hololive.tv/wp-content/uploads/2022/${tmp}/jp${
-                    i + 1
-                }_0${j}.jpg`
-            );
-        }
-        let en_title = "Short title";
-        let jp_title = "短いタイトル";
-        if (i == 2) {
-            en_title = "Super duper long title";
-            jp_title = "めちゃくちゃ長いタイトル";
-        }
-        tmpMangaData[0].chapters.push({
-            title: en_title,
-            pageCount: tmpPageCount,
-            pages: enTmpPages,
-        });
-        tmpMangaData[1].chapters.push({
-            title: jp_title,
-            pageCount: tmpPageCount,
-            pages: jpTmpPages,
-        });
-    }
-
-    const manga: Manga = {
-        id: "test-manga",
-        publishedDate: new Date("2024-01-16"),
-        authors: [],
-        artists: [],
-        data: new Map([
-            ["en", tmpMangaData[0]],
-            ["jp", tmpMangaData[1]],
-        ]),
-    };
-    return manga;
-}

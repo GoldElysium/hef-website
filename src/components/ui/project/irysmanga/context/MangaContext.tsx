@@ -12,7 +12,7 @@ import {
 	ReaderTheme,
 	readerThemes,
 } from '../utils/types';
-import { generateDummyManga } from '../utils/helper';
+import getManga from '../utils/data-helper';
 
 // Define the type for the context value
 interface MangaContextProps {
@@ -55,15 +55,14 @@ const MangaContext = createContext<MangaContextProps | undefined>(undefined);
 
 /* eslint-disable */
 // Creating a provider component
-export const MangaProvider: React.FC<{ children: React.ReactNode }> = ({
-    children,
-}) => {
-    const [readerLanguage, setReaderLanguage] = useState<Language>("en");
-    const [mangaLanguage, setMangaLanguage] = useState<Language>("en");
+export const MangaProvider: React.FC<{ children: React.ReactNode, devProps: { [key: string]: string }, lang: Language }> = (
+    { children, devProps, lang }) => {
+    const [readerLanguage, setReaderLanguage] = useState<Language>(lang);
+    const [mangaLanguage, setMangaLanguage] = useState<Language>(lang);
     const [pageLayout, setPageLayout] = useState<PageLayout>("single");
     const [fitMode, setFitMode] = useState<FitMode>("original");
 
-    const [manga, setManga] = useState(generateDummyManga());
+    const [manga, setManga] = useState(getManga(devProps));
     const [page, setPage] = useState(0);
     const [chapter, setChapter] = useState(0);
     const [direction, setDirection] = useState<PageDirection>("ltr");
