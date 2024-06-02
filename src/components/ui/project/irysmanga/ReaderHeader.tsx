@@ -7,6 +7,7 @@ import { getMangaDataOrThrow } from './utils/types';
 import './styles/styles.css';
 import styles from './styles/Header.module.css';
 import NavIcon from './NavIcon';
+import useDualTranslation from './hooks/useDualTranslation';
 
 interface Props {
 	setOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>;
@@ -17,6 +18,7 @@ function ReaderHeader({ setOpenSidebar }: Props) {
 		page, chapter, manga, mangaLanguage, headerVisibility,
 	} = useMangaContext();
 	const { t } = useTranslation('reader');
+	const tManga = useDualTranslation(mangaLanguage);
 	const containerRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
@@ -60,7 +62,7 @@ function ReaderHeader({ setOpenSidebar }: Props) {
                 <div className="flex gap-2 items-center">
                     <div className={styles.infoBadge}>
                         <span className={styles.infoBadgeTitle}>
-                            {t("chapter")}
+                            {tManga("chapter")}
                         </span>
                         <span className={styles.infoBadgeContent}>
                             {chapter + 1} / {mangaData.chapterCount}
@@ -68,7 +70,7 @@ function ReaderHeader({ setOpenSidebar }: Props) {
                     </div>
                     <div className={styles.infoBadge}>
                         <span className={styles.infoBadgeTitle}>
-                            {t("page")}
+                            {tManga("page")}
                         </span>
                         <span className={styles.infoBadgeContent}>
                             {page + 1} / {currentChapter.pageCount}

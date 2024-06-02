@@ -1,11 +1,11 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
-import useTranslation from '@/lib/i18n/client';
 import Select from 'react-select';
 import { useState } from 'react';
 import classNames from 'classnames';
 import { useMangaContext } from './context/MangaContext';
 import { handlePageNavigation } from './utils/helper';
 import { getMangaDataOrThrow } from './utils/types';
+import useDualTranslation from './hooks/useDualTranslation';
 
 interface SelectBoxProps {
 	value: number;
@@ -13,11 +13,11 @@ interface SelectBoxProps {
 }
 
 function SelectBox({ value, label }: SelectBoxProps) {
-	const { t } = useTranslation('reader');
 	const {
 		mangaLanguage, setPage, chapter, setChapter, manga, pageLayout,
 	} = useMangaContext();
 	const mangaData = getMangaDataOrThrow(manga, mangaLanguage);
+	const tManga = useDualTranslation(mangaLanguage);
 
 	/* eslint-disable */
     let maxValue =
@@ -51,11 +51,11 @@ function SelectBox({ value, label }: SelectBoxProps) {
         labelList = Array.from(Array(maxValue).keys()).map((key) =>
             mangaData.chapters[key].title
                 ? mangaData.chapters[key].title
-                : `${t(label)} ${key + 1}`
+                : `${tManga(label)} ${key + 1}`
         );
     } else {
         labelList = Array.from(Array(maxValue).keys()).map(
-            (key) => `${t(label)} ${key + 1}`
+            (key) => `${tManga(label)} ${key + 1}`
         );
     }
     const options = labelList.map((item, index) => ({
@@ -114,7 +114,6 @@ function SelectBox({ value, label }: SelectBoxProps) {
                                 }
                             ),
                     }}
-                    // styles={selectStyles(open)}
                 />
             </div>
 

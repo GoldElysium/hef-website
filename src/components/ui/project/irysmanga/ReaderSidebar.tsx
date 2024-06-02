@@ -82,7 +82,7 @@ function ReaderSidebar({ openSidebar, setOpenSidebar }: Props) {
 		return () => {
 			document.removeEventListener('mousedown', handleClickOutside);
 		};
-	}, []);
+	}, [setOpenSidebar]);
 
 	return (
 		<>
