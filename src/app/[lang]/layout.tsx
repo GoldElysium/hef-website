@@ -33,12 +33,9 @@ export default async function RootLayout({
 			<head>
 				<link href="/favicon.svg" rel="icon" type="image/svg+xml" />
 			</head>
-			{/* remove body tag after dev */}
-			<body>
-				<LocaleContextProvider lang={lang}>
-					{children}
-				</LocaleContextProvider>
-			</body>
+			<LocaleContextProvider lang={lang}>
+				{children}
+			</LocaleContextProvider>
 		</html>
 	);
 }
