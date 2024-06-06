@@ -21,13 +21,15 @@ import {
 } from './utils/types';
 import SettingButton from './SettingButton';
 import styles from './styles/Sidebar.module.css';
+import ReaderModal from './modal-components/ReaderModal';
 
 interface Props {
 	openSidebar: boolean;
 	setOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>;
+	modalRef: React.RefObject<HTMLDialogElement>;
 }
 
-function ReaderSidebar({ openSidebar, setOpenSidebar }: Props) {
+function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }: Props) {
 	const {
 		pageLayout,
 		page,
@@ -49,7 +51,6 @@ function ReaderSidebar({ openSidebar, setOpenSidebar }: Props) {
 		setProgressVisibility,
 		setReaderTheme,
 	} = useMangaContext();
-	const modalRef = useRef<HTMLDialogElement>(null);
 	const { t, i18n } = useTranslation('reader');
 	useEffect(() => {
 		i18n.changeLanguage(readerLanguage);
@@ -71,6 +72,7 @@ function ReaderSidebar({ openSidebar, setOpenSidebar }: Props) {
 			if (
 				containerRef.current
                 && !containerRef.current.contains(event.target as Node)
+                && !modalRef.current?.open
 			) {
 				setOpenSidebar(false);
 			}
@@ -82,7 +84,7 @@ function ReaderSidebar({ openSidebar, setOpenSidebar }: Props) {
 		return () => {
 			document.removeEventListener('mousedown', handleClickOutside);
 		};
-	}, [setOpenSidebar]);
+	}, [setOpenSidebar, modalRef]);
 
 	return (
 		<>
@@ -200,20 +202,8 @@ function ReaderSidebar({ openSidebar, setOpenSidebar }: Props) {
 					/>
 				</div>
 			</div>
-
-			<dialog id="info_modal" className="modal" ref={modalRef}>
-				<div className="modal-box">
-					<h3>Info and credits</h3>
-					<div className="modal-action">
-						<form method="dialog">
-							{/* eslint-disable */}
-                            <button className="btn">Close</button>
-                            {/* // eslint-enable */}
-                        </form>
-                    </div>
-                </div>
-            </dialog>
-        </>
+			<ReaderModal modalRef={modalRef} />
+		</>
 	);
 }
 

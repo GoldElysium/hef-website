@@ -12,6 +12,7 @@ function IrysManga() {
 	const [clickCounter, setClickCounter] = useState(0);
 
 	const readerContainerRef = useRef(null);
+	const modalRef = useRef(null);
 
 	useEffect(() => {
 		if (openSidebar === false) {
@@ -33,10 +34,12 @@ function IrysManga() {
 			<ReaderSidebar
 				openSidebar={openSidebar}
 				setOpenSidebar={setOpenSidebar}
+				modalRef={modalRef}
 			/>
 			<KeyPressHandler
 				setOpenSidebar={setOpenSidebar}
 				readerContainerRef={readerContainerRef}
+				modalRef={modalRef}
 			/>
 		</div>
 	);

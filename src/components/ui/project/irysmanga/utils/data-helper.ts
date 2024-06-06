@@ -1,4 +1,4 @@
-import { Manga, MangaData } from './types';
+import { Contributor, Manga, MangaData } from './types';
 
 function getMangaFromDevProps(devProps: { [key: string]: string }): Manga {
 	if (!devProps.mangaData) {
@@ -6,6 +6,26 @@ function getMangaFromDevProps(devProps: { [key: string]: string }): Manga {
 	}
 
 	return JSON.parse(devProps.mangaData);
+}
+
+function getDummyContributors(): Contributor[] {
+	return Array(5).fill({
+		name: 'Contributor name',
+		socials: [
+			{
+				platform: 'Twitter',
+				link: '',
+			},
+			{
+				platform: 'Pixiv',
+				link: '',
+			},
+			{
+				platform: 'Github',
+				link: '',
+			},
+		],
+	});
 }
 
 function getDummyManga(): Manga {
@@ -62,8 +82,10 @@ function getDummyManga(): Manga {
 	const manga: Manga = {
 		id: 'test-manga',
 		publishedDate: '2024-01-16',
-		authors: [],
-		artists: [],
+		authors: getDummyContributors(),
+		artists: getDummyContributors(),
+		translators: getDummyContributors(),
+		devs: getDummyContributors(),
 		data: {
 			en: tmpMangaData[0],
 			jp: tmpMangaData[1],
@@ -78,7 +100,10 @@ function objIsEmpty(obj: any): boolean {
 }
 
 export default function getManga(devProps: { [key: string]: string }): Manga {
-	if (process.env.NODE_ENV === 'development' && (!process.env.NEXT_PUBLIC_CMS_URL || objIsEmpty(devProps))) {
+	if (
+		process.env.NODE_ENV === 'development'
+        && (!process.env.NEXT_PUBLIC_CMS_URL || objIsEmpty(devProps))
+	) {
 		return getDummyManga();
 	}
 

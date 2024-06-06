@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useMangaContext } from './context/MangaContext';
 import {
 	getNextOption,
@@ -18,9 +18,14 @@ import {
 interface Props {
 	setOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>;
 	readerContainerRef: React.RefObject<HTMLDivElement>;
+	modalRef: React.RefObject<HTMLDialogElement>;
 }
 
-function KeyPressHandler({ setOpenSidebar, readerContainerRef }: Props) {
+function KeyPressHandler({
+	setOpenSidebar,
+	readerContainerRef,
+	modalRef,
+}: Props) {
 	const {
 		setPage,
 		setChapter,
@@ -44,6 +49,9 @@ function KeyPressHandler({ setOpenSidebar, readerContainerRef }: Props) {
 
 	useEffect(() => {
 		const handleKeyPress = (event: KeyboardEvent) => {
+			if (modalRef.current?.open) {
+				return;
+			}
 			if (event.key === 'ArrowLeft') {
 				if (direction === 'ltr') {
 					handlePageNavigation(
@@ -155,6 +163,9 @@ function KeyPressHandler({ setOpenSidebar, readerContainerRef }: Props) {
 			if (event.key === 'k') {
 				setReaderLanguage((prev) => getNextOption(prev, languages));
 			}
+			if (event.key === 'i') {
+				modalRef.current?.showModal();
+			}
 		};
 
 		window.addEventListener('keydown', handleKeyPress);
@@ -181,6 +192,7 @@ function KeyPressHandler({ setOpenSidebar, readerContainerRef }: Props) {
 		setPageLayout,
 		setProgressVisibility,
 		setReaderTheme,
+		modalRef,
 	]);
 	useEffect(() => {
 		const startScrolling = (scrollDirection: number) => {
@@ -204,6 +216,9 @@ function KeyPressHandler({ setOpenSidebar, readerContainerRef }: Props) {
 			stopScrolling();
 		};
 		const handleKeyPressUpDown = (event: KeyboardEvent) => {
+			if (modalRef.current?.open) {
+				return;
+			}
 			if (event.key === 'ArrowUp') {
 				event.preventDefault();
 				startScrolling(-1);
@@ -220,7 +235,7 @@ function KeyPressHandler({ setOpenSidebar, readerContainerRef }: Props) {
 			window.removeEventListener('keyup', handleKeyRelease);
 			stopScrolling();
 		};
-	}, [readerContainerRef]);
+	}, [readerContainerRef, modalRef]);
 	return null;
 }
 

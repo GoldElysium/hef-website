@@ -25,6 +25,8 @@ export type Manga = {
 	publishedDate: string; // Publish date must be in ISO8601
 	authors: Contributor[];
 	artists: Contributor[];
+	translators: Contributor[];
+	devs: Contributor[];
 	data: { readonly [lang: string]: MangaData }; // Maps ISO language codes to correct data.
 };
 
