@@ -77,6 +77,14 @@ function Reader({
 		}
 	};
 
+	/**
+	 * Check whether we should preload an image for a page.
+	 * Note we preload a few pages in advance (or behind just in case you try jumping pages)
+	 * for a better reading experience, but we don't want to load all the images at once
+	 * because that might be slow.
+	*/
+	const shouldPreload = (numPages: number, pg: number): ('eager' | 'lazy') => (Math.abs(numPages - pg) > 3 ? 'lazy' : 'eager');
+
 	// Handle page turn on click
 	const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
 		const { clientX, target } = event;
@@ -168,6 +176,7 @@ function Reader({
                         [styles.pageWidth]: fitMode === "width",
                     })}
                     alt={`Page ${i + 1}`}
+					loading={shouldPreload(i, page)}
                 />
             ));
         } else {
@@ -182,6 +191,7 @@ function Reader({
                         [styles.pageWidth]: fitMode === "width",
                     })}
                     alt={`Page ${i + 1}`}
+					loading={shouldPreload(i, page)} // Preload up to 3 pages in advance.
                 />
             ));
         }
