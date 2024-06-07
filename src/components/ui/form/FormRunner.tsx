@@ -2,12 +2,14 @@
 
 import { IRunnerAttachments, markdownifyToJSX, useRunner } from '@tripetto/runner-react-hook';
 import type { IForm } from '@/app/[lang]/(DynamicLayout)/forms/[id]/page';
-import { ReactNode } from 'react';
+import type { FocusEvent } from 'react';
+import { ReactNode, useRef } from 'react';
 import {
 	castToBoolean, markdownifyToString, markdownifyToURL, NodeBlock,
 } from '@tripetto/runner';
 import { TOverlayContext, useOverlay } from '@tripetto/runner-fabric/overlay';
 import './blocks';
+import { Turnstile, TurnstileInstance } from '@marsidev/react-turnstile';
 
 interface IProps {
 	id: string;
@@ -35,8 +37,8 @@ export interface IFormNodeBlockProps {
 	readonly ariaDescription: JSX.Element | undefined;
 	readonly autoFocus: (element: HTMLElement | null) => void;
 	readonly onSubmit: (() => void) | undefined;
-	readonly focus: ((event: FocusEvent) => void) | undefined;
-	readonly blur: ((event: FocusEvent) => void) | undefined;
+	readonly focus: ((event: FocusEvent<HTMLElement, HTMLElement>) => void) | undefined;
+	readonly blur: ((event: FocusEvent<HTMLElement, HTMLElement>) => void) | undefined;
 	readonly attachments: IRunnerAttachments | undefined;
 	readonly markdownifyToJSX: (md: string, lineBreaks?: boolean) => JSX.Element;
 	readonly markdownifyToURL: (md: string) => string;
@@ -51,6 +53,7 @@ export default function FormRunner({ id, form }: IProps) {
 		// snapshot,
 	} = useRunner<IFormNodeBlock>({
 		definition: form.form,
+		view: 'test',
 		// snapshot: JSON.parse(localStorage.getItem(`form-${id}`) || 'null') || undefined,
 	}, {
 		autoStart: true,
@@ -58,6 +61,8 @@ export default function FormRunner({ id, form }: IProps) {
 	});
 
 	const [OverlayProvider, overlay] = useOverlay();
+
+	const turnstileRef = useRef<TurnstileInstance>();
 
 	/* const localSnapshot = useRef({
 		data: undefined as ISnapshot<any> | undefined,
@@ -107,10 +112,19 @@ export default function FormRunner({ id, form }: IProps) {
 												return res.blob();
 											},
 											async put(file) {
+												turnstileRef.current?.execute();
+
+												const turnstileResponse = await turnstileRef.current?.getResponsePromise();
+												if (!turnstileResponse) {
+													// TODO: Properly handle
+													throw new Error('Failed to get Turnstile response.');
+												}
+
 												const res = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL}/forms/upload`, {
 													method: 'POST',
 													body: JSON.stringify({
 														fileExt: file.name.split('.').pop(),
+														turnstileResponse,
 													}),
 													headers: {
 														'Content-Type': 'application/json',
@@ -126,20 +140,30 @@ export default function FormRunner({ id, form }: IProps) {
 
 												await fetch(url, {
 													body: formData,
+													method: 'POST',
 												});
 
 												return filename;
 											},
 											async delete(key) {
-												await fetch(`${process.env.NEXT_PUBLIC_CMS_URL}/forms/upload`, {
+												turnstileRef.current?.execute();
+
+												const turnstileResponse = await turnstileRef.current?.getResponsePromise();
+												if (!turnstileResponse) {
+													// TODO: Properly handle
+													throw new Error('Failed to get Turnstile response.');
+												}
+
+												fetch(`${process.env.NEXT_PUBLIC_CMS_URL}/forms/upload`, {
 													method: 'DELETE',
 													body: JSON.stringify({
 														key,
+														turnstileResponse,
 													}),
 													headers: {
 														'Content-Type': 'application/json',
 													},
-												});
+												}).then();
 											},
 										},
 										get id() {
@@ -268,6 +292,17 @@ export default function FormRunner({ id, form }: IProps) {
 						</nav>
 					</div>
 				))}
+				<Turnstile
+					className="mt-4"
+					siteKey={process.env.NEXT_PUBLIC_TURNSTILE_KEY as string}
+					ref={turnstileRef}
+					options={{
+						execution: 'execute',
+						appearance: 'execute',
+						responseField: false,
+						refreshExpired: 'manual',
+					}}
+				/>
 				<OverlayProvider />
 			</>
 		)
