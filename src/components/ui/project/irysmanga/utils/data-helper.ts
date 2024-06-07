@@ -8,9 +8,9 @@ function getMangaFromDevProps(devProps: { [key: string]: string }): Manga {
 	return JSON.parse(devProps.mangaData);
 }
 
-function getDummyContributors(): Contributor[] {
+function getDummyContributors(role: string): Contributor[] {
 	return Array(5).fill({
-		name: 'Contributor name',
+		name: `${role} name`,
 		socials: [
 			{
 				platform: 'Twitter',
@@ -82,10 +82,10 @@ function getDummyManga(): Manga {
 	const manga: Manga = {
 		id: 'test-manga',
 		publishedDate: '2024-01-16',
-		authors: getDummyContributors(),
-		artists: getDummyContributors(),
-		translators: getDummyContributors(),
-		devs: getDummyContributors(),
+		authors: getDummyContributors('Author'),
+		artists: getDummyContributors('Artist'),
+		translators: getDummyContributors('Translator'),
+		devs: getDummyContributors('Developer'),
 		data: {
 			en: tmpMangaData[0],
 			jp: tmpMangaData[1],
