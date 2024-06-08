@@ -17,7 +17,7 @@ interface IProps {
 }
 
 const jura = Jura({
-	weight: ['700'],
+	weight: ['500', '600', '700'],
 	subsets: ['latin'],
 });
 

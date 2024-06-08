@@ -1,5 +1,6 @@
 import { RefObject, useState } from 'react';
 import { languages } from '@/lib/i18n/settings';
+import useTranslation from '@/lib/i18n/client';
 import ModalTab from './ModalTab';
 import ModalTabGeneral from './ModalTabGeneral';
 import ModalTabStory from './ModalTabStory';
@@ -14,6 +15,7 @@ interface Props {
 function ReaderModal({ modalRef }: Props) {
 	const [selected, setSelected] = useState('General');
 	const { readerLanguage, setReaderLanguage } = useMangaContext();
+	const { t } = useTranslation('reader');
 	return (
 		<dialog id="info_modal" className="modal" ref={modalRef}>
 			<div className="modal-box flex h-[90%] min-w-[50%] max-w-[70%] flex-col justify-between overflow-hidden">
@@ -66,7 +68,7 @@ function ReaderModal({ modalRef }: Props) {
                                   )
                         }
                     >
-                        {selected === "Reader" ? "Close" : "Next"}
+                        {selected === "Reader" ? t("close") : t("next")}
                     </button>
                     {/* // eslint-enable */}
                 </div>

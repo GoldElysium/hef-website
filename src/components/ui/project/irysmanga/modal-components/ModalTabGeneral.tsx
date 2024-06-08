@@ -1,39 +1,26 @@
+import useTranslation from '@/lib/i18n/client';
 import CreditBlock from './CreditBlock';
 import ModalTabContent from './ModalTabContent';
 import { useMangaContext } from '../context/MangaContext';
 
 function ModalTabGeneral() {
 	const { manga } = useMangaContext();
+	const { t } = useTranslation('reader', 'modal-general');
 	return (
 		<ModalTabContent>
-			<h1 className="mb-4 text-4xl font-bold">
-				HiRys! Happy 3rd Anniversary!
-			</h1>
-			<p className="mb-4">
-				Can you believe it&apos;s already been 3 years? Time really
-				flies! It&apos;s been an incredible journey filled with
-				memorable moments and achievements. As the IRyStocrats,
-				we&apos;ve joined forces to commemorate this special occasion by
-				creating a manga just for you! We hope you enjoy it!
-			</p>
-			<h2 className="mb-4 text-3xl font-bold underline">Credits</h2>
+			<h1 className="mb-4 text-4xl font-bold">{t('greeting')}</h1>
+			<p className="mb-4">{t('essay')}</p>
+			<h2 className="mb-4 text-3xl font-bold underline">
+				{t('credits')}
+			</h2>
 			<div className="grid w-full lg:grid-cols-2 lg:grid-rows-2">
+				<CreditBlock label="authors" contributors={manga.authors} />
+				<CreditBlock label="artists" contributors={manga.artists} />
 				<CreditBlock
-					label="Authors"
-					contributors={manga.authors}
-				/>
-				<CreditBlock
-					label="Artists"
-					contributors={manga.artists}
-				/>
-				<CreditBlock
-					label="Translators"
+					label="translators"
 					contributors={manga.translators}
 				/>
-				<CreditBlock
-					label="Programmers"
-					contributors={manga.devs}
-				/>
+				<CreditBlock label="programmers" contributors={manga.devs} />
 			</div>
 		</ModalTabContent>
 	);

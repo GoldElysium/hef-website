@@ -1,110 +1,102 @@
+import useTranslation from '@/lib/i18n/client';
 import ModalTabContent from './ModalTabContent';
 
-function ModalTabReader() {
+function MangaReaderModal() {
+	const { t } = useTranslation('reader', 'modal-reader');
+
 	return (
 		<ModalTabContent>
-			<h1 className="mb-4 text-3xl font-bold">
-				Welcome to the Irys-Themed Manga Reader!
-			</h1>
-			<p className="mb-4">
-				In order to show the manga, we built our very own Irys-themed
-				reader! Here&apos;s a quick guide to help you get started and
-				make the most of your reading experience.
-			</p>
-			<h2 className="mb-2 text-2xl font-semibold">
-				How to Use the Manga Reader:
-			</h2>
+			<h1 className="mb-4 text-3xl font-bold">{t('greeting')}</h1>
+			<p className="mb-4">{t('introduction')}</p>
+			<h2 className="mb-2 text-2xl font-semibold">{t('howto')}</h2>
 			<ul className="mb-4 list-inside list-disc">
 				<li>
-					Turning Pages: You can easily turn the page by clicking
-					anywhere on the current page. It&apos;s as simple as that!
+					<span className="font-semibold">{t('page-turn')}</span>
+					{' '}
+					{t('page-turn-text')}
 				</li>
 				<li>
-					Sidebar Settings: The sidebar on the right holds various
-					settings to enhance your reading experience. Things such as
-					language, current chapter, page layout, reader theme, etc.
-					Can be customized through here.
+					<span className="font-semibold">{t('settings')}</span>
+					{' '}
+					{t('settings-text')}
 				</li>
 				<li>
-					Making more space: If you want more screen space, you can
-					close the sidebar by clicking the top icon on the top right
-					corner of the sidebar (or if you&apos;re on mobile, you can
-					click anywhere outside the bar to close it). You can also
-					close the header from one of the settings.
+					<span className="font-semibold">{t('space')}</span>
+					{' '}
+					{t('space-text')}
 				</li>
 			</ul>
-			<h2 className="mb-2 text-2xl font-semibold">Keyboard Shortcuts:</h2>
+			<h2 className="mb-2 text-2xl font-semibold">{t('shortcut')}</h2>
 			<ul className="grid list-inside list-disc grid-cols-1 min-[920px]:grid-cols-2 min-[1360px]:grid-cols-3">
 				<li>
-					Page Turn:
+					{t('page-turn-k')}
 					{' '}
 					<kbd className="kbd kbd-sm">→</kbd>
 					{' '}
-					or
+					{t('or')}
 					{' '}
 					<kbd className="kbd kbd-sm">←</kbd>
 				</li>
 				<li>
-					Page Scroll:
+					{t('page-scroll-k')}
 					{' '}
 					<kbd className="kbd kbd-sm">↑</kbd>
 					{' '}
-					or
+					{t('or')}
 					{' '}
 					<kbd className="kbd kbd-sm">↓</kbd>
 				</li>
 				<li>
-					Chapter Turn:
+					{t('chapter-turn-k')}
 					{' '}
 					<kbd className="kbd kbd-sm">,</kbd>
 					{' '}
-					or
+					{t('or')}
 					{' '}
 					<kbd className="kbd kbd-sm">.</kbd>
 				</li>
 				<li>
-					Change Manga Language:
+					{t('manga-language-k')}
 					{' '}
 					<kbd className="kbd kbd-sm">J</kbd>
 				</li>
 				<li>
-					Change Reader Language:
+					{t('reader-language-k')}
 					{' '}
 					<kbd className="kbd kbd-sm">K</kbd>
 				</li>
-
 				<li>
-					Change Page Direction:
+					{t('page-direction-k')}
 					{' '}
 					<kbd className="kbd kbd-sm">D</kbd>
 				</li>
 				<li>
-					Open/Close Sidebar:
+					{t('sidebar-k')}
 					{' '}
 					<kbd className="kbd kbd-sm">M</kbd>
 				</li>
 				<li>
-					Open/Close Header
+					{t('header-k')}
 					{' '}
 					<kbd className="kbd kbd-sm">H</kbd>
 				</li>
 				<li>
-					Change Theme:
+					{t('theme-k')}
 					{' '}
 					<kbd className="kbd kbd-sm">T</kbd>
 				</li>
 				<li>
-					Change Page Layout:
+					{t('page-layout-k')}
 					{' '}
 					<kbd className="kbd kbd-sm">S</kbd>
 				</li>
 				<li>
-					Change Page Fit Mode:
+					{t('page-fit-k')}
 					{' '}
 					<kbd className="kbd kbd-sm">F</kbd>
 				</li>
 				<li>
-					Show/Hide Progress:
+					{t('progress-k')}
 					{' '}
 					<kbd className="kbd kbd-sm">P</kbd>
 				</li>
@@ -113,4 +105,4 @@ function ModalTabReader() {
 	);
 }
 
-export default ModalTabReader;
+export default MangaReaderModal;

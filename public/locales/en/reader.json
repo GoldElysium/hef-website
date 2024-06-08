@@ -20,5 +20,45 @@
     "theme": "Theme",
     "dark": "Dark",
     "light": "Light",
-    "menu": "Menu"
+    "menu": "Menu",
+    "next": "Next",
+    "close": "Close",
+    "modal-general": {
+        "greeting": "HiRys! Happy 3rd Anniversary!",
+        "essay": "Can you believe it's already been 3 years? Time really flies! It's been an incredible journey filled with memorable moments and achievements. As the IRyStocrats, we've joined forces to commemorate this special occasion by creating a manga just for you! We hope you enjoy it!",
+        "credits": "Credits",
+        "authors": "Authors",
+        "artists": "Artists",
+        "translators": "Translators",
+        "programmers": "Programmers"
+    },
+    "modal-story": {
+        "greeting": "Story",
+        "content": "Content"
+    },
+    "modal-reader": {
+        "greeting": "Welcome to the Irys-Themed Manga Reader!",
+        "introduction": "In order to show the manga, we built our very own Irys-themed reader! Here's a quick guide to help you get started and make the most of your reading experience.",
+        "howto": "How to Use the Manga Reader:",
+        "page-turn": "Turning Pages:",
+        "page-turn-text": "You can easily turn the page by clicking anywhere on the current page. It's as simple as that!",
+        "settings": "Settings:",
+        "settings-text": "The sidebar on the right holds various settings to enhance your reading experience. Things such as language, current chapter, page layout, reader theme, etc. Can be customized through here.",
+        "space": "Making more space:",
+        "space-text": "If you want more screen space, you can close the sidebar by clicking the top icon on the top right corner of the sidebar (or if you're on mobile, you can click anywhere outside the bar to close it). You can also close the header from one of the settings.",
+        "shortcut": "Keyboard Shortcuts:",
+        "page-turn-k": "Page Turn:",
+        "page-scroll-k": "Page Scroll:",
+        "chapter-turn-k": "Chapter Turn:",
+        "manga-language-k": "Change Manga Language:",
+        "reader-language-k": "Change Reader Language:",
+        "page-direction-k": "Change Page Direction:",
+        "sidebar-k": "Open/Close Sidebar:",
+        "header-k": "Open/Close Header",
+        "theme-k": "Change Theme:",
+        "page-layout-k": "Change Page Layout:",
+        "page-fit-k": "Change Page Fit Mode:",
+        "progress-k": "Show/Hide Progress:",
+        "or": "or"
+    }
 }
