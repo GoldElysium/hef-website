@@ -50,6 +50,8 @@ interface MangaContextProps {
 
 	manga: Manga;
 	setManga: React.Dispatch<React.SetStateAction<Manga>>;
+
+	optimizedImages: Map<string, string[]>
 }
 
 // Creating a context object
@@ -57,8 +59,8 @@ const MangaContext = createContext<MangaContextProps | undefined>(undefined);
 
 /* eslint-disable */
 // Creating a provider component
-export const MangaProvider: React.FC<{ children: React.ReactNode, devProps: { [key: string]: string }, lang: Language }> = (
-	{ children, devProps, lang }) => {
+export const MangaProvider: React.FC<{ children: React.ReactNode, devProps: { [key: string]: string }, lang: Language, optimizedImages: Map<string, string[]> }> = (
+	{ children, devProps, lang, optimizedImages }) => {
 	const [readerLanguage, setReaderLanguage] = useState<Language>(lang);
 	const [mangaLanguage, setMangaLanguage] = useState<Language>(lang);
 	const [pageLayout, setPageLayout] = useState<PageLayout>("single");
@@ -99,6 +101,7 @@ export const MangaProvider: React.FC<{ children: React.ReactNode, devProps: { [k
 			setReaderTheme,
 			manga,
 			setManga,
+			optimizedImages,
 		}),
 		[
 			readerLanguage,
@@ -112,6 +115,7 @@ export const MangaProvider: React.FC<{ children: React.ReactNode, devProps: { [k
 			progressVisibility,
 			readerTheme,
 			manga,
+			optimizedImages,
 		]
 	);
 

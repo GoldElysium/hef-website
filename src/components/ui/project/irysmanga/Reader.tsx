@@ -32,6 +32,7 @@ function Reader({
 		manga,
 		direction,
 		mangaLanguage,
+		optimizedImages,
 	} = useMangaContext();
 
 	// const containerRef = useRef<HTMLDivElement>(null);
@@ -162,7 +163,8 @@ function Reader({
 	if (mangaData.chapters[chapter]) {
 		const currentChapter = mangaData.chapters[chapter];
 		const maxPageCount = currentChapter.pageCount;
-		const currentPages = currentChapter.pages;
+		// Use optimized pages if we have them, otherwise fall back to unoptimized I guess.
+		const currentPages = optimizedImages.get(currentChapter.title) ?? currentChapter.pages;
 
 		const getClassNames = (i: number) => {
 			const blockStyle = pageLayout === 'single' ? {
