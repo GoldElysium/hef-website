@@ -1,5 +1,3 @@
-'use client';
-
 import { Project } from '@/types/payload-types';
 import { Language } from '@/lib/i18n/languages';
 import { Jura } from 'next/font/google';

@@ -1,3 +1,5 @@
+'use client';
+
 import React, {
 	createContext, useState, useContext, useMemo,
 } from 'react';
@@ -24,6 +26,7 @@ interface MangaContextProps {
 
 	page: number;
 	setPage: React.Dispatch<React.SetStateAction<number>>;
+
 	chapter: number;
 	setChapter: React.Dispatch<React.SetStateAction<number>>;
 
@@ -40,12 +43,11 @@ interface MangaContextProps {
 	setHeaderVisibility: React.Dispatch<React.SetStateAction<HeaderVisibility>>;
 
 	progressVisibility: ProgressVisibility;
-	setProgressVisibility: React.Dispatch<
-	React.SetStateAction<ProgressVisibility>
-	>;
+	setProgressVisibility: React.Dispatch<React.SetStateAction<ProgressVisibility>>;
 
 	readerTheme: ReaderTheme;
 	setReaderTheme: React.Dispatch<React.SetStateAction<ReaderTheme>>;
+
 	manga: Manga;
 	setManga: React.Dispatch<React.SetStateAction<Manga>>;
 }
@@ -56,78 +58,76 @@ const MangaContext = createContext<MangaContextProps | undefined>(undefined);
 /* eslint-disable */
 // Creating a provider component
 export const MangaProvider: React.FC<{ children: React.ReactNode, devProps: { [key: string]: string }, lang: Language }> = (
-    { children, devProps, lang }) => {
-    const [readerLanguage, setReaderLanguage] = useState<Language>(lang);
-    const [mangaLanguage, setMangaLanguage] = useState<Language>(lang);
-    const [pageLayout, setPageLayout] = useState<PageLayout>("single");
-    const [fitMode, setFitMode] = useState<FitMode>("original");
+	{ children, devProps, lang }) => {
+	const [readerLanguage, setReaderLanguage] = useState<Language>(lang);
+	const [mangaLanguage, setMangaLanguage] = useState<Language>(lang);
+	const [pageLayout, setPageLayout] = useState<PageLayout>("single");
+	const [fitMode, setFitMode] = useState<FitMode>("original");
 
-    const [manga, setManga] = useState(getManga(devProps));
-    const [page, setPage] = useState(0);
-    const [chapter, setChapter] = useState(0);
-    const [direction, setDirection] = useState<PageDirection>("ltr");
-    const [headerVisibility, setHeaderVisibility] =
-        useState<HeaderVisibility>("header-shown");
-    const [progressVisibility, setProgressVisibility] =
-        useState<ProgressVisibility>("progress-shown");
+	const [manga, setManga] = useState(getManga(devProps));
+	const [page, setPage] = useState(0);
+	const [chapter, setChapter] = useState(0);
+	const [direction, setDirection] = useState<PageDirection>("ltr");
+	const [headerVisibility, setHeaderVisibility] =
+		useState<HeaderVisibility>("header-shown");
+	const [progressVisibility, setProgressVisibility] =
+		useState<ProgressVisibility>("progress-shown");
 
-    const [readerTheme, setReaderTheme] = useState<ReaderTheme>(
-        readerThemes[0]
-    );
+	const [readerTheme, setReaderTheme] = useState<ReaderTheme>(readerThemes[0]);
 
-    const contextValue = useMemo(
-        () => ({
-            readerLanguage,
-            setReaderLanguage,
-            mangaLanguage,
-            setMangaLanguage,
-            page,
-            setPage,
-            chapter,
-            setChapter,
-            pageLayout,
-            setPageLayout,
-            fitMode,
-            setFitMode,
-            direction,
-            setDirection,
-            headerVisibility,
-            setHeaderVisibility,
-            progressVisibility,
-            setProgressVisibility,
-            readerTheme,
-            setReaderTheme,
-            manga,
-            setManga,
-        }),
-        [
-            readerLanguage,
-            mangaLanguage,
-            page,
-            chapter,
-            pageLayout,
-            fitMode,
-            direction,
-            headerVisibility,
-            progressVisibility,
-            readerTheme,
-            manga,
-        ]
-    );
+	const contextValue = useMemo(
+		() => ({
+			readerLanguage,
+			setReaderLanguage,
+			mangaLanguage,
+			setMangaLanguage,
+			page,
+			setPage,
+			chapter,
+			setChapter,
+			pageLayout,
+			setPageLayout,
+			fitMode,
+			setFitMode,
+			direction,
+			setDirection,
+			headerVisibility,
+			setHeaderVisibility,
+			progressVisibility,
+			setProgressVisibility,
+			readerTheme,
+			setReaderTheme,
+			manga,
+			setManga,
+		}),
+		[
+			readerLanguage,
+			mangaLanguage,
+			page,
+			chapter,
+			pageLayout,
+			fitMode,
+			direction,
+			headerVisibility,
+			progressVisibility,
+			readerTheme,
+			manga,
+		]
+	);
 
-    return (
-        <MangaContext.Provider value={contextValue}>
-            {children}
-        </MangaContext.Provider>
-    );
+	return (
+		<MangaContext.Provider value={contextValue}>
+			{children}
+		</MangaContext.Provider>
+	);
 };
 // eslint-enable
 
 // Custom hook to use the context
 export const useMangaContext = (): MangaContextProps => {
-    const context = useContext(MangaContext);
-    if (!context) {
-        throw new Error("useMangaContext must be used within an MangaProvider");
-    }
-    return context;
+	const context = useContext(MangaContext);
+	if (!context) {
+		throw new Error("useMangaContext must be used within an MangaProvider");
+	}
+	return context;
 };

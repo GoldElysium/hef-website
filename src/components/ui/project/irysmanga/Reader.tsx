@@ -1,3 +1,5 @@
+'use client';
+
 import classNames from 'classnames';
 import React, { useEffect, useRef } from 'react';
 import { useMangaContext } from './context/MangaContext';
@@ -44,8 +46,8 @@ function Reader({
 			const targetImg = pageRefs.current[page];
 			if (targetImg) {
 				// eslint-disable-next-line
-                containerRef.current.scrollTop =
-                    targetImg.offsetTop - containerRef.current.offsetTop;
+				containerRef.current.scrollTop =
+					targetImg.offsetTop - containerRef.current.offsetTop;
 			}
 		}
 	};
@@ -146,12 +148,12 @@ function Reader({
 	};
 
 	// eslint-disable-next-line
-    useEffect(() => {
+	useEffect(() => {
 		handleScrollTop();
 	}, [page, chapter, pageLayout]);
 
 	// eslint-disable-next-line
-    useEffect(() => {
+	useEffect(() => {
 		setScollTopToPage();
 	}, [fitMode]);
 
@@ -162,62 +164,55 @@ function Reader({
 		const maxPageCount = currentChapter.pageCount;
 		const currentPages = currentChapter.pages;
 
-		/* eslint-disable */
-        if (pageLayout === "single") {
-            displayedPages = Array.from({ length: maxPageCount }, (_, i) => (
-                <img
-                    key={i}
-                    ref={(el) => (pageRefs.current[i] = el as HTMLImageElement)}
-                    src={currentPages[i]}
-                    className={classNames(styles.page, {
-                        block: i === page,
-                        hidden: i !== page,
-                        [styles.pageHeight]: fitMode === "height",
-                        [styles.pageWidth]: fitMode === "width",
-                    })}
-                    alt={`Page ${i + 1}`}
-					loading={shouldPreload(i, page)}
-                />
-            ));
-        } else {
-            displayedPages = Array.from({ length: maxPageCount }, (_, i) => (
-                <img
-                    key={i}
-                    ref={(el) => (pageRefs.current[i] = el as HTMLImageElement)}
-                    src={currentPages[i]}
-                    className={classNames(styles.page, {
-                        block: true,
-                        [styles.pageHeight]: fitMode === "height",
-                        [styles.pageWidth]: fitMode === "width",
-                    })}
-                    alt={`Page ${i + 1}`}
-					loading={shouldPreload(i, page)} // Preload up to 3 pages in advance.
-                />
-            ));
-        }
+		const getClassNames = (i: number) => {
+			const blockStyle = pageLayout === 'single' ? {
+				block: i === page,
+				hidden: i !== page,
+			} : {
+				block: true,
+			};
 
-        // eslint-enable
-    }
+			return classNames(
+				styles.page,
+				blockStyle,
+				{
+					[styles.pageHeight]: fitMode === 'height',
+					[styles.pageWidth]: fitMode === 'width',
+				},
+			);
+		};
 
-    /* eslint-disable */
-    return (
-        <div className="flex flex-col h-screen relative grow bg-base-100 transition-colors">
-            <ReaderHeader setOpenSidebar={setOpenSidebar}></ReaderHeader>
-            <div
-                ref={containerRef}
-                className={styles.pageContainer}
-                onClick={handleClick}
-                onScroll={handleScroll}
-                tabIndex={0}
-            >
-                {displayedPages}
-            </div>
-            <div className="absolute bottom-0 left-0 w-full">
-                <ProgressBar></ProgressBar>
-            </div>
-        </div>
-    );
-    // eslint-enable
+		displayedPages = Array.from({ length: maxPageCount }, (_, i) => (
+			<img
+				key={i}
+				ref={(el) => { pageRefs.current[i] = el as HTMLImageElement; }}
+				src={currentPages[i]}
+				className={getClassNames(i)}
+				alt={`Page ${i + 1}`}
+				loading={shouldPreload(i, page)}
+			/>
+		));
+	}
+
+	/* eslint-disable */
+	return (
+		<div className="flex flex-col h-screen relative grow bg-base-100 transition-colors">
+			<ReaderHeader setOpenSidebar={setOpenSidebar}></ReaderHeader>
+			<div
+				ref={containerRef}
+				className={styles.pageContainer}
+				onClick={handleClick}
+				onScroll={handleScroll}
+				tabIndex={0}
+			>
+				{displayedPages}
+			</div>
+			<div className="absolute bottom-0 left-0 w-full">
+				<ProgressBar></ProgressBar>
+			</div>
+		</div>
+	);
+	// eslint-enable
 }
 
 export default Reader;
