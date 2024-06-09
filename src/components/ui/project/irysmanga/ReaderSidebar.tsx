@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { Bars3Icon } from '@heroicons/react/24/solid';
+import { XMarkIcon } from '@heroicons/react/24/solid';
 import {
 	BookOpenIcon,
 	DocumentIcon,
@@ -88,13 +88,6 @@ function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }: Props) {
 
 	return (
 		<>
-			{!openSidebar && headerVisibility === 'header-hidden' && (
-				<Bars3Icon
-					className="barIcon absolute right-0 z-10 mr-4 mt-2"
-					onClick={() => setOpenSidebar(true)}
-					width={30}
-				/>
-			)}
 			<div
 				className={classNames(styles.fakeSidebarContainer, {
 					[styles.fakeSidebarContainerOpen]: openSidebar,
@@ -108,18 +101,20 @@ function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }: Props) {
 				})}
 				ref={containerRef}
 			>
-				<Bars3Icon
-					onClick={() => setOpenSidebar(false)}
-					className="barIcon invisible absolute right-0 mr-2 md:visible"
-					width={30}
-				/>
 				{/* Manga info */}
 				<div className="400 flex flex-col gap-2">
-					<div className="flex items-center gap-1">
-						<BookOpenIcon width={30} />
-						<strong className=" whitespace-nowrap">
-							{mangaData.title}
-						</strong>
+					<div className="flex flex-row content-center items-center justify-between">
+						<div className="flex items-center gap-1">
+							<BookOpenIcon width={30} />
+							<strong className=" whitespace-nowrap">
+								{mangaData.title}
+							</strong>
+						</div>
+						<XMarkIcon
+							onClick={() => setOpenSidebar(false)}
+							className="size-9 rounded-full p-1 hover:bg-gray-200"
+							width={30}
+						/>
 					</div>
 					<div className="flex items-center gap-1">
 						<DocumentIcon width={30} />
