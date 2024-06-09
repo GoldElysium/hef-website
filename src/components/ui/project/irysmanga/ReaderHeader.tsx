@@ -31,60 +31,56 @@ function ReaderHeader({ setOpenSidebar }: Props) {
 	const currentChapter = mangaData.chapters[chapter];
 	return (
 		<>
-			{/* eslint-disable */}
-            <div
-                className={classNames(styles.fakeHeader, {
-                    [styles.fakeHeaderShown]:
-                        headerVisibility === "header-shown",
-                    [styles.fakeHeaderHidden]:
-                        headerVisibility === "header-hidden",
-                })}
-            ></div>
-            <div
-                className={classNames(styles.header, {
-                    [styles.headerShown]: headerVisibility === "header-shown",
-                    [styles.headerHidden]: headerVisibility === "header-hidden",
-                })}
-                ref={containerRef}
-            >
-                <div className="flex gap-2 items-center">
-                    <Link href={"/"}>
-                        <NavIcon></NavIcon>
-                    </Link>
-                    <div className={styles.infoBadge}>
-                        <strong className={""}>{mangaData.title}</strong>
-                        {/* <strong className={styles.infoBadgeContent}>
+			<div
+				className={classNames(styles.fakeHeader, {
+					[styles.fakeHeaderShown]:
+						headerVisibility === 'header-shown',
+					[styles.fakeHeaderHidden]:
+						headerVisibility === 'header-hidden',
+				})}
+			/>
+			<div
+				className={classNames(styles.header, {
+					[styles.headerShown]: headerVisibility === 'header-shown',
+					[styles.headerHidden]: headerVisibility === 'header-hidden',
+				})}
+				ref={containerRef}
+			>
+				<div className="flex items-center gap-2">
+					<Link href="/">
+						<NavIcon />
+					</Link>
+					<div className={styles.infoBadge}>
+						<strong className="">{mangaData.title}</strong>
+						{/* <strong className={styles.infoBadgeContent}>
                             {currentChapter.title}
                         </strong> */}
-                    </div>
-                </div>
-                <div className="flex gap-2 items-center">
-                    <div className={styles.infoBadge}>
-                        <span className={styles.infoBadgeTitle}>
-                            {tManga("chapter")}
-                        </span>
-                        <span className={styles.infoBadgeContent}>
-                            {chapter + 1} / {mangaData.chapterCount}
-                        </span>
-                    </div>
-                    <div className={styles.infoBadge}>
-                        <span className={styles.infoBadgeTitle}>
-                            {tManga("page")}
-                        </span>
-                        <span className={styles.infoBadgeContent}>
-                            {page + 1} / {currentChapter.pageCount}
-                        </span>
-                    </div>
-					{
-						<Bars3Icon
-							className="barIcon z-10"
-							onClick={() => setOpenSidebar((curr) => !curr)}
-							width={30}
-						/>
-					}
-                </div>
-            </div>
-            {/* eslint-enable */}
+					</div>
+				</div>
+				<div className="flex items-center gap-2">
+					<div className={styles.infoBadge}>
+						<span className={styles.infoBadgeTitle}>
+							{tManga('chapter')}
+						</span>
+						<span className={styles.infoBadgeContent}>
+							{`${chapter + 1} / ${mangaData.chapterCount}`}
+						</span>
+					</div>
+					<div className={styles.infoBadge}>
+						<span className={styles.infoBadgeTitle}>
+							{tManga('page')}
+						</span>
+						<span className={styles.infoBadgeContent}>
+							{`${page + 1} / ${currentChapter.pageCount}`}
+						</span>
+					</div>
+					<Bars3Icon
+						className="barIcon z-10"
+						onClick={() => setOpenSidebar((curr) => !curr)}
+						width={30}
+					/>
+				</div>
+			</div>
 		</>
 	);
 }
