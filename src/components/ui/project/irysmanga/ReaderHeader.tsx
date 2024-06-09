@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { useEffect, useRef } from 'react';
-import useTranslation from '@/lib/i18n/client';
 import classNames from 'classnames';
+import { Bars3Icon } from '@heroicons/react/24/solid';
 import { useMangaContext } from './context/MangaContext';
 import { getMangaDataOrThrow } from './utils/types';
 import './styles/styles.css';
@@ -17,7 +17,6 @@ function ReaderHeader({ setOpenSidebar }: Props) {
 	const {
 		page, chapter, manga, mangaLanguage, headerVisibility,
 	} = useMangaContext();
-	const { t } = useTranslation('reader');
 	const tManga = useDualTranslation(mangaLanguage);
 	const containerRef = useRef<HTMLDivElement>(null);
 
@@ -76,12 +75,13 @@ function ReaderHeader({ setOpenSidebar }: Props) {
                             {page + 1} / {currentChapter.pageCount}
                         </span>
                     </div>
-                    <button
-                        className={"btn btn-sm btn-neutral"}
-                        onClick={() => setOpenSidebar((prev) => !prev)}
-                    >
-                        {t("menu")}
-                    </button>
+					{
+						<Bars3Icon
+							className="barIcon z-10"
+							onClick={() => setOpenSidebar((curr) => !curr)}
+							width={30}
+						/>
+					}
                 </div>
             </div>
             {/* eslint-enable */}
