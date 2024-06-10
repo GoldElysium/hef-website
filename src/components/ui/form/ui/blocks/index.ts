@@ -13,3 +13,7 @@ import './textarea';
 import './text';
 import './yes-no';
 import './file-upload';
+import './multi-select';
+import './multiple-choice';
+import './url';
+import './email';

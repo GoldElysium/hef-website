@@ -1,310 +1,420 @@
+/* eslint-disable max-len */
+/* Based on components provided by @tripetto/runner-fabric and @tripetto/runner-classic */
+/*
+Copyright 2019 Tripetto B.V.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+/*
+MIT License
+
+Copyright (c) 2021 GoldElysium
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+ */
+/* eslint-enable */
+
 'use client';
 
-import { IRunnerAttachments, markdownifyToJSX, useRunner } from '@tripetto/runner-react-hook';
-import type { IForm } from '@/app/[lang]/(DynamicLayout)/forms/[id]/page';
-import type { FocusEvent } from 'react';
-import { ReactNode, useRef } from 'react';
+import { TRunnerPreviewData } from '@tripetto/runner-react-hook';
+import { useEffect, useRef, useState } from 'react';
 import {
-	castToBoolean, markdownifyToString, markdownifyToURL, NodeBlock,
+	compare,
+	fingerprint,
+	IDefinition,
+	IHookPayload,
+	isFunction,
+	ISnapshot,
+	isPromise,
+	L10n,
+	TL10n,
+	Export, Instance,
 } from '@tripetto/runner';
-import { TOverlayContext, useOverlay } from '@tripetto/runner-fabric/overlay';
-import './blocks';
-import { Turnstile, TurnstileInstance } from '@marsidev/react-turnstile';
+import './ui/blocks';
+import Prologue from './ui/messages/prologue';
+import Epilogue from './ui/messages/epilogue';
+import { IRunnerSnapshot } from './interfaces/snapshot';
+import { IRunnerProps, IRunnerUIProps } from './interfaces/props';
+import { IBuilderInstance } from './interfaces/builder';
+import { IRunnerController } from './hooks/controller';
+import useFormRunner from './hooks/runner';
 
-interface IProps {
-	id: string;
-	form: IForm;
-}
+let runCounter = 0;
 
-export interface IFormNodeBlock extends NodeBlock {
-	readonly required?: boolean;
-	readonly marginAroundBlock?: boolean;
-	readonly hideRequiredIndicatorFromName?: boolean;
-	readonly render?: (props: IFormNodeBlockProps) => ReactNode;
-}
-
-export interface IFormNodeBlockProps {
-	readonly id: string;
-	readonly overlay: TOverlayContext;
-	readonly name: JSX.Element | undefined;
-	readonly description: JSX.Element | undefined;
-	readonly explanation: JSX.Element | undefined;
-	readonly label: JSX.Element | undefined;
-	readonly placeholder: string;
-	readonly tabIndex: number;
-	readonly isFailed: boolean;
-	readonly ariaDescribedBy: string | undefined;
-	readonly ariaDescription: JSX.Element | undefined;
-	readonly autoFocus: (element: HTMLElement | null) => void;
-	readonly onSubmit: (() => void) | undefined;
-	readonly focus: ((event: FocusEvent<HTMLElement, HTMLElement>) => void) | undefined;
-	readonly blur: ((event: FocusEvent<HTMLElement, HTMLElement>) => void) | undefined;
-	readonly attachments: IRunnerAttachments | undefined;
-	readonly markdownifyToJSX: (md: string, lineBreaks?: boolean) => JSX.Element;
-	readonly markdownifyToURL: (md: string) => string;
-	readonly markdownifyToImage: (md: string) => string;
-	readonly markdownifyToString: (md: string) => string;
-}
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export default function FormRunner({ id, form }: IProps) {
+export default function FormRunnerUI(props: IRunnerUIProps) {
 	const {
-		storyline,
-		// snapshot,
-	} = useRunner<IFormNodeBlock>({
-		definition: form.form,
-		view: 'test',
-		// snapshot: JSON.parse(localStorage.getItem(`form-${id}`) || 'null') || undefined,
-	}, {
-		autoStart: true,
-		mode: 'paginated',
+		frameRef,
+		prologue,
+		blocks,
+		epilogue,
+	} = useFormRunner({
+		...props,
+		onSubmit: (instance: Instance) => {
+			const exportables = Export.exportablesWithData(instance);
+
+			console.log(exportables);
+		},
 	});
 
-	const [OverlayProvider, overlay] = useOverlay();
+	return (
+		<div
+			ref={frameRef}
+		>
+			{
+				// eslint-disable-next-line react/jsx-props-no-spreading
+				(prologue && <Prologue {...prologue} />)
+				|| (
+					blocks && (
+						// eslint-disable-next-line react/jsx-no-useless-fragment
+						<>
+							{blocks}
+						</>
+					)
+				)
+				// eslint-disable-next-line react/jsx-props-no-spreading
+				|| (epilogue && <Epilogue {...epilogue} />)
+			}
+		</div>
+	);
+}
 
-	const turnstileRef = useRef<TurnstileInstance>();
+/* eslint-disable react/destructuring-assignment */
+export function FormRunner(props: IRunnerProps) {
+	const definition = useRef<IDefinition | false>();
+	const snapshot = useRef<ISnapshot<IRunnerSnapshot> | false>();
+	const l10n = useRef<TL10n | false>();
+	const license = useRef<string | false>();
+	const emptyDefinition = {
+		sections: [],
+		builder: {
+			name: '',
+			version: '',
+		},
+	} as IDefinition;
+	const isReady = useRef<true>();
+	const runOnce = useRef<true>();
+	const builderRef = useRef<IBuilderInstance>();
+	const builderAwait = useRef<boolean>();
+	const isLive = props.view !== 'test' && props.view !== 'preview';
+	const controllerInternal = useRef<IRunnerController>();
+	const controller = props.controller || controllerInternal;
+	const [, updateProc] = useState({});
+	const componentState = useRef<'mounted' | 'dirty'>();
+	const updateRef = useRef<typeof updateProc>();
+	const update = (apply: () => void) => {
+		apply();
 
-	/* const localSnapshot = useRef({
-		data: undefined as ISnapshot<any> | undefined,
+		if (componentState.current === 'mounted') {
+			updateRef.current!({});
+		} else {
+			componentState.current = 'dirty';
+		}
+	};
+
+	updateRef.current = updateProc;
+
+	if (!runOnce.current) {
+		runOnce.current = true;
+		builderAwait.current = !!props.builder;
+
+		if (isPromise(props.definition)) {
+			definition.current = false;
+
+			props.definition
+				// eslint-disable-next-line no-return-assign
+				.then((data) => update(() => (definition.current = data || emptyDefinition)))
+				// eslint-disable-next-line no-return-assign
+				?.catch(() => update(() => (definition.current = emptyDefinition)));
+		} else {
+			definition.current = props.definition || emptyDefinition;
+		}
+
+		if (isPromise(props.snapshot)) {
+			snapshot.current = false;
+
+			props.snapshot
+				// eslint-disable-next-line no-return-assign
+				.then((data) => update(() => (snapshot.current = data)))
+				// eslint-disable-next-line no-return-assign
+				?.catch(() => update(() => (snapshot.current = undefined)));
+		} else {
+			snapshot.current = props.snapshot || undefined;
+		}
+
+		if (isPromise(props.l10n)) {
+			l10n.current = false;
+
+			// eslint-disable-next-line no-return-assign,max-len
+			props.l10n.then((data) => update(() => (l10n.current = data)))?.catch(() => update(() => (l10n.current = undefined)));
+		} else {
+			l10n.current = props.l10n || undefined;
+		}
+
+		if (isPromise(props.license)) {
+			license.current = false;
+
+			// eslint-disable-next-line no-return-assign,max-len
+			props.license.then((data) => update(() => (license.current = data)))?.catch(() => update(() => (license.current = undefined)));
+		} else {
+			license.current = props.license || undefined;
+		}
+	}
+
+	const l10nNamespace = useRef<L10n.Namespace>();
+	const l10nCache = useRef<{
+		locales: {
+			[domain: string]: {
+				locale: L10n.ILocale | undefined;
+			};
+		};
+		translations: {
+			[domain: string]: {
+				translation: L10n.TTranslation | L10n.TTranslation[] | undefined;
+			};
+		};
+	}>({
+		locales: {},
+		translations: {},
+	});
+
+	const processL10n = async (data: TL10n) => {
+		const currentDefinition = controller.current?.definition || definition.current;
+
+		l10nNamespace.current!.reset(
+			(data.language !== 'auto' && data.language)
+			|| (currentDefinition && currentDefinition.language)
+			|| props.language
+			|| navigator.language,
+		);
+
+		if (props.translations || props.locale) {
+			const localeDomain = data.locale || 'auto';
+			// eslint-disable-next-line no-nested-ternary
+			const localeResult = l10nCache.current.locales[localeDomain]
+				? l10nCache.current.locales[localeDomain].locale
+				: isFunction(props.locale)
+					? props.locale(localeDomain)
+					: props.locale;
+			const translationResult = l10nCache.current.translations[l10nNamespace.current!.current]
+				? l10nCache.current.translations[l10nNamespace.current!.current].translation
+				: (isFunction(props.translations)
+					? props.translations(l10nNamespace.current!.current, 'hefw-forms', '')
+					: props.translations) || undefined;
+			// eslint-disable-next-line max-len
+			const [locale, translation] =	await Promise.all([Promise.resolve(localeResult), Promise.resolve(translationResult)]);
+
+			l10nCache.current.locales[localeDomain] = {
+				locale,
+			};
+
+			l10nCache.current.translations[l10nNamespace.current!.current] = {
+				translation,
+			};
+
+			if (locale) {
+				l10nNamespace.current!.locale.load(locale);
+			}
+
+			if (translation) {
+				l10nNamespace.current!.load(translation, false);
+			}
+		}
+
+		if (data.translations) {
+			l10nNamespace.current!.load(data.translations, false, 'overwrite');
+		}
+	};
+
+	const localSnapshot = useRef({
+		data: undefined as ISnapshot<IRunnerSnapshot> | undefined,
 		save: () => {
-			if (localStorage) {
-				const currentSnapshot = snapshot();
-				if (currentSnapshot) {
-					localStorage.setItem(`form-${id}`, JSON.stringify(currentSnapshot));
+			if (controller.current && localStorage) {
+				const key = `hefw-forms-${controller.current.fingerprint}`;
+				const data = controller.current.snapshot;
+
+				if (data) {
+					localStorage.setItem(key, JSON.stringify(data));
 				} else {
-					localStorage.removeItem(`form-${id}`);
+					localStorage.removeItem(key);
 				}
 			}
 		},
 	});
 
-	if (typeof window !== 'undefined' && localStorage) {
-		localSnapshot.current.data = JSON.parse(localStorage.getItem(`form-${id}`) || 'null')
+	if (!l10nNamespace.current && definition.current !== false && l10n.current !== false) {
+		// eslint-disable-next-line no-plusplus
+		l10nNamespace.current = L10n.Namespace.create(`hefw-forms:${runCounter++}`);
+
+		processL10n(l10n.current || {})
+			// eslint-disable-next-line no-return-assign
+			.then(() => update(() => (isReady.current = true)))
+			// eslint-disable-next-line no-return-assign
+			.catch(() => update(() => (isReady.current = true)));
+	}
+
+	if (props.persistent && isLive && definition.current !== false && typeof window !== 'undefined' && localStorage) {
+		localSnapshot.current.data = JSON.parse(localStorage.getItem(`hefw-forms-${fingerprint(definition.current || emptyDefinition)}`) || 'null')
 			|| undefined;
 	}
 
 	useEffect(() => {
-		window.addEventListener('unload', localSnapshot.current.save);
+		const isDirty = componentState.current === 'dirty';
+		const allowListener = props.persistent && isLive && typeof window !== 'undefined' && localStorage;
+		let handle = 0;
+
+		componentState.current = 'mounted';
+
+		if (allowListener) {
+			window.addEventListener('unload', localSnapshot.current.save);
+		}
+
+		if (props.builder && !builderRef.current) {
+			new Promise((resolve: (builder: IBuilderInstance) => void) => {
+				const fnAwait = () => {
+					handle = 0;
+
+					if (props.builder?.current) {
+						resolve(props.builder?.current);
+					} else {
+						handle = requestAnimationFrame(fnAwait);
+					}
+				};
+
+				fnAwait();
+			}).then((builder) => {
+				if (!builderRef.current) {
+					builderRef.current = builder;
+
+					update(() => {
+						definition.current = builder.definition;
+						builderAwait.current = false;
+					});
+
+					builder.hook<
+					'OnChange',
+					IHookPayload<'OnChange'> & {
+						readonly definition: IDefinition;
+					}
+					>('OnChange', 'synchronous', (changeEvent) => {
+						if (controller.current) {
+							controller.current.definition = changeEvent.definition;
+						}
+					});
+
+					builder.hook<'OnEdit', IHookPayload<'OnEdit'> & { readonly data: TRunnerPreviewData }>(
+						'OnEdit',
+						'synchronous',
+						(editEvent) => {
+							controller.current?.doPreview(editEvent.data);
+						},
+					);
+				}
+			});
+		}
+
+		if (isDirty) {
+			updateProc({});
+		}
 
 		return () => {
-			window.removeEventListener('unload', localSnapshot.current.save);
+			if (allowListener) {
+				window.removeEventListener('unload', localSnapshot.current.save);
+			}
+
+			if (handle !== 0) {
+				cancelAnimationFrame(handle);
+			}
 		};
-	}, []); */
+	});
+
+	if (controller.current) {
+		if (props.view) {
+			controller.current.view = props.view;
+		}
+
+		if (!isPromise(props.definition)
+			&& props.definition && !compare(props.definition, controller.current.definition, true)) {
+			// eslint-disable-next-line no-multi-assign
+			controller.current.definition = definition.current = props.definition;
+		}
+
+		if (!isPromise(props.l10n)
+			&& props.l10n && !compare(props.l10n, controller.current.l10n, true)) {
+			// eslint-disable-next-line no-multi-assign
+			controller.current.l10n = l10n.current = props.l10n;
+		}
+	}
 
 	return (
-		storyline
-		&& !storyline.isEmpty
-		&& (
-			<>
-				{storyline.map((moment, page) => (
-					// eslint-disable-next-line react/no-array-index-key
-					<div key={`form-page-${page}`}>
-						<h1 className="text-4xl font-bold">{moment.section.props.name}</h1>
-						<div className="flex flex-col gap-4">
-							{moment.nodes.map((node) => (
-								node.block?.render
-									? node.block.render({
-										overlay,
-										attachments: {
-											async get(key) {
-												const res = await fetch(`${process.env.NEXT_PUBLIC_CDN_URL}/form-submissions/tmp/${key}`);
-
-												return res.blob();
-											},
-											async put(file) {
-												turnstileRef.current?.execute();
-
-												const turnstileResponse = await turnstileRef.current?.getResponsePromise();
-												if (!turnstileResponse) {
-													// TODO: Properly handle
-													throw new Error('Failed to get Turnstile response.');
+		// eslint-disable-next-line react/jsx-no-useless-fragment
+		<>
+			{!isReady.current
+			|| definition.current === false
+			|| snapshot.current === false
+			|| license.current === false
+			|| l10n.current === false
+			|| builderAwait.current ? (
+					props.loader
+				) : (
+					<FormRunnerUI
+						// eslint-disable-next-line react/jsx-props-no-spreading
+						{...props}
+						controller={controller}
+						definition={definition.current || emptyDefinition}
+						snapshot={snapshot.current || localSnapshot.current.data}
+						license={license.current}
+						l10nNamespace={l10nNamespace.current}
+						l10n={l10n.current}
+						onL10n={processL10n}
+						onEdit={
+							props.builder
+								? (type: 'prologue' | 'epilogue' | 'styles' | 'l10n' | 'block', id?: string) => {
+									if (props.builder?.current) {
+										// eslint-disable-next-line default-case
+										switch (type) {
+											case 'prologue':
+												props.builder.current.edit('prologue');
+												break;
+											case 'epilogue':
+												props.builder.current.edit('epilogue', id);
+												break;
+											case 'block':
+												if (id) {
+													props.builder.current.edit('node', id);
 												}
+												break;
+										}
+									}
 
-												const res = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL}/forms/upload`, {
-													method: 'POST',
-													body: JSON.stringify({
-														fileExt: file.name.split('.').pop(),
-														turnstileResponse,
-													}),
-													headers: {
-														'Content-Type': 'application/json',
-													},
-												});
-
-												const { fields, url, filename } = await res.json();
-												const formData = new FormData();
-												Object.entries(fields).forEach(([field, value]) => {
-													formData.append(field, value as string);
-												});
-												formData.append('file', file);
-
-												await fetch(url, {
-													body: formData,
-													method: 'POST',
-												});
-
-												return filename;
-											},
-											async delete(key) {
-												turnstileRef.current?.execute();
-
-												const turnstileResponse = await turnstileRef.current?.getResponsePromise();
-												if (!turnstileResponse) {
-													// TODO: Properly handle
-													throw new Error('Failed to get Turnstile response.');
-												}
-
-												fetch(`${process.env.NEXT_PUBLIC_CMS_URL}/forms/upload`, {
-													method: 'DELETE',
-													body: JSON.stringify({
-														key,
-														turnstileResponse,
-													}),
-													headers: {
-														'Content-Type': 'application/json',
-													},
-												}).then();
-											},
-										},
-										get id() {
-											return node.block?.key() || '';
-										},
-										// eslint-disable-next-line react/no-unstable-nested-components
-										get name() {
-											return (
-												(node.props.name && castToBoolean(node.props.nameVisible, true) && (
-													<label
-														className="text-lg font-bold"
-														htmlFor={node.block?.key()}
-														key={node.block?.key('label')}
-													>
-														{markdownifyToJSX(node.props.name, node.context)}
-														{node.block?.required
-															&& !node.block.hideRequiredIndicatorFromName && (
-															<span
-																className="relative top-[0.2rem] ml-1 text-2xl font-bold text-skin-primary"
-															>
-																*
-															</span>
-														)}
-													</label>
-												))
-												|| undefined
-											);
-										},
-										// eslint-disable-next-line react/no-unstable-nested-components
-										get description() {
-											return (
-												(node.props.description && (
-													<p
-														key={node.block?.key('description')}
-													>
-														{markdownifyToJSX(node.props.description, node.context)}
-													</p>
-												))
-												|| undefined
-											);
-										},
-										get explanation() {
-											return (
-												(
-													node.props.explanation
-													&& markdownifyToJSX(node.props.explanation, node.context)
-												) || undefined
-											);
-										},
-										get placeholder() {
-											return markdownifyToString(node.props.placeholder || '', node.context) || '';
-										},
-										get label() {
-											return markdownifyToJSX(
-												node.props.placeholder || node.props.name || '...',
-												node.context,
-												false,
-											);
-										},
-										get tabIndex(): number {
-											return 0;
-										},
-										get isFailed() {
-											return false;
-										},
-										get ariaDescribedBy() {
-											return (node.props.explanation && node.block?.key('explanation')) || undefined;
-										},
-										// eslint-disable-next-line react/no-unstable-nested-components
-										get ariaDescription() {
-											return (
-												(node.props.explanation && (
-													<p id={node.block?.key('explanation')}>
-														{markdownifyToJSX(node.props.explanation, node.context)}
-													</p>
-												))
-												|| undefined
-											);
-										},
-										focus: () => {},
-										blur: () => {},
-										autoFocus: () => {},
-										onSubmit: () => {},
-										// eslint-disable-next-line max-len
-										markdownifyToJSX: (md: string, lineBreaks?: boolean) => markdownifyToJSX(md, node.context, lineBreaks),
-										markdownifyToURL: (md: string) => markdownifyToURL(md, node.context),
-										// eslint-disable-next-line max-len
-										markdownifyToImage: (md: string) => markdownifyToURL(md, node.context, undefined, [
-											'image/jpeg',
-											'image/png',
-											'image/svg',
-											'image/gif',
-										]) || '',
-										// eslint-disable-next-line max-len
-										markdownifyToString: (md: string, lineBreaks?: boolean) => markdownifyToString(md, node.context, undefined, lineBreaks),
-									})
-									: (
-										<div key={node.key}>
-											{castToBoolean(node.props.nameVisible, true) && (
-												<h3 className="text-xl font-bold">{markdownifyToJSX(node.props.name || '...', node.context)}</h3>
-											)}
-											{node.props.description && (
-												<p className="text-lg">{markdownifyToJSX(node.props.description, node.context, true)}</p>
-											)}
-										</div>
-									)
-							))}
-						</div>
-						<nav className="mt-8 flex gap-4">
-							<button
-								type="button"
-								className="rounded-md bg-skin-primary px-4 py-2 text-skin-primary-foreground disabled:bg-skin-secondary disabled:text-skin-secondary-foreground dark:bg-skin-primary-dark dark:text-skin-primary-foreground-dark disabled:dark:bg-skin-secondary-dark disabled:dark:text-skin-secondary-foreground-dark"
-								disabled={storyline.isAtStart}
-								onClick={() => storyline.stepBackward()}
-							>
-								Back
-							</button>
-							<button
-								type="button"
-								className="rounded-md bg-skin-primary px-4 py-2 text-skin-primary-foreground disabled:bg-skin-secondary disabled:text-skin-secondary-foreground dark:bg-skin-primary-dark dark:text-skin-primary-foreground-dark disabled:dark:bg-skin-secondary-dark disabled:dark:text-skin-secondary-foreground-dark"
-								disabled={storyline.isFailed || (storyline.isAtFinish && !storyline.isFinishable)}
-								onClick={() => storyline.stepForward()}
-							>
-								{storyline.isAtFinish ? 'Finish' : 'Next'}
-							</button>
-						</nav>
-					</div>
-				))}
-				<Turnstile
-					className="mt-4"
-					siteKey={process.env.NEXT_PUBLIC_TURNSTILE_KEY as string}
-					ref={turnstileRef}
-					options={{
-						execution: 'execute',
-						appearance: 'execute',
-						responseField: false,
-						refreshExpired: 'manual',
-					}}
-				/>
-				<OverlayProvider />
-			</>
-		)
+									if (props.onEdit) {
+										props.onEdit(type, id);
+									}
+								}
+								: props.onEdit
+						}
+					/>
+				)}
+		</>
 	);
 }
+/* eslint-enable */

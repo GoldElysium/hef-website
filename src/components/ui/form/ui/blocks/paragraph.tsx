@@ -34,47 +34,34 @@ SOFTWARE.
  */
 /* eslint-enable */
 
-import { FocusEvent, MutableRefObject } from 'react';
+import { Paragraph } from '@tripetto/block-paragraph/runner';
+import { tripetto } from '@tripetto/runner';
+import { ReactNode } from 'react';
+import ReactPlayer from 'react-player';
+import { IFormNodeBlockProps, IFormNodeBlock } from '../../interfaces/block';
 
-export const setReturnValue = <T>(setValue: (value: T) => void, value: T | void) => {
-	if (typeof value !== 'undefined') {
-		setValue(value);
+@tripetto({
+	legacyBlock: true,
+	type: 'node',
+	identifier: '@tripetto/block-paragraph',
+	alias: 'paragraph',
+})
+export default class ParagraphBlock extends Paragraph implements IFormNodeBlock {
+	render(props: IFormNodeBlockProps): ReactNode {
+		return (
+			<>
+				{this.props.imageURL && this.props.imageAboveText && (
+					<img src={props.markdownifyToImage(this.props.imageURL)} width={this.props.imageWidth} alt="" />
+				)}
+				{props.name && <h3>{props.name}</h3>}
+				{this.props.caption && <span>{props.markdownifyToJSX(this.props.caption)}</span>}
+				{props.description}
+				{this.props.imageURL && !this.props.imageAboveText && (
+					<img src={props.markdownifyToImage(this.props.imageURL)} width={this.props.imageWidth} alt="" />
+				)}
+				{this.props.video && <ReactPlayer src={props.markdownifyToURL(this.props.video)} />}
+				{props.ariaDescription}
+			</>
+		);
 	}
-};
-
-// eslint-disable-next-line max-len
-export const handleEvent =	<T>(setValue: (value: T) => void, event?: (e: FocusEvent) => T | void) => (e: FocusEvent) => {
-	if (event) {
-		setReturnValue(setValue, event(e));
-	}
-};
-
-// eslint-disable-next-line max-len
-export const handleFocus = <T>(setFocus: (focus: boolean) => void, setValue: (value: T) => void, event?: ((e: FocusEvent) => (string | void)) | undefined) => (e: FocusEvent) => {
-	setFocus(true);
-
-	if (event) {
-		// @ts-ignore
-		setReturnValue(setValue, event(e));
-	}
-};
-
-// eslint-disable-next-line max-len
-export const handleBlur = <T>(setFocus: (focus: boolean) => void, setValue: (value: T) => void, event?: ((e: FocusEvent) => (string | void)) | undefined) => (e: FocusEvent) => {
-	setFocus(false);
-
-	if (event) {
-		// @ts-ignore
-		setReturnValue(setValue, event(e));
-	}
-};
-
-export const handleAutoSubmit = (
-	autoSubmitRef: MutableRefObject<{
-		id: number;
-		cb?: () => void;
-	}>,
-) => {
-	// eslint-disable-next-line max-len,no-param-reassign
-	autoSubmitRef.current.id = setTimeout(() => autoSubmitRef.current.cb && autoSubmitRef.current.cb(), 200) as unknown as number;
-};
+}

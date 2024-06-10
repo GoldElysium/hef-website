@@ -34,47 +34,73 @@ SOFTWARE.
  */
 /* eslint-enable */
 
-import { FocusEvent, MutableRefObject } from 'react';
+import { TSerializeTypes } from '@tripetto/runner/module/serializer';
+import { ReactNode } from 'react';
+import { tripetto } from '@tripetto/runner';
+import { Email } from '@tripetto/block-email/runner';
+import type { FocusEvent } from 'react';
+import { IFormNodeBlockProps, IFormNodeBlock } from '../../interfaces/block';
+import Input from './input';
 
-export const setReturnValue = <T>(setValue: (value: T) => void, value: T | void) => {
-	if (typeof value !== 'undefined') {
-		setValue(value);
+export const EmailFabric = (props: {
+	readonly id?: string;
+	readonly placeholder?: string;
+	readonly required?: boolean;
+	readonly disabled?: boolean;
+	readonly readOnly?: boolean;
+	readonly error?: boolean;
+	readonly tabIndex?: number;
+	readonly maxLength?: number;
+	readonly value?:
+	| string
+	| {
+		pristine: TSerializeTypes;
+		readonly string: string;
+		readonly isLocked: boolean;
+		readonly isFrozen: boolean;
+	};
+	readonly ariaDescribedBy?: string;
+	readonly onChange?: (value: string) => string | void;
+	readonly onFocus?: (e: FocusEvent) => string | void;
+	readonly onBlur?: (e: FocusEvent) => string | void;
+	readonly onAutoFocus?: (el: HTMLInputElement | null) => void;
+	readonly onSubmit?: () => void;
+	readonly onCancel?: () => void;
+}) => Input({
+	type: 'email',
+	inputMode: 'email',
+	autoComplete: 'email',
+	...props,
+	placeholder: props.placeholder || '@',
+});
+
+@tripetto({
+	legacyBlock: true,
+	type: 'node',
+	identifier: '@tripetto/block-email',
+})
+export default class EmailBlock extends Email implements IFormNodeBlock {
+	render(props: IFormNodeBlockProps): ReactNode {
+		return (
+			<>
+				{props.name}
+				{props.description}
+				<EmailFabric
+					id={props.id}
+					value={this.emailSlot}
+					required={this.required}
+					error={props.isFailed}
+					tabIndex={props.tabIndex}
+					placeholder={props.placeholder}
+					ariaDescribedBy={props.ariaDescribedBy}
+					onAutoFocus={props.autoFocus}
+					onFocus={props.focus}
+					onBlur={props.blur}
+					onSubmit={props.onSubmit}
+
+				/>
+				{props.ariaDescription}
+			</>
+		);
 	}
-};
-
-// eslint-disable-next-line max-len
-export const handleEvent =	<T>(setValue: (value: T) => void, event?: (e: FocusEvent) => T | void) => (e: FocusEvent) => {
-	if (event) {
-		setReturnValue(setValue, event(e));
-	}
-};
-
-// eslint-disable-next-line max-len
-export const handleFocus = <T>(setFocus: (focus: boolean) => void, setValue: (value: T) => void, event?: ((e: FocusEvent) => (string | void)) | undefined) => (e: FocusEvent) => {
-	setFocus(true);
-
-	if (event) {
-		// @ts-ignore
-		setReturnValue(setValue, event(e));
-	}
-};
-
-// eslint-disable-next-line max-len
-export const handleBlur = <T>(setFocus: (focus: boolean) => void, setValue: (value: T) => void, event?: ((e: FocusEvent) => (string | void)) | undefined) => (e: FocusEvent) => {
-	setFocus(false);
-
-	if (event) {
-		// @ts-ignore
-		setReturnValue(setValue, event(e));
-	}
-};
-
-export const handleAutoSubmit = (
-	autoSubmitRef: MutableRefObject<{
-		id: number;
-		cb?: () => void;
-	}>,
-) => {
-	// eslint-disable-next-line max-len,no-param-reassign
-	autoSubmitRef.current.id = setTimeout(() => autoSubmitRef.current.cb && autoSubmitRef.current.cb(), 200) as unknown as number;
-};
+}

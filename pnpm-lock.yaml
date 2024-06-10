@@ -68,6 +68,9 @@ importers:
       '@tripetto/block-device':
         specifier: ^5.0.2
         version: 5.0.2
+      '@tripetto/block-email':
+        specifier: ^6.0.3
+        version: 6.0.3
       '@tripetto/block-evaluate':
         specifier: ^4.0.2
         version: 4.0.2
@@ -77,6 +80,15 @@ importers:
       '@tripetto/block-hidden-field':
         specifier: ^6.2.3
         version: 6.2.3
+      '@tripetto/block-multi-select':
+        specifier: ^2.1.2
+        version: 2.1.2
+      '@tripetto/block-multiple-choice':
+        specifier: ^7.0.1
+        version: 7.0.1
+      '@tripetto/block-number':
+        specifier: ^8.0.3
+        version: 8.0.3(@tripetto/block-calculator@4.0.6)
       '@tripetto/block-paragraph':
         specifier: ^5.0.2
         version: 5.0.2
@@ -92,6 +104,9 @@ importers:
       '@tripetto/block-textarea':
         specifier: ^6.0.3
         version: 6.0.3
+      '@tripetto/block-url':
+        specifier: ^6.0.2
+        version: 6.0.2
       '@tripetto/block-variable':
         specifier: ^3.0.3
         version: 3.0.3(@tripetto/block-calculator@4.0.6)
@@ -2397,6 +2412,9 @@ packages:
   '@tripetto/block-device@5.0.2':
     resolution: {integrity: sha512-O2wVBRcluFlOuvFd+F5mbLumC3vnP7xCDKC4uZYGzFd1L1Qp3iU32nL2W7xF0A6DRHf5OyqtbYafKzv2ZurNBg==}
 
+  '@tripetto/block-email@6.0.3':
+    resolution: {integrity: sha512-4LTGu3dcHp3E2c/2oxyaOXip/j2PvM8jDYZ6qwlSdC4xFm+F1QxoY7LH9MpDOc11i7I82LUTGyPvPZRFJPj9SA==}
+
   '@tripetto/block-evaluate@4.0.2':
     resolution: {integrity: sha512-+zusb9G0gdO4ylj7OPTa72EJBbm0kaZyfaubp3KKT6wA/Q1ydck3YSn31V6zFqfQ7UtgAzOqWJ/ww5EMx+KSnw==}
 
@@ -2405,6 +2423,17 @@ packages:
 
   '@tripetto/block-hidden-field@6.2.3':
     resolution: {integrity: sha512-/RmkZ8aE2BNOa+HDOAMY0QqL7wnbes4/Bke5+uFqtSNfQxkGoMJNnh3Lym2AG30f3NNwCOkJLDdMcA8WxymkmA==}
+
+  '@tripetto/block-multi-select@2.1.2':
+    resolution: {integrity: sha512-l8yKSXo1Srv5C8IjFYqOODby4kOkyN5OMspUKRDZghfE14qzQoulMQVrPJqi2Na4rt9bZFKG3e97zAkleYVOTw==}
+
+  '@tripetto/block-multiple-choice@7.0.1':
+    resolution: {integrity: sha512-F5kJIUswNCpZPvfxPdzvtZGWyOeIHEUnwsuaY0z1JMyAPGrF7XLA1NJxiewzV1mIm4ekZCkC630unqKaMAJHhQ==}
+
+  '@tripetto/block-number@8.0.3':
+    resolution: {integrity: sha512-UBlhvk/HrDlpXw35lLeyI0lOAk6kC83mrmWXmoPCtijeKCdckrZeGCW61ToTOP7ENyinQ7cAuzROP7bRd6D3RA==}
+    peerDependencies:
+      '@tripetto/block-calculator': ^4.0.1
 
   '@tripetto/block-paragraph@5.0.2':
     resolution: {integrity: sha512-Zxuw7r0yzDjphsbInk2mH3DHRkxL9eL7eHDzn3FelDch6kMQgA2Rm6fWr5iw6Inq8VEFnr8LpSMGDazjl1KWJw==}
@@ -2422,6 +2451,9 @@ packages:
 
   '@tripetto/block-textarea@6.0.3':
     resolution: {integrity: sha512-tmpjz3AUK/M0kAha3exS2FEarVPKp+eAe6jwyHT9GUbD4hYpicNBTRxrkiTz3rreexX2AXfbgYYukhNpIzzzUg==}
+
+  '@tripetto/block-url@6.0.2':
+    resolution: {integrity: sha512-EYMy4x/kgMeAG8RaHVCUiL6UbEXKvmBtY50mnJfjCIn9VsTILU6vO18rt5DdeZQ2oOVcVyY0egFnR11FW4fhxg==}
 
   '@tripetto/block-variable@3.0.3':
     resolution: {integrity: sha512-GUzrcrrNBEBCBIiMFK5du6JIgpVR8NJLgYUPjMDTUjAc7jZuYcb/56OTL+z5oQc6mDNLetdag7B7oa93yMciSQ==}
@@ -10181,11 +10213,21 @@ snapshots:
 
   '@tripetto/block-device@5.0.2': {}
 
+  '@tripetto/block-email@6.0.3': {}
+
   '@tripetto/block-evaluate@4.0.2': {}
 
   '@tripetto/block-file-upload@5.1.0': {}
 
   '@tripetto/block-hidden-field@6.2.3': {}
+
+  '@tripetto/block-multi-select@2.1.2': {}
+
+  '@tripetto/block-multiple-choice@7.0.1': {}
+
+  '@tripetto/block-number@8.0.3(@tripetto/block-calculator@4.0.6)':
+    dependencies:
+      '@tripetto/block-calculator': 4.0.6
 
   '@tripetto/block-paragraph@5.0.2': {}
 
@@ -10198,6 +10240,8 @@ snapshots:
   '@tripetto/block-text@6.0.2': {}
 
   '@tripetto/block-textarea@6.0.3': {}
+
+  '@tripetto/block-url@6.0.2': {}
 
   '@tripetto/block-variable@3.0.3(@tripetto/block-calculator@4.0.6)':
     dependencies:

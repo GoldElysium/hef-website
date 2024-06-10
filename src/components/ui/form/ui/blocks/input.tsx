@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-/* Based on Input provided by @tripetto/runner-fabric, but restyled */
+/* Based on components provided by @tripetto/runner-fabric and @tripetto/runner-classic */
 /*
 Copyright 2019 Tripetto B.V.
 
@@ -41,7 +41,7 @@ import {
 import {
 	ChangeEvent, KeyboardEvent, useEffect, useRef, useState,
 } from 'react';
-import { setReturnValue } from '../helpers';
+import { setReturnValue } from '../../helpers';
 
 interface InputProps {
 	readonly type: 'text' | 'email' | 'url' | 'password' | 'tel' | 'number';

@@ -4,7 +4,7 @@ import { Language } from '@/lib/i18n/languages';
 import PayloadResponse from '@/types/PayloadResponse';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
-import FormRunner from '@/components/ui/form/FormRunner';
+import FormRunnerUI from '@/components/ui/form/FormRunner';
 import fetchForm from '@/lib/fetchForm';
 
 export interface IForm {
@@ -35,7 +35,19 @@ export default async function FormPage({ params: { id, lang } }: IProps) {
 			<div className="grow">
 				<div className="my-16 flex w-full flex-col items-center px-4 md:px-16 lg:px-24 2xl:px-56">
 					<div className="w-full max-w-6xl break-words px-4 md:break-normal">
-						<FormRunner form={form} id={id} />
+						<FormRunnerUI
+							definition={form.form}
+							id={id}
+						/>
+
+						<a
+							className="mt-4 text-skin-link underline dark:text-skin-link-dark"
+							href="https://tripetto.com/your-tripetto-experience/?utm_source=holoen.fans&utm_medium=tripetto_runners&utm_campaign=tripetto_branding&utm_content=form"
+							target="_blank"
+						>
+							Powered by Tripetto
+						</a>
+
 					</div>
 				</div>
 			</div>

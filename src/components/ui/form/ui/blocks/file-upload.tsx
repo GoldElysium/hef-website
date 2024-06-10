@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-/* Based on File provided by @tripetto/runner-fabric, but restyled */
+/* Based on components provided by @tripetto/runner-fabric and @tripetto/runner-classic */
 /*
 Copyright 2019 Tripetto B.V.
 
@@ -35,7 +35,6 @@ SOFTWARE.
 /* eslint-enable */
 
 import { FileUpload } from '@tripetto/block-file-upload/runner';
-import { IFormNodeBlock, IFormNodeBlockProps } from '@/components/ui/form/FormRunner';
 import { IFileController, IFileService } from '@tripetto/runner-fabric/components/file';
 import { Num, tripetto, Str } from '@tripetto/runner';
 import {
@@ -43,6 +42,7 @@ import {
 } from 'react';
 import type { KeyboardEvent, DragEvent, FocusEvent } from 'react';
 import { fileIcon } from '@tripetto/runner-fabric/icons/file';
+import { IFormNodeBlockProps, IFormNodeBlock } from '../../interfaces/block';
 
 // eslint-disable-next-line max-len
 /* eslint-disable react/destructuring-assignment,react/no-unused-prop-types,@typescript-eslint/no-unused-vars */
@@ -239,13 +239,21 @@ export function FileFabric(props: {
 					}}
 				>
 					<svg className="mb-1.5 block h-16" fill="currentColor" viewBox="0 0 10240 10240">
-						<path d="M640 5760l640 0c248,0 461,132 572,354l607 1212c111,222 324,354 572,354l4178 0c248,0 461,-132 572,-354l607 -1212c111,-222 324,-354 572,-354l640 0 0 3520c0,176 -144,320 -320,320l-8320 0c-176,0 -320,-144 -320,-320l0 -3520z" />
-						<path d="M7887 6400l-160 320 -5214 0 -160 -320 5534 0zm-320 640l-72 143c-57,114 -159,177 -286,177l-4178 0c-127,0 -229,-63 -286,-177l-72 -143 4894 0z" />
-						<path d="M6853 4293l-1507 1506c-124,124 -328,124 -452,0l-1507 -1506c-124,-125 -187,-277 -187,-453l0 -1159c0,-66 38,-122 99,-147 61,-26 127,-13 174,34l1007 1007 0 -2135c0,-88 72,-160 160,-160l960 0c88,0 160,72 160,160l0 2135 1007 -1007c47,-47 113,-60 174,-34 61,25 99,81 99,147l0 1159c0,176 -63,328 -187,453z" />
+						<path
+							d="M640 5760l640 0c248,0 461,132 572,354l607 1212c111,222 324,354 572,354l4178 0c248,0 461,-132 572,-354l607 -1212c111,-222 324,-354 572,-354l640 0 0 3520c0,176 -144,320 -320,320l-8320 0c-176,0 -320,-144 -320,-320l0 -3520z"
+						/>
+						<path
+							d="M7887 6400l-160 320 -5214 0 -160 -320 5534 0zm-320 640l-72 143c-57,114 -159,177 -286,177l-4178 0c-127,0 -229,-63 -286,-177l-72 -143 4894 0z"
+						/>
+						<path
+							d="M6853 4293l-1507 1506c-124,124 -328,124 -452,0l-1507 -1506c-124,-125 -187,-277 -187,-453l0 -1159c0,-66 38,-122 99,-147 61,-26 127,-13 174,34l1007 1007 0 -2135c0,-88 72,-160 160,-160l960 0c88,0 160,72 160,160l0 2135 1007 -1007c47,-47 113,-60 174,-34 61,25 99,81 99,147l0 1159c0,176 -63,328 -187,453z"
+						/>
 					</svg>
 					<input
 						className="absolute -z-1 size-px overflow-hidden opacity-0"
-						ref={(el) => { inputRef.current = el; }}
+						ref={(el) => {
+							inputRef.current = el;
+						}}
 						type="file"
 						multiple={false}
 						tabIndex={-1}
@@ -258,9 +266,19 @@ export function FileFabric(props: {
 						}}
 					/>
 					<span className="block text-center">{props.labels(dragging ? 'dragging' : 'explanation', '')}</span>
-					{props.controller.limit > 0 && <small className="block text-center">{props.labels('limit', `${props.controller.limit}MB`)}</small>}
+					{props.controller.limit > 0 && (
+						<small
+							className="block text-center"
+						>
+							{props.labels('limit', `${props.controller.limit}MB`)}
+						</small>
+					)}
 					{props.controller.allowedExtensions.length > 0 && (
-						<small className="block text-center">{props.labels('extensions', Str.iterateToString(props.controller.allowedExtensions, ', '))}</small>
+						<small
+							className="block text-center"
+						>
+							{props.labels('extensions', Str.iterateToString(props.controller.allowedExtensions, ', '))}
+						</small>
 					)}
 				</label>
 			)}
@@ -273,7 +291,9 @@ export function FileFabric(props: {
 						e.preventDefault();
 					}}
 				>
-					<div className="m-1.5 inline h-4 w-4/5 max-w-[300px] overflow-hidden rounded-[4px] bg-skin-primary/25 dark:bg-skin-primary/25">
+					<div
+						className="m-1.5 inline h-4 w-4/5 max-w-[300px] overflow-hidden rounded-[4px] bg-skin-primary/25 dark:bg-skin-primary/25"
+					>
 						<div
 							className="h-4 w-0 bg-skin-primary dark:bg-skin-primary"
 							style={{
@@ -361,6 +381,7 @@ export function FileFabric(props: {
 	legacyBlock: true,
 	type: 'node',
 	identifier: '@tripetto/block-file-upload',
+	alias: 'file-upload',
 })
 export default class UploadBlock extends FileUpload implements IFormNodeBlock {
 	render(props: IFormNodeBlockProps) {

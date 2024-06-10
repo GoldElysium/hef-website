@@ -34,47 +34,58 @@ SOFTWARE.
  */
 /* eslint-enable */
 
-import { FocusEvent, MutableRefObject } from 'react';
+import { ReactNode } from 'react';
+import { tripetto } from '@tripetto/runner';
+import { MultipleChoice } from '@tripetto/block-multiple-choice/runner';
+import { MultipleChoiceFabric } from '@tripetto/runner-fabric/components/multiple-choice';
+import { IFormNodeBlockProps, IFormNodeBlock } from '../../interfaces/block';
 
-export const setReturnValue = <T>(setValue: (value: T) => void, value: T | void) => {
-	if (typeof value !== 'undefined') {
-		setValue(value);
+@tripetto({
+	legacyBlock: true,
+	type: 'node',
+	identifier: '@tripetto/block-multiple-choice',
+	alias: 'multiple-choice',
+	autoRender: true,
+})
+export default class MultipleChoiceBlock extends MultipleChoice implements IFormNodeBlock {
+	render(props: IFormNodeBlockProps): ReactNode {
+		return (
+			<>
+				{this.props.imageURL && this.props.imageAboveText && (
+					<img src={props.markdownifyToImage(this.props.imageURL)} width={this.props.imageWidth} alt="" />
+				)}
+				{this.props.caption ? (
+					<>
+						{props.name && <h3>{props.name}</h3>}
+						<span>{props.markdownifyToJSX(this.props.caption)}</span>
+					</>
+				) : (
+					props.name
+				)}
+				{props.description}
+				{this.props.imageURL && !this.props.imageAboveText && (
+					<img src={props.markdownifyToImage(this.props.imageURL)} width={this.props.imageWidth} alt="" />
+				)}
+				<MultipleChoiceFabric
+					styles={{
+						color: '#000',
+					}}
+					buttons={this.choices(props)}
+					alignment={
+						(this.props.alignment === 'equal' || this.props.alignment === 'full' || this.props.alignment === 'columns'
+							? this.props.alignment
+							: this.props.alignment && 'horizontal') || 'vertical'
+					}
+					value={(!this.props.multiple && this.valueOf('choice')) || undefined}
+					required={this.required}
+					ariaDescribedBy={props.ariaDescribedBy}
+					onAutoFocus={props.autoFocus}
+					onFocus={props.focus}
+					onBlur={props.blur}
+					onSubmit={props.onSubmit}
+				/>
+				{props.ariaDescription}
+			</>
+		);
 	}
-};
-
-// eslint-disable-next-line max-len
-export const handleEvent =	<T>(setValue: (value: T) => void, event?: (e: FocusEvent) => T | void) => (e: FocusEvent) => {
-	if (event) {
-		setReturnValue(setValue, event(e));
-	}
-};
-
-// eslint-disable-next-line max-len
-export const handleFocus = <T>(setFocus: (focus: boolean) => void, setValue: (value: T) => void, event?: ((e: FocusEvent) => (string | void)) | undefined) => (e: FocusEvent) => {
-	setFocus(true);
-
-	if (event) {
-		// @ts-ignore
-		setReturnValue(setValue, event(e));
-	}
-};
-
-// eslint-disable-next-line max-len
-export const handleBlur = <T>(setFocus: (focus: boolean) => void, setValue: (value: T) => void, event?: ((e: FocusEvent) => (string | void)) | undefined) => (e: FocusEvent) => {
-	setFocus(false);
-
-	if (event) {
-		// @ts-ignore
-		setReturnValue(setValue, event(e));
-	}
-};
-
-export const handleAutoSubmit = (
-	autoSubmitRef: MutableRefObject<{
-		id: number;
-		cb?: () => void;
-	}>,
-) => {
-	// eslint-disable-next-line max-len,no-param-reassign
-	autoSubmitRef.current.id = setTimeout(() => autoSubmitRef.current.cb && autoSubmitRef.current.cb(), 200) as unknown as number;
-};
+}

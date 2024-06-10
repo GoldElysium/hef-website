@@ -34,47 +34,74 @@ SOFTWARE.
  */
 /* eslint-enable */
 
-import { FocusEvent, MutableRefObject } from 'react';
+import { ReactNode, useRef } from 'react';
+import { IObservableNode, TStatus, each } from '@tripetto/runner';
+import { TRunnerStatus } from '@tripetto/runner-react-hook';
+import { IFormNodeBlock } from '../interfaces/block';
 
-export const setReturnValue = <T>(setValue: (value: T) => void, value: T | void) => {
-	if (typeof value !== 'undefined') {
-		setValue(value);
+export interface ICache {
+	readonly fetch: (
+		create: () => ReactNode,
+		node: IObservableNode<IFormNodeBlock>,
+		status: TRunnerStatus | TStatus | 'reloading',
+		tabIndex: number
+	) => ReactNode;
+
+	readonly purge: () => void;
+}
+
+export function useCache(): ICache {
+	const cacheRef = useRef<ICache>();
+
+	if (!cacheRef.current) {
+		const cache: {
+			[node: string]:
+			| {
+				readonly buffer: ReactNode;
+				readonly status: TRunnerStatus | TStatus | 'reloading';
+				readonly isPassed: boolean;
+				readonly tabIndex: number;
+			}
+			| undefined;
+		} = {};
+
+		cacheRef.current = {
+			fetch: (
+				create: () => ReactNode,
+				node: IObservableNode<IFormNodeBlock>,
+				status: TRunnerStatus | TStatus | 'reloading',
+				tabIndex: number,
+			) => {
+				const { key } = node;
+				const current = !node.hasChanged() && cache[key];
+
+				if (current && current.status === status
+					&& current.isPassed === node.isPassed && current.tabIndex === tabIndex) {
+					return current.buffer;
+				}
+
+				cache[key] = {
+					buffer: create(),
+					status,
+					isPassed: node.isPassed,
+					tabIndex,
+				};
+
+				return cache[key]!.buffer;
+			},
+			purge: () => {
+				each(
+					cache,
+					(_node, key: string) => {
+						delete cache[key];
+					},
+					{
+						keys: true,
+					},
+				);
+			},
+		};
 	}
-};
 
-// eslint-disable-next-line max-len
-export const handleEvent =	<T>(setValue: (value: T) => void, event?: (e: FocusEvent) => T | void) => (e: FocusEvent) => {
-	if (event) {
-		setReturnValue(setValue, event(e));
-	}
-};
-
-// eslint-disable-next-line max-len
-export const handleFocus = <T>(setFocus: (focus: boolean) => void, setValue: (value: T) => void, event?: ((e: FocusEvent) => (string | void)) | undefined) => (e: FocusEvent) => {
-	setFocus(true);
-
-	if (event) {
-		// @ts-ignore
-		setReturnValue(setValue, event(e));
-	}
-};
-
-// eslint-disable-next-line max-len
-export const handleBlur = <T>(setFocus: (focus: boolean) => void, setValue: (value: T) => void, event?: ((e: FocusEvent) => (string | void)) | undefined) => (e: FocusEvent) => {
-	setFocus(false);
-
-	if (event) {
-		// @ts-ignore
-		setReturnValue(setValue, event(e));
-	}
-};
-
-export const handleAutoSubmit = (
-	autoSubmitRef: MutableRefObject<{
-		id: number;
-		cb?: () => void;
-	}>,
-) => {
-	// eslint-disable-next-line max-len,no-param-reassign
-	autoSubmitRef.current.id = setTimeout(() => autoSubmitRef.current.cb && autoSubmitRef.current.cb(), 200) as unknown as number;
-};
+	return cacheRef.current;
+}

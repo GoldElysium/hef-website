@@ -34,47 +34,38 @@ SOFTWARE.
  */
 /* eslint-enable */
 
-import { FocusEvent, MutableRefObject } from 'react';
+import { L10n, NodeBlock } from '@tripetto/runner';
+import { type FocusEvent, ReactNode } from 'react';
+import { TOverlayContext } from '@tripetto/runner-fabric/overlay';
+import { IRunnerAttachments } from '@tripetto/runner-react-hook';
 
-export const setReturnValue = <T>(setValue: (value: T) => void, value: T | void) => {
-	if (typeof value !== 'undefined') {
-		setValue(value);
-	}
-};
+export interface IFormNodeBlock extends NodeBlock {
+	readonly required?: boolean;
+	readonly marginAroundBlock?: boolean;
+	readonly hideRequiredIndicatorFromName?: boolean;
+	readonly render?: (props: IFormNodeBlockProps) => ReactNode;
+}
 
-// eslint-disable-next-line max-len
-export const handleEvent =	<T>(setValue: (value: T) => void, event?: (e: FocusEvent) => T | void) => (e: FocusEvent) => {
-	if (event) {
-		setReturnValue(setValue, event(e));
-	}
-};
-
-// eslint-disable-next-line max-len
-export const handleFocus = <T>(setFocus: (focus: boolean) => void, setValue: (value: T) => void, event?: ((e: FocusEvent) => (string | void)) | undefined) => (e: FocusEvent) => {
-	setFocus(true);
-
-	if (event) {
-		// @ts-ignore
-		setReturnValue(setValue, event(e));
-	}
-};
-
-// eslint-disable-next-line max-len
-export const handleBlur = <T>(setFocus: (focus: boolean) => void, setValue: (value: T) => void, event?: ((e: FocusEvent) => (string | void)) | undefined) => (e: FocusEvent) => {
-	setFocus(false);
-
-	if (event) {
-		// @ts-ignore
-		setReturnValue(setValue, event(e));
-	}
-};
-
-export const handleAutoSubmit = (
-	autoSubmitRef: MutableRefObject<{
-		id: number;
-		cb?: () => void;
-	}>,
-) => {
-	// eslint-disable-next-line max-len,no-param-reassign
-	autoSubmitRef.current.id = setTimeout(() => autoSubmitRef.current.cb && autoSubmitRef.current.cb(), 200) as unknown as number;
-};
+export interface IFormNodeBlockProps {
+	readonly id: string;
+	readonly l10n: L10n.Namespace;
+	readonly overlay: TOverlayContext;
+	readonly name: JSX.Element | undefined;
+	readonly description: JSX.Element | undefined;
+	readonly explanation: JSX.Element | undefined;
+	readonly label: JSX.Element | undefined;
+	readonly placeholder: string;
+	readonly tabIndex: number;
+	readonly isFailed: boolean;
+	readonly ariaDescribedBy: string | undefined;
+	readonly ariaDescription: JSX.Element | undefined;
+	readonly autoFocus: (element: HTMLElement | null) => void;
+	readonly onSubmit: (() => void) | undefined;
+	readonly focus: ((event: FocusEvent) => void) | undefined;
+	readonly blur: ((event: FocusEvent) => void) | undefined;
+	readonly attachments: IRunnerAttachments | undefined;
+	readonly markdownifyToJSX: (md: string, lineBreaks?: boolean) => JSX.Element;
+	readonly markdownifyToURL: (md: string) => string;
+	readonly markdownifyToImage: (md: string) => string;
+	readonly markdownifyToString: (md: string) => string;
+}
