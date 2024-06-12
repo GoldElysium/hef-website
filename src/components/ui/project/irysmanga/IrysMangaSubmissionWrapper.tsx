@@ -22,8 +22,9 @@ const jura = Jura({
 });
 
 async function fetchOptimizedImageURLs({ project, lang }: IProps) {
-	// TODO: Change this to serve the actual manga.
 	const manga = getManga(project.devprops);
+	// Bypass if not set.
+	const bypassImgProxy = process.env.IMAGINARY_SECRET === '' && process.env.IMAGINARY_URL === '';
 	const { chapters } = manga.data[lang];
 
 	const optimizedImages = new Map<string, string[]>();
@@ -31,14 +32,20 @@ async function fetchOptimizedImageURLs({ project, lang }: IProps) {
 	chapters.forEach((chapter) => {
 		optimizedImages.set(
 			chapter.title,
-			chapter.pages.map((page) => getImageUrl(
-				{
-					src: page,
-					height: 1080,
-					quality: 90,
-					action: 'resize',
-				},
-			)),
+			chapter.pages.map((page) => {
+				if (bypassImgProxy) {
+					return page;
+				}
+
+				return getImageUrl(
+					{
+						src: page,
+						height: 1080,
+						quality: 90,
+						action: 'resize',
+					},
+				);
+			}),
 		);
 	});
 
