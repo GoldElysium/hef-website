@@ -17,6 +17,7 @@ import {
 	languages,
 	pageLayouts,
 	progressVisibilities,
+	ReaderSetting,
 	readerThemes,
 } from './utils/types';
 import SettingButton from './SettingButton';
@@ -86,6 +87,19 @@ function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }: Props) {
 		};
 	}, [setOpenSidebar, modalRef]);
 
+	const mangaLanguages: ReaderSetting[] = [];
+
+	languages.forEach((value) => {
+		// If no chapters don't allow it as a selectable target.
+		if (manga.data[value].chapterCount === 0) {
+			return;
+		}
+
+		if (manga.data[value].chapters[chapter] !== null) {
+			mangaLanguages.push(value);
+		}
+	});
+
 	return (
 		<>
 			<div
@@ -135,7 +149,8 @@ function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }: Props) {
 					<div className="flex w-full gap-1">
 						<SettingButton
 							value={mangaLanguage}
-							valueList={languages}
+							valueList={mangaLanguages}
+							disabled={mangaLanguages.length < 2}
 							// @ts-ignore
 							setValue={setMangaLanguage}
 							label="manga"
