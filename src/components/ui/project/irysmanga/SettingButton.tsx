@@ -24,6 +24,7 @@ interface Props {
 	valueList: ReadonlyArray<ReaderSetting>;
 	setValue: React.Dispatch<React.SetStateAction<ReaderSetting>>;
 	label?: string;
+	disabled?: boolean;
 }
 
 type SettingIcons = {
@@ -49,7 +50,7 @@ const settingIcons: SettingIcons = {
 };
 
 function SettingButton({
-	value, valueList, setValue, label,
+	value, valueList, setValue, label, disabled,
 }: Props) {
 	const { t } = useTranslation('reader');
 	return (
@@ -59,6 +60,7 @@ function SettingButton({
 				'justify-center': settingIcons[value] === null,
 			})}
 			type="button"
+			disabled={disabled}
 			onClick={() => setValue((prev) => getNextOption(prev, valueList))}
 		>
 			<div>
