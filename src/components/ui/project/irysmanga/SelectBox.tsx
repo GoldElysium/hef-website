@@ -1,6 +1,6 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 import Select from 'react-select';
-import { useState } from 'react';
+import { useState, useId } from 'react';
 import classNames from 'classnames';
 import { useMangaContext } from './context/MangaContext';
 import { handlePageNavigation } from './utils/helper';
@@ -89,6 +89,7 @@ function SelectBox({ value, label }: SelectBoxProps) {
                     menuIsOpen
                     classNamePrefix={"react-select"}
                     className="h-full grow"
+                    instanceId={useId()}
                     classNames={{
                         valueContainer: () => "w-full",
                         control: () =>
