@@ -1,6 +1,7 @@
 'use client';
 
 import classNames from 'classnames';
+import Image from 'next/image';
 import React, { useEffect, useRef } from 'react';
 import { useMangaContext } from './context/MangaContext';
 import { handlePageNavigation } from './utils/helper';
@@ -41,7 +42,7 @@ function Reader({
 	const scriptedScroll = useRef(false);
 
 	// Sets the scrollbar to the correct position on page change
-	const setScollTopToPage = () => {
+	const setScrollTopToPage = () => {
 		if (containerRef.current) {
 			scriptedScroll.current = true;
 			const targetImg = pageRefs.current[page];
@@ -54,10 +55,10 @@ function Reader({
 	};
 	const handleScrollTop = () => {
 		if (pageLayout !== 'single' && !pageScrolled.current) {
-			setScollTopToPage();
+			setScrollTopToPage();
 		}
 		if (pageLayout === 'single') {
-			setScollTopToPage();
+			setScrollTopToPage();
 		}
 		pageScrolled.current = false;
 	};
@@ -86,7 +87,7 @@ function Reader({
 	 * for a better reading experience, but we don't want to load all the images at once
 	 * because that might be slow.
 	*/
-	const shouldPreload = (numPages: number, pg: number): ('eager' | 'lazy') => (Math.abs(numPages - pg) > 3 ? 'lazy' : 'eager');
+	const getPriority = (numPages: number, pg: number): boolean => Math.abs(numPages - pg) <= 3;
 
 	// Handle page turn on click
 	const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -155,7 +156,7 @@ function Reader({
 
 	// eslint-disable-next-line
 	useEffect(() => {
-		setScollTopToPage();
+		setScrollTopToPage();
 	}, [fitMode]);
 
 	let displayedPages: React.JSX.Element[] = [];
@@ -185,13 +186,17 @@ function Reader({
 		};
 
 		displayedPages = Array.from({ length: maxPageCount }, (_, i) => (
-			<img
+			<Image
 				key={i}
-				ref={(el) => { pageRefs.current[i] = el as HTMLImageElement; }}
 				src={currentPages[i]}
+				quality={100}
+				ref={(el) => { pageRefs.current[i] = el as HTMLImageElement; }}
 				className={getClassNames(i)}
+				priority={getPriority(i, page)}
 				alt={`Page ${i + 1}`}
-				loading={shouldPreload(i, page)}
+				width="0"
+				height={1080}
+				style={{ width: 'auto' }}
 			/>
 		));
 	}
