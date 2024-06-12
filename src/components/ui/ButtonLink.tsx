@@ -30,7 +30,7 @@ export default function ButtonLink({
 			<a href={url}>
 				<div
 					className={`flex h-10 cursor-pointer content-end items-center justify-center rounded-lg bg-skin-primary px-4
-							font-bold text-skin-primary-foreground hover:text-opacity-70 ${forceLightMode ? '' : 'dark:bg-skin-primary-dark dark:text-skin-primary-foreground-dark'}`}
+							font-bold text-skin-primary-foreground hover:text-opacity-70 ${forceLightMode ? '' : 'dark:bg-skin-primary-dark dark:text-skin-primary-foreground-dark'} ${className}`}
 				>
 					{text ?? children}
 				</div>

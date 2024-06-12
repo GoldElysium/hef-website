@@ -65,12 +65,24 @@ importers:
       '@tripetto/block-calculator':
         specifier: ^4.0.6
         version: 4.0.6
+      '@tripetto/block-checkbox':
+        specifier: ^6.0.2
+        version: 6.0.2
+      '@tripetto/block-checkboxes':
+        specifier: ^7.1.1
+        version: 7.1.1
       '@tripetto/block-device':
         specifier: ^5.0.2
         version: 5.0.2
+      '@tripetto/block-dropdown':
+        specifier: ^7.0.0
+        version: 7.0.0
       '@tripetto/block-email':
         specifier: ^6.0.3
         version: 6.0.3
+      '@tripetto/block-error':
+        specifier: ^5.0.4
+        version: 5.0.4
       '@tripetto/block-evaluate':
         specifier: ^4.0.2
         version: 4.0.2
@@ -92,12 +104,18 @@ importers:
       '@tripetto/block-paragraph':
         specifier: ^5.0.2
         version: 5.0.2
+      '@tripetto/block-radiobuttons':
+        specifier: ^8.0.0
+        version: 8.0.0
       '@tripetto/block-regex':
         specifier: ^4.0.2
         version: 4.0.2
       '@tripetto/block-setter':
         specifier: ^3.0.3
         version: 3.0.3(@tripetto/block-calculator@4.0.6)
+      '@tripetto/block-stop':
+        specifier: ^3.0.2
+        version: 3.0.2
       '@tripetto/block-text':
         specifier: ^6.0.2
         version: 6.0.2
@@ -2409,11 +2427,23 @@ packages:
   '@tripetto/block-calculator@4.0.6':
     resolution: {integrity: sha512-qdvYk4H5jsh01UdKBTkeVxq+O2+mrXwPUYuBThaQuNdOkJ9d8aT4zboluREhSUClQqzkqtA4Ms5aChcwBSdhAw==}
 
+  '@tripetto/block-checkbox@6.0.2':
+    resolution: {integrity: sha512-uQmxAhKQr0v2ksL5Au5qLUbFgAqRQFHYpbM2eZ+RnTUPuonRrFFWQcqcRhHPU3ah3qn4CQo5Y5T5fKhNbxBzkA==}
+
+  '@tripetto/block-checkboxes@7.1.1':
+    resolution: {integrity: sha512-YEhSc3bGxXHeuFnqrIMckrRbc7C6a3nJnO+nU3VXIS49NwHj9TnveIF5jY7Nv6uw5Nx4FoUOUbsY9K7w/gUMFg==}
+
   '@tripetto/block-device@5.0.2':
     resolution: {integrity: sha512-O2wVBRcluFlOuvFd+F5mbLumC3vnP7xCDKC4uZYGzFd1L1Qp3iU32nL2W7xF0A6DRHf5OyqtbYafKzv2ZurNBg==}
 
+  '@tripetto/block-dropdown@7.0.0':
+    resolution: {integrity: sha512-QUT3zyvW1vk4OtCAukeSKqxIARzIPlOu1s4aeERCRKu9VKqump1kJwg4PLo0BmAMhXm5mjhGkZ3RurQp2LYZGg==}
+
   '@tripetto/block-email@6.0.3':
     resolution: {integrity: sha512-4LTGu3dcHp3E2c/2oxyaOXip/j2PvM8jDYZ6qwlSdC4xFm+F1QxoY7LH9MpDOc11i7I82LUTGyPvPZRFJPj9SA==}
+
+  '@tripetto/block-error@5.0.4':
+    resolution: {integrity: sha512-Lfcq4gSnGz9cNam2IrapG/8GwoEZJx9Eb2NF0QTBu0XYiRHbjZiS4k+iSNEkQj30LnTFRCy3BwMHjUBY2Sbwvw==}
 
   '@tripetto/block-evaluate@4.0.2':
     resolution: {integrity: sha512-+zusb9G0gdO4ylj7OPTa72EJBbm0kaZyfaubp3KKT6wA/Q1ydck3YSn31V6zFqfQ7UtgAzOqWJ/ww5EMx+KSnw==}
@@ -2438,6 +2468,9 @@ packages:
   '@tripetto/block-paragraph@5.0.2':
     resolution: {integrity: sha512-Zxuw7r0yzDjphsbInk2mH3DHRkxL9eL7eHDzn3FelDch6kMQgA2Rm6fWr5iw6Inq8VEFnr8LpSMGDazjl1KWJw==}
 
+  '@tripetto/block-radiobuttons@8.0.0':
+    resolution: {integrity: sha512-fQLlohkS2ieXBgXIkmbFuIqybqvZGH5b5DqGmwVo5PhcjR4Oc0WRJqaodfGZQyxT84zLYl3b8efiU3AVb08zWQ==}
+
   '@tripetto/block-regex@4.0.2':
     resolution: {integrity: sha512-Qrb3fX5kFjt0nrancxq+4CO44tOMJ0hNjTYW4W186pUsDiuIbqDknbx9k8YS5ZODahG9cRniPAEoGeE2fFfd3A==}
 
@@ -2445,6 +2478,9 @@ packages:
     resolution: {integrity: sha512-jz0LqEnzEW0EmPGtruPnms4KI324DwDn3XaGc8yzdZ26OeK4HRroiD3Bg6ELYNVhovQR8I+IrUfAF1u3TUCvBQ==}
     peerDependencies:
       '@tripetto/block-calculator': ^4.0.1
+
+  '@tripetto/block-stop@3.0.2':
+    resolution: {integrity: sha512-QK99cqiGKy+N0NZ4ko1sqJeZbs/L+5i19ekd3kc0H9Ojqerp9q2LnSEsX/7bTefc2U6e96D7C4SEK/MIISWJIg==}
 
   '@tripetto/block-text@6.0.2':
     resolution: {integrity: sha512-N780rrF0KORM1tj4sHagZjlxyTvG/rWBaF9kg2mevnl98wx2cIIpYGIAYvlWnJAdBw0ucnDHFSx8RQ3g25K1Qw==}
@@ -10211,9 +10247,17 @@ snapshots:
 
   '@tripetto/block-calculator@4.0.6': {}
 
+  '@tripetto/block-checkbox@6.0.2': {}
+
+  '@tripetto/block-checkboxes@7.1.1': {}
+
   '@tripetto/block-device@5.0.2': {}
 
+  '@tripetto/block-dropdown@7.0.0': {}
+
   '@tripetto/block-email@6.0.3': {}
+
+  '@tripetto/block-error@5.0.4': {}
 
   '@tripetto/block-evaluate@4.0.2': {}
 
@@ -10231,11 +10275,15 @@ snapshots:
 
   '@tripetto/block-paragraph@5.0.2': {}
 
+  '@tripetto/block-radiobuttons@8.0.0': {}
+
   '@tripetto/block-regex@4.0.2': {}
 
   '@tripetto/block-setter@3.0.3(@tripetto/block-calculator@4.0.6)':
     dependencies:
       '@tripetto/block-calculator': 4.0.6
+
+  '@tripetto/block-stop@3.0.2': {}
 
   '@tripetto/block-text@6.0.2': {}
 

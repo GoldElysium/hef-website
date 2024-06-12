@@ -141,6 +141,18 @@
   @apply transition-colors duration-300 motion-reduce:transition-none;
 }*/
 
+
+
+.dark {
+  input, textarea {
+    background-color: #2b2a33;
+  }
+
+  ::placeholder {
+    color: #9ca3a1;
+  }
+}
+
 .description-body {
   background-color: inherit !important;
 }

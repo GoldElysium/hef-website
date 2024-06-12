@@ -38,152 +38,120 @@ import {
 	ReactNode, ChangeEvent, FocusEvent, KeyboardEvent, useEffect, useRef, useState,
 } from 'react';
 import {
-	tripetto, DateTime, Num, TSerializeTypes,
-	cancelUITimeout, castToString, scheduleUITimeout,
+	tripetto,
+	TSerializeTypes, cancelUITimeout, findFirst, scheduleUITimeout,
 } from '@tripetto/runner';
-import { Textarea } from '@tripetto/block-textarea/runner';
-import { IFormNodeBlockProps, IFormNodeBlock } from '../../interfaces/block';
-import { handleBlur, handleFocus, setReturnValue } from '../../util/helpers';
-import { DEBOUNCE_MAX, DEBOUNCE_MIN } from '../../util/const';
+import { Dropdown } from '@tripetto/block-dropdown/runner';
+import { IFormNodeBlock, IFormNodeBlockProps } from '@/components/ui/form/interfaces/block';
+import { IDropdownFabricOption } from '@tripetto/runner-fabric';
+import { DEBOUNCE_NORMAL } from '../../util/const';
 
-/* eslint-disable react/destructuring-assignment */
-function TextareaFabric(props: {
+const assertValue = (
+	valueRef: {
+		reference?: string;
+		readonly set: (value: TSerializeTypes, reference?: string, display?: string) => void;
+		readonly default: (value: TSerializeTypes, reference?: string, display?: string) => void;
+	},
+	props: {
+		readonly options: IDropdownFabricOption[];
+		readonly placeholder?: string;
+	},
+	reference?: string,
+) => {
+	const selected = findFirst(props.options, (option) => option.id === reference);
+
+	if (!selected && !props.placeholder && props.options.length > 0) {
+		const defaultOption = findFirst(props.options, (option) => (!!option.name));
+
+		if (defaultOption) {
+			valueRef.default(
+				defaultOption.value || defaultOption.name,
+				defaultOption.id,
+				defaultOption.name,
+			);
+		}
+	} else if (valueRef.reference !== selected?.id) {
+		valueRef.set(selected && (selected.value || selected.name), selected?.id, selected?.name);
+	}
+
+	return (selected && selected.id) || '';
+};
+
+/* eslint-disable react/destructuring-assignment,react/no-unused-prop-types */
+function DropdownFabric(props: {
 	readonly id?: string;
+	readonly options: IDropdownFabricOption[];
 	readonly placeholder?: string;
 	readonly required?: boolean;
 	readonly disabled?: boolean;
 	readonly readOnly?: boolean;
-	readonly rows?: number;
-	readonly autoSize?: boolean;
 	readonly error?: boolean;
 	readonly tabIndex?: number;
-	readonly maxLength?: number;
 	readonly value?:
 	| string
 	| {
-		pristine: TSerializeTypes;
-		readonly string: string;
+		reference?: string;
 		readonly isLocked: boolean;
 		readonly isFrozen: boolean;
+		readonly set: (value: TSerializeTypes, reference?: string, display?: string) => void;
+		readonly default: (value: TSerializeTypes, reference?: string, display?: string) => void;
 	};
 	readonly ariaDescribedBy?: string;
-	readonly onChange?: (value: string) => string | void;
-	readonly onFocus?: (e: FocusEvent) => string | void;
-	readonly onBlur?: (e: FocusEvent) => string | void;
-	readonly onAutoFocus?: (el: HTMLTextAreaElement | null) => void;
+	readonly onChange?: (value: string) => void;
+	readonly onFocus?: (e: FocusEvent) => void;
+	readonly onBlur?: (e: FocusEvent) => void;
+	readonly onAutoFocus?: (el: HTMLSelectElement | null) => void;
 	readonly onSubmit?: () => void;
 	readonly onCancel?: () => void;
 }) {
 	const valueRef = props.value;
-	const debounceRef = useRef<{
-		duration: number;
-		handle: number;
-		update?:() => void;
-	}>({
-				duration: 0,
-				handle: 0,
-			});
-	const [focus, setFocus] = useState(false);
-	const [focusValue, setFocusValue] = useState(typeof valueRef === 'object' ? castToString(valueRef.pristine) : valueRef || '');
+	const debounceRef = useRef<number>(0);
+	const [proxy, setProxy] = useState((typeof valueRef !== 'object' && valueRef) || '');
 	const [value, setValue] =		typeof valueRef === 'object'
 		? [
-			focus ? focusValue : valueRef.string,
-			(val: string) => {
-				cancelUITimeout(debounceRef.current.handle);
+			debounceRef.current !== 0 ? proxy : assertValue(valueRef, props, valueRef.reference),
+			(reference: string) => {
+				cancelUITimeout(debounceRef.current);
 
-				setFocusValue(val);
+				setProxy(reference);
 
-				const nTimeout = Num.range(debounceRef.current.duration * 2, DEBOUNCE_MIN, DEBOUNCE_MAX);
+				debounceRef.current = scheduleUITimeout(() => {
+					debounceRef.current = 0;
 
-				debounceRef.current.handle = scheduleUITimeout(() => {
-					const start = DateTime.precise;
-
-					debounceRef.current.handle = 0;
-					debounceRef.current.update = () => {
-						debounceRef.current.duration = DateTime.elapsed(start, true);
-						debounceRef.current.update = undefined;
-					};
-
-					valueRef.pristine = val || undefined;
-				}, nTimeout);
+					assertValue(valueRef, props, reference);
+				}, DEBOUNCE_NORMAL);
 			},
 		]
-		: [focusValue, setFocusValue];
+		: [proxy, setProxy];
 	const [, makeErrorVisible] = useState(!!value);
-	const [height, setHeight] = useState('auto');
-	const minHeight = useRef<number>();
-	const ref = useRef<HTMLTextAreaElement | null>();
-	const setRef = (el: HTMLTextAreaElement | null) => {
-		if (props.onAutoFocus) {
-			props.onAutoFocus(el);
-		}
-
-		ref.current = el;
-	};
-
-	useEffect(() => {
-		if (ref.current) {
-			if (!focus) {
-				ref.current.value = value;
-			}
-
-			if (props.autoSize) {
-				if (typeof minHeight.current !== 'number') {
-					minHeight.current = ref.current.getBoundingClientRect().height;
-				}
-
-				const current = ref.current.style.height;
-
-				ref.current.style.height = 'auto';
-
-				const n = Math.max(minHeight.current, ref.current.scrollHeight);
-
-				setHeight(n > 10 ? `${n}px` : 'auto');
-
-				ref.current.style.height = current;
-			}
-		}
-	}, [value]);
 
 	useEffect(() => () => {
-		cancelUITimeout(debounceRef.current.handle);
+		cancelUITimeout(debounceRef.current);
 	}, []);
 
-	if (debounceRef.current.update) {
-		debounceRef.current.update();
-	}
-
 	return (
-		<textarea
-			className={`resize-none rounded-lg px-4 py-2 ${props.error ? 'border-2 border-red-600' : 'border border-skin-primary dark:border-skin-primary-dark'}`}
+		<select
+			className="rounded-lg border border-skin-primary bg-white px-4 py-2 dark:border-skin-primary-dark dark:bg-[#2b2a33]"
 			id={props.id}
-			ref={setRef}
+			ref={props.onAutoFocus}
 			tabIndex={props.tabIndex}
-			placeholder={props.placeholder}
 			required={props.required || false}
-			disabled={props.disabled || false}
-			readOnly={props.readOnly || (typeof valueRef === 'object' && (valueRef.isFrozen || valueRef.isLocked)) || false}
-			rows={props.rows || 2}
-			maxLength={props.maxLength || undefined}
-			defaultValue={value}
-			autoComplete="off"
-			inputMode="text"
+			disabled={
+				props.disabled || props.readOnly || (typeof valueRef === 'object' && (valueRef.isFrozen || valueRef.isLocked)) || false
+			}
+			value={value}
 			aria-describedby={props.ariaDescribedBy}
-			style={{
-				height,
-				overflowY: (props.autoSize && 'hidden') || undefined,
-			}}
-			onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
+			onChange={(e: ChangeEvent<HTMLSelectElement>) => {
 				setValue(e.target.value);
 				makeErrorVisible(true);
 
 				if (props.onChange) {
-					setReturnValue(setValue, props.onChange(e.target.value));
+					props.onChange(e.target.value);
 				}
 			}}
-			onFocus={handleFocus(setFocus, setValue, props.onFocus)}
-			onBlur={handleBlur(setFocus, setValue, props.onBlur)}
-			onKeyDown={(e: KeyboardEvent<HTMLTextAreaElement>) => {
+			onFocus={props.onFocus}
+			onBlur={props.onBlur}
+			onKeyDown={(e: KeyboardEvent<HTMLSelectElement>) => {
 				if (e.shiftKey && e.key === 'Enter' && props.onSubmit) {
 					e.preventDefault();
 
@@ -204,7 +172,24 @@ function TextareaFabric(props: {
 					}
 				}
 			}}
-		/>
+		>
+			{props.placeholder && (
+				<option
+					value=""
+				>
+					{props.placeholder}
+				</option>
+			)}
+			{props.options.map(
+				(option, index) => option.name
+					&& option.id && (
+				// eslint-disable-next-line react/no-array-index-key
+					<option key={index} value={option.id}>
+						{option.name}
+					</option>
+				),
+			)}
+		</select>
 	);
 }
 /* eslint-enable */
@@ -212,25 +197,26 @@ function TextareaFabric(props: {
 @tripetto({
 	legacyBlock: true,
 	type: 'node',
-	identifier: '@tripetto/block-textarea',
+	identifier: '@tripetto/block-dropdown',
 })
-export default class TextareaBlock extends Textarea implements IFormNodeBlock {
+export default class DropdownBlock extends Dropdown implements IFormNodeBlock {
 	render(props: IFormNodeBlockProps): ReactNode {
 		return (
 			<>
 				{props.name}
 				{props.description}
-				<TextareaFabric
+				<DropdownFabric
 					id={props.id}
-					value={this.textareaSlot}
+					options={this.options}
+					value={this.dropdownSlot}
 					required={this.required}
 					error={props.isFailed}
-					autoSize
 					tabIndex={props.tabIndex}
 					placeholder={props.placeholder}
-					maxLength={this.maxLength}
 					ariaDescribedBy={props.ariaDescribedBy}
 					onAutoFocus={props.autoFocus}
+					onFocus={props.focus}
+					onBlur={props.blur}
 					onSubmit={props.onSubmit}
 				/>
 				{props.ariaDescription}

@@ -481,17 +481,23 @@
 .ina {
     --color-background: 239 235 247;
     --color-primary: 149 117 226;
+    --color-primary-foreground: 252 252 252;
     --color-secondary: 210 202 229;
+    --color-secondary-foreground: 48 48 48;
     --color-text: 48 48 48;
     --color-header: 149 117 226;
+    --color-header-foreground: 252 252 252;
     --color-heading: 86 70 128;
     --color-link: 86 70 128;
 
     --color-background-dark: 63 62 105;
     --color-primary-dark: 149 117 226;
+    --color-primary-foreground-dark: 252 252 252;
     --color-secondary-dark: 91 77 128;
+    --color-secondary-foreground-dark: 252 252 252;
     --color-text-dark: 252 252 252;
     --color-header-dark: 98 86 126;
+    --color-header-foreground-dark: 252 252 252;
     --color-heading-dark: 219 204 255;
     --color-link-dark: 219 204 255;
 

@@ -53,7 +53,7 @@ import {
 import { Number } from '@tripetto/block-number/runner';
 import { IFormNodeBlockProps, IFormNodeBlock } from '../../interfaces/block';
 import { DEBOUNCE_MAX, DEBOUNCE_MIN } from '../../util/const';
-import { handleBlur, handleFocus, setReturnValue } from '../../helpers';
+import { handleBlur, handleFocus, setReturnValue } from '../../util/helpers';
 
 /* eslint-disable react/destructuring-assignment */
 function NumberFabric(props: {
@@ -170,7 +170,7 @@ function NumberFabric(props: {
 	return (
 		<input
 			id={props.id}
-			className={`rounded-lg px-4 py-2 ${error ? 'border-2 border-red-600' : 'border border-black'}`}
+			className={`rounded-lg px-4 py-2 ${error ? 'border-2 border-red-600' : 'border border-skin-primary dark:border-skin-primary-dark'}`}
 			ref={props.onAutoFocus}
 			type={type}
 			tabIndex={props.tabIndex}

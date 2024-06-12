@@ -46,8 +46,8 @@ import {
 	markdownifyToURL,
 } from '@tripetto/runner';
 import { markdownifyToJSX } from '@tripetto/runner-react-hook';
-import { Turnstile, TurnstileInstance } from '@marsidev/react-turnstile';
 import { useOverlay } from '@tripetto/runner-fabric/overlay';
+import { TurnstileInstance } from '@marsidev/react-turnstile';
 import { IRunnerUIProps } from '../interfaces/props';
 import { IFormNodeBlock } from '../interfaces/block';
 import { useRunnerController } from './controller';
@@ -96,6 +96,8 @@ const useFormRunner = (props: IRunnerUIProps) => {
 		initialFocus: props.snapshot && props.snapshot.b && props.snapshot.b.b,
 	});
 
+	const turnstileRef = useRef<TurnstileInstance>();
+
 	const blocksRef = useRef<{
 		[key: string]: HTMLElement | undefined;
 	}>({});
@@ -111,8 +113,6 @@ const useFormRunner = (props: IRunnerUIProps) => {
 	const stagedRef = useRef<{
 		[key: string]: IObservableNode<IFormNodeBlock> | undefined;
 	}>({});
-
-	const turnstileRef = useRef<TurnstileInstance>();
 
 	const mode = runner.storyline?.mode || 'progressive';
 	const { status } = runner;
@@ -419,17 +419,6 @@ const useFormRunner = (props: IRunnerUIProps) => {
 						</nav>
 					</div>
 				))}
-				<Turnstile
-					className="mt-4"
-					siteKey={process.env.NEXT_PUBLIC_TURNSTILE_KEY as string}
-					ref={turnstileRef}
-					options={{
-						execution: 'execute',
-						appearance: 'execute',
-						responseField: false,
-						refreshExpired: 'manual',
-					}}
-				/>
 				<OverlayProvider />
 			</>
 		)
@@ -455,6 +444,7 @@ const useFormRunner = (props: IRunnerUIProps) => {
 
 	return {
 		frameRef,
+		turnstileRef,
 		status,
 		view,
 		isPage,

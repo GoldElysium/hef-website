@@ -40,17 +40,19 @@ import { TRunnerPreviewData } from '@tripetto/runner-react-hook';
 import { useEffect, useRef, useState } from 'react';
 import {
 	compare,
+	Export,
 	fingerprint,
 	IDefinition,
 	IHookPayload,
+	Instance,
 	isFunction,
 	ISnapshot,
 	isPromise,
 	L10n,
 	TL10n,
-	Export, Instance,
 } from '@tripetto/runner';
 import './ui/blocks';
+import { Turnstile } from '@marsidev/react-turnstile';
 import Prologue from './ui/messages/prologue';
 import Epilogue from './ui/messages/epilogue';
 import { IRunnerSnapshot } from './interfaces/snapshot';
@@ -61,9 +63,10 @@ import useFormRunner from './hooks/runner';
 
 let runCounter = 0;
 
-export default function FormRunnerUI(props: IRunnerUIProps) {
+export function FormRunnerUI(props: IRunnerUIProps) {
 	const {
 		frameRef,
+		turnstileRef,
 		prologue,
 		blocks,
 		epilogue,
@@ -94,16 +97,24 @@ export default function FormRunnerUI(props: IRunnerUIProps) {
 				// eslint-disable-next-line react/jsx-props-no-spreading
 				|| (epilogue && <Epilogue {...epilogue} />)
 			}
+
+			<Turnstile
+				className="mt-4"
+				siteKey={process.env.NEXT_PUBLIC_TURNSTILE_KEY as string}
+				ref={turnstileRef}
+				options={{
+					execution: 'execute',
+					appearance: 'execute',
+					responseField: false,
+					refreshExpired: 'manual',
+				}}
+			/>
 		</div>
 	);
 }
 
 /* eslint-disable react/destructuring-assignment */
-export function FormRunner(props: IRunnerProps) {
-	const definition = useRef<IDefinition | false>();
-	const snapshot = useRef<ISnapshot<IRunnerSnapshot> | false>();
-	const l10n = useRef<TL10n | false>();
-	const license = useRef<string | false>();
+export default function FormRunner(props: IRunnerProps) {
 	const emptyDefinition = {
 		sections: [],
 		builder: {
@@ -111,6 +122,11 @@ export function FormRunner(props: IRunnerProps) {
 			version: '',
 		},
 	} as IDefinition;
+
+	const definition = useRef<IDefinition | false>();
+	const snapshot = useRef<ISnapshot<IRunnerSnapshot> | false>();
+	const l10n = useRef<TL10n | false>();
+	const license = useRef<string | false>();
 	const isReady = useRef<true>();
 	const runOnce = useRef<true>();
 	const builderRef = useRef<IBuilderInstance>();
@@ -248,6 +264,7 @@ export function FormRunner(props: IRunnerProps) {
 	const localSnapshot = useRef({
 		data: undefined as ISnapshot<IRunnerSnapshot> | undefined,
 		save: () => {
+			console.log('Save called!');
 			if (controller.current && localStorage) {
 				const key = `hefw-forms-${controller.current.fingerprint}`;
 				const data = controller.current.snapshot;
@@ -338,6 +355,7 @@ export function FormRunner(props: IRunnerProps) {
 
 		return () => {
 			if (allowListener) {
+				localSnapshot.current.save();
 				window.removeEventListener('unload', localSnapshot.current.save);
 			}
 

@@ -41,7 +41,7 @@ import {
 import {
 	ChangeEvent, KeyboardEvent, useEffect, useRef, useState,
 } from 'react';
-import { setReturnValue } from '../../helpers';
+import { setReturnValue } from '../../util/helpers';
 
 interface InputProps {
 	readonly type: 'text' | 'email' | 'url' | 'password' | 'tel' | 'number';
@@ -166,7 +166,7 @@ export default function Input({
 	return (
 		<input
 			id={id}
-			className={`rounded-lg px-4 py-2 ${error ? 'border-2 border-red-600' : 'border border-black'}`}
+			className={`rounded-lg px-4 py-2 ${error ? 'border-2 border-red-600' : 'border border-skin-primary dark:border-skin-primary-dark'}`}
 			ref={setRef}
 			type={type ?? 'text'}
 			list={list}

@@ -37,7 +37,7 @@ SOFTWARE.
 import { Paragraph } from '@tripetto/block-paragraph/runner';
 import { tripetto } from '@tripetto/runner';
 import { ReactNode } from 'react';
-import ReactPlayer from 'react-player';
+import ReactPlayer from 'react-player/lazy';
 import { IFormNodeBlockProps, IFormNodeBlock } from '../../interfaces/block';
 
 @tripetto({
@@ -59,7 +59,21 @@ export default class ParagraphBlock extends Paragraph implements IFormNodeBlock 
 				{this.props.imageURL && !this.props.imageAboveText && (
 					<img src={props.markdownifyToImage(this.props.imageURL)} width={this.props.imageWidth} alt="" />
 				)}
-				{this.props.video && <ReactPlayer src={props.markdownifyToURL(this.props.video)} />}
+				{this.props.video && (
+					// This ensures a 16:9 aspect ratio
+					<div className="relative mb-4 h-0 w-full max-w-full pb-[56.25%]">
+						<div className="absolute left-0 top-0 size-full">
+							<ReactPlayer
+								url={props.markdownifyToURL(this.props.video)}
+								width="100%"
+								height="100%"
+								controls
+								light
+								className="my-4"
+							/>
+						</div>
+					</div>
+				)}
 				{props.ariaDescription}
 			</>
 		);

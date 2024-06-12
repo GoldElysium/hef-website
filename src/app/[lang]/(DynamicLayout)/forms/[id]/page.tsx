@@ -4,8 +4,9 @@ import { Language } from '@/lib/i18n/languages';
 import PayloadResponse from '@/types/PayloadResponse';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
-import FormRunnerUI from '@/components/ui/form/FormRunner';
+import FormRunner from '@/components/ui/form/FormRunner';
 import fetchForm from '@/lib/fetchForm';
+import ButtonLink from '@/components/ui/ButtonLink';
 
 export interface IForm {
 	name: string;
@@ -30,14 +31,41 @@ export default async function FormPage({ params: { id, lang } }: IProps) {
 		notFound();
 	}
 
+	if (form.status !== 'open') {
+		return (
+			<div className="flex h-full min-h-screen flex-col bg-skin-background text-skin-text dark:bg-skin-background-dark dark:text-skin-text-dark">
+				<div className="grow">
+					<div className="my-16 flex w-full flex-col items-center px-4 md:px-16 lg:px-24 2xl:px-56">
+						<div className="w-full max-w-6xl break-words px-4 md:break-normal">
+							<h1 className="text-center text-4xl font-bold">This form is currently closed.</h1>
+							<div className="mt-6 flex justify-center">
+								<ButtonLink
+									url="/"
+									lang={lang}
+									className="px-8 py-6 text-lg"
+									internal
+								>
+									Go home
+								</ButtonLink>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		);
+	}
+
 	return (
-		<div className="flex h-full min-h-screen flex-col bg-skin-background text-skin-text dark:bg-skin-background-dark dark:text-skin-text-dark">
+		<div
+			className="flex h-full min-h-screen flex-col bg-skin-background text-skin-text dark:bg-skin-background-dark dark:text-skin-text-dark"
+		>
 			<div className="grow">
 				<div className="my-16 flex w-full flex-col items-center px-4 md:px-16 lg:px-24 2xl:px-56">
 					<div className="w-full max-w-6xl break-words px-4 md:break-normal">
-						<FormRunnerUI
+						<FormRunner
 							definition={form.form}
 							id={id}
+							persistent
 						/>
 
 						<a
@@ -47,7 +75,6 @@ export default async function FormPage({ params: { id, lang } }: IProps) {
 						>
 							Powered by Tripetto
 						</a>
-
 					</div>
 				</div>
 			</div>
