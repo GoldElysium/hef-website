@@ -60,7 +60,7 @@ const useFormRunner = (props: IRunnerUIProps) => {
 		...props,
 		onSnapshot: () => ({
 			// eslint-disable-next-line @typescript-eslint/no-use-before-define
-			b,
+			b: initialFocus,
 			d: props.snapshot && props.snapshot.b && props.snapshot.b.d,
 			e: DateTime.now,
 		}),
@@ -90,7 +90,7 @@ const useFormRunner = (props: IRunnerUIProps) => {
 
 	const [OverlayProvider, overlay] = useOverlay();
 
-	const [frameRef, blur, , handleFocus, handleAutoFocus, b] = useFocus({
+	const [frameRef, blur, , handleFocus, handleAutoFocus, initialFocus] = useFocus({
 		page: runner.page,
 		gainFocus: runner.view === 'live' && props.display === 'page',
 		initialFocus: props.snapshot && props.snapshot.b && props.snapshot.b.b,
@@ -177,6 +177,7 @@ const useFormRunner = (props: IRunnerUIProps) => {
 													overlay,
 													l10n: undefined as any,
 													attachments: {
+														/* eslint-disable prefer-promise-reject-errors */
 														async get(key) {
 															const res = await fetch(`${process.env.NEXT_PUBLIC_CDN_URL}/form-submissions/tmp/${key}`);
 
@@ -185,10 +186,14 @@ const useFormRunner = (props: IRunnerUIProps) => {
 														async put(file) {
 															turnstileRef.current?.execute();
 
-															const turnstileResponse = await turnstileRef.current?.getResponsePromise();
+															let turnstileResponse;
+															try {
+																turnstileResponse = await turnstileRef.current?.getResponsePromise();
+															} catch {
+																return Promise.reject('Failed captcha, try again.');
+															}
 															if (!turnstileResponse) {
-																// TODO: Properly handle
-																throw new Error('Failed to get Turnstile response.');
+																return Promise.reject('Failed captcha, try again.');
 															}
 
 															const res = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL}/forms/upload`, {
@@ -214,15 +219,14 @@ const useFormRunner = (props: IRunnerUIProps) => {
 																method: 'POST',
 															});
 
-															return filename;
+															return filename as string;
 														},
 														async delete(key) {
 															turnstileRef.current?.execute();
 
 															const turnstileResponse = await turnstileRef.current?.getResponsePromise();
 															if (!turnstileResponse) {
-																// TODO: Properly handle
-																throw new Error('Failed to get Turnstile response.');
+																return Promise.reject('Failed captcha, try again.');
 															}
 
 															fetch(`${process.env.NEXT_PUBLIC_CMS_URL}/forms/upload`, {
@@ -235,7 +239,10 @@ const useFormRunner = (props: IRunnerUIProps) => {
 																	'Content-Type': 'application/json',
 																},
 															}).then();
+
+															return Promise.resolve();
 														},
+														/* eslint-enable */
 													},
 													get id() {
 														return node.block?.key() || '';
@@ -333,7 +340,8 @@ const useFormRunner = (props: IRunnerUIProps) => {
 																	if (
 																		count === 1
 																		&& !runner.storyline.isFailed
-																		&& !(runner.storyline.isAtFinish && !runner.storyline.isFinishable)
+																		&& !(runner.storyline.isAtFinish
+																			&& !runner.storyline.isFinishable)
 																	) {
 																		runner.storyline.stepForward();
 																	}
@@ -375,13 +383,17 @@ const useFormRunner = (props: IRunnerUIProps) => {
 												>
 													{block || (
 														<>
-															{isString(node.props.name) && castToBoolean(node.props.nameVisible, true) && (
-																// eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions
-																<h2 onClick={fnEdit}>
-																	{markdownifyToJSX(node.props.name, node.context)}
-																</h2>
-															)}
+															{isString(node.props.name)
+																&& castToBoolean(node.props.nameVisible, true)
+																&& (
+																	// eslint-disable-next-line max-len
+																	// eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions
+																	<h2 onClick={fnEdit}>
+																		{markdownifyToJSX(node.props.name, node.context)}
+																	</h2>
+																)}
 															{node.props.description && (
+																// eslint-disable-next-line max-len
 																// eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-noninteractive-element-interactions
 																<p onClick={fnEdit}>
 																	{markdownifyToJSX(node.props.description, node.context)}
@@ -411,7 +423,11 @@ const useFormRunner = (props: IRunnerUIProps) => {
 							<button
 								type="button"
 								className="rounded-md bg-skin-primary px-4 py-2 text-skin-primary-foreground disabled:bg-skin-secondary disabled:text-skin-secondary-foreground dark:bg-skin-primary-dark dark:text-skin-primary-foreground-dark disabled:dark:bg-skin-secondary-dark disabled:dark:text-skin-secondary-foreground-dark"
-								disabled={runner.storyline?.isFailed || (runner.storyline?.isAtFinish && !runner.storyline?.isFinishable)}
+								disabled={
+									runner.storyline?.isFailed
+									|| (runner.storyline?.isAtFinish
+									&& !runner.storyline?.isFinishable)
+								}
 								onClick={() => runner.storyline?.stepForward()}
 							>
 								{runner.storyline?.isAtFinish ? 'Finish' : 'Next'}
@@ -464,7 +480,9 @@ const useFormRunner = (props: IRunnerUIProps) => {
 			(view !== 'preview'
 				&& status !== 'pausing'
 				&& runner.storyline && {
-				previous: (!runner.storyline.isAtStart && (() => runner.storyline!.stepBackward())) || undefined,
+				previous:
+					(!runner.storyline.isAtStart && (() => runner.storyline!.stepBackward()))
+					|| undefined,
 				next:
 						(!runner.storyline.isFailed
 							&& !(runner.storyline.isAtFinish && !runner.storyline.isFinishable)

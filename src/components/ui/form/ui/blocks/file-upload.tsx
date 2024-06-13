@@ -430,6 +430,9 @@ export default class UploadBlock extends FileUpload implements IFormNodeBlock {
 						}
 					}}
 				/>
+				<small className="text-sm">
+					If your upload seems to be stuck, check the captcha at the bottom of the page.
+				</small>
 				{props.ariaDescription}
 			</>
 		);

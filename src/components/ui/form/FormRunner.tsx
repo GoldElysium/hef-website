@@ -50,6 +50,8 @@ import {
 	isPromise,
 	L10n,
 	TL10n,
+	checksum,
+	powSolve,
 } from '@tripetto/runner';
 import './ui/blocks';
 import { Turnstile } from '@marsidev/react-turnstile';
@@ -72,10 +74,88 @@ export function FormRunnerUI(props: IRunnerUIProps) {
 		epilogue,
 	} = useFormRunner({
 		...props,
-		onSubmit: (instance: Instance) => {
-			const exportables = Export.exportablesWithData(instance);
+		onSubmit: async (instance: Instance): Promise<string | undefined> => {
+			/* eslint-disable prefer-promise-reject-errors */
+			const data = {
+				exportables: Export.exportables(instance),
+				actionables: Export.actionables(instance),
+			};
 
-			console.log(exportables);
+			const announcementRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL}/forms/announce`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					// eslint-disable-next-line react/destructuring-assignment
+					formId: props.id,
+					checksum: checksum(data, true),
+				}),
+			}).catch();
+
+			if (!announcementRes) {
+				return Promise.reject();
+			}
+
+			if (announcementRes.status > 400) {
+				return Promise.reject('reject');
+			}
+
+			const announcement = await announcementRes.json();
+
+			let answer;
+			try {
+				answer = powSolve(
+					data,
+					10,
+					announcement.id,
+					16,
+					1000 * 60 * 5,
+					announcement.timestamp,
+				);
+			} catch {
+				return Promise.reject('Failed to solve the challenge');
+			}
+
+			if (!answer) {
+				return Promise.reject();
+			}
+
+			turnstileRef.current?.execute();
+
+			let turnstileResponse;
+			try {
+				turnstileResponse = await turnstileRef.current?.getResponsePromise();
+			} catch {
+				return Promise.reject('reject');
+			}
+			if (!turnstileResponse) {
+				return Promise.reject('reject');
+			}
+
+			const res = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL}/forms/submit`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					...data,
+					id: announcement.id,
+					turnstileResponse,
+					answer,
+				}),
+			}).catch();
+
+			if (!res) {
+				return Promise.reject();
+			}
+
+			if (res.status > 400) {
+				return Promise.reject('reject');
+			}
+
+			return undefined;
+			/* eslint-enable */
 		},
 	});
 
@@ -98,17 +178,20 @@ export function FormRunnerUI(props: IRunnerUIProps) {
 				|| (epilogue && <Epilogue {...epilogue} />)
 			}
 
-			<Turnstile
-				className="mt-4"
-				siteKey={process.env.NEXT_PUBLIC_TURNSTILE_KEY as string}
-				ref={turnstileRef}
-				options={{
-					execution: 'execute',
-					appearance: 'execute',
-					responseField: false,
-					refreshExpired: 'manual',
-				}}
-			/>
+			{turnstileRef && (
+				<Turnstile
+					className="mt-4"
+					siteKey={process.env.NEXT_PUBLIC_TURNSTILE_KEY as string}
+					ref={turnstileRef}
+					options={{
+						execution: 'render',
+						appearance: 'always',
+						responseField: false,
+						refreshExpired: 'manual',
+					}}
+					onError={() => {}}
+				/>
+			)}
 		</div>
 	);
 }
@@ -264,7 +347,6 @@ export default function FormRunner(props: IRunnerProps) {
 	const localSnapshot = useRef({
 		data: undefined as ISnapshot<IRunnerSnapshot> | undefined,
 		save: () => {
-			console.log('Save called!');
 			if (controller.current && localStorage) {
 				const key = `hefw-forms-${controller.current.fingerprint}`;
 				const data = controller.current.snapshot;
