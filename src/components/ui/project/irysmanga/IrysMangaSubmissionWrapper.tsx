@@ -37,14 +37,12 @@ async function fetchOptimizedImageURLs({ project, lang }: IProps) {
 					return page;
 				}
 
-				return getImageUrl(
-					{
-						src: page,
-						height: 1080,
-						quality: 90,
-						action: 'resize',
-					},
-				);
+				return getImageUrl({
+					src: page,
+					height: 1080,
+					quality: 90,
+					action: 'resize',
+				});
 			}),
 		);
 	});
@@ -52,12 +50,18 @@ async function fetchOptimizedImageURLs({ project, lang }: IProps) {
 	return optimizedImages;
 }
 
-export default async function IrysMangaSubmissionWrapper({ project, lang }: IProps) {
+export default async function IrysMangaSubmissionWrapper({
+	project,
+	lang,
+}: IProps) {
 	const optimizedImages = await fetchOptimizedImageURLs({ project, lang });
-
 	return (
 		<div className={jura.className}>
-			<MangaProvider devProps={project.devprops} lang={lang} optimizedImages={optimizedImages}>
+			<MangaProvider
+				devProps={project.devprops}
+				lang={lang}
+				optimizedImages={optimizedImages}
+			>
 				<IrysManga />
 			</MangaProvider>
 		</div>

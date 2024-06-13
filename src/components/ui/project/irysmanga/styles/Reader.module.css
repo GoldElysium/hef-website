@@ -1,5 +1,5 @@
 .page {
-    @apply m-auto object-cover;
+    @apply m-auto object-cover w-full;
 }
 
 .pageHeight {
@@ -10,6 +10,10 @@
     @apply w-full;
 }
 
+.pageMedium {
+    @apply w-full md:max-w-[80%];
+}
+
 .pageContainer {
-    @apply grow hover:cursor-pointer overflow-y-auto flex flex-col gap-[10px] relative;
+    @apply grow hover:cursor-pointer overflow-y-auto flex flex-col gap-[10px] relative items-center;
 }

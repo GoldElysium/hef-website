@@ -2,13 +2,14 @@
 
 import classNames from 'classnames';
 import Image from 'next/image';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useMangaContext } from './context/MangaContext';
 import { handlePageNavigation } from './utils/helper';
 import ProgressBar from './ProgressBar';
 import { getMangaDataOrThrow } from './utils/types';
 import ReaderHeader from './ReaderHeader';
 import styles from './styles/Reader.module.css';
+import LoadingIcon from './LoadingIcon';
 
 interface Props {
 	setOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>;
@@ -36,10 +37,14 @@ function Reader({
 		optimizedImages,
 	} = useMangaContext();
 
+	const mangaData = getMangaDataOrThrow(manga, mangaLanguage);
 	// const containerRef = useRef<HTMLDivElement>(null);
 	const pageRefs = useRef<HTMLImageElement[]>([]);
 	const pageScrolled = useRef(false);
 	const scriptedScroll = useRef(false);
+	const [loading, setLoading] = useState<boolean[]>(
+		[...Array(mangaData.chapters[chapter].pageCount)].fill(true),
+	);
 
 	// Sets the scrollbar to the correct position on page change
 	const setScrollTopToPage = () => {
@@ -48,8 +53,8 @@ function Reader({
 			const targetImg = pageRefs.current[page];
 			if (targetImg) {
 				// eslint-disable-next-line
-				containerRef.current.scrollTop =
-					targetImg.offsetTop - containerRef.current.offsetTop;
+                containerRef.current.scrollTop =
+                    targetImg.offsetTop - containerRef.current.offsetTop;
 			}
 		}
 	};
@@ -82,11 +87,11 @@ function Reader({
 	};
 
 	/**
-	 * Check whether we should preload an image for a page.
-	 * Note we preload a few pages in advance (or behind just in case you try jumping pages)
-	 * for a better reading experience, but we don't want to load all the images at once
-	 * because that might be slow.
-	*/
+     * Check whether we should preload an image for a page.
+     * Note we preload a few pages in advance (or behind just in case you try jumping pages)
+     * for a better reading experience, but we don't want to load all the images at once
+     * because that might be slow.
+     */
 	const getPriority = (numPages: number, pg: number): boolean => Math.abs(numPages - pg) <= 3;
 
 	// Handle page turn on click
@@ -149,77 +154,91 @@ function Reader({
 		}
 	};
 
-	// eslint-disable-next-line
-	useEffect(() => {
-		handleScrollTop();
-	}, [page, chapter, pageLayout]);
-
-	// eslint-disable-next-line
-	useEffect(() => {
-		setScrollTopToPage();
-	}, [fitMode]);
-
-	let displayedPages: React.JSX.Element[] = [];
-	const mangaData = getMangaDataOrThrow(manga, mangaLanguage);
-	if (mangaData.chapters[chapter]) {
-		const currentChapter = mangaData.chapters[chapter];
-		const maxPageCount = currentChapter.pageCount;
-		// Use optimized pages if we have them, otherwise fall back to unoptimized I guess.
-		const currentPages = optimizedImages.get(currentChapter.title) ?? currentChapter.pages;
-
-		const getClassNames = (i: number) => {
-			const blockStyle = pageLayout === 'single' ? {
-				block: i === page,
-				hidden: i !== page,
-			} : {
-				block: true,
-			};
-
-			return classNames(
-				styles.page,
-				blockStyle,
-				{
-					[styles.pageHeight]: fitMode === 'height',
-					[styles.pageWidth]: fitMode === 'width',
-				},
-			);
-		};
-
-		displayedPages = Array.from({ length: maxPageCount }, (_, i) => (
-			<Image
-				key={i}
-				src={currentPages[i]}
-				quality={100}
-				ref={(el) => { pageRefs.current[i] = el as HTMLImageElement; }}
-				className={getClassNames(i)}
-				priority={getPriority(i, page)}
-				alt={`Page ${i + 1}`}
-				width="0"
-				height={1080}
-				style={{ width: 'auto' }}
-			/>
-		));
-	}
-
 	/* eslint-disable */
-	return (
-		<div className="flex flex-col h-screen relative grow bg-base-100 transition-colors">
-			<ReaderHeader setOpenSidebar={setOpenSidebar}></ReaderHeader>
-			<div
-				ref={containerRef}
-				className={styles.pageContainer}
-				onClick={handleClick}
-				onScroll={handleScroll}
-				tabIndex={0}
-			>
-				{displayedPages}
-			</div>
-			<div className="absolute bottom-0 left-0 w-full">
-				<ProgressBar></ProgressBar>
-			</div>
-		</div>
-	);
-	// eslint-enable
+    useEffect(() => {
+        handleScrollTop();
+    }, [page, chapter, pageLayout]);
+
+    useEffect(() => {
+        setScrollTopToPage();
+    }, [fitMode]);
+    // eslint-enable
+
+    let displayedPages: React.JSX.Element[] = [];
+    if (mangaData.chapters[chapter]) {
+        const currentChapter = mangaData.chapters[chapter];
+        const maxPageCount = currentChapter.pageCount;
+        // Use optimized pages if we have them, otherwise fall back to unoptimized I guess.
+        const currentPages =
+            optimizedImages.get(currentChapter.title) ?? currentChapter.pages;
+        /* eslint-disable */
+        const getClassNames = (i: number) => {
+            const blockStyle =
+                pageLayout === "single"
+                    ? {
+                          block: i === page,
+                          hidden: i !== page,
+                      }
+                    : {
+                          block: true,
+                      };
+            const containerStyle = loading[i] ? "min-h-full" : "";
+
+            return classNames(containerStyle, blockStyle, {
+                [styles.pageHeight]: fitMode === "height",
+                [styles.pageWidth]: fitMode === "width",
+                [styles.pageMedium]: fitMode === "original",
+            });
+        };
+        // eslint-enable
+
+        displayedPages = Array.from({ length: maxPageCount }, (_, i) => (
+            <div
+                className={getClassNames(i) + " relative"}
+                ref={(el) => {
+                    pageRefs.current[i] = el as HTMLImageElement;
+                }}
+                key={`page ${i}`}
+            >
+                <Image
+                    key={i}
+                    src={currentPages[i]}
+                    quality={100}
+                    className={getClassNames(i) + " " + styles.page}
+                    priority={getPriority(i, page)}
+                    alt={`Page ${i + 1}`}
+                    width={"0"}
+                    height={1080}
+                    style={{ width: "auto", opacity: loading[i] ? "0" : "1" }}
+                    onLoad={() => {
+                        let newLoading = [...loading];
+                        newLoading[i] = false;
+                        setLoading(newLoading);
+                    }}
+                />
+                {loading[i] && <LoadingIcon></LoadingIcon>}
+            </div>
+        ));
+    }
+    /* eslint-disable */
+    return (
+        <div className="flex flex-col h-screen relative grow bg-base-100 transition-colors">
+            <ReaderHeader setOpenSidebar={setOpenSidebar}></ReaderHeader>
+            <div
+                ref={containerRef}
+                className={styles.pageContainer}
+                onClick={handleClick}
+                onScroll={handleScroll}
+                tabIndex={0}
+            >
+                {displayedPages}
+            </div>
+            <div className="absolute bottom-0 left-0 w-full">
+                <ProgressBar></ProgressBar>
+            </div>
+        </div>
+    );
+    // eslint-enable
 }
 
 export default Reader;

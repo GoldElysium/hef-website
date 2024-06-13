@@ -106,6 +106,9 @@ export default function getManga(devProps: { [key: string]: string }): Manga {
 	) {
 		return getDummyManga();
 	}
-
+	const useDummy = true;
+	if (useDummy) {
+		return getDummyManga();
+	}
 	return getMangaFromDevProps(devProps);
 }
