@@ -209,7 +209,7 @@ function Reader({
                     alt={`Page ${i + 1}`}
                     width={"0"}
                     height={1080}
-                    style={{ width: "auto", opacity: loading[i] ? "0" : "1" }}
+                    style={{ opacity: loading[i] ? "0" : "1" }}
                     onLoad={() => {
                         let newLoading = [...loading];
                         newLoading[i] = false;
