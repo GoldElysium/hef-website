@@ -229,7 +229,6 @@ function Reader({
                 className={styles.pageContainer}
                 onClick={handleClick}
                 onScroll={handleScroll}
-                tabIndex={0}
             >
                 {displayedPages}
             </div>
