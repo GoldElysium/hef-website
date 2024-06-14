@@ -1,5 +1,4 @@
 const defaultTheme = require("tailwindcss/defaultTheme");
-const plugin = require("tailwindcss/plugin");
 
 function withOpacity(variableName) {
     return `rgb(var(${variableName}) / <alpha-value>)`;
@@ -125,9 +124,6 @@ module.exports = {
             },
             "light",
             "dark",
-            "cupcake",
-            "valentine",
-            "aqua",
         ],
     },
 };

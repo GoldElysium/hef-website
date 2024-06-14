@@ -154,65 +154,60 @@ function Reader({
 		}
 	};
 
-	/* eslint-disable */
-    useEffect(() => {
-        handleScrollTop();
-    }, [page, chapter, pageLayout]);
+	useEffect(() => {
+		handleScrollTop();
+	}, [page, chapter, pageLayout]);
 
-    useEffect(() => {
-        setScrollTopToPage();
-    }, [fitMode]);
-    // eslint-enable
+	useEffect(() => {
+		setScrollTopToPage();
+	}, [fitMode]);
 
 	let displayedPages: React.JSX.Element[] = [];
 	if (mangaData.chapters[chapter]) {
 		const currentChapter = mangaData.chapters[chapter];
 		const maxPageCount = currentChapter.pageCount;
 		// Use optimized pages if we have them, otherwise fall back to unoptimized I guess.
-		const currentPages =
-			optimizedImages.get(currentChapter.title) ?? currentChapter.pages;
+		const currentPages = optimizedImages.get(currentChapter.title) ?? currentChapter.pages;
 		const getClassNames = (i: number) => {
-			const blockStyle =
-				pageLayout === "single"
-					? {
-						block: i === page,
-						hidden: i !== page,
-					}
-					: {
-						block: true,
-					};
-			const containerStyle = loading[i] ? "min-h-full" : "";
+			const blockStyle =				pageLayout === 'single'
+				? {
+					block: i === page,
+					hidden: i !== page,
+				}
+				: {
+					block: true,
+				};
+			const containerStyle = loading[i] ? 'min-h-full' : '';
 
 			return classNames(containerStyle, blockStyle, {
-				[styles.pageHeight]: fitMode === "height",
-				[styles.pageWidth]: fitMode === "width",
-				[styles.pageMedium]: fitMode === "original",
+				[styles.pageHeight]: fitMode === 'height',
+				[styles.pageWidth]: fitMode === 'width',
+				[styles.pageMedium]: fitMode === 'original',
 			});
 		};
 
-        displayedPages = Array.from({ length: maxPageCount }, (_, i) => (
+		displayedPages = Array.from({ length: maxPageCount }, (_, i) => (
 			<div
-				className={getClassNames(i) + " relative"}
+				className={`${getClassNames(i)} relative`}
 				ref={(el) => {
 					pageRefs.current[i] = el as HTMLImageElement;
 				}}
 				key={`page ${i}`}
 			>
-				{loading[i] && <LoadingIcon></LoadingIcon>}
+				{loading[i] && <LoadingIcon />}
 				<Image
 					key={i}
 					src={currentPages[i]}
 					quality={100}
-					className={getClassNames(i) + " " + styles.page}
+					className={`${getClassNames(i)} ${styles.page}`}
 					priority={getPriority(i, page)}
 					alt={`Page ${i + 1}`}
-					width={"0"}
+					width="0"
 					height={1080}
-					style={{ opacity: loading[i] ? "0" : "1" }}
+					style={{ opacity: loading[i] ? '0' : '1' }}
 					onLoad={() => {
-						setLoading((currentLoading) =>
-							currentLoading.map((curr, index) => index === i ? false : curr)
-						);
+						setLoading((currentLoading) => currentLoading
+							.map((curr, index) => (index === i ? false : curr)));
 					}}
 				/>
 			</div>
@@ -220,8 +215,10 @@ function Reader({
 	}
 
 	return (
-		<div className="flex flex-col h-screen relative grow bg-base-100 transition-colors">
-			<ReaderHeader setOpenSidebar={setOpenSidebar}></ReaderHeader>
+		<div className="relative flex h-screen grow flex-col bg-base-100 transition-colors">
+			<ReaderHeader setOpenSidebar={setOpenSidebar} />
+			{/* eslint-disable-next-line max-len */}
+			{/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
 			<div
 				ref={containerRef}
 				className={styles.pageContainer}
