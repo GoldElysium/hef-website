@@ -45,6 +45,10 @@ function Reader({
 	const [loading, setLoading] = useState<boolean[]>(
 		[...Array(mangaData.chapters[chapter].pageCount)].fill(true),
 	);
+	const [containerDimensions, setContainerDimensions] = useState({
+		width: 0,
+		height: 0,
+	});
 
 	// Sets the scrollbar to the correct position on page change
 	const setScrollTopToPage = () => {
@@ -172,7 +176,7 @@ function Reader({
         const currentPages =
             optimizedImages.get(currentChapter.title) ?? currentChapter.pages;
         /* eslint-disable */
-        const getClassNames = (i: number) => {
+        const getClassNamesContainer = (i: number) => {
             const blockStyle =
                 pageLayout === "single"
                     ? {
@@ -182,29 +186,34 @@ function Reader({
                     : {
                           block: true,
                       };
-            const containerStyle = loading[i] ? "min-h-full" : "";
 
-            return classNames(containerStyle, blockStyle, {
-                [styles.pageHeight]: fitMode === "height",
-                [styles.pageWidth]: fitMode === "width",
-                [styles.pageMedium]: fitMode === "original",
+            return classNames(blockStyle, "relative", {
+                "h-full": fitMode === "height",
+                "w-full": fitMode === "width",
+                "w-full md:max-w-[80%]": fitMode === "original",
+            });
+        };
+
+        const getClassNamesPage = () => {
+            return classNames("object-contain", {
+                "h-full w-auto": fitMode === "height",
+                "w-full": fitMode === "width" || fitMode === "original",
             });
         };
         // eslint-enable
-
+        const dynamicHeight = containerRef.current?.clientHeight;
         displayedPages = Array.from({ length: maxPageCount }, (_, i) => (
             <div
-                className={getClassNames(i) + " relative"}
+                className={getClassNamesContainer(i)}
+                key={`page ${i}`}
                 ref={(el) => {
                     pageRefs.current[i] = el as HTMLImageElement;
                 }}
-                key={`page ${i}`}
             >
                 <Image
-                    key={i}
                     src={currentPages[i]}
                     quality={100}
-                    className={getClassNames(i) + " " + styles.page}
+                    className={getClassNamesPage()}
                     priority={getPriority(i, page)}
                     alt={`Page ${i + 1}`}
                     width={"0"}
@@ -220,13 +229,35 @@ function Reader({
             </div>
         ));
     }
+
+    useEffect(() => {
+        const handleResize = () => {
+            if (containerRef.current) {
+                const { clientWidth, clientHeight } = containerRef.current;
+                setContainerDimensions({
+                    width: clientWidth,
+                    height: clientHeight,
+                });
+            }
+        };
+        window.addEventListener("resize", handleResize);
+        handleResize();
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
     /* eslint-disable */
+
     return (
-        <div className="flex flex-col h-screen relative grow bg-base-100 transition-colors">
+        <div className="flex flex-col h-screen max-w-full relative bg-base-100 transition-colors flex-1">
             <ReaderHeader setOpenSidebar={setOpenSidebar}></ReaderHeader>
             <div
                 ref={containerRef}
-                className={styles.pageContainer}
+                className={classNames(styles.pageContainer, {
+                    "justify-center":
+                        pageLayout === "single" &&
+                        containerDimensions.height > containerDimensions.width,
+                })}
                 onClick={handleClick}
                 onScroll={handleScroll}
             >
