@@ -3,11 +3,9 @@
 import { useEffect, useRef, useState } from 'react';
 import Reader from './Reader';
 import ReaderSidebar from './ReaderSidebar';
-import { useMangaContext } from './context/MangaContext';
 import KeyPressHandler from './KeyPressHandler';
 
 export default function IrysManga() {
-	const { readerTheme } = useMangaContext();
 	const [openSidebar, setOpenSidebar] = useState(true);
 	const [clickCounter, setClickCounter] = useState(0);
 
@@ -23,7 +21,6 @@ export default function IrysManga() {
 	return (
 		<div
 			className="relative flex h-screen min-w-[310px] overflow-hidden bg-skin-background text-skin-text dark:bg-skin-background-dark dark:text-skin-text-dark"
-			data-theme={readerTheme}
 		>
 			<Reader
 				setOpenSidebar={setOpenSidebar}
