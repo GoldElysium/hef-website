@@ -15,17 +15,17 @@ import {
 	readerThemes,
 } from './utils/types';
 
-interface Props {
+interface IProps {
 	setOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>;
 	readerContainerRef: React.RefObject<HTMLDivElement>;
 	modalRef: React.RefObject<HTMLDialogElement>;
 }
 
-function KeyPressHandler({
+export default function KeyPressHandler({
 	setOpenSidebar,
 	readerContainerRef,
 	modalRef,
-}: Props) {
+}: IProps) {
 	const {
 		setPage,
 		setChapter,
@@ -238,5 +238,3 @@ function KeyPressHandler({
 	}, [readerContainerRef, modalRef]);
 	return null;
 }
-
-export default KeyPressHandler;

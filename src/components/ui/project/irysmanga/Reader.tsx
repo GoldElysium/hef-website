@@ -11,19 +11,19 @@ import ReaderHeader from './ReaderHeader';
 import styles from './styles/Reader.module.css';
 import LoadingIcon from './LoadingIcon';
 
-interface Props {
+interface IProps {
 	setOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>;
 	containerRef: React.RefObject<HTMLDivElement>;
 	clickCounter: number;
 	setClickCounter: React.Dispatch<React.SetStateAction<number>>;
 }
 
-function Reader({
+export default function Reader({
 	setOpenSidebar,
 	clickCounter,
 	setClickCounter,
 	containerRef,
-}: Props) {
+}: IProps) {
 	const {
 		pageLayout,
 		fitMode,
@@ -52,9 +52,8 @@ function Reader({
 			scriptedScroll.current = true;
 			const targetImg = pageRefs.current[page];
 			if (targetImg) {
-				// eslint-disable-next-line
-                containerRef.current.scrollTop =
-                    targetImg.offsetTop - containerRef.current.offsetTop;
+				// eslint-disable-next-line no-param-reassign
+				containerRef.current.scrollTop = targetImg.offsetTop - containerRef.current.offsetTop;
 			}
 		}
 	};
@@ -235,5 +234,3 @@ function Reader({
 		</div>
 	);
 }
-
-export default Reader;

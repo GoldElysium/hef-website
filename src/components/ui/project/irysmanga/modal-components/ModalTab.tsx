@@ -1,9 +1,10 @@
-interface Props {
+interface IProps {
 	label: string;
 	selected: string;
 	setSelected: (val: string) => void;
 }
-function ModalTab({ label, selected, setSelected }: Props) {
+
+function ModalTab({ label, selected, setSelected }: IProps) {
 	return (
 		<input
 			type="radio"

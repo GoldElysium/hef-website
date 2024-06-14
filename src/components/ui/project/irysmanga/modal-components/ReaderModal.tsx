@@ -8,14 +8,15 @@ import ModalTabReader from './ModalTabReader';
 import { getNextOption } from '../utils/helper';
 import { useMangaContext } from '../context/MangaContext';
 
-interface Props {
+interface IProps {
 	modalRef: RefObject<HTMLDialogElement>;
 }
 
-function ReaderModal({ modalRef }: Props) {
+export default function ReaderModal({ modalRef }: IProps) {
 	const [selected, setSelected] = useState('General');
 	const { readerLanguage, setReaderLanguage } = useMangaContext();
 	const { t } = useTranslation('reader');
+
 	return (
 		<dialog id="info_modal" className="modal" ref={modalRef}>
 			<div className="modal-box flex h-[90%] min-w-[50%] max-w-[70%] flex-col justify-between overflow-hidden">
@@ -43,41 +44,40 @@ function ReaderModal({ modalRef }: Props) {
 					{selected === 'Reader' && <ModalTabReader />}
 				</div>
 				<div className="modal-action justify-between">
-					{/* eslint-disable */}
-                    <button
-                        className="btn"
-                        onClick={() =>
-                            setReaderLanguage(
-                                getNextOption(readerLanguage, languages)
-                            )
-                        }
-                    >
-                        {readerLanguage.toLocaleUpperCase()}
-                    </button>
-                    <button
-                        className="btn"
-                        onClick={() =>
-                            selected === "Reader"
-                                ? modalRef.current?.close()
-                                : setSelected(
-                                      getNextOption(selected, [
-                                          "General",
-                                          "Story",
-                                          "Reader",
-                                      ])
-                                  )
-                        }
-                    >
-                        {selected === "Reader" ? t("close") : t("next")}
-                    </button>
-                    {/* // eslint-enable */}
-                </div>
-            </div>
-            <form method="dialog" className="modal-backdrop">
-                <button className="hover:cursor-default">close</button>
-            </form>
-        </dialog>
+					<button
+						type="button"
+						className="btn"
+						onClick={() => setReaderLanguage(
+							getNextOption(readerLanguage, languages),
+						)}
+					>
+						{readerLanguage.toLocaleUpperCase()}
+					</button>
+					<button
+						type="button"
+						className="btn"
+						onClick={() => (selected === 'Reader'
+							? modalRef.current?.close()
+							: setSelected(
+								getNextOption(selected, [
+									'General',
+									'Story',
+									'Reader',
+								]),
+							))}
+					>
+						{selected === 'Reader' ? t('close') : t('next')}
+					</button>
+				</div>
+			</div>
+			<form method="dialog" className="modal-backdrop">
+				<button
+					type="submit"
+					className="hover:cursor-default"
+				>
+					close
+				</button>
+			</form>
+		</dialog>
 	);
 }
-
-export default ReaderModal;

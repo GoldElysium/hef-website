@@ -1,7 +1,7 @@
 import useTranslation from '@/lib/i18n/client';
 import ModalTabContent from './ModalTabContent';
 
-function MangaReaderModal() {
+export default function MangaReaderModal() {
 	const { t } = useTranslation('reader', 'modal-reader');
 
 	return (
@@ -104,5 +104,3 @@ function MangaReaderModal() {
 		</ModalTabContent>
 	);
 }
-
-export default MangaReaderModal;

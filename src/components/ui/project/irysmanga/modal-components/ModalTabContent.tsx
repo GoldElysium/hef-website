@@ -1,14 +1,13 @@
 import React from 'react';
 
-interface Props {
+interface IProps {
 	children: React.ReactNode;
 }
-function ModalTabContent({ children }: Props) {
+
+export default function ModalTabContent({ children }: IProps) {
 	return (
 		<div className="overflow-y-auto rounded-lg border bg-base-100 p-6">
 			{children}
 		</div>
 	);
 }
-
-export default ModalTabContent;

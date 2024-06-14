@@ -24,13 +24,13 @@ import SettingButton from './SettingButton';
 import styles from './styles/Sidebar.module.css';
 import ReaderModal from './modal-components/ReaderModal';
 
-interface Props {
+interface IProps {
 	openSidebar: boolean;
 	setOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>;
 	modalRef: React.RefObject<HTMLDialogElement>;
 }
 
-function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }: Props) {
+export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }: IProps) {
 	const {
 		pageLayout,
 		page,
@@ -213,5 +213,3 @@ function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }: Props) {
 		</>
 	);
 }
-
-export default ReaderSidebar;

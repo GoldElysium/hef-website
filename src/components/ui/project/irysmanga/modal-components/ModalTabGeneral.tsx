@@ -3,9 +3,10 @@ import CreditBlock from './CreditBlock';
 import ModalTabContent from './ModalTabContent';
 import { useMangaContext } from '../context/MangaContext';
 
-function ModalTabGeneral() {
+export default function ModalTabGeneral() {
 	const { manga } = useMangaContext();
 	const { t } = useTranslation('reader', 'modal-general');
+
 	return (
 		<ModalTabContent>
 			<h1 className="mb-4 text-4xl font-bold">{t('greeting')}</h1>
@@ -25,5 +26,3 @@ function ModalTabGeneral() {
 		</ModalTabContent>
 	);
 }
-
-export default ModalTabGeneral;

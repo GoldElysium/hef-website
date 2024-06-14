@@ -19,7 +19,7 @@ import classNames from 'classnames';
 import { ReaderSetting } from './utils/types';
 import { getNextOption } from './utils/helper';
 
-interface Props {
+interface IProps {
 	value: ReaderSetting;
 	valueList: ReadonlyArray<ReaderSetting>;
 	setValue: React.Dispatch<React.SetStateAction<ReaderSetting>>;
@@ -49,9 +49,9 @@ const settingIcons: SettingIcons = {
 	jp: null,
 };
 
-function SettingButton({
+export default function SettingButton({
 	value, valueList, setValue, label, disabled,
-}: Props) {
+}: IProps) {
 	const { t } = useTranslation('reader');
 	return (
 		<button
@@ -71,5 +71,3 @@ function SettingButton({
 		</button>
 	);
 }
-
-export default SettingButton;
