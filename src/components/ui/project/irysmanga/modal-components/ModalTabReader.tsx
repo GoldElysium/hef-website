@@ -31,74 +31,74 @@ export default function MangaReaderModal() {
 				<li>
 					{t('page-turn-k')}
 					{' '}
-					<kbd className="kbd kbd-sm">→</kbd>
+					<kbd className="kbdalt">→</kbd>
 					{' '}
 					{t('or')}
 					{' '}
-					<kbd className="kbd kbd-sm">←</kbd>
+					<kbd className="kbdalt">←</kbd>
 				</li>
 				<li>
 					{t('page-scroll-k')}
 					{' '}
-					<kbd className="kbd kbd-sm">↑</kbd>
+					<kbd className="kbdalt">↑</kbd>
 					{' '}
 					{t('or')}
 					{' '}
-					<kbd className="kbd kbd-sm">↓</kbd>
+					<kbd className="kbdalt">↓</kbd>
 				</li>
 				<li>
 					{t('chapter-turn-k')}
 					{' '}
-					<kbd className="kbd kbd-sm">,</kbd>
+					<kbd className="kbdalt">,</kbd>
 					{' '}
 					{t('or')}
 					{' '}
-					<kbd className="kbd kbd-sm">.</kbd>
+					<kbd className="kbdalt">.</kbd>
 				</li>
 				<li>
 					{t('manga-language-k')}
 					{' '}
-					<kbd className="kbd kbd-sm">J</kbd>
+					<kbd className="kbdalt">J</kbd>
 				</li>
 				<li>
 					{t('reader-language-k')}
 					{' '}
-					<kbd className="kbd kbd-sm">K</kbd>
+					<kbd className="kbdalt">K</kbd>
 				</li>
 				<li>
 					{t('page-direction-k')}
 					{' '}
-					<kbd className="kbd kbd-sm">D</kbd>
+					<kbd className="kbdalt">D</kbd>
 				</li>
 				<li>
 					{t('sidebar-k')}
 					{' '}
-					<kbd className="kbd kbd-sm">M</kbd>
+					<kbd className="kbdalt">M</kbd>
 				</li>
 				<li>
 					{t('header-k')}
 					{' '}
-					<kbd className="kbd kbd-sm">H</kbd>
+					<kbd className="kbdalt">H</kbd>
 				</li>
 				<li>
 					{t('theme-k')}
 					{' '}
-					<kbd className="kbd kbd-sm">T</kbd>
+					<kbd className="kbdalt">T</kbd>
 				</li>
 				<li>
 					{t('page-layout-k')}
 					{' '}
-					<kbd className="kbd kbd-sm">S</kbd>
+					<kbd className="kbdalt">S</kbd>
 				</li>
 				<li>
 					{t('page-fit-k')}
 					{' '}
-					<kbd className="kbd kbd-sm">F</kbd>
+					<kbd className="kbdalt">F</kbd>
 				</li>
 				<li>
 					{t('progress-k')}
 					{' '}
-					<kbd className="kbd kbd-sm">P</kbd>
+					<kbd className="kbdalt">P</kbd>
 				</li>
 			</ul>
 		</ModalTabContent>

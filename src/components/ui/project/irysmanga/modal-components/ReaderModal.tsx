@@ -46,7 +46,7 @@ export default function ReaderModal({ modalRef }: IProps) {
 				<div className="modal-action justify-between">
 					<button
 						type="button"
-						className="btn"
+						className="flex h-12 min-h-12 items-center gap-2 whitespace-nowrap rounded-md bg-skin-primary p-4 text-sm font-semibold leading-4 text-skin-primary-foreground transition-all hover:bg-[color-mix(in_srgb,rgb(var(--color-primary))_90%,black)] disabled:cursor-not-allowed disabled:bg-[color-mix(in_srgb,rgb(var(--color-primary))_90%,black)] dark:bg-skin-primary-dark dark:text-skin-primary-foreground-dark dark:hover:bg-[color-mix(in_srgb,rgb(var(--color-primary-dark))_90%,black)]"
 						onClick={() => setReaderLanguage(
 							getNextOption(readerLanguage, languages),
 						)}
@@ -55,7 +55,7 @@ export default function ReaderModal({ modalRef }: IProps) {
 					</button>
 					<button
 						type="button"
-						className="btn"
+						className="flex h-12 min-h-12 items-center gap-2 whitespace-nowrap rounded-md bg-skin-primary p-4 text-sm font-semibold leading-4 text-skin-primary-foreground transition-all hover:bg-[color-mix(in_srgb,rgb(var(--color-primary))_90%,black)] disabled:cursor-not-allowed disabled:bg-[color-mix(in_srgb,rgb(var(--color-primary))_90%,black)] dark:bg-skin-primary-dark dark:text-skin-primary-foreground-dark dark:hover:bg-[color-mix(in_srgb,rgb(var(--color-primary-dark))_90%,black)]"
 						onClick={() => (selected === 'Reader'
 							? modalRef.current?.close()
 							: setSelected(
@@ -75,7 +75,7 @@ export default function ReaderModal({ modalRef }: IProps) {
 					type="submit"
 					className="hover:cursor-default"
 				>
-					close
+					Close
 				</button>
 			</form>
 		</dialog>

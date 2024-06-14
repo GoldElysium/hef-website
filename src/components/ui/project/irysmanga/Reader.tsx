@@ -171,99 +171,95 @@ export default function Reader({
 		const maxPageCount = currentChapter.pageCount;
 		// Use optimized pages if we have them, otherwise fall back to unoptimized I guess.
 		const currentPages = optimizedImages.get(currentChapter.title) ?? currentChapter.pages;
-		/* eslint-disable */
-        const getClassNamesContainer = (i: number) => {
-            const blockStyle =
-                pageLayout === "single"
-                    ? {
-                          block: i === page,
-                          hidden: i !== page,
-                      }
-                    : {
-                          block: true,
-                      };
 
-            return classNames(blockStyle, "relative", {
-                "h-full": fitMode === "height",
-                "w-full": fitMode === "width",
-                "w-full md:max-w-[80%]": fitMode === "original",
-            });
-        };
+		const getClassNamesContainer = (i: number) => {
+			const blockStyle = (
+				pageLayout === 'single'
+					? {
+						block: i === page,
+						hidden: i !== page,
+					}
+					: {
+						block: true,
+					}
+			);
 
-        const getClassNamesPage = () => {
-            return classNames("object-contain", {
-                "h-full w-auto": fitMode === "height",
-                "w-full": fitMode === "width" || fitMode === "original",
-            });
-        };
-        // eslint-enable
+			return classNames(blockStyle, 'relative', {
+				'h-full': fitMode === 'height',
+				'w-full': fitMode === 'width',
+				'w-full md:max-w-[80%]': fitMode === 'original',
+			});
+		};
 
-        displayedPages = Array.from({ length: maxPageCount }, (_, i) => (
-            <div
-                className={getClassNamesContainer(i)}
-                key={`page ${i}`}
-                ref={(el) => {
-                    pageRefs.current[i] = el as HTMLImageElement;
-                }}
-            >
-                {loading[i] && <LoadingIcon />}
-                <Image
-                    src={currentPages[i]}
-                    quality={100}
-                    className={getClassNamesPage()}
-                    priority={getPriority(i, page)}
-                    alt={`Page ${i + 1}`}
-                    width={"0"}
-                    height={1080}
-                    style={{ opacity: loading[i] ? "0" : "1" }}
-                    onLoad={() => {
-                        setLoading((currentLoading) =>
-                            currentLoading.map((curr, index) =>
-                                index === i ? false : curr
-                            )
-                        );
-                    }}
-                />
-            </div>
-        ));
-    }
-    useEffect(() => {
-        const handleResize = () => {
-            if (containerRef.current) {
-                const { clientWidth, clientHeight } = containerRef.current;
-                setContainerDimensions({
-                    width: clientWidth,
-                    height: clientHeight,
-                });
-            }
-        };
-        window.addEventListener("resize", handleResize);
-        handleResize();
+		const getClassNamesPage = () => classNames('object-contain', {
+			'h-full w-auto': fitMode === 'height',
+			'w-full': fitMode === 'width' || fitMode === 'original',
+		});
 
-        return () => {
-            window.removeEventListener("resize", handleResize);
-        };
-    }, []);
-    /* eslint-disable */
-    return (
-        <div className="flex flex-col h-screen relative grow bg-base-100 transition-colors">
-            <ReaderHeader setOpenSidebar={setOpenSidebar}></ReaderHeader>
-            <div
-                ref={containerRef}
-                className={classNames(styles.pageContainer, {
-                    "justify-center":
-                        pageLayout === "single" &&
-                        containerDimensions.height > containerDimensions.width,
-                })}
-                onClick={handleClick}
-                onScroll={handleScroll}
-            >
-                {displayedPages}
-            </div>
-            <div className="absolute bottom-0 left-0 w-full">
-                <ProgressBar></ProgressBar>
-            </div>
-        </div>
-    );
-    // eslint-enable
+		displayedPages = Array.from({ length: maxPageCount }, (_, i) => (
+			<div
+				className={getClassNamesContainer(i)}
+				key={`page ${i}`}
+				ref={(el) => {
+					pageRefs.current[i] = el as HTMLImageElement;
+				}}
+			>
+				{loading[i] && <LoadingIcon />}
+				<Image
+					src={currentPages[i]}
+					quality={100}
+					className={getClassNamesPage()}
+					priority={getPriority(i, page)}
+					alt={`Page ${i + 1}`}
+					width="0"
+					height={1080}
+					style={{ opacity: loading[i] ? '0' : '1' }}
+					onLoad={() => {
+						setLoading((currentLoading) => currentLoading
+							.map((curr, index) => (index === i ? false : curr)));
+					}}
+				/>
+			</div>
+		));
+	}
+	useEffect(() => {
+		const handleResize = () => {
+			if (containerRef.current) {
+				const { clientWidth, clientHeight } = containerRef.current;
+				setContainerDimensions({
+					width: clientWidth,
+					height: clientHeight,
+				});
+			}
+		};
+		window.addEventListener('resize', handleResize);
+		handleResize();
+
+		return () => {
+			window.removeEventListener('resize', handleResize);
+		};
+	}, []);
+
+	return (
+		<div className="relative flex h-screen grow flex-col bg-base-100 transition-colors">
+			<ReaderHeader setOpenSidebar={setOpenSidebar} />
+			{/* eslint-disable-next-line max-len */}
+			{/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
+			<div
+				ref={containerRef}
+				className={classNames(styles.pageContainer, {
+					'justify-center':
+                        pageLayout === 'single'
+                        && containerDimensions.height > containerDimensions.width,
+				})}
+				onClick={handleClick}
+				onScroll={handleScroll}
+			>
+				{displayedPages}
+			</div>
+			<div className="absolute bottom-0 left-0 w-full">
+				<ProgressBar />
+			</div>
+		</div>
+	);
 }

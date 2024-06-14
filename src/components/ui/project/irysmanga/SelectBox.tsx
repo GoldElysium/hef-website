@@ -65,12 +65,13 @@ function SelectBox({ value, label }: SelectBoxProps) {
 	return (
 		<div className="flex w-full justify-center gap-2">
 			<button
-				className="btn"
+				className="button shrink-0"
 				aria-label="left-page"
 				type="button"
 				onClick={() => handleSelectValue(value - 1)}
+				disabled={value === 0}
 			>
-				<ChevronLeftIcon width={20} />
+				<ChevronLeftIcon className="size-5" />
 			</button>
 
 			{/* eslint-disable-next-line max-len */}
@@ -89,10 +90,10 @@ function SelectBox({ value, label }: SelectBoxProps) {
 					instanceId={useId()}
 					classNames={{
 						valueContainer: () => 'w-full',
-						control: () => 'rounded-md w-full h-full px-2 hover:cursor-pointer bg-base-200 hover:bg-base-300 transition-all',
+						control: () => 'rounded-md w-full h-full px-2 hover:cursor-pointer bg-skin-secondary dark:bg-skin-secondary-dark text-skin-secondary-foreground transition-all hover:bg-[color-mix(in_srgb,rgb(var(--color-secondary))_90%,black)] dark:text-skin-secondary-foreground-dark dark:hover:bg-[color-mix(in_srgb,rgb(var(--color-secondary-dark))_90%,black)]',
 						singleValue: () => 'w-full truncate',
 						menu: () => classNames(
-							'mt-2 p-1 bg-base-100 border rounded-md transition-all',
+							'mt-2 p-1 bg-skin-secondary dark:bg-skin-secondary-dark border border-skin-secondary-foreground dark:border-skin-secondary-foreground-dark rounded-md transition-all',
 							{
 								'opacity-100 visible': open,
 								'opacity-0 invisible': !open,
@@ -100,11 +101,11 @@ function SelectBox({ value, label }: SelectBoxProps) {
 						),
 						menuList: () => 'scroll-smooth',
 						option: ({ isFocused, isSelected }) => classNames(
-							'hover:cursor-pointer p-2 font-sm rounded truncate',
+							'hover:cursor-pointer text-skin-secondary-foreground p-2 font-sm rounded truncate dark:text-skin-secondary-foreground-dark',
 							{
-								'bg-neutral text-neutral-content':
+								'bg-skin-secondary dark:bg-skin-secondary-dark':
                                         isSelected,
-								'hover:bg-neutral hover:text-neutral-content':
+								'hover:bg-[color-mix(in_srgb,rgb(var(--color-secondary))_90%,black)] dark:hover:bg-[color-mix(in_srgb,rgb(var(--color-secondary-dark))_90%,black)]':
                                         isFocused,
 							},
 						),
@@ -113,10 +114,11 @@ function SelectBox({ value, label }: SelectBoxProps) {
 			</div>
 
 			<button
-				className="btn"
+				className="button"
 				aria-label="right-page"
 				type="button"
 				onClick={() => handleSelectValue(value + 1)}
+				disabled={value === maxValue - 1}
 			>
 				<ChevronRightIcon width={20} />
 			</button>

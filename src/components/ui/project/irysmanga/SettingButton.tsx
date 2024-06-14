@@ -23,6 +23,7 @@ interface IProps {
 	value: ReaderSetting;
 	valueList: ReadonlyArray<ReaderSetting>;
 	setValue: React.Dispatch<React.SetStateAction<ReaderSetting>>;
+	onClick?: () => void;
 	label?: string;
 	disabled?: boolean;
 }
@@ -50,18 +51,18 @@ const settingIcons: SettingIcons = {
 };
 
 export default function SettingButton({
-	value, valueList, setValue, label, disabled,
+	value, valueList, setValue, label, disabled, onClick,
 }: IProps) {
 	const { t } = useTranslation('reader');
 	return (
 		<button
-			className={classNames('btn flex whitespace-nowrap flex-1', {
+			className={classNames('button flex-1', {
 				'justify-between': settingIcons[value] !== null,
 				'justify-center': settingIcons[value] === null,
 			})}
 			type="button"
 			disabled={disabled}
-			onClick={() => setValue((prev) => getNextOption(prev, valueList))}
+			onClick={onClick ?? (() => setValue((prev) => getNextOption(prev, valueList)))}
 		>
 			<div>
 				{label ? `${t(label)}: ` : ''}

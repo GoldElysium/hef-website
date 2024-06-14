@@ -2,11 +2,11 @@ import Link from 'next/link';
 import { useEffect, useRef } from 'react';
 import classNames from 'classnames';
 import { Bars3Icon } from '@heroicons/react/24/solid';
+import Icon from '@/components/ui/Icon';
 import { useMangaContext } from './context/MangaContext';
 import { getMangaDataOrThrow } from './utils/types';
 import './styles/styles.css';
 import styles from './styles/Header.module.css';
-import NavIcon from './NavIcon';
 import useDualTranslation from './hooks/useDualTranslation';
 
 interface Props {
@@ -48,7 +48,7 @@ export default function ReaderHeader({ setOpenSidebar }: Props) {
 			>
 				<div className="flex items-center gap-2">
 					<Link href="/">
-						<NavIcon />
+						<Icon />
 					</Link>
 					<div className={styles.infoBadge}>
 						<strong className="">{mangaData.title}</strong>

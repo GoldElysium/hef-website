@@ -7,6 +7,7 @@ import {
 } from '@heroicons/react/24/outline';
 import { useEffect, useRef } from 'react';
 import useTranslation from '@/lib/i18n/client';
+import { useTheme } from 'next-themes';
 import SelectBox from './SelectBox';
 import { useMangaContext } from './context/MangaContext';
 import {
@@ -17,7 +18,7 @@ import {
 	languages,
 	pageLayouts,
 	progressVisibilities,
-	ReaderSetting,
+	ReaderSetting, ReaderTheme,
 	readerThemes,
 } from './utils/types';
 import SettingButton from './SettingButton';
@@ -31,6 +32,8 @@ interface IProps {
 }
 
 export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }: IProps) {
+	const { resolvedTheme, setTheme } = useTheme();
+
 	const {
 		pageLayout,
 		page,
@@ -41,7 +44,6 @@ export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }:
 		direction,
 		headerVisibility,
 		progressVisibility,
-		readerTheme,
 		manga,
 		setPageLayout,
 		setFitMode,
@@ -50,7 +52,6 @@ export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }:
 		setDirection,
 		setHeaderVisibility,
 		setProgressVisibility,
-		setReaderTheme,
 	} = useMangaContext();
 	const { t, i18n } = useTranslation('reader');
 	const mangaData = getMangaDataOrThrow(manga, mangaLanguage);
@@ -136,7 +137,7 @@ export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }:
 						</strong>
 					</div>
 					<button
-						className="btn justify-between whitespace-nowrap text-nowrap"
+						className="button justify-between whitespace-nowrap text-nowrap"
 						type="button"
 						onClick={() => modalRef.current?.showModal()}
 					>
@@ -195,10 +196,11 @@ export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }:
 						setValue={setHeaderVisibility}
 					/>
 					<SettingButton
-						value={readerTheme}
+						value={resolvedTheme as ReaderTheme}
 						valueList={readerThemes}
+						onClick={() => setTheme(resolvedTheme === 'light' ? 'dark' : 'light')}
 						// @ts-ignore
-						setValue={setReaderTheme}
+						setValue={() => {}}
 						label="theme"
 					/>
 					<SettingButton

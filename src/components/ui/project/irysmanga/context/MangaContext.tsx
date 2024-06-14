@@ -12,8 +12,6 @@ import {
 	PageDirection,
 	PageLayout,
 	ProgressVisibility,
-	ReaderTheme,
-	readerThemes,
 } from '../utils/types';
 import getManga from '../utils/data-helper';
 
@@ -45,9 +43,6 @@ interface MangaContextProps {
 
 	progressVisibility: ProgressVisibility;
 	setProgressVisibility: React.Dispatch<React.SetStateAction<ProgressVisibility>>;
-
-	readerTheme: ReaderTheme;
-	setReaderTheme: React.Dispatch<React.SetStateAction<ReaderTheme>>;
 
 	manga: Manga;
 	setManga: React.Dispatch<React.SetStateAction<Manga>>;
@@ -108,7 +103,6 @@ export function MangaProvider({
 	const [direction, setDirection] = useState<PageDirection>(getSettings('localDirection', 'ltr'));
 	const [headerVisibility, setHeaderVisibility] = useState<HeaderVisibility>(getSettings('localHeaderVisibility', 'header-shown'));
 	const [progressVisibility, setProgressVisibility] = useState<ProgressVisibility>(getSettings('localProgressVisibility', 'progress-shown'));
-	const [readerTheme, setReaderTheme] = useState<ReaderTheme>(getSettings('localReaderTheme', readerThemes[0]));
 
 	// Manga details
 	const [manga, setManga] = useState(getManga(devProps));
@@ -127,7 +121,6 @@ export function MangaProvider({
 				localDirection: direction,
 				localHeaderVisibility: headerVisibility,
 				localProgressVisibility: progressVisibility,
-				localReaderTheme: readerTheme,
 			};
 
 			localStorage.setItem(localStorageSettingsKey, JSON.stringify(settings));
@@ -140,7 +133,6 @@ export function MangaProvider({
 		direction,
 		headerVisibility,
 		progressVisibility,
-		readerTheme,
 	]);
 
 	const contextValue = useMemo(
@@ -163,8 +155,6 @@ export function MangaProvider({
 			setHeaderVisibility,
 			progressVisibility,
 			setProgressVisibility,
-			readerTheme,
-			setReaderTheme,
 			manga,
 			setManga,
 			optimizedImages,
@@ -179,7 +169,6 @@ export function MangaProvider({
 			direction,
 			headerVisibility,
 			progressVisibility,
-			readerTheme,
 			manga,
 			optimizedImages,
 		],

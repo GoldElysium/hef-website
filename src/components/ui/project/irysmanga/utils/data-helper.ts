@@ -9,8 +9,9 @@ function getMangaFromDevProps(devProps: { [key: string]: string }): Manga {
 }
 
 function getDummyContributors(role: string): Contributor[] {
-	return Array(5).fill({
-		name: `${role} name`,
+	return Array.from({ length: 5 }, (_, i) => ({
+		// eslint-disable-next-line no-plusplus
+		name: `${role} name ${i}`,
 		socials: [
 			{
 				platform: 'Twitter',
@@ -25,7 +26,7 @@ function getDummyContributors(role: string): Contributor[] {
 				link: '',
 			},
 		],
-	});
+	}));
 }
 
 function getDummyManga(): Manga {
