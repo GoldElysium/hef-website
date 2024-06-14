@@ -31,7 +31,6 @@ export type Manga = {
 };
 
 // Reader settings types
-
 export const fitModes = ['height', 'width', 'original'] as const;
 export type FitMode = (typeof fitModes)[number];
 
@@ -47,10 +46,7 @@ export type PageDirection = (typeof directions)[number];
 export const headerVisibilities = ['header-hidden', 'header-shown'] as const;
 export type HeaderVisibility = (typeof headerVisibilities)[number];
 
-export const progressVisibilities = [
-	'progress-hidden',
-	'progress-shown',
-] as const;
+export const progressVisibilities = ['progress-hidden', 'progress-shown'] as const;
 export type ProgressVisibility = (typeof progressVisibilities)[number];
 
 export const readerThemes = ['light', 'dark'] as const;

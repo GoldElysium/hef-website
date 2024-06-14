@@ -54,12 +54,10 @@ function getDummyManga(): Manga {
 		const tmpPageCount = 9;
 		for (let j = 1; j <= tmpPageCount; ++j) {
 			enTmpPages.push(
-				`https://alt.hololive.tv/wp-content/uploads/2022/${tmp}/en${i + 1
-				}_0${j}.jpg`,
+				`https://alt.hololive.tv/wp-content/uploads/2022/${tmp}/en${i + 1}_0${j}.jpg`,
 			);
 			jpTmpPages.push(
-				`https://alt.hololive.tv/wp-content/uploads/2022/${tmp}/jp${i + 1
-				}_0${j}.jpg`,
+				`https://alt.hololive.tv/wp-content/uploads/2022/${tmp}/jp${i + 1}_0${j}.jpg`,
 			);
 		}
 		const enTitle = i === 2 ? 'Super duper long title' : 'Short title';
