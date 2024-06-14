@@ -185,21 +185,26 @@ export default function Reader({
 			);
 
 			return classNames(blockStyle, 'relative', {
-				'h-full': fitMode === 'height',
+				'h-full min-w-full': fitMode === 'height',
 				'w-full': fitMode === 'width',
 				'w-full md:max-w-[80%]': fitMode === 'original',
 			});
 		};
 
-		const getClassNamesPage = () => classNames('object-contain', {
-			'h-full w-auto': fitMode === 'height',
-			'w-full': fitMode === 'width' || fitMode === 'original',
-		});
+		const widescreen = containerDimensions.width > containerDimensions.height;
+
+		const getClassNamesPage = () => classNames(
+			(!widescreen && fitMode === 'height') || fitMode !== 'height' ? 'object-cover' : 'object-contain',
+			{
+				'h-full w-auto': fitMode === 'height',
+				'w-full': fitMode === 'width' || fitMode === 'original',
+			},
+		);
 
 		displayedPages = Array.from({ length: maxPageCount }, (_, i) => (
 			<div
-				className={getClassNamesContainer(i)}
-				key={`page ${i}`}
+				className={`flex justify-center ${getClassNamesContainer(i)}`}
+				key={`page-${i}`}
 				ref={(el) => {
 					pageRefs.current[i] = el as HTMLImageElement;
 				}}
@@ -208,7 +213,7 @@ export default function Reader({
 				<Image
 					src={currentPages[i]}
 					quality={100}
-					className={getClassNamesPage()}
+					className={`${getClassNamesPage()}`}
 					priority={getPriority(i, page)}
 					alt={`Page ${i + 1}`}
 					width="0"
@@ -222,6 +227,7 @@ export default function Reader({
 			</div>
 		));
 	}
+
 	useEffect(() => {
 		const handleResize = () => {
 			if (containerRef.current) {
@@ -241,7 +247,7 @@ export default function Reader({
 	}, []);
 
 	return (
-		<div className="relative flex h-screen grow flex-col bg-base-100 transition-colors">
+		<div className="relative flex h-screen grow flex-col transition-colors">
 			<ReaderHeader setOpenSidebar={setOpenSidebar} />
 			{/* eslint-disable-next-line max-len */}
 			{/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}

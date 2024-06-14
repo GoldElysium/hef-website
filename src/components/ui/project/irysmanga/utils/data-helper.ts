@@ -76,7 +76,7 @@ function getDummyManga(): Manga {
 		});
 	}
 
-	const manga: Manga = {
+	return {
 		id: 'test-manga',
 		publishedDate: '2024-01-16',
 		authors: getDummyContributors('Author'),
@@ -88,7 +88,6 @@ function getDummyManga(): Manga {
 			jp: tmpMangaData[1],
 		},
 	};
-	return manga;
 }
 
 // https://stackoverflow.com/questions/679915/how-do-i-test-for-an-empty-javascript-object
