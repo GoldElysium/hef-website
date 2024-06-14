@@ -6,7 +6,7 @@ import ReaderSidebar from './ReaderSidebar';
 import { useMangaContext } from './context/MangaContext';
 import KeyPressHandler from './KeyPressHandler';
 
-function IrysManga() {
+export default function IrysManga() {
 	const { readerTheme } = useMangaContext();
 	const [openSidebar, setOpenSidebar] = useState(true);
 	const [clickCounter, setClickCounter] = useState(0);
@@ -15,7 +15,7 @@ function IrysManga() {
 	const modalRef = useRef(null);
 
 	useEffect(() => {
-		if (openSidebar === false) {
+		if (!openSidebar) {
 			setClickCounter(-1);
 		}
 	}, [openSidebar]);
@@ -44,5 +44,3 @@ function IrysManga() {
 		</div>
 	);
 }
-
-export default IrysManga;

@@ -23,8 +23,9 @@ const jura = Jura({
 
 async function fetchOptimizedImageURLs({ project, lang }: IProps) {
 	const manga = getManga(project.devprops);
+
 	// Bypass if not set.
-	const bypassImgProxy = process.env.IMAGINARY_SECRET === '' && process.env.IMAGINARY_URL === '';
+	const bypassImgProxy = !process.env.IMAGINARY_URL;
 	const { chapters } = manga.data[lang];
 
 	const optimizedImages = new Map<string, string[]>();
@@ -50,7 +51,7 @@ async function fetchOptimizedImageURLs({ project, lang }: IProps) {
 	return optimizedImages;
 }
 
-export default async function IrysMangaSubmissionWrapper({
+export default async function IrysMangaDataWrapper({
 	project,
 	lang,
 }: IProps) {

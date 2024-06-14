@@ -21,7 +21,7 @@ const outlineVariants = {
 	},
 };
 
-function LoadingIcon() {
+export default function LoadingIcon() {
 	const strokeWidth = 100;
 	return (
 		<motion.svg
@@ -107,5 +107,3 @@ m217 -2662 c318 -318 583 -586 588 -595 19 -32 -212 -167 -415 -243 -237 -89
 		</motion.svg>
 	);
 }
-
-export default LoadingIcon;

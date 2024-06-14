@@ -24,13 +24,13 @@ import SettingButton from './SettingButton';
 import styles from './styles/Sidebar.module.css';
 import ReaderModal from './modal-components/ReaderModal';
 
-interface Props {
+interface IProps {
 	openSidebar: boolean;
 	setOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>;
 	modalRef: React.RefObject<HTMLDialogElement>;
 }
 
-function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }: Props) {
+export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }: IProps) {
 	const {
 		pageLayout,
 		page,
@@ -53,11 +53,12 @@ function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }: Props) {
 		setReaderTheme,
 	} = useMangaContext();
 	const { t, i18n } = useTranslation('reader');
+	const mangaData = getMangaDataOrThrow(manga, mangaLanguage);
+	const containerRef = useRef<HTMLDivElement>(null);
+
 	useEffect(() => {
 		i18n.changeLanguage(readerLanguage);
 	}, [readerLanguage, i18n]);
-	const mangaData = getMangaDataOrThrow(manga, mangaLanguage);
-	const containerRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
 		const width = containerRef.current?.getBoundingClientRect().width;
@@ -82,22 +83,18 @@ function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }: Props) {
 		// Set your threshold here (e.g., 768 for small screens)
 		document.addEventListener('mousedown', handleClickOutside);
 
-		return () => {
+		return (() => {
 			document.removeEventListener('mousedown', handleClickOutside);
-		};
+		});
 	}, [setOpenSidebar, modalRef]);
 
-	const mangaLanguages: ReaderSetting[] = [];
-
-	languages.forEach((value) => {
+	const mangaLanguages: ReaderSetting[] = languages.filter((value) => {
 		// If no chapters don't allow it as a selectable target.
 		if (manga.data[value].chapterCount === 0) {
-			return;
+			return false;
 		}
 
-		if (manga.data[value].chapters[chapter] !== null) {
-			mangaLanguages.push(value);
-		}
+		return (manga.data[value].chapters[chapter] !== null);
 	});
 
 	return (
@@ -216,5 +213,3 @@ function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }: Props) {
 		</>
 	);
 }
-
-export default ReaderSidebar;

@@ -2,6 +2,7 @@
 
 import React, {
 	createContext, useState, useContext, useMemo,
+	useEffect,
 } from 'react';
 import {
 	FitMode,
@@ -43,9 +44,7 @@ interface MangaContextProps {
 	setHeaderVisibility: React.Dispatch<React.SetStateAction<HeaderVisibility>>;
 
 	progressVisibility: ProgressVisibility;
-	setProgressVisibility: React.Dispatch<
-	React.SetStateAction<ProgressVisibility>
-	>;
+	setProgressVisibility: React.Dispatch<React.SetStateAction<ProgressVisibility>>;
 
 	readerTheme: ReaderTheme;
 	setReaderTheme: React.Dispatch<React.SetStateAction<ReaderTheme>>;
@@ -59,87 +58,147 @@ interface MangaContextProps {
 // Creating a context object
 const MangaContext = createContext<MangaContextProps | undefined>(undefined);
 
-/* eslint-disable */
+interface MangaProviderProps {
+	children: React.ReactNode;
+	devProps: { [key: string]: string };
+	lang: Language;
+	optimizedImages: Map<string, string[]>;
+}
+
 // Creating a provider component
-export const MangaProvider: React.FC<{
-    children: React.ReactNode;
-    devProps: { [key: string]: string };
-    lang: Language;
-    optimizedImages: Map<string, string[]>;
-}> = ({ children, devProps, lang, optimizedImages }) => {
-    const [readerLanguage, setReaderLanguage] = useState<Language>(lang);
-    const [mangaLanguage, setMangaLanguage] = useState<Language>(lang);
-    const [pageLayout, setPageLayout] = useState<PageLayout>("single");
-    const [fitMode, setFitMode] = useState<FitMode>("original");
+export function MangaProvider({
+	children, devProps, lang, optimizedImages,
+}: MangaProviderProps) {
+	const localStorageSettingsKey = 'irys-manga-settings';
+	let parsedSettings: any = null; // Avoid having to re-parse the json multiple times.
 
-    const [manga, setManga] = useState(getManga(devProps));
-    const [page, setPage] = useState(0);
-    const [chapter, setChapter] = useState(0);
-    const [direction, setDirection] = useState<PageDirection>("ltr");
-    const [headerVisibility, setHeaderVisibility] =
-        useState<HeaderVisibility>("header-shown");
-    const [progressVisibility, setProgressVisibility] =
-        useState<ProgressVisibility>("progress-shown");
+	const isLocalStorageReady = () => typeof window !== 'undefined';
 
-    const [readerTheme, setReaderTheme] = useState<ReaderTheme>(
-        readerThemes[0]
-    );
+	/**
+	 * Grab settings from localStorage if set.
+	 */
+	function getSettings<T>(key: string, def: T): T {
+		// If for some reason local storage isn't available yet, just return the default values.
+		if (!isLocalStorageReady()) {
+			return def;
+		}
 
-    const contextValue = useMemo(
-        () => ({
-            readerLanguage,
-            setReaderLanguage,
-            mangaLanguage,
-            setMangaLanguage,
-            page,
-            setPage,
-            chapter,
-            setChapter,
-            pageLayout,
-            setPageLayout,
-            fitMode,
-            setFitMode,
-            direction,
-            setDirection,
-            headerVisibility,
-            setHeaderVisibility,
-            progressVisibility,
-            setProgressVisibility,
-            readerTheme,
-            setReaderTheme,
-            manga,
-            setManga,
-            optimizedImages,
-        }),
-        [
-            readerLanguage,
-            mangaLanguage,
-            page,
-            chapter,
-            pageLayout,
-            fitMode,
-            direction,
-            headerVisibility,
-            progressVisibility,
-            readerTheme,
-            manga,
-            optimizedImages,
-        ]
-    );
+		const irysMangaLocalStorage = localStorage.getItem(localStorageSettingsKey);
+		if (irysMangaLocalStorage === null) {
+			return def;
+		}
 
-    return (
-        <MangaContext.Provider value={contextValue}>
-            {children}
-        </MangaContext.Provider>
-    );
-};
-// eslint-enable
+		if (parsedSettings === null) {
+			parsedSettings = JSON.parse(irysMangaLocalStorage);
+		}
 
-// Custom hook to use the context
+		const setting: T = parsedSettings[key];
+		if (setting === null) {
+			return def;
+		}
+
+		return setting;
+	}
+
+	// Reader settings
+	const [readerLanguage, setReaderLanguage] = useState<Language>(getSettings('localReaderLanguage', lang));
+	const [mangaLanguage, setMangaLanguage] = useState<Language>(getSettings('localMangaLanguage', lang));
+	const [pageLayout, setPageLayout] = useState<PageLayout>(getSettings('localPageLayout', 'single'));
+	const [fitMode, setFitMode] = useState<FitMode>(getSettings('localFitMode', 'original'));
+	const [direction, setDirection] = useState<PageDirection>(getSettings('localDirection', 'ltr'));
+	const [headerVisibility, setHeaderVisibility] = useState<HeaderVisibility>(getSettings('localHeaderVisibility', 'header-shown'));
+	const [progressVisibility, setProgressVisibility] = useState<ProgressVisibility>(getSettings('localProgressVisibility', 'progress-shown'));
+	const [readerTheme, setReaderTheme] = useState<ReaderTheme>(getSettings('localReaderTheme', readerThemes[0]));
+
+	// Manga details
+	const [manga, setManga] = useState(getManga(devProps));
+	const [page, setPage] = useState(0);
+	const [chapter, setChapter] = useState(0);
+
+	// Define a callback to update localStorage when updating certain parts of state.
+	useEffect(() => {
+		// If for some reason local storage isn't available yet, don't try to write to it.
+		if (isLocalStorageReady()) {
+			const settings = {
+				localReaderLanguage: readerLanguage,
+				localMangaLanguage: mangaLanguage,
+				localPageLayout: pageLayout,
+				localFitMode: fitMode,
+				localDirection: direction,
+				localHeaderVisibility: headerVisibility,
+				localProgressVisibility: progressVisibility,
+				localReaderTheme: readerTheme,
+			};
+
+			localStorage.setItem(localStorageSettingsKey, JSON.stringify(settings));
+		}
+	}, [
+		readerLanguage,
+		mangaLanguage,
+		pageLayout,
+		fitMode,
+		direction,
+		headerVisibility,
+		progressVisibility,
+		readerTheme,
+	]);
+
+	const contextValue = useMemo(
+		() => ({
+			readerLanguage,
+			setReaderLanguage,
+			mangaLanguage,
+			setMangaLanguage,
+			page,
+			setPage,
+			chapter,
+			setChapter,
+			pageLayout,
+			setPageLayout,
+			fitMode,
+			setFitMode,
+			direction,
+			setDirection,
+			headerVisibility,
+			setHeaderVisibility,
+			progressVisibility,
+			setProgressVisibility,
+			readerTheme,
+			setReaderTheme,
+			manga,
+			setManga,
+			optimizedImages,
+		}),
+		[
+			readerLanguage,
+			mangaLanguage,
+			page,
+			chapter,
+			pageLayout,
+			fitMode,
+			direction,
+			headerVisibility,
+			progressVisibility,
+			readerTheme,
+			manga,
+			optimizedImages,
+		],
+	);
+
+	return (
+		<MangaContext.Provider value={contextValue}>
+			{children}
+		</MangaContext.Provider>
+	);
+}
+
+/**
+ * Custom hook to use the context
+ */
 export const useMangaContext = (): MangaContextProps => {
-    const context = useContext(MangaContext);
-    if (!context) {
-        throw new Error("useMangaContext must be used within an MangaProvider");
-    }
-    return context;
+	const context = useContext(MangaContext);
+	if (!context) {
+		throw new Error('useMangaContext must be used within an MangaProvider');
+	}
+	return context;
 };

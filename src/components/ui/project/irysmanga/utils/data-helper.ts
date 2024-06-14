@@ -54,14 +54,10 @@ function getDummyManga(): Manga {
 		const tmpPageCount = 9;
 		for (let j = 1; j <= tmpPageCount; ++j) {
 			enTmpPages.push(
-				`https://alt.hololive.tv/wp-content/uploads/2022/${tmp}/en${
-					i + 1
-				}_0${j}.jpg`,
+				`https://alt.hololive.tv/wp-content/uploads/2022/${tmp}/en${i + 1}_0${j}.jpg`,
 			);
 			jpTmpPages.push(
-				`https://alt.hololive.tv/wp-content/uploads/2022/${tmp}/jp${
-					i + 1
-				}_0${j}.jpg`,
+				`https://alt.hololive.tv/wp-content/uploads/2022/${tmp}/jp${i + 1}_0${j}.jpg`,
 			);
 		}
 		const enTitle = i === 2 ? 'Super duper long title' : 'Short title';
@@ -100,15 +96,15 @@ function objIsEmpty(obj: any): boolean {
 }
 
 export default function getManga(devProps: { [key: string]: string }): Manga {
-	if (
-		process.env.NODE_ENV === 'development'
-        && (!process.env.NEXT_PUBLIC_CMS_URL || objIsEmpty(devProps))
-	) {
+	if (process.env.NODE_ENV !== 'production' && (!process.env.NEXT_PUBLIC_CMS_URL || objIsEmpty(devProps))) {
 		return getDummyManga();
 	}
+
+	// TODO: Remove this before deploying to prod
 	const useDummy = true;
 	if (useDummy) {
 		return getDummyManga();
 	}
+
 	return getMangaFromDevProps(devProps);
 }

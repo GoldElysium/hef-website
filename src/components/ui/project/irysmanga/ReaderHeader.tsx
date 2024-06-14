@@ -13,7 +13,7 @@ interface Props {
 	setOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-function ReaderHeader({ setOpenSidebar }: Props) {
+export default function ReaderHeader({ setOpenSidebar }: Props) {
 	const {
 		page, chapter, manga, mangaLanguage, headerVisibility,
 	} = useMangaContext();
@@ -84,5 +84,3 @@ function ReaderHeader({ setOpenSidebar }: Props) {
 		</>
 	);
 }
-
-export default ReaderHeader;

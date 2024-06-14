@@ -11,19 +11,19 @@ import ReaderHeader from './ReaderHeader';
 import styles from './styles/Reader.module.css';
 import LoadingIcon from './LoadingIcon';
 
-interface Props {
+interface IProps {
 	setOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>;
 	containerRef: React.RefObject<HTMLDivElement>;
 	clickCounter: number;
 	setClickCounter: React.Dispatch<React.SetStateAction<number>>;
 }
 
-function Reader({
+export default function Reader({
 	setOpenSidebar,
 	clickCounter,
 	setClickCounter,
 	containerRef,
-}: Props) {
+}: IProps) {
 	const {
 		pageLayout,
 		fitMode,
@@ -43,7 +43,7 @@ function Reader({
 	const pageScrolled = useRef(false);
 	const scriptedScroll = useRef(false);
 	const [loading, setLoading] = useState<boolean[]>(
-		[...Array(mangaData.chapters[chapter].pageCount)].fill(true),
+		Array(mangaData.chapters[chapter].pageCount).fill(true),
 	);
 	const [containerDimensions, setContainerDimensions] = useState({
 		width: 0,
@@ -56,9 +56,8 @@ function Reader({
 			scriptedScroll.current = true;
 			const targetImg = pageRefs.current[page];
 			if (targetImg) {
-				// eslint-disable-next-line
-                containerRef.current.scrollTop =
-                    targetImg.offsetTop - containerRef.current.offsetTop;
+				// eslint-disable-next-line no-param-reassign
+				containerRef.current.scrollTop = targetImg.offsetTop - containerRef.current.offsetTop;
 			}
 		}
 	};
@@ -158,24 +157,21 @@ function Reader({
 		}
 	};
 
-	/* eslint-disable */
-    useEffect(() => {
-        handleScrollTop();
-    }, [page, chapter, pageLayout]);
+	useEffect(() => {
+		handleScrollTop();
+	}, [page, chapter, pageLayout]);
 
-    useEffect(() => {
-        setScrollTopToPage();
-    }, [fitMode]);
-    // eslint-enable
+	useEffect(() => {
+		setScrollTopToPage();
+	}, [fitMode]);
 
-    let displayedPages: React.JSX.Element[] = [];
-    if (mangaData.chapters[chapter]) {
-        const currentChapter = mangaData.chapters[chapter];
-        const maxPageCount = currentChapter.pageCount;
-        // Use optimized pages if we have them, otherwise fall back to unoptimized I guess.
-        const currentPages =
-            optimizedImages.get(currentChapter.title) ?? currentChapter.pages;
-        /* eslint-disable */
+	let displayedPages: React.JSX.Element[] = [];
+	if (mangaData.chapters[chapter]) {
+		const currentChapter = mangaData.chapters[chapter];
+		const maxPageCount = currentChapter.pageCount;
+		// Use optimized pages if we have them, otherwise fall back to unoptimized I guess.
+		const currentPages = optimizedImages.get(currentChapter.title) ?? currentChapter.pages;
+		/* eslint-disable */
         const getClassNamesContainer = (i: number) => {
             const blockStyle =
                 pageLayout === "single"
@@ -201,7 +197,7 @@ function Reader({
             });
         };
         // eslint-enable
-        const dynamicHeight = containerRef.current?.clientHeight;
+
         displayedPages = Array.from({ length: maxPageCount }, (_, i) => (
             <div
                 className={getClassNamesContainer(i)}
@@ -210,6 +206,7 @@ function Reader({
                     pageRefs.current[i] = el as HTMLImageElement;
                 }}
             >
+                {loading[i] && <LoadingIcon />}
                 <Image
                     src={currentPages[i]}
                     quality={100}
@@ -220,16 +217,16 @@ function Reader({
                     height={1080}
                     style={{ opacity: loading[i] ? "0" : "1" }}
                     onLoad={() => {
-                        let newLoading = [...loading];
-                        newLoading[i] = false;
-                        setLoading(newLoading);
+                        setLoading((currentLoading) =>
+                            currentLoading.map((curr, index) =>
+                                index === i ? false : curr
+                            )
+                        );
                     }}
                 />
-                {loading[i] && <LoadingIcon></LoadingIcon>}
             </div>
         ));
     }
-
     useEffect(() => {
         const handleResize = () => {
             if (containerRef.current) {
@@ -242,14 +239,14 @@ function Reader({
         };
         window.addEventListener("resize", handleResize);
         handleResize();
+
         return () => {
             window.removeEventListener("resize", handleResize);
         };
     }, []);
     /* eslint-disable */
-
     return (
-        <div className="flex flex-col h-screen max-w-full relative bg-base-100 transition-colors flex-1">
+        <div className="flex flex-col h-screen relative grow bg-base-100 transition-colors">
             <ReaderHeader setOpenSidebar={setOpenSidebar}></ReaderHeader>
             <div
                 ref={containerRef}
@@ -270,5 +267,3 @@ function Reader({
     );
     // eslint-enable
 }
-
-export default Reader;
