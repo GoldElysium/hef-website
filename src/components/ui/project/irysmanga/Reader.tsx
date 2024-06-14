@@ -43,7 +43,7 @@ function Reader({
 	const pageScrolled = useRef(false);
 	const scriptedScroll = useRef(false);
 	const [loading, setLoading] = useState<boolean[]>(
-		[...Array(mangaData.chapters[chapter].pageCount)].fill(true),
+		Array(mangaData.chapters[chapter].pageCount).fill(true),
 	);
 
 	// Sets the scrollbar to the correct position on page change
@@ -164,80 +164,77 @@ function Reader({
     }, [fitMode]);
     // eslint-enable
 
-    let displayedPages: React.JSX.Element[] = [];
-    if (mangaData.chapters[chapter]) {
-        const currentChapter = mangaData.chapters[chapter];
-        const maxPageCount = currentChapter.pageCount;
-        // Use optimized pages if we have them, otherwise fall back to unoptimized I guess.
-        const currentPages =
-            optimizedImages.get(currentChapter.title) ?? currentChapter.pages;
-        /* eslint-disable */
-        const getClassNames = (i: number) => {
-            const blockStyle =
-                pageLayout === "single"
-                    ? {
-                          block: i === page,
-                          hidden: i !== page,
-                      }
-                    : {
-                          block: true,
-                      };
-            const containerStyle = loading[i] ? "min-h-full" : "";
+	let displayedPages: React.JSX.Element[] = [];
+	if (mangaData.chapters[chapter]) {
+		const currentChapter = mangaData.chapters[chapter];
+		const maxPageCount = currentChapter.pageCount;
+		// Use optimized pages if we have them, otherwise fall back to unoptimized I guess.
+		const currentPages =
+			optimizedImages.get(currentChapter.title) ?? currentChapter.pages;
+		const getClassNames = (i: number) => {
+			const blockStyle =
+				pageLayout === "single"
+					? {
+						block: i === page,
+						hidden: i !== page,
+					}
+					: {
+						block: true,
+					};
+			const containerStyle = loading[i] ? "min-h-full" : "";
 
-            return classNames(containerStyle, blockStyle, {
-                [styles.pageHeight]: fitMode === "height",
-                [styles.pageWidth]: fitMode === "width",
-                [styles.pageMedium]: fitMode === "original",
-            });
-        };
-        // eslint-enable
+			return classNames(containerStyle, blockStyle, {
+				[styles.pageHeight]: fitMode === "height",
+				[styles.pageWidth]: fitMode === "width",
+				[styles.pageMedium]: fitMode === "original",
+			});
+		};
 
         displayedPages = Array.from({ length: maxPageCount }, (_, i) => (
-            <div
-                className={getClassNames(i) + " relative"}
-                ref={(el) => {
-                    pageRefs.current[i] = el as HTMLImageElement;
-                }}
-                key={`page ${i}`}
-            >
-                <Image
-                    key={i}
-                    src={currentPages[i]}
-                    quality={100}
-                    className={getClassNames(i) + " " + styles.page}
-                    priority={getPriority(i, page)}
-                    alt={`Page ${i + 1}`}
-                    width={"0"}
-                    height={1080}
-                    style={{ opacity: loading[i] ? "0" : "1" }}
-                    onLoad={() => {
-                        let newLoading = [...loading];
-                        newLoading[i] = false;
-                        setLoading(newLoading);
-                    }}
-                />
-                {loading[i] && <LoadingIcon></LoadingIcon>}
-            </div>
-        ));
-    }
-    /* eslint-disable */
-    return (
-        <div className="flex flex-col h-screen relative grow bg-base-100 transition-colors">
-            <ReaderHeader setOpenSidebar={setOpenSidebar}></ReaderHeader>
-            <div
-                ref={containerRef}
-                className={styles.pageContainer}
-                onClick={handleClick}
-                onScroll={handleScroll}
-            >
-                {displayedPages}
-            </div>
-            <div className="absolute bottom-0 left-0 w-full">
-                <ProgressBar></ProgressBar>
-            </div>
-        </div>
-    );
-    // eslint-enable
+			<div
+				className={getClassNames(i) + " relative"}
+				ref={(el) => {
+					pageRefs.current[i] = el as HTMLImageElement;
+				}}
+				key={`page ${i}`}
+			>
+				{loading[i] && <LoadingIcon></LoadingIcon>}
+				<Image
+					key={i}
+					src={currentPages[i]}
+					quality={100}
+					className={getClassNames(i) + " " + styles.page}
+					priority={getPriority(i, page)}
+					alt={`Page ${i + 1}`}
+					width={"0"}
+					height={1080}
+					style={{ opacity: loading[i] ? "0" : "1" }}
+					onLoad={() => {
+						setLoading((currentLoading) =>
+							currentLoading.map((curr, index) => index === i ? false : curr)
+						);
+					}}
+				/>
+			</div>
+		));
+	}
+
+	return (
+		<div className="flex flex-col h-screen relative grow bg-base-100 transition-colors">
+			<ReaderHeader setOpenSidebar={setOpenSidebar}></ReaderHeader>
+			<div
+				ref={containerRef}
+				className={styles.pageContainer}
+				onClick={handleClick}
+				onScroll={handleScroll}
+			>
+				{displayedPages}
+			</div>
+			<div className="absolute bottom-0 left-0 w-full">
+				<ProgressBar />
+			</div>
+		</div>
+	);
 }
 
 export default Reader;
