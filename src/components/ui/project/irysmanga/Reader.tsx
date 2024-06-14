@@ -169,14 +169,16 @@ function Reader({
 		// Use optimized pages if we have them, otherwise fall back to unoptimized I guess.
 		const currentPages = optimizedImages.get(currentChapter.title) ?? currentChapter.pages;
 		const getClassNames = (i: number) => {
-			const blockStyle =				pageLayout === 'single'
-				? {
-					block: i === page,
-					hidden: i !== page,
-				}
-				: {
-					block: true,
-				};
+			const blockStyle = (
+				pageLayout === 'single'
+					? {
+						block: i === page,
+						hidden: i !== page,
+					}
+					: {
+						block: true,
+					}
+			);
 			const containerStyle = loading[i] ? 'min-h-full' : '';
 
 			return classNames(containerStyle, blockStyle, {
@@ -199,7 +201,7 @@ function Reader({
 					key={i}
 					src={currentPages[i]}
 					quality={100}
-					className={`${getClassNames(i)} ${styles.page}`}
+					className={`${getClassNames(i)} ${styles.page} ${fitMode === 'height' ? 'object-contain' : 'object-cover'}`}
 					priority={getPriority(i, page)}
 					alt={`Page ${i + 1}`}
 					width="0"

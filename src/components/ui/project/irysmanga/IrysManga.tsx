@@ -15,7 +15,7 @@ function IrysManga() {
 	const modalRef = useRef(null);
 
 	useEffect(() => {
-		if (openSidebar === false) {
+		if (!openSidebar) {
 			setClickCounter(-1);
 		}
 	}, [openSidebar]);

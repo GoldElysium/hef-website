@@ -1,9 +1,9 @@
 .page {
-    @apply m-auto object-cover w-full;
+    @apply m-auto w-full;
 }
 
 .pageHeight {
-    @apply h-full;
+    @apply h-full max-h-full w-full;
 }
 
 .pageWidth {
