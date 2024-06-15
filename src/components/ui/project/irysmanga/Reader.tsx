@@ -170,7 +170,7 @@ export default function Reader({
 		const currentChapter = mangaData.chapters[chapter];
 		const maxPageCount = currentChapter.pageCount;
 		// Use optimized pages if we have them, otherwise fall back to unoptimized I guess.
-		const currentPages = optimizedImages.get(currentChapter.title) ?? currentChapter.pages;
+		const currentPages = optimizedImages.get(currentChapter.id) ?? currentChapter.pages;
 
 		const getClassNamesContainer = (i: number) => {
 			const blockStyle = (
