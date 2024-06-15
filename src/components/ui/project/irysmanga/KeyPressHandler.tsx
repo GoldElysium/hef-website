@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { useTheme } from 'next-themes';
 import { useMangaContext } from './context/MangaContext';
 import {
 	getNextOption,
@@ -12,7 +13,6 @@ import {
 	languages,
 	pageLayouts,
 	progressVisibilities,
-	readerThemes,
 } from './utils/types';
 
 interface IProps {
@@ -33,7 +33,6 @@ export default function KeyPressHandler({
 		setFitMode,
 		setDirection,
 		setProgressVisibility,
-		setReaderTheme,
 		setMangaLanguage,
 		setReaderLanguage,
 		page,
@@ -46,6 +45,7 @@ export default function KeyPressHandler({
 	} = useMangaContext();
 	const scrollIntervalRef = useRef<any>();
 	const scrollDirectionRef = useRef<number>();
+	const { resolvedTheme, setTheme } = useTheme();
 
 	useEffect(() => {
 		const handleKeyPress = (event: KeyboardEvent) => {
@@ -143,7 +143,7 @@ export default function KeyPressHandler({
 				setHeaderVisibility((prev) => getNextOption(prev, headerVisibilities));
 			}
 			if (event.key === 't') {
-				setReaderTheme((prev) => getNextOption(prev, readerThemes));
+				setTheme(resolvedTheme === 'light' ? 'dark' : 'light');
 			}
 			if (event.key === 'f') {
 				setFitMode((prev) => getNextOption(prev, fitModes));
@@ -191,7 +191,7 @@ export default function KeyPressHandler({
 		setOpenSidebar,
 		setPageLayout,
 		setProgressVisibility,
-		setReaderTheme,
+		resolvedTheme,
 		modalRef,
 	]);
 	useEffect(() => {
