@@ -61,7 +61,7 @@ function getDummyManga(): Manga {
 		contributors: [
 			{
 				name: 'Test1',
-				role: 'artist',
+				role: 'organizer',
 				socials: [],
 			},
 			{
@@ -70,6 +70,82 @@ function getDummyManga(): Manga {
 				socials: [
 					{
 						platform: 'twitter',
+						link: '',
+					},
+				],
+			},
+			{
+				name: 'Test3',
+				role: 'lead-artist',
+				socials: [
+					{
+						platform: 'pixiv',
+						link: '',
+					},
+					{
+						platform: 'twitter',
+						link: '',
+					},
+				],
+			},
+			{
+				name: 'Test4a',
+				role: 'artist',
+				socials: [
+					{
+						platform: 'pixiv',
+						link: '',
+					},
+					{
+						platform: 'twitter',
+						link: '',
+					},
+				],
+			},
+			{
+				name: 'Test4b',
+				role: 'artist',
+				socials: [
+					{
+						platform: 'pixiv',
+						link: '',
+					},
+					{
+						platform: 'twitter',
+						link: '',
+					},
+				],
+			},
+			{
+				name: 'Test4c',
+				role: 'artist',
+				socials: [
+					{
+						platform: 'pixiv',
+						link: '',
+					},
+					{
+						platform: 'twitter',
+						link: '',
+					},
+				],
+			},
+			{
+				name: 'Test5',
+				role: 'translator',
+				socials: [
+					{
+						platform: 'twitter',
+						link: '',
+					},
+				],
+			},
+			{
+				name: 'Test6',
+				role: 'developer',
+				socials: [
+					{
+						platform: 'github',
 						link: '',
 					},
 				],

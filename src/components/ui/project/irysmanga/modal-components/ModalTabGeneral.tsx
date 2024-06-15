@@ -15,13 +15,30 @@ export default function ModalTabGeneral() {
 				{t('credits')}
 			</h2>
 			<div className="grid w-full lg:grid-cols-2 lg:grid-rows-2">
-				<CreditBlock label="authors" contributors={manga.authors} />
-				<CreditBlock label="artists" contributors={manga.artists} />
+				<CreditBlock
+					label="organizers"
+					contributors={manga.contributors.filter((e) => e.role === 'organizer')}
+				/>
+				<CreditBlock
+					label="authors"
+					contributors={manga.contributors.filter((e) => e.role === 'writer')}
+				/>
+				<CreditBlock
+					label="lead-artists"
+					contributors={manga.contributors.filter((e) => e.role === 'lead-artist')}
+				/>
+				<CreditBlock
+					label="artists"
+					contributors={manga.contributors.filter((e) => e.role === 'artist')}
+				/>
 				<CreditBlock
 					label="translators"
-					contributors={manga.translators}
+					contributors={manga.contributors.filter((e) => e.role === 'translator')}
 				/>
-				<CreditBlock label="programmers" contributors={manga.devs} />
+				<CreditBlock
+					label="programmers"
+					contributors={manga.contributors.filter((e) => e.role === 'developer')}
+				/>
 			</div>
 		</ModalTabContent>
 	);

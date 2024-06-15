@@ -30,7 +30,9 @@
         "authors": "Authors",
         "artists": "Artists",
         "translators": "Translators",
-        "programmers": "Programmers"
+        "programmers": "Programmers",
+        "organizers": "Organizers",
+        "lead-artists":"Lead Artists"
     },
     "modal-story": {
         "greeting": "Story",
