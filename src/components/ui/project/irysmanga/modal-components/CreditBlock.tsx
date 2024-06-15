@@ -24,7 +24,7 @@ export default function CreditBlock({ label, contributors }: IProps) {
 						{' '}
 						{contributor.socials.map((social) => (
 							<span
-								key={`span-${label}-${contributor.name}`}
+								key={`span-${label}-${contributor.name}-${social.platform}`}
 							>
 								<a
 									href={social.link}
