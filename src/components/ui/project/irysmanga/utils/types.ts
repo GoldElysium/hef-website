@@ -14,6 +14,7 @@ export type MangaData = {
 
 export type Contributor = {
 	name: string;
+	role: 'organizer' | 'writer' | 'lead-artist' | 'artist' | 'translator' | 'developer';
 	socials: {
 		platform: string;
 		link: string;
@@ -23,10 +24,7 @@ export type Contributor = {
 export type Manga = {
 	id: string;
 	publishedDate: string; // Publish date must be in ISO8601
-	authors: Contributor[];
-	artists: Contributor[];
-	translators: Contributor[];
-	devs: Contributor[];
+	contributors: Contributor[];
 	data: { readonly [lang: string]: MangaData }; // Maps ISO language codes to correct data.
 };
 

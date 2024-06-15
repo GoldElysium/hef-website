@@ -1,4 +1,4 @@
-import { Contributor, Manga, MangaData } from './types';
+import { Manga, MangaData } from './types';
 
 function getMangaFromDevProps(devProps: { [key: string]: string }): Manga {
 	if (!devProps.mangaData) {
@@ -6,27 +6,6 @@ function getMangaFromDevProps(devProps: { [key: string]: string }): Manga {
 	}
 
 	return JSON.parse(devProps.mangaData);
-}
-
-function getDummyContributors(role: string): Contributor[] {
-	return Array.from({ length: 5 }, (_, i) => ({
-		// eslint-disable-next-line no-plusplus
-		name: `${role} name ${i}`,
-		socials: [
-			{
-				platform: 'Twitter',
-				link: '',
-			},
-			{
-				platform: 'Pixiv',
-				link: '',
-			},
-			{
-				platform: 'Github',
-				link: '',
-			},
-		],
-	}));
 }
 
 function getDummyManga(): Manga {
@@ -79,10 +58,23 @@ function getDummyManga(): Manga {
 	return {
 		id: 'test-manga',
 		publishedDate: '2024-01-16',
-		authors: getDummyContributors('Author'),
-		artists: getDummyContributors('Artist'),
-		translators: getDummyContributors('Translator'),
-		devs: getDummyContributors('Developer'),
+		contributors: [
+			{
+				name: 'Test1',
+				role: 'artist',
+				socials: [],
+			},
+			{
+				name: 'Test2',
+				role: 'writer',
+				socials: [
+					{
+						platform: 'twitter',
+						link: '',
+					},
+				],
+			},
+		],
 		data: {
 			en: tmpMangaData[0],
 			jp: tmpMangaData[1],
