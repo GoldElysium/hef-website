@@ -53,9 +53,9 @@ export default function ProgressBar() {
 		<div
 			className={classNames(styles.progressOuterContainer, {
 				[styles.progressOuterContainerOpen]:
-                        progressVisibility === 'progress-shown',
+					progressVisibility === 'progress-shown',
 				[styles.progressOuterContainerClose]:
-                        progressVisibility === 'progress-hidden',
+					progressVisibility === 'progress-hidden',
 			})}
 			onMouseEnter={() => setOpenProgress(true)}
 			onMouseLeave={() => setOpenProgress(false)}
@@ -66,7 +66,11 @@ export default function ProgressBar() {
 					[styles.progressInnerContainerClose]: !openProgress,
 				})}
 			>
-				<div className={styles.numberLabelContainer}>
+				<div
+					className={classNames(styles.numberLabelContainer, {
+						[styles.numberLabelContainerFadeLeft]: !openProgress,
+					})}
+				>
 					<span
 						className={classNames(styles.numberLabel, {
 							[styles.numberLabelOpen]: openProgress,
@@ -76,12 +80,16 @@ export default function ProgressBar() {
 						1
 					</span>
 				</div>
-				<div className={styles.progressBarContanier}>
+				<div className={styles.progressBarContainer}>
 					<div className={styles.progressSectionsContainer}>
 						{pageSections}
 					</div>
 				</div>
-				<div className={styles.numberLabelContainer}>
+				<div
+					className={classNames(styles.numberLabelContainer, {
+						[styles.numberLabelContainerFadeRight]: !openProgress,
+					})}
+				>
 					<span
 						className={classNames(styles.numberLabel, {
 							[styles.numberLabelOpen]: openProgress,
