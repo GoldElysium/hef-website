@@ -90,38 +90,6 @@ module.exports = {
     plugins: [require("daisyui")],
     daisyui: {
         themes: [
-            {
-                irysLight: {
-                    primary: "rgb(140, 18, 54)", //dark purple
-                    "primary-content": "rgb(255, 255, 255)", //white
-                    secondary: "rgb(235, 188, 202)", // light pinkish
-                    "secondary-content": "rgb(0, 0, 0)", //white
-                    accent: "rgb(102, 0, 30)", // dark purple
-                    neutral: "rgb(47, 47, 47)", //grey
-                    "base-100": "rgb(242, 228, 232)", //light pinkish
-                    "base-200": "rgb(140, 18, 54)",
-                    "base-300": "rgb(38, 2, 12)",
-                    info: "rgb(235, 188, 202)", // light pink
-                    success: "rgb(140, 18, 54)", // dark purple
-                    warning: "rgb(166, 21, 64)", // not as dark puurple
-                    error: "rgb(255, 191, 210)", // light pink
-                },
-                irysDark: {
-                    primary: "rgb(140, 18, 54)",
-                    "primary-content": "rgb(238, 238, 238)",
-                    secondary: "rgb(140, 56, 81)",
-                    "secondary-content": "rgb(238, 238, 238)",
-                    accent: "rgb(245, 196, 199)",
-                    neutral: "rgb(238, 238, 238)",
-                    "base-100": "rgb(38, 2, 12)",
-                    "base-200": "rgb(140, 18, 54)",
-                    "base-300": "rgb(47, 47, 47)",
-                    info: "rgb(140, 56, 81)",
-                    success: "rgb(140, 18, 54)",
-                    warning: "rgb(166, 21, 64)",
-                    error: "rgb(255, 191, 210)",
-                },
-            },
             "light",
             "dark",
         ],
