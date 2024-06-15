@@ -11,7 +11,7 @@
 }
 
 .progressInnerContainer {
-    @apply w-[100%] mr-[4px] flex transition-all;
+    @apply w-[100%] flex transition-all;
 }
 
 .progressInnerContainerOpen {
@@ -19,15 +19,23 @@
 }
 
 .progressInnerContainerClose {
-    @apply opacity-50 h-[5px];
+    @apply h-[5px] opacity-50;
 }
 
 .numberLabelContainer {
-    @apply h-full min-w-4 px-2 py-1 flex justify-center items-center bg-base-300;
+    @apply h-full min-w-4 px-2 py-1 flex justify-center items-center bg-base-300 overflow-hidden;
+}
+
+.numberLabelContainerFadeLeft {
+    background: linear-gradient(to left, oklch(var(--nc)) 8%, transparent);
+}
+
+.numberLabelContainerFadeRight {
+    background: linear-gradient(to right, oklch(var(--nc)) 8%, transparent);
 }
 
 .numberLabel {
-    @apply transition-all;
+    @apply transition-all w-[1.5rem] text-center;
 }
 
 .numberLabelOpen {
@@ -38,7 +46,7 @@
     @apply opacity-0;
 }
 
-.progressBarContanier {
+.progressBarContainer {
     @apply h-full grow bg-neutral-content transition-all;
 }
 
