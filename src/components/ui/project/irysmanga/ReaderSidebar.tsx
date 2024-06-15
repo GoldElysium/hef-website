@@ -196,7 +196,7 @@ export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }:
 						setValue={setHeaderVisibility}
 					/>
 					<SettingButton
-						value={resolvedTheme as ReaderTheme}
+						value={resolvedTheme as ReaderTheme ?? 'light'}
 						valueList={readerThemes}
 						onClick={() => setTheme(resolvedTheme === 'light' ? 'dark' : 'light')}
 						// @ts-ignore
