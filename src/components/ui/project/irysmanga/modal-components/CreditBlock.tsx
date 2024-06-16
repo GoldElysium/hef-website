@@ -1,5 +1,22 @@
 import useTranslation from '@/lib/i18n/client';
+import {
+	CommandLineIcon,
+	LanguageIcon,
+	LightBulbIcon,
+	PaintBrushIcon,
+	PencilIcon,
+} from '@heroicons/react/24/outline';
 import { Contributor } from '../utils/types';
+
+const iconWidth = '1.5rem';
+const contributorIcons: { [key: string]: JSX.Element } = {
+	organizers: <LightBulbIcon width={iconWidth} />,
+	authors: <PencilIcon width={iconWidth} />,
+	'lead-artists': <PaintBrushIcon width={iconWidth} />,
+	artists: <PaintBrushIcon width={iconWidth} />,
+	translators: <LanguageIcon width={iconWidth} />,
+	programmers: <CommandLineIcon width={iconWidth} />,
+};
 
 interface IProps {
 	label: string;
@@ -8,16 +25,12 @@ interface IProps {
 
 interface RCProps {
 	label: string;
-	contributor: Contributor
+	contributor: Contributor;
 }
 
 function RenderedContributor({ label, contributor }: RCProps) {
 	if (contributor.socials.length === 0) {
-		return (
-			<li>
-				{contributor.name}
-			</li>
-		);
+		return <li>{contributor.name}</li>;
 	}
 
 	return (
@@ -50,9 +63,9 @@ export default function CreditBlock({ label, contributors }: IProps) {
 
 	return (
 		<div className="mb-4">
-			<h3 className="mb-1 text-2xl font-semibold">
+			<h3 className="mb-1 flex items-center gap-1 text-2xl font-semibold">
+				{contributorIcons[label] ?? null}
 				{t(label)}
-				:
 			</h3>
 			<ul className="ml-4 list-inside list-disc">
 				{contributors.map((contributor) => (
