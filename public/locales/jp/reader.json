@@ -30,7 +30,9 @@
         "authors": "著者",
         "artists": "アーティスト",
         "translators": "翻訳者",
-        "programmers": "プログラマー"
+        "programmers": "プログラマー",
+        "organizers": "主催者",
+        "lead-artists":"リードアーティスト"
     },
     "modal-story": {
         "greeting": "ストーリー",

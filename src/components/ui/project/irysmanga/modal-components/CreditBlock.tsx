@@ -6,6 +6,45 @@ interface IProps {
 	contributors: Contributor[];
 }
 
+interface RCProps {
+	label: string;
+	contributor: Contributor
+}
+
+function RenderedContributor({ label, contributor }: RCProps) {
+	if (contributor.socials.length === 0) {
+		return (
+			<li>
+				{contributor.name}
+			</li>
+		);
+	}
+
+	return (
+		<li>
+			{contributor.name}
+			{' '}
+			-
+			{' '}
+			{contributor.socials.map((social) => (
+				<span
+					key={`span-${label}-${contributor.name}-${social.platform}`}
+				>
+					<a
+						href={social.link}
+						className="link"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						{social.platform}
+					</a>
+					{' '}
+				</span>
+			))}
+		</li>
+	);
+}
+
 export default function CreditBlock({ label, contributors }: IProps) {
 	const { t } = useTranslation('reader', 'modal-general');
 
@@ -17,27 +56,11 @@ export default function CreditBlock({ label, contributors }: IProps) {
 			</h3>
 			<ul className="ml-4 list-inside list-disc">
 				{contributors.map((contributor) => (
-					<li key={`li-${label}-${contributor.name}`}>
-						{contributor.name}
-						{' '}
-						-
-						{' '}
-						{contributor.socials.map((social) => (
-							<span
-								key={`span-${label}-${contributor.name}-${social.platform}`}
-							>
-								<a
-									href={social.link}
-									className="link"
-									target="_blank"
-									rel="noopener noreferrer"
-								>
-									{social.platform}
-								</a>
-								{' '}
-							</span>
-						))}
-					</li>
+					<RenderedContributor
+						key={`rc-${label}-${contributor.name}`}
+						label={label}
+						contributor={contributor}
+					/>
 				))}
 			</ul>
 		</div>
