@@ -34,23 +34,27 @@ function getDummyManga(): Manga {
 		const tmpPageCount = 9;
 		for (let j = 1; j <= tmpPageCount; ++j) {
 			enTmpPages.push(
-				`https://alt.hololive.tv/wp-content/uploads/2022/${tmp}/en${i + 1}_0${j}.jpg`,
+				`https://alt.hololive.tv/wp-content/uploads/2022/${tmp}/en${
+					i + 1
+				}_0${j}.jpg`,
 			);
 			jpTmpPages.push(
-				`https://alt.hololive.tv/wp-content/uploads/2022/${tmp}/jp${i + 1}_0${j}.jpg`,
+				`https://alt.hololive.tv/wp-content/uploads/2022/${tmp}/jp${
+					i + 1
+				}_0${j}.jpg`,
 			);
 		}
 		const enTitle = i === 2 ? 'Super duper long title' : 'Short title';
 		const jpTitle = i === 2 ? 'めちゃくちゃ長いタイトル' : '短いタイトル';
 
 		tmpMangaData[0].chapters.push({
-			id: 'en-ch-1',
+			id: `en-ch-${i}`,
 			title: enTitle,
 			pageCount: tmpPageCount,
 			pages: enTmpPages,
 		});
 		tmpMangaData[1].chapters.push({
-			id: 'jp-ch-1',
+			id: `jp-ch-${i}`,
 			title: jpTitle,
 			pageCount: tmpPageCount,
 			pages: jpTmpPages,
@@ -166,7 +170,10 @@ function objIsEmpty(obj: any): boolean {
 }
 
 export default function getManga(devProps: { [key: string]: string }): Manga {
-	if (process.env.NODE_ENV !== 'production' && (!process.env.NEXT_PUBLIC_CMS_URL || objIsEmpty(devProps))) {
+	if (
+		process.env.NODE_ENV !== 'production'
+        && (!process.env.NEXT_PUBLIC_CMS_URL || objIsEmpty(devProps))
+	) {
 		return getDummyManga();
 	}
 
