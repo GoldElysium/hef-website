@@ -21,31 +21,34 @@ const jura = Jura({
 	subsets: ['latin'],
 });
 
-async function fetchOptimizedImageURLs({ project, lang }: IProps) {
+async function fetchOptimizedImageURLs({ project }: IProps) {
 	const manga = getManga(project.devprops);
 
 	// Bypass if not set.
 	const bypassImgProxy = !process.env.IMAGINARY_URL;
-	const { chapters } = manga.data[lang];
 
 	const optimizedImages = new Map<string, string[]>();
 
-	chapters.forEach((chapter) => {
-		optimizedImages.set(
-			chapter.title,
-			chapter.pages.map((page) => {
-				if (bypassImgProxy) {
-					return page;
-				}
+	Object.entries(manga.data).forEach((mangaDataPair) => {
+		const currentData = mangaDataPair[1];
 
-				return getImageUrl({
-					src: page,
-					height: 1080,
-					quality: 90,
-					action: 'resize',
-				});
-			}),
-		);
+		currentData.chapters.forEach((chapter) => {
+			optimizedImages.set(
+				chapter.id,
+				chapter.pages.map((page) => {
+					if (bypassImgProxy) {
+						return page;
+					}
+
+					return getImageUrl({
+						src: page,
+						height: 1080,
+						quality: 90,
+						action: 'resize',
+					});
+				}),
+			);
+		});
 	});
 
 	return optimizedImages;

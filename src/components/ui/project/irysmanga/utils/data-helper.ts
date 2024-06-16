@@ -65,11 +65,13 @@ function getDummyManga(): Manga {
 		const jpTitle = i === 2 ? 'めちゃくちゃ長いタイトル' : '短いタイトル';
 
 		tmpMangaData[0].chapters.push({
+			id: 'en-ch-1',
 			title: enTitle,
 			pageCount: tmpPageCount,
 			pages: enTmpPages,
 		});
 		tmpMangaData[1].chapters.push({
+			id: 'jp-ch-1',
 			title: jpTitle,
 			pageCount: tmpPageCount,
 			pages: jpTmpPages,
