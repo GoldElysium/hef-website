@@ -3,6 +3,11 @@
     --sidebar-width: 300px;
 }
 
+.kb-list > li > span:before {
+    content: ": ";
+    margin-left: 0.25rem;
+}
+
 .kbdalt {
     @apply bg-skin-primary dark:bg-skin-primary-dark text-skin-primary-foreground dark:text-skin-primary-foreground-dark rounded-md px-2 py-0.5 text-sm;
 }

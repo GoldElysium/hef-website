@@ -27,78 +27,58 @@ export default function MangaReaderModal() {
 				</li>
 			</ul>
 			<h2 className="mb-2 text-2xl font-semibold">{t('shortcut')}</h2>
-			<ul className="grid list-inside list-disc grid-cols-1 min-[920px]:grid-cols-2 min-[1360px]:grid-cols-3">
+			<ul className="kb-list grid list-inside list-disc min-[1260px]:grid-cols-2">
 				<li>
-					{t('page-turn-k')}
-					{' '}
 					<kbd className="kbdalt">→</kbd>
-					{' '}
-					{t('or')}
-					{' '}
 					<kbd className="kbdalt">←</kbd>
+
+					<span>{t('page-turn-k')}</span>
 				</li>
 				<li>
-					{t('page-scroll-k')}
-					{' '}
 					<kbd className="kbdalt">↑</kbd>
-					{' '}
-					{t('or')}
-					{' '}
 					<kbd className="kbdalt">↓</kbd>
+					<span>{t('page-scroll-k')}</span>
 				</li>
 				<li>
-					{t('chapter-turn-k')}
-					{' '}
 					<kbd className="kbdalt">,</kbd>
-					{' '}
-					{t('or')}
-					{' '}
 					<kbd className="kbdalt">.</kbd>
+					<span>{t('chapter-turn-k')}</span>
 				</li>
 				<li>
-					{t('manga-language-k')}
-					{' '}
 					<kbd className="kbdalt">J</kbd>
+					<span>{t('manga-language-k')}</span>
 				</li>
 				<li>
-					{t('reader-language-k')}
-					{' '}
 					<kbd className="kbdalt">K</kbd>
+					<span>{t('reader-language-k')}</span>
 				</li>
 				<li>
-					{t('page-direction-k')}
-					{' '}
 					<kbd className="kbdalt">D</kbd>
+					<span>{t('page-direction-k')}</span>
 				</li>
 				<li>
-					{t('sidebar-k')}
-					{' '}
 					<kbd className="kbdalt">M</kbd>
+					<span>{t('sidebar-k')}</span>
 				</li>
 				<li>
-					{t('header-k')}
-					{' '}
 					<kbd className="kbdalt">H</kbd>
+					<span>{t('header-k')}</span>
 				</li>
 				<li>
-					{t('theme-k')}
-					{' '}
 					<kbd className="kbdalt">T</kbd>
+					<span>{t('theme-k')}</span>
 				</li>
 				<li>
-					{t('page-layout-k')}
-					{' '}
 					<kbd className="kbdalt">S</kbd>
+					<span>{t('page-layout-k')}</span>
 				</li>
 				<li>
-					{t('page-fit-k')}
-					{' '}
 					<kbd className="kbdalt">F</kbd>
+					<span>{t('page-fit-k')}</span>
 				</li>
 				<li>
-					{t('progress-k')}
-					{' '}
 					<kbd className="kbdalt">P</kbd>
+					<span>{t('progress-k')}</span>
 				</li>
 			</ul>
 		</ModalTabContent>

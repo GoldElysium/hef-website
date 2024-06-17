@@ -16,45 +16,31 @@ export default function ModalTabGeneral() {
 				<SparklesIcon width="2.5rem" />
 			</h1>
 			<p className="mb-4">{t('essay')}</p>
-			<h2 className="mb-4 text-3xl font-bold underline">
-				{t('credits')}
-			</h2>
-			<div className="grid w-full lg:grid-cols-2 lg:grid-rows-2">
+			<h2 className="mb-4 text-3xl font-bold underline">{t('credits')}</h2>
+			<div className="grid w-full lg:grid-rows-2 min-[1260px]:grid-cols-2">
 				<CreditBlock
 					label="organizers"
-					contributors={manga.contributors.filter(
-						(e) => e.role === 'organizer',
-					)}
+					contributors={manga.contributors.filter((e) => e.role === 'organizer')}
 				/>
 				<CreditBlock
 					label="authors"
-					contributors={manga.contributors.filter(
-						(e) => e.role === 'writer',
-					)}
+					contributors={manga.contributors.filter((e) => e.role === 'writer')}
 				/>
 				<CreditBlock
 					label="lead-artists"
-					contributors={manga.contributors.filter(
-						(e) => e.role === 'lead-artist',
-					)}
+					contributors={manga.contributors.filter((e) => e.role === 'lead-artist')}
 				/>
 				<CreditBlock
 					label="artists"
-					contributors={manga.contributors.filter(
-						(e) => e.role === 'artist',
-					)}
+					contributors={manga.contributors.filter((e) => e.role === 'artist')}
 				/>
 				<CreditBlock
 					label="translators"
-					contributors={manga.contributors.filter(
-						(e) => e.role === 'translator',
-					)}
+					contributors={manga.contributors.filter((e) => e.role === 'translator')}
 				/>
 				<CreditBlock
 					label="programmers"
-					contributors={manga.contributors.filter(
-						(e) => e.role === 'developer',
-					)}
+					contributors={manga.contributors.filter((e) => e.role === 'developer')}
 				/>
 			</div>
 		</ModalTabContent>
