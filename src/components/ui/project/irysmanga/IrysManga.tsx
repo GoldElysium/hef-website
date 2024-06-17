@@ -21,6 +21,7 @@ export default function IrysManga() {
 	return (
 		<div className="relative flex h-screen min-w-[310px] overflow-hidden bg-skin-background text-skin-text dark:bg-skin-background-dark dark:text-skin-text-dark">
 			<Reader
+				openSidebar={openSidebar}
 				setOpenSidebar={setOpenSidebar}
 				clickCounter={clickCounter}
 				setClickCounter={setClickCounter}

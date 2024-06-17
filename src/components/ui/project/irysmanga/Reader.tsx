@@ -12,6 +12,7 @@ import styles from './styles/Reader.module.css';
 import LoadingIcon from './LoadingIcon';
 
 interface IProps {
+	openSidebar: boolean
 	setOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>;
 	containerRef: React.RefObject<HTMLDivElement>;
 	clickCounter: number;
@@ -19,6 +20,7 @@ interface IProps {
 }
 
 export default function Reader({
+	openSidebar,
 	setOpenSidebar,
 	clickCounter,
 	setClickCounter,
@@ -248,7 +250,7 @@ export default function Reader({
 
 	return (
 		<div className="relative flex h-screen grow flex-col transition-colors">
-			<ReaderHeader setOpenSidebar={setOpenSidebar} />
+			<ReaderHeader openSidebar={openSidebar} setOpenSidebar={setOpenSidebar} />
 			{/* eslint-disable-next-line max-len */}
 			{/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
 			<div

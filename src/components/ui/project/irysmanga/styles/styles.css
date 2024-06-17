@@ -3,10 +3,6 @@
     --sidebar-width: 300px;
 }
 
-.barIcon {
-    @apply transition-opacity duration-100 ease-linear opacity-60 cursor-pointer hover:opacity-100;
-}
-
 .kbdalt {
     @apply bg-skin-primary dark:bg-skin-primary-dark text-skin-primary-foreground dark:text-skin-primary-foreground-dark rounded-md px-2 py-0.5 text-sm;
 }
@@ -22,7 +18,6 @@ body {
 ::-webkit-scrollbar {
     width: 4px;
     height: 4px;
-    
 }
 
 ::-webkit-scrollbar-track {
@@ -122,7 +117,9 @@ SOFTWARE.
     color: var(--tab-color);
     padding-inline-start: var(--tab-padding, 1rem);
     padding-inline-end: var(--tab-padding, 1rem);
-    &:is(.tab-active, [aria-selected="true"]):not(.tab-disabled):not([disabled]),
+    &:is(.tab-active, [aria-selected="true"]):not(.tab-disabled):not(
+            [disabled]
+        ),
     &:is(input:checked) {
         @apply border-opacity-100 text-opacity-100;
     }
@@ -160,16 +157,23 @@ SOFTWARE.
     padding-inline-start: var(--tab-padding, 1rem);
     padding-inline-end: var(--tab-padding, 1rem);
     padding-top: var(--tab-border, 1px);
-    &:is(.tab-active, [aria-selected="true"]):not(.tab-disabled):not([disabled]),
+    &:is(.tab-active, [aria-selected="true"]):not(.tab-disabled):not(
+            [disabled]
+        ),
     &:is(input:checked) {
         background-color: var(--tab-bg);
         color: var(--tab-color);
-        border-width: var(--tab-border, 1px) var(--tab-border, 1px) 0 var(--tab-border, 1px);
+        border-width: var(--tab-border, 1px) var(--tab-border, 1px) 0
+            var(--tab-border, 1px);
         border-inline-start-color: var(--tab-border-color);
         border-inline-end-color: var(--tab-border-color);
         border-top-color: var(--tab-border-color);
-        padding-inline-start: calc(var(--tab-padding, 1rem) - var(--tab-border, 1px));
-        padding-inline-end: calc(var(--tab-padding, 1rem) - var(--tab-border, 1px));
+        padding-inline-start: calc(
+            var(--tab-padding, 1rem) - var(--tab-border, 1px)
+        );
+        padding-inline-end: calc(
+            var(--tab-padding, 1rem) - var(--tab-border, 1px)
+        );
         padding-bottom: var(--tab-border, 1px);
         padding-top: 0;
         &:before {
@@ -181,24 +185,26 @@ SOFTWARE.
             height: var(--tab-radius, 0.5rem);
             bottom: 0;
             background-size: var(--tab-radius, 0.5rem);
-            background-position:
-                    top left,
-                    top right;
+            background-position: top left, top right;
             background-repeat: no-repeat;
             --tab-grad: calc(69% - var(--tab-border, 1px));
             --radius-start: radial-gradient(
-                    circle at top left,
-                    transparent var(--tab-grad),
-                    var(--tab-border-color) calc(var(--tab-grad) + 0.25px),
-                    var(--tab-border-color) calc(var(--tab-grad) + var(--tab-border, 1px)),
-                    var(--tab-bg) calc(var(--tab-grad) + var(--tab-border, 1px) + 0.25px)
+                circle at top left,
+                transparent var(--tab-grad),
+                var(--tab-border-color) calc(var(--tab-grad) + 0.25px),
+                var(--tab-border-color)
+                    calc(var(--tab-grad) + var(--tab-border, 1px)),
+                var(--tab-bg)
+                    calc(var(--tab-grad) + var(--tab-border, 1px) + 0.25px)
             );
             --radius-end: radial-gradient(
-                    circle at top right,
-                    transparent var(--tab-grad),
-                    var(--tab-border-color) calc(var(--tab-grad) + 0.25px),
-                    var(--tab-border-color) calc(var(--tab-grad) + var(--tab-border, 1px)),
-                    var(--tab-bg) calc(var(--tab-grad) + var(--tab-border, 1px) + 0.25px)
+                circle at top right,
+                transparent var(--tab-grad),
+                var(--tab-border-color) calc(var(--tab-grad) + 0.25px),
+                var(--tab-border-color)
+                    calc(var(--tab-grad) + var(--tab-border, 1px)),
+                var(--tab-bg)
+                    calc(var(--tab-grad) + var(--tab-border, 1px) + 0.25px)
             );
             background-image: var(--radius-start), var(--radius-end);
         }
@@ -222,9 +228,11 @@ SOFTWARE.
     }
 }
 .tabs-lifted
-> :is(.tab-active, [aria-selected="true"]):not(.tab-disabled):not([disabled])
-+ .tabs-lifted
-:is(.tab-active, [aria-selected="true"]):not(.tab-disabled):not([disabled]),
+    > :is(.tab-active, [aria-selected="true"]):not(.tab-disabled):not(
+        [disabled]
+    )
+    + .tabs-lifted
+    :is(.tab-active, [aria-selected="true"]):not(.tab-disabled):not([disabled]),
 .tabs-lifted > .tab:is(input:checked) + .tabs-lifted .tab:is(input:checked) {
     &:before {
         background-image: var(--radius-end);

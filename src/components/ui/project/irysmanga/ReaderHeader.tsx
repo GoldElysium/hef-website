@@ -10,10 +10,11 @@ import styles from './styles/Header.module.css';
 import useDualTranslation from './hooks/useDualTranslation';
 
 interface Props {
+	openSidebar: boolean;
 	setOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function ReaderHeader({ setOpenSidebar }: Props) {
+export default function ReaderHeader({ openSidebar, setOpenSidebar }: Props) {
 	const {
 		page, chapter, manga, mangaLanguage, headerVisibility,
 	} = useMangaContext();
@@ -34,9 +35,9 @@ export default function ReaderHeader({ setOpenSidebar }: Props) {
 			<div
 				className={classNames(styles.fakeHeader, {
 					[styles.fakeHeaderShown]:
-						headerVisibility === 'header-shown',
+                        headerVisibility === 'header-shown',
 					[styles.fakeHeaderHidden]:
-						headerVisibility === 'header-hidden',
+                        headerVisibility === 'header-hidden',
 				})}
 			/>
 			<div
@@ -52,9 +53,6 @@ export default function ReaderHeader({ setOpenSidebar }: Props) {
 					</Link>
 					<div className={styles.infoBadge}>
 						<strong className="">{mangaData.title}</strong>
-						{/* <strong className={styles.infoBadgeContent}>
-                            {currentChapter.title}
-                        </strong> */}
 					</div>
 				</div>
 				<div className="flex items-center gap-2">
@@ -75,9 +73,15 @@ export default function ReaderHeader({ setOpenSidebar }: Props) {
 						</span>
 					</div>
 					<Bars3Icon
-						className="barIcon z-10"
+						className={classNames(
+							'transition-all cursor-pointer hover:opacity-100 z-10',
+							{
+								'opacity-0': openSidebar,
+								'opacity-60': !openSidebar,
+							},
+						)}
 						onClick={() => setOpenSidebar((curr) => !curr)}
-						width={30}
+						width={openSidebar ? 0 : 30}
 					/>
 				</div>
 			</div>
