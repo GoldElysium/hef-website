@@ -9,21 +9,18 @@ export default function MangaReaderModal() {
 			<h1 className="mb-4 text-3xl font-bold">{t('greeting')}</h1>
 			<p className="mb-4">{t('introduction')}</p>
 			<h2 className="mb-2 text-2xl font-semibold">{t('howto')}</h2>
-			<ul className="mb-4 list-inside list-disc">
+			<ul className="disc-list mb-4 list-inside list-disc">
 				<li>
-					<span className="font-semibold">{t('page-turn')}</span>
-					{' '}
-					{t('page-turn-text')}
+					<span>{t('page-turn')}</span>
+					<p>{t('page-turn-text')}</p>
 				</li>
 				<li>
-					<span className="font-semibold">{t('settings')}</span>
-					{' '}
-					{t('settings-text')}
+					<span>{t('settings')}</span>
+					<p>{t('settings-text')}</p>
 				</li>
 				<li>
-					<span className="font-semibold">{t('space')}</span>
-					{' '}
-					{t('space-text')}
+					<span>{t('space')}</span>
+					<p>{t('space-text')}</p>
 				</li>
 			</ul>
 			<h2 className="mb-2 text-2xl font-semibold">{t('shortcut')}</h2>

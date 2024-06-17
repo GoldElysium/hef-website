@@ -3,6 +3,7 @@ import { SparklesIcon } from '@heroicons/react/24/outline';
 import CreditBlock from './CreditBlock';
 import ModalTabContent from './ModalTabContent';
 import { useMangaContext } from '../context/MangaContext';
+import FloatingDecoArt from './FloatingDecoArt';
 
 export default function ModalTabGeneral() {
 	const { manga } = useMangaContext();
@@ -43,6 +44,11 @@ export default function ModalTabGeneral() {
 					contributors={manga.contributors.filter((e) => e.role === 'developer')}
 				/>
 			</div>
+			<FloatingDecoArt
+				src="/assets/irysmanga/chibi/keychainrys.png"
+				className="absolute left-[70%] top-[50%] -z-1 opacity-50"
+				width="200"
+			/>
 		</ModalTabContent>
 	);
 }

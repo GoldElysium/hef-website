@@ -36,7 +36,7 @@
     },
     "modal-story": {
         "greeting": "Story",
-        "content": "The Industrial Revolution and its consequences have been a disaster for the human race. They have greatly increased the life-expectancy of those of us who live in “advanced” countries, but they have destabilized society, have made life unfulfilling, have subjected human beings to indignities, have led to widespread psychological suffering (in the Third World to physical suffering as well) and have inflicted severe damage on the natural world. The continued development of technology will worsen the situation."
+        "content": "Having made a crucial mistake with IRyS, Good GuyRys finds himself trapped in the Backrooms with his fiercest rival, Bad GuyRyS. Together, the two must solve the mystery of their new prison. Could the two of them set aside the passionate flames burning between them, or will they let themselves be forever trapped without Hope."
     },
     "modal-reader": {
         "greeting": "Welcome to the IRyS-Themed Manga Reader!",
@@ -46,7 +46,7 @@
         "page-turn-text": "You can easily turn the page by clicking anywhere on the current page. It's as simple as that!",
         "settings": "Settings",
         "settings-text": "The sidebar on the right holds various settings to enhance your reading experience. Things such as language, current chapter, page layout, reader theme, etc. Can be customized through here.",
-        "space": "Making more space:",
+        "space": "Making more space",
         "space-text": "If you want more screen space, you can close the sidebar by clicking the top icon on the top right corner of the sidebar (or if you're on mobile, you can click anywhere outside the bar to close it). You can also close the header from one of the settings.",
         "shortcut": "Keyboard Shortcuts",
         "page-turn-k": "Page Turn",
