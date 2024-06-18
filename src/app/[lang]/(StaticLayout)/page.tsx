@@ -106,7 +106,7 @@ export default async function Page({ params: { lang } }: IProps) {
 								{t('page.featured.right')}
 							</span>
 						</TextHeader>
-						<div className="grid h-[40rem] gap-6 md:grid-cols-2 lg:h-[24rem] lg:grid-cols-3">
+						<div className="grid h-[40rem] gap-6 md:grid-cols-2 lg:h-96 lg:grid-cols-3">
 							{featuredProjectsHtml.length > 0 ? (
 								featuredProjectsHtml
 							) : (

@@ -280,10 +280,6 @@ export default class YesNoBlock extends YesNo implements IFormNodeBlock {
 				)}
 				<YesNoFabric
 					value={this.answerSlot}
-					styles={{
-						yesColor: 'green',
-						noColor: 'red',
-					}}
 					yes={{
 						label: props.markdownifyToString(this.props.altYes || '') || 'Yes',
 						color: this.props.colorYes,
