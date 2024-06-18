@@ -68,7 +68,9 @@ const Viewport = PixiComponent('Viewport', {
 			screenHeight: height,
 			worldWidth: worldWidth ?? width,
 			worldHeight: worldHeight ?? height,
+			// @ts-ignore
 			forceHitArea,
+			// @ts-ignore
 			ticker: app.ticker,
 			events: app.renderer.events,
 			passiveWheel: true,

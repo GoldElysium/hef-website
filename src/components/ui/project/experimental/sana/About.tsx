@@ -1,8 +1,11 @@
 import ProjectDescription from '@/components/ui/project/experimental/sana/Description';
-import DescriptionSerializer from '@/components/ui/project/util/DescriptionSerializer';
 import ProjectGallery from '@/components/ui/project/Gallery';
 import ProjectLinks from '@/components/ui/project/experimental/sana/Links';
 import { Project } from '@/types/payload-types';
+import {
+	PayloadLexicalReactRenderer,
+	PayloadLexicalReactRendererContent,
+} from '@atelier-disko/payload-lexical-react-renderer';
 
 export interface ProjectAboutProps {
 	project: Omit<Project, 'flags' | 'devprops'> & {
@@ -17,7 +20,9 @@ export default function ProjectAbout({ project }: ProjectAboutProps) {
 	if (project.flags?.includes('bigAbout')) {
 		return (
 			<p className="my-16 flex content-center justify-center text-center text-3xl text-black dark:text-white dark:text-opacity-80">
-				{DescriptionSerializer(project.description)}
+				<PayloadLexicalReactRenderer
+					content={project.description as PayloadLexicalReactRendererContent}
+				/>
 			</p>
 		);
 	}

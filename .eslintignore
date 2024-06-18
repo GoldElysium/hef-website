@@ -5,3 +5,4 @@ next.config.js
 commitlint.config.js
 node_modules
 src/types/payload-types.ts
+imageLoader.js

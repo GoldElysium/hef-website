@@ -3,8 +3,11 @@
 import { Fragment, Suspense, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { Notice as APINoticeBanner } from '@/types/payload-types';
-import DescriptionSerializer from '@/components/ui/project/util/DescriptionSerializer';
 import useTranslation from '@/lib/i18n/client';
+import {
+	PayloadLexicalReactRenderer,
+	PayloadLexicalReactRendererContent,
+} from '@atelier-disko/payload-lexical-react-renderer';
 
 export default function NoticeBanner({ data }: { data: APINoticeBanner }) {
 	const { t } = useTranslation('layout', 'notice-banner');
@@ -64,7 +67,9 @@ export default function NoticeBanner({ data }: { data: APINoticeBanner }) {
 										</Dialog.Title>
 										<div className="mt-4">
 											<p className="md:text-lg">
-												{DescriptionSerializer(data.message as any)}
+												<PayloadLexicalReactRenderer
+													content={data.message as PayloadLexicalReactRendererContent}
+												/>
 											</p>
 										</div>
 

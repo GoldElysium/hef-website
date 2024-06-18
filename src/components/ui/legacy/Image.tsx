@@ -9,7 +9,7 @@ type Props = Parameters<typeof NextImage>[0] & {
 export function getImageUrl({
 	src, width, height, quality, action,
 }: Omit<Props, 'alt'>): string {
-	if (typeof src !== 'string') throw new Error('Cannot optimize static import');
+	if (typeof src !== 'string') throw new Error(`Cannot optimize static import: ${src}`);
 
 	if (src.toLowerCase().endsWith('.gif')) return src;
 

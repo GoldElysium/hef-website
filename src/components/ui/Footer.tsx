@@ -31,7 +31,7 @@ export default function Footer({ flags }: IProps) {
 						by
 						{' '}
 						<a
-							href="https://github.com/GoldElysium/hefs-website#contributors-"
+							href="https://github.com/GoldElysium/hef-website#contributors-"
 							target="_blank"
 							className="underline"
 							rel="noreferrer"
