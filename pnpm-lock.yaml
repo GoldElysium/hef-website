@@ -26,6 +26,9 @@ importers:
       '@heroicons/react':
         specifier: 2.1.3
         version: 2.1.3(react@18.2.0)
+      '@holoenfans/tripetto-block-multi-file-upload':
+        specifier: ^0.0.4
+        version: 0.0.4
       '@marsidev/react-turnstile':
         specifier: ^0.5.4
         version: 0.5.4(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -1365,6 +1368,9 @@ packages:
     resolution: {integrity: sha512-fEcPfo4oN345SoqdlCDdSa4ivjaKbk0jTd+oubcgNxnNgAfzysfwWfQUr+51wigiWHQQRiZNd1Ao0M5Y3M2EGg==}
     peerDependencies:
       react: '>= 16'
+
+  '@holoenfans/tripetto-block-multi-file-upload@0.0.4':
+    resolution: {integrity: sha512-jBuSjFKD+LzzF+VVE4CJ/Z/1+5Kjxa7oE6MpZyqsNfqVpQ4YxCn1CsJA/aFfveu5RXSUpu3bshyfiNw63I4L7g==}
 
   '@humanwhocodes/config-array@0.11.14':
     resolution: {integrity: sha512-3T8LkOmg45BV5FICb15QQMsyUSWrQ8AygVfC7ZG32zOalnqrilm018ZVCw0eapXux8FtA33q8PSRSstjee3jSg==}
@@ -8659,6 +8665,8 @@ snapshots:
   '@heroicons/react@2.1.3(react@18.2.0)':
     dependencies:
       react: 18.2.0
+
+  '@holoenfans/tripetto-block-multi-file-upload@0.0.4': {}
 
   '@humanwhocodes/config-array@0.11.14':
     dependencies:
