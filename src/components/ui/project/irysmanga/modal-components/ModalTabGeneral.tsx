@@ -1,13 +1,20 @@
 import useTranslation from '@/lib/i18n/client';
 import { SparklesIcon } from '@heroicons/react/24/outline';
+import { useTheme } from 'next-themes';
 import CreditBlock from './CreditBlock';
 import ModalTabContent from './ModalTabContent';
 import { useMangaContext } from '../context/MangaContext';
 import FloatingDecoArt from './FloatingDecoArt';
 
+const bgDecoSrc: { [key: string]: string } = {
+	dark: '/assets/irysmanga/chibi/keychainrys.png',
+	light: '/assets/irysmanga/chibi/iryshood.png',
+};
+
 export default function ModalTabGeneral() {
 	const { manga } = useMangaContext();
 	const { t } = useTranslation('reader', 'modal-general');
+	const { resolvedTheme } = useTheme();
 
 	return (
 		<ModalTabContent>
@@ -45,7 +52,7 @@ export default function ModalTabGeneral() {
 				/>
 			</div>
 			<FloatingDecoArt
-				src="/assets/irysmanga/chibi/keychainrys.png"
+				src={bgDecoSrc[resolvedTheme as string]}
 				className="absolute left-[70%] top-[50%] -z-1 opacity-50"
 				width="200"
 			/>

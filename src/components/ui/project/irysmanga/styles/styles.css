@@ -75,7 +75,7 @@ SOFTWARE.
 .modal {
     @apply bg-transparent text-[inherit] duration-200 ease-out;
     transition-property: transform, opacity, visibility;
-    overflow-y: hidden;
+    overflow: hidden;
     overscroll-behavior: contain;
     &:not(dialog:not(.modal-open)),
     &::backdrop {
@@ -99,7 +99,7 @@ SOFTWARE.
     @apply translate-y-0 scale-100;
 }
 .modal-action {
-    @apply mt-6 justify-end space-x-2;
+    @apply mt-6 space-x-2;
 }
 @keyframes modal-pop {
     0% {

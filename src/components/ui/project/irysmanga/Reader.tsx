@@ -249,7 +249,7 @@ export default function Reader({
 	}, []);
 
 	return (
-		<div className="relative flex h-screen grow flex-col transition-colors">
+		<div className="relative flex h-screen grow flex-col">
 			<ReaderHeader openSidebar={openSidebar} setOpenSidebar={setOpenSidebar} />
 			{/* eslint-disable-next-line max-len */}
 			{/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
