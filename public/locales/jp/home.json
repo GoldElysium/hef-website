@@ -1,14 +1,14 @@
 {
 	"page": {
 		"featured": {
-			"left": "特徴プロジェクト",
-			"right": ""
+			"left": "注目の",
+			"right": "プロジェクト"
 		},
 		"servers": "EN サーバー",
 		"none": "なし"
 	},
 	"hero": {
 		"title": "HoloENのファンウェブサイト",
-		"description": "HoloEN ファンプロジェクト集ファンの企画した素晴らしいプロジェクトのカタログです！"
+		"description": "HoloEN ファンプロジェクト集 ファンの企画した素晴らしいプロジェクトのカタログです！"
 	}
 }
