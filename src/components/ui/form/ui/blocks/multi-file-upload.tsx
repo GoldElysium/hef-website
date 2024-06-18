@@ -383,7 +383,7 @@ export function MultiFileFabric(props: {
 			)}
 			{slotsInfo.hasValue && !error && progress === -1 && (
 				<div
-					className="flex flex-wrap gap-4 px-4"
+					className="flex flex-wrap items-center gap-4 px-4"
 					onDragOver={(e: DragEvent<HTMLDivElement>) => {
 						if (slotsInfo.filledSlots.length === props.controller.maxFiles) e.preventDefault();
 					}}
@@ -411,7 +411,7 @@ export function MultiFileFabric(props: {
 					<button
 						type="button"
 						tabIndex={props.tabIndex || 0}
-						className="rounded-md border-2 border-skin-primary px-2 py-1.5 disabled:cursor-not-allowed disabled:opacity-50 dark:border-skin-primary-dark"
+						className="h-10 rounded-md border-2 border-skin-primary px-2 py-1.5 disabled:cursor-not-allowed disabled:opacity-50 dark:border-skin-primary-dark"
 						onClick={handleClear}
 						disabled={deleting}
 					>
