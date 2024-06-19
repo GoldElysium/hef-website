@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import { XMarkIcon } from '@heroicons/react/24/solid';
 import {
+	Bars3Icon,
 	BookOpenIcon,
 	DocumentIcon,
 	InformationCircleIcon,
@@ -18,7 +19,8 @@ import {
 	languages,
 	pageLayouts,
 	progressVisibilities,
-	ReaderSetting, ReaderTheme,
+	ReaderSetting,
+	ReaderTheme,
 	readerThemes,
 } from './utils/types';
 import SettingButton from './SettingButton';
@@ -63,10 +65,7 @@ export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }:
 
 	useEffect(() => {
 		const width = containerRef.current?.getBoundingClientRect().width;
-		document.documentElement.style.setProperty(
-			'--sidebar-width',
-			`${width!}px`,
-		);
+		document.documentElement.style.setProperty('--sidebar-width', `${width!}px`);
 
 		const handleClickOutside = (event: MouseEvent) => {
 			if (window.innerWidth > 768) {
@@ -74,8 +73,8 @@ export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }:
 			}
 			if (
 				containerRef.current
-				&& !containerRef.current.contains(event.target as Node)
-				&& !modalRef.current?.open
+                && !containerRef.current.contains(event.target as Node)
+                && !modalRef.current?.open
 			) {
 				setOpenSidebar(false);
 			}
@@ -84,9 +83,9 @@ export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }:
 		// Set your threshold here (e.g., 768 for small screens)
 		document.addEventListener('mousedown', handleClickOutside);
 
-		return (() => {
+		return () => {
 			document.removeEventListener('mousedown', handleClickOutside);
-		});
+		};
 	}, [setOpenSidebar, modalRef]);
 
 	const mangaLanguages: ReaderSetting[] = languages.filter((value) => {
@@ -95,11 +94,22 @@ export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }:
 			return false;
 		}
 
-		return (manga.data[value].chapters[chapter] !== null);
+		return manga.data[value].chapters[chapter] !== null;
 	});
 
 	return (
 		<>
+			<Bars3Icon
+				className={classNames(
+					'transition-all cursor-pointer opacity-50 hover:opacity-100 z-10 absolute right-4 top-4',
+					{
+						hidden: openSidebar || headerVisibility === 'header-shown',
+						block: !(openSidebar || headerVisibility === 'header-shown'),
+					},
+				)}
+				width={30}
+				onClick={() => setOpenSidebar((curr) => !curr)}
+			/>
 			<div
 				className={classNames(styles.fakeSidebarContainer, {
 					[styles.fakeSidebarContainerOpen]: openSidebar,
@@ -118,9 +128,7 @@ export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }:
 					<div className="flex flex-row content-center items-center justify-between">
 						<div className="flex items-center gap-1">
 							<BookOpenIcon width={30} />
-							<strong className="whitespace-nowrap">
-								{mangaData.title}
-							</strong>
+							<strong className="whitespace-nowrap">{mangaData.title}</strong>
 						</div>
 						<XMarkIcon
 							onClick={() => setOpenSidebar(false)}
@@ -196,11 +204,11 @@ export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }:
 						setValue={setHeaderVisibility}
 					/>
 					<SettingButton
-						value={resolvedTheme as ReaderTheme ?? 'light'}
+						value={(resolvedTheme as ReaderTheme) ?? 'light'}
 						valueList={readerThemes}
 						onClick={() => setTheme(resolvedTheme === 'light' ? 'dark' : 'light')}
 						// @ts-ignore
-						setValue={() => { }}
+						setValue={() => {}}
 						label="theme"
 					/>
 					<SettingButton
