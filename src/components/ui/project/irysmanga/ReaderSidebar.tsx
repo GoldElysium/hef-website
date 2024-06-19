@@ -118,19 +118,19 @@ export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }:
 					<div className="flex flex-row content-center items-center justify-between">
 						<div className="flex items-center gap-1">
 							<BookOpenIcon width={30} />
-							<strong className=" whitespace-nowrap">
+							<strong className="whitespace-nowrap">
 								{mangaData.title}
 							</strong>
 						</div>
 						<XMarkIcon
 							onClick={() => setOpenSidebar(false)}
-							className="size-9 rounded-full bg-black/0 p-1 hover:bg-black/[.08] dark:bg-white/0 dark:hover:bg-white/10"
+							className={styles.xButton}
 							width={30}
 						/>
 					</div>
 					<div className="flex items-center gap-1">
 						<DocumentIcon width={30} />
-						<strong className=" whitespace-nowrap">
+						<strong className="whitespace-nowrap">
 							{mangaData.chapters[chapter].title
 								? mangaData.chapters[chapter].title
 								: `${t('chapter')} ${chapter + 1}`}
@@ -163,7 +163,7 @@ export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }:
 					</div>
 				</div>
 				<div className="divider" />
-				{/* Chapter and page seletion */}
+				{/* Chapter and page selection */}
 				<div className="flex flex-col items-center gap-2">
 					<SelectBox value={page} label="page" />
 					<SelectBox value={chapter} label="chapter" />

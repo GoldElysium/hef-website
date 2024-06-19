@@ -1,23 +1,27 @@
 .sidebarContainer {
-    @apply flex flex-col px-4 py-4 shrink-0 min-w-[300px] max-w-[300px] overflow-x-hidden absolute right-0 top-0 overflow-y-auto h-full z-10 bg-inherit transition-all border-l-[1px] border-neutral shadow-2xl;
+  @apply flex flex-col px-4 py-4 shrink-0 min-w-[300px] max-w-[300px] overflow-x-hidden absolute right-0 top-0 overflow-y-auto h-full z-10 bg-inherit transition-all border-l-[1px] border-neutral shadow-2xl;
 }
 
 .sidebarContainerOpen {
-    @apply translate-x-0 opacity-100;
+  @apply translate-x-0 opacity-100;
 }
 
 .sidebarContainerHidden {
-    @apply translate-x-full opacity-0;
+  @apply translate-x-full opacity-0;
 }
 
 .fakeSidebarContainer {
-    @apply h-full shrink-0 transition-all bg-transparent hidden md:block;
+  @apply h-full shrink-0 transition-all bg-transparent hidden md:block;
 }
 
 .fakeSidebarContainerOpen {
-    width: var(--sidebar-width);
+  width: var(--sidebar-width);
 }
 
 .fakeSidebarContainerHidden {
-    width: 0;
+  width: 0;
+}
+
+.xButton {
+  @apply size-9 cursor-pointer rounded-full bg-black/0 p-1 hover:bg-black/[.08] dark:bg-white/0 dark:hover:bg-white/10;
 }
