@@ -20,6 +20,10 @@
     @apply w-[20px] text-nowrap;
 }
 
+.loading-icon-g > * {
+    @apply stroke-skin-secondary-foreground dark:stroke-skin-secondary-foreground-dark;
+}
+
 body {
     scrollbar-width: thin;
 }

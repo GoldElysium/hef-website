@@ -39,6 +39,7 @@ export default function LoadingIcon() {
 				transform="translate(0.000000,678.000000) scale(0.100000,-0.100000)"
 				fill="#000000"
 				stroke="none"
+				className="loading-icon-g"
 			>
 				<motion.path
 					d="M6242 6740 c-10 -25 -61 -152 -112 -283 l-94 -238 -202 -152 c-190
@@ -49,7 +50,6 @@ export default function LoadingIcon() {
 70 -20 -45z"
 					variants={outlineVariants}
 					fill="none"
-					stroke="black"
 					strokeWidth={strokeWidth}
 				/>
 				<motion.path
@@ -78,7 +78,6 @@ m217 -2662 c318 -318 583 -586 588 -595 19 -32 -212 -167 -415 -243 -237 -89
 -411 -230 -411 -12 0 -766 750 -766 762 0 5 245 8 545 8 512 0 545 -1 545 -17z"
 					variants={outlineVariants}
 					fill="none"
-					stroke="black"
 					strokeWidth={strokeWidth}
 				/>
 				<motion.path
@@ -90,7 +89,6 @@ m217 -2662 c318 -318 583 -586 588 -595 19 -32 -212 -167 -415 -243 -237 -89
 -1662 134z"
 					variants={outlineVariants}
 					fill="none"
-					stroke="black"
 					strokeWidth={strokeWidth}
 				/>
 				<motion.path
@@ -100,7 +98,6 @@ m217 -2662 c318 -318 583 -586 588 -595 19 -32 -212 -167 -415 -243 -237 -89
 -156 38 -445 57 -643 42z"
 					variants={outlineVariants}
 					fill="none"
-					stroke="black"
 					strokeWidth={strokeWidth}
 				/>
 			</motion.g>
