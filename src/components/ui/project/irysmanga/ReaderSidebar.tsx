@@ -124,7 +124,7 @@ export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }:
 						</div>
 						<XMarkIcon
 							onClick={() => setOpenSidebar(false)}
-							className="size-9 rounded-full p-1"
+							className="size-9 rounded-full bg-black/0 p-1 hover:bg-black/[.08] dark:bg-white/0 dark:hover:bg-white/10"
 							width={30}
 						/>
 					</div>
