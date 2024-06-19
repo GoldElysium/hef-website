@@ -74,8 +74,8 @@ export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }:
 			}
 			if (
 				containerRef.current
-                && !containerRef.current.contains(event.target as Node)
-                && !modalRef.current?.open
+				&& !containerRef.current.contains(event.target as Node)
+				&& !modalRef.current?.open
 			) {
 				setOpenSidebar(false);
 			}
@@ -124,7 +124,7 @@ export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }:
 						</div>
 						<XMarkIcon
 							onClick={() => setOpenSidebar(false)}
-							className="size-9 rounded-full p-1 hover:bg-gray-200"
+							className="size-9 rounded-full bg-black/0 p-1 hover:bg-black/[.08] dark:bg-white/0 dark:hover:bg-white/10"
 							width={30}
 						/>
 					</div>
@@ -200,7 +200,7 @@ export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }:
 						valueList={readerThemes}
 						onClick={() => setTheme(resolvedTheme === 'light' ? 'dark' : 'light')}
 						// @ts-ignore
-						setValue={() => {}}
+						setValue={() => { }}
 						label="theme"
 					/>
 					<SettingButton

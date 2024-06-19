@@ -41,7 +41,7 @@ module.exports = {
         "./src/pages/**/*.{js,ts,jsx,tsx}",
         "./src/components/**/*.{js,ts,jsx,tsx}",
     ],
-    darkMode: "class",
+    darkMode: ['class', "[class~='dark']"], // See https://github.com/tailwindlabs/tailwindcss/discussions/2917
     theme: {
         extend: {
             fontFamily: {
