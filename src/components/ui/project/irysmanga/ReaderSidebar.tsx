@@ -74,8 +74,8 @@ export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }:
 			}
 			if (
 				containerRef.current
-                && !containerRef.current.contains(event.target as Node)
-                && !modalRef.current?.open
+				&& !containerRef.current.contains(event.target as Node)
+				&& !modalRef.current?.open
 			) {
 				setOpenSidebar(false);
 			}
@@ -118,19 +118,19 @@ export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }:
 					<div className="flex flex-row content-center items-center justify-between">
 						<div className="flex items-center gap-1">
 							<BookOpenIcon width={30} />
-							<strong className=" whitespace-nowrap">
+							<strong className="whitespace-nowrap">
 								{mangaData.title}
 							</strong>
 						</div>
 						<XMarkIcon
 							onClick={() => setOpenSidebar(false)}
-							className="size-9 rounded-full p-1 hover:bg-gray-200"
+							className={styles.xButton}
 							width={30}
 						/>
 					</div>
 					<div className="flex items-center gap-1">
 						<DocumentIcon width={30} />
-						<strong className=" whitespace-nowrap">
+						<strong className="whitespace-nowrap">
 							{mangaData.chapters[chapter].title
 								? mangaData.chapters[chapter].title
 								: `${t('chapter')} ${chapter + 1}`}
@@ -163,7 +163,7 @@ export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }:
 					</div>
 				</div>
 				<div className="divider" />
-				{/* Chapter and page seletion */}
+				{/* Chapter and page selection */}
 				<div className="flex flex-col items-center gap-2">
 					<SelectBox value={page} label="page" />
 					<SelectBox value={chapter} label="chapter" />
@@ -200,7 +200,7 @@ export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }:
 						valueList={readerThemes}
 						onClick={() => setTheme(resolvedTheme === 'light' ? 'dark' : 'light')}
 						// @ts-ignore
-						setValue={() => {}}
+						setValue={() => { }}
 						label="theme"
 					/>
 					<SettingButton
