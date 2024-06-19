@@ -2,10 +2,10 @@ import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 import Select from 'react-select';
 import { useState, useId } from 'react';
 import classNames from 'classnames';
+import useTranslation from '@/lib/i18n/client';
 import { useMangaContext } from './context/MangaContext';
 import { handlePageNavigation } from './utils/helper';
 import { getMangaDataOrThrow } from './utils/types';
-import useDualTranslation from './hooks/useDualTranslation';
 
 interface SelectBoxProps {
 	value: number;
@@ -17,13 +17,9 @@ function SelectBox({ value, label }: SelectBoxProps) {
 		mangaLanguage, setPage, chapter, setChapter, manga, pageLayout,
 	} = useMangaContext();
 	const mangaData = getMangaDataOrThrow(manga, mangaLanguage);
-	const tManga = useDualTranslation(mangaLanguage);
+	const { t } = useTranslation('reader');
 
-	const maxValue = (
-		label === 'page'
-			? mangaData.chapters[chapter].pageCount
-			: mangaData.chapterCount
-	);
+	const maxValue = label === 'page' ? mangaData.chapters[chapter].pageCount : mangaData.chapterCount;
 
 	function handleSelectValue(selectedValue: number) {
 		const maxChapterIndex = mangaData.chapterCount - 1;
@@ -45,16 +41,7 @@ function SelectBox({ value, label }: SelectBoxProps) {
 		}
 	}
 
-	let labelList: string[] = [];
-	if (label === 'chapter') {
-		labelList = Array.from(Array(maxValue).keys()).map((key) => (mangaData.chapters[key].title
-			? mangaData.chapters[key].title
-			: `${tManga(label)} ${key + 1}`));
-	} else {
-		labelList = Array.from(Array(maxValue).keys()).map(
-			(key) => `${tManga(label)} ${key + 1}`,
-		);
-	}
+	const labelList = Array.from(Array(maxValue).keys()).map((key) => `${t(label)} ${key + 1}`);
 	const options = labelList.map((item, index) => ({
 		value: index.toString(),
 		label: item,
@@ -103,8 +90,7 @@ function SelectBox({ value, label }: SelectBoxProps) {
 						option: ({ isFocused, isSelected }) => classNames(
 							'hover:cursor-pointer text-skin-secondary-foreground p-2 font-sm rounded truncate dark:text-skin-secondary-foreground-dark',
 							{
-								'bg-skin-secondary dark:bg-skin-secondary-dark':
-                                        isSelected,
+								'bg-skin-secondary dark:bg-skin-secondary-dark': isSelected,
 								'hover:bg-[color-mix(in_srgb,rgb(var(--color-secondary))_90%,black)] dark:hover:bg-[color-mix(in_srgb,rgb(var(--color-secondary-dark))_90%,black)]':
                                         isFocused,
 							},

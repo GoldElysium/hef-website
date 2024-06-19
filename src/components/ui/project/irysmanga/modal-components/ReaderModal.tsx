@@ -20,7 +20,7 @@ export default function ReaderModal({ modalRef }: IProps) {
 	const options = ['General', 'Story', 'Reader'];
 	return (
 		<dialog id="info_modal" className="modal" ref={modalRef}>
-			<div className="modal-box flex h-[90%] min-w-[50%] max-w-[70%] flex-col justify-between overflow-hidden">
+			<div className="modal-box flex h-[90%] min-w-[50%] max-w-[70%] flex-col overflow-hidden">
 				<div className="flex max-h-[87%] grow flex-col">
 					<div className="tabs-lifted flex self-center">
 						<ModalTab

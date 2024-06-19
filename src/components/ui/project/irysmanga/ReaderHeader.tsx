@@ -1,3 +1,4 @@
+import useTranslation from '@/lib/i18n/client';
 import Link from 'next/link';
 import { useEffect, useRef } from 'react';
 import classNames from 'classnames';
@@ -7,7 +8,6 @@ import { useMangaContext } from './context/MangaContext';
 import { getMangaDataOrThrow } from './utils/types';
 import './styles/styles.css';
 import styles from './styles/Header.module.css';
-import useDualTranslation from './hooks/useDualTranslation';
 
 interface Props {
 	openSidebar: boolean;
@@ -18,15 +18,12 @@ export default function ReaderHeader({ openSidebar, setOpenSidebar }: Props) {
 	const {
 		page, chapter, manga, mangaLanguage, headerVisibility,
 	} = useMangaContext();
-	const tManga = useDualTranslation(mangaLanguage);
 	const containerRef = useRef<HTMLDivElement>(null);
+	const { t } = useTranslation('reader');
 
 	useEffect(() => {
 		const height = containerRef.current?.getBoundingClientRect().height;
-		document.documentElement.style.setProperty(
-			'--header-height',
-			`${height!}px`,
-		);
+		document.documentElement.style.setProperty('--header-height', `${height!}px`);
 	}, []);
 	const mangaData = getMangaDataOrThrow(manga, mangaLanguage);
 	const currentChapter = mangaData.chapters[chapter];
@@ -34,10 +31,8 @@ export default function ReaderHeader({ openSidebar, setOpenSidebar }: Props) {
 		<>
 			<div
 				className={classNames(styles.fakeHeader, {
-					[styles.fakeHeaderShown]:
-                        headerVisibility === 'header-shown',
-					[styles.fakeHeaderHidden]:
-                        headerVisibility === 'header-hidden',
+					[styles.fakeHeaderShown]: headerVisibility === 'header-shown',
+					[styles.fakeHeaderHidden]: headerVisibility === 'header-hidden',
 				})}
 			/>
 			<div
@@ -57,17 +52,13 @@ export default function ReaderHeader({ openSidebar, setOpenSidebar }: Props) {
 				</div>
 				<div className="flex items-center gap-2">
 					<div className={styles.infoBadge}>
-						<span className={styles.infoBadgeTitle}>
-							{tManga('chapter')}
-						</span>
+						<span className={styles.infoBadgeTitle}>{t('chapter')}</span>
 						<span className={styles.infoBadgeContent}>
 							{`${chapter + 1} / ${mangaData.chapterCount}`}
 						</span>
 					</div>
 					<div className={styles.infoBadge}>
-						<span className={styles.infoBadgeTitle}>
-							{tManga('page')}
-						</span>
+						<span className={styles.infoBadgeTitle}>{t('page')}</span>
 						<span className={styles.infoBadgeContent}>
 							{`${page + 1} / ${currentChapter.pageCount}`}
 						</span>

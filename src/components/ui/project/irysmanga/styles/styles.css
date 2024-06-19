@@ -30,17 +30,13 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-    background: oklch(var(--b2));
+    background: none;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: oklch(var(--bc));
+    @apply bg-[color-mix(in_srgb,rgb(var(--color-primary))_50%,white)];
     opacity: 0;
     border-radius: 6px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
 }
 
 /* Classes below based on DaisyUI */
