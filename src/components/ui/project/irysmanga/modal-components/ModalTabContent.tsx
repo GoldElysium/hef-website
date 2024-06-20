@@ -6,7 +6,7 @@ interface IProps {
 
 export default function ModalTabContent({ children }: IProps) {
 	return (
-		<div className="relative overflow-y-auto rounded-lg border-[2px] border-skin-secondary-foreground p-6">
+		<div className="modal-content relative overflow-y-auto border-y-[2px] p-6">
 			{children}
 		</div>
 	);
