@@ -19,7 +19,7 @@
 }
 
 .progressInnerContainerClose {
-    @apply h-[5px] opacity-50;
+    @apply h-[10px] opacity-50;
 }
 
 .numberLabelContainer {
