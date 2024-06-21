@@ -12,6 +12,8 @@ export default function IrysManga() {
 	const readerContainerRef = useRef(null);
 	const modalRef = useRef(null);
 
+	// Set a counter to detect click counts, necessary for closing the sidebar
+	// when clicked outside without triggering the page turning
 	useEffect(() => {
 		if (!openSidebar) {
 			setClickCounter(-1);

@@ -47,6 +47,7 @@ export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }:
 		headerVisibility,
 		progressVisibility,
 		manga,
+		hasVisited,
 		setPageLayout,
 		setFitMode,
 		setReaderLanguage,
@@ -54,6 +55,7 @@ export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }:
 		setDirection,
 		setHeaderVisibility,
 		setProgressVisibility,
+		setHasVisited,
 	} = useMangaContext();
 	const { t, i18n } = useTranslation('reader');
 	const mangaData = getMangaDataOrThrow(manga, mangaLanguage);
@@ -87,6 +89,13 @@ export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }:
 			document.removeEventListener('mousedown', handleClickOutside);
 		};
 	}, [setOpenSidebar, modalRef]);
+
+	useEffect(() => {
+		if (!hasVisited) {
+			setHasVisited(true);
+			modalRef.current?.showModal();
+		}
+	}, [hasVisited, modalRef, setHasVisited]);
 
 	const mangaLanguages: ReaderSetting[] = languages.filter((value) => {
 		// If no chapters don't allow it as a selectable target.

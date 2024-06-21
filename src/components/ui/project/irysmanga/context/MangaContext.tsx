@@ -1,8 +1,7 @@
 'use client';
 
 import React, {
-	createContext, useState, useContext, useMemo,
-	useEffect,
+	createContext, useState, useContext, useMemo, useEffect,
 } from 'react';
 import {
 	FitMode,
@@ -48,6 +47,9 @@ interface MangaContextProps {
 	setManga: React.Dispatch<React.SetStateAction<Manga>>;
 
 	optimizedImages: Map<string, string[]>;
+
+	hasVisited: boolean;
+	setHasVisited: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 // Creating a context object
@@ -70,8 +72,8 @@ export function MangaProvider({
 	const isLocalStorageReady = () => typeof window !== 'undefined';
 
 	/**
-	 * Grab settings from localStorage if set.
-	 */
+     * Grab settings from localStorage if set.
+     */
 	function getSettings<T>(key: string, def: T): T {
 		// If for some reason local storage isn't available yet, just return the default values.
 		if (!isLocalStorageReady()) {
@@ -96,18 +98,31 @@ export function MangaProvider({
 	}
 
 	// Reader settings
-	const [readerLanguage, setReaderLanguage] = useState<Language>(getSettings('localReaderLanguage', lang));
-	const [mangaLanguage, setMangaLanguage] = useState<Language>(getSettings('localMangaLanguage', lang));
-	const [pageLayout, setPageLayout] = useState<PageLayout>(getSettings('localPageLayout', 'single'));
+	const [readerLanguage, setReaderLanguage] = useState<Language>(
+		getSettings('localReaderLanguage', lang),
+	);
+	const [mangaLanguage, setMangaLanguage] = useState<Language>(
+		getSettings('localMangaLanguage', lang),
+	);
+	const [pageLayout, setPageLayout] = useState<PageLayout>(
+		getSettings('localPageLayout', 'single'),
+	);
 	const [fitMode, setFitMode] = useState<FitMode>(getSettings('localFitMode', 'original'));
 	const [direction, setDirection] = useState<PageDirection>(getSettings('localDirection', 'ltr'));
-	const [headerVisibility, setHeaderVisibility] = useState<HeaderVisibility>(getSettings('localHeaderVisibility', 'header-shown'));
-	const [progressVisibility, setProgressVisibility] = useState<ProgressVisibility>(getSettings('localProgressVisibility', 'progress-shown'));
+	const [headerVisibility, setHeaderVisibility] = useState<HeaderVisibility>(
+		getSettings('localHeaderVisibility', 'header-shown'),
+	);
+	const [progressVisibility, setProgressVisibility] = useState<ProgressVisibility>(
+		getSettings('localProgressVisibility', 'progress-shown'),
+	);
 
 	// Manga details
 	const [manga, setManga] = useState(getManga(devProps));
 	const [page, setPage] = useState(0);
 	const [chapter, setChapter] = useState(0);
+
+	// State to check for first time visits
+	const [hasVisited, setHasVisited] = useState<boolean>(getSettings('localHasVisited', false));
 
 	// Define a callback to update localStorage when updating certain parts of state.
 	useEffect(() => {
@@ -121,6 +136,7 @@ export function MangaProvider({
 				localDirection: direction,
 				localHeaderVisibility: headerVisibility,
 				localProgressVisibility: progressVisibility,
+				localHasVisited: hasVisited,
 			};
 
 			localStorage.setItem(localStorageSettingsKey, JSON.stringify(settings));
@@ -133,6 +149,7 @@ export function MangaProvider({
 		direction,
 		headerVisibility,
 		progressVisibility,
+		hasVisited,
 	]);
 
 	const contextValue = useMemo(
@@ -158,6 +175,8 @@ export function MangaProvider({
 			manga,
 			setManga,
 			optimizedImages,
+			hasVisited,
+			setHasVisited,
 		}),
 		[
 			readerLanguage,
@@ -171,14 +190,11 @@ export function MangaProvider({
 			progressVisibility,
 			manga,
 			optimizedImages,
+			hasVisited,
 		],
 	);
 
-	return (
-		<MangaContext.Provider value={contextValue}>
-			{children}
-		</MangaContext.Provider>
-	);
+	return <MangaContext.Provider value={contextValue}>{children}</MangaContext.Provider>;
 }
 
 /**

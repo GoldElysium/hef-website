@@ -1,13 +1,13 @@
 import { RefObject, useState } from 'react';
 import { languages } from '@/lib/i18n/settings';
 import useTranslation from '@/lib/i18n/client';
-import DarkModeToggle from '@/components/ui/DarkModeToggle';
 import ModalTab from './ModalTab';
 import ModalTabGeneral from './ModalTabGeneral';
 import ModalTabStory from './ModalTabStory';
 import ModalTabReader from './ModalTabReader';
 import { getNextOption } from '../utils/helper';
 import { useMangaContext } from '../context/MangaContext';
+import ThemeController from './ThemeController';
 
 interface IProps {
 	modalRef: RefObject<HTMLDialogElement>;
@@ -20,7 +20,7 @@ export default function ReaderModal({ modalRef }: IProps) {
 	const options = ['General', 'Story', 'Reader'];
 	return (
 		<dialog id="info_modal" className="modal bg-gradient-to-r" ref={modalRef}>
-			<div className="modal-box flex h-[90%] min-w-[50%] max-w-[70%] flex-col justify-around overflow-hidden">
+			<div className="modal-box flex h-[90%] min-w-[50%] max-w-[70%] flex-col justify-between overflow-hidden">
 				<div className="flex max-h-[87%] grow flex-col">
 					<div className="tabs-lifted flex self-center">
 						<ModalTab
@@ -45,8 +45,8 @@ export default function ReaderModal({ modalRef }: IProps) {
 					{selected === 'Reader' && <ModalTabReader />}
 				</div>
 				<div className="modal-action flex items-center justify-between">
-					<div className="-ml-6 self-start">
-						<DarkModeToggle />
+					<div className="self-start">
+						<ThemeController />
 					</div>
 					<div className="flex gap-1 self-end">
 						<button
