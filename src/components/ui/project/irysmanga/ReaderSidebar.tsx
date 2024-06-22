@@ -6,7 +6,7 @@ import {
 	DocumentIcon,
 	InformationCircleIcon,
 } from '@heroicons/react/24/outline';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import useTranslation from '@/lib/i18n/client';
 import { useTheme } from 'next-themes';
 import SelectBox from './SelectBox';
@@ -60,6 +60,7 @@ export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }:
 	const { t, i18n } = useTranslation('reader');
 	const mangaData = getMangaDataOrThrow(manga, mangaLanguage);
 	const containerRef = useRef<HTMLDivElement>(null);
+	const [menuIconFocus, setMenuIconFocus] = useState(false);
 
 	useEffect(() => {
 		i18n.changeLanguage(readerLanguage);
@@ -108,17 +109,29 @@ export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }:
 
 	return (
 		<>
-			<Bars3Icon
+			{/* eslint-disable-next-line max-len */}
+			{/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
+			<div
 				className={classNames(
-					'transition-all cursor-pointer opacity-50 hover:opacity-100 z-10 absolute right-4 top-4',
+					'z-10 absolute right-4 top-4 w-[60px] h-[60px] cursor-pointer flex justify-end items-start',
 					{
 						hidden: openSidebar || headerVisibility === 'header-shown',
 						block: !(openSidebar || headerVisibility === 'header-shown'),
 					},
 				)}
-				width={30}
+				onMouseEnter={() => setMenuIconFocus(true)}
+				onMouseLeave={() => setMenuIconFocus(false)}
 				onClick={() => setOpenSidebar((curr) => !curr)}
-			/>
+			>
+				<Bars3Icon
+					className={classNames('transition-all top-0 right-0', {
+						'opacity-50': !menuIconFocus,
+						'opacity-1': menuIconFocus,
+					})}
+					width={30}
+				/>
+			</div>
+
 			<div
 				className={classNames(styles.fakeSidebarContainer, {
 					[styles.fakeSidebarContainerOpen]: openSidebar,

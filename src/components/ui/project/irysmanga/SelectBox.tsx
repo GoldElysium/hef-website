@@ -87,14 +87,14 @@ function SelectBox({ value, label }: SelectBoxProps) {
 							},
 						),
 						menuList: () => 'scroll-smooth',
-						option: ({ isFocused, isSelected }) => classNames(
-							'hover:cursor-pointer text-skin-secondary-foreground p-2 font-sm rounded truncate dark:text-skin-secondary-foreground-dark',
-							{
-								'bg-skin-secondary dark:bg-skin-secondary-dark': isSelected,
-								'hover:bg-[color-mix(in_srgb,rgb(var(--color-secondary))_90%,black)] dark:hover:bg-[color-mix(in_srgb,rgb(var(--color-secondary-dark))_90%,black)]':
-                                        isFocused,
-							},
-						),
+						option: ({ isFocused, isSelected }) => classNames('hover:cursor-pointer p-2 font-sm rounded truncate', {
+							'bg-skin-header dark:bg-skin-header-dark text-skin-header-foreground dark:text-skin-header-foreground-dark':
+                                    isSelected,
+							'hover:bg-[color-mix(in_srgb,rgb(var(--color-secondary))_90%,black)] dark:hover:bg-[color-mix(in_srgb,rgb(var(--color-secondary-dark))_90%,black)]':
+                                    isFocused && !isSelected,
+							'text-skin-secondary-foreground  dark:text-skin-secondary-foreground-dark':
+                                    !isSelected && !isFocused,
+						}),
 					}}
 				/>
 			</div>
