@@ -69,14 +69,14 @@ export function MangaProvider({
 	const localStorageSettingsKey = 'irys-manga-settings';
 	let parsedSettings: any = null; // Avoid having to re-parse the json multiple times.
 
-	const isLocalStorageReady = () => typeof window !== 'undefined';
+	const isBrowserWindowReady = () => typeof window !== 'undefined';
 
 	/**
      * Grab settings from localStorage if set.
      */
 	function getSettings<T>(key: string, def: T): T {
 		// If for some reason local storage isn't available yet, just return the default values.
-		if (!isLocalStorageReady()) {
+		if (!isBrowserWindowReady()) {
 			return def;
 		}
 
@@ -96,6 +96,31 @@ export function MangaProvider({
 
 		return setting;
 	}
+
+	/**
+	 * Searches the URL query params for a specific key and returns the
+	 * value pointed to it as a number.
+	 * @param key Key of the search param.
+	 * @param def Default value to return if the specified search key is not found.
+	 * @returns The value parsed as a number if found, else def.
+	 */
+	function getNumberFromQuery(key: string, def: number): number {
+		if (!isBrowserWindowReady()) {
+			return def;
+		}
+
+		const urlParams = new URLSearchParams(window.location.search);
+		const val = urlParams.get(key);
+
+		if (val) {
+			return parseInt(val, 10);
+		}
+
+		return def;
+	}
+
+	function getPageFromQuery(): number { return getNumberFromQuery('page', 0); }
+	function getChapterFromQuery(): number { return getNumberFromQuery('chapter', 0); }
 
 	// Reader settings
 	const [readerLanguage, setReaderLanguage] = useState<Language>(
@@ -117,9 +142,10 @@ export function MangaProvider({
 	);
 
 	// Manga details
-	const [manga, setManga] = useState(getManga(devProps));
-	const [page, setPage] = useState(0);
-	const [chapter, setChapter] = useState(0);
+	const [manga, setManga] = useState<Manga>(getManga(devProps));
+	// Fetch the page/chapter from the URL, else use the default value of 0.
+	const [page, setPage] = useState<number>(getPageFromQuery);
+	const [chapter, setChapter] = useState<number>(getChapterFromQuery);
 
 	// State to check for first time visits
 	const [hasVisited, setHasVisited] = useState<boolean>(getSettings('localHasVisited', false));
@@ -127,7 +153,7 @@ export function MangaProvider({
 	// Define a callback to update localStorage when updating certain parts of state.
 	useEffect(() => {
 		// If for some reason local storage isn't available yet, don't try to write to it.
-		if (isLocalStorageReady()) {
+		if (isBrowserWindowReady()) {
 			const settings = {
 				localReaderLanguage: readerLanguage,
 				localMangaLanguage: mangaLanguage,
@@ -151,6 +177,14 @@ export function MangaProvider({
 		progressVisibility,
 		hasVisited,
 	]);
+
+	// When the page/chapter is changed, push the new value into the URL.
+	useEffect(() => {
+		const currentQueryStr = new URLSearchParams([
+			['chapter', chapter.toString()], ['page', page.toString()],
+		]);
+		window.history.replaceState({ page, chapter }, '', `?${currentQueryStr.toString()}`);
+	}, [page, chapter]);
 
 	const contextValue = useMemo(
 		() => ({
