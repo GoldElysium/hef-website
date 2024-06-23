@@ -76,8 +76,8 @@ export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }:
 			}
 			if (
 				containerRef.current
-                && !containerRef.current.contains(event.target as Node)
-                && !modalRef.current?.open
+				&& !containerRef.current.contains(event.target as Node)
+				&& !modalRef.current?.open
 			) {
 				setOpenSidebar(false);
 			}
@@ -230,7 +230,7 @@ export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }:
 						valueList={readerThemes}
 						onClick={() => setTheme(resolvedTheme === 'light' ? 'dark' : 'light')}
 						// @ts-ignore
-						setValue={() => {}}
+						setValue={() => { }}
 						label="theme"
 					/>
 					<SettingButton

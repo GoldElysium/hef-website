@@ -1,7 +1,7 @@
 'use client';
 
 import classNames from 'classnames';
-import Image from 'next/image';
+import NextImage from 'next/image';
 import React, { useEffect, useRef, useState } from 'react';
 import { useMangaContext } from './context/MangaContext';
 import { handlePageNavigation } from './utils/helper';
@@ -92,11 +92,11 @@ export default function Reader({
 	};
 
 	/**
-     * Check whether we should preload an image for a page.
-     * Note we preload a few pages in advance (or behind just in case you try jumping pages)
-     * for a better reading experience, but we don't want to load all the images at once
-     * because that might be slow.
-     */
+	 * Check whether we should preload an image for a page.
+	 * Note we preload a few pages in advance (or behind just in case you try jumping pages)
+	 * for a better reading experience, but we don't want to load all the images at once
+	 * because that might be slow.
+	 */
 	const getPriority = (numPages: number, pg: number): boolean => Math.abs(numPages - pg) <= 3;
 
 	// Handle page turn on click
@@ -174,6 +174,9 @@ export default function Reader({
 		// Use optimized pages if we have them, otherwise fall back to unoptimized I guess.
 		const currentPages = optimizedImages.get(currentChapter.id) ?? currentChapter.pages;
 
+		/**
+		 * Returns class names for the page _container_.
+		 */
 		const getClassNamesContainer = (i: number) => {
 			const blockStyle = (
 				pageLayout === 'single'
@@ -186,48 +189,46 @@ export default function Reader({
 					}
 			);
 
-			return classNames(blockStyle, 'relative', {
-				'h-full min-w-full': fitMode === 'height',
-				'w-full': fitMode === 'width',
-				'w-full md:max-w-[80%]': fitMode === 'original',
-			});
+			return classNames(blockStyle, 'relative', 'w-full', 'h-full', 'overflow-scroll');
 		};
 
-		const widescreen = containerDimensions.width > containerDimensions.height;
+		// const widescreen = containerDimensions.width > containerDimensions.height;
 
-		const getClassNamesPage = () => classNames(
-			(!widescreen && fitMode === 'height') || fitMode !== 'height' ? 'object-cover' : 'object-contain',
-			{
-				'h-full w-auto': fitMode === 'height',
-				'w-full': fitMode === 'width' || fitMode === 'original',
-			},
-		);
+		/**
+		 * Returns class names for the page image itself.
+		 */
+		const getClassNamesPageImage = () => classNames('w-auto', 'h-auto');
 
-		displayedPages = Array.from({ length: maxPageCount }, (_, i) => (
-			<div
-				className={`flex justify-center ${getClassNamesContainer(i)}`}
-				key={`page-${i}`}
-				ref={(el) => {
-					pageRefs.current[i] = el as HTMLImageElement;
-				}}
-			>
-				{loading[i] && <LoadingIcon />}
-				<Image
-					src={currentPages[i]}
-					quality={100}
-					className={`${getClassNamesPage()}`}
-					priority={getPriority(i, page)}
-					alt={`Page ${i + 1}`}
-					width="0"
-					height={1080}
-					style={{ opacity: loading[i] ? '0' : '1' }}
-					onLoad={() => {
-						setLoading((currentLoading) => currentLoading
-							.map((curr, index) => (index === i ? false : curr)));
+		displayedPages = Array.from({ length: maxPageCount }, (_, i) => {
+			const img = new Image();
+			img.src = currentPages[i];
+
+			return (
+				<div
+					className={`flex justify-center ${getClassNamesContainer(i)}`}
+					key={`page-${i}`}
+					ref={(el) => {
+						pageRefs.current[i] = el as HTMLImageElement;
 					}}
-				/>
-			</div>
-		));
+				>
+					{loading[i] && <LoadingIcon />}
+					<NextImage
+						src={currentPages[i]}
+						quality={100}
+						className={`${getClassNamesPageImage()}`}
+						priority={getPriority(i, page)}
+						alt={`Page ${i + 1}`}
+						width={img.width}
+						height={img.height}
+						style={{ opacity: loading[i] ? '0' : '1', width: img.width, height: img.height, maxWidth: img.width, maxHeight: img.height }}
+						onLoad={() => {
+							setLoading((currentLoading) => currentLoading
+								.map((curr, index) => (index === i ? false : curr)));
+						}}
+					/>
+				</div>
+			);
+		});
 	}
 
 	useEffect(() => {
@@ -257,8 +258,8 @@ export default function Reader({
 				ref={containerRef}
 				className={classNames(styles.pageContainer, {
 					'justify-center':
-                        pageLayout === 'single'
-                        && containerDimensions.height > containerDimensions.width,
+						pageLayout === 'single'
+						&& containerDimensions.height > containerDimensions.width,
 				})}
 				onClick={handleClick}
 				onScroll={handleScroll}
