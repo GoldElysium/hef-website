@@ -5,9 +5,12 @@ interface IProps {
 	src: string;
 	className: string;
 	width?: string;
+	dragConstraints?: React.RefObject<HTMLDivElement>;
 }
 
-export default function FloatingDecoArt({ src, className, width }: IProps) {
+export default function FloatingDecoArt({
+	src, className, width, dragConstraints,
+}: IProps) {
 	const controls = useDragControls();
 	const [state, setState] = useState('initial');
 	const [dragStarted, setDragStarted] = useState(false);
@@ -127,7 +130,8 @@ export default function FloatingDecoArt({ src, className, width }: IProps) {
 			className={className}
 			drag={state !== 'flat'}
 			dragControls={controls}
-			dragElastic={0.5}
+			dragElastic={{ top: 0.5, bottom: 0.5 }}
+			dragConstraints={dragConstraints}
 			animate={getAnimation()}
 			transition={getTransition()}
 			onPointerDown={(e) => {

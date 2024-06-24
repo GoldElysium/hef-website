@@ -1,6 +1,7 @@
 import useTranslation from '@/lib/i18n/client';
 import { SparklesIcon } from '@heroicons/react/24/outline';
 import { useTheme } from 'next-themes';
+import { useRef } from 'react';
 import CreditBlock from './CreditBlock';
 import ModalTabContent from './ModalTabContent';
 import { useMangaContext } from '../context/MangaContext';
@@ -16,8 +17,9 @@ export default function ModalTabGeneral() {
 	const { t } = useTranslation('reader', 'modal-general');
 	const { resolvedTheme } = useTheme();
 
+	const containerRef = useRef<HTMLDivElement>(null);
 	return (
-		<ModalTabContent>
+		<ModalTabContent ref={containerRef}>
 			<h1 className="mb-4 flex items-center gap-1 text-4xl font-bold">
 				{t('greeting')}
 				{' '}
@@ -55,6 +57,7 @@ export default function ModalTabGeneral() {
 				src={bgDecoSrc[resolvedTheme as string]}
 				className="absolute left-[70%] top-[50%] opacity-50"
 				width="200"
+				dragConstraints={containerRef}
 			/>
 		</ModalTabContent>
 	);
