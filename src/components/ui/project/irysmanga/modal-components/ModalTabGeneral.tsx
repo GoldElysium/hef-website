@@ -53,7 +53,7 @@ export default function ModalTabGeneral() {
 			</div>
 			<FloatingDecoArt
 				src={bgDecoSrc[resolvedTheme as string]}
-				className="absolute left-[70%] top-[50%] -z-1 opacity-50"
+				className="absolute left-[70%] top-[50%] opacity-50"
 				width="200"
 			/>
 		</ModalTabContent>
