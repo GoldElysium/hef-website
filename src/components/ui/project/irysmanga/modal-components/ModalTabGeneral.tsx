@@ -5,7 +5,7 @@ import { useRef } from 'react';
 import CreditBlock from './CreditBlock';
 import ModalTabContent from './ModalTabContent';
 import { useMangaContext } from '../context/MangaContext';
-import FloatingDecoArt from './FloatingDecoArt';
+import FloatingDecoArtDraggable from './FloatingDecoArtDraggable';
 
 const bgDecoSrc: { [key: string]: string } = {
 	dark: '/assets/irysmanga/chibi/keychainrys.png',
@@ -53,11 +53,11 @@ export default function ModalTabGeneral() {
 					contributors={manga.contributors.filter((e) => e.role === 'developer')}
 				/>
 			</div>
-			<FloatingDecoArt
+			<FloatingDecoArtDraggable
 				src={bgDecoSrc[resolvedTheme as string]}
 				className="absolute left-[70%] top-[50%] opacity-50"
 				width="200"
-				dragConstraints={containerRef}
+				containerRef={containerRef}
 			/>
 		</ModalTabContent>
 	);
