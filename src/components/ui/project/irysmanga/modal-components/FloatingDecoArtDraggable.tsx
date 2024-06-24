@@ -163,6 +163,7 @@ export default function FloatingDecoArtDraggable({
 			src={data[state].img}
 			alt="bg-art"
 			width={width}
+			draggable={false}
 		/>
 	);
 }
