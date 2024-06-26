@@ -189,15 +189,11 @@ export default function Reader({
 					}
 			);
 
-			return classNames(blockStyle, 'relative', 'size-auto');
+			return classNames(blockStyle, 'max-w-full h-max shrink-0 flex overflow-x-auto overflow-y-visible');
 		};
 
-		// const widescreen = containerDimensions.width > containerDimensions.height;
-
-		/**
-		 * Returns class names for the page image itself.
-		 */
-		const getClassNamesPageImage = () => classNames('w-auto', 'h-auto');
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		const widescreen = containerDimensions.width > containerDimensions.height;
 
 		displayedPages = Array.from({ length: maxPageCount }, (_, i) => {
 			const img = new Image();
@@ -205,17 +201,19 @@ export default function Reader({
 
 			return (
 				<div
-					className={`flex justify-center ${getClassNamesContainer(i)}`}
+					className={`${getClassNamesContainer(i)}`}
 					key={`page-${i}`}
 					ref={(el) => {
 						pageRefs.current[i] = el as HTMLImageElement;
+					}}
+					style={{
+						// scrollbarWidth: 'none', msOverflowStyle: 'none',
 					}}
 				>
 					{loading[i] && <LoadingIcon />}
 					<NextImage
 						src={currentPages[i]}
 						quality={100}
-						className={`${getClassNamesPageImage()}`}
 						priority={getPriority(i, page)}
 						alt={`Page ${i + 1}`}
 						width={img.width}
@@ -254,21 +252,15 @@ export default function Reader({
 	return (
 		<div className="relative flex max-h-full max-w-full grow flex-col overflow-hidden">
 			<ReaderHeader openSidebar={openSidebar} setOpenSidebar={setOpenSidebar} />
-			<div className="flex grow flex-col overflow-auto">
-				{/* eslint-disable-next-line max-len */}
-				{/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
-				<div
-					ref={containerRef}
-					className={classNames(styles.pageContainer, {
-						'justify-center':
-							pageLayout === 'single'
-							&& containerDimensions.height > containerDimensions.width,
-					})}
-					onClick={handleClick}
-					onScroll={handleScroll}
-				>
-					{displayedPages}
-				</div>
+			{/* eslint-disable-next-line max-len */}
+			{/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
+			<div
+				ref={containerRef}
+				className={classNames(styles.pagesWrapper)}
+				onClick={handleClick}
+				onScroll={handleScroll}
+			>
+				{displayedPages}
 			</div>
 			<div className="absolute bottom-0 left-0 w-full">
 				<ProgressBar />
