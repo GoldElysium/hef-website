@@ -1,3 +1,3 @@
 .pageContainer {
-    @apply grow max-w-full hover:cursor-pointer overflow-auto flex flex-col items-center gap-[10px];
+    @apply grow h-max w-max hover:cursor-pointer flex flex-col items-center gap-[10px];
 }

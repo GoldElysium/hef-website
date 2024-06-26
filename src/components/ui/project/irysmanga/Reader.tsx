@@ -189,7 +189,7 @@ export default function Reader({
 					}
 			);
 
-			return classNames(blockStyle, 'relative', 'w-full', 'h-full', 'overflow-scroll');
+			return classNames(blockStyle, 'relative', 'size-auto');
 		};
 
 		// const widescreen = containerDimensions.width > containerDimensions.height;
@@ -220,7 +220,9 @@ export default function Reader({
 						alt={`Page ${i + 1}`}
 						width={img.width}
 						height={img.height}
-						style={{ opacity: loading[i] ? '0' : '1', width: img.width, height: img.height, maxWidth: img.width, maxHeight: img.height }}
+						style={{
+							opacity: loading[i] ? '0' : '1', width: img.width, height: img.height, maxWidth: img.width, maxHeight: img.height,
+						}}
 						onLoad={() => {
 							setLoading((currentLoading) => currentLoading
 								.map((curr, index) => (index === i ? false : curr)));
@@ -250,21 +252,23 @@ export default function Reader({
 	}, []);
 
 	return (
-		<div className="relative flex h-screen grow flex-col">
+		<div className="relative flex max-h-full max-w-full grow flex-col overflow-hidden">
 			<ReaderHeader openSidebar={openSidebar} setOpenSidebar={setOpenSidebar} />
-			{/* eslint-disable-next-line max-len */}
-			{/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
-			<div
-				ref={containerRef}
-				className={classNames(styles.pageContainer, {
-					'justify-center':
-						pageLayout === 'single'
-						&& containerDimensions.height > containerDimensions.width,
-				})}
-				onClick={handleClick}
-				onScroll={handleScroll}
-			>
-				{displayedPages}
+			<div className="flex grow flex-col overflow-auto">
+				{/* eslint-disable-next-line max-len */}
+				{/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
+				<div
+					ref={containerRef}
+					className={classNames(styles.pageContainer, {
+						'justify-center':
+							pageLayout === 'single'
+							&& containerDimensions.height > containerDimensions.width,
+					})}
+					onClick={handleClick}
+					onScroll={handleScroll}
+				>
+					{displayedPages}
+				</div>
 			</div>
 			<div className="absolute bottom-0 left-0 w-full">
 				<ProgressBar />
