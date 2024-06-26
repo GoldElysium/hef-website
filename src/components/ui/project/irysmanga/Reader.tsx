@@ -190,9 +190,9 @@ export default function Reader({
 			);
 
 			const fitStyle = {
-				// For height mode, we force the image to fit on the y-axis and then get width to scale.
-				// Width will overflow on the container-level if necessary.
-				'w-auto h-full overflow-x-auto': fitMode === 'height',
+				// For height mode, we force the image to fit on the y-axis and then get width to scale
+				// using manual calculations. Width will overflow on the container-level if necessary.
+				'max-w-full h-full overflow-x-auto': fitMode === 'height',
 
 				// For width mode, we force the image to fit on the x-axis and then get height to scale.
 				// Note that height should overflow to the parent level.
@@ -216,9 +216,6 @@ export default function Reader({
 				// With fit-both, we can just use object-contain and call it a day.
 				'object-contain': fitMode === 'fit-both',
 
-				// For height, make it take the full available height and let width auto-scale.
-				'h-full w-auto': fitMode === 'height',
-
 				// For width, just make it follow width and let height auto-scale.
 				'w-full h-auto': fitMode === 'width',
 			};
@@ -230,10 +227,24 @@ export default function Reader({
 		 * Return styles for the page image.
 		 */
 		const getPageImageFitStyles = (width: number, height: number) => {
+			// I could probably move this to `getClassNamesPageImage` but eh, this works and I'm lazy.
+
 			if (fitMode === 'original') {
-				// I could probably move this to `getClassNamesPageImage` but eh, this works and I'm lazy.
 				return {
 					width, height, maxWidth: width, maxHeight: height,
+				};
+			}
+
+			if (fitMode === 'height') {
+				// I hate this but I'm too tired.
+				const newWidth = (containerDimensions.height / height) * width;
+				const newHeight = containerDimensions.height;
+
+				return {
+					width: newWidth,
+					height: newHeight,
+					maxWidth: newWidth,
+					maxHeight: newHeight,
 				};
 			}
 
