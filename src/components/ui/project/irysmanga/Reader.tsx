@@ -189,15 +189,62 @@ export default function Reader({
 					}
 			);
 
-			return classNames(blockStyle, 'max-w-full h-max shrink-0 flex overflow-x-auto overflow-y-visible');
+			const fitStyle = {
+				// For height mode, we force the image to fit on the y-axis and then get width to scale.
+				// Width will overflow on the container-level if necessary.
+				'h-full max-w-full overflow-x-auto': fitMode === 'height',
+
+				// For width mode, we force the image to fit on the x-axis and then get height to scale.
+				// Note that height should overflow on the parent level.
+				'w-full h-auto overflow-x-auto overflow-y-visible': fitMode === 'width',
+
+				// Basically, overflow on width and then let the outer parent handle height.
+				'max-w-full h-max overflow-x-auto overflow-y-visible ': fitMode === 'original',
+
+				// Cap on container width and height; we use object-cover on the child to then make it fit.
+				'max-w-full max-h-full overflow-auto': fitMode === 'fit-both',
+			};
+
+			return classNames(blockStyle, fitStyle, 'flex shrink-0');
 		};
 
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		const widescreen = containerDimensions.width > containerDimensions.height;
+		/**
+		 * Returns class names for the page image itself.
+		 */
+		const getClassNamesPageImage = () => {
+			const fitStyle = {
+				// With fit-both, we can just use object-contain and call it a day.
+				'object-contain': fitMode === 'fit-both',
+
+				// For height,
+				'h-inherit w-auto min-h-full': fitMode === 'height',
+
+				// For width,
+				'w-full h-auto': fitMode === 'width',
+			};
+
+			return classNames(fitStyle);
+		};
+
+		/**
+		 * Return styles for the page image.
+		 */
+		const getPageImageFitStyles = (width: number, height: number) => {
+			if (fitMode === 'original') {
+				// I could probably move this to `getClassNamesPageImage` but eh, this works and I'm lazy.
+				return {
+					width, height, maxWidth: width, maxHeight: height,
+				};
+			}
+
+			return {};
+		};
 
 		displayedPages = Array.from({ length: maxPageCount }, (_, i) => {
-			const img = new Image();
-			img.src = currentPages[i];
+			const originalImage = new Image();
+			originalImage.src = currentPages[i];
+
+			const fitStyles = getPageImageFitStyles(originalImage.width, originalImage.height);
 
 			return (
 				<div
@@ -207,19 +254,20 @@ export default function Reader({
 						pageRefs.current[i] = el as HTMLImageElement;
 					}}
 					style={{
-						// scrollbarWidth: 'none', msOverflowStyle: 'none',
+						scrollbarWidth: 'none', msOverflowStyle: 'none',
 					}}
 				>
 					{loading[i] && <LoadingIcon />}
 					<NextImage
 						src={currentPages[i]}
+						className={getClassNamesPageImage()}
 						quality={100}
 						priority={getPriority(i, page)}
 						alt={`Page ${i + 1}`}
-						width={img.width}
-						height={img.height}
+						width={originalImage.width}
+						height={originalImage.height}
 						style={{
-							opacity: loading[i] ? '0' : '1', width: img.width, height: img.height, maxWidth: img.width, maxHeight: img.height,
+							opacity: loading[i] ? '0' : '1', ...fitStyles,
 						}}
 						onLoad={() => {
 							setLoading((currentLoading) => currentLoading
@@ -256,7 +304,12 @@ export default function Reader({
 			{/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
 			<div
 				ref={containerRef}
-				className={classNames(styles.pagesWrapper)}
+				className={classNames(styles.pagesWrapper, {
+					'justify-center':
+						pageLayout === 'single'
+						&& fitMode !== 'width'
+						&& containerDimensions.height > containerDimensions.width,
+				})}
 				onClick={handleClick}
 				onScroll={handleScroll}
 			>
