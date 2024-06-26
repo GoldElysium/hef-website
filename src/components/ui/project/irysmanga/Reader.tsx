@@ -192,10 +192,10 @@ export default function Reader({
 			const fitStyle = {
 				// For height mode, we force the image to fit on the y-axis and then get width to scale.
 				// Width will overflow on the container-level if necessary.
-				'h-full max-w-full overflow-x-auto': fitMode === 'height',
+				'w-auto h-full overflow-x-auto': fitMode === 'height',
 
 				// For width mode, we force the image to fit on the x-axis and then get height to scale.
-				// Note that height should overflow on the parent level.
+				// Note that height should overflow to the parent level.
 				'w-full h-auto overflow-x-auto overflow-y-visible': fitMode === 'width',
 
 				// Basically, overflow on width and then let the outer parent handle height.
@@ -216,10 +216,10 @@ export default function Reader({
 				// With fit-both, we can just use object-contain and call it a day.
 				'object-contain': fitMode === 'fit-both',
 
-				// For height,
-				'h-inherit w-auto min-h-full': fitMode === 'height',
+				// For height, make it take the full available height and let width auto-scale.
+				'h-full w-auto': fitMode === 'height',
 
-				// For width,
+				// For width, just make it follow width and let height auto-scale.
 				'w-full h-auto': fitMode === 'width',
 			};
 
@@ -295,7 +295,7 @@ export default function Reader({
 		return () => {
 			window.removeEventListener('resize', handleResize);
 		};
-	}, []);
+	}, [containerRef, fitMode]);
 
 	return (
 		<div className="relative flex max-h-full max-w-full grow flex-col overflow-hidden">
@@ -305,10 +305,12 @@ export default function Reader({
 			<div
 				ref={containerRef}
 				className={classNames(styles.pagesWrapper, {
+					// We add this check as without it vertical scrolling can break. As such, this
+					// disables it if scrolling is required!
 					'justify-center':
 						pageLayout === 'single'
-						&& fitMode !== 'width'
-						&& containerDimensions.height > containerDimensions.width,
+						&& (pageRefs.current[page]
+							&& containerDimensions.height > pageRefs.current[page].clientHeight),
 				})}
 				onClick={handleClick}
 				onScroll={handleScroll}
