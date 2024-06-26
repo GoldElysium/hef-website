@@ -3,6 +3,7 @@
 import React, {
 	createContext, useState, useContext, useMemo, useEffect,
 } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import {
 	FitMode,
 	HeaderVisibility,
@@ -97,6 +98,7 @@ export function MangaProvider({
 		return setting;
 	}
 
+	const queryParams = useSearchParams();
 	/**
 	 * Searches the URL query params for a specific key and returns the
 	 * value pointed to it as a number.
@@ -105,12 +107,7 @@ export function MangaProvider({
 	 * @returns The value parsed as a number if found, else def.
 	 */
 	function getNumberFromQuery(key: string, def: number): number {
-		if (!isBrowserWindowReady()) {
-			return def;
-		}
-
-		const urlParams = new URLSearchParams(window.location.search);
-		const val = urlParams.get(key);
+		const val = queryParams.get(key);
 
 		if (val) {
 			return parseInt(val, 10);
@@ -178,13 +175,16 @@ export function MangaProvider({
 		hasVisited,
 	]);
 
+	const router = useRouter();
 	// When the page/chapter is changed, push the new value into the URL.
+	// Wrapped in useEffect to ensure that it only runs when page or chapter is updated.
+	// Also helps silence some spurious errors.
 	useEffect(() => {
 		const currentQueryStr = new URLSearchParams([
 			['chapter', chapter.toString()], ['page', page.toString()],
 		]);
-		window.history.replaceState({ page, chapter }, '', `?${currentQueryStr.toString()}`);
-	}, [page, chapter]);
+		router.replace(`?${currentQueryStr.toString()}`);
+	}, [page, chapter, router]);
 
 	const contextValue = useMemo(
 		() => ({
