@@ -3,7 +3,7 @@
 import React, {
 	createContext, useState, useContext, useMemo, useEffect,
 } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import {
 	FitMode,
 	HeaderVisibility,
@@ -12,6 +12,7 @@ import {
 	PageDirection,
 	PageLayout,
 	ProgressVisibility,
+	getMangaDataOrThrow,
 } from '../utils/types';
 import getManga from '../utils/data-helper';
 
@@ -98,27 +99,6 @@ export function MangaProvider({
 		return setting;
 	}
 
-	const queryParams = useSearchParams();
-	/**
-	 * Searches the URL query params for a specific key and returns the
-	 * value pointed to it as a number.
-	 * @param key Key of the search param.
-	 * @param def Default value to return if the specified search key is not found.
-	 * @returns The value parsed as a number if found, else def.
-	 */
-	function getNumberFromQuery(key: string, def: number): number {
-		const val = queryParams.get(key);
-
-		if (val) {
-			return parseInt(val, 10);
-		}
-
-		return def;
-	}
-
-	function getPageFromQuery(): number { return getNumberFromQuery('page', 0); }
-	function getChapterFromQuery(): number { return getNumberFromQuery('chapter', 0); }
-
 	// Reader settings
 	const [readerLanguage, setReaderLanguage] = useState<Language>(
 		getSettings('localReaderLanguage', lang),
@@ -140,9 +120,34 @@ export function MangaProvider({
 
 	// Manga details
 	const [manga, setManga] = useState<Manga>(getManga(devProps));
+
 	// Fetch the page/chapter from the URL, else use the default value of 0.
-	const [page, setPage] = useState<number>(getPageFromQuery);
-	const [chapter, setChapter] = useState<number>(getChapterFromQuery);
+	function getPageAndChapterFromHash() : number[] {
+		if (isBrowserWindowReady()) {
+			const { hash } = window.location;
+			const parts = hash.split('/');
+
+			const result = [0, 0];
+			if (parts.length === 2) {
+				const chapter = parseInt(parts[0].substring(1), 10);
+				const page = parseInt(parts[1], 10);
+
+				result[0] = Number.isNaN(chapter) ? result[0] : chapter;
+				result[1] = Number.isNaN(page) ? result[1] : page;
+
+				const mangaData = getMangaDataOrThrow(manga, mangaLanguage);
+				result[0] = result[0] >= mangaData.chapterCount ? 0 : result[0];
+				result[1] = result[1] >= mangaData.chapters[result[0]].pageCount ? 0 : result[1];
+			}
+
+			return result;
+		}
+		return [0, 0];
+	}
+
+	const [hashChapter, hashPage] = getPageAndChapterFromHash();
+	const [page, setPage] = useState<number>(hashPage);
+	const [chapter, setChapter] = useState<number>(hashChapter);
 
 	// State to check for first time visits
 	const [hasVisited, setHasVisited] = useState<boolean>(getSettings('localHasVisited', false));
@@ -180,10 +185,7 @@ export function MangaProvider({
 	// Wrapped in useEffect to ensure that it only runs when page or chapter is updated.
 	// Also helps silence some spurious errors.
 	useEffect(() => {
-		const currentQueryStr = new URLSearchParams([
-			['chapter', chapter.toString()], ['page', page.toString()],
-		]);
-		router.replace(`?${currentQueryStr.toString()}`);
+		router.replace(`#${chapter}/${page}`);
 	}, [page, chapter, router]);
 
 	const contextValue = useMemo(
