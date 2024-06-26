@@ -1,5 +1,5 @@
 .sidebarContainer {
-  @apply flex flex-col px-4 py-4 shrink-0 min-w-[300px] max-w-[300px] overflow-x-hidden absolute right-0 top-0 overflow-y-auto h-full z-10 bg-inherit transition-all border-l-[1px] border-neutral shadow-2xl;
+  @apply flex flex-col px-4 py-4 shrink-0 min-w-[300px] max-w-[300px] overflow-x-hidden absolute right-0 top-0 overflow-y-auto h-full z-50 bg-inherit transition-all border-l-[1px] border-neutral shadow-2xl;
 }
 
 .sidebarContainerOpen {
