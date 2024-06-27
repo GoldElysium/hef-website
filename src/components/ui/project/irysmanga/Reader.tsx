@@ -218,7 +218,7 @@ export default function Reader({
 				'max-w-full max-h-full overflow-auto': fitMode === 'fit-both',
 			};
 
-			return classNames(blockStyle, fitStyle, 'flex shrink-0');
+			return classNames(blockStyle, fitStyle, 'relative flex shrink-0');
 		};
 
 		/**
@@ -298,7 +298,6 @@ export default function Reader({
 								.map((curr, index) => (index === i ? false : curr)));
 
 							const originalImage = ele.currentTarget;
-
 							setImageSizes((currentImageSizes) => currentImageSizes.map((curr, idx) =>
 								// eslint-disable-next-line max-len, implicit-arrow-linebreak
 								(idx === i ? { width: originalImage.naturalWidth, height: originalImage.naturalHeight } : curr)));
