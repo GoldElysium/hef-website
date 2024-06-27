@@ -237,7 +237,7 @@ export default function Reader({
 
 			if (fitMode === 'height') {
 				// I hate this but I'm too tired.
-				const newWidth = (containerDimensions.height / height) * width;
+				const newWidth = height > 0 ? ((containerDimensions.height / height) * width) : '100%'; // Not necessarily correct but better than nothing I guess...
 				const newHeight = containerDimensions.height;
 
 				return {
