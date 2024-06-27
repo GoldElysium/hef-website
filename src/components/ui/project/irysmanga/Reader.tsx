@@ -47,6 +47,9 @@ export default function Reader({
 	const [loading, setLoading] = useState<boolean[]>(
 		Array(mangaData.chapters[chapter].pageCount).fill(true),
 	);
+	const [imageSizes, setImageSizes] = useState(
+		Array(mangaData.chapters[chapter].pageCount).fill({ width: 0, height: 0 }),
+	);
 	const [containerDimensions, setContainerDimensions] = useState({
 		width: 0,
 		height: 0,
@@ -255,16 +258,7 @@ export default function Reader({
 		};
 
 		displayedPages = Array.from({ length: maxPageCount }, (_, i) => {
-			const originalImage = new Image();
-			originalImage.src = currentPages[i];
-
-			const fitStyles = (() => {
-				if (loading[i]) {
-					return {};
-				}
-
-				return getPageImageFitStyles(originalImage.width, originalImage.height);
-			})();
+			const fitStyles = getPageImageFitStyles(imageSizes[i].width, imageSizes[i].height);
 
 			return (
 				<div
@@ -284,14 +278,20 @@ export default function Reader({
 						quality={100}
 						priority={getPriority(i, page)}
 						alt={`Page ${i + 1}`}
-						width={originalImage.width}
-						height={originalImage.height}
+						width={imageSizes[i].width}
+						height={imageSizes[i].height}
 						style={{
 							opacity: loading[i] ? '0' : '1', ...fitStyles,
 						}}
-						onLoad={() => {
+						onLoad={(ele) => {
 							setLoading((currentLoading) => currentLoading
 								.map((curr, index) => (index === i ? false : curr)));
+
+							const originalImage = ele.currentTarget;
+
+							setImageSizes((currentImageSizes) => currentImageSizes.map((curr, idx) =>
+								// eslint-disable-next-line max-len, implicit-arrow-linebreak
+								(idx === i ? { width: originalImage.naturalWidth, height: originalImage.naturalHeight } : curr)));
 						}}
 					/>
 				</div>
