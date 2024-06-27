@@ -78,23 +78,29 @@ export default function Reader({
 
 	/**
 	 * Update the page counter when the user scrolls
-	 * It checks for the first page where the middle point (vertically) is within the container
-	 * If there are no pages that satisfy this condition then the page number stays the same
+	 * It chooses the page that has the closest middle point to the container's middle point
 	 */
 	const handleScroll = () => {
 		if (!containerRef.current || scriptedScroll.current) {
 			scriptedScroll.current = false;
 			return;
 		}
+		pageScrolled.current = true;
 		const containerRect = containerRef.current.getBoundingClientRect();
+		const containerMiddleY = (containerRect.top + containerRect.bottom) / 2;
+		let minDistY = Infinity;
+		let chosenPage = -1;
 		for (let i = 0; i < pageRefs.current.length; ++i) {
 			const imgRect = pageRefs.current[i].getBoundingClientRect();
 			const imgMiddleY = (imgRect.bottom + imgRect.top) / 2;
-			if (containerRect.top <= imgMiddleY && imgMiddleY <= containerRect.bottom) {
-				pageScrolled.current = true;
-				setPage(i);
-				break;
+			const distY = Math.abs(containerMiddleY - imgMiddleY);
+			if (distY < minDistY) {
+				chosenPage = i;
+				minDistY = distY;
 			}
+		}
+		if (chosenPage !== -1) {
+			setPage(chosenPage);
 		}
 	};
 
