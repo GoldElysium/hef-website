@@ -237,7 +237,10 @@ export default function Reader({
 
 			if (fitMode === 'height') {
 				// I hate this but I'm too tired.
-				const newWidth = height > 0 ? ((containerDimensions.height / height) * width) : '100%'; // Not necessarily correct but better than nothing I guess...
+				// Note 'auto' is not necessarily correct but better than nothing I guess... I think the
+				// only time it may trigger is if for _some_ reason images aren't available yet and thus
+				// height is 0.
+				const newWidth = height > 0 ? ((containerDimensions.height / height) * width) : 'auto';
 				const newHeight = containerDimensions.height;
 
 				return {
@@ -255,7 +258,13 @@ export default function Reader({
 			const originalImage = new Image();
 			originalImage.src = currentPages[i];
 
-			const fitStyles = getPageImageFitStyles(originalImage.width, originalImage.height);
+			const fitStyles = (() => {
+				if (loading[i]) {
+					return {};
+				}
+
+				return getPageImageFitStyles(originalImage.width, originalImage.height);
+			})();
 
 			return (
 				<div
