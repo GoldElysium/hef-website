@@ -76,21 +76,25 @@ export default function Reader({
 		pageScrolled.current = false;
 	};
 
-	// Update the page counter when the user scrolls
+	/**
+	 * Update the page counter when the user scrolls
+	 * It checks for the first page where the middle point (vertically) is within the container
+	 * If there are no pages that satisfy this condition then the page number stays the same
+	 */
 	const handleScroll = () => {
 		if (!containerRef.current || scriptedScroll.current) {
 			scriptedScroll.current = false;
 			return;
 		}
 		const containerRect = containerRef.current.getBoundingClientRect();
-		const imgRect = pageRefs.current[page].getBoundingClientRect();
-		const offset = 100;
-		if (imgRect.bottom - offset <= containerRect.top) {
-			pageScrolled.current = true;
-			setPage(page + 1);
-		} else if (imgRect.top + offset >= containerRect.bottom) {
-			pageScrolled.current = true;
-			setPage(page - 1);
+		for (let i = 0; i < pageRefs.current.length; ++i) {
+			const imgRect = pageRefs.current[i].getBoundingClientRect();
+			const imgMiddleY = (imgRect.bottom + imgRect.top) / 2;
+			if (containerRect.top <= imgMiddleY && imgMiddleY <= containerRect.bottom) {
+				pageScrolled.current = true;
+				setPage(i);
+				break;
+			}
 		}
 	};
 
