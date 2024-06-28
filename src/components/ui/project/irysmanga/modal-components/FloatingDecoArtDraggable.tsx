@@ -44,18 +44,24 @@ export default function FloatingDecoArtDraggable({
 		},
 	};
 
-	const audioRefDrag = useRef(new Audio(data.initial.sfx));
-	const audioRefFall = useRef(new Audio(data.falling.sfx));
-	const audioRefFlat = useRef(new Audio(data.flat.sfx));
-	const audioRefSplat = useRef(new Audio('/assets/irysmanga/audio/splat.mp3'));
+	const audioRefDrag = useRef(new Audio(undefined));
+	const audioRefFall = useRef(new Audio(undefined));
+	const audioRefFlat = useRef(new Audio(undefined));
+	const audioRefSplat = useRef(new Audio(undefined));
 	const targetRef = useRef<HTMLImageElement>(null);
 
 	useEffect(() => {
-		audioRefSplat.current.volume = 0.5;
+		audioRefDrag.current.src = data.initial.sfx;
+		audioRefFall.current.src = data.falling.sfx;
+		audioRefFlat.current.src = data.flat.sfx;
+		audioRefSplat.current.src = '/assets/irysmanga/audio/splat.mp3';
+
 		audioRefDrag.current.load();
 		audioRefFall.current.load();
 		audioRefFlat.current.load();
+		audioRefSplat.current.volume = 0.5;
 	}, []);
+
 	const handleIntersection = (entries: IntersectionObserverEntry[]) => {
 		entries.forEach((entry) => {
 			if (entry.isIntersecting && state === 'flat' && !flatPlayed.current) {
@@ -64,6 +70,7 @@ export default function FloatingDecoArtDraggable({
 			}
 		});
 	};
+
 	useEffect(() => {
 		const observer = new IntersectionObserver(handleIntersection, {
 			root: null,
