@@ -30,7 +30,7 @@ export type Manga = {
 };
 
 // Reader settings types
-export const fitModes = ['height', 'width', 'original'] as const;
+export const fitModes = ['height', 'width', 'original', 'fit-both'] as const;
 export type FitMode = (typeof fitModes)[number];
 
 export const languages = ['en', 'jp'] as const;
@@ -52,13 +52,13 @@ export const readerThemes = ['light', 'dark'] as const;
 export type ReaderTheme = (typeof readerThemes)[number];
 
 export type ReaderSetting =
-    | FitMode
-    | Language
-    | PageLayout
-    | PageDirection
-    | HeaderVisibility
-    | ReaderTheme
-    | ProgressVisibility;
+	| FitMode
+	| Language
+	| PageLayout
+	| PageDirection
+	| HeaderVisibility
+	| ReaderTheme
+	| ProgressVisibility;
 
 // Returns the correct MangaData object for a given language. If there is no such manga data
 // for the given language, throw an error.

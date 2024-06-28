@@ -1,11 +1,15 @@
 import React from 'react';
 import {
+	ArrowsPointingOutIcon,
+	ArrowLongDownIcon,
+	ArrowLongUpIcon,
+	ArrowLongLeftIcon,
+	ArrowLongRightIcon,
+} from '@heroicons/react/24/solid';
+import {
 	ArrowsRightLeftIcon,
-	DevicePhoneMobileIcon,
-	ComputerDesktopIcon,
 	ArrowRightIcon,
 	ArrowLeftIcon,
-	CodeBracketIcon,
 	StopIcon,
 	WindowIcon,
 	SunIcon,
@@ -13,6 +17,7 @@ import {
 	ArrowsUpDownIcon,
 	Bars2Icon,
 	MinusIcon,
+	DocumentIcon,
 } from '@heroicons/react/24/outline';
 import useTranslation from '@/lib/i18n/client';
 import classNames from 'classnames';
@@ -35,9 +40,20 @@ type SettingIcons = {
 const settingIcons: SettingIcons = {
 	single: <ArrowsRightLeftIcon className="setting-icon" />,
 	long: <ArrowsUpDownIcon className="setting-icon" />,
-	height: <DevicePhoneMobileIcon className="setting-icon" />,
-	width: <CodeBracketIcon className="setting-icon" />,
-	original: <ComputerDesktopIcon className="setting-icon" />,
+	height: (
+		<div className="relative h-full min-h-[20px] w-[20px]">
+			<ArrowLongUpIcon className="setting-icon absolute left-0 top-0" />
+			<ArrowLongDownIcon className="setting-icon absolute left-0 top-0" />
+		</div>
+	),
+	width: (
+		<div className="relative h-full min-h-[20px] w-[20px]">
+			<ArrowLongLeftIcon className="setting-icon absolute left-0 top-0" />
+			<ArrowLongRightIcon className="setting-icon absolute left-0 top-0" />
+		</div>
+	),
+	original: <DocumentIcon className="setting-icon" />,
+	'fit-both': <ArrowsPointingOutIcon className="setting-icon" />,
 	ltr: <ArrowRightIcon className="setting-icon" />,
 	rtl: <ArrowLeftIcon className="setting-icon" />,
 	'header-hidden': <StopIcon className="setting-icon" />,

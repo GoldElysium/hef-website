@@ -6,7 +6,7 @@ import {
 	DocumentIcon,
 	InformationCircleIcon,
 } from '@heroicons/react/24/outline';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import useTranslation from '@/lib/i18n/client';
 import { useTheme } from 'next-themes';
 import SelectBox from './SelectBox';
@@ -60,7 +60,6 @@ export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }:
 	const { t, i18n } = useTranslation('reader');
 	const mangaData = getMangaDataOrThrow(manga, mangaLanguage);
 	const containerRef = useRef<HTMLDivElement>(null);
-	const [menuIconFocus, setMenuIconFocus] = useState(false);
 
 	useEffect(() => {
 		i18n.changeLanguage(readerLanguage);
@@ -76,8 +75,8 @@ export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }:
 			}
 			if (
 				containerRef.current
-                && !containerRef.current.contains(event.target as Node)
-                && !modalRef.current?.open
+				&& !containerRef.current.contains(event.target as Node)
+				&& !modalRef.current?.open
 			) {
 				setOpenSidebar(false);
 			}
@@ -109,6 +108,7 @@ export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }:
 
 	return (
 		<>
+			{/* This is a hamburger menu if both the header and the menu is closed. */}
 			{/* eslint-disable-next-line max-len */}
 			{/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
 			<div
@@ -119,15 +119,10 @@ export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }:
 						block: !(openSidebar || headerVisibility === 'header-shown'),
 					},
 				)}
-				onMouseEnter={() => setMenuIconFocus(true)}
-				onMouseLeave={() => setMenuIconFocus(false)}
 				onClick={() => setOpenSidebar((curr) => !curr)}
 			>
 				<Bars3Icon
-					className={classNames('transition-all top-0 right-0', {
-						'opacity-50': !menuIconFocus,
-						'opacity-1': menuIconFocus,
-					})}
+					className={classNames('transition-all top-0 right-0 opacity-50 hover:opacity-100')}
 					width={30}
 				/>
 			</div>
@@ -138,6 +133,7 @@ export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }:
 					[styles.fakeSidebarContainerHidden]: !openSidebar,
 				})}
 			/>
+
 			<div
 				className={classNames(styles.sidebarContainer, {
 					[styles.sidebarContainerOpen]: openSidebar,
@@ -230,7 +226,7 @@ export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }:
 						valueList={readerThemes}
 						onClick={() => setTheme(resolvedTheme === 'light' ? 'dark' : 'light')}
 						// @ts-ignore
-						setValue={() => {}}
+						setValue={() => { }}
 						label="theme"
 					/>
 					<SettingButton
