@@ -3,6 +3,7 @@
 import React, {
 	createContext, useState, useContext, useMemo, useEffect,
 } from 'react';
+import { useRouter } from 'next/navigation';
 import {
 	FitMode,
 	HeaderVisibility,
@@ -11,6 +12,7 @@ import {
 	PageDirection,
 	PageLayout,
 	ProgressVisibility,
+	getMangaDataOrThrow,
 } from '../utils/types';
 import getManga from '../utils/data-helper';
 
@@ -69,14 +71,14 @@ export function MangaProvider({
 	const localStorageSettingsKey = 'irys-manga-settings';
 	let parsedSettings: any = null; // Avoid having to re-parse the json multiple times.
 
-	const isLocalStorageReady = () => typeof window !== 'undefined';
+	const isBrowserWindowReady = () => typeof window !== 'undefined';
 
 	/**
      * Grab settings from localStorage if set.
      */
 	function getSettings<T>(key: string, def: T): T {
 		// If for some reason local storage isn't available yet, just return the default values.
-		if (!isLocalStorageReady()) {
+		if (!isBrowserWindowReady()) {
 			return def;
 		}
 
@@ -117,9 +119,35 @@ export function MangaProvider({
 	);
 
 	// Manga details
-	const [manga, setManga] = useState(getManga(devProps));
-	const [page, setPage] = useState(0);
-	const [chapter, setChapter] = useState(0);
+	const [manga, setManga] = useState<Manga>(getManga(devProps));
+
+	// Fetch the page/chapter from the URL, else use the default value of 0.
+	function getPageAndChapterFromHash() : number[] {
+		if (isBrowserWindowReady()) {
+			const { hash } = window.location;
+			const parts = hash.split('/');
+
+			const result = [0, 0];
+			if (parts.length === 2) {
+				const chapter = parseInt(parts[0].substring(1), 10);
+				const page = parseInt(parts[1], 10);
+
+				result[0] = Number.isNaN(chapter) ? result[0] : chapter;
+				result[1] = Number.isNaN(page) ? result[1] : page;
+
+				const mangaData = getMangaDataOrThrow(manga, mangaLanguage);
+				result[0] = result[0] >= mangaData.chapterCount ? 0 : result[0];
+				result[1] = result[1] >= mangaData.chapters[result[0]].pageCount ? 0 : result[1];
+			}
+
+			return result;
+		}
+		return [0, 0];
+	}
+
+	const [hashChapter, hashPage] = getPageAndChapterFromHash();
+	const [page, setPage] = useState<number>(hashPage);
+	const [chapter, setChapter] = useState<number>(hashChapter);
 
 	// State to check for first time visits
 	const [hasVisited, setHasVisited] = useState<boolean>(getSettings('localHasVisited', false));
@@ -127,7 +155,7 @@ export function MangaProvider({
 	// Define a callback to update localStorage when updating certain parts of state.
 	useEffect(() => {
 		// If for some reason local storage isn't available yet, don't try to write to it.
-		if (isLocalStorageReady()) {
+		if (isBrowserWindowReady()) {
 			const settings = {
 				localReaderLanguage: readerLanguage,
 				localMangaLanguage: mangaLanguage,
@@ -151,6 +179,14 @@ export function MangaProvider({
 		progressVisibility,
 		hasVisited,
 	]);
+
+	const router = useRouter();
+	// When the page/chapter is changed, push the new value into the URL.
+	// Wrapped in useEffect to ensure that it only runs when page or chapter is updated.
+	// Also helps silence some spurious errors.
+	useEffect(() => {
+		router.replace(`#${chapter}/${page}`);
+	}, [page, chapter, router]);
 
 	const contextValue = useMemo(
 		() => ({
