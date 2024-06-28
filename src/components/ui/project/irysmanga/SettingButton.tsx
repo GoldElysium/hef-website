@@ -10,8 +10,6 @@ import {
 	ArrowsRightLeftIcon,
 	ArrowRightIcon,
 	ArrowLeftIcon,
-	StopIcon,
-	WindowIcon,
 	SunIcon,
 	MoonIcon,
 	ArrowsUpDownIcon,
@@ -23,6 +21,7 @@ import useTranslation from '@/lib/i18n/client';
 import classNames from 'classnames';
 import { ReaderSetting } from './utils/types';
 import { getNextOption } from './utils/helper';
+import { ShowHeaderIcon, HideHeaderIcon } from './HeaderIcons';
 
 interface IProps {
 	value: ReaderSetting;
@@ -56,8 +55,8 @@ const settingIcons: SettingIcons = {
 	'fit-both': <ArrowsPointingOutIcon className="setting-icon" />,
 	ltr: <ArrowRightIcon className="setting-icon" />,
 	rtl: <ArrowLeftIcon className="setting-icon" />,
-	'header-hidden': <StopIcon className="setting-icon" />,
-	'header-shown': <WindowIcon className="setting-icon" />,
+	'header-hidden': <HideHeaderIcon />,
+	'header-shown': <ShowHeaderIcon />,
 	'progress-hidden': <MinusIcon className="setting-icon" />,
 	'progress-shown': <Bars2Icon className="setting-icon" />,
 	light: <SunIcon className="setting-icon" />,
