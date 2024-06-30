@@ -14,7 +14,7 @@ interface SelectBoxProps {
 
 function SelectBox({ value, label }: SelectBoxProps) {
 	const {
-		mangaLanguage, setPage, chapter, setChapter, manga, pageLayout,
+		mangaLanguage, setPage, chapter, setChapter, manga,
 	} = useMangaContext();
 	const mangaData = getMangaDataOrThrow(manga, mangaLanguage);
 	const { t } = useTranslation('reader');
@@ -26,7 +26,6 @@ function SelectBox({ value, label }: SelectBoxProps) {
 		if (label === 'page') {
 			handlePageNavigation(
 				selectedValue,
-				pageLayout,
 				setPage,
 				setChapter,
 				chapter,
@@ -89,11 +88,11 @@ function SelectBox({ value, label }: SelectBoxProps) {
 						menuList: () => 'scroll-smooth',
 						option: ({ isFocused, isSelected }) => classNames('hover:cursor-pointer p-2 font-sm rounded truncate', {
 							'bg-skin-header dark:bg-skin-header-dark text-skin-header-foreground dark:text-skin-header-foreground-dark':
-                                    isSelected,
+								isSelected,
 							'hover:bg-[color-mix(in_srgb,rgb(var(--color-secondary))_90%,black)] dark:hover:bg-[color-mix(in_srgb,rgb(var(--color-secondary-dark))_90%,black)]':
-                                    isFocused && !isSelected,
+								isFocused && !isSelected,
 							'text-skin-secondary-foreground  dark:text-skin-secondary-foreground-dark':
-                                    !isSelected && !isFocused,
+								!isSelected && !isFocused,
 						}),
 					}}
 				/>

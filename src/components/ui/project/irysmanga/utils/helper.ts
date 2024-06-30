@@ -1,8 +1,7 @@
-import { Manga, PageLayout, getMangaDataOrThrow } from './types';
+import { Manga, getMangaDataOrThrow } from './types';
 
 export const handlePageNavigation = (
 	selectedPage: number,
-	_pageLayout: PageLayout,
 	setPage: React.Dispatch<React.SetStateAction<number>>,
 	setChapter: React.Dispatch<React.SetStateAction<number>>,
 	chapter: number,
@@ -18,15 +17,15 @@ export const handlePageNavigation = (
 		setChapter((prev) => prev - 1);
 	} else if (
 		selectedPage >= currentChapter.pageCount
-        && chapter >= 0
-        && chapter < mangaData.chapterCount - 1
+		&& chapter >= 0
+		&& chapter < mangaData.chapterCount - 1
 	) {
 		// Case: Change to the next chapter if the page index is >= currentChapter.pageCount
 		setPage(0);
 		setChapter((prev) => prev + 1);
 	} else if (
 		selectedPage >= 0
-        && selectedPage <= currentChapter.pageCount - 1
+		&& selectedPage <= currentChapter.pageCount - 1
 	) {
 		// Case: Change to the selected page
 		setPage(selectedPage);

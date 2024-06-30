@@ -1,8 +1,11 @@
 'use client';
 
+import lod from 'lodash';
 import classNames from 'classnames';
 import NextImage from 'next/image';
-import React, { useEffect, useRef, useState } from 'react';
+import React, {
+	useEffect, useMemo, useRef, useState,
+} from 'react';
 import { useMangaContext } from './context/MangaContext';
 import { handlePageNavigation } from './utils/helper';
 import ProgressBar from './ProgressBar';
@@ -35,55 +38,40 @@ export default function Reader({
 	} = useMangaContext();
 
 	const mangaData = getMangaDataOrThrow(manga, mangaLanguage);
-	// const containerRef = useRef<HTMLDivElement>(null);
 	const pageRefs = useRef<HTMLImageElement[]>([]);
-	const pageScrolled = useRef(false);
-	const scriptedScroll = useRef(false);
+
+	const isScrollCausedByUserScroll = useRef<boolean>(false);
+	const isHandleScrollLocked = useRef<boolean>(false); // A check to "lock" the handleScroll event.
+
 	const [loading, setLoading] = useState<boolean[]>(
 		Array(mangaData.chapters[chapter].pageCount).fill(true),
 	);
 	const [imageSizes, setImageSizes] = useState(
-		Array(mangaData.chapters[chapter].pageCount).fill({ width: 0, height: 0 }),
+		Array(mangaData.chapters[chapter].pageCount).fill({ width: 0, height: 1080 }),
 	);
 	const [containerDimensions, setContainerDimensions] = useState({
 		width: 0,
 		height: 0,
 	});
 
-	// Sets the scrollbar to the correct position on page change
-	const setScrollTopToPage = () => {
-		if (containerRef.current) {
-			scriptedScroll.current = true;
-			const targetImg = pageRefs.current[page];
-			if (targetImg) {
-				// eslint-disable-next-line no-param-reassign
-				containerRef.current.scrollTop = targetImg.offsetTop - containerRef.current.offsetTop;
-			}
-		}
-	};
-	const handleScrollTop = () => {
-		if (pageLayout === 'long' && !pageScrolled.current) {
-			setScrollTopToPage();
-		}
-		if (pageLayout !== 'long') {
-			setScrollTopToPage();
-		}
-		pageScrolled.current = false;
-	};
+	/**
+	 * A function to automatically set the "is user currently the one scrolling" state to false.
+	 */
+	const handleEndScroll = useMemo(() => lod.debounce(() => {
+		isScrollCausedByUserScroll.current = false;
+	}, 100), []);
 
 	/**
-	 * Update the page counter when the user scrolls
+	 * Update the page counter when the user scrolls.
 	 * It chooses the page that has the closest middle point to the container's middle point
 	 */
 	const handleScroll = () => {
-		if (!containerRef.current || scriptedScroll.current) {
-			scriptedScroll.current = false;
+		if (!containerRef.current || (pageLayout === 'long' && isHandleScrollLocked.current)) {
 			return;
 		}
-		if (pageLayout !== 'long') {
-			return;
-		}
-		pageScrolled.current = true;
+
+		isScrollCausedByUserScroll.current = true;
+
 		const containerRect = containerRef.current.getBoundingClientRect();
 		const containerMiddleY = (containerRect.top + containerRect.bottom) / 2;
 		let minDistY = Infinity;
@@ -100,6 +88,8 @@ export default function Reader({
 		if (chosenPage !== -1) {
 			setPage(chosenPage);
 		}
+
+		handleEndScroll();
 	};
 
 	/**
@@ -124,33 +114,10 @@ export default function Reader({
 
 		const position = clientX - left;
 		const threshold = width / 2;
-		scriptedScroll.current = true;
 		if (position < threshold) {
-			if (pageLayout === 'ltr' || pageLayout === 'long') {
-				handlePageNavigation(
-					page - 1,
-					pageLayout,
-					setPage,
-					setChapter,
-					chapter,
-					mangaLanguage,
-					manga,
-				);
-			} else {
-				handlePageNavigation(
-					page + 1,
-					pageLayout,
-					setPage,
-					setChapter,
-					chapter,
-					mangaLanguage,
-					manga,
-				);
-			}
-		} else if (pageLayout === 'ltr' || pageLayout === 'long') {
+			const diff = (pageLayout === 'ltr' || pageLayout === 'long') ? -1 : 1;
 			handlePageNavigation(
-				page + 1,
-				pageLayout,
+				page + diff,
 				setPage,
 				setChapter,
 				chapter,
@@ -158,9 +125,9 @@ export default function Reader({
 				manga,
 			);
 		} else {
+			const diff = (pageLayout === 'ltr' || pageLayout === 'long') ? 1 : -1;
 			handlePageNavigation(
-				page - 1,
-				pageLayout,
+				page + diff,
 				setPage,
 				setChapter,
 				chapter,
@@ -171,19 +138,51 @@ export default function Reader({
 	};
 
 	useEffect(() => {
-		handleScrollTop();
-	}, [page, chapter, pageLayout]);
+		if (pageLayout === 'long' && isScrollCausedByUserScroll.current) {
+			return;
+		}
 
-	useEffect(() => {
-		setScrollTopToPage();
-	}, [fitMode]);
+		if (containerRef.current) {
+			const targetImg = pageRefs.current[page];
+			if (targetImg) {
+				if (pageLayout === 'long') {
+					// If:
+					// - We are in long mode
+					// - The page hasn't fully loaded yet
+					// Then keep the scroll lock UNTIL the page (and the page after) is loaded and
+					// we've scrolled to it!
+					//
+					// TODO: Maybe change it so it waits until pages load first? But eh, too lazy.
+
+					const currentPageLoading = loading[page];
+					const nextPageLoading = (page + 1) < mangaData.chapters[chapter].pages.length
+						? loading[page + 1]
+						: false;
+
+					if (currentPageLoading || nextPageLoading) {
+						isHandleScrollLocked.current = true;
+					}
+
+					// eslint-disable-next-line no-param-reassign
+					containerRef.current.scrollTop = targetImg.offsetTop - containerRef.current.offsetTop;
+
+					if (!currentPageLoading && !nextPageLoading) {
+						isHandleScrollLocked.current = false;
+					}
+				} else {
+					// eslint-disable-next-line no-param-reassign
+					containerRef.current.scrollTop = targetImg.offsetTop - containerRef.current.offsetTop;
+				}
+			}
+		}
+	}, [page, chapter, pageLayout, loading, fitMode, containerRef, mangaData.chapters]);
 
 	let displayedPages: React.JSX.Element[] = [];
 	if (mangaData.chapters[chapter]) {
 		const currentChapter = mangaData.chapters[chapter];
 		const maxPageCount = currentChapter.pageCount;
 		// Use optimized pages if we have them, otherwise fall back to unoptimized I guess.
-		const currentPages = optimizedImages.get(currentChapter.id) ?? currentChapter.pages;
+		const pageSources = optimizedImages.get(currentChapter.id) ?? currentChapter.pages;
 
 		/**
 		 * Returns class names for the page _container_.
@@ -281,7 +280,7 @@ export default function Reader({
 				>
 					{loading[i] && <LoadingIcon />}
 					<NextImage
-						src={currentPages[i]}
+						src={pageSources[i]}
 						className={getClassNamesPageImage()}
 						quality={100}
 						priority={getPriority(i, page)}
@@ -296,9 +295,8 @@ export default function Reader({
 								.map((curr, index) => (index === i ? false : curr)));
 
 							const originalImage = ele.currentTarget;
-							setImageSizes((currentImageSizes) => currentImageSizes.map((curr, idx) =>
-								// eslint-disable-next-line max-len, implicit-arrow-linebreak
-								(idx === i ? { width: originalImage.naturalWidth, height: originalImage.naturalHeight } : curr)));
+							// eslint-disable-next-line max-len, implicit-arrow-linebreak
+							setImageSizes((currentImageSizes) => currentImageSizes.map((curr, idx) => (idx === i ? { width: originalImage.naturalWidth, height: originalImage.naturalHeight } : curr)));
 						}}
 					/>
 				</div>
