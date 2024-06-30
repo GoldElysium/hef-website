@@ -35,10 +35,7 @@ export default function Reader({
 	} = useMangaContext();
 
 	const mangaData = getMangaDataOrThrow(manga, mangaLanguage);
-	// const containerRef = useRef<HTMLDivElement>(null);
 	const pageRefs = useRef<HTMLImageElement[]>([]);
-	const pageScrolled = useRef(false);
-	const scriptedScroll = useRef(false);
 	const [loading, setLoading] = useState<boolean[]>(
 		Array(mangaData.chapters[chapter].pageCount).fill(true),
 	);
@@ -50,40 +47,14 @@ export default function Reader({
 		height: 0,
 	});
 
-	// Sets the scrollbar to the correct position on page change
-	const setScrollTopToPage = () => {
-		if (containerRef.current) {
-			scriptedScroll.current = true;
-			const targetImg = pageRefs.current[page];
-			if (targetImg) {
-				// eslint-disable-next-line no-param-reassign
-				containerRef.current.scrollTop = targetImg.offsetTop - containerRef.current.offsetTop;
-			}
-		}
-	};
-	const handleScrollTop = () => {
-		if (pageLayout === 'long' && !pageScrolled.current) {
-			setScrollTopToPage();
-		}
-		if (pageLayout !== 'long') {
-			setScrollTopToPage();
-		}
-		pageScrolled.current = false;
-	};
-
 	/**
-	 * Update the page counter when the user scrolls
+	 * Update the page counter when the user scrolls.
 	 * It chooses the page that has the closest middle point to the container's middle point
 	 */
 	const handleScroll = () => {
-		if (!containerRef.current || scriptedScroll.current) {
-			scriptedScroll.current = false;
+		if (!containerRef.current) {
 			return;
 		}
-		if (pageLayout !== 'long') {
-			return;
-		}
-		pageScrolled.current = true;
 		const containerRect = containerRef.current.getBoundingClientRect();
 		const containerMiddleY = (containerRect.top + containerRect.bottom) / 2;
 		let minDistY = Infinity;
@@ -124,33 +95,13 @@ export default function Reader({
 
 		const position = clientX - left;
 		const threshold = width / 2;
-		scriptedScroll.current = true;
+		let currentPage = page;
 		if (position < threshold) {
-			if (pageLayout === 'ltr' || pageLayout === 'long') {
-				handlePageNavigation(
-					page - 1,
-					pageLayout,
-					setPage,
-					setChapter,
-					chapter,
-					mangaLanguage,
-					manga,
-				);
-			} else {
-				handlePageNavigation(
-					page + 1,
-					pageLayout,
-					setPage,
-					setChapter,
-					chapter,
-					mangaLanguage,
-					manga,
-				);
-			}
-		} else if (pageLayout === 'ltr' || pageLayout === 'long') {
+			const diff = (pageLayout === 'ltr' || pageLayout === 'long') ? -1 : 1;
+			currentPage += diff;
+
 			handlePageNavigation(
-				page + 1,
-				pageLayout,
+				page + diff,
 				setPage,
 				setChapter,
 				chapter,
@@ -158,9 +109,11 @@ export default function Reader({
 				manga,
 			);
 		} else {
+			const diff = (pageLayout === 'ltr' || pageLayout === 'long') ? 1 : -1;
+			currentPage += diff;
+
 			handlePageNavigation(
-				page - 1,
-				pageLayout,
+				page + diff,
 				setPage,
 				setChapter,
 				chapter,
@@ -168,15 +121,26 @@ export default function Reader({
 				manga,
 			);
 		}
+
+		if (pageLayout === 'long' && containerRef.current) {
+			const targetImg = pageRefs.current[currentPage];
+			if (targetImg) {
+				// eslint-disable-next-line no-param-reassign
+				containerRef.current.scrollTop = targetImg.offsetTop - containerRef.current.offsetTop;
+			}
+		}
 	};
 
 	useEffect(() => {
-		handleScrollTop();
-	}, [page, chapter, pageLayout]);
-
-	useEffect(() => {
-		setScrollTopToPage();
-	}, [fitMode]);
+		if (containerRef.current) {
+			const targetImg = pageRefs.current[page];
+			if (targetImg) {
+				// eslint-disable-next-line no-param-reassign
+				containerRef.current.scrollTop = targetImg.offsetTop - containerRef.current.offsetTop;
+			}
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [chapter, pageLayout, fitMode, containerRef]);
 
 	let displayedPages: React.JSX.Element[] = [];
 	if (mangaData.chapters[chapter]) {
