@@ -28,32 +28,36 @@ export default function ModalTabGeneral() {
 			<p className="mb-4">{t('essay')}</p>
 			<div className="relative">
 				<h2 className="mb-4 text-3xl font-bold underline">{t('credits')}</h2>
-				<div className="-z--1 grid w-full lg:grid-rows-2 min-[1260px]:grid-cols-2">
-					<CreditBlock
-						label="organizers"
-						contributors={manga.contributors.filter((e) => e.role === 'organizer')}
-					/>
-					<CreditBlock
-						label="authors"
-						contributors={manga.contributors.filter((e) => e.role === 'writer')}
-					/>
-					<CreditBlock
-						label="lead-artists"
-						contributors={manga.contributors.filter((e) => e.role === 'lead-artist')}
-					/>
-					<CreditBlock
-						label="artists"
-						contributors={manga.contributors.filter((e) => e.role === 'artist')}
-					/>
-					<CreditBlock
-						label="translators"
-						contributors={manga.contributors.filter((e) => e.role === 'translator')}
-					/>
-					<CreditBlock
-						label="programmers"
-						contributors={manga.contributors.filter((e) => e.role === 'developer')}
-					/>
-				</div>
+				{
+					manga.contributors && (
+						<div className="-z--1 grid w-full lg:grid-rows-2 min-[1260px]:grid-cols-2">
+							<CreditBlock
+								label="organizers"
+								contributors={manga.contributors.filter((e) => e.role === 'organizer')}
+							/>
+							<CreditBlock
+								label="authors"
+								contributors={manga.contributors.filter((e) => e.role === 'writer')}
+							/>
+							<CreditBlock
+								label="lead-artists"
+								contributors={manga.contributors.filter((e) => e.role === 'lead-artist')}
+							/>
+							<CreditBlock
+								label="artists"
+								contributors={manga.contributors.filter((e) => e.role === 'artist')}
+							/>
+							<CreditBlock
+								label="translators"
+								contributors={manga.contributors.filter((e) => e.role === 'translator')}
+							/>
+							<CreditBlock
+								label="programmers"
+								contributors={manga.contributors.filter((e) => e.role === 'developer')}
+							/>
+						</div>
+					)
+				}
 				<FloatingDecoArtDraggable
 					src={bgDecoSrc[resolvedTheme as string]}
 					className="absolute right-0 top-[5%] z-0 w-1/2 opacity-50 lg:max-w-[200px]"

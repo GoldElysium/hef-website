@@ -48,10 +48,12 @@ function SelectBox({ value, label }: SelectBoxProps) {
 
 	const [open, setOpen] = useState(false);
 
+	const nextButtonClasses = 'button shrink-0 disabled:opacity-50';
+
 	return (
 		<div className="flex w-full justify-center gap-2">
 			<button
-				className="button shrink-0"
+				className={nextButtonClasses}
 				aria-label="left-page"
 				type="button"
 				onClick={() => handleSelectValue(value - 1)}
@@ -99,7 +101,7 @@ function SelectBox({ value, label }: SelectBoxProps) {
 			</div>
 
 			<button
-				className="button"
+				className={nextButtonClasses}
 				aria-label="right-page"
 				type="button"
 				onClick={() => handleSelectValue(value + 1)}
