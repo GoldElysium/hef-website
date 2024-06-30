@@ -15,15 +15,11 @@ interface IProps {
 	openSidebar: boolean
 	setOpenSidebar: React.Dispatch<React.SetStateAction<boolean>>;
 	containerRef: React.RefObject<HTMLDivElement>;
-	clickCounter: number;
-	setClickCounter: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export default function Reader({
 	openSidebar,
 	setOpenSidebar,
-	clickCounter,
-	setClickCounter,
 	containerRef,
 }: IProps) {
 	const {
@@ -120,8 +116,8 @@ export default function Reader({
 		const { left, width } = (target as HTMLElement).getBoundingClientRect();
 
 		if (window.innerWidth <= 768) {
-			if (clickCounter < 0) {
-				setClickCounter((prev) => prev + 1);
+			if (openSidebar) {
+				setOpenSidebar(false);
 				return;
 			}
 		}

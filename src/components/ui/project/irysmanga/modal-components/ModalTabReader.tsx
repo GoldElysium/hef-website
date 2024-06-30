@@ -50,10 +50,6 @@ export default function MangaReaderModal() {
 					<span>{t('reader-language-k')}</span>
 				</li>
 				<li>
-					<kbd className="kbdalt">D</kbd>
-					<span>{t('page-direction-k')}</span>
-				</li>
-				<li>
 					<kbd className="kbdalt">M</kbd>
 					<span>{t('sidebar-k')}</span>
 				</li>

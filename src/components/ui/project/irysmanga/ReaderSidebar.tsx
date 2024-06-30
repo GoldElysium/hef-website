@@ -65,27 +65,7 @@ export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }:
 	useEffect(() => {
 		const width = containerRef.current?.getBoundingClientRect().width;
 		document.documentElement.style.setProperty('--sidebar-width', `${width!}px`);
-
-		const handleClickOutside = (event: MouseEvent) => {
-			if (window.innerWidth > 768) {
-				return;
-			}
-			if (
-				containerRef.current
-                && !containerRef.current.contains(event.target as Node)
-                && !modalRef.current?.open
-			) {
-				setOpenSidebar(false);
-			}
-		};
-
-		// Set your threshold here (e.g., 768 for small screens)
-		document.addEventListener('mousedown', handleClickOutside);
-
-		return () => {
-			document.removeEventListener('mousedown', handleClickOutside);
-		};
-	}, [setOpenSidebar, modalRef]);
+	}, []);
 
 	useEffect(() => {
 		if (!hasVisited) {
