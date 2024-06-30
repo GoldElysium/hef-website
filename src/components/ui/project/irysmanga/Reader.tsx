@@ -95,10 +95,8 @@ export default function Reader({
 
 		const position = clientX - left;
 		const threshold = width / 2;
-		let currentPage = page;
 		if (position < threshold) {
 			const diff = (pageLayout === 'ltr' || pageLayout === 'long') ? -1 : 1;
-			currentPage += diff;
 
 			handlePageNavigation(
 				page + diff,
@@ -110,7 +108,6 @@ export default function Reader({
 			);
 		} else {
 			const diff = (pageLayout === 'ltr' || pageLayout === 'long') ? 1 : -1;
-			currentPage += diff;
 
 			handlePageNavigation(
 				page + diff,
@@ -120,14 +117,6 @@ export default function Reader({
 				mangaLanguage,
 				manga,
 			);
-		}
-
-		if (pageLayout === 'long' && containerRef.current) {
-			const targetImg = pageRefs.current[currentPage];
-			if (targetImg) {
-				// eslint-disable-next-line no-param-reassign
-				containerRef.current.scrollTop = targetImg.offsetTop - containerRef.current.offsetTop;
-			}
 		}
 	};
 
@@ -140,7 +129,7 @@ export default function Reader({
 			}
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [chapter, pageLayout, fitMode, containerRef]);
+	}, [page, chapter, pageLayout, fitMode, containerRef]);
 
 	let displayedPages: React.JSX.Element[] = [];
 	if (mangaData.chapters[chapter]) {
