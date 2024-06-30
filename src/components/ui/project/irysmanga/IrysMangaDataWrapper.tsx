@@ -17,7 +17,7 @@ interface IProps {
 }
 
 const jura = Jura({
-	weight: ['500', '600', '700'],
+	weight: ['600', '700'],
 	subsets: ['latin'],
 });
 
@@ -54,10 +54,7 @@ async function fetchOptimizedImageURLs({ project }: IProps) {
 	return optimizedImages;
 }
 
-export default async function IrysMangaDataWrapper({
-	project,
-	lang,
-}: IProps) {
+export default async function IrysMangaDataWrapper({ project, lang }: IProps) {
 	const optimizedImages = await fetchOptimizedImageURLs({ project, lang });
 	const IrysManga = dynamic(() => import('./IrysManga'), { ssr: false });
 

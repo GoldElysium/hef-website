@@ -195,18 +195,18 @@ export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }:
 						setValue={setHeaderVisibility}
 					/>
 					<SettingButton
+						value={progressVisibility}
+						valueList={progressVisibilities}
+						// @ts-ignore
+						setValue={setProgressVisibility}
+					/>
+					<SettingButton
 						value={(resolvedTheme as ReaderTheme) ?? 'light'}
 						valueList={readerThemes}
 						onClick={() => setTheme(resolvedTheme === 'light' ? 'dark' : 'light')}
 						// @ts-ignore
 						setValue={() => {}}
 						label="theme"
-					/>
-					<SettingButton
-						value={progressVisibility}
-						valueList={progressVisibilities}
-						// @ts-ignore
-						setValue={setProgressVisibility}
 					/>
 				</div>
 			</div>
