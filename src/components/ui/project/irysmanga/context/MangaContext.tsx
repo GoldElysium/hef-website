@@ -70,8 +70,8 @@ export function MangaProvider({
 	const isBrowserWindowReady = () => typeof window !== 'undefined';
 
 	/**
-     * Grab settings from localStorage if set.
-     */
+	 * Grab settings from localStorage if set.
+	 */
 	function getSettings<T>(key: string, def: T): T {
 		// If for some reason local storage isn't available yet, just return the default values.
 		if (!isBrowserWindowReady()) {
@@ -115,22 +115,23 @@ export function MangaProvider({
 	const [manga, setManga] = useState<Manga>(getManga(devProps));
 
 	// Fetch the page/chapter from the URL, else use the default value of 0.
-	function getPageAndChapterFromHash() : number[] {
+	function getPageAndChapterFromHash(): number[] {
 		if (isBrowserWindowReady()) {
 			const { hash } = window.location;
 			const parts = hash.split('/');
 
 			const result = [0, 0];
 			if (parts.length === 2) {
-				const chapter = parseInt(parts[0].substring(1), 10);
-				const page = parseInt(parts[1], 10);
+				const chapter = parseInt(parts[0].substring(1), 10) - 1;
+				const page = parseInt(parts[1], 10) - 1;
 
 				result[0] = Number.isNaN(chapter) ? result[0] : chapter;
 				result[1] = Number.isNaN(page) ? result[1] : page;
 
 				const mangaData = getMangaDataOrThrow(manga, mangaLanguage);
-				result[0] = result[0] >= mangaData.chapterCount ? 0 : result[0];
-				result[1] = result[1] >= mangaData.chapters[result[0]].pageCount ? 0 : result[1];
+				result[0] = result[0] >= mangaData.chapterCount || result[0] < 0 ? 0 : result[0];
+				const invalidPage = result[1] >= mangaData.chapters[result[0]].pageCount || result[1] < 0;
+				result[1] = invalidPage ? 0 : result[1];
 			}
 
 			return result;
@@ -176,7 +177,7 @@ export function MangaProvider({
 	// Wrapped in useEffect to ensure that it only runs when page or chapter is updated.
 	// Also helps silence some spurious errors.
 	useEffect(() => {
-		router.replace(`#${chapter}/${page}`);
+		router.replace(`#${chapter + 1}/${page + 1}`);
 	}, [page, chapter, router]);
 
 	const contextValue = useMemo(

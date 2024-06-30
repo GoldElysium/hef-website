@@ -88,14 +88,14 @@ export default function KeyPressHandler({ setOpenSidebar, readerContainerRef, mo
 				}
 			}
 			if (event.key === ',') {
-				if (pageLayout === 'ltr') {
+				if (pageLayout === 'ltr' || pageLayout === 'long') {
 					handleChapterNavigation(setChapter, setPage, chapter - 1, mangaLanguage, manga);
 				} else {
 					handleChapterNavigation(setChapter, setPage, chapter + 1, mangaLanguage, manga);
 				}
 			}
 			if (event.key === '.') {
-				if (pageLayout === 'ltr') {
+				if (pageLayout === 'ltr' || pageLayout === 'long') {
 					handleChapterNavigation(setChapter, setPage, chapter + 1, mangaLanguage, manga);
 				} else {
 					handleChapterNavigation(setChapter, setPage, chapter - 1, mangaLanguage, manga);
@@ -160,7 +160,7 @@ export default function KeyPressHandler({ setOpenSidebar, readerContainerRef, mo
 				scrollDirectionRef.current = scrollDirection;
 				scrollIntervalRef.current = setInterval(() => {
 					// eslint-disable-next-line
-                    readerContainerRef.current!.scrollTop += scrollDirectionRef.current! * 10; // Adjust scrolling speed as needed
+					readerContainerRef.current!.scrollTop += scrollDirectionRef.current! * 10; // Adjust scrolling speed as needed
 				}, 10); // Adjust interval as needed for smoother scrolling
 			}
 		};

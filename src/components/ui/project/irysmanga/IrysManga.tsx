@@ -11,9 +11,6 @@ export default function IrysManga() {
 	const readerContainerRef = useRef(null);
 	const modalRef = useRef(null);
 
-	// Set a counter to detect click counts, necessary for closing the sidebar
-	// when clicked outside without triggering the page turning
-
 	return (
 		<div className="relative flex h-screen w-screen min-w-[310px] flex-row-reverse overflow-hidden bg-skin-background text-skin-text dark:bg-skin-background-dark dark:text-skin-text-dark">
 			<ReaderSidebar
