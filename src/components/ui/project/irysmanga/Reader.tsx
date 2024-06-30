@@ -34,7 +34,6 @@ export default function Reader({
 		setChapter,
 		chapter,
 		manga,
-		direction,
 		mangaLanguage,
 		optimizedImages,
 	} = useMangaContext();
@@ -67,10 +66,10 @@ export default function Reader({
 		}
 	};
 	const handleScrollTop = () => {
-		if (pageLayout !== 'single' && !pageScrolled.current) {
+		if (pageLayout === 'long' && !pageScrolled.current) {
 			setScrollTopToPage();
 		}
-		if (pageLayout === 'single') {
+		if (pageLayout !== 'long') {
 			setScrollTopToPage();
 		}
 		pageScrolled.current = false;
@@ -128,7 +127,7 @@ export default function Reader({
 		const threshold = width / 2;
 		scriptedScroll.current = true;
 		if (position < threshold) {
-			if (direction === 'ltr') {
+			if (pageLayout === 'ltr') {
 				handlePageNavigation(
 					page - 1,
 					pageLayout,
@@ -149,7 +148,7 @@ export default function Reader({
 					manga,
 				);
 			}
-		} else if (direction === 'ltr') {
+		} else if (pageLayout === 'ltr') {
 			handlePageNavigation(
 				page + 1,
 				pageLayout,
@@ -192,7 +191,7 @@ export default function Reader({
 		 */
 		const getClassNamesContainer = (i: number) => {
 			const blockStyle = (
-				pageLayout === 'single'
+				pageLayout !== 'long'
 					? {
 						block: i === page,
 						hidden: i !== page,
@@ -337,7 +336,7 @@ export default function Reader({
 					// We add this check as without it vertical scrolling can break. As such, this
 					// disables it if scrolling is required!
 					'justify-center':
-						pageLayout === 'single'
+						pageLayout !== 'long'
 						&& (pageRefs.current[page]
 							&& containerDimensions.height > pageRefs.current[page].clientHeight),
 				})}

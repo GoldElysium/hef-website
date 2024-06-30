@@ -12,7 +12,6 @@ import { useTheme } from 'next-themes';
 import SelectBox from './SelectBox';
 import { useMangaContext } from './context/MangaContext';
 import {
-	directions,
 	fitModes,
 	getMangaDataOrThrow,
 	headerVisibilities,
@@ -43,7 +42,6 @@ export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }:
 		fitMode,
 		readerLanguage,
 		mangaLanguage,
-		direction,
 		headerVisibility,
 		progressVisibility,
 		manga,
@@ -52,7 +50,6 @@ export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }:
 		setFitMode,
 		setReaderLanguage,
 		setMangaLanguage,
-		setDirection,
 		setHeaderVisibility,
 		setProgressVisibility,
 		setHasVisited,
@@ -75,8 +72,8 @@ export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }:
 			}
 			if (
 				containerRef.current
-				&& !containerRef.current.contains(event.target as Node)
-				&& !modalRef.current?.open
+                && !containerRef.current.contains(event.target as Node)
+                && !modalRef.current?.open
 			) {
 				setOpenSidebar(false);
 			}
@@ -122,7 +119,9 @@ export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }:
 				onClick={() => setOpenSidebar((curr) => !curr)}
 			>
 				<Bars3Icon
-					className={classNames('transition-all top-0 right-0 opacity-50 hover:opacity-100')}
+					className={classNames(
+						'transition-all top-0 right-0 opacity-50 hover:opacity-100',
+					)}
 					width={30}
 				/>
 			</div>
@@ -210,12 +209,6 @@ export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }:
 						setValue={setFitMode}
 					/>
 					<SettingButton
-						value={direction}
-						valueList={directions}
-						// @ts-ignore
-						setValue={setDirection}
-					/>
-					<SettingButton
 						value={headerVisibility}
 						valueList={headerVisibilities}
 						// @ts-ignore
@@ -226,7 +219,7 @@ export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }:
 						valueList={readerThemes}
 						onClick={() => setTheme(resolvedTheme === 'light' ? 'dark' : 'light')}
 						// @ts-ignore
-						setValue={() => { }}
+						setValue={() => {}}
 						label="theme"
 					/>
 					<SettingButton

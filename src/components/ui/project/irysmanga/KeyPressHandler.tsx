@@ -1,13 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import { useTheme } from 'next-themes';
 import { useMangaContext } from './context/MangaContext';
+import { getNextOption, handleChapterNavigation, handlePageNavigation } from './utils/helper';
 import {
-	getNextOption,
-	handleChapterNavigation,
-	handlePageNavigation,
-} from './utils/helper';
-import {
-	directions,
 	fitModes,
 	headerVisibilities,
 	languages,
@@ -21,24 +16,18 @@ interface IProps {
 	modalRef: React.RefObject<HTMLDialogElement>;
 }
 
-export default function KeyPressHandler({
-	setOpenSidebar,
-	readerContainerRef,
-	modalRef,
-}: IProps) {
+export default function KeyPressHandler({ setOpenSidebar, readerContainerRef, modalRef }: IProps) {
 	const {
 		setPage,
 		setChapter,
 		setPageLayout,
 		setFitMode,
-		setDirection,
 		setProgressVisibility,
 		setMangaLanguage,
 		setReaderLanguage,
 		page,
 		chapter,
 		pageLayout,
-		direction,
 		mangaLanguage,
 		manga,
 		setHeaderVisibility,
@@ -53,7 +42,7 @@ export default function KeyPressHandler({
 				return;
 			}
 			if (event.key === 'ArrowLeft') {
-				if (direction === 'ltr') {
+				if (pageLayout === 'ltr') {
 					handlePageNavigation(
 						page - 1,
 						pageLayout,
@@ -76,7 +65,7 @@ export default function KeyPressHandler({
 				}
 			}
 			if (event.key === 'ArrowRight') {
-				if (direction === 'ltr') {
+				if (pageLayout === 'ltr') {
 					handlePageNavigation(
 						page + 1,
 						pageLayout,
@@ -99,41 +88,17 @@ export default function KeyPressHandler({
 				}
 			}
 			if (event.key === ',') {
-				if (direction === 'ltr') {
-					handleChapterNavigation(
-						setChapter,
-						setPage,
-						chapter - 1,
-						mangaLanguage,
-						manga,
-					);
+				if (pageLayout === 'ltr') {
+					handleChapterNavigation(setChapter, setPage, chapter - 1, mangaLanguage, manga);
 				} else {
-					handleChapterNavigation(
-						setChapter,
-						setPage,
-						chapter + 1,
-						mangaLanguage,
-						manga,
-					);
+					handleChapterNavigation(setChapter, setPage, chapter + 1, mangaLanguage, manga);
 				}
 			}
 			if (event.key === '.') {
-				if (direction === 'ltr') {
-					handleChapterNavigation(
-						setChapter,
-						setPage,
-						chapter + 1,
-						mangaLanguage,
-						manga,
-					);
+				if (pageLayout === 'ltr') {
+					handleChapterNavigation(setChapter, setPage, chapter + 1, mangaLanguage, manga);
 				} else {
-					handleChapterNavigation(
-						setChapter,
-						setPage,
-						chapter - 1,
-						mangaLanguage,
-						manga,
-					);
+					handleChapterNavigation(setChapter, setPage, chapter - 1, mangaLanguage, manga);
 				}
 			}
 			if (event.key === 'm') {
@@ -150,9 +115,6 @@ export default function KeyPressHandler({
 			}
 			if (event.key === 's') {
 				setPageLayout((prev) => getNextOption(prev, pageLayouts));
-			}
-			if (event.key === 'l') {
-				setDirection((prev) => getNextOption(prev, directions));
 			}
 			if (event.key === 'p') {
 				setProgressVisibility((prev) => getNextOption(prev, progressVisibilities));
@@ -174,7 +136,6 @@ export default function KeyPressHandler({
 		};
 	}, [
 		chapter,
-		direction,
 		mangaLanguage,
 		manga,
 		page,
@@ -184,7 +145,6 @@ export default function KeyPressHandler({
 		setChapter,
 		setPage,
 		setHeaderVisibility,
-		setDirection,
 		setFitMode,
 		setMangaLanguage,
 		setReaderLanguage,
@@ -200,8 +160,7 @@ export default function KeyPressHandler({
 				scrollDirectionRef.current = scrollDirection;
 				scrollIntervalRef.current = setInterval(() => {
 					// eslint-disable-next-line
-                    readerContainerRef.current!.scrollTop +=
-                        scrollDirectionRef.current! * 10; // Adjust scrolling speed as needed
+                    readerContainerRef.current!.scrollTop += scrollDirectionRef.current! * 10; // Adjust scrolling speed as needed
 				}, 10); // Adjust interval as needed for smoother scrolling
 			}
 		};

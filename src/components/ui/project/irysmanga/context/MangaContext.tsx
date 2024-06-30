@@ -9,7 +9,6 @@ import {
 	HeaderVisibility,
 	Language,
 	Manga,
-	PageDirection,
 	PageLayout,
 	ProgressVisibility,
 	getMangaDataOrThrow,
@@ -35,9 +34,6 @@ interface MangaContextProps {
 
 	fitMode: FitMode;
 	setFitMode: React.Dispatch<React.SetStateAction<FitMode>>;
-
-	direction: PageDirection;
-	setDirection: React.Dispatch<React.SetStateAction<PageDirection>>;
 
 	headerVisibility: HeaderVisibility;
 	setHeaderVisibility: React.Dispatch<React.SetStateAction<HeaderVisibility>>;
@@ -106,11 +102,8 @@ export function MangaProvider({
 	const [mangaLanguage, setMangaLanguage] = useState<Language>(
 		getSettings('localMangaLanguage', lang),
 	);
-	const [pageLayout, setPageLayout] = useState<PageLayout>(
-		getSettings('localPageLayout', 'single'),
-	);
+	const [pageLayout, setPageLayout] = useState<PageLayout>(getSettings('localPageLayout', 'ltr'));
 	const [fitMode, setFitMode] = useState<FitMode>(getSettings('localFitMode', 'original'));
-	const [direction, setDirection] = useState<PageDirection>(getSettings('localDirection', 'ltr'));
 	const [headerVisibility, setHeaderVisibility] = useState<HeaderVisibility>(
 		getSettings('localHeaderVisibility', 'header-shown'),
 	);
@@ -161,7 +154,6 @@ export function MangaProvider({
 				localMangaLanguage: mangaLanguage,
 				localPageLayout: pageLayout,
 				localFitMode: fitMode,
-				localDirection: direction,
 				localHeaderVisibility: headerVisibility,
 				localProgressVisibility: progressVisibility,
 				localHasVisited: hasVisited,
@@ -174,7 +166,6 @@ export function MangaProvider({
 		mangaLanguage,
 		pageLayout,
 		fitMode,
-		direction,
 		headerVisibility,
 		progressVisibility,
 		hasVisited,
@@ -202,8 +193,6 @@ export function MangaProvider({
 			setPageLayout,
 			fitMode,
 			setFitMode,
-			direction,
-			setDirection,
 			headerVisibility,
 			setHeaderVisibility,
 			progressVisibility,
@@ -221,7 +210,6 @@ export function MangaProvider({
 			chapter,
 			pageLayout,
 			fitMode,
-			direction,
 			headerVisibility,
 			progressVisibility,
 			manga,

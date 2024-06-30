@@ -7,7 +7,6 @@ import {
 	ArrowLongRightIcon,
 } from '@heroicons/react/24/solid';
 import {
-	ArrowsRightLeftIcon,
 	ArrowRightIcon,
 	ArrowLeftIcon,
 	SunIcon,
@@ -37,7 +36,6 @@ type SettingIcons = {
 };
 
 const settingIcons: SettingIcons = {
-	single: <ArrowsRightLeftIcon className="setting-icon" />,
 	long: <ArrowsUpDownIcon className="setting-icon" />,
 	height: (
 		<div className="relative h-full min-h-[20px] w-[20px]">
@@ -66,7 +64,12 @@ const settingIcons: SettingIcons = {
 };
 
 export default function SettingButton({
-	value, valueList, setValue, label, disabled, onClick,
+	value,
+	valueList,
+	setValue,
+	label,
+	disabled,
+	onClick,
 }: IProps) {
 	const { t } = useTranslation('reader');
 	return (
