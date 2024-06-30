@@ -42,7 +42,7 @@ export default function KeyPressHandler({ setOpenSidebar, readerContainerRef, mo
 				return;
 			}
 			if (event.key === 'ArrowLeft') {
-				if (pageLayout === 'ltr') {
+				if (pageLayout === 'ltr' || pageLayout === 'long') {
 					handlePageNavigation(
 						page - 1,
 						pageLayout,
@@ -65,7 +65,7 @@ export default function KeyPressHandler({ setOpenSidebar, readerContainerRef, mo
 				}
 			}
 			if (event.key === 'ArrowRight') {
-				if (pageLayout === 'ltr') {
+				if (pageLayout === 'ltr' || pageLayout === 'long') {
 					handlePageNavigation(
 						page + 1,
 						pageLayout,

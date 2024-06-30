@@ -84,6 +84,9 @@ export default function Reader({
 			scriptedScroll.current = false;
 			return;
 		}
+		if (pageLayout !== 'long') {
+			return;
+		}
 		pageScrolled.current = true;
 		const containerRect = containerRef.current.getBoundingClientRect();
 		const containerMiddleY = (containerRect.top + containerRect.bottom) / 2;
@@ -127,7 +130,7 @@ export default function Reader({
 		const threshold = width / 2;
 		scriptedScroll.current = true;
 		if (position < threshold) {
-			if (pageLayout === 'ltr') {
+			if (pageLayout === 'ltr' || pageLayout === 'long') {
 				handlePageNavigation(
 					page - 1,
 					pageLayout,
@@ -148,7 +151,7 @@ export default function Reader({
 					manga,
 				);
 			}
-		} else if (pageLayout === 'ltr') {
+		} else if (pageLayout === 'ltr' || pageLayout === 'long') {
 			handlePageNavigation(
 				page + 1,
 				pageLayout,
