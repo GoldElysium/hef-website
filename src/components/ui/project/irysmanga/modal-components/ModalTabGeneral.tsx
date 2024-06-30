@@ -52,6 +52,10 @@ export default function ModalTabGeneral() {
 					label="programmers"
 					contributors={manga.contributors.filter((e) => e.role === 'developer')}
 				/>
+				<CreditBlock
+					label="special-thanks"
+					contributors={manga.contributors.filter((e) => e.role === 'special-thanks')}
+				/>
 			</div>
 			<FloatingDecoArtDraggable
 				src={bgDecoSrc[resolvedTheme as string]}

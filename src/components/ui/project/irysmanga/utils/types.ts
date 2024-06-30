@@ -15,7 +15,7 @@ export type MangaData = {
 
 export type Contributor = {
 	name: string;
-	role: 'organizer' | 'writer' | 'lead-artist' | 'artist' | 'translator' | 'developer';
+	role: 'organizer' | 'writer' | 'lead-artist' | 'artist' | 'translator' | 'developer' | 'special-thanks';
 	socials: {
 		platform: string;
 		link: string;
