@@ -27,11 +27,11 @@
 }
 
 .numberLabelContainerFadeLeft {
-    @apply bg-gradient-to-l from-[#a6adbb] from-[8%] to-transparent;
+    @apply bg-transparent dark:bg-transparent bg-gradient-to-l from-[color-mix(in_srgb,rgb(var(--color-secondary))_60%,white)] dark:from-[color-mix(in_srgb,rgb(var(--color-secondary-dark))_60%,white)] from-[8%] to-transparent
 }
 
 .numberLabelContainerFadeRight {
-    @apply bg-gradient-to-r from-[#a6adbb] from-[8%] to-transparent;
+    @apply bg-transparent dark:bg-transparent bg-gradient-to-r from-[color-mix(in_srgb,rgb(var(--color-secondary))_60%,white)] dark:from-[color-mix(in_srgb,rgb(var(--color-secondary-dark))_60%,white)] from-[8%] to-transparent
 }
 
 .numberLabel {
@@ -59,7 +59,7 @@
 }
 
 .progressSectionTooltip:hover {
-    @apply bg-[color-mix(in_srgb,rgb(var(--color-header))_50%,white)];
+    @apply bg-[color-mix(in_srgb,rgb(var(--color-header))_60%,white)];
 }
 
 .progressSectionTooltipActive {
