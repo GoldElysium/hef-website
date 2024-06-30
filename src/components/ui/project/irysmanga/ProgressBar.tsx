@@ -25,16 +25,12 @@ export default function ProgressBar() {
 	for (let i = 0; i < pageCount; i++) {
 		const isActive = i < page;
 		const isSelected = i === page;
-		let sectionClasses = styles.progressSectionTooltip;
+		let sectionClasses = classNames(styles.progressSectionTooltip, 'my-tooltip my-tooltip-top');
 		if (isActive) {
-			sectionClasses = sectionClasses.concat(
-				` ${styles.progressSectionTooltipActive}`,
-			);
+			sectionClasses = sectionClasses.concat(` ${styles.progressSectionTooltipActive}`);
 		}
 		if (isSelected) {
-			sectionClasses = sectionClasses.concat(
-				` ${styles.progressSectionTooltipSelected}`,
-			);
+			sectionClasses = sectionClasses.concat(` ${styles.progressSectionTooltipSelected}`);
 		}
 		pageSections.push(
 			// eslint-disable-next-line max-len
@@ -52,10 +48,8 @@ export default function ProgressBar() {
 	return (
 		<div
 			className={classNames(styles.progressOuterContainer, {
-				[styles.progressOuterContainerOpen]:
-					progressVisibility === 'progress-shown',
-				[styles.progressOuterContainerClose]:
-					progressVisibility === 'progress-hidden',
+				[styles.progressOuterContainerOpen]: progressVisibility === 'progress-shown',
+				[styles.progressOuterContainerClose]: progressVisibility === 'progress-hidden',
 			})}
 			onMouseEnter={() => setOpenProgress(true)}
 			onMouseLeave={() => setOpenProgress(false)}
@@ -81,9 +75,7 @@ export default function ProgressBar() {
 					</span>
 				</div>
 				<div className={styles.progressBarContainer}>
-					<div className={styles.progressSectionsContainer}>
-						{pageSections}
-					</div>
+					<div className={styles.progressSectionsContainer}>{pageSections}</div>
 				</div>
 				<div
 					className={classNames(styles.numberLabelContainer, {

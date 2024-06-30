@@ -262,3 +262,110 @@ SOFTWARE.
         background-position: top right;
     }
 }
+
+.my-tooltip {
+    position: relative;
+    display: inline-block;
+    --tooltip-offset: calc(100% + 1px + var(--tooltip-tail, 0px));
+}
+.my-tooltip:before {
+    position: absolute;
+    pointer-events: none;
+    z-index: 1;
+    content: var(--tw-content);
+    --tw-content: attr(data-tip);
+}
+.my-tooltip:before,
+.my-tooltip-top:before {
+    transform: translateX(-50%);
+    top: auto;
+    left: 50%;
+    right: auto;
+    bottom: var(--tooltip-offset);
+}
+.my-tooltip {
+    position: relative;
+    display: inline-block;
+    text-align: center;
+    --tooltip-tail: 0.1875rem /* 3px */;
+    --tooltip-color: rgb(var(--color-background));
+    --tooltip-text-color: rgb(var(--color-text));
+    --tooltip-tail-offset: calc(100% + 0.0625rem /* 1px */ - var(--tooltip-tail));
+}
+
+.dark .my-tooltip {
+    --tooltip-color: rgb(var(--color-background-dark));
+    --tooltip-text-color: rgb(var(--color-text-dark));
+}
+
+.my-tooltip:before,
+.my-tooltip:after {
+    opacity: 0;
+}
+.my-tooltip:before,
+.my-tooltip:after {
+    opacity: 0;
+}
+.my-tooltip:after {
+    position: absolute;
+    position: absolute;
+    content: '';
+    border-style: solid;
+    border-width: var(--tooltip-tail, 0);
+    width: 0;
+    height: 0;
+    display: block;
+}
+.my-tooltip:before {
+    max-width: 20rem /* 320px */;
+    border-radius: 0.25rem /* 4px */;
+    padding-left: 0.5rem /* 8px */;
+    padding-right: 0.5rem /* 8px */;
+    padding-top: 0.25rem /* 4px */;
+    padding-bottom: 0.25rem /* 4px */;
+    font-size: 0.875rem /* 14px */;
+    line-height: 1.25rem /* 20px */;
+    background-color: var(--tooltip-color);
+    color: var(--tooltip-text-color);
+    font-weight: 700;
+    width: max-content;
+}
+.my-tooltip.my-tooltip-open:before {
+    opacity: 1;
+}
+.my-tooltip.my-tooltip-open:after {
+    opacity: 1;
+}
+.my-tooltip:hover:before {
+    opacity: 1;
+}
+.my-tooltip:hover:after {
+    opacity: 1;
+}
+.my-tooltip:has(:focus-visible):after,
+.my-tooltip:has(:focus-visible):before {
+    opacity: 1;
+}
+.my-tooltip:has(:focus-visible):after,
+.my-tooltip:has(:focus-visible):before {
+    opacity: 1;
+}
+.my-tooltip:not([data-tip]):hover:before,
+.my-tooltip:not([data-tip]):hover:after {
+    visibility: hidden;
+    opacity: 0;
+}
+.my-tooltip:not([data-tip]):hover:before,
+.my-tooltip:not([data-tip]):hover:after {
+    visibility: hidden;
+    opacity: 0;
+}
+.my-tooltip:after,
+.my-tooltip-top:after {
+    transform: translateX(-50%);
+    border-color: var(--tooltip-color) transparent transparent transparent;
+    top: auto;
+    left: 50%;
+    right: auto;
+    bottom: var(--tooltip-tail-offset);
+}
