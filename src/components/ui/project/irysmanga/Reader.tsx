@@ -40,7 +40,7 @@ export default function Reader({
 		Array(mangaData.chapters[chapter].pageCount).fill(true),
 	);
 	const [imageSizes, setImageSizes] = useState(
-		Array(mangaData.chapters[chapter].pageCount).fill({ width: 0, height: 0 }),
+		Array(mangaData.chapters[chapter].pageCount).fill({ width: 0, height: 1080 }),
 	);
 	const [containerDimensions, setContainerDimensions] = useState({
 		width: 0,
@@ -260,9 +260,8 @@ export default function Reader({
 								.map((curr, index) => (index === i ? false : curr)));
 
 							const originalImage = ele.currentTarget;
-							setImageSizes((currentImageSizes) => currentImageSizes.map((curr, idx) =>
-								// eslint-disable-next-line max-len, implicit-arrow-linebreak
-								(idx === i ? { width: originalImage.naturalWidth, height: originalImage.naturalHeight } : curr)));
+							// eslint-disable-next-line max-len, implicit-arrow-linebreak
+							setImageSizes((currentImageSizes) => currentImageSizes.map((curr, idx) => (idx === i ? { width: originalImage.naturalWidth, height: originalImage.naturalHeight } : curr)));
 						}}
 					/>
 				</div>
