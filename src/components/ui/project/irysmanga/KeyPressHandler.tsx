@@ -45,7 +45,6 @@ export default function KeyPressHandler({ setOpenSidebar, readerContainerRef, mo
 				if (pageLayout === 'ltr' || pageLayout === 'long') {
 					handlePageNavigation(
 						page - 1,
-						pageLayout,
 						setPage,
 						setChapter,
 						chapter,
@@ -55,7 +54,6 @@ export default function KeyPressHandler({ setOpenSidebar, readerContainerRef, mo
 				} else {
 					handlePageNavigation(
 						page + 1,
-						pageLayout,
 						setPage,
 						setChapter,
 						chapter,
@@ -68,7 +66,6 @@ export default function KeyPressHandler({ setOpenSidebar, readerContainerRef, mo
 				if (pageLayout === 'ltr' || pageLayout === 'long') {
 					handlePageNavigation(
 						page + 1,
-						pageLayout,
 						setPage,
 						setChapter,
 						chapter,
@@ -78,7 +75,6 @@ export default function KeyPressHandler({ setOpenSidebar, readerContainerRef, mo
 				} else {
 					handlePageNavigation(
 						page - 1,
-						pageLayout,
 						setPage,
 						setChapter,
 						chapter,
@@ -151,6 +147,7 @@ export default function KeyPressHandler({ setOpenSidebar, readerContainerRef, mo
 		setOpenSidebar,
 		setPageLayout,
 		setProgressVisibility,
+		setTheme,
 		resolvedTheme,
 		modalRef,
 	]);
