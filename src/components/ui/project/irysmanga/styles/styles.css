@@ -7,7 +7,9 @@
     content: ': ';
     margin-left: 0.25rem;
 }
-
+.kb-list > li {
+    @apply mb-1;
+}
 .disc-list > li > span {
     @apply font-bold underline underline-offset-2;
 }
