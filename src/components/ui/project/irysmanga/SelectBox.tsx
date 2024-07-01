@@ -64,7 +64,7 @@ function SelectBox({ value, label }: SelectBoxProps) {
 
 			{/* eslint-disable-next-line max-len */}
 			{/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
-			<div className="h-full grow" onClick={() => setOpen(!open)}>
+			<button className="h-full grow text-left" onClick={() => setOpen(!open)} type="button" aria-label={`Select ${label}`}>
 				<Select
 					value={options[value]}
 					onChange={(selectedOption) => handleSelectValue(parseInt(selectedOption!.value, 10))}
@@ -76,6 +76,7 @@ function SelectBox({ value, label }: SelectBoxProps) {
 					classNamePrefix="react-select"
 					className="h-full grow"
 					instanceId={useId()}
+					tabIndex={-1}
 					classNames={{
 						valueContainer: () => 'w-full',
 						control: () => 'rounded-md w-full h-full px-2 hover:cursor-pointer bg-skin-secondary dark:bg-skin-secondary-dark text-skin-secondary-foreground transition-all hover:bg-[color-mix(in_srgb,rgb(var(--color-secondary))_90%,black)] dark:text-skin-secondary-foreground-dark dark:hover:bg-[color-mix(in_srgb,rgb(var(--color-secondary-dark))_90%,black)]',
@@ -98,7 +99,7 @@ function SelectBox({ value, label }: SelectBoxProps) {
 						}),
 					}}
 				/>
-			</div>
+			</button>
 
 			<button
 				className={nextButtonClasses}
