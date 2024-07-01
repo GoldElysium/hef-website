@@ -86,17 +86,18 @@ export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }:
 	return (
 		<>
 			{/* This is a hamburger menu if both the header and the menu is closed. */}
-			{/* eslint-disable-next-line max-len */}
-			{/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
-			<div
+			<button
+				type="button"
+				aria-label="Open the sidebar"
 				className={classNames(
-					'z-10 absolute right-4 top-4 w-[60px] h-[60px] cursor-pointer flex justify-end items-start',
+					'z-10 absolute right-4 top-4 cursor-pointer flex justify-end items-start',
 					{
 						hidden: openSidebar || headerVisibility === 'header-shown',
 						block: !(openSidebar || headerVisibility === 'header-shown'),
 					},
 				)}
 				onClick={() => setOpenSidebar((curr) => !curr)}
+				disabled={openSidebar}
 			>
 				<Bars3Icon
 					className={classNames(
@@ -104,7 +105,7 @@ export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }:
 					)}
 					width={30}
 				/>
-			</div>
+			</button>
 
 			<div
 				className={classNames(styles.fakeSidebarContainer, {
@@ -127,11 +128,16 @@ export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }:
 							<BookOpenIcon width={30} />
 							<strong className="whitespace-nowrap">{mangaData.title}</strong>
 						</div>
-						<XMarkIcon
+						<button
+							type="button"
+							aria-label="Close the sidebar"
 							onClick={() => setOpenSidebar(false)}
-							className={styles.xButton}
-							width={30}
-						/>
+						>
+							<XMarkIcon
+								className={styles.xButton}
+								width={30}
+							/>
+						</button>
 					</div>
 					<div className="flex items-center gap-1">
 						<DocumentIcon width={30} />
@@ -205,7 +211,7 @@ export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }:
 						valueList={readerThemes}
 						onClick={() => setTheme(resolvedTheme === 'light' ? 'dark' : 'light')}
 						// @ts-ignore
-						setValue={() => {}}
+						setValue={() => { }}
 						label="theme"
 					/>
 				</div>

@@ -7,7 +7,7 @@
 }
 
 .sidebarContainerHidden {
-    @apply translate-x-full opacity-0;
+    @apply translate-x-full opacity-0 invisible;
 }
 
 /* Need this to be hidden on small viewports to remove it from the flow */

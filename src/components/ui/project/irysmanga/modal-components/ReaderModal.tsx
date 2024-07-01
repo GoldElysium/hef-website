@@ -21,12 +21,11 @@ export default function ReaderModal({ modalRef }: IProps) {
 	const { readerLanguage, setReaderLanguage } = useMangaContext();
 	const options = ['General', 'Story', 'Reader', 'Lisences'];
 	return (
-		<dialog id="info_modal" className="modal" ref={modalRef}>
+		<dialog id="info_modal" className="modal invisible bg-gradient-to-r" ref={modalRef}>
 			<div className="modal-box relative flex h-[90%] min-w-[50%] max-w-[70%] flex-col justify-between overflow-hidden">
 				<XMarkIcon
-					onClick={() => modalRef.current?.close()}
 					className={classNames(styles.xButton, 'absolute right-4 top-4')}
-					width={30}
+					onClick={() => modalRef.current?.close()}
 				/>
 				<div className="flex max-h-[87%] grow flex-col">
 					<div className="tabs-lifted flex self-center">

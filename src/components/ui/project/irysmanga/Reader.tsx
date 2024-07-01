@@ -47,7 +47,7 @@ export default function Reader({
 		Array(mangaData.chapters[chapter].pageCount).fill(true),
 	);
 	const [imageSizes, setImageSizes] = useState(
-		Array(mangaData.chapters[chapter].pageCount).fill({ width: 0, height: 1080 }),
+		Array(mangaData.chapters[chapter].pageCount).fill({ width: 0, height: 0 }),
 	);
 	const [containerDimensions, setContainerDimensions] = useState({
 		width: 0,
@@ -104,8 +104,9 @@ export default function Reader({
 	const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
 		const { clientX, target } = event;
 		const { left, width } = (target as HTMLElement).getBoundingClientRect();
+		const MOBILE_PAGE_WIDTH = 768;
 
-		if (window.innerWidth <= 768) {
+		if (window.innerWidth <= MOBILE_PAGE_WIDTH) {
 			if (openSidebar) {
 				setOpenSidebar(false);
 				return;
