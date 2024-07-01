@@ -47,7 +47,7 @@ export default function Reader({
 		Array(mangaData.chapters[chapter].pageCount).fill(true),
 	);
 	const [imageSizes, setImageSizes] = useState(
-		Array(mangaData.chapters[chapter].pageCount).fill({ width: 0, height: 1080 }),
+		Array(mangaData.chapters[chapter].pageCount).fill({ width: 0, height: 0 }),
 	);
 	const [containerDimensions, setContainerDimensions] = useState({
 		width: 0,
