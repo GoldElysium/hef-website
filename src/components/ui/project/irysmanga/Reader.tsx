@@ -70,6 +70,10 @@ export default function Reader({
 			return;
 		}
 
+		if (pageLayout !== 'long') {
+			return;
+		}
+
 		isScrollCausedByUserScroll.current = true;
 
 		const containerRect = containerRef.current.getBoundingClientRect();
