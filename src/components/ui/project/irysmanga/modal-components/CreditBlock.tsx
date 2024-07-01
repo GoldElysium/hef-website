@@ -5,6 +5,7 @@ import {
 	LightBulbIcon,
 	PaintBrushIcon,
 	PencilIcon,
+	StarIcon,
 } from '@heroicons/react/24/outline';
 import { Contributor } from '../utils/types';
 
@@ -16,6 +17,7 @@ const contributorIcons: { [key: string]: JSX.Element } = {
 	artists: <PaintBrushIcon width={iconWidth} />,
 	translators: <LanguageIcon width={iconWidth} />,
 	programmers: <CommandLineIcon width={iconWidth} />,
+	'special-thanks': <StarIcon width={iconWidth} />,
 };
 
 interface IProps {

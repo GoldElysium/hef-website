@@ -63,6 +63,10 @@ export default function ModalTabGeneral() {
 					className="absolute right-0 top-[5%] z-0 w-1/2 opacity-50 lg:max-w-[200px]"
 					containerRef={containerRef}
 				/>
+				<CreditBlock
+					label="special-thanks"
+					contributors={manga.contributors.filter((e) => e.role === 'special-thanks')}
+				/>
 			</div>
 		</ModalTabContent>
 	);

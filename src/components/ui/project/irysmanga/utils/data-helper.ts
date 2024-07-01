@@ -154,6 +154,11 @@ function getDummyManga(): Manga {
 					},
 				],
 			},
+			{
+				name: 'Test7',
+				role: 'special-thanks',
+				socials: [],
+			},
 		],
 		data: {
 			en: tmpMangaData[0],

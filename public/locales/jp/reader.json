@@ -32,7 +32,8 @@
         "translators": "翻訳者",
         "programmers": "プログラマー",
         "organizers": "主催者",
-        "lead-artists": "リードアーティスト"
+        "lead-artists": "リードアーティスト",
+        "special-thanks": "スペシャルサンクス"
     },
     "modal-story": {
         "greeting": "ストーリー",
