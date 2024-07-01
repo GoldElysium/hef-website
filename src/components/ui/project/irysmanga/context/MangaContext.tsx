@@ -103,7 +103,7 @@ export function MangaProvider({
 		getSettings('localMangaLanguage', lang),
 	);
 	const [pageLayout, setPageLayout] = useState<PageLayout>(getSettings('localPageLayout', 'ltr'));
-	const [fitMode, setFitMode] = useState<FitMode>(getSettings('localFitMode', 'original'));
+	const [fitMode, setFitMode] = useState<FitMode>(getSettings('localFitMode', 'fit-both'));
 	const [headerVisibility, setHeaderVisibility] = useState<HeaderVisibility>(
 		getSettings('localHeaderVisibility', 'header-shown'),
 	);

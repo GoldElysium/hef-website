@@ -43,7 +43,7 @@ export default function ReaderHeader({ openSidebar, setOpenSidebar }: Props) {
 				ref={containerRef}
 			>
 				<div className="flex items-center gap-2">
-					<Link href="/">
+					<Link href="/" tabIndex={headerVisibility === 'header-shown' ? 0 : -1}>
 						<Icon />
 					</Link>
 					<div className={styles.infoBadge}>
@@ -63,17 +63,23 @@ export default function ReaderHeader({ openSidebar, setOpenSidebar }: Props) {
 							{`${page + 1} / ${currentChapter.pageCount}`}
 						</span>
 					</div>
-					<Bars3Icon
-						className={classNames(
-							'transition-all cursor-pointer hover:opacity-100 z-10',
-							{
-								'opacity-0': openSidebar,
-								'opacity-60': !openSidebar,
-							},
-						)}
+					<button
+						type="button"
+						aria-label="Open the sidebar"
 						onClick={() => setOpenSidebar((curr) => !curr)}
-						width={openSidebar ? 0 : 30}
-					/>
+						disabled={openSidebar || headerVisibility === 'header-hidden'}
+					>
+						<Bars3Icon
+							className={classNames(
+								'transition-all cursor-pointer hover:opacity-100 z-10',
+								{
+									'opacity-0': openSidebar,
+									'opacity-60': !openSidebar,
+								},
+							)}
+							width={openSidebar ? 0 : 30}
+						/>
+					</button>
 				</div>
 			</div>
 		</>

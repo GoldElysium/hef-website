@@ -20,7 +20,9 @@ export default function ReaderModal({ modalRef }: IProps) {
 	const { t } = useTranslation('reader');
 	const options = ['General', 'Story', 'Reader'];
 	return (
-		<dialog id="info_modal" className="modal bg-gradient-to-r" ref={modalRef}>
+		// The "invisible" stops tabbing going to invisible elements while the modal is hidden.
+		// It seems to work fine when it's shown.
+		<dialog id="info_modal" className="modal invisible bg-gradient-to-r" ref={modalRef}>
 			<div className="modal-box flex h-[90%] min-w-[50%] max-w-[70%] flex-col justify-between overflow-hidden">
 				<div className="flex max-h-[87%] grow flex-col">
 					<div className="tabs-lifted flex self-center">
