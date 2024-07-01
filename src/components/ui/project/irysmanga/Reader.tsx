@@ -104,8 +104,9 @@ export default function Reader({
 	const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
 		const { clientX, target } = event;
 		const { left, width } = (target as HTMLElement).getBoundingClientRect();
+		const MOBILE_PAGE_WIDTH = 768;
 
-		if (window.innerWidth <= 768) {
+		if (window.innerWidth <= MOBILE_PAGE_WIDTH) {
 			if (openSidebar) {
 				setOpenSidebar(false);
 				return;

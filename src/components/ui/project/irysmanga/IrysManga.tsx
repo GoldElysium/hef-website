@@ -6,7 +6,16 @@ import ReaderSidebar from './ReaderSidebar';
 import KeyPressHandler from './KeyPressHandler';
 
 export default function IrysManga() {
-	const [openSidebar, setOpenSidebar] = useState(true);
+	const [openSidebar, setOpenSidebar] = useState((() => {
+		if (window) {
+			const MOBILE_PAGE_WIDTH = 768;
+			const { innerWidth } = window;
+
+			return innerWidth >= MOBILE_PAGE_WIDTH;
+		}
+
+		return true;
+	})());
 
 	const readerContainerRef = useRef(null);
 	const modalRef = useRef(null);
