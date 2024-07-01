@@ -57,7 +57,13 @@ function SelectBox({ value, label }: SelectBoxProps) {
 				aria-label="left-page"
 				type="button"
 				onClick={() => handleSelectValue(value - 1)}
-				disabled={value === 0}
+				disabled={(() => {
+					if (label === 'page') {
+						return value === 0 && chapter === 0;
+					}
+
+					return (value === 0);
+				})()}
 			>
 				<ChevronLeftIcon className="size-5" />
 			</button>
@@ -106,7 +112,15 @@ function SelectBox({ value, label }: SelectBoxProps) {
 				aria-label="right-page"
 				type="button"
 				onClick={() => handleSelectValue(value + 1)}
-				disabled={value === maxValue - 1}
+				disabled={(() => {
+					if (label === 'page') {
+						return (
+							((value + 1) === maxValue) && (chapter + 1) === mangaData.chapterCount
+						);
+					}
+
+					return ((value + 1) === maxValue);
+				})()}
 			>
 				<ChevronRightIcon width={20} />
 			</button>
