@@ -181,7 +181,7 @@ function getDummyManga(): Manga {
 					storyGreeting: 'ストーリー',
 					storyContent: '大きなミスをおかしてしまったグッドガイリスは彼の一番ライバルであるバッドガイリスとザ・バックルームに囚われました。新たな牢屋の謎を解かなければいけない二人は、果たしてどのような展開が待っているのだろうか。二人の間に感情が芽生えるのか、それとも希望なき牢屋の中に永遠に彷徨うのだろうか。',
 					storyImage: '/assets/irysmanga/other/backroom.png',
-					storyImageCaption: '(In Japanese) Good and Bad GuyRys last seen in the Backrooms',
+					storyImageCaption: 'ザ・バックルームで最後に姿を確認できましたグッドガイリスとバッドガイリス',
 					readerGreeting: 'IrySテーマのマンガリーダーへようこそ！',
 					readerIntro: 'マンガを表示するために、私たちは独自のIrysテーマのリーダーを作成しました!ここでは、使い始めるための簡単なガイドを提供し、読書体験を最大限に活用する方法をお伝えします。',
 				},
