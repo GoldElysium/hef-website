@@ -10,7 +10,7 @@ export default function ModalTabStory() {
 	return (
 		<ModalTabContent>
 			<h1 className="mb-4 text-4xl font-bold">{modalData.storyGreeting}</h1>
-			<p className="mb-4">{modalData.storyContent}</p>
+			<p className="mb-4 whitespace-pre-line">{modalData.storyContent}</p>
 			<figure>
 				<Image
 					src={modalData.storyImage}

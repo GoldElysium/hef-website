@@ -27,7 +27,7 @@ export default function ModalTabGeneral() {
 				{' '}
 				<SparklesIcon width="2.5rem" />
 			</h1>
-			<p className="mb-4">{modalData.generalEssay}</p>
+			<p className="mb-4 whitespace-pre-line">{modalData.generalEssay}</p>
 			<div className="relative">
 				<h2 className="mb-4 text-3xl font-bold underline">{t('credits')}</h2>
 				{

@@ -167,7 +167,7 @@ function getDummyManga(): Manga {
 			data: {
 				en: {
 					generalGreeting: 'HiRyS! Happy 3rd Anniversary!',
-					generalEssay: 'For 3 years, you\'ve given us IRyStocrats countless memories and special moments - from funny moments in streams, beautiful moments in karaokes, to mesmerizing moments in concerts! As always, we want to show our gratitude by gathering IRyStocrats together to participate in fan projects dedicated to you. For this year, we have created something we know that you\'ll truly love. That\'s right! BOYS\' LO- "Bromance" manga! We truly hope that you and the IRyStocrats enjoy these 3 chapters of "bromance"! (PS: Don\'t worry. The manga isn\'t actually BL. You\'re safe to show this on stream xD)',
+					generalEssay: 'For 3 years, you\'ve given us IRyStocrats countless memories and special moments - from funny moments in streams, beautiful moments in karaokes, to mesmerizing moments in concerts! As always, we want to show our gratitude by gathering IRyStocrats together to participate in fan projects dedicated to you. For this year, we have created something we know that you\'ll truly love. That\'s right! BOYS\' LO- "Bromance" manga! We truly hope that you and the IRyStocrats enjoy these 3 chapters of "bromance"! \n(PS: Don\'t worry. The manga isn\'t actually BL. You\'re safe to show this on stream xD)',
 					storyGreeting: 'Story',
 					storyContent: 'Having made a crucial mistake with IRyS, Good GuyRys finds himself trapped in the Backrooms with his fiercest rival, Bad GuyRyS. Together, the two must solve the mystery of their new prison. Could the two of them set aside the passionate flames burning between them, or will they let themselves be forever trapped without Hope.',
 					storyImage: '/assets/irysmanga/other/backroom.png',
@@ -177,7 +177,7 @@ function getDummyManga(): Manga {
 				},
 				jp: {
 					generalGreeting: '三周年おめでたいRyS!',
-					generalEssay: '三年間、配信中の面白い場面と、カラオケ中の美しいひと時と、ライブ中の魅力的な光景などなど数えきれないほどの思い出と特別な瞬間が沢山ありましたね！今回も、あなたに感謝の気持ちを伝えるため、IRystocratsが集まって、ファン企画を立ちました。今年は、IRySなら絶対好き！っと確信したモノを作って参りました。そう！B...じゃなくて、「男の友情」の漫画！IRySもIRyStocratsも、このブロマンス漫画を楽しんでいただけると幸いです！（PS：ガチもんのBLじゃないから配信に映しても大丈夫ですよXD）',
+					generalEssay: '三年間、配信中の面白い場面と、カラオケ中の美しいひと時と、ライブ中の魅力的な光景などなど数えきれないほどの思い出と特別な瞬間が沢山ありましたね！今回も、あなたに感謝の気持ちを伝えるため、IRyStocratsが集まって、ファン企画を立ちました。今年は、IRySなら絶対好き！っと確信したモノを作って参りました。そう！B...じゃなくて、「男の友情」の漫画！IRySもIRyStocratsも、このブロマンス漫画を楽しんでいただけると幸いです！\n（PS：ガチもんのBLじゃないから配信に映しても大丈夫ですよXD）',
 					storyGreeting: 'ストーリー',
 					storyContent: '大きなミスをおかしてしまったグッドガイリスは彼の一番ライバルであるバッドガイリスとザ・バックルームに囚われました。新たな牢屋の謎を解かなければいけない二人は、果たしてどのような展開が待っているのだろうか。二人の間に感情が芽生えるのか、それとも希望なき牢屋の中に永遠に彷徨うのだろうか。',
 					storyImage: '/assets/irysmanga/other/backroom.png',
