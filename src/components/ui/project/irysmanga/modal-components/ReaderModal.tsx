@@ -10,7 +10,7 @@ import { getNextOption } from '../utils/helper';
 import { useMangaContext } from '../context/MangaContext';
 import ThemeController from './ThemeController';
 import styles from '../styles/Sidebar.module.css';
-import ModalTabLisences from './ModalTabLisences';
+import ModalTabLicences from './ModalTabLicences';
 
 interface IProps {
 	modalRef: RefObject<HTMLDialogElement>;
@@ -19,7 +19,7 @@ interface IProps {
 export default function ReaderModal({ modalRef }: IProps) {
 	const [selected, setSelected] = useState('General');
 	const { readerLanguage, setReaderLanguage } = useMangaContext();
-	const options = ['General', 'Story', 'Reader', 'Lisences'];
+	const options = ['General', 'Story', 'Reader', 'Licences'];
 	return (
 		<dialog id="info_modal" className="modal invisible bg-gradient-to-r" ref={modalRef}>
 			<div className="modal-box relative flex h-[90%] min-w-[50%] max-w-[70%] flex-col justify-between overflow-hidden">
@@ -54,7 +54,7 @@ export default function ReaderModal({ modalRef }: IProps) {
 					{selected === 'General' && <ModalTabGeneral />}
 					{selected === 'Story' && <ModalTabStory />}
 					{selected === 'Reader' && <ModalTabReader />}
-					{selected === 'Lisences' && <ModalTabLisences />}
+					{selected === 'Licences' && <ModalTabLicences />}
 				</div>
 				<div className="modal-action flex items-center justify-between">
 					<div className="self-start">
