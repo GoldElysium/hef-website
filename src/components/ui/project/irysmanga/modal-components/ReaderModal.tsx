@@ -22,13 +22,20 @@ export default function ReaderModal({ modalRef }: IProps) {
 	const options = ['General', 'Story', 'Reader', 'Licences'];
 	return (
 		<dialog id="info_modal" className="modal invisible bg-gradient-to-r" ref={modalRef}>
-			<div className="modal-box relative flex h-[90%] min-w-[50%] max-w-[70%] flex-col justify-between overflow-hidden">
-				<XMarkIcon
-					className={classNames(styles.xButton, 'absolute right-4 top-4')}
+			<div className="modal-box relative flex max-h-[85%] min-h-[300px] min-w-[50%] max-w-[80%] flex-col justify-between overflow-hidden">
+				<button
+					className="absolute right-4 top-4"
+					type="button"
+					aria-label="Close the modal"
 					onClick={() => modalRef.current?.close()}
-				/>
+				>
+					<XMarkIcon
+						className={classNames(styles.xButton)}
+						width={30}
+					/>
+				</button>
 				<div className="flex max-h-[87%] grow flex-col">
-					<div className="tabs-lifted flex self-center">
+					<div className="flex min-h-[30px] self-center ">
 						<ModalTab
 							label={options[0]}
 							selected={selected}

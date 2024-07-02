@@ -1,3 +1,5 @@
+import styles from '../styles/Modal.module.css';
+
 interface IProps {
 	label: string;
 	selected: string;
@@ -10,7 +12,7 @@ function ModalTab({ label, selected, setSelected }: IProps) {
 			type="radio"
 			name="my_tabs"
 			role="tab"
-			className="tab"
+			className={styles.modalTab}
 			aria-label={label}
 			checked={selected === label}
 			value={label}
