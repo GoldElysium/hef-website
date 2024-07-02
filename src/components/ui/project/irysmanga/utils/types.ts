@@ -28,6 +28,7 @@ export type ModalData = {
 	storyGreeting: string;
 	storyContent: string;
 	storyImage: string;
+	storyImageCaption: string;
 	readerGreeting: string;
 	readerIntro: string;
 };
