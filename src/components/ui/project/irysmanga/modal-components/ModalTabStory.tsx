@@ -1,24 +1,26 @@
-import useTranslation from '@/lib/i18n/client';
 import Image from 'next/image';
 import ModalTabContent from './ModalTabContent';
+import { useMangaContext } from '../context/MangaContext';
+import { getLocalisedModalData, getModalDataRoot } from '../utils/types';
 
 export default function ModalTabStory() {
-	const { t } = useTranslation('reader', 'modal-story');
+	const { manga, readerLanguage } = useMangaContext();
+	const modalData = getLocalisedModalData(getModalDataRoot(manga), readerLanguage);
 
 	return (
 		<ModalTabContent>
-			<h1 className="mb-4 text-4xl font-bold">{t('greeting')}</h1>
-			<p className="mb-4">{t('content')}</p>
+			<h1 className="mb-4 text-4xl font-bold">{modalData.storyGreeting}</h1>
+			<p className="mb-4">{modalData.storyContent}</p>
 			<figure>
 				<Image
-					src="/assets/irysmanga/other/backroom.png"
+					src={modalData.storyImage}
 					alt="backroom image"
 					width={1919}
 					height={1079}
 					className="rounded-lg"
 				/>
 				<figcaption className="text-center">
-					Good and Bad GuyRys last seen in the Backrooms
+					{modalData.storyImageCaption}
 				</figcaption>
 			</figure>
 		</ModalTabContent>

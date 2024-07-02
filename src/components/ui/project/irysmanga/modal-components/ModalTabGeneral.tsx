@@ -6,6 +6,7 @@ import CreditBlock from './CreditBlock';
 import ModalTabContent from './ModalTabContent';
 import { useMangaContext } from '../context/MangaContext';
 import FloatingDecoArtDraggable from './FloatingDecoArtDraggable';
+import { getLocalisedModalData, getModalDataRoot } from '../utils/types';
 
 const bgDecoSrc: { [key: string]: string } = {
 	dark: '/assets/irysmanga/chibi/keychainrys.png',
@@ -13,19 +14,20 @@ const bgDecoSrc: { [key: string]: string } = {
 };
 
 export default function ModalTabGeneral() {
-	const { manga } = useMangaContext();
+	const { manga, readerLanguage } = useMangaContext();
 	const { t } = useTranslation('reader', 'modal-general');
 	const { resolvedTheme } = useTheme();
+	const modalData = getLocalisedModalData(getModalDataRoot(manga), readerLanguage);
 
 	const containerRef = useRef<HTMLDivElement>(null);
 	return (
 		<ModalTabContent ref={containerRef}>
 			<h1 className="mb-4 flex items-center gap-1 text-4xl font-bold">
-				{t('greeting')}
+				{modalData.generalGreeting}
 				{' '}
 				<SparklesIcon width="2.5rem" />
 			</h1>
-			<p className="mb-4">{t('essay')}</p>
+			<p className="mb-4">{modalData.generalEssay}</p>
 			<div className="relative">
 				<h2 className="mb-4 text-3xl font-bold underline">{t('credits')}</h2>
 				{

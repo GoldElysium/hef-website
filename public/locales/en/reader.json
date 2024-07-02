@@ -25,8 +25,6 @@
     "back": "Back",
     "close": "Close",
     "modal-general": {
-        "greeting": "HiRyS! Happy 3rd Anniversary!",
-        "essay": "Can you believe it's already been 3 years? Time really flies! It's been an incredible journey filled with memorable moments and achievements. As the IRyStocrats, we've joined forces to commemorate this special occasion by creating a manga just for you! We hope you enjoy it!",
         "credits": "Credits",
         "authors": "Authors",
         "artists": "Artists",
@@ -35,13 +33,7 @@
         "organizers": "Organizers",
         "lead-artists": "Lead Artists"
     },
-    "modal-story": {
-        "greeting": "Story",
-        "content": "Having made a crucial mistake with IRyS, Good GuyRys finds himself trapped in the Backrooms with his fiercest rival, Bad GuyRyS. Together, the two must solve the mystery of their new prison. Could the two of them set aside the passionate flames burning between them, or will they let themselves be forever trapped without Hope."
-    },
     "modal-reader": {
-        "greeting": "Welcome to the IRyS-Themed Manga Reader!",
-        "introduction": "In order to show the manga, we built our very own IRyS-themed reader! Here's a quick guide to help you get started and make the most of your reading experience.",
         "howto": "How to Use the Manga Reader",
         "page-turn": "Turning Pages",
         "page-turn-text": "You can easily turn the page by clicking anywhere on the current page. It's as simple as that!",
