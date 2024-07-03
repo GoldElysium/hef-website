@@ -69,10 +69,8 @@ function SelectBox({ value, label }: SelectBoxProps) {
 				onClick={() => setOpen(!open)}
 				type="button"
 				aria-label={`Select ${label}`}
-				onBlur={() => setOpen(false)}
 				onMouseEnter={() => setIsHovered(true)}
 				onMouseLeave={() => setIsHovered(false)}
-				tabIndex={-1}
 			>
 				<Select
 					value={options[value]}
