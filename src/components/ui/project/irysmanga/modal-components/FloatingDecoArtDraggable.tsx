@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import { motion, useDragControls } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 
@@ -36,7 +37,7 @@ export default function FloatingDecoArtDraggable({
 		initial: { img: src, sfx: '/assets/irysmanga/audio/dragging.mp3' },
 		falling: {
 			img: '/assets/irysmanga/chibi/fallingrys.png',
-			sfx: '/assets/irysmanga/audio/falling.mp3',
+			sfx: '/assets/irysmanga/audio/fallsplat.mp3',
 		},
 		flat: {
 			img: '/assets/irysmanga/chibi/flatrys.png',
@@ -47,19 +48,16 @@ export default function FloatingDecoArtDraggable({
 	const audioRefDrag = useRef(new Audio(undefined));
 	const audioRefFall = useRef(new Audio(undefined));
 	const audioRefFlat = useRef(new Audio(undefined));
-	const audioRefSplat = useRef(new Audio(undefined));
 	const targetRef = useRef<HTMLImageElement>(null);
 
 	useEffect(() => {
 		audioRefDrag.current.src = data.initial.sfx;
 		audioRefFall.current.src = data.falling.sfx;
 		audioRefFlat.current.src = data.flat.sfx;
-		audioRefSplat.current.src = '/assets/irysmanga/audio/splat.mp3';
 
 		audioRefDrag.current.load();
 		audioRefFall.current.load();
 		audioRefFlat.current.load();
-		audioRefSplat.current.volume = 0.5;
 	}, [data.falling.sfx, data.flat.sfx, data.initial.sfx]);
 
 	useEffect(() => {
@@ -113,9 +111,9 @@ export default function FloatingDecoArtDraggable({
 	const handleAnimationComplete = (def: {}) => {
 		if (state === 'falling' && def === fallingAnimation.animate) {
 			setState('flat');
-			audioRefSplat.current?.play();
 		}
 	};
+
 	useEffect(() => {
 		if (state === 'falling' || state === 'flat') {
 			setAnimation(fallingAnimation);
@@ -172,7 +170,10 @@ export default function FloatingDecoArtDraggable({
 
 	return (
 		<motion.img
-			className={className}
+			className={classNames(className, {
+				'cursor-grab': state === 'initial' && !dragStarted,
+				'cursor-grabbing': dragStarted,
+			})}
 			drag={state === 'initial'}
 			dragControls={controls}
 			dragElastic={{ top: 0.5, bottom: 0.5 }}
