@@ -60,18 +60,18 @@ export default function FloatingDecoArtDraggable({
 		audioRefFall.current.load();
 		audioRefFlat.current.load();
 		audioRefSplat.current.volume = 0.5;
-	}, []);
-
-	const handleIntersection = (entries: IntersectionObserverEntry[]) => {
-		entries.forEach((entry) => {
-			if (entry.isIntersecting && state === 'flat' && !flatPlayed.current) {
-				audioRefFlat.current.play();
-				flatPlayed.current = true;
-			}
-		});
-	};
+	}, [data.falling.sfx, data.flat.sfx, data.initial.sfx]);
 
 	useEffect(() => {
+		const handleIntersection = (entries: IntersectionObserverEntry[]) => {
+			entries.forEach((entry) => {
+				if (entry.isIntersecting && state === 'flat' && !flatPlayed.current) {
+					audioRefFlat.current.play();
+					flatPlayed.current = true;
+				}
+			});
+		};
+
 		const observer = new IntersectionObserver(handleIntersection, {
 			root: null,
 			rootMargin: '0px',
@@ -138,7 +138,7 @@ export default function FloatingDecoArtDraggable({
 				const targetRect = targetRef.current.getBoundingClientRect();
 				const containerRect = containerRef.current.getBoundingClientRect();
 				setConstraints({
-					left: containerRect.left - targetRect.left - 75,
+					left: containerRect.left - targetRect.left,
 					right: Math.abs(targetRect.right - containerRect.right),
 					top: containerRect.top - targetRect.top,
 					bottom: Math.abs(targetRect.bottom - containerRect.bottom),
@@ -150,6 +150,24 @@ export default function FloatingDecoArtDraggable({
 		return () => {
 			window.removeEventListener('resize', handleResize);
 		};
+	}, [containerRef]);
+
+	// eslint-disable-next-line consistent-return
+	useEffect(() => {
+		const imgElement = targetRef.current;
+		if (imgElement) {
+			const preventDefault = (e: any) => {
+				e.preventDefault();
+			};
+
+			imgElement.addEventListener('touchstart', preventDefault);
+			imgElement.addEventListener('touchmove', preventDefault);
+
+			return () => {
+				imgElement.removeEventListener('touchstart', preventDefault);
+				imgElement.removeEventListener('touchmove', preventDefault);
+			};
+		}
 	}, []);
 
 	return (
@@ -175,7 +193,12 @@ export default function FloatingDecoArtDraggable({
 			alt="bg-art"
 			width={width}
 			draggable={false}
-			style={{ touchAction: 'none' }}
+			style={{
+				touchAction: 'none',
+				WebkitUserSelect: 'none',
+				userSelect: 'none',
+				WebkitTapHighlightColor: 'transparent',
+			}}
 		/>
 	);
 }
