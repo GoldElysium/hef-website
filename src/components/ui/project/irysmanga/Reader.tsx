@@ -142,26 +142,6 @@ export default function Reader({
 		}
 	};
 
-	// TODO: Do we need this with ResizeObserver?
-	useEffect(() => {
-		const handleResize = () => {
-			if (containerRef && containerRef.current) {
-				const { clientWidth, clientHeight } = containerRef.current;
-				setContainerDimensions({
-					width: clientWidth,
-					height: clientHeight,
-				});
-			}
-		};
-
-		window.addEventListener('resize', handleResize);
-
-		return () => {
-			window.removeEventListener('resize', handleResize);
-		};
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
-
 	useEffect(() => {
 		if (!containerRef.current) {
 			return () => { };
