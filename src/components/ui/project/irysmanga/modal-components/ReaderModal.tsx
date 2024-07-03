@@ -22,7 +22,7 @@ export default function ReaderModal({ modalRef }: IProps) {
 	const options = ['General', 'Story', 'Reader', 'Licences'];
 	return (
 		<dialog id="info_modal" className="modal invisible bg-gradient-to-r" ref={modalRef}>
-			<div className="modal-box relative flex max-h-[85%] min-h-[300px] min-w-[50%] max-w-[80%] flex-col justify-between overflow-hidden">
+			<div className="modal-box relative flex h-[85%] max-h-[65rem] min-w-[50%] max-w-[80%] flex-col justify-between overflow-hidden">
 				<button
 					className="absolute right-4 top-4"
 					type="button"
