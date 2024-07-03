@@ -46,22 +46,24 @@ export default function ReaderHeader({ openSidebar, setOpenSidebar }: Props) {
 					<Link href="/" tabIndex={headerVisibility === 'header-shown' ? 0 : -1}>
 						<Icon />
 					</Link>
-					<div className={styles.infoBadge}>
+					<div className={styles.infoTitle}>
 						<strong className="">{mangaData.title}</strong>
 					</div>
 				</div>
-				<div className="flex items-center gap-2">
-					<div className={styles.infoBadge}>
-						<span className={styles.infoBadgeTitle}>{t('chapter')}</span>
-						<span className={styles.infoBadgeContent}>
-							{`${chapter + 1} / ${mangaData.chapterCount}`}
-						</span>
-					</div>
-					<div className={styles.infoBadge}>
-						<span className={styles.infoBadgeTitle}>{t('page')}</span>
-						<span className={styles.infoBadgeContent}>
-							{`${page + 1} / ${currentChapter.pageCount}`}
-						</span>
+				<div className="flex grow items-center justify-end gap-2 md:gap-4">
+					<div className="flex flex-col md:flex-row md:gap-2">
+						<div className={styles.infoBadge}>
+							<span className={styles.infoBadgeTitle}>{t('chapter')}</span>
+							<span className={styles.infoBadgeContent}>
+								{`${chapter + 1} / ${mangaData.chapterCount}`}
+							</span>
+						</div>
+						<div className={styles.infoBadge}>
+							<span className={styles.infoBadgeTitle}>{t('page')}</span>
+							<span className={styles.infoBadgeContent}>
+								{`${page + 1} / ${currentChapter.pageCount}`}
+							</span>
+						</div>
 					</div>
 					<button
 						type="button"
