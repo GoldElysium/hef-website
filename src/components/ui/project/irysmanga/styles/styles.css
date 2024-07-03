@@ -170,6 +170,11 @@ SOFTWARE.
     --tab-bg: rgb(var(--color-primary-dark));
     --tab-border-color: rgb(var(--color-secondary-foreground-dark));
 }
+@media (max-width: 576px) {
+    .tab {
+        @apply text-xs px-[8px] !important;
+    }
+}
 
 .tab:hover {
     @apply bg-[color-mix(in_srgb,rgb(var(--color-background))_90%,black)] !important;
