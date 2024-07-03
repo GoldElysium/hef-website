@@ -172,10 +172,18 @@ SOFTWARE.
 }
 
 .tab:hover {
-    @apply hover:bg-[color-mix(in_srgb,rgb(var(--color-background))_90%,black)] !important;
+    @apply bg-[color-mix(in_srgb,rgb(var(--color-background))_90%,black)] !important;
+
+    &:is(input:checked) {
+        @apply bg-[color-mix(in_srgb,rgb(var(--color-primary))_90%,black)] !important;
+    }
 }
 .dark .tab:hover {
-    @apply hover:bg-[color-mix(in_srgb,rgb(var(--color-background-dark))_90%,white)] !important;
+    @apply bg-[color-mix(in_srgb,rgb(var(--color-background-dark))_90%,white)] !important;
+
+    &:is(input:checked) {
+        @apply bg-[color-mix(in_srgb,rgb(var(--color-primary-dark))_90%,black)] !important;
+    }
 }
 
 .tabs-bordered > .tab {
