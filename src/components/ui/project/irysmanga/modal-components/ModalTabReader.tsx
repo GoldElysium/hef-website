@@ -30,8 +30,8 @@ export default function MangaReaderModal() {
 			<h2 className="mb-2 text-2xl font-semibold">{t('shortcut')}</h2>
 			<ul className="kb-list grid list-inside list-disc min-[1260px]:grid-cols-2">
 				<li>
-					<kbd className="kbdalt">→</kbd>
-					<kbd className="kbdalt ml-1">←</kbd>
+					<kbd className="kbdalt">←</kbd>
+					<kbd className="kbdalt ml-1">→</kbd>
 					<span>{t('page-turn-k')}</span>
 				</li>
 				<li>

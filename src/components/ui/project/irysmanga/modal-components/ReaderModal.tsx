@@ -1,7 +1,8 @@
-import { RefObject, useState } from 'react';
+import { RefObject, useEffect, useState } from 'react';
 import { languages } from '@/lib/i18n/settings';
 import { LanguageIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import classNames from 'classnames';
+import useTranslation from '@/lib/i18n/client';
 import ModalTab from './ModalTab';
 import ModalTabGeneral from './ModalTabGeneral';
 import ModalTabStory from './ModalTabStory';
@@ -20,15 +21,40 @@ export default function ReaderModal({ modalRef }: IProps) {
 	const [selected, setSelected] = useState('General');
 	const { readerLanguage, setReaderLanguage } = useMangaContext();
 	const options = ['General', 'Story', 'Reader', 'Licences'];
+	const { t } = useTranslation('reader');
+
+	const MOBILE_PAGE_WIDTH = 768;
+	const [showMobileCloseButton, setShowMobileCloseButton] = useState(
+		window && window.innerWidth <= MOBILE_PAGE_WIDTH,
+	);
+
+	useEffect(() => {
+		const handleResize = () => {
+			setShowMobileCloseButton(window && window.innerWidth <= MOBILE_PAGE_WIDTH);
+		};
+
+		window.addEventListener('resize', handleResize);
+		return () => window.removeEventListener('resize', handleResize);
+	}, [setShowMobileCloseButton]);
+
 	return (
 		<dialog id="info_modal" className="modal invisible bg-gradient-to-r" ref={modalRef}>
-			<div className="modal-box relative flex h-[90%] min-w-[50%] max-w-[70%] flex-col justify-between overflow-hidden">
-				<XMarkIcon
-					className={classNames(styles.xButton, 'absolute right-4 top-4')}
+			<div className="modal-box relative flex h-[85%] max-h-[65rem] min-w-[50%] max-w-[80%] flex-col justify-between overflow-hidden">
+				<button
+					className="absolute right-4 top-4"
+					type="button"
+					aria-label="Close the modal"
 					onClick={() => modalRef.current?.close()}
-				/>
-				<div className="flex max-h-[87%] grow flex-col">
-					<div className="tabs-lifted flex self-center">
+				>
+					{!showMobileCloseButton && (
+						<XMarkIcon
+							className={classNames(styles.xButton)}
+							width={30}
+						/>
+					)}
+				</button>
+				<div className="flex max-h-[87%] grow flex-col overflow-hidden">
+					<div className="tabs-lifted flex min-h-[30px] self-center">
 						<ModalTab
 							label={options[0]}
 							selected={selected}
@@ -63,12 +89,21 @@ export default function ReaderModal({ modalRef }: IProps) {
 					<div className="flex gap-1 self-end">
 						<button
 							type="button"
-							className="flex h-12 min-h-12 items-center gap-2 whitespace-nowrap rounded-md bg-skin-primary p-4 text-sm font-semibold leading-4 text-skin-primary-foreground transition-all hover:bg-[color-mix(in_srgb,rgb(var(--color-primary))_90%,black)] disabled:cursor-not-allowed disabled:bg-[color-mix(in_srgb,rgb(var(--color-primary))_90%,black)] dark:bg-skin-primary-dark dark:text-skin-primary-foreground-dark dark:hover:bg-[color-mix(in_srgb,rgb(var(--color-primary-dark))_90%,black)]"
+							className="flex h-12 min-h-12 items-center gap-2 whitespace-nowrap rounded-md border-[1px] border-transparent bg-skin-primary p-4 text-sm font-semibold leading-4 text-skin-primary-foreground transition-all hover:bg-[color-mix(in_srgb,rgb(var(--color-primary))_90%,black)] disabled:cursor-not-allowed disabled:bg-[color-mix(in_srgb,rgb(var(--color-primary))_90%,black)] dark:bg-skin-primary-dark dark:text-skin-primary-foreground-dark dark:hover:bg-[color-mix(in_srgb,rgb(var(--color-primary-dark))_90%,black)]"
 							onClick={() => setReaderLanguage(getNextOption(readerLanguage, languages))}
 						>
 							<LanguageIcon width="1rem" />
 							{readerLanguage.toLocaleUpperCase()}
 						</button>
+						{showMobileCloseButton && (
+							<button
+								type="button"
+								className="dark: flex h-12 min-h-12 items-center gap-2 whitespace-nowrap rounded-md border-[1px] border-solid border-[rgb(var(--color-primary))] border-[rgb(var(--color-primary-dark))] bg-transparent p-4 text-sm font-semibold leading-4 transition-all hover:bg-black/10 dark:hover:bg-white/10"
+								onClick={() => modalRef.current?.close()}
+							>
+								{t('close')}
+							</button>
+						)}
 					</div>
 				</div>
 			</div>
