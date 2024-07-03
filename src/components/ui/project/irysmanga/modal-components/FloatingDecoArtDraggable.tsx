@@ -91,7 +91,7 @@ export default function FloatingDecoArtDraggable({
 	}, [state, flatPlayed]);
 
 	const handleDragStart = (e: React.PointerEvent<HTMLDivElement>) => {
-		if (state === 'flat') {
+		if (state !== 'initial') {
 			return;
 		}
 		controls.start(e);
@@ -101,6 +101,9 @@ export default function FloatingDecoArtDraggable({
 	};
 
 	const handleDragEnd = () => {
+		if (state !== 'initial') {
+			return;
+		}
 		setState('falling');
 		setDragStarted(false);
 		audioRefDrag.current?.pause();
@@ -152,9 +155,10 @@ export default function FloatingDecoArtDraggable({
 	return (
 		<motion.img
 			className={className}
-			drag={state !== 'flat'}
+			drag={state === 'initial'}
 			dragControls={controls}
 			dragElastic={{ top: 0.5, bottom: 0.5 }}
+			dragListener={false}
 			animate={animation.animate}
 			transition={animation.transition}
 			dragConstraints={constraints}
@@ -171,6 +175,7 @@ export default function FloatingDecoArtDraggable({
 			alt="bg-art"
 			width={width}
 			draggable={false}
+			style={{ touchAction: 'none' }}
 		/>
 	);
 }

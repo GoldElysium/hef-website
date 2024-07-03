@@ -47,10 +47,7 @@ export default function ReaderModal({ modalRef }: IProps) {
 					onClick={() => modalRef.current?.close()}
 				>
 					{!showMobileCloseButton && (
-						<XMarkIcon
-							className={classNames(styles.xButton)}
-							width={30}
-						/>
+						<XMarkIcon className={classNames(styles.xButton)} width={30} />
 					)}
 				</button>
 				<div className="flex max-h-[87%] grow flex-col overflow-hidden">
@@ -98,7 +95,7 @@ export default function ReaderModal({ modalRef }: IProps) {
 						{showMobileCloseButton && (
 							<button
 								type="button"
-								className="dark: flex h-12 min-h-12 items-center gap-2 whitespace-nowrap rounded-md border-[1px] border-solid border-[rgb(var(--color-primary))] border-[rgb(var(--color-primary-dark))] bg-transparent p-4 text-sm font-semibold leading-4 transition-all hover:bg-black/10 dark:hover:bg-white/10"
+								className="flex h-12 min-h-12 items-center gap-2 whitespace-nowrap rounded-md border-[1px] border-solid border-[rgb(var(--color-primary))] bg-transparent p-4 text-sm font-semibold leading-4 transition-all hover:bg-black/10 dark:border-[rgb(var(--color-primary-dark))] dark:hover:bg-white/10"
 								onClick={() => modalRef.current?.close()}
 							>
 								{t('close')}
