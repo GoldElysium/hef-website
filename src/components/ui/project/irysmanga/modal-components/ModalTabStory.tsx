@@ -19,7 +19,7 @@ export default function ModalTabStory() {
 					height={1079}
 					className="rounded-lg"
 				/>
-				<figcaption className="text-center">
+				<figcaption className="mt-2 text-center text-sm">
 					{modalData.storyImageCaption}
 				</figcaption>
 			</figure>
