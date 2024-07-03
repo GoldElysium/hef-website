@@ -183,7 +183,7 @@ function getDummyManga(): Manga {
 					storyImage: '/assets/irysmanga/other/backroom.png',
 					storyImageCaption: 'ザ・バックルームで最後に姿を確認できましたグッドガイリスとバッドガイリス',
 					readerGreeting: 'IrySテーマのマンガリーダーへようこそ！',
-					readerIntro: 'マンガを表示するために、私たちは独自のIrysテーマのリーダーを作成しました!ここでは、使い始めるための簡単なガイドを提供し、読書体験を最大限に活用する方法をお伝えします。',
+					readerIntro: 'マンガを表示するために、私たちは独自のIRySテーマのリーダーを作成しました!ここでは、使い始めるための簡単なガイドを提供し、読書体験を最大限に活用する方法をお伝えします。',
 				},
 			},
 		},
