@@ -9,6 +9,7 @@ import {
 import { useEffect, useRef } from 'react';
 import useTranslation from '@/lib/i18n/client';
 import { useTheme } from 'next-themes';
+import Image from 'next/image';
 import SelectBox from './SelectBox';
 import { useMangaContext } from './context/MangaContext';
 import {
@@ -134,10 +135,7 @@ export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }:
 								aria-label="Close the sidebar"
 								onClick={() => setOpenSidebar(false)}
 							>
-								<XMarkIcon
-									className={styles.xButton}
-									width={30}
-								/>
+								<XMarkIcon className={styles.xButton} width={30} />
 							</button>
 						</div>
 						<div className="flex items-center gap-1">
@@ -150,13 +148,20 @@ export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }:
 						</div>
 					</div>
 					<button
-						className="button mt-4 justify-between whitespace-nowrap text-nowrap"
+						className="button relative mt-4 justify-between whitespace-nowrap text-nowrap"
 						type="button"
 						aria-label="Open an information modal"
 						onClick={() => modalRef.current?.showModal()}
 					>
 						{t('details')}
 						<InformationCircleIcon className="setting-icon" />
+						<Image
+							src="/assets/irysmanga/chibi/ebi.png"
+							className="pointer-events-none absolute right-8 top-0 -translate-y-full opacity-50"
+							width={90}
+							height={0}
+							alt="ebi"
+						/>
 					</button>
 					<div className="flex w-full gap-1">
 						<SettingButton
@@ -214,7 +219,7 @@ export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }:
 						valueList={readerThemes}
 						onClick={() => setTheme(resolvedTheme === 'light' ? 'dark' : 'light')}
 						// @ts-ignore
-						setValue={() => { }}
+						setValue={() => {}}
 						label="theme"
 					/>
 				</div>
