@@ -1,6 +1,6 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 import Select from 'react-select';
-import { useState, useId } from 'react';
+import { useId } from 'react';
 import classNames from 'classnames';
 import useTranslation from '@/lib/i18n/client';
 import { useMangaContext } from './context/MangaContext';
@@ -39,9 +39,6 @@ function SelectBox({ value, label }: SelectBoxProps) {
 		label: item,
 	}));
 
-	const [open, setOpen] = useState(false);
-	const [isHovered, setIsHovered] = useState(false);
-
 	const nextButtonClasses = 'button shrink-0 disabled:opacity-50';
 
 	return (
@@ -64,56 +61,35 @@ function SelectBox({ value, label }: SelectBoxProps) {
 
 			{/* eslint-disable-next-line max-len */}
 			{/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
-			<button
-				className="h-full grow text-left"
-				onClick={() => setOpen(!open)}
-				type="button"
-				aria-label={`Select ${label}`}
-				onMouseEnter={() => setIsHovered(true)}
-				onMouseLeave={() => setIsHovered(false)}
-			>
-				<Select
-					value={options[value]}
-					onChange={(selectedOption) => handleSelectValue(parseInt(selectedOption!.value, 10))}
-					unstyled
-					options={options}
-					isSearchable={false}
-					menuIsOpen={open}
-					classNamePrefix="react-select"
-					className="size-full"
-					instanceId={useId()}
-					classNames={{
-						valueContainer: () => 'w-full',
-						control: () => classNames(
-							'-z-1 rounded-md w-full h-full px-2 hover:cursor-pointer transition-all',
-							{
-								'bg-[color-mix(in_srgb,rgb(var(--color-secondary))_90%,black)] dark:bg-[color-mix(in_srgb,rgb(var(--color-secondary-dark))_90%,black)]':
-                                        isHovered,
-								'bg-skin-secondary dark:bg-skin-secondary-dark text-skin-secondary-foreground  dark:text-skin-secondary-foreground-dark':
-                                        !isHovered,
-							},
-						),
+			<Select
+				value={options[value]}
+				onChange={(selectedOption) => handleSelectValue(parseInt(selectedOption!.value, 10))}
+				unstyled
+				options={options}
+				isSearchable={false}
+				classNamePrefix="react-select"
+				className="h-full grow hover:cursor-pointer"
+				instanceId={useId()}
+				openMenuOnClick
+				classNames={{
+					valueContainer: () => 'w-full',
+					control: () => 'rounded-md w-full h-full px-2 hover:cursor-pointer transition-all bg-skin-secondary dark:bg-skin-secondary-dark text-skin-secondary-foreground dark:text-skin-secondary-foreground-dark hover:bg-[color-mix(in_srgb,rgb(var(--color-secondary))_90%,black)] dark:hover:bg-[color-mix(in_srgb,rgb(var(--color-secondary-dark))_90%,black)]',
 
-						singleValue: () => 'w-full truncate',
-						menu: () => classNames(
-							'mt-2 p-1 bg-skin-secondary dark:bg-skin-secondary-dark border border-skin-secondary-foreground dark:border-skin-secondary-foreground-dark rounded-md transition-all',
-							{
-								'opacity-100 visible': open,
-								'opacity-0 invisible': !open,
-							},
-						),
-						menuList: () => 'scroll-smooth',
-						option: ({ isFocused, isSelected }) => classNames('hover:cursor-pointer p-2 font-sm rounded truncate', {
-							'bg-skin-header dark:bg-skin-header-dark text-skin-header-foreground dark:text-skin-header-foreground-dark':
-                                    isSelected,
-							'hover:bg-[color-mix(in_srgb,rgb(var(--color-secondary))_90%,black)] dark:hover:bg-[color-mix(in_srgb,rgb(var(--color-secondary-dark))_90%,black)]':
-                                    isFocused && !isSelected,
-							'text-skin-secondary-foreground  dark:text-skin-secondary-foreground-dark':
-                                    !isSelected && !isFocused,
-						}),
-					}}
-				/>
-			</button>
+					singleValue: () => 'w-full truncate',
+					menu: () => classNames(
+						'mt-2 p-1 bg-skin-secondary dark:bg-skin-secondary-dark border border-skin-secondary-foreground dark:border-skin-secondary-foreground-dark rounded-md transition-all',
+					),
+					menuList: () => 'scroll-smooth',
+					option: ({ isFocused, isSelected }) => classNames('hover:cursor-pointer p-2 font-sm rounded truncate', {
+						'bg-skin-header dark:bg-skin-header-dark text-skin-header-foreground dark:text-skin-header-foreground-dark':
+                                isSelected,
+						'hover:bg-[color-mix(in_srgb,rgb(var(--color-secondary))_90%,black)] dark:hover:bg-[color-mix(in_srgb,rgb(var(--color-secondary-dark))_90%,black)]':
+                                isFocused && !isSelected,
+						'text-skin-secondary-foreground  dark:text-skin-secondary-foreground-dark':
+                                !isSelected && !isFocused,
+					}),
+				}}
+			/>
 
 			<button
 				className={nextButtonClasses}
