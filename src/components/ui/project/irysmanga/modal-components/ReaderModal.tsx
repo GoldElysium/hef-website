@@ -24,7 +24,7 @@ export default function ReaderModal({ modalRef }: IProps) {
 		<dialog id="info_modal" className="modal invisible bg-gradient-to-r" ref={modalRef}>
 			<div className="modal-box relative flex h-[85%] max-h-[65rem] min-w-[50%] max-w-[80%] flex-col justify-between overflow-hidden">
 				<button
-					className="self-end"
+					className="self-end md:absolute md:right-4 md:top-4"
 					type="button"
 					aria-label="Close the modal"
 					onClick={() => modalRef.current?.close()}
