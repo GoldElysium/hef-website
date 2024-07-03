@@ -51,7 +51,7 @@ export default function ReaderModal({ modalRef }: IProps) {
 					)}
 				</button>
 				<div className="flex max-h-[87%] grow flex-col overflow-hidden">
-					<div className="tabs-lifted flex min-h-[30px] self-center">
+					<div className="tabs-lifted flex h-[32px] self-center">
 						<ModalTab
 							label={options[0]}
 							selected={selected}

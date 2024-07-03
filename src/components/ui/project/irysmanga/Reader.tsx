@@ -142,6 +142,57 @@ export default function Reader({
 		}
 	};
 
+	// TODO: Do we need this with ResizeObserver?
+	useEffect(() => {
+		const handleResize = () => {
+			if (containerRef && containerRef.current) {
+				const { clientWidth, clientHeight } = containerRef.current;
+				setContainerDimensions({
+					width: clientWidth,
+					height: clientHeight,
+				});
+			}
+		};
+
+		window.addEventListener('resize', handleResize);
+
+		return () => {
+			window.removeEventListener('resize', handleResize);
+		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
+	useEffect(() => {
+		if (!containerRef.current) {
+			return () => { };
+		}
+
+		const resizeObserver = new ResizeObserver(() => {
+			if (containerRef && containerRef.current) {
+				const { clientWidth, clientHeight } = containerRef.current;
+				setContainerDimensions({
+					width: clientWidth,
+					height: clientHeight,
+				});
+			}
+		});
+
+		resizeObserver.observe(containerRef.current);
+
+		return () => resizeObserver.disconnect();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
+	useEffect(() => {
+		if (containerRef && containerRef.current) {
+			const { clientWidth, clientHeight } = containerRef.current;
+			setContainerDimensions({
+				width: clientWidth,
+				height: clientHeight,
+			});
+		}
+	}, [containerRef, fitMode]);
+
 	useEffect(() => {
 		if (pageLayout === 'long' && isScrollCausedByUserScroll.current) {
 			return;
@@ -180,7 +231,9 @@ export default function Reader({
 				}
 			}
 		}
-	}, [page, chapter, pageLayout, loading, fitMode, containerRef, mangaData.chapters]);
+	}, [
+		page, chapter, pageLayout, loading, fitMode, containerRef, mangaData.chapters,
+	]);
 
 	let displayedPages: React.JSX.Element[] = [];
 	if (mangaData.chapters[chapter]) {
@@ -308,24 +361,6 @@ export default function Reader({
 			);
 		});
 	}
-
-	useEffect(() => {
-		const handleResize = () => {
-			if (containerRef.current) {
-				const { clientWidth, clientHeight } = containerRef.current;
-				setContainerDimensions({
-					width: clientWidth,
-					height: clientHeight,
-				});
-			}
-		};
-		window.addEventListener('resize', handleResize);
-		handleResize();
-
-		return () => {
-			window.removeEventListener('resize', handleResize);
-		};
-	}, [containerRef, fitMode]);
 
 	return (
 		<div className="relative flex max-h-full max-w-full grow flex-col overflow-hidden">

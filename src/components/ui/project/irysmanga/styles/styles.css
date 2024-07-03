@@ -198,14 +198,14 @@ SOFTWARE.
 }
 .tabs-lifted > .tab {
     @apply bg-skin-background dark:bg-skin-background-dark text-skin-text dark:text-skin-text-dark;
-    border: var(--tab-border, 1px) solid transparent;
-    border-width: 0 0 var(--tab-border, 4px) 0;
-    border-start-start-radius: var(--tab-radius, 0.5rem);
-    border-start-end-radius: var(--tab-radius, 0.5rem);
-    border-bottom: var(--tab-border-color, 0px);
-    padding-inline-start: var(--tab-padding, 1rem);
-    padding-inline-end: var(--tab-padding, 1rem);
-    padding-top: var(--tab-border, 4px);
+    border-width: var(--tab-border, 4px) var(--tab-border, 4px) 0 var(--tab-border, 4px);
+    border-inline-start-color: invisible;
+    border-inline-end-color: invisible;
+    border-top-color: invisible;
+    padding-inline-start: calc(var(--tab-padding, 1rem) - var(--tab-border, 4px));
+    padding-inline-end: calc(var(--tab-padding, 1rem) - var(--tab-border, 4px));
+    padding-bottom: 0;
+    padding-top: 0;
     &:is(.tab-active, [aria-selected='true']):not(.tab-disabled):not([disabled]),
     &:is(input:checked) {
         background-color: var(--tab-bg);
@@ -216,7 +216,7 @@ SOFTWARE.
         border-top-color: var(--tab-border-color);
         padding-inline-start: calc(var(--tab-padding, 1rem) - var(--tab-border, 4px));
         padding-inline-end: calc(var(--tab-padding, 1rem) - var(--tab-border, 4px));
-        padding-bottom: var(--tab-border, 0px);
+        padding-bottom: 0;
         padding-top: 0;
         &:before {
             z-index: 1;
@@ -237,14 +237,14 @@ SOFTWARE.
                 transparent var(--tab-grad),
                 var(--tab-border-color) calc(var(--tab-grad) + 1px),
                 var(--tab-border-color) calc(var(--tab-grad) + var(--tab-border, 4px)),
-                var(--tab-bg) calc(var(--tab-grad) + var(--tab-border, 4px) + 1px)
+                var(--tab-bg) calc(var(--tab-grad) + var(--tab-border, 4px) + 10px)
             );
             --radius-end: radial-gradient(
                 circle at top right,
                 transparent var(--tab-grad),
                 var(--tab-border-color) calc(var(--tab-grad) + 1px),
                 var(--tab-border-color) calc(var(--tab-grad) + var(--tab-border, 4px)),
-                var(--tab-bg) calc(var(--tab-grad) + var(--tab-border, 4px) + 1px)
+                var(--tab-bg) calc(var(--tab-grad) + var(--tab-border, 4px) + 10px)
             );
             background-image: var(--radius-start), var(--radius-end);
         }
