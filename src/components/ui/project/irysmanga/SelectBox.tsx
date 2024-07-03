@@ -24,14 +24,7 @@ function SelectBox({ value, label }: SelectBoxProps) {
 	function handleSelectValue(selectedValue: number) {
 		const maxChapterIndex = mangaData.chapterCount - 1;
 		if (label === 'page') {
-			handlePageNavigation(
-				selectedValue,
-				setPage,
-				setChapter,
-				chapter,
-				mangaLanguage,
-				manga,
-			);
+			handlePageNavigation(selectedValue, setPage, setChapter, chapter, mangaLanguage, manga);
 			return;
 		}
 		if (selectedValue >= 0 && selectedValue <= maxChapterIndex) {
@@ -47,6 +40,7 @@ function SelectBox({ value, label }: SelectBoxProps) {
 	}));
 
 	const [open, setOpen] = useState(false);
+	const [isHovered, setIsHovered] = useState(false);
 
 	const nextButtonClasses = 'button shrink-0 disabled:opacity-50';
 
@@ -62,7 +56,7 @@ function SelectBox({ value, label }: SelectBoxProps) {
 						return value === 0 && chapter === 0;
 					}
 
-					return (value === 0);
+					return value === 0;
 				})()}
 			>
 				<ChevronLeftIcon className="size-5" />
@@ -70,22 +64,38 @@ function SelectBox({ value, label }: SelectBoxProps) {
 
 			{/* eslint-disable-next-line max-len */}
 			{/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
-			<button className="h-full grow text-left" onClick={() => setOpen(!open)} type="button" aria-label={`Select ${label}`}>
+			<button
+				className="h-full grow text-left"
+				onClick={() => setOpen(!open)}
+				type="button"
+				aria-label={`Select ${label}`}
+				onBlur={() => setOpen(false)}
+				onMouseEnter={() => setIsHovered(true)}
+				onMouseLeave={() => setIsHovered(false)}
+				tabIndex={-1}
+			>
 				<Select
 					value={options[value]}
 					onChange={(selectedOption) => handleSelectValue(parseInt(selectedOption!.value, 10))}
 					unstyled
 					options={options}
 					isSearchable={false}
-					onBlur={() => setOpen(false)}
-					menuIsOpen
+					menuIsOpen={open}
 					classNamePrefix="react-select"
-					className="h-full grow"
+					className="size-full"
 					instanceId={useId()}
-					tabIndex={-1}
 					classNames={{
 						valueContainer: () => 'w-full',
-						control: () => 'rounded-md w-full h-full px-2 hover:cursor-pointer bg-skin-secondary dark:bg-skin-secondary-dark text-skin-secondary-foreground transition-all hover:bg-[color-mix(in_srgb,rgb(var(--color-secondary))_90%,black)] dark:text-skin-secondary-foreground-dark dark:hover:bg-[color-mix(in_srgb,rgb(var(--color-secondary-dark))_90%,black)]',
+						control: () => classNames(
+							'-z-1 rounded-md w-full h-full px-2 hover:cursor-pointer transition-all',
+							{
+								'bg-[color-mix(in_srgb,rgb(var(--color-secondary))_90%,black)] dark:bg-[color-mix(in_srgb,rgb(var(--color-secondary-dark))_90%,black)]':
+                                        isHovered,
+								'bg-skin-secondary dark:bg-skin-secondary-dark text-skin-secondary-foreground  dark:text-skin-secondary-foreground-dark':
+                                        !isHovered,
+							},
+						),
+
 						singleValue: () => 'w-full truncate',
 						menu: () => classNames(
 							'mt-2 p-1 bg-skin-secondary dark:bg-skin-secondary-dark border border-skin-secondary-foreground dark:border-skin-secondary-foreground-dark rounded-md transition-all',
@@ -97,11 +107,11 @@ function SelectBox({ value, label }: SelectBoxProps) {
 						menuList: () => 'scroll-smooth',
 						option: ({ isFocused, isSelected }) => classNames('hover:cursor-pointer p-2 font-sm rounded truncate', {
 							'bg-skin-header dark:bg-skin-header-dark text-skin-header-foreground dark:text-skin-header-foreground-dark':
-								isSelected,
+                                    isSelected,
 							'hover:bg-[color-mix(in_srgb,rgb(var(--color-secondary))_90%,black)] dark:hover:bg-[color-mix(in_srgb,rgb(var(--color-secondary-dark))_90%,black)]':
-								isFocused && !isSelected,
+                                    isFocused && !isSelected,
 							'text-skin-secondary-foreground  dark:text-skin-secondary-foreground-dark':
-								!isSelected && !isFocused,
+                                    !isSelected && !isFocused,
 						}),
 					}}
 				/>
@@ -114,12 +124,10 @@ function SelectBox({ value, label }: SelectBoxProps) {
 				onClick={() => handleSelectValue(value + 1)}
 				disabled={(() => {
 					if (label === 'page') {
-						return (
-							((value + 1) === maxValue) && (chapter + 1) === mangaData.chapterCount
-						);
+						return value + 1 === maxValue && chapter + 1 === mangaData.chapterCount;
 					}
 
-					return ((value + 1) === maxValue);
+					return value + 1 === maxValue;
 				})()}
 			>
 				<ChevronRightIcon width={20} />
