@@ -1,13 +1,17 @@
 import useTranslation from '@/lib/i18n/client';
 import ModalTabContent from './ModalTabContent';
+import { useMangaContext } from '../context/MangaContext';
+import { getLocalisedModalData, getModalDataRoot } from '../utils/types';
 
 export default function MangaReaderModal() {
 	const { t } = useTranslation('reader', 'modal-reader');
+	const { manga, readerLanguage } = useMangaContext();
+	const modalData = getLocalisedModalData(getModalDataRoot(manga), readerLanguage);
 
 	return (
 		<ModalTabContent>
-			<h1 className="mb-4 text-3xl font-bold">{t('greeting')}</h1>
-			<p className="mb-4">{t('introduction')}</p>
+			<h1 className="mb-4 text-3xl font-bold">{modalData.readerGreeting}</h1>
+			<p className="mb-4 whitespace-pre-line">{modalData.readerIntro}</p>
 			<h2 className="mb-2 text-2xl font-semibold">{t('howto')}</h2>
 			<ul className="disc-list mb-4 list-inside list-disc">
 				<li>
