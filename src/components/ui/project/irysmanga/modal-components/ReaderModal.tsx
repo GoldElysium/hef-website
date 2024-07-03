@@ -23,14 +23,14 @@ export default function ReaderModal({ modalRef }: IProps) {
 	const options = ['General', 'Story', 'Reader', 'Licences'];
 	const { t } = useTranslation('reader');
 
-	const MOBILE_PAGE_WIDTH = 768;
+	const SMALL_MOBILE_PAGE_WIDTH = 576;
 	const [showMobileCloseButton, setShowMobileCloseButton] = useState(
-		window && window.innerWidth <= MOBILE_PAGE_WIDTH,
+		window && window.innerWidth < SMALL_MOBILE_PAGE_WIDTH,
 	);
 
 	useEffect(() => {
 		const handleResize = () => {
-			setShowMobileCloseButton(window && window.innerWidth <= MOBILE_PAGE_WIDTH);
+			setShowMobileCloseButton(window && window.innerWidth < SMALL_MOBILE_PAGE_WIDTH);
 		};
 
 		window.addEventListener('resize', handleResize);
