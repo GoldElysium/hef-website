@@ -1,7 +1,8 @@
-import { RefObject, useState } from 'react';
+import { RefObject, useEffect, useState } from 'react';
 import { languages } from '@/lib/i18n/settings';
 import { LanguageIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import classNames from 'classnames';
+import useTranslation from '@/lib/i18n/client';
 import ModalTab from './ModalTab';
 import ModalTabGeneral from './ModalTabGeneral';
 import ModalTabStory from './ModalTabStory';
@@ -20,9 +21,21 @@ export default function ReaderModal({ modalRef }: IProps) {
 	const [selected, setSelected] = useState('General');
 	const { readerLanguage, setReaderLanguage } = useMangaContext();
 	const options = ['General', 'Story', 'Reader', 'Licences'];
+	const { t } = useTranslation('reader');
 
 	const MOBILE_PAGE_WIDTH = 768;
-	const showMobileCloseButton = window && window.innerWidth <= MOBILE_PAGE_WIDTH;
+	const [showMobileCloseButton, setShowMobileCloseButton] = useState(
+		window && window.innerWidth <= MOBILE_PAGE_WIDTH,
+	);
+
+	useEffect(() => {
+		const handleResize = () => {
+			setShowMobileCloseButton(window && window.innerWidth <= MOBILE_PAGE_WIDTH);
+		};
+
+		window.addEventListener('resize', handleResize);
+		return () => window.removeEventListener('resize', handleResize);
+	}, [setShowMobileCloseButton]);
 
 	return (
 		<dialog id="info_modal" className="modal invisible bg-gradient-to-r" ref={modalRef}>
@@ -88,7 +101,7 @@ export default function ReaderModal({ modalRef }: IProps) {
 								className="dark: flex h-12 min-h-12 items-center gap-2 whitespace-nowrap rounded-md border-[1px] border-solid border-[rgb(var(--color-primary))] border-[rgb(var(--color-primary-dark))] bg-transparent p-4 text-sm font-semibold leading-4 transition-all hover:bg-black/10 dark:hover:bg-white/10"
 								onClick={() => modalRef.current?.close()}
 							>
-								Close
+								{t('close')}
 							</button>
 						)}
 					</div>
