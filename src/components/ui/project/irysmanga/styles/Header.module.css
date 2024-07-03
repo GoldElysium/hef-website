@@ -23,23 +23,23 @@
 }
 
 .infoBadge {
-    @apply flex flex-col;
-}
-.infoBadgeTitle {
-    @apply text-xs;
-}
-.infoBadgeContent {
-    @apply text-sm;
+    @apply flex gap-1 items-center text-center;
 }
 
-@media (min-width: 820px) {
+.infoTitle {
+    @apply text-base md:text-lg;
+}
+
+.infoBadgeContent {
+    @apply text-sm min-w-[2rem] text-nowrap;
+}
+
+@media (min-width: 768px) {
     .infoBadge {
-        @apply flex-row gap-1;
+        @apply flex-row;
     }
+
     .infoBadgeContent {
-        @apply text-base;
-    }
-    .infoBadgeTitle {
         @apply text-base;
     }
 }

@@ -123,33 +123,36 @@ export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }:
 			>
 				{/* Manga info */}
 				<div className="400 flex flex-col gap-2">
-					<div className="flex flex-row content-center items-center justify-between">
-						<div className="flex items-center gap-1">
-							<BookOpenIcon width={30} />
-							<strong className="whitespace-nowrap">{mangaData.title}</strong>
+					<div className="flex flex-col gap-1">
+						<div className="flex flex-row content-center items-center justify-between">
+							<div className="flex items-center gap-1">
+								<BookOpenIcon width={30} />
+								<strong className="whitespace-nowrap">{mangaData.title}</strong>
+							</div>
+							<button
+								type="button"
+								aria-label="Close the sidebar"
+								onClick={() => setOpenSidebar(false)}
+							>
+								<XMarkIcon
+									className={styles.xButton}
+									width={30}
+								/>
+							</button>
 						</div>
-						<button
-							type="button"
-							aria-label="Close the sidebar"
-							onClick={() => setOpenSidebar(false)}
-						>
-							<XMarkIcon
-								className={styles.xButton}
-								width={30}
-							/>
-						</button>
-					</div>
-					<div className="flex items-center gap-1">
-						<DocumentIcon width={30} />
-						<strong className="whitespace-nowrap">
-							{mangaData.chapters[chapter].title
-								? mangaData.chapters[chapter].title
-								: `${t('chapter')} ${chapter + 1}`}
-						</strong>
+						<div className="flex items-center gap-1">
+							<DocumentIcon width={30} />
+							<strong className="whitespace-nowrap">
+								{mangaData.chapters[chapter].title
+									? mangaData.chapters[chapter].title
+									: `${t('chapter')} ${chapter + 1}`}
+							</strong>
+						</div>
 					</div>
 					<button
-						className="button justify-between whitespace-nowrap text-nowrap"
+						className="button mt-4 justify-between whitespace-nowrap text-nowrap"
 						type="button"
+						aria-label="Open an information modal"
 						onClick={() => modalRef.current?.showModal()}
 					>
 						{t('details')}
