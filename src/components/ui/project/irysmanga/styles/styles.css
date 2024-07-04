@@ -199,9 +199,9 @@ SOFTWARE.
 .tabs-lifted > .tab {
     @apply bg-skin-background dark:bg-skin-background-dark text-skin-text dark:text-skin-text-dark;
     border-width: var(--tab-border, 4px) var(--tab-border, 4px) 0 var(--tab-border, 4px);
-    border-inline-start-color: invisible;
-    border-inline-end-color: invisible;
-    border-top-color: invisible;
+    border-inline-start-color: transparent;
+    border-inline-end-color: transparent;
+    border-top-color: transparent;
     padding-inline-start: calc(var(--tab-padding, 1rem) - var(--tab-border, 4px));
     padding-inline-end: calc(var(--tab-padding, 1rem) - var(--tab-border, 4px));
     padding-bottom: 0;
