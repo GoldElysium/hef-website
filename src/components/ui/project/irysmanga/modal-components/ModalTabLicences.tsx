@@ -16,7 +16,11 @@ export default function ModalTabLicenses() {
 			<p className="mb-4">
 				{modalData.artLicensesContent}
 				{' '}
-				<a href="https://hololivepro.com/en/terms/" className="text-blue-500 underline">
+				<a
+					href="https://hololivepro.com/en/terms/"
+					className="text-blue-500 underline"
+					target="_blank"
+				>
 					{modalData.coverGuidelines}
 				</a>
 				.
@@ -31,14 +35,22 @@ export default function ModalTabLicenses() {
 								:
 								{' '}
 							</strong>
-							<a href={image.licenseUrl} className="text-blue-500 underline">
+							<a
+								href={image.licenseUrl}
+								className="text-blue-500 underline"
+								target="_blank"
+							>
 								{image.licenseName}
 							</a>
 						</p>
 					)}
 					{image.source && (
 						<p>
-							<a href={image.source} className="break-words text-blue-500 underline">
+							<a
+								href={image.source}
+								className="break-words text-blue-500 underline"
+								target="_blank"
+							>
 								{t('source')}
 							</a>
 						</p>
@@ -63,7 +75,11 @@ export default function ModalTabLicenses() {
 							:
 						</strong>
 						{' '}
-						<a href={font.licenseUrl} className="text-blue-500 underline">
+						<a
+							href={font.licenseUrl}
+							className="text-blue-500 underline"
+							target="_blank"
+						>
 							{font.licenseName}
 						</a>
 						<br />
