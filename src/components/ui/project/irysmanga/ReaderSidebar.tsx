@@ -157,10 +157,11 @@ export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }:
 						<InformationCircleIcon className="setting-icon" />
 						<Image
 							src="/assets/irysmanga/chibi/ebi.png"
-							className="pointer-events-none absolute right-8 top-0 -translate-y-full opacity-50"
-							width={90}
+							className="pointer-events-none absolute right-8 top-0 h-auto w-[90px] -translate-y-full opacity-50"
+							width={0}
 							height={0}
 							alt="ebi"
+							priority={false}
 						/>
 					</button>
 					<div className="flex w-full gap-1">
@@ -219,7 +220,7 @@ export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }:
 						valueList={readerThemes}
 						onClick={() => setTheme(resolvedTheme === 'light' ? 'dark' : 'light')}
 						// @ts-ignore
-						setValue={() => {}}
+						setValue={() => { }}
 						label="theme"
 					/>
 				</div>
