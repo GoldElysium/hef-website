@@ -47,7 +47,7 @@ export default function Reader({
 		Array(mangaData.chapters[chapter].pageCount).fill(true),
 	);
 	const [imageSizes, setImageSizes] = useState(
-		Array(mangaData.chapters[chapter].pageCount).fill({ width: 1, height: 1080 }),
+		Array(mangaData.chapters[chapter].pageCount).fill({ width: 0, height: 0 }),
 	);
 	const [containerDimensions, setContainerDimensions] = useState({
 		width: 0,
@@ -262,10 +262,9 @@ export default function Reader({
 				'max-w-full max-h-full overflow-auto': fitMode === 'fit-both',
 			};
 
+			const enableMargin = pageLayout !== 'long' && fitMode !== 'height' && !loading[i];
 			const marginStyle = {
-				// We add this check as without it vertical scrolling can break. As such, this
-				// disables it if scrolling is required!
-				'my-auto': pageLayout !== 'long' && fitMode !== 'height',
+				'my-auto': enableMargin,
 			};
 
 			return classNames(blockStyle, fitStyle, marginStyle, 'relative flex shrink-0');
@@ -369,8 +368,6 @@ export default function Reader({
 				className={classNames(styles.pagesWrapper)}
 				onClick={handleClick}
 				onScroll={handleScroll}
-			// This only works on non-safari
-			// style={{ justifyContent: pageLayout === 'long' ? 'unset' : 'safe center' }}
 			>
 				{displayedPages}
 			</div>
