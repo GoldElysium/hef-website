@@ -33,7 +33,7 @@ function getDummyManga(): Manga {
 		const enTmpPages: string[] = [];
 		const jpTmpPages: string[] = [];
 		const tmp = 11;
-		const tmpPageCount = 9;
+		const tmpPageCount = i === 2 ? 9 : 8;
 		for (let j = 1; j <= tmpPageCount; ++j) {
 			enTmpPages.push(
 				`https://alt.hololive.tv/wp-content/uploads/2022/${tmp}/en${i + 1

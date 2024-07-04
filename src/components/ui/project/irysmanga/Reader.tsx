@@ -53,6 +53,7 @@ export default function Reader({
 		width: 0,
 		height: 0,
 	});
+	const [currentlyLoadedChapter, setCurrentlyLoadedChapter] = useState(chapter);
 
 	/**
 	 * A function to automatically set the "is user currently the one scrolling" state to false.
@@ -174,6 +175,19 @@ export default function Reader({
 	}, [containerRef, fitMode]);
 
 	useEffect(() => {
+		if (chapter !== currentlyLoadedChapter) {
+			// Flush the page stuff after a new chapter is loaded.
+			const { pageCount } = mangaData.chapters[chapter];
+
+			setLoading(Array(pageCount).fill(true));
+			setImageSizes(Array(pageCount).fill({ width: 0, height: 0 }));
+			pageRefs.current = [];
+
+			setCurrentlyLoadedChapter(chapter);
+		}
+	}, [chapter, mangaData.chapters, currentlyLoadedChapter]);
+
+	useEffect(() => {
 		if (pageLayout === 'long' && isScrollCausedByUserScroll.current) {
 			return;
 		}
@@ -253,7 +267,12 @@ export default function Reader({
 				'max-w-full max-h-full overflow-auto': fitMode === 'fit-both',
 			};
 
-			return classNames(blockStyle, fitStyle, 'relative flex shrink-0');
+			const enableMargin = pageLayout !== 'long' && fitMode !== 'height' && !loading[i];
+			const marginStyle = {
+				'my-auto': enableMargin,
+			};
+
+			return classNames(blockStyle, fitStyle, marginStyle, 'relative flex shrink-0');
 		};
 
 		/**
@@ -302,44 +321,46 @@ export default function Reader({
 			return {};
 		};
 
-		displayedPages = Array.from({ length: maxPageCount }, (_, i) => {
-			const fitStyles = getPageImageFitStyles(imageSizes[i].width, imageSizes[i].height);
+		if (currentlyLoadedChapter === chapter) {
+			displayedPages = Array.from({ length: maxPageCount }, (_, i) => {
+				const fitStyles = getPageImageFitStyles(imageSizes[i].width, imageSizes[i].height);
 
-			return (
-				<div
-					className={`${getClassNamesContainer(i)}`}
-					key={`page-${i}`}
-					ref={(el) => {
-						pageRefs.current[i] = el as HTMLImageElement;
-					}}
-					style={{
-						scrollbarWidth: 'none', msOverflowStyle: 'none',
-					}}
-				>
-					{loading[i] && <LoadingIcon />}
-					<NextImage
-						src={pageSources[i]}
-						className={getClassNamesPageImage()}
-						quality={100}
-						priority={getPriority(i, page)}
-						alt={`Page ${i + 1}`}
-						width={imageSizes[i].width}
-						height={imageSizes[i].height}
+				return (
+					<div
+						className={`${getClassNamesContainer(i)}`}
+						key={`page-${i}`}
+						ref={(el) => {
+							pageRefs.current[i] = el as HTMLImageElement;
+						}}
 						style={{
-							opacity: loading[i] ? '0' : '1', ...fitStyles,
+							scrollbarWidth: 'none', msOverflowStyle: 'none',
 						}}
-						onLoad={(ele) => {
-							setLoading((currentLoading) => currentLoading
-								.map((curr, index) => (index === i ? false : curr)));
+					>
+						{loading[i] && <LoadingIcon />}
+						<NextImage
+							src={pageSources[i]}
+							className={getClassNamesPageImage()}
+							quality={100}
+							priority={getPriority(i, page)}
+							alt={`Page ${i + 1}`}
+							width={imageSizes[i].width}
+							height={imageSizes[i].height}
+							style={{
+								opacity: loading[i] ? '0' : '1', ...fitStyles,
+							}}
+							onLoad={(ele) => {
+								setLoading((currentLoading) => currentLoading
+									.map((curr, index) => (index === i ? false : curr)));
 
-							const originalImage = ele.currentTarget;
-							// eslint-disable-next-line max-len, implicit-arrow-linebreak
-							setImageSizes((currentImageSizes) => currentImageSizes.map((curr, idx) => (idx === i ? { width: originalImage.naturalWidth, height: originalImage.naturalHeight } : curr)));
-						}}
-					/>
-				</div>
-			);
-		});
+								const originalImage = ele.currentTarget;
+								// eslint-disable-next-line max-len, implicit-arrow-linebreak
+								setImageSizes((currentImageSizes) => currentImageSizes.map((curr, idx) => (idx === i ? { width: originalImage.naturalWidth, height: originalImage.naturalHeight } : curr)));
+							}}
+						/>
+					</div>
+				);
+			});
+		}
 	}
 
 	return (
@@ -349,14 +370,7 @@ export default function Reader({
 			{/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
 			<div
 				ref={containerRef}
-				className={classNames(styles.pagesWrapper, {
-					// We add this check as without it vertical scrolling can break. As such, this
-					// disables it if scrolling is required!
-					'justify-center':
-						pageLayout !== 'long'
-						&& (pageRefs.current[page]
-							&& containerDimensions.height > pageRefs.current[page].clientHeight),
-				})}
+				className={classNames(styles.pagesWrapper)}
 				onClick={handleClick}
 				onScroll={handleScroll}
 			>
