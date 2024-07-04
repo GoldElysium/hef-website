@@ -181,9 +181,9 @@ function getDummyManga(): Manga {
 				{
 					imageName:
                         "Images taken from IRyS' stream 【CARaoke BREAKOUT finale】Valentine's Singing Escapade",
-					licenseName: "Cover's derivative works guidelines",
+					licenseName: '',
 					licenseUrl: '',
-					source: '',
+					source: 'https://www.youtube.com/watch?v=kGAxmpIGN0c',
 					usedLocation: '55',
 				},
 				{
@@ -226,7 +226,7 @@ function getDummyManga(): Manga {
 				en: {
 					generalGreeting: 'HiRyS! Happy 3rd Anniversary!',
 					generalEssay:
-                        "For 3 years, you've given us IRyStocrats countless memories and special moments - from funny moments in streams, beautiful moments in karaokes, to mesmerizing moments in concerts! As always, we want to show our gratitude by gathering IRyStocrats together to participate in fan projects dedicated to you. For this year, we have created something we know that you'll truly love. That's right! BOYS' LO- \"Bromance\" manga! We truly hope that you and the IRyStocrats enjoy these 3 chapters of \"bromance\"! \n(PS: Don't worry. The manga isn't actually BL. You're safe to show this on stream xD)",
+                        "For 3 years, you've given us IRyStocrats countless memories and special moments - from funny moments in streams, beautiful moments in karaokes, to mesmerizing moments in concerts! As always, we want to show our gratitude by gathering IRyStocrats together to participate in fan projects dedicated to you.\n\n For this year, we have created something we know that you'll truly love. That's right! BOYS' LO- \"Bromance\" manga! We truly hope that you and the IRyStocrats enjoy these 3 chapters of \"bromance\"! \n(PS: Don't worry. The manga isn't actually BL. You're safe to show this on stream xD)",
 					storyGreeting: 'Story',
 					storyContent:
                         'Having made a crucial mistake with IRyS, Good GuyRys finds himself trapped in the Backrooms with his fiercest rival, Bad GuyRyS. Together, the two must solve the mystery of their new prison. Could the two of them set aside the passionate flames burning between them, or will they let themselves be forever trapped without Hope.',
@@ -238,7 +238,7 @@ function getDummyManga(): Manga {
 					licensesGreeting: 'Licenses',
 					artLicensesContent:
                         "Fan Art Guidelines: The artwork in our manga adheres to Cover's guidelines for fanart. For more details, please refer to the",
-					coverGuidelines: 'Cover Fanart Guidelines',
+					coverGuidelines: "Cover's derivative works guidelines",
 					additionalInfoContent:
                         'For any inquiries or further details about the licenses and usage rights, please contact us at [contact information]',
 				},

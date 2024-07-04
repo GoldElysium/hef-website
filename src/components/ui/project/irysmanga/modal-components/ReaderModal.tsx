@@ -18,9 +18,9 @@ interface IProps {
 }
 
 export default function ReaderModal({ modalRef }: IProps) {
-	const [selected, setSelected] = useState('General');
+	const [selected, setSelected] = useState('general');
 	const { readerLanguage, setReaderLanguage } = useMangaContext();
-	const options = ['General', 'Story', 'Reader', 'Licences'];
+	const options = ['general', 'story', 'reader', 'licenses'];
 	const { t } = useTranslation('reader');
 
 	const SMALL_MOBILE_PAGE_WIDTH = 576;
@@ -74,10 +74,10 @@ export default function ReaderModal({ modalRef }: IProps) {
 						/>
 					</div>
 
-					{selected === 'General' && <ModalTabGeneral />}
-					{selected === 'Story' && <ModalTabStory />}
-					{selected === 'Reader' && <ModalTabReader />}
-					{selected === 'Licences' && <ModalTabLicences />}
+					{selected === 'general' && <ModalTabGeneral />}
+					{selected === 'story' && <ModalTabStory />}
+					{selected === 'reader' && <ModalTabReader />}
+					{selected === 'licenses' && <ModalTabLicences />}
 				</div>
 				<div className="modal-action flex items-center justify-between">
 					<div className="self-start">

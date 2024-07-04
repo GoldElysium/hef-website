@@ -24,6 +24,9 @@
     "next": "Next",
     "back": "Back",
     "close": "Close",
+    "general": "General",
+    "story": "Story",
+    "licenses": "Licenses",
     "modal-general": {
         "credits": "Credits",
         "authors": "Authors",
