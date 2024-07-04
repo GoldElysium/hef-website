@@ -94,7 +94,16 @@ export default function ModalTabLicenses() {
 			))}
 
 			<h2 className="mb-2 text-2xl font-semibold underline">{t('additionalInfo')}</h2>
-			<p>{modalData.additionalInfoContent}</p>
+			<p>
+				{modalData.additionalInfoContent}
+				{' '}
+				<a
+					className="inline text-blue-500 underline"
+					href={`mailto:${modalData.contactInfo}`}
+				>
+					{modalData.contactInfo}
+				</a>
+			</p>
 		</ModalTabContent>
 	);
 }

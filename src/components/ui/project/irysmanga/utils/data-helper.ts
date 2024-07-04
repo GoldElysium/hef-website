@@ -243,7 +243,8 @@ function getDummyManga(): Manga {
                         "Fan Art Guidelines: The artwork in our manga adheres to Cover's guidelines for fanart. For more details, please refer to the",
 					coverGuidelines: "Cover's derivative works guidelines",
 					additionalInfoContent:
-                        'For any inquiries or further details about the licenses and usage rights, please contact us at [contact information]',
+                        'For any inquiries or further details about the licenses and usage rights, please contact us at',
+					contactInfo: 'contact@holoen.fans',
 				},
 				jp: {
 					generalGreeting: '三周年おめでたいRyS!',
@@ -262,6 +263,7 @@ function getDummyManga(): Manga {
 					artLicensesContent: '',
 					coverGuidelines: '',
 					additionalInfoContent: '',
+					contactInfo: 'contact@holoen.fans',
 				},
 			},
 		},

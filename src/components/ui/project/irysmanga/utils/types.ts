@@ -42,6 +42,7 @@ export type ModalData = {
 	artLicensesContent: string;
 	coverGuidelines: string;
 	additionalInfoContent: string;
+	contactInfo: string;
 };
 
 export type ModalDataRoot = {
