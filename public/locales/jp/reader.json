@@ -23,6 +23,8 @@
     "next": "次に",
     "back": "戻る",
     "close": "閉じる",
+    "cover": "表紙",
+    "back-cover": "裏表紙",
     "modal-general": {
         "credits": "クレジット",
         "authors": "著者",

@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { Bars3Icon } from '@heroicons/react/24/solid';
 import Icon from '@/components/ui/Icon';
 import { useMangaContext } from './context/MangaContext';
-import { getMangaDataOrThrow } from './utils/types';
+import { Chapter, getMangaDataOrThrow } from './utils/types';
 import './styles/styles.css';
 import styles from './styles/Header.module.css';
 
@@ -26,6 +26,21 @@ export default function ReaderHeader({ openSidebar, setOpenSidebar }: Props) {
 		document.documentElement.style.setProperty('--header-height', `${height!}px`);
 	}, []);
 	const mangaData = getMangaDataOrThrow(manga, mangaLanguage);
+
+	function generateChapterLabel(currentChapter: Chapter) {
+		if (currentChapter.isCover) {
+			return t('cover');
+		}
+
+		if (currentChapter.isBackCover) {
+			return t('back-cover');
+		}
+
+		return `${t('chapter')} ${currentChapter.displayChapterNumber}`;
+	}
+
+	const currentChapter = mangaData.chapters[chapter];
+	const chapterLabel = generateChapterLabel(currentChapter);
 	return (
 		<>
 			<div
@@ -51,7 +66,7 @@ export default function ReaderHeader({ openSidebar, setOpenSidebar }: Props) {
 						</div>
 						<div className={styles.infoBadge}>
 							<span className={styles.infoBadgeContent}>
-								{`${t('chapter')} ${chapter + 1}`}
+								{chapterLabel}
 							</span>
 						</div>
 					</div>

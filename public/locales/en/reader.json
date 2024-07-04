@@ -24,6 +24,8 @@
     "next": "Next",
     "back": "Back",
     "close": "Close",
+    "cover": "Cover",
+    "back-cover": "Back Cover",
     "modal-general": {
         "credits": "Credits",
         "authors": "Authors",
