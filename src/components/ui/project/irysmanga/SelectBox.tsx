@@ -14,7 +14,7 @@ interface SelectBoxProps {
 
 function SelectBox({ value, label }: SelectBoxProps) {
 	const {
-		mangaLanguage, setPage, chapter, setChapter, manga,
+		mangaLanguage, setPage, chapter, setChapter, manga, pageLayout,
 	} = useMangaContext();
 	const mangaData = getMangaDataOrThrow(manga, mangaLanguage);
 	const { t } = useTranslation('reader');
@@ -40,6 +40,7 @@ function SelectBox({ value, label }: SelectBoxProps) {
 	}));
 
 	const nextButtonClasses = 'button shrink-0 disabled:opacity-50';
+	const direction = pageLayout !== 'rtl' ? 1 : -1;
 
 	return (
 		<div className="flex w-full justify-center gap-2">
@@ -47,13 +48,18 @@ function SelectBox({ value, label }: SelectBoxProps) {
 				className={nextButtonClasses}
 				aria-label="left-page"
 				type="button"
-				onClick={() => handleSelectValue(value - 1)}
+				onClick={() => handleSelectValue(value - 1 * direction)}
 				disabled={(() => {
 					if (label === 'page') {
-						return value === 0 && chapter === 0;
+						if (direction === 1) {
+							return value === 0 && chapter === 0;
+						}
+						return value + 1 === maxValue && chapter + 1 === mangaData.chapterCount;
 					}
-
-					return value === 0;
+					if (direction === 1) {
+						return value === 0;
+					}
+					return value + 1 === maxValue;
 				})()}
 			>
 				<ChevronLeftIcon className="size-5" />
@@ -95,13 +101,18 @@ function SelectBox({ value, label }: SelectBoxProps) {
 				className={nextButtonClasses}
 				aria-label="right-page"
 				type="button"
-				onClick={() => handleSelectValue(value + 1)}
+				onClick={() => handleSelectValue(value + 1 * direction)}
 				disabled={(() => {
 					if (label === 'page') {
-						return value + 1 === maxValue && chapter + 1 === mangaData.chapterCount;
+						if (direction === 1) {
+							return value + 1 === maxValue && chapter + 1 === mangaData.chapterCount;
+						}
+						return value === 0 && chapter === 0;
 					}
-
-					return value + 1 === maxValue;
+					if (direction === 1) {
+						return value + 1 === maxValue;
+					}
+					return value === 0;
 				})()}
 			>
 				<ChevronRightIcon width={20} />
