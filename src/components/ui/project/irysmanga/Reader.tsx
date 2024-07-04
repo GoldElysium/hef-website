@@ -53,6 +53,7 @@ export default function Reader({
 		width: 0,
 		height: 0,
 	});
+	const [currentlyLoadedChapter, setCurrentlyLoadedChapter] = useState(chapter);
 
 	/**
 	 * A function to automatically set the "is user currently the one scrolling" state to false.
@@ -164,15 +165,6 @@ export default function Reader({
 	}, []);
 
 	useEffect(() => {
-		// Flush the page stuff after a new chapter is loaded.
-		const { pageCount } = mangaData.chapters[chapter];
-
-		setLoading(Array(pageCount).fill(true));
-		setImageSizes(Array(pageCount).fill({ width: 0, height: 0 }));
-		pageRefs.current = [];
-	}, [chapter, mangaData.chapters]);
-
-	useEffect(() => {
 		if (containerRef && containerRef.current) {
 			const { clientWidth, clientHeight } = containerRef.current;
 			setContainerDimensions({
@@ -181,6 +173,19 @@ export default function Reader({
 			});
 		}
 	}, [containerRef, fitMode]);
+
+	useEffect(() => {
+		if (chapter !== currentlyLoadedChapter) {
+			// Flush the page stuff after a new chapter is loaded.
+			const { pageCount } = mangaData.chapters[chapter];
+
+			setLoading(Array(pageCount).fill(true));
+			setImageSizes(Array(pageCount).fill({ width: 0, height: 0 }));
+			pageRefs.current = [];
+
+			setCurrentlyLoadedChapter(chapter);
+		}
+	}, [chapter, mangaData.chapters, currentlyLoadedChapter]);
 
 	useEffect(() => {
 		if (pageLayout === 'long' && isScrollCausedByUserScroll.current) {
@@ -316,7 +321,7 @@ export default function Reader({
 			return {};
 		};
 
-		if (imageSizes.length === maxPageCount && loading.length === maxPageCount) {
+		if (currentlyLoadedChapter === chapter) {
 			displayedPages = Array.from({ length: maxPageCount }, (_, i) => {
 				const fitStyles = getPageImageFitStyles(imageSizes[i].width, imageSizes[i].height);
 
