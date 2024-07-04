@@ -179,12 +179,6 @@ export default function Reader({
 		}
 
 		if (containerRef.current) {
-			const { clientWidth, clientHeight } = containerRef.current;
-			setContainerDimensions({
-				width: clientWidth,
-				height: clientHeight,
-			});
-
 			const targetImg = pageRefs.current[page];
 			if (targetImg) {
 				if (pageLayout === 'long') {
@@ -220,6 +214,14 @@ export default function Reader({
 	}, [
 		page, chapter, pageLayout, loading, fitMode, containerRef, mangaData.chapters,
 	]);
+
+	const shouldJustify = () => {
+		const should = pageLayout !== 'long'
+			&& (pageRefs.current[page]
+				&& containerDimensions.height > pageRefs.current[page].clientHeight);
+
+		return should;
+	};
 
 	let displayedPages: React.JSX.Element[] = [];
 	if (mangaData.chapters[chapter]) {
@@ -358,10 +360,7 @@ export default function Reader({
 				className={classNames(styles.pagesWrapper, {
 					// We add this check as without it vertical scrolling can break. As such, this
 					// disables it if scrolling is required!
-					'justify-center':
-						pageLayout !== 'long'
-						&& (pageRefs.current[page]
-							&& containerDimensions.height > pageRefs.current[page].clientHeight),
+					'justify-center': shouldJustify(),
 				})}
 				onClick={handleClick}
 				onScroll={handleScroll}
