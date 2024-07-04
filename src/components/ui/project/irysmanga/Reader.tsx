@@ -179,6 +179,12 @@ export default function Reader({
 		}
 
 		if (containerRef.current) {
+			const { clientWidth, clientHeight } = containerRef.current;
+			setContainerDimensions({
+				width: clientWidth,
+				height: clientHeight,
+			});
+
 			const targetImg = pageRefs.current[page];
 			if (targetImg) {
 				if (pageLayout === 'long') {
