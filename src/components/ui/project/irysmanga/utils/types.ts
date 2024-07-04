@@ -18,7 +18,14 @@ export type MangaData = {
 
 export type Contributor = {
 	name: string;
-	role: 'organizer' | 'writer' | 'lead-artist' | 'artist' | 'translator' | 'developer' | 'special-thanks';
+	role:
+	| 'organizer'
+	| 'writer'
+	| 'lead-artist'
+	| 'artist'
+	| 'translator'
+	| 'developer'
+	| 'special-thanks';
 	socials: {
 		platform: string;
 		link: string;
@@ -34,6 +41,10 @@ export type ModalData = {
 	storyImageCaption: string;
 	readerGreeting: string;
 	readerIntro: string;
+	licensesGreeting: string;
+	artLicensesContent: string;
+	coverGuidelines: string;
+	additionalInfoContent: string;
 };
 
 export type ModalDataRoot = {
@@ -46,9 +57,9 @@ export type ModalDataRoot = {
 	}[];
 	imageLicenses: {
 		imageName: string;
-		licenseName: string;
-		licenseUrl: string;
-		source: string;
+		licenseName?: string;
+		licenseUrl?: string;
+		source?: string;
 		usedLocation: string; // the page number(s) where the image was used.
 	}[];
 };
