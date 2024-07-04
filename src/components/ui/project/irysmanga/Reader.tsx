@@ -47,7 +47,7 @@ export default function Reader({
 		Array(mangaData.chapters[chapter].pageCount).fill(true),
 	);
 	const [imageSizes, setImageSizes] = useState(
-		Array(mangaData.chapters[chapter].pageCount).fill({ width: 0, height: 0 }),
+		Array(mangaData.chapters[chapter].pageCount).fill({ width: 1, height: 1080 }),
 	);
 	const [containerDimensions, setContainerDimensions] = useState({
 		width: 0,
@@ -224,14 +224,6 @@ export default function Reader({
 		page, chapter, pageLayout, loading, fitMode, containerRef, mangaData.chapters,
 	]);
 
-	const shouldJustify = () => {
-		const should = pageLayout !== 'long'
-			&& (pageRefs.current[page]
-				&& containerDimensions.height > pageRefs.current[page].clientHeight);
-
-		return should;
-	};
-
 	let displayedPages: React.JSX.Element[] = [];
 	if (mangaData.chapters[chapter]) {
 		const currentChapter = mangaData.chapters[chapter];
@@ -270,7 +262,13 @@ export default function Reader({
 				'max-w-full max-h-full overflow-auto': fitMode === 'fit-both',
 			};
 
-			return classNames(blockStyle, fitStyle, 'relative flex shrink-0');
+			const marginStyle = {
+				// We add this check as without it vertical scrolling can break. As such, this
+				// disables it if scrolling is required!
+				'my-auto': pageLayout !== 'long' && fitMode !== 'height',
+			};
+
+			return classNames(blockStyle, fitStyle, marginStyle, 'relative flex shrink-0');
 		};
 
 		/**
@@ -368,13 +366,11 @@ export default function Reader({
 			{/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
 			<div
 				ref={containerRef}
-				className={classNames(styles.pagesWrapper, {
-					// We add this check as without it vertical scrolling can break. As such, this
-					// disables it if scrolling is required!
-					'justify-center': shouldJustify(),
-				})}
+				className={classNames(styles.pagesWrapper)}
 				onClick={handleClick}
 				onScroll={handleScroll}
+			// This only works on non-safari
+			// style={{ justifyContent: pageLayout === 'long' ? 'unset' : 'safe center' }}
 			>
 				{displayedPages}
 			</div>
