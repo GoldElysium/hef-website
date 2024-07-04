@@ -161,7 +161,7 @@ export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }:
 							width={0}
 							height={0}
 							alt="ebi"
-							priority={false}
+							priority
 						/>
 					</button>
 					<div className="flex w-full gap-1">
