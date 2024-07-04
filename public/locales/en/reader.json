@@ -24,6 +24,9 @@
     "next": "Next",
     "back": "Back",
     "close": "Close",
+    "general": "General",
+    "story": "Story",
+    "licenses": "Licenses",
     "modal-general": {
         "credits": "Credits",
         "authors": "Authors",
@@ -56,5 +59,14 @@
         "page-fit-k": "Change Fit Mode",
         "progress-k": "Show/Hide Progress",
         "or": "or"
+    },
+    "modal-licenses": {
+        "fontLicenses": "Font Licenses",
+        "artLicenses": "Art Licenses",
+        "imageLicenses": "Image Licenses",
+        "additionalInfo": "Additional Info",
+        "source": "Source",
+        "usedOn": "Used on page",
+        "license": "License"
     }
 }
