@@ -164,6 +164,15 @@ export default function Reader({
 	}, []);
 
 	useEffect(() => {
+		// Flush the page stuff after a new chapter is loaded.
+		const { pageCount } = mangaData.chapters[chapter];
+
+		setLoading(Array(pageCount).fill(true));
+		setImageSizes(Array(pageCount).fill({ width: 0, height: 0 }));
+		pageRefs.current = [];
+	}, [chapter, mangaData.chapters]);
+
+	useEffect(() => {
 		if (containerRef && containerRef.current) {
 			const { clientWidth, clientHeight } = containerRef.current;
 			setContainerDimensions({
@@ -226,7 +235,7 @@ export default function Reader({
 	let displayedPages: React.JSX.Element[] = [];
 	if (mangaData.chapters[chapter]) {
 		const currentChapter = mangaData.chapters[chapter];
-		const maxPageCount = currentChapter.pageCount;
+		const maxPageCount = Math.min(currentChapter.pageCount, imageSizes.length, loading.length);
 		// Use optimized pages if we have them, otherwise fall back to unoptimized I guess.
 		const pageSources = optimizedImages.get(currentChapter.id) ?? currentChapter.pages;
 
