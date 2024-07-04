@@ -174,7 +174,7 @@ function getDummyManga(): Manga {
 				{
 					imageName: 'The forest image',
 					licenseName: "Pixabay's Content License",
-					licenseUrl: '',
+					licenseUrl: 'https://pixabay.com/vi/service/license-summary/',
 					source: '',
 					usedLocation: '41',
 				},
@@ -189,21 +189,24 @@ function getDummyManga(): Manga {
 				{
 					imageName: 'The train station image',
 					licenseName: "Adobe Stock's Standard License",
-					licenseUrl: '',
+					licenseUrl:
+                        'https://stock.adobe.com/vn/license-terms#:~:text=Use%20Only%20restrictions.-,Standard%20licenses,%2C%20digital%20documents%2C%20or%20software.',
 					source: '',
 					usedLocation: '56',
 				},
 				{
 					imageName: 'The train interior image',
 					licenseName: "Shutterstock's Standard License",
-					licenseUrl: '',
+					licenseUrl:
+                        'https://support.shutterstock.com/s/article/Standard-License-vs-Enhanced-License?language=en_US',
 					source: '',
 					usedLocation: '58',
 				},
 				{
 					imageName: 'The background images',
 					licenseName: "Shutterstock's Standard License",
-					licenseUrl: '',
+					licenseUrl:
+                        'https://support.shutterstock.com/s/article/Standard-License-vs-Enhanced-License?language=en_US',
 					source: '',
 					usedLocation: '67, 69',
 				},
@@ -212,13 +215,13 @@ function getDummyManga(): Manga {
 				{
 					fontName: 'Anime Ace 2',
 					licenseName: 'Indie Comics Use',
-					licenseUrl: '',
+					licenseUrl: 'https://blambot.com/pages/licenses',
 					source: 'Blambot',
 				},
 				{
 					fontName: 'BIZ UD 明朝 (Minchou) Medium',
 					licenseName: 'SIL Open Font License 1.1',
-					licenseUrl: '',
+					licenseUrl: 'https://openfontlicense.org/',
 					source: 'タイプバンク (TypeBank), モリサワ (Morisawa)',
 				},
 			],
