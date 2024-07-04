@@ -235,7 +235,7 @@ export default function Reader({
 	let displayedPages: React.JSX.Element[] = [];
 	if (mangaData.chapters[chapter]) {
 		const currentChapter = mangaData.chapters[chapter];
-		const maxPageCount = Math.min(currentChapter.pageCount, imageSizes.length, loading.length);
+		const maxPageCount = currentChapter.pageCount;
 		// Use optimized pages if we have them, otherwise fall back to unoptimized I guess.
 		const pageSources = optimizedImages.get(currentChapter.id) ?? currentChapter.pages;
 
@@ -319,44 +319,46 @@ export default function Reader({
 			return {};
 		};
 
-		displayedPages = Array.from({ length: maxPageCount }, (_, i) => {
-			const fitStyles = getPageImageFitStyles(imageSizes[i].width, imageSizes[i].height);
+		if (imageSizes.length === maxPageCount && loading.length === maxPageCount) {
+			displayedPages = Array.from({ length: maxPageCount }, (_, i) => {
+				const fitStyles = getPageImageFitStyles(imageSizes[i].width, imageSizes[i].height);
 
-			return (
-				<div
-					className={`${getClassNamesContainer(i)}`}
-					key={`page-${i}`}
-					ref={(el) => {
-						pageRefs.current[i] = el as HTMLImageElement;
-					}}
-					style={{
-						scrollbarWidth: 'none', msOverflowStyle: 'none',
-					}}
-				>
-					{loading[i] && <LoadingIcon />}
-					<NextImage
-						src={pageSources[i]}
-						className={getClassNamesPageImage()}
-						quality={100}
-						priority={getPriority(i, page)}
-						alt={`Page ${i + 1}`}
-						width={imageSizes[i].width}
-						height={imageSizes[i].height}
+				return (
+					<div
+						className={`${getClassNamesContainer(i)}`}
+						key={`page-${i}`}
+						ref={(el) => {
+							pageRefs.current[i] = el as HTMLImageElement;
+						}}
 						style={{
-							opacity: loading[i] ? '0' : '1', ...fitStyles,
+							scrollbarWidth: 'none', msOverflowStyle: 'none',
 						}}
-						onLoad={(ele) => {
-							setLoading((currentLoading) => currentLoading
-								.map((curr, index) => (index === i ? false : curr)));
+					>
+						{loading[i] && <LoadingIcon />}
+						<NextImage
+							src={pageSources[i]}
+							className={getClassNamesPageImage()}
+							quality={100}
+							priority={getPriority(i, page)}
+							alt={`Page ${i + 1}`}
+							width={imageSizes[i].width}
+							height={imageSizes[i].height}
+							style={{
+								opacity: loading[i] ? '0' : '1', ...fitStyles,
+							}}
+							onLoad={(ele) => {
+								setLoading((currentLoading) => currentLoading
+									.map((curr, index) => (index === i ? false : curr)));
 
-							const originalImage = ele.currentTarget;
-							// eslint-disable-next-line max-len, implicit-arrow-linebreak
-							setImageSizes((currentImageSizes) => currentImageSizes.map((curr, idx) => (idx === i ? { width: originalImage.naturalWidth, height: originalImage.naturalHeight } : curr)));
-						}}
-					/>
-				</div>
-			);
-		});
+								const originalImage = ele.currentTarget;
+								// eslint-disable-next-line max-len, implicit-arrow-linebreak
+								setImageSizes((currentImageSizes) => currentImageSizes.map((curr, idx) => (idx === i ? { width: originalImage.naturalWidth, height: originalImage.naturalHeight } : curr)));
+							}}
+						/>
+					</div>
+				);
+			});
+		}
 	}
 
 	return (
