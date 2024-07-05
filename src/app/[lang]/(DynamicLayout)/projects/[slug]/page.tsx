@@ -14,6 +14,7 @@ import { Language } from '@/lib/i18n/languages';
 import PixiSubmissionWrapper from '@/components/ui/project/kroniipuzzle/PixiSubmissionWrapper';
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/20/solid';
 import KroniiMapSubmissionWrapper from '@/components/ui/project/kroniimap/KroniiMapSubmissionsWrapper';
+import KiaraBdaySubmissionWrapper from '@/components/ui/project/kiarabday/KiaraBdaySubmissionWrapper';
 import {
 	PayloadLexicalReactRenderer,
 	PayloadLexicalReactRendererContent,
@@ -53,7 +54,6 @@ async function fetchProject(slug: string, lang: Language): Promise<ProjectData |
 
 	const project = res.docs[0];
 	const flags = (project.flags as Flag[] | undefined ?? []).map((flag) => flag.code);
-
 	return {
 		...project,
 		media: project.media!.map((item) => {
@@ -103,6 +103,12 @@ export default async function ProjectPage({ params: { slug, lang } }: IProps) {
 	if (project.flags?.includes('kronii-map-bd-2024')) {
 		return (
 			<KroniiMapSubmissionWrapper project={project} />
+		);
+	}
+
+	if (project.flags?.includes('kiara-bday-2024')) {
+		return (
+			<KiaraBdaySubmissionWrapper lang={lang} project={project} />
 		);
 	}
 
