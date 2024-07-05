@@ -8,22 +8,26 @@ export default function ModalTabLicenses() {
 	const modalDataRoot = getModalDataRoot(manga);
 	const modalData = getLocalisedModalData(modalDataRoot, readerLanguage);
 	const { t } = useTranslation('reader', 'modal-licenses');
+
+	const coverGuidelinesParts = modalData.artLicensesContent.split(modalData.coverGuidelines);
+	const additionalInfoParts = modalData.additionalInfoContent.split(modalData.contactInfo);
 	return (
 		<ModalTabContent>
 			<h1 className="mb-4 text-3xl font-bold">{modalData.licensesGreeting}</h1>
 
 			<h2 className="mb-2 text-2xl font-semibold underline">{t('artLicenses')}</h2>
 			<p className="mb-4">
-				{modalData.artLicensesContent}
+				{coverGuidelinesParts[0]}
 				{' '}
 				<a
-					href="https://hololivepro.com/en/terms/"
+					href={modalData.coverGuidelinesUrl}
 					className="text-blue-500 underline"
 					target="_blank"
 				>
 					{modalData.coverGuidelines}
 				</a>
-				.
+				{' '}
+				{coverGuidelinesParts.length > 1 ? coverGuidelinesParts[1] : '.'}
 			</p>
 
 			{modalDataRoot.imageLicenses.map((image) => (
@@ -96,7 +100,7 @@ export default function ModalTabLicenses() {
 
 			<h2 className="mb-2 text-2xl font-semibold underline">{t('additionalInfo')}</h2>
 			<p>
-				{modalData.additionalInfoContent}
+				{additionalInfoParts[0]}
 				{' '}
 				<a
 					className="inline text-blue-500 underline"
@@ -104,6 +108,8 @@ export default function ModalTabLicenses() {
 				>
 					{modalData.contactInfo}
 				</a>
+				{' '}
+				{additionalInfoParts.length > 1 ? additionalInfoParts[1] : '.'}
 			</p>
 		</ModalTabContent>
 	);

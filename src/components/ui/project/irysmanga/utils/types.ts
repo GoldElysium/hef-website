@@ -44,6 +44,7 @@ export type ModalData = {
 	licensesGreeting: string;
 	artLicensesContent: string;
 	coverGuidelines: string;
+	coverGuidelinesUrl: string;
 	additionalInfoContent: string;
 	contactInfo: string;
 };
