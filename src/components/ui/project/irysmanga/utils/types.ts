@@ -1,6 +1,9 @@
 export type Chapter = {
 	id: string;
 	title: string;
+	isCover: boolean;
+	isBackCover: boolean;
+	displayChapterNumber: number;
 	pageCount: number;
 	pages: string[];
 };

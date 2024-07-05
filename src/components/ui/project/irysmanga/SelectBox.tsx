@@ -33,11 +33,33 @@ function SelectBox({ value, label }: SelectBoxProps) {
 		}
 	}
 
-	const labelList = Array.from(Array(maxValue).keys()).map((key) => `${t(label)} ${key + 1}`);
-	const options = labelList.map((item, index) => ({
-		value: index.toString(),
-		label: item,
-	}));
+	function generateOptions() {
+		if (label === 'chapter') {
+			const labelList = mangaData.chapters.map((obj) => {
+				if (obj.isCover) {
+					return t('cover');
+				}
+
+				if (obj.isBackCover) {
+					return t('back-cover');
+				}
+
+				return `${t(label)} ${obj.displayChapterNumber}`;
+			});
+			return labelList.map((item, index) => ({
+				value: index.toString(),
+				label: item,
+			}));
+		}
+
+		const labelList = Array.from(Array(maxValue).keys()).map((key) => `${t(label)} ${key + 1}`);
+		return labelList.map((item, index) => ({
+			value: index.toString(),
+			label: item,
+		}));
+	}
+
+	const options = generateOptions();
 
 	const nextButtonClasses = 'button shrink-0 disabled:opacity-50';
 	const direction = pageLayout !== 'rtl' ? 1 : -1;

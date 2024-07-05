@@ -46,16 +46,44 @@ function getDummyManga(): Manga {
 		tmpMangaData[0].chapters.push({
 			id: `en-ch-${i}`,
 			title: enTitle,
+			isCover: false,
+			isBackCover: false,
+			displayChapterNumber: i,
 			pageCount: tmpPageCount,
 			pages: enTmpPages,
 		});
 		tmpMangaData[1].chapters.push({
 			id: `jp-ch-${i}`,
 			title: jpTitle,
+			isCover: false,
+			isBackCover: false,
+			displayChapterNumber: i,
 			pageCount: tmpPageCount,
 			pages: jpTmpPages,
 		});
 	}
+
+	tmpMangaData[0].chapters.unshift({
+		id: 'cover',
+		title: 'Cover',
+		isCover: true,
+		isBackCover: false,
+		displayChapterNumber: -1,
+		pageCount: 1,
+		pages: ['https://alt.hololive.tv/wp-content/uploads/2023/06/holoearth_main-1.png'],
+	});
+	tmpMangaData[0].chapterCount += 1;
+
+	tmpMangaData[1].chapters.unshift({
+		id: 'cover',
+		title: 'Cover',
+		isCover: true,
+		isBackCover: false,
+		displayChapterNumber: -1,
+		pageCount: 1,
+		pages: ['https://alt.hololive.tv/wp-content/uploads/2023/06/holoearth_main-1.png'],
+	});
+	tmpMangaData[1].chapterCount += 1;
 
 	return {
 		id: 'test-manga',
