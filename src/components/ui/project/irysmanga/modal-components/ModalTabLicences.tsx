@@ -25,16 +25,17 @@ export default function ModalTabLicenses() {
 				</a>
 				.
 			</p>
+
 			{modalDataRoot.imageLicenses.map((image) => (
-				<div className="mb-4" key={image.imageName}>
-					<h3 className="text-lg font-semibold">{image.imageName}</h3>
+				<div className="mb-4" key={image.imageName[readerLanguage]}>
+					<h3 className="text-lg">{image.imageName[readerLanguage]}</h3>
 					{image.licenseName && (
 						<p>
-							<strong>
+							<span>
 								{t('license')}
 								:
 								{' '}
-							</strong>
+							</span>
 							<a
 								href={image.licenseUrl}
 								className="text-blue-500 underline"
@@ -55,11 +56,11 @@ export default function ModalTabLicenses() {
 							</a>
 						</p>
 					)}
-					<strong>
+					<span>
 						{t('usedOn')}
 						:
 						{' '}
-					</strong>
+					</span>
 					{' '}
 					{image.usedLocation}
 				</div>
@@ -68,12 +69,12 @@ export default function ModalTabLicenses() {
 			<h2 className="mb-2 text-2xl font-semibold underline">{t('fontLicenses')}</h2>
 			{modalDataRoot.fontLicenses.map((font) => (
 				<div className="mb-4" key={font.fontName}>
-					<h3 className="text-lg font-semibold">{font.fontName}</h3>
+					<h3 className="text-lg">{font.fontName}</h3>
 					<p>
-						<strong>
+						<span>
 							{t('license')}
 							:
-						</strong>
+						</span>
 						{' '}
 						<a
 							href={font.licenseUrl}
@@ -83,10 +84,10 @@ export default function ModalTabLicenses() {
 							{font.licenseName}
 						</a>
 						<br />
-						<strong>
+						<span>
 							{t('source')}
 							:
-						</strong>
+						</span>
 						{' '}
 						{font.source}
 					</p>

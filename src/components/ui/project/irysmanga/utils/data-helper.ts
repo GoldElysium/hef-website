@@ -165,29 +165,40 @@ function getDummyManga(): Manga {
 		modalData: {
 			imageLicenses: [
 				{
-					imageName: 'The Backrooms',
+					imageName: {
+						en: 'The Backrooms',
+						jp: 'The Backrooms / ザ・バックルーム',
+					},
 					licenseName: '',
 					licenseUrl: '',
 					source: 'https://web.archive.org/web/20030503094137/http://www.hobbytownoshkosh.com:80/revolution%20raceway,%20020903.htm',
 					usedLocation: '4',
 				},
 				{
-					imageName: 'The forest image',
+					imageName: {
+						en: 'The forest image',
+						jp: '背景の森の画像',
+					},
 					licenseName: "Pixabay's Content License",
 					licenseUrl: 'https://pixabay.com/vi/service/license-summary/',
 					source: '',
 					usedLocation: '41',
 				},
 				{
-					imageName:
-                        "Images taken from IRyS' stream 【CARaoke BREAKOUT finale】Valentine's Singing Escapade",
+					imageName: {
+						en: "Images taken from IRyS' stream 【CARaoke BREAKOUT finale】Valentine's Singing Escapade",
+						jp: "IRySの配信動画「【CARaoke BREAKOUT finale】Valentine's Singing Escapade」からのスクリーンショット",
+					},
 					licenseName: '',
 					licenseUrl: '',
 					source: 'https://www.youtube.com/watch?v=kGAxmpIGN0c',
 					usedLocation: '55',
 				},
 				{
-					imageName: 'The train station image',
+					imageName: {
+						en: 'The train station image',
+						jp: '電車駅の画像',
+					},
 					licenseName: "Adobe Stock's Standard License",
 					licenseUrl:
                         'https://stock.adobe.com/vn/license-terms#:~:text=Use%20Only%20restrictions.-,Standard%20licenses,%2C%20digital%20documents%2C%20or%20software.',
@@ -195,7 +206,7 @@ function getDummyManga(): Manga {
 					usedLocation: '56',
 				},
 				{
-					imageName: 'The train interior image',
+					imageName: { en: 'The train interior image', jp: '電車の車内の画像' },
 					licenseName: "Shutterstock's Standard License",
 					licenseUrl:
                         'https://support.shutterstock.com/s/article/Standard-License-vs-Enhanced-License?language=en_US',
@@ -203,7 +214,7 @@ function getDummyManga(): Manga {
 					usedLocation: '58',
 				},
 				{
-					imageName: 'The background images',
+					imageName: { en: 'The background images', jp: '背景画像' },
 					licenseName: "Shutterstock's Standard License",
 					licenseUrl:
                         'https://support.shutterstock.com/s/article/Standard-License-vs-Enhanced-License?language=en_US',
@@ -259,10 +270,12 @@ function getDummyManga(): Manga {
 					readerGreeting: 'IrySテーマのマンガリーダーへようこそ！',
 					readerIntro:
                         'マンガを表示するために、私たちは独自のIRySテーマのリーダーを作成しました!ここでは、使い始めるための簡単なガイドを提供し、読書体験を最大限に活用する方法をお伝えします。',
-					licensesGreeting: '',
-					artLicensesContent: '',
-					coverGuidelines: '',
-					additionalInfoContent: '',
+					licensesGreeting: 'ライセンス関連',
+					artLicensesContent:
+                        'ファンアートのガイドライン: この漫画のイラストはカバー株式会社のファンアートのガイドラインを遵守しています。詳しくはカバー株式会社の二次創作全般ガイドラインを参照してください',
+					coverGuidelines: 'カバー株式会社の二次創作全般ガイドライン',
+					additionalInfoContent:
+                        'ライセンスや使用許可についてのお聞き合わせや詳細はここまでメールしてください',
 					contactInfo: 'contact@holoen.fans',
 				},
 			},
