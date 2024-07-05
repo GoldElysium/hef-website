@@ -45,6 +45,7 @@ export type ModalData = {
 	artLicensesContent: string;
 	coverGuidelines: string;
 	additionalInfoContent: string;
+	contactInfo: string;
 };
 
 export type ModalDataRoot = {
@@ -56,7 +57,7 @@ export type ModalDataRoot = {
 		source: string;
 	}[];
 	imageLicenses: {
-		imageName: string;
+		imageName: { readonly [lang: string]: string };
 		licenseName?: string;
 		licenseUrl?: string;
 		source?: string;

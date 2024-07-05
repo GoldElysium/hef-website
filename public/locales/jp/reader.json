@@ -10,6 +10,7 @@
     "width": "幅に合わせる",
     "height": "高さに合わせる",
     "original": "普通に合わせる",
+    "fit-both": "幅と高さに合わせる",
     "ltr": "左から右へ",
     "rtl": "右から左へ",
     "header-hidden": "ヘッダーを隠す",
@@ -25,6 +26,9 @@
     "close": "閉じる",
     "cover": "表紙",
     "back-cover": "裏表紙",
+    "general": "ジェネラル",
+    "story": "ストーリー",
+    "licenses": "ライセンス",
     "modal-general": {
         "credits": "クレジット",
         "authors": "著者",
@@ -57,5 +61,13 @@
         "page-fit-k": "ページの合わせ方を切り替える",
         "progress-k": "プログレスバー表示/非表示",
         "or": "または"
+    },
+    "modal-licenses": {
+        "fontLicenses": "フォントのライセンス",
+        "artLicenses": "画像のライセンス",
+        "additionalInfo": "その他",
+        "source": "出所",
+        "usedOn": "使用されているページ",
+        "license": "ライセンス"
     }
 }

@@ -150,6 +150,7 @@ export default function FloatingDecoArtDraggable({
 		};
 	}, [containerRef]);
 
+	// Need this for avoid ios devices selecting the image
 	// eslint-disable-next-line consistent-return
 	useEffect(() => {
 		const imgElement = targetRef.current;
@@ -158,8 +159,8 @@ export default function FloatingDecoArtDraggable({
 				e.preventDefault();
 			};
 
-			imgElement.addEventListener('touchstart', preventDefault);
-			imgElement.addEventListener('touchmove', preventDefault);
+			imgElement.addEventListener('touchstart', preventDefault, { passive: false });
+			imgElement.addEventListener('touchmove', preventDefault, { passive: false });
 
 			return () => {
 				imgElement.removeEventListener('touchstart', preventDefault);
