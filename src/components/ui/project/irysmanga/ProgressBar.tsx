@@ -6,7 +6,7 @@ import styles from './styles/ProgressBar.module.css';
 
 export default function ProgressBar() {
 	const {
-		mangaLanguage, page, chapter, manga, progressVisibility, setPage,
+		mangaLanguage, page, chapter, manga, progressVisibility, setPage, pageLayout,
 	} = useMangaContext();
 
 	const mangaData = getMangaDataOrThrow(manga, mangaLanguage);
@@ -22,7 +22,21 @@ export default function ProgressBar() {
 	};
 
 	const pageSections = [];
-	for (let i = 0; i < pageCount; i++) {
+	let firstIndex = 0;
+	let lastIndex = pageCount;
+	let increment = 1;
+	let leftLabelValue = 1;
+	let rightLabelValue = pageCount;
+
+	if (pageLayout === 'rtl') {
+		firstIndex = pageCount - 1;
+		lastIndex = -1;
+		increment = -1;
+		leftLabelValue = pageCount;
+		rightLabelValue = 1;
+	}
+
+	for (let i = firstIndex; i !== lastIndex; i += increment) {
 		const isActive = i < page;
 		const isSelected = i === page;
 		let sectionClasses = classNames(styles.progressSectionTooltip, 'my-tooltip my-tooltip-top');
@@ -71,7 +85,7 @@ export default function ProgressBar() {
 							[styles.numberLabelClose]: !openProgress,
 						})}
 					>
-						1
+						{leftLabelValue}
 					</span>
 				</div>
 				<div className={styles.progressBarContainer}>
@@ -88,7 +102,7 @@ export default function ProgressBar() {
 							[styles.numberLabelClose]: !openProgress,
 						})}
 					>
-						{pageCount}
+						{rightLabelValue}
 					</span>
 				</div>
 			</div>
