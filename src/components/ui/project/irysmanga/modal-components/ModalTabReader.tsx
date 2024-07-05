@@ -15,15 +15,15 @@ export default function MangaReaderModal() {
 			<h2 className="mb-2 text-2xl font-semibold">{t('howto')}</h2>
 			<ul className="disc-list mb-4 list-inside list-disc">
 				<li>
-					<span>{t('page-turn')}</span>
+					<span className="font-bold">{t('page-turn')}</span>
 					<p>{t('page-turn-text')}</p>
 				</li>
 				<li>
-					<span>{t('settings')}</span>
+					<span className="font-bold">{t('settings')}</span>
 					<p>{t('settings-text')}</p>
 				</li>
 				<li>
-					<span>{t('space')}</span>
+					<span className="font-bold">{t('space')}</span>
 					<p>{t('space-text')}</p>
 				</li>
 			</ul>
