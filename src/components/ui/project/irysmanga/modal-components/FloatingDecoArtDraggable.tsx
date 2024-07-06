@@ -34,14 +34,17 @@ export default function FloatingDecoArtDraggable({
 	const [animation, setAnimation] = useState<{ animate: {}; transition: {} }>(initialAnimation);
 
 	const data: { [key: string]: { img: string; sfx: string } } = {
-		initial: { img: src, sfx: '/assets/irysmanga/audio/dragging.mp3' },
+		initial: {
+			img: src,
+			sfx: 'https://cdn.holoen.fans/hefw/assets/anniversarys-2024/audio/dragging.mp3',
+		},
 		falling: {
-			img: '/assets/irysmanga/chibi/fallingrys.png',
-			sfx: '/assets/irysmanga/audio/fallsplat.mp3',
+			img: 'https://cdn.holoen.fans/hefw/assets/anniversarys-2024/chibi/fallingrys.png',
+			sfx: 'https://cdn.holoen.fans/hefw/assets/anniversarys-2024/audio/fallsplat.mp3',
 		},
 		flat: {
-			img: '/assets/irysmanga/chibi/flatrys.png',
-			sfx: '/assets/irysmanga/audio/flatting.mp3',
+			img: 'https://cdn.holoen.fans/hefw/assets/anniversarys-2024/chibi/flatrys.png',
+			sfx: 'https://cdn.holoen.fans/hefw/assets/anniversarys-2024/audio/flatting.mp3',
 		},
 	};
 

@@ -9,8 +9,8 @@ import FloatingDecoArtDraggable from './FloatingDecoArtDraggable';
 import { getLocalisedModalData, getModalDataRoot } from '../utils/types';
 
 const bgDecoSrc: { [key: string]: string } = {
-	dark: '/assets/irysmanga/chibi/keychainrys.png',
-	light: '/assets/irysmanga/chibi/iryshood.png',
+	dark: 'https://cdn.holoen.fans/hefw/assets/anniversarys-2024/chibi/keychainrys.png',
+	light: 'https://cdn.holoen.fans/hefw/assets/anniversarys-2024/chibi/iryshood.png',
 };
 
 export default function ModalTabGeneral() {

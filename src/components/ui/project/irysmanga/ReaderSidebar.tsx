@@ -156,7 +156,7 @@ export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }:
 						{t('details')}
 						<InformationCircleIcon className="setting-icon" />
 						<Image
-							src="/assets/irysmanga/chibi/ebi.png"
+							src="https://cdn.holoen.fans/hefw/assets/anniversarys-2024/chibi/ebi.png"
 							className="pointer-events-none absolute right-8 top-0 h-auto w-[90px] -translate-y-full opacity-50"
 							width={0}
 							height={0}
@@ -220,7 +220,7 @@ export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }:
 						valueList={readerThemes}
 						onClick={() => setTheme(resolvedTheme === 'light' ? 'dark' : 'light')}
 						// @ts-ignore
-						setValue={() => { }}
+						setValue={() => {}}
 						label="theme"
 					/>
 				</div>
