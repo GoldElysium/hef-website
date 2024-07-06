@@ -44,6 +44,7 @@ export type ModalData = {
 	licensesGreeting: string;
 	artLicensesContent: string;
 	coverGuidelines: string;
+	coverGuidelinesUrl: string;
 	additionalInfoContent: string;
 	contactInfo: string;
 };
@@ -58,8 +59,8 @@ export type ModalDataRoot = {
 	}[];
 	imageLicenses: {
 		imageName: { readonly [lang: string]: string };
-		licenseName?: string;
-		licenseUrl?: string;
+		licenseName?: { readonly [lang: string]: string };
+		licenseUrl?: { readonly [lang: string]: string };
 		source?: string;
 		usedLocation: string; // the page number(s) where the image was used.
 	}[];
