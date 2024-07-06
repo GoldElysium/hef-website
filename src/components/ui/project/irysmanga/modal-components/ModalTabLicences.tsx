@@ -33,7 +33,7 @@ export default function ModalTabLicenses() {
 			{modalDataRoot.imageLicenses.map((image) => (
 				<div className="mb-4" key={image.imageName[readerLanguage]}>
 					<h3 className="text-lg">{image.imageName[readerLanguage]}</h3>
-					{image.licenseName && (
+					{(image.licenseName && image.licenseUrl) && (
 						<p>
 							<span>
 								{t('license')}
@@ -41,11 +41,11 @@ export default function ModalTabLicenses() {
 								{' '}
 							</span>
 							<a
-								href={image.licenseUrl}
+								href={image.licenseUrl[readerLanguage]}
 								className="text-blue-500 underline"
 								target="_blank"
 							>
-								{image.licenseName}
+								{image.licenseName[readerLanguage]}
 							</a>
 						</p>
 					)}
