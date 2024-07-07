@@ -1,7 +1,7 @@
-import { Project } from '@/types/payload-types';
+import { Project, SubmissionMedia } from '@/types/payload-types';
 import dynamic from 'next/dynamic';
 import fetchSubmissions, { ISubmission } from '@/lib/fetchSubmissions';
-import { getImageUrl } from '@/components/ui/old/Image';
+import { getImageUrl } from '@/components/ui/legacy/Image';
 
 interface IProps {
 	project: Omit<Project, 'flags' | 'devprops'> & {
@@ -27,7 +27,7 @@ async function fetchSubmissionsWithImageProxy(project: { id: string, slug: strin
 			mediaDocs[index] = {
 				...item,
 				image: {
-					...item.image!,
+					...item.image as SubmissionMedia,
 					url: getImageUrl({
 						src: item.image!.url!,
 						width: 200,

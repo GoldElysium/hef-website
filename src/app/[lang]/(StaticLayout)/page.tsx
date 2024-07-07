@@ -2,7 +2,7 @@ import useTranslation from '@/lib/i18n/server';
 import { Guild, Media, Project } from '@/types/payload-types';
 import PayloadResponse from '@/types/PayloadResponse';
 import Header from '@/components/ui/Header';
-import TextHeader from '@/components/ui/old/TextHeader';
+import TextHeader from '@/components/ui/legacy/TextHeader';
 import { Language } from '@/lib/i18n/languages';
 import ProjectFeaturedCard from '@/components/ui/ProjectFeaturedCard';
 import ButtonLink from '@/components/ui/ButtonLink';
@@ -106,7 +106,7 @@ export default async function Page({ params: { lang } }: IProps) {
 								{t('page.featured.right')}
 							</span>
 						</TextHeader>
-						<div className="grid h-[40rem] gap-6 md:grid-cols-2 lg:h-[24rem] lg:grid-cols-3">
+						<div className="grid h-[40rem] gap-6 md:grid-cols-2 lg:h-96 lg:grid-cols-3">
 							{featuredProjectsHtml.length > 0 ? (
 								featuredProjectsHtml
 							) : (

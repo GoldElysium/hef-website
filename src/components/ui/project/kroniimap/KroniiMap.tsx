@@ -154,7 +154,7 @@ export default function KroniiMap({ submissions, markerMap }: IProps) {
 						initialSize={8}
 						scaler={4}
 						coordinates={[3, 55]}
-						className="-rotate-12 scale-x-[-1]"
+						className="-rotate-12 -scale-x-100"
 					/>
 					<ScaledMarker
 						img="https://cdn.holoen.fans/hefw/assets/kroniimap/kronie-plane.gif"
@@ -193,7 +193,7 @@ export default function KroniiMap({ submissions, markerMap }: IProps) {
 						initialSize={8}
 						scaler={4}
 						coordinates={[-129, 40]}
-						className="-rotate-12 scale-x-[-1]"
+						className="-rotate-12 -scale-x-100"
 					/>
 					<ScaledMarker
 						img="https://cdn.holoen.fans/hefw/assets/kroniimap/kronie-boat.gif"
@@ -212,7 +212,7 @@ export default function KroniiMap({ submissions, markerMap }: IProps) {
 						initialSize={8}
 						scaler={4}
 						coordinates={[90, 13]}
-						className="-rotate-12 scale-x-[-1]"
+						className="-rotate-12 -scale-x-100"
 					/>
 				</ZoomableGroup>
 			</ComposableMap>
@@ -278,7 +278,7 @@ export default function KroniiMap({ submissions, markerMap }: IProps) {
 									)}
 								</div>
 								<div className="flex items-center gap-4">
-									<div className="h-[36rem] w-[24rem] overflow-y-auto bg-white px-4 py-8 text-black">
+									<div className="h-[36rem] w-96 overflow-y-auto bg-white px-4 py-8 text-black">
 										<div className="mb-2 flex items-center gap-4">
 											{
 												hasPersonalizedKronie && (
@@ -343,7 +343,7 @@ export default function KroniiMap({ submissions, markerMap }: IProps) {
 															key={media.id}
 															src={media.image.url!}
 															alt={`Submission from ${currentSubmission.author}`}
-															className="-mt-2 max-h-[30rem] max-w-[42rem] object-contain"
+															className="-mt-2 max-h-[30rem] max-w-2xl object-contain"
 															loading={index === 0 ? 'eager' : 'lazy'}
 															width={1280}
 															height={780}
