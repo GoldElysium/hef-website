@@ -1,7 +1,8 @@
 import React, {
 	useCallback, useEffect, useRef, useState,
 } from 'react';
-import { Graphics as PixiGraphics, TextStyle } from 'pixi.js';
+import { TextStyle } from 'pixi.js';
+import type { Graphics as PixiGraphics } from '@pixi/graphics';
 import {
 	Container, Graphics, Sprite, Text, useApp,
 } from '@pixi/react';
