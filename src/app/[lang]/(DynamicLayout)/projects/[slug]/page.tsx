@@ -181,21 +181,23 @@ export default async function ProjectPage({ params: { slug, lang } }: IProps) {
 						)}
 						<div className="mt-4">
 							{project.hasSubmissions && !(project.flags.includes('disableTabs') || project.flags.includes('filterableSubmissions')) && (
-								<TextHeader>
-									Community
-									<span className="text-skin-heading dark:text-skin-heading-dark">
-										{' '}
-										Submissions
-									</span>
-								</TextHeader>
+								<>
+									<TextHeader>
+										Community
+										<span className="text-skin-heading dark:text-skin-heading-dark">
+											{' '}
+											Submissions
+										</span>
+									</TextHeader>
+									<div className="mb-16 flex flex-wrap justify-between gap-4">
+										<RandomSubmissions submissions={submissions} />
+										</div>
+										<div className="flex justify-center">
+											<ButtonLink text="See all submissions" url={`/projects/${slug}/submissions`} lang={lang} internal />
+										</div>
+									</div>
+								</>
 							)}
-							<div className="mb-16 flex flex-wrap justify-between gap-4">
-								<RandomSubmissions submissions={submissions} />
-							</div>
-							<div className="flex justify-center">
-								<ButtonLink text="See all submissions" url={`/projects/${slug}/submissions`} lang={lang} internal />
-							</div>
-						</div>
 					</div>
 				</div>
 			</div>
