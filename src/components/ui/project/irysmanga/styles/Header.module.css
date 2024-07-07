@@ -1,0 +1,45 @@
+.header {
+    @apply flex w-full min-h-[64px] bg-skin-header dark:bg-skin-header-dark text-skin-header-foreground dark:text-skin-header-foreground-dark shrink-0 justify-between items-center px-4 py-1 absolute z-10 transition-all border-b-[1px] border-neutral;
+}
+
+.headerShown {
+    @apply translate-y-0 opacity-100;
+}
+
+.headerHidden {
+    @apply -translate-y-full opacity-0;
+}
+
+.fakeHeader {
+    @apply shrink-0 transition-all bg-transparent;
+}
+
+.fakeHeaderShown {
+    height: var(--header-height);
+}
+
+.fakeHeaderHidden {
+    height: 0;
+}
+
+.infoBadge {
+    @apply flex gap-1 items-center text-center;
+}
+
+.infoTitle {
+    @apply text-base md:text-lg;
+}
+
+.infoBadgeContent {
+    @apply text-sm min-w-[2rem] text-nowrap;
+}
+
+@media (min-width: 768px) {
+    .infoBadge {
+        @apply flex-row;
+    }
+
+    .infoBadgeContent {
+        @apply text-base;
+    }
+}

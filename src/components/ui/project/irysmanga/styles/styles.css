@@ -1,0 +1,386 @@
+:root {
+    --header-height: 64px;
+    --sidebar-width: 300px;
+}
+
+.kb-list > li > span::before {
+    content: ': ';
+    margin-left: 0.25rem;
+}
+.kb-list > li {
+    @apply mb-1;
+}
+.disc-list > li > span {
+    @apply font-bold underline underline-offset-2;
+}
+
+.kbdalt {
+    @apply bg-skin-primary dark:bg-skin-primary-dark text-skin-primary-foreground dark:text-skin-primary-foreground-dark rounded-md px-2 py-0.5 text-sm;
+}
+
+.setting-icon {
+    @apply w-[20px] text-nowrap;
+}
+
+.loading-icon-g > * {
+    @apply stroke-skin-secondary-foreground dark:stroke-skin-secondary-foreground-dark;
+}
+
+body {
+    scrollbar-width: thin;
+}
+
+::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+}
+
+::-webkit-scrollbar-track {
+    background: none;
+}
+
+::-webkit-scrollbar-thumb {
+    @apply bg-skin-secondary-foreground/30;
+    opacity: 0;
+    border-radius: 6px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+    @apply bg-skin-secondary-foreground-dark/30;
+}
+
+/* Classes below based on DaisyUI */
+/*
+MIT License
+
+Copyright (c) 2020 Pouya Saadeghi
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+ */
+
+.button {
+    @apply rounded-md bg-skin-secondary dark:bg-skin-secondary-dark text-skin-secondary-foreground dark:text-skin-secondary-foreground-dark p-4 h-12 min-h-12 text-sm leading-4 gap-2 font-semibold transition-all items-center hover:bg-[color-mix(in_srgb,rgb(var(--color-secondary))_90%,black)] dark:hover:bg-[color-mix(in_srgb,rgb(var(--color-secondary-dark))_90%,black)] flex whitespace-nowrap disabled:cursor-not-allowed disabled:bg-[color-mix(in_srgb,rgb(var(--color-secondary))_90%,black)];
+}
+
+.modal {
+    @apply bg-transparent text-[inherit] duration-200 ease-out;
+    transition-property: transform, opacity, visibility;
+    overflow: hidden;
+    overscroll-behavior: contain;
+    &:not(dialog:not(.modal-open)),
+    &::backdrop {
+        background-color: #0006;
+        animation: modal-pop 0.2s ease-out;
+    }
+}
+.modal-backdrop {
+    @apply -z-[1] col-start-1 row-start-1 grid self-stretch justify-self-stretch text-transparent;
+}
+
+.modal-box {
+    @apply rounded-b-box rounded-t-box col-start-1 row-start-1 w-11/12 max-w-lg scale-90 transform p-6 transition duration-200 ease-out;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    background-image: linear-gradient(
+        45deg,
+        rgb(var(--color-background)),
+        rgb(var(--color-background)) 80%,
+        color-mix(in srgb, rgb(var(--color-primary)) 70%, white) 80%,
+        color-mix(in srgb, rgb(var(--color-primary)) 70%, white)
+    );
+}
+
+.dark .modal-box {
+    background-image: linear-gradient(
+        45deg,
+        rgb(var(--color-background-dark)),
+        rgb(var(--color-background-dark)) 80%,
+        rgb(var(--color-primary-dark)) 80%,
+        rgb(var(--color-primary-dark))
+    );
+}
+
+.modal-content {
+    @apply dark:border-skin-secondary-foreground-dark border-skin-secondary-foreground;
+}
+
+.modal-open .modal-box,
+.modal-toggle:checked + .modal .modal-box,
+.modal:target .modal-box,
+.modal[open] .modal-box {
+    @apply translate-y-0 scale-100;
+}
+.modal-action {
+    @apply mt-6 space-x-2;
+}
+@keyframes modal-pop {
+    0% {
+        opacity: 0;
+    }
+}
+
+.tabs-lifted > .tab:focus-visible {
+    border-end-end-radius: 0;
+    border-end-start-radius: 0;
+}
+.tab {
+    --tab-color: rgb(var(--color-primary-foreground));
+    --tab-bg: rgb(var(--color-primary));
+    --tab-border-color: rgb(var(--color-secondary-foreground));
+
+    color: var(--tab-color);
+    padding-inline-start: var(--tab-padding, 1rem);
+    padding-inline-end: var(--tab-padding, 1rem);
+    &:is(.tab-active, [aria-selected='true']):not(.tab-disabled):not([disabled]),
+    &:focus-visible {
+        outline: 2px solid currentColor;
+        outline-offset: -5px;
+    }
+    /* disabled */
+    &-disabled,
+    &[disabled] {
+        @apply cursor-not-allowed text-opacity-20;
+    }
+    @media (hover: hover) {
+        &[disabled],
+        &[disabled]:hover {
+            @apply cursor-not-allowed text-opacity-20;
+        }
+    }
+}
+.dark .tab {
+    --tab-color: rgb(var(--color-primary-foreground-dark));
+    --tab-bg: rgb(var(--color-primary-dark));
+    --tab-border-color: rgb(var(--color-secondary-foreground-dark));
+}
+@media (max-width: 576px) {
+    .tab {
+        @apply text-xs px-[8px] !important;
+    }
+}
+
+.tab:hover {
+    @apply bg-[color-mix(in_srgb,rgb(var(--color-background))_90%,black)] !important;
+
+    &:is(input:checked) {
+        @apply bg-[color-mix(in_srgb,rgb(var(--color-primary))_90%,black)] !important;
+    }
+}
+.dark .tab:hover {
+    @apply bg-[color-mix(in_srgb,rgb(var(--color-background-dark))_90%,white)] !important;
+
+    &:is(input:checked) {
+        @apply bg-[color-mix(in_srgb,rgb(var(--color-primary-dark))_90%,black)] !important;
+    }
+}
+
+.tabs-bordered > .tab {
+    @apply border-base-content border-opacity-20;
+    border-style: solid;
+    border-bottom-width: calc(var(--tab-border, 1px) + 1px);
+}
+.tabs-lifted > .tab {
+    @apply bg-skin-background dark:bg-skin-background-dark text-skin-text dark:text-skin-text-dark;
+    border-width: var(--tab-border, 4px) var(--tab-border, 4px) 0 var(--tab-border, 4px);
+    border-inline-start-color: transparent;
+    border-inline-end-color: transparent;
+    border-top-color: transparent;
+    padding-inline-start: calc(var(--tab-padding, 1rem) - var(--tab-border, 4px));
+    padding-inline-end: calc(var(--tab-padding, 1rem) - var(--tab-border, 4px));
+    padding-bottom: 0;
+    padding-top: 0;
+    &:is(.tab-active, [aria-selected='true']):not(.tab-disabled):not([disabled]),
+    &:is(input:checked) {
+        background-color: var(--tab-bg);
+        color: var(--tab-color);
+        border-width: var(--tab-border, 4px) var(--tab-border, 4px) 0 var(--tab-border, 4px);
+        border-inline-start-color: var(--tab-border-color);
+        border-inline-end-color: var(--tab-border-color);
+        border-top-color: var(--tab-border-color);
+        padding-inline-start: calc(var(--tab-padding, 1rem) - var(--tab-border, 4px));
+        padding-inline-end: calc(var(--tab-padding, 1rem) - var(--tab-border, 4px));
+        padding-bottom: 0;
+        padding-top: 0;
+        &:before {
+            z-index: 1;
+            content: '';
+            display: block;
+            position: absolute;
+            width: calc(100% + var(--tab-radius, 0.5rem) * 2);
+            height: var(--tab-radius, 0.5rem);
+            bottom: 0;
+            background-size: var(--tab-radius, 0.5rem);
+            background-position:
+                top left,
+                top right;
+            background-repeat: no-repeat;
+            --tab-grad: calc(69% - var(--tab-border, 4px));
+            --radius-start: radial-gradient(
+                circle at top left,
+                transparent var(--tab-grad),
+                var(--tab-border-color) calc(var(--tab-grad) + 1px),
+                var(--tab-border-color) calc(var(--tab-grad) + var(--tab-border, 4px)),
+                var(--tab-bg) calc(var(--tab-grad) + var(--tab-border, 4px) + 10px)
+            );
+            --radius-end: radial-gradient(
+                circle at top right,
+                transparent var(--tab-grad),
+                var(--tab-border-color) calc(var(--tab-grad) + 1px),
+                var(--tab-border-color) calc(var(--tab-grad) + var(--tab-border, 4px)),
+                var(--tab-bg) calc(var(--tab-grad) + var(--tab-border, 4px) + 10px)
+            );
+            background-image: var(--radius-start), var(--radius-end);
+        }
+
+        &:first-child:before {
+            background-image: var(--radius-end);
+            background-position: top right;
+            [dir='rtl'] & {
+                background-image: var(--radius-start);
+                background-position: top left;
+            }
+        }
+        &:last-child:before {
+            background-image: var(--radius-start);
+            background-position: top left;
+            [dir='rtl'] & {
+                background-image: var(--radius-end);
+                background-position: top right;
+            }
+        }
+    }
+}
+.tabs-lifted
+    > :is(.tab-active, [aria-selected='true']):not(.tab-disabled):not([disabled])
+    + .tabs-lifted
+    :is(.tab-active, [aria-selected='true']):not(.tab-disabled):not([disabled]),
+.tabs-lifted > .tab:is(input:checked) + .tabs-lifted .tab:is(input:checked) {
+    &:before {
+        background-image: var(--radius-end);
+        background-position: top right;
+    }
+}
+
+.my-tooltip {
+    position: relative;
+    display: inline-block;
+    --tooltip-offset: calc(100% + 1px + var(--tooltip-tail, 0px));
+}
+.my-tooltip:before {
+    position: absolute;
+    pointer-events: none;
+    z-index: 1;
+    content: var(--tw-content);
+    --tw-content: attr(data-tip);
+}
+.my-tooltip:before,
+.my-tooltip-top:before {
+    transform: translateX(-50%);
+    top: auto;
+    left: 50%;
+    right: auto;
+    bottom: var(--tooltip-offset);
+}
+.my-tooltip {
+    position: relative;
+    display: inline-block;
+    text-align: center;
+    --tooltip-tail: 0.1875rem /* 3px */;
+    --tooltip-color: rgb(var(--color-background));
+    --tooltip-text-color: rgb(var(--color-text));
+    --tooltip-tail-offset: calc(100% + 0.0625rem /* 1px */ - var(--tooltip-tail));
+}
+
+.dark .my-tooltip {
+    --tooltip-color: rgb(var(--color-background-dark));
+    --tooltip-text-color: rgb(var(--color-text-dark));
+}
+
+.my-tooltip:before,
+.my-tooltip:after {
+    opacity: 0;
+}
+.my-tooltip:before,
+.my-tooltip:after {
+    opacity: 0;
+}
+.my-tooltip:after {
+    position: absolute;
+    position: absolute;
+    content: '';
+    border-style: solid;
+    border-width: var(--tooltip-tail, 0);
+    width: 0;
+    height: 0;
+    display: block;
+}
+.my-tooltip:before {
+    max-width: 20rem /* 320px */;
+    border-radius: 0.25rem /* 4px */;
+    padding-left: 0.5rem /* 8px */;
+    padding-right: 0.5rem /* 8px */;
+    padding-top: 0.25rem /* 4px */;
+    padding-bottom: 0.25rem /* 4px */;
+    font-size: 0.875rem /* 14px */;
+    line-height: 1.25rem /* 20px */;
+    background-color: var(--tooltip-color);
+    color: var(--tooltip-text-color);
+    font-weight: 700;
+    width: max-content;
+}
+.my-tooltip.my-tooltip-open:before {
+    opacity: 1;
+}
+.my-tooltip.my-tooltip-open:after {
+    opacity: 1;
+}
+.my-tooltip:hover:before {
+    opacity: 1;
+}
+.my-tooltip:hover:after {
+    opacity: 1;
+}
+.my-tooltip:has(:focus-visible):after,
+.my-tooltip:has(:focus-visible):before {
+    opacity: 1;
+}
+.my-tooltip:has(:focus-visible):after,
+.my-tooltip:has(:focus-visible):before {
+    opacity: 1;
+}
+.my-tooltip:not([data-tip]):hover:before,
+.my-tooltip:not([data-tip]):hover:after {
+    visibility: hidden;
+    opacity: 0;
+}
+.my-tooltip:not([data-tip]):hover:before,
+.my-tooltip:not([data-tip]):hover:after {
+    visibility: hidden;
+    opacity: 0;
+}
+.my-tooltip:after,
+.my-tooltip-top:after {
+    transform: translateX(-50%);
+    border-color: var(--tooltip-color) transparent transparent transparent;
+    top: auto;
+    left: 50%;
+    right: auto;
+    bottom: var(--tooltip-tail-offset);
+}

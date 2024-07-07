@@ -16,6 +16,7 @@ import { Language } from '@/lib/i18n/languages';
 import PixiSubmissionWrapper from '@/components/ui/project/kroniipuzzle/PixiSubmissionWrapper';
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/20/solid';
 import KroniiMapSubmissionWrapper from '@/components/ui/project/kroniimap/KroniiMapSubmissionsWrapper';
+import IrysMangaDataWrapper from '@/components/ui/project/irysmanga/IrysMangaDataWrapper';
 
 interface IProps {
 	params: {
@@ -104,6 +105,12 @@ export default async function ProjectPage({ params: { slug, lang } }: IProps) {
 	if (project.flags?.includes('kronii-map-bd-2024')) {
 		return (
 			<KroniiMapSubmissionWrapper project={project} />
+		);
+	}
+
+	if (project.flags?.includes('manga-reader')) {
+		return (
+			<IrysMangaDataWrapper project={project} lang={lang} />
 		);
 	}
 

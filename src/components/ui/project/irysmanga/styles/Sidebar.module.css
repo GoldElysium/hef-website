@@ -1,0 +1,28 @@
+.sidebarContainer {
+    @apply flex flex-col px-4 py-4 shrink-0 w-[300px] overflow-x-hidden absolute right-0 top-0 overflow-y-auto h-full z-50 bg-inherit transition-all border-l-[1px] border-neutral shadow-2xl;
+}
+
+.sidebarContainerOpen {
+    @apply translate-x-0 opacity-100;
+}
+
+.sidebarContainerHidden {
+    @apply translate-x-full opacity-0 invisible;
+}
+
+/* Need this to be hidden on small viewports to remove it from the flow */
+.fakeSidebarContainer {
+    @apply h-full shrink-0 grow-0 transition-all bg-transparent hidden md:block;
+}
+
+.fakeSidebarContainerOpen {
+    flex-basis: var(--sidebar-width);
+}
+
+.fakeSidebarContainerHidden {
+    flex-basis: 0;
+}
+
+.xButton {
+    @apply size-9 cursor-pointer rounded-full bg-black/0 p-1 hover:bg-black/[.08] dark:bg-white/0 dark:hover:bg-white/10;
+}
