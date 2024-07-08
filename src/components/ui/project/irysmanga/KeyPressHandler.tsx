@@ -1,7 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import { useTheme } from 'next-themes';
 import { useMangaContext } from './context/MangaContext';
-import { getNextOption, handleChapterNavigation, handlePageNavigation } from './utils/helper';
+import {
+	getNextOption,
+	handleChapterNavigation,
+	handlePageNavigation,
+} from './utils/helper';
 import {
 	fitModes,
 	headerVisibilities,
@@ -16,7 +20,11 @@ interface IProps {
 	modalRef: React.RefObject<HTMLDialogElement>;
 }
 
-export default function KeyPressHandler({ setOpenSidebar, readerContainerRef, modalRef }: IProps) {
+export default function KeyPressHandler({
+	setOpenSidebar,
+	readerContainerRef,
+	modalRef,
+}: IProps) {
 	const {
 		setPage,
 		setChapter,
@@ -41,6 +49,7 @@ export default function KeyPressHandler({ setOpenSidebar, readerContainerRef, mo
 			if (modalRef.current?.open) {
 				return;
 			}
+
 			if (event.key === 'ArrowLeft') {
 				if (pageLayout === 'ltr' || pageLayout === 'long') {
 					handlePageNavigation(
@@ -83,44 +92,79 @@ export default function KeyPressHandler({ setOpenSidebar, readerContainerRef, mo
 					);
 				}
 			}
+
 			if (event.key === ',') {
 				if (pageLayout === 'ltr' || pageLayout === 'long') {
-					handleChapterNavigation(setChapter, setPage, chapter - 1, mangaLanguage, manga);
+					handleChapterNavigation(
+						setChapter,
+						setPage,
+						chapter - 1,
+						mangaLanguage,
+						manga,
+					);
 				} else {
-					handleChapterNavigation(setChapter, setPage, chapter + 1, mangaLanguage, manga);
+					handleChapterNavigation(
+						setChapter,
+						setPage,
+						chapter + 1,
+						mangaLanguage,
+						manga,
+					);
 				}
 			}
+
 			if (event.key === '.') {
 				if (pageLayout === 'ltr' || pageLayout === 'long') {
-					handleChapterNavigation(setChapter, setPage, chapter + 1, mangaLanguage, manga);
+					handleChapterNavigation(
+						setChapter,
+						setPage,
+						chapter + 1,
+						mangaLanguage,
+						manga,
+					);
 				} else {
-					handleChapterNavigation(setChapter, setPage, chapter - 1, mangaLanguage, manga);
+					handleChapterNavigation(
+						setChapter,
+						setPage,
+						chapter - 1,
+						mangaLanguage,
+						manga,
+					);
 				}
 			}
+
 			if (event.key === 'm') {
 				setOpenSidebar((prev) => !prev);
 			}
+
 			if (event.key === 'h') {
 				setHeaderVisibility((prev) => getNextOption(prev, headerVisibilities));
 			}
+
 			if (event.key === 't') {
 				setTheme(resolvedTheme === 'light' ? 'dark' : 'light');
 			}
+
 			if (event.key === 'f') {
 				setFitMode((prev) => getNextOption(prev, fitModes));
 			}
+
 			if (event.key === 's') {
 				setPageLayout((prev) => getNextOption(prev, pageLayouts));
 			}
+
 			if (event.key === 'p') {
 				setProgressVisibility((prev) => getNextOption(prev, progressVisibilities));
 			}
+
 			if (event.key === 'j') {
 				setMangaLanguage((prev) => getNextOption(prev, languages));
 			}
+
 			if (event.key === 'k') {
 				setReaderLanguage((prev) => getNextOption(prev, languages));
 			}
+
 			if (event.key === 'i') {
 				modalRef.current?.showModal();
 			}
@@ -151,16 +195,19 @@ export default function KeyPressHandler({ setOpenSidebar, readerContainerRef, mo
 		resolvedTheme,
 		modalRef,
 	]);
+
 	useEffect(() => {
 		const startScrolling = (scrollDirection: number) => {
 			if (!scrollIntervalRef.current) {
 				scrollDirectionRef.current = scrollDirection;
 				scrollIntervalRef.current = setInterval(() => {
 					// eslint-disable-next-line
-					readerContainerRef.current!.scrollTop += scrollDirectionRef.current! * 10; // Adjust scrolling speed as needed
+                    readerContainerRef.current!.scrollTop +=
+                        scrollDirectionRef.current! * 10; // Adjust scrolling speed as needed
 				}, 10); // Adjust interval as needed for smoother scrolling
 			}
 		};
+
 		const stopScrolling = () => {
 			if (scrollIntervalRef.current) {
 				clearInterval(scrollIntervalRef.current);
@@ -168,9 +215,11 @@ export default function KeyPressHandler({ setOpenSidebar, readerContainerRef, mo
 				scrollDirectionRef.current = undefined;
 			}
 		};
+
 		const handleKeyRelease = () => {
 			stopScrolling();
 		};
+
 		const handleKeyPressUpDown = (event: KeyboardEvent) => {
 			if (modalRef.current?.open) {
 				return;
@@ -184,6 +233,7 @@ export default function KeyPressHandler({ setOpenSidebar, readerContainerRef, mo
 				startScrolling(1);
 			}
 		};
+
 		window.addEventListener('keydown', handleKeyPressUpDown);
 		window.addEventListener('keyup', handleKeyRelease);
 		return () => {

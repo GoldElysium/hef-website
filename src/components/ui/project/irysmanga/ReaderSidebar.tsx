@@ -33,7 +33,11 @@ interface IProps {
 	modalRef: React.RefObject<HTMLDialogElement>;
 }
 
-export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }: IProps) {
+export default function ReaderSidebar({
+	openSidebar,
+	setOpenSidebar,
+	modalRef,
+}: IProps) {
 	const { resolvedTheme, setTheme } = useTheme();
 
 	const {
@@ -65,7 +69,10 @@ export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }:
 
 	useEffect(() => {
 		const width = containerRef.current?.getBoundingClientRect().width;
-		document.documentElement.style.setProperty('--sidebar-width', `${width!}px`);
+		document.documentElement.style.setProperty(
+			'--sidebar-width',
+			`${width!}px`,
+		);
 	}, []);
 
 	useEffect(() => {
@@ -93,11 +100,14 @@ export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }:
 				className={classNames(
 					'z-10 absolute right-4 top-4 cursor-pointer flex justify-end items-start',
 					{
-						hidden: openSidebar || headerVisibility === 'header-shown',
-						block: !(openSidebar || headerVisibility === 'header-shown'),
+						hidden:
+                            openSidebar || headerVisibility === 'header-shown',
+						block: !(
+							openSidebar || headerVisibility === 'header-shown'
+						),
 					},
 				)}
-				onClick={() => setOpenSidebar((curr) => !curr)}
+				onClick={() => setOpenSidebar(true)}
 				disabled={openSidebar}
 			>
 				<Bars3Icon
@@ -128,14 +138,19 @@ export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }:
 						<div className="flex flex-row content-center items-center justify-between">
 							<div className="flex items-center gap-1">
 								<BookOpenIcon width={30} />
-								<strong className="whitespace-nowrap">{mangaData.title}</strong>
+								<strong className="whitespace-nowrap">
+									{mangaData.title}
+								</strong>
 							</div>
 							<button
 								type="button"
 								aria-label="Close the sidebar"
 								onClick={() => setOpenSidebar(false)}
 							>
-								<XMarkIcon className={styles.xButton} width={30} />
+								<XMarkIcon
+									className={styles.xButton}
+									width={30}
+								/>
 							</button>
 						</div>
 						<div className="flex items-center gap-1">
@@ -218,7 +233,9 @@ export default function ReaderSidebar({ openSidebar, setOpenSidebar, modalRef }:
 					<SettingButton
 						value={(resolvedTheme as ReaderTheme) ?? 'light'}
 						valueList={readerThemes}
-						onClick={() => setTheme(resolvedTheme === 'light' ? 'dark' : 'light')}
+						onClick={() => setTheme(
+							resolvedTheme === 'light' ? 'dark' : 'light',
+						)}
 						// @ts-ignore
 						setValue={() => {}}
 						label="theme"

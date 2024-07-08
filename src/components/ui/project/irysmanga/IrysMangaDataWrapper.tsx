@@ -4,7 +4,7 @@ import { Jura } from 'next/font/google';
 import dynamic from 'next/dynamic';
 import { MangaProvider } from './context/MangaContext';
 import getManga from './utils/data-helper';
-import { getImageUrl } from '../../old/Image';
+import { getImageUrl } from '../../legacy/Image';
 
 interface IProps {
 	project: Omit<Project, 'flags' | 'devprops'> & {

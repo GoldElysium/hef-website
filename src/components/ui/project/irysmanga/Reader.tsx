@@ -81,15 +81,18 @@ export default function Reader({
 		const containerMiddleY = (containerRect.top + containerRect.bottom) / 2;
 		let minDistY = Infinity;
 		let chosenPage = -1;
+
 		for (let i = 0; i < pageRefs.current.length; ++i) {
 			const imgRect = pageRefs.current[i].getBoundingClientRect();
 			const imgMiddleY = (imgRect.bottom + imgRect.top) / 2;
 			const distY = Math.abs(containerMiddleY - imgMiddleY);
+
 			if (distY < minDistY) {
 				chosenPage = i;
 				minDistY = distY;
 			}
 		}
+
 		if (chosenPage !== -1) {
 			setPage(chosenPage);
 		}
@@ -120,6 +123,7 @@ export default function Reader({
 
 		const position = clientX - left;
 		const threshold = width / 2;
+
 		if (position < threshold) {
 			const diff = (pageLayout === 'ltr' || pageLayout === 'long') ? -1 : 1;
 			handlePageNavigation(

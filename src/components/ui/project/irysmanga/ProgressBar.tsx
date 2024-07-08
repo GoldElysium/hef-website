@@ -6,7 +6,13 @@ import styles from './styles/ProgressBar.module.css';
 
 export default function ProgressBar() {
 	const {
-		mangaLanguage, page, chapter, manga, progressVisibility, setPage, pageLayout,
+		mangaLanguage,
+		page,
+		chapter,
+		manga,
+		progressVisibility,
+		setPage,
+		pageLayout,
 	} = useMangaContext();
 
 	const mangaData = getMangaDataOrThrow(manga, mangaLanguage);
@@ -39,13 +45,24 @@ export default function ProgressBar() {
 	for (let i = firstIndex; i !== lastIndex; i += increment) {
 		const isActive = i < page;
 		const isSelected = i === page;
-		let sectionClasses = classNames(styles.progressSectionTooltip, 'my-tooltip my-tooltip-top');
+
+		let sectionClasses = classNames(
+			styles.progressSectionTooltip,
+			'my-tooltip my-tooltip-top',
+		);
+
 		if (isActive) {
-			sectionClasses = sectionClasses.concat(` ${styles.progressSectionTooltipActive}`);
+			sectionClasses = sectionClasses.concat(
+				` ${styles.progressSectionTooltipActive}`,
+			);
 		}
+
 		if (isSelected) {
-			sectionClasses = sectionClasses.concat(` ${styles.progressSectionTooltipSelected}`);
+			sectionClasses = sectionClasses.concat(
+				` ${styles.progressSectionTooltipSelected}`,
+			);
 		}
+
 		pageSections.push(
 			// eslint-disable-next-line max-len
 			// eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
@@ -62,8 +79,10 @@ export default function ProgressBar() {
 	return (
 		<div
 			className={classNames(styles.progressOuterContainer, {
-				[styles.progressOuterContainerOpen]: progressVisibility === 'progress-shown',
-				[styles.progressOuterContainerClose]: progressVisibility === 'progress-hidden',
+				[styles.progressOuterContainerOpen]:
+                    progressVisibility === 'progress-shown',
+				[styles.progressOuterContainerClose]:
+                    progressVisibility === 'progress-hidden',
 			})}
 			onMouseEnter={() => setOpenProgress(true)}
 			onMouseLeave={() => setOpenProgress(false)}
@@ -89,7 +108,9 @@ export default function ProgressBar() {
 					</span>
 				</div>
 				<div className={styles.progressBarContainer}>
-					<div className={styles.progressSectionsContainer}>{pageSections}</div>
+					<div className={styles.progressSectionsContainer}>
+						{pageSections}
+					</div>
 				</div>
 				<div
 					className={classNames(styles.numberLabelContainer, {

@@ -6,7 +6,7 @@ interface IProps {
 	setSelected: (val: string) => void;
 }
 
-function ModalTab({ label, selected, setSelected }: IProps) {
+export default function ModalTab({ label, selected, setSelected }: IProps) {
 	const { t } = useTranslation('reader');
 	return (
 		<input
@@ -21,5 +21,3 @@ function ModalTab({ label, selected, setSelected }: IProps) {
 		/>
 	);
 }
-
-export default ModalTab;
