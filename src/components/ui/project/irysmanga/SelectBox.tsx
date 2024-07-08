@@ -12,7 +12,7 @@ interface SelectBoxProps {
 	label: 'page' | 'chapter';
 }
 
-function SelectBox({ value, label }: SelectBoxProps) {
+export default function SelectBox({ value, label }: SelectBoxProps) {
 	const {
 		mangaLanguage, setPage, chapter, setChapter, manga, pageLayout,
 	} = useMangaContext();
@@ -143,4 +143,3 @@ function SelectBox({ value, label }: SelectBoxProps) {
 	);
 }
 
-export default SelectBox;

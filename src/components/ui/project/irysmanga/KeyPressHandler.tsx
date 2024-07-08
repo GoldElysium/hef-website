@@ -40,8 +40,10 @@ export default function KeyPressHandler({
 		manga,
 		setHeaderVisibility,
 	} = useMangaContext();
+
 	const scrollIntervalRef = useRef<any>();
 	const scrollDirectionRef = useRef<number>();
+
 	const { resolvedTheme, setTheme } = useTheme();
 
 	useEffect(() => {
@@ -171,6 +173,7 @@ export default function KeyPressHandler({
 		};
 
 		window.addEventListener('keydown', handleKeyPress);
+
 		return () => {
 			window.removeEventListener('keydown', handleKeyPress);
 		};

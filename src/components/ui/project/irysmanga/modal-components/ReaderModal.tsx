@@ -86,7 +86,7 @@ export default function ReaderModal({ modalRef }: IProps) {
 					<div className="flex gap-1 self-end">
 						<button
 							type="button"
-							className="flex h-12 min-h-12 items-center gap-2 whitespace-nowrap rounded-md border-[1px] border-transparent bg-skin-primary p-4 text-sm font-semibold leading-4 text-skin-primary-foreground transition-all hover:bg-[color-mix(in_srgb,rgb(var(--color-primary))_90%,black)] disabled:cursor-not-allowed disabled:bg-[color-mix(in_srgb,rgb(var(--color-primary))_90%,black)] dark:bg-skin-primary-dark dark:text-skin-primary-foreground-dark dark:hover:bg-[color-mix(in_srgb,rgb(var(--color-primary-dark))_90%,black)]"
+							className="flex h-12 min-h-12 items-center gap-2 whitespace-nowrap rounded-md border border-transparent bg-skin-primary p-4 text-sm font-semibold leading-4 text-skin-primary-foreground transition-all hover:bg-[color-mix(in_srgb,rgb(var(--color-primary))_90%,black)] disabled:cursor-not-allowed disabled:bg-[color-mix(in_srgb,rgb(var(--color-primary))_90%,black)] dark:bg-skin-primary-dark dark:text-skin-primary-foreground-dark dark:hover:bg-[color-mix(in_srgb,rgb(var(--color-primary-dark))_90%,black)]"
 							onClick={() => setReaderLanguage(getNextOption(readerLanguage, languages))}
 						>
 							<LanguageIcon width="1rem" />

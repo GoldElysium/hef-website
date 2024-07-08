@@ -72,6 +72,7 @@ export default function SettingButton({
 	onClick,
 }: IProps) {
 	const { t } = useTranslation('reader');
+
 	return (
 		<button
 			className={classNames('button flex-1', {
