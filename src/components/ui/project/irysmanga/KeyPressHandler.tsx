@@ -245,5 +245,6 @@ export default function KeyPressHandler({
 			stopScrolling();
 		};
 	}, [readerContainerRef, modalRef]);
+
 	return null;
 }
