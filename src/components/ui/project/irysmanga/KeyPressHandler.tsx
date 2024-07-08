@@ -97,6 +97,7 @@ export default function KeyPressHandler({ setOpenSidebar, readerContainerRef, mo
 					handleChapterNavigation(setChapter, setPage, chapter - 1, mangaLanguage, manga);
 				}
 			}
+
 			if (event.key === 'm') {
 				setOpenSidebar((prev) => !prev);
 			}
