@@ -130,6 +130,7 @@ export default function KeyPressHandler({ setOpenSidebar, readerContainerRef, mo
 		};
 
 		window.addEventListener('keydown', handleKeyPress);
+
 		return () => {
 			window.removeEventListener('keydown', handleKeyPress);
 		};
