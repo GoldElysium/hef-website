@@ -2,194 +2,38 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  :root {
-    /*
-      background-1: body background
-      background-2: header background
-      card: card background (unused in project pages)
-      primary-1: Section headings, dark mode toggle
-      secondary-1: links
-      link: hyperlinks (smaller, require higher color contrast)
-    */
-    --color-background-1: 253, 236, 236;
-    --color-background-2: 239, 68, 68;
-    --color-card: 255, 255, 255;
-    --color-primary-1: 239, 68, 68;
-    --color-secondary-1: 255, 136, 26;
-    --color-link: 50, 50, 235;
-    --color-dark-background-1: 22, 18, 18;
-    --color-dark-background-2: 36, 30, 30;
-    --color-dark-card: 50, 41, 41;
-    --color-dark-primary-1: 207, 23, 23;
-    --color-dark-secondary-1: 255, 85, 0;
-    --color-dark-link: 100, 100, 255;
-  }
+:root {
+  --color-background: 254 240 240;
+  --color-primary: 239 68 68;
+  --color-primary-foreground: 252 252 252;
+  --color-secondary: 238 206 206;
+  --color-secondary-foreground: 48 48 48;
+  --color-accent: 166 48 48;
+  --color-text: 48 48 48;
+  --color-header: 239 68 68;
+  --color-header-foreground: 252 252 252;
+  --color-heading: 210 20 20;
+  --color-link: 210 20 20;
 
-  .theme-ina {
-    --color-background-1: 247, 243, 251;
-    --color-background-2: 79, 68, 95;
-    --color-card: 255, 255, 255;
-    --color-primary-1: 160, 70, 152;
-    --color-secondary-1: 242, 154, 48;
-    --color-link: 160, 70, 152;
-    --color-dark-background-1: 19, 18, 23;
-    --color-dark-background-2: 49, 39, 60;
-    --color-dark-card: 48, 44, 58;
-    --color-dark-primary-1: 171, 110, 160;
-    --color-dark-secondary-1: 230, 133, 15;
-    --color-dark-link: 230, 133, 15;
-  }
+  --color-background-dark: 20 3 3;
+  --color-primary-dark: 159 15 15;
+  --color-primary-foreground-dark: 252 252 252;
+  --color-secondary-dark: 140 56 56;
+  --color-secondary-foreground-dark: 252 252 252;
+  --color-accent-dark: 147 83 83;
+  --color-text-dark: 253 236 236;
+  --color-header-dark: 140 52 52;
+  --color-header-foreground-dark: 252 252 252;
+  --color-heading-dark: 254 203 203;
+  --color-link-dark: 254 203 203;
 
-  .theme-calli {
-    --color-background-1: 252, 233, 238;
-    --color-background-2: 155, 75, 108;
-    --color-card: 255, 255, 255;
-    --color-primary-1: 112, 82, 122;
-    --color-secondary-1: 178, 5, 59;
-    --color-link: 178, 5, 59;
-    --color-dark-background-1: 27, 9, 18;
-    --color-dark-background-2: 68, 13, 38;
-    --color-dark-card: 48, 10, 25;
-    --color-dark-primary-1: 245, 163, 223;
-    --color-dark-secondary-1: 219, 10, 70;
-    --color-dark-link: 219, 10, 70;
-  }
+  --color-holoen-red: #EF4444;
 
-  .theme-gura {
-    --color-background-1: 240, 249, 255;
-    --color-background-2: 52, 116, 158;
-    --color-card: 255, 255, 255;
-    --color-primary-1: 43, 158, 166;
-    --color-secondary-1: 186, 69, 73;
-    --color-link: 200, 79, 83;
-    --color-dark-background-1: 5, 11, 15;
-    --color-dark-background-2: 15, 33, 46;
-    --color-dark-card: 15, 33, 46;
-    --color-dark-primary-1: 9, 138, 149;
-    --color-dark-secondary-1: 217, 48, 54;
-    --color-dark-link: 217, 48, 54;
-  }
+  --color-icon-primary: #FFF;
+  --color-icon-secondary: var(--color-holoen-red);
 
-  .theme-kiara {
-    --color-background-1: 255, 255, 255;
-    --color-background-2: 204, 65, 30;
-    --color-card: 255, 255, 255;
-    --color-primary-1: 204, 122, 0;
-    --color-secondary-1: 20, 148, 114;
-    --color-link: 0, 128, 94;
-    --color-dark-background-1: 15, 0, 0;
-    --color-dark-background-2: 67, 19, 2;
-    --color-dark-card: 40, 12, 3;
-    --color-dark-primary-1: 230, 131, 25;
-    --color-dark-secondary-1: 23, 211, 183;
-    --color-dark-link: 23, 211, 183;
-  }
-
-  .theme-ame {
-    --color-background-1: 255, 247, 235;
-    --color-background-2: 164, 92, 70;
-    --color-card: 255, 255, 255;
-    --color-primary-1: 132, 67, 57;
-    --color-secondary-1: 18, 130, 161;
-    --color-link: 18, 130, 161;
-    --color-dark-background-1: 21, 13, 10;
-    --color-dark-background-2: 54, 33, 23;
-    --color-dark-card: 54, 33, 23;
-    --color-dark-primary-1: 251, 224, 181;
-    --color-dark-secondary-1: 0, 146, 204;
-    --color-dark-link: 0, 146, 204;
-  }
-
-  .theme-irys {
-    --color-background-1: 246, 243, 247;
-    --color-background-2: 106, 4, 68;
-    --color-card: 255, 255, 255;
-    --color-primary-1: 181, 29, 100;
-    --color-secondary-1: 231, 12, 83;
-    --color-link: 231, 12, 83;
-    --color-dark-background-1: 28, 26, 29;
-    --color-dark-background-2: 102, 21, 69;
-    --color-dark-card: 48, 44, 58;
-    --color-dark-primary-1: 219, 44, 108;
-    --color-dark-secondary-1: 183, 37, 203;
-    --color-dark-link: 206, 83, 223;
-  }
-
-  .theme-fauna {
-    --color-background-1: 249, 255, 247;
-    --color-background-2: 87, 142, 62;
-    --color-card: 255, 255, 255;
-    --color-primary-1: 0, 161, 147;
-    --color-secondary-1: 219, 23, 116;
-    --color-link: 219, 23, 116;
-    --color-dark-background-1: 12, 28, 28;
-    --color-dark-background-2: 37, 84, 68;
-    --color-dark-card: 48, 44, 58;
-    --color-dark-primary-1: 139, 204, 141;
-    --color-dark-secondary-1: 0, 168, 38;
-    --color-dark-link: 255, 201, 184;
-  }
-
-  .theme-sana {
-    --color-background-1: 255, 248, 242;
-    --color-background-2: 101, 35, 226;
-    --color-card: 255, 255, 255;
-    --color-primary-1: 255, 71, 170;
-    --color-secondary-1: 255, 128, 16;
-    --color-link: 75, 31, 255;
-    --color-dark-background-1: 6, 2, 39;
-    --color-dark-background-2: 105, 24, 181;
-    --color-dark-card: 48, 44, 58;
-    --color-dark-primary-1: 255, 31, 150;
-    --color-dark-secondary-1: 255, 128, 16;
-    --color-dark-link: 255, 213, 135;
-  }
-
-  .theme-mumei {
-    --color-background-1: 255, 253, 252;
-    --color-background-2: 158, 120, 107;
-    --color-card: 255, 255, 255;
-    --color-primary-1: 168, 77, 79;
-    --color-secondary-1: 67, 134, 137;
-    --color-link: 0, 138, 143;
-    --color-dark-background-1: 46, 37, 35;
-    --color-dark-background-2: 79, 55, 49;
-    --color-dark-card: 48, 44, 58;
-    --color-dark-primary-1: 191, 163, 155;
-    --color-dark-secondary-1: 67, 134, 137;
-    --color-dark-link: 229, 158, 107;
-  }
-
-  .theme-kronii {
-    --color-background-1: 250, 250, 255;
-    --color-background-2: 93, 97, 122;
-    --color-card: 255, 255, 255;
-    --color-primary-1: 53, 53, 53;
-    --color-secondary-1: 39, 73, 173;
-    --color-link: 21, 107, 207;
-    --color-dark-background-1: 28, 28, 33;
-    --color-dark-background-2: 71, 73, 89;
-    --color-dark-card: 48, 44, 58;
-    --color-dark-primary-1: 239, 243, 250;
-    --color-dark-secondary-1: 47, 77, 198;
-    --color-dark-link: 114, 223, 253;
-  }
-
-  .theme-bae {
-    --color-background-1: 251, 250, 255;
-    --color-background-2: 161, 26, 20;
-    --color-card: 255, 255, 255;
-    --color-primary-1: 62, 57, 61;
-    --color-secondary-1: 6, 162, 150;
-    --color-link: 217, 27, 17;
-    --color-dark-background-1: 35, 35, 35;
-    --color-dark-background-2: 122, 4, 0;
-    --color-dark-card: 48, 44, 58;
-    --color-dark-primary-1: 240, 240, 240;
-    --color-dark-secondary-1: 27, 133, 120;
-    --color-dark-link: 255, 219, 73;
-  }
+  --color-icon-primary-dark: #FFF;
+  --color-icon-secondary-dark: var(--color-holoen-red);
 }
 
 @layer components {
@@ -249,6 +93,40 @@
     transform: translateX(22px);
   }
 
+  .description-body {
+    h1 {
+      @apply my-8 text-center text-3xl font-semibold text-skin-text dark:text-skin-text-dark sm:text-5xl;
+    }
+
+    h2 {
+      @apply my-4 text-xl font-semibold text-skin-text dark:text-skin-text-dark sm:text-2xl;
+    }
+
+    h3 {
+      @apply my-4 text-lg font-semibold text-skin-text dark:text-skin-text-dark sm:text-xl;
+    }
+
+    h4 {
+      @apply my-2 text-lg font-semibold text-skin-text dark:text-skin-text-dark;
+    }
+
+    h5 {
+      @apply my-2 text-base font-semibold text-skin-text dark:text-skin-text-dark;
+    }
+
+    h6 {
+      @apply my-2 text-base font-semibold text-skin-text dark:text-skin-text-dark;
+    }
+
+    p, blockquote, ul, ol, li {
+      @apply text-black dark:text-gray-300;
+    }
+
+    :link {
+      @apply text-skin-link dark:text-skin-link-dark;
+    }
+  }
+
   /* Rounded sliders */
   .slider.round {
     border-radius: 34px;
@@ -256,6 +134,22 @@
 
   .slider.round:before {
     border-radius: 50%;
+  }
+}
+
+/** {
+  @apply transition-colors duration-300 motion-reduce:transition-none;
+}*/
+
+
+
+.dark {
+  input, textarea {
+    background-color: #2b2a33;
+  }
+
+  ::placeholder {
+    color: #9ca3a1;
   }
 }
 
@@ -301,4 +195,15 @@
 .sana-letter {
   transform: rotate(1deg);
   transform-origin: 50% 50%;
+}
+
+div#stats {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 500;
+  width: max(200px, 10vw, 10vh);
+  height: max(100px, 6vh, 6vw);
+  opacity: 0.8;
+  user-select: none;
 }

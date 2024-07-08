@@ -1,0 +1,3 @@
+.pagesWrapper {
+    @apply grow overflow-x-hidden overflow-y-auto hover:cursor-pointer flex flex-col items-center gap-[10px];
+}

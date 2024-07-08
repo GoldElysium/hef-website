@@ -1,5 +1,5 @@
-import { Language } from 'lib/i18n/languages';
-import { languages } from 'lib/i18n/settings';
+import { Language } from '@/lib/i18n/languages';
+import { languages } from '@/lib/i18n/settings';
 
 /**
  * Prepend the locale to the provided path name.

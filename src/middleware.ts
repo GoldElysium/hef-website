@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { match } from '@formatjs/intl-localematcher';
-import getLanguagesFromHeaders from 'lib/util/middleware';
-import { fallbackLanguage, languages } from 'lib/i18n/settings';
+import getLanguagesFromHeaders from '@/lib/util/middleware';
+import { fallbackLanguage, languages } from '@/lib/i18n/settings';
 
 function getLocaleFromPathname(pathName: string) {
 	return languages.find(
@@ -110,7 +110,7 @@ export function middleware(request: NextRequest) {
 export const config = {
 	matcher: [
 		// Paths to ignore
-		'/((?!api|_next/static|_next/image|favicon.ico|sw.js|resize|assets|img|locales|sitemap.xml|robots.txt).*)',
+		'/((?!api|_next/static|_next/image|favicon.svg|sw.js|resize|assets|img|locales|sitemap.xml|robots.txt|monitoring).*)',
 
 		// Paths to check
 		'/',

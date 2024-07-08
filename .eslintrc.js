@@ -3,10 +3,23 @@ module.exports = {
 		'airbnb',
 		'airbnb-typescript',
 		'next/core-web-vitals',
+		'plugin:tailwindcss/recommended',
 		'plugin:storybook/recommended',
 	],
+	plugins: ['@typescript-eslint', 'import'],
 	parserOptions: {
 		project: './tsconfig.json'
+	},
+	settings: {
+		'import/parsers': {
+			'@typescript-eslint/parser': ['.ts', '.tsx'],
+		},
+		'import/resolver': {
+			typescript: {
+				alwaysTryTypes: true,
+				project: './tsconfig.json'
+			},
+		},
 	},
 	rules: {
 		'no-tabs': 'off',
@@ -19,7 +32,7 @@ module.exports = {
 		'react/jsx-indent': ['error', 'tab'],
 		'react/jsx-indent-props': ['error', 'tab'],
 		'react/react-in-jsx-scope': 'off',
-		'no-underscore-dangle': 'off', // Mongoose uses _id
+		'no-underscore-dangle': 'off',
 		'no-plusplus': ['error', {
 			'allowForLoopAfterthoughts': true
 		}],
@@ -31,6 +44,7 @@ module.exports = {
 		}],
 		'@next/next/no-img-element': 'off',
 		'import/no-anonymous-default-export': 'off',
-		'react/require-default-props': 'off'
+		'react/require-default-props': 'off',
+		'tailwindcss/no-custom-classname': 'off',
 	}
 };

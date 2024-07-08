@@ -1,4 +1,4 @@
-import { fallbackLanguage } from 'lib/i18n/settings';
+import { fallbackLanguage } from '@/lib/i18n/settings';
 import { NextRequest } from 'next/server';
 
 const langRegex = /^\s*[^\s\-;]+(?:-[^\s;]+)?/;

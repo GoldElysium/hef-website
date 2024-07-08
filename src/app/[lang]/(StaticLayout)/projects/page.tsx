@@ -1,11 +1,10 @@
-import Card from 'ui/Card';
-import TextHeader from 'ui/TextHeader';
-import { Project } from 'types/payload-types';
-import PayloadResponse from 'types/PayloadResponse';
-import Header from 'ui/Header';
+import { Project } from '@/types/payload-types';
+import PayloadResponse from '@/types/PayloadResponse';
+import Header from '@/components/ui/Header';
 import { Metadata } from 'next';
-import useTranslation from 'lib/i18n/server';
-import { Language } from 'lib/i18n/languages';
+import useTranslation from '@/lib/i18n/server';
+import { Language } from '@/lib/i18n/languages';
+import ProjectCard from '@/components/ui/ProjectCard';
 
 interface IProps {
 	params: {
@@ -20,7 +19,7 @@ async function fetchProjects(lang: Language): Promise<Project[]> {
 
 	async function fetchNextProjects() {
 		// Fetch next page
-		const projectsRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/projects?limit=100&page=${page}&depth=2&locale=${lang}&fallback-locale=en`, {
+		const projectsRes = await fetch(`${process.env.NEXT_PUBLIC_CMS_URL!}/api/projects?limit=100&page=${page}&depth=2&locale=${lang}&fallback-locale=en&where[status][not_equals]=hidden`, {
 			headers: {
 				'X-RateLimit-Bypass': process.env.PAYLOAD_BYPASS_RATE_LIMIT_KEY ?? undefined,
 				Authorization: process.env.PAYLOAD_API_KEY ? `users API-Key ${process.env.PAYLOAD_API_KEY}` : undefined,
@@ -47,15 +46,11 @@ async function fetchProjects(lang: Language): Promise<Project[]> {
 }
 
 function formatProjects(projects: Project[], lang: Language): JSX.Element[] {
-	return projects.map((project: Project) => (
-		<Card
+	return projects.map((project) => (
+		<ProjectCard
 			key={project.id}
-			title={project.title}
-			description={project.shortDescription}
-			button="View"
-			url={`/projects/${project.slug}`}
+			project={project}
 			lang={lang}
-			internal
 		/>
 	));
 }
@@ -63,46 +58,24 @@ function formatProjects(projects: Project[], lang: Language): JSX.Element[] {
 export default async function Page({ params: { lang } }: IProps) {
 	const { t } = await useTranslation(lang, 'projects', 'page');
 	const projects = await fetchProjects(lang);
-
-	const ongoing = projects.filter((project: Project) => project.status === 'ongoing');
-	const ongoingProjects = formatProjects(ongoing, lang);
-
-	const past = projects.filter((project: Project) => project.status === 'past');
-	const pastProjects = formatProjects(past, lang);
+	const projectsHtml = formatProjects(projects, lang);
 
 	return (
-		<div className="flex flex-col h-full min-h-screen bg-skin-background-1 dark:bg-skin-dark-background-1">
+		<div className="flex h-full min-h-screen flex-col bg-skin-background dark:bg-skin-background-dark">
 			<Header
 				title="Projects"
 				description="A list of all the projects organized by Hololive EN Fan servers!"
 			/>
-			<div className="flex-grow">
-				<div className="my-16 w-full flex flex-col items-center">
-					<div className="max-w-4xl mx-4">
-						<div>
-							<TextHeader>{t('ongoing')}</TextHeader>
-							<div className="flex flex-col text-center sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center">
-								{ongoingProjects.length > 0 ? (
-									ongoingProjects
-								) : (
-									<div className="font-bold text-2xl mt-4 text-black dark:text-white">
-										{t('none')}
-									</div>
-								)}
+			<div className="grow">
+				<div className="my-16 flex w-full flex-col items-center px-4 md:px-16 lg:px-24 2xl:px-56">
+					<div className="grid w-full grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+						{projectsHtml.length > 0 ? (
+							projectsHtml
+						) : (
+							<div className="mt-4 text-2xl font-bold text-black dark:text-white">
+								{t('none')}
 							</div>
-						</div>
-						<div className="mt-10">
-							<TextHeader>{t('past')}</TextHeader>
-							<div className="flex flex-col text-center sm:flex-row sm:flex-wrap sm:-mx-2 sm:justify-center">
-								{pastProjects.length > 0 ? (
-									pastProjects
-								) : (
-									<div className="font-bold text-2xl mt-4 text-black dark:text-white">
-										{t('none')}
-									</div>
-								)}
-							</div>
-						</div>
+						)}
 					</div>
 				</div>
 			</div>

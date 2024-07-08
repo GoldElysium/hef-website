@@ -1,0 +1,71 @@
+.progressOuterContainer {
+    @apply sticky z-10 w-full h-[60px] flex items-end transition-all opacity-0;
+}
+
+.progressOuterContainerOpen {
+    @apply opacity-100;
+}
+
+.progressOuterContainerClose {
+    @apply opacity-0;
+}
+
+.progressInnerContainer {
+    @apply w-[100%] flex transition-all;
+}
+
+.progressInnerContainerOpen {
+    @apply h-[20px] opacity-100;
+}
+
+.progressInnerContainerClose {
+    @apply h-[10px] opacity-50;
+}
+
+.numberLabelContainer {
+    @apply h-full min-w-4 px-2 py-1 flex justify-center items-center overflow-hidden bg-skin-background dark:bg-skin-background-dark text-skin-text dark:text-skin-text-dark;
+}
+
+.numberLabelContainerFadeLeft {
+    @apply bg-transparent dark:bg-transparent bg-gradient-to-l from-[color-mix(in_srgb,rgb(var(--color-secondary))_60%,white)] dark:from-[color-mix(in_srgb,rgb(var(--color-secondary-dark))_60%,white)] from-[8%] to-transparent
+}
+
+.numberLabelContainerFadeRight {
+    @apply bg-transparent dark:bg-transparent bg-gradient-to-r from-[color-mix(in_srgb,rgb(var(--color-secondary))_60%,white)] dark:from-[color-mix(in_srgb,rgb(var(--color-secondary-dark))_60%,white)] from-[8%] to-transparent
+}
+
+.numberLabel {
+    @apply transition-all w-[1.5rem] text-center font-semibold;
+}
+
+.numberLabelOpen {
+    @apply opacity-100;
+}
+
+.numberLabelClose {
+    @apply opacity-0;
+}
+
+.progressBarContainer {
+    @apply h-full grow transition-all bg-[color-mix(in_srgb,rgb(var(--color-secondary))_60%,white)] dark:bg-[color-mix(in_srgb,rgb(var(--color-secondary-dark))_60%,white)];
+}
+
+.progressSectionsContainer {
+    @apply flex justify-between w-full h-full;
+}
+
+.progressSectionTooltip {
+    @apply z-10 flex h-full cursor-pointer grow border-x border-[color-mix(in_srgb,rgb(var(--color-secondary))_80%,black)] dark:border-[color-mix(in_srgb,rgb(var(--color-secondary-dark))_80%,black)] transition-all duration-100 ease-in-out;
+}
+
+.progressSectionTooltip:hover {
+    @apply bg-[color-mix(in_srgb,rgb(var(--color-header))_60%,white)];
+}
+
+.progressSectionTooltipActive {
+    @apply bg-[color-mix(in_srgb,rgb(var(--color-header))_80%,white)];
+}
+
+.progressSectionTooltipSelected {
+    @apply bg-skin-header dark:bg-skin-header-dark;
+}

@@ -39,3 +39,9 @@ yarn-error.log*
 /.vs
 /user.
 /.vscode
+
+# Sentry Auth Token
+.sentryclirc
+
+# Sentry Config File
+.sentryclirc
