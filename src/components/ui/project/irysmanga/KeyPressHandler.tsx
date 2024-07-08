@@ -32,8 +32,10 @@ export default function KeyPressHandler({ setOpenSidebar, readerContainerRef, mo
 		manga,
 		setHeaderVisibility,
 	} = useMangaContext();
+
 	const scrollIntervalRef = useRef<any>();
 	const scrollDirectionRef = useRef<number>();
+
 	const { resolvedTheme, setTheme } = useTheme();
 
 	useEffect(() => {
