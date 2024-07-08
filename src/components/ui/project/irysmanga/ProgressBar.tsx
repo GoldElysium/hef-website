@@ -76,6 +76,7 @@ export default function ProgressBar() {
 	}
 
 	const [openProgress, setOpenProgress] = useState(false);
+
 	return (
 		<div
 			className={classNames(styles.progressOuterContainer, {
