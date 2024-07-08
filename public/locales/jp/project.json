@@ -1,14 +1,19 @@
 {
 	"page": {
+		"description": {
+			"left": "プロジェクトの",
+			"right": "概要"
+		},
 		"links": "リンク",
-		"submissions": "ファンの貢献",
-		"loading": "待ってください"
+		"submissions": "ファンの投稿",
+		"loading": "読み込み中..."
 	},
 	"submissions": {
-		"end": "終わりました"
+		"end": "投稿はこれで最後です!"
 	},
 	"submission": {
-		"author": "著者:",
+		"author": "From: ",
 		"invalid-media": "不正なメディア"
 	}
 }
+
