@@ -111,9 +111,7 @@ export default function ReaderSidebar({
 				disabled={openSidebar}
 			>
 				<Bars3Icon
-					className={classNames(
-						'transition-all top-0 right-0 opacity-50 hover:opacity-100',
-					)}
+					className="transition-all top-0 right-0 opacity-50 hover:opacity-100"
 					width={30}
 				/>
 			</button>
