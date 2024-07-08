@@ -2,7 +2,7 @@ import React from 'react';
 import {
 	Container, Graphics, Sprite, Text,
 } from '@pixi/react';
-import { Graphics as PixiGraphics, TextStyle } from 'pixi.js';
+import { TextStyle } from 'pixi.js';
 
 interface ModalProps {
 	x: number;
@@ -25,7 +25,7 @@ export default function Modal({
 	return (
 		<Container eventMode={onClick ? 'static' : 'auto'} pointerdown={handleClick} x={x} y={y}>
 			<Graphics
-				draw={(g: PixiGraphics) => {
+				draw={(g) => {
 					g.clear();
 					g.beginFill(0x222222);
 					g.drawRect(0, 0, width, height);

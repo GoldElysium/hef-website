@@ -22,6 +22,7 @@ import {
 import fetchSubmissions from '@/lib/fetchSubmissions';
 import { RandomSubmissions } from '@/app/[lang]/(DynamicLayout)/projects/[slug]/submissions/page';
 import ButtonLink from '@/components/ui/ButtonLink';
+import IrysMangaDataWrapper from '@/components/ui/project/irysmanga/IrysMangaDataWrapper';
 
 interface IProps {
 	params: {
@@ -109,6 +110,12 @@ export default async function ProjectPage({ params: { slug, lang } }: IProps) {
 	if (project.flags?.includes('kiara-bday-2024')) {
 		return (
 			<KiaraBdaySubmissionWrapper lang={lang} project={project} />
+		);
+	}
+
+	if (project.flags?.includes('manga-reader')) {
+		return (
+			<IrysMangaDataWrapper project={project} lang={lang} />
 		);
 	}
 

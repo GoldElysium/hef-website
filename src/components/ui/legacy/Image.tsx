@@ -11,15 +11,19 @@ export function getImageUrl({
 }: Omit<Props, 'alt'>): string {
 	if (typeof src !== 'string') throw new Error(`Cannot optimize static import: ${src}`);
 
+	if (!process.env.IMAGINARY_URL) return src;
+
 	if (src.toLowerCase().endsWith('.gif')) return src;
+
+	if (!width && !height) throw new Error('Width or height must be provided');
 
 	const query = [
 		'type=webp',
 		'stripmeta=true',
-		`width=${width}`,
 		`quality=${quality ?? 75}`,
 	];
-	if (height && (action && action !== 'resize')) query.push(`height=${height}`);
+	if (width) query.push(`width=${width}`);
+	if (height) query.push(`height=${height}`);
 
 	const urlParam = encodeURIComponent(src.replace('localhost', 'host.docker.internal'));
 
