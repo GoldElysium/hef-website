@@ -142,4 +142,3 @@ export default function SelectBox({ value, label }: SelectBoxProps) {
 		</div>
 	);
 }
-
