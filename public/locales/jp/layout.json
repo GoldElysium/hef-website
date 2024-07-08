@@ -5,7 +5,8 @@
 	},
 	"nav": {
 		"home": "ホーム",
-		"projects": "プロジェクト"
+		"projects": "プロジェクト",
+		"about": "About"
 	},
 	"notice-banner": {
 		"open": "もっと読む",

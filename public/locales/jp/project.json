@@ -1,5 +1,9 @@
 {
 	"page": {
+		"description": {
+			"left": "About this",
+			"right": " Project"
+		},
 		"links": "リンク",
 		"submissions": "ファンの貢献",
 		"loading": "待ってください"
