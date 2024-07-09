@@ -294,8 +294,7 @@ export default function Reader({
 			};
 
 			const loadingHeight = {
-				'w-full': loading[i],
-				'h-full': loading[i],
+				'w-full h-full': loading[i],
 			};
 
 			return classNames(blockStyle, fitStyle, marginStyle, loadingHeight, 'relative flex shrink-0');
@@ -326,6 +325,33 @@ export default function Reader({
 				return {
 					width, height, maxWidth: width, maxHeight: height,
 				};
+			}
+
+			if (fitMode === 'fit-both') {
+				// I hate this even more but I'm way too tired and it's too close to the deadline for
+				// something nicer.
+
+				if (height > 0 && width > 0) {
+					let newWidth = 0;
+					let newHeight = 0;
+
+					if (containerDimensions.height > containerDimensions.width) {
+						newWidth = containerDimensions.width;
+						newHeight = (containerDimensions.width / width) * height;
+					} else {
+						newWidth = (containerDimensions.height / height) * width;
+						newHeight = containerDimensions.height;
+					}
+
+					return {
+						width: newWidth,
+						height: newHeight,
+						maxWidth: newWidth,
+						maxHeight: newHeight,
+					};
+				}
+
+				return {};
 			}
 
 			if (fitMode === 'height') {

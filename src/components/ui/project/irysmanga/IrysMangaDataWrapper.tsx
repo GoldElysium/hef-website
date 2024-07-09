@@ -37,7 +37,7 @@ async function fetchOptimizedImageURLs({ project }: IProps) {
 				chapter.id,
 				chapter.pages.map((page) => {
 					if (bypassImgProxy) {
-						return page.replace(/en\/0([4-9]\.png)/, 'en/$1');
+						return page;
 					}
 
 					return getImageUrl({
