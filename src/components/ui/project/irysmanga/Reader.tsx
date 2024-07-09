@@ -37,6 +37,8 @@ export default function Reader({
 		optimizedImages,
 	} = useMangaContext();
 
+	const DEFAULT_HEIGHT = 1080;
+
 	const mangaData = getMangaDataOrThrow(manga, mangaLanguage);
 	const pageRefs = useRef<HTMLImageElement[]>([]);
 
@@ -47,13 +49,14 @@ export default function Reader({
 		Array(mangaData.chapters[chapter].pageCount).fill(true),
 	);
 	const [imageSizes, setImageSizes] = useState(
-		Array(mangaData.chapters[chapter].pageCount).fill({ width: 0, height: 0 }),
+		Array(mangaData.chapters[chapter].pageCount).fill({ width: 0, height: DEFAULT_HEIGHT }),
 	);
 	const [containerDimensions, setContainerDimensions] = useState({
 		width: 0,
 		height: 0,
 	});
 	const [currentlyLoadedChapter, setCurrentlyLoadedChapter] = useState(chapter);
+	const [currentlyLoadedLanguage, setCurrentlyLoadedLanguage] = useState(mangaLanguage);
 
 	/**
 	 * A function to automatically set the "is user currently the one scrolling" state to false.
@@ -106,15 +109,19 @@ export default function Reader({
 	 * for a better reading experience, but we don't want to load all the images at once
 	 * because that might be slow.
 	 */
-	const getPriority = (numPages: number, pg: number): boolean => Math.abs(numPages - pg) <= 3;
+	const getLazyLoading = (numPages: number, pg: number): ('eager' | 'lazy') => (Math.abs(numPages - pg) <= 3 ? 'eager' : 'lazy');
 
 	// Handle page turn on click
 	const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
 		const { clientX, target } = event;
+		if (target === null) {
+			return;
+		}
+
 		const { left, width } = (target as HTMLElement).getBoundingClientRect();
 		const MOBILE_PAGE_WIDTH = 768;
 
-		if (window && window.innerWidth <= MOBILE_PAGE_WIDTH) {
+		if (window && window.innerWidth < MOBILE_PAGE_WIDTH) {
 			if (openSidebar) {
 				setOpenSidebar(false);
 				return;
@@ -184,12 +191,22 @@ export default function Reader({
 			const { pageCount } = mangaData.chapters[chapter];
 
 			setLoading(Array(pageCount).fill(true));
-			setImageSizes(Array(pageCount).fill({ width: 0, height: 0 }));
+			setImageSizes(Array(pageCount).fill({ width: 0, height: DEFAULT_HEIGHT }));
 			pageRefs.current = [];
 
 			setCurrentlyLoadedChapter(chapter);
 		}
 	}, [chapter, mangaData.chapters, currentlyLoadedChapter]);
+
+	useEffect(() => {
+		if (mangaLanguage !== currentlyLoadedLanguage) {
+			setLoading(loading.fill(true));
+			setImageSizes(imageSizes.fill({ width: 0, height: DEFAULT_HEIGHT }));
+			pageRefs.current = [];
+
+			setCurrentlyLoadedLanguage(mangaLanguage);
+		}
+	}, [loading, imageSizes, mangaLanguage, currentlyLoadedLanguage]);
 
 	useEffect(() => {
 		if (pageLayout === 'long' && isScrollCausedByUserScroll.current) {
@@ -276,7 +293,11 @@ export default function Reader({
 				'my-auto': enableMargin,
 			};
 
-			return classNames(blockStyle, fitStyle, marginStyle, 'relative flex shrink-0');
+			const loadingHeight = {
+				'w-full h-full': loading[i],
+			};
+
+			return classNames(blockStyle, fitStyle, marginStyle, loadingHeight, 'relative flex shrink-0');
 		};
 
 		/**
@@ -306,6 +327,33 @@ export default function Reader({
 				};
 			}
 
+			if (fitMode === 'fit-both') {
+				// I hate this even more but I'm way too tired and it's too close to the deadline for
+				// something nicer.
+
+				if (height > 0 && width > 0) {
+					let newWidth = 0;
+					let newHeight = 0;
+
+					if (containerDimensions.height > containerDimensions.width) {
+						newWidth = containerDimensions.width;
+						newHeight = (containerDimensions.width / width) * height;
+					} else {
+						newWidth = (containerDimensions.height / height) * width;
+						newHeight = containerDimensions.height;
+					}
+
+					return {
+						width: newWidth,
+						height: newHeight,
+						maxWidth: newWidth,
+						maxHeight: newHeight,
+					};
+				}
+
+				return {};
+			}
+
 			if (fitMode === 'height') {
 				// I hate this but I'm too tired.
 				// Note 'auto' is not necessarily correct but better than nothing I guess... I think the
@@ -325,7 +373,7 @@ export default function Reader({
 			return {};
 		};
 
-		if (currentlyLoadedChapter === chapter) {
+		if (currentlyLoadedChapter === chapter && currentlyLoadedLanguage === mangaLanguage) {
 			displayedPages = Array.from({ length: maxPageCount }, (_, i) => {
 				const fitStyles = getPageImageFitStyles(imageSizes[i].width, imageSizes[i].height);
 
@@ -345,7 +393,7 @@ export default function Reader({
 							src={pageSources[i]}
 							className={getClassNamesPageImage()}
 							quality={100}
-							priority={getPriority(i, page)}
+							loading={getLazyLoading(i, page)}
 							alt={`Page ${i + 1}`}
 							width={imageSizes[i].width}
 							height={imageSizes[i].height}
