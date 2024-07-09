@@ -37,6 +37,8 @@ export default function Reader({
 		optimizedImages,
 	} = useMangaContext();
 
+	const DEFAULT_HEIGHT = 1080;
+
 	const mangaData = getMangaDataOrThrow(manga, mangaLanguage);
 	const pageRefs = useRef<HTMLImageElement[]>([]);
 
@@ -47,7 +49,7 @@ export default function Reader({
 		Array(mangaData.chapters[chapter].pageCount).fill(true),
 	);
 	const [imageSizes, setImageSizes] = useState(
-		Array(mangaData.chapters[chapter].pageCount).fill({ width: 0, height: 0 }),
+		Array(mangaData.chapters[chapter].pageCount).fill({ width: 0, height: DEFAULT_HEIGHT }),
 	);
 	const [containerDimensions, setContainerDimensions] = useState({
 		width: 0,
@@ -189,7 +191,7 @@ export default function Reader({
 			const { pageCount } = mangaData.chapters[chapter];
 
 			setLoading(Array(pageCount).fill(true));
-			setImageSizes(Array(pageCount).fill({ width: 0, height: 0 }));
+			setImageSizes(Array(pageCount).fill({ width: 0, height: DEFAULT_HEIGHT }));
 			pageRefs.current = [];
 
 			setCurrentlyLoadedChapter(chapter);
@@ -199,7 +201,7 @@ export default function Reader({
 	useEffect(() => {
 		if (mangaLanguage !== currentlyLoadedLanguage) {
 			setLoading(loading.fill(true));
-			setImageSizes(imageSizes.fill({ width: 0, height: 0 }));
+			setImageSizes(imageSizes.fill({ width: 0, height: DEFAULT_HEIGHT }));
 			pageRefs.current = [];
 
 			setCurrentlyLoadedLanguage(mangaLanguage);
@@ -291,7 +293,12 @@ export default function Reader({
 				'my-auto': enableMargin,
 			};
 
-			return classNames(blockStyle, fitStyle, marginStyle, 'relative flex shrink-0');
+			const loadingHeight = {
+				'w-full': loading[i],
+				'h-full': loading[i],
+			};
+
+			return classNames(blockStyle, fitStyle, marginStyle, loadingHeight, 'relative flex shrink-0');
 		};
 
 		/**
