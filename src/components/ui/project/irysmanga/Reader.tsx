@@ -121,7 +121,7 @@ export default function Reader({
 		const { left, width } = (target as HTMLElement).getBoundingClientRect();
 		const MOBILE_PAGE_WIDTH = 768;
 
-		if (window && window.innerWidth <= MOBILE_PAGE_WIDTH) {
+		if (window && window.innerWidth < MOBILE_PAGE_WIDTH) {
 			if (openSidebar) {
 				setOpenSidebar(false);
 				return;
