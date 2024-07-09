@@ -54,6 +54,7 @@ export default function Reader({
 		height: 0,
 	});
 	const [currentlyLoadedChapter, setCurrentlyLoadedChapter] = useState(chapter);
+	const [currentlyLoadedLanguage, setCurrentlyLoadedLanguage] = useState(mangaLanguage);
 
 	/**
 	 * A function to automatically set the "is user currently the one scrolling" state to false.
@@ -106,11 +107,15 @@ export default function Reader({
 	 * for a better reading experience, but we don't want to load all the images at once
 	 * because that might be slow.
 	 */
-	const getPriority = (numPages: number, pg: number): boolean => Math.abs(numPages - pg) <= 3;
+	const getLazyLoading = (numPages: number, pg: number): ('eager' | 'lazy') => (Math.abs(numPages - pg) <= 3 ? 'eager' : 'lazy');
 
 	// Handle page turn on click
 	const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
 		const { clientX, target } = event;
+		if (target === null) {
+			return;
+		}
+
 		const { left, width } = (target as HTMLElement).getBoundingClientRect();
 		const MOBILE_PAGE_WIDTH = 768;
 
@@ -190,6 +195,16 @@ export default function Reader({
 			setCurrentlyLoadedChapter(chapter);
 		}
 	}, [chapter, mangaData.chapters, currentlyLoadedChapter]);
+
+	useEffect(() => {
+		if (mangaLanguage !== currentlyLoadedLanguage) {
+			setLoading(loading.fill(true));
+			setImageSizes(imageSizes.fill({ width: 0, height: 0 }));
+			pageRefs.current = [];
+
+			setCurrentlyLoadedLanguage(mangaLanguage);
+		}
+	}, [loading, imageSizes, mangaLanguage, currentlyLoadedLanguage]);
 
 	useEffect(() => {
 		if (pageLayout === 'long' && isScrollCausedByUserScroll.current) {
@@ -325,7 +340,7 @@ export default function Reader({
 			return {};
 		};
 
-		if (currentlyLoadedChapter === chapter) {
+		if (currentlyLoadedChapter === chapter && currentlyLoadedLanguage === mangaLanguage) {
 			displayedPages = Array.from({ length: maxPageCount }, (_, i) => {
 				const fitStyles = getPageImageFitStyles(imageSizes[i].width, imageSizes[i].height);
 
@@ -345,7 +360,7 @@ export default function Reader({
 							src={pageSources[i]}
 							className={getClassNamesPageImage()}
 							quality={100}
-							priority={getPriority(i, page)}
+							loading={getLazyLoading(i, page)}
 							alt={`Page ${i + 1}`}
 							width={imageSizes[i].width}
 							height={imageSizes[i].height}
