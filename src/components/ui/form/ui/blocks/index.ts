@@ -25,3 +25,4 @@ import './radiobuttons';
 import './error';
 import './stop';
 import './multi-file-upload';
+import './spacer';

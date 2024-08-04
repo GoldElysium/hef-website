@@ -29,6 +29,7 @@
     "@headlessui/react": "1.7.18",
     "@heroicons/react": "2.1.3",
     "@holoenfans/tripetto-block-multi-file-upload": "^0.0.4",
+    "@holoenfans/tripetto-block-spacer": "^0.0.2",
     "@marsidev/react-turnstile": "^0.5.4",
     "@mdi/js": "7.4.47",
     "@mdi/react": "1.6.1",
