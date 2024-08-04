@@ -21,30 +21,34 @@ function CheckboxesFabric(props: {
 		<>
 			{props.checkboxes.map(
 				(checkbox, index) => (props.view === 'preview' || checkbox.label) && (
-					<CheckboxFabric
-						key={checkbox.id || index}
-						label={checkbox.label}
-						description={checkbox.description}
-						required={checkbox.required}
-						disabled={checkbox.disabled}
-						readOnly={checkbox.readOnly}
-						error={checkbox.error}
-						tabIndex={checkbox.tabIndex || props.tabIndex}
-						tabSubmit={index + 1 === props.checkboxes.length}
-						value={checkbox.value}
-						ariaDescribedBy={props.ariaDescribedBy}
-						onChange={checkbox.onChange}
-						onAutoFocus={(index === 0 && props.onAutoFocus) || undefined}
-						onFocus={props.onFocus}
-						onBlur={props.onBlur}
-						onSubmit={props.onSubmit}
-						onCancel={(index === 0 && props.onCancel) || undefined}
-					/>
+					<>
+						<CheckboxFabric
+							key={checkbox.id || index}
+							label={checkbox.label}
+							description={checkbox.description}
+							required={checkbox.required}
+							disabled={checkbox.disabled}
+							readOnly={checkbox.readOnly}
+							error={checkbox.error}
+							tabIndex={checkbox.tabIndex || props.tabIndex}
+							tabSubmit={index + 1 === props.checkboxes.length}
+							value={checkbox.value}
+							ariaDescribedBy={props.ariaDescribedBy}
+							onChange={checkbox.onChange}
+							onAutoFocus={(index === 0 && props.onAutoFocus) || undefined}
+							onFocus={props.onFocus}
+							onBlur={props.onBlur}
+							onSubmit={props.onSubmit}
+							onCancel={(index === 0 && props.onCancel) || undefined}
+						/>
+						<hr className="my-2 border-none" />
+					</>
 				),
 			)}
 		</>
 	);
 }
+
 /* eslint-enable */
 
 @tripetto({
@@ -58,6 +62,7 @@ export default class CheckboxesBlock extends Checkboxes implements IFormNodeBloc
 			<>
 				{props.name}
 				{props.description}
+				<hr className="mt-3 border-none" />
 				<CheckboxesFabric
 					checkboxes={this.checkboxes(props)}
 					ariaDescribedBy={props.ariaDescribedBy}

@@ -110,7 +110,7 @@ export function CheckboxFabric(props: {
 	return (
 		<div className="w-full">
 			<label
-				className="relative inline-flex min-h-5 select-none items-center"
+				className="relative inline-flex min-h-5 cursor-pointer select-none items-center"
 			>
 				<input
 					className="absolute size-0 cursor-pointer opacity-0"

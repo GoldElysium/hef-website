@@ -9,7 +9,7 @@ import { IFormNodeBlock } from '@/components/ui/form/interfaces/block';
 export default class SpacerBlock extends Spacer implements IFormNodeBlock {
 	render() {
 		return (
-			<hr style={{ height: `${this.size}em` }} className="min-w-1" />
+			<hr style={{ height: `${this.size}em` }} className="min-w-1 border-none" />
 		);
 	}
 }
