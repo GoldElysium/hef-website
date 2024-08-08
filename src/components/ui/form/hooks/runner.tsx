@@ -56,7 +56,7 @@ import '../ui/blocks';
 
 /* eslint-disable max-len */
 const useFormRunner = (props: IRunnerUIProps) => {
-	const [clientId] = useState(crypto.randomUUID);
+	const [clientId] = useState(crypto.randomUUID());
 
 	const [runner, cache, l10n, , doAction] = useRunnerController({
 		...props,
