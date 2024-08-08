@@ -121,6 +121,7 @@ export function FormRunnerUI(props: IRunnerUIProps) {
 				return Promise.reject();
 			}
 
+			turnstileRef.current?.reset();
 			turnstileRef.current?.execute();
 
 			let turnstileResponse;

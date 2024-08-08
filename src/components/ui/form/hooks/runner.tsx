@@ -56,6 +56,8 @@ import '../ui/blocks';
 
 /* eslint-disable max-len */
 const useFormRunner = (props: IRunnerUIProps) => {
+	const clientId = crypto.randomUUID();
+
 	const [runner, cache, l10n, , doAction] = useRunnerController({
 		...props,
 		onSnapshot: () => ({
@@ -201,6 +203,7 @@ const useFormRunner = (props: IRunnerUIProps) => {
 																body: JSON.stringify({
 																	fileExt: file.name.split('.').pop(),
 																	turnstileResponse,
+																	clientId,
 																}),
 																headers: {
 																	'Content-Type': 'application/json',
@@ -234,6 +237,7 @@ const useFormRunner = (props: IRunnerUIProps) => {
 																body: JSON.stringify({
 																	key,
 																	turnstileResponse,
+																	clientId,
 																}),
 																headers: {
 																	'Content-Type': 'application/json',
