@@ -198,8 +198,8 @@ importers:
         specifier: 0.5.0
         version: 0.5.0(webpack@5.90.1(esbuild@0.18.20))
       phaser3-rex-plugins:
-        specifier: 1.1.85
-        version: 1.1.85
+        specifier: 1.80.6
+        version: 1.80.6
       pixi-scrollbox:
         specifier: ^2.3.1
         version: 2.3.1(pixi-viewport@5.0.3)(pixi.js@7.4.2)
@@ -2420,6 +2420,7 @@ packages:
 
   '@storybook/testing-library@0.2.2':
     resolution: {integrity: sha512-L8sXFJUHmrlyU2BsWWZGuAjv39Jl1uAqUHdxmN42JY15M4+XCMjGlArdCCjDe1wpTSW6USYISA9axjZojgtvnw==}
+    deprecated: In Storybook 8, this package functionality has been integrated to a new package called @storybook/test, which uses Vitest APIs for an improved experience. When upgrading to Storybook 8 with 'npx storybook@latest upgrade', you will get prompted and will get an automigration for the new package. Please migrate when you can.
 
   '@storybook/theming@8.0.8':
     resolution: {integrity: sha512-43hkNz7yo8Bl97AO2WbxIGprUqMhUZyK9g8383bd30gSxy9nfND/bdSdcgmA8IokDn8qp37Q4QmxtUZdhjMzZQ==}
@@ -4907,8 +4908,8 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
-  i18next-http-backend@2.4.3:
-    resolution: {integrity: sha512-jo2M03O6n1/DNb51WSQ8PsQ0xEELzLZRdYUTbf17mLw3rVwnJF9hwNgMXvEFSxxb+N8dT+o0vtigA6s5mGWyPA==}
+  i18next-http-backend@2.5.2:
+    resolution: {integrity: sha512-+K8HbDfrvc1/2X8jpb7RLhI9ZxBDpx3xogYkQwGKlWAUXLSEGXzgdt3EcUjLlBCdMwdQY+K+EUF6oh8oB6rwHw==}
 
   i18next-resources-to-backend@1.2.1:
     resolution: {integrity: sha512-okHbVA+HZ7n1/76MsfhPqDou0fptl2dAlhRDu2ideXloRRduzHsqDOznJBef+R3DFZnbvWoBW+KxJ7fnFjd6Yw==}
@@ -5692,6 +5693,10 @@ packages:
   ms@2.1.3:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
 
+  mustache@4.2.0:
+    resolution: {integrity: sha512-71ippSywq5Yb7/tVYyGbkBggbU8H3u5Rz56fH60jGFgr8uHwxs+aSKeqmluIVzM0m0kB7xQjKS6qPfd0b2ZoqQ==}
+    hasBin: true
+
   mz@2.7.0:
     resolution: {integrity: sha512-z81GNO7nnYMEhrGh9LeymoE4+Yr0Wn5McHIZMK5cfQCl+NDX08sCZgUc9/6MHni9IWuFLm1Z3HTCXu2z9fN62Q==}
 
@@ -6046,8 +6051,8 @@ packages:
   phaser3-nineslice@0.5.0:
     resolution: {integrity: sha512-QLzkvvyinNYczZ++W4kp+WYd0dQQWGQ2Odw5leaQiEdCPpEtVv5hS1T0Fn7JsYQt/riJW0ELMd6BywDackM2FQ==}
 
-  phaser3-rex-plugins@1.1.85:
-    resolution: {integrity: sha512-NQOp0sRLmDqDn5OgrjsWh0naGwcQiL2rF8WV56DR9PsNBp196F5OSqtgxjYYKjYTDc6FphrDGejZJ6g99w0Iwg==}
+  phaser3-rex-plugins@1.80.6:
+    resolution: {integrity: sha512-p03OGkuM8RTO5wCAuG8wIT8h/T79lxH18/LApm1JMJarR0qgSNLla/MHKT4Tv0UiMyuGLyOnw0TZ4LkeMQdX0Q==}
 
   phaser3spectorjs@0.0.8:
     resolution: {integrity: sha512-0dSO7/aMjEUPrp5EcjRvRRsEf+jXDbmzalPeJ6VtTB2Pn1PeaKc+qlL/DmO3l1Dvc5lkzc+Sil1Ta+Hkyi5cbA==}
@@ -13542,7 +13547,7 @@ snapshots:
 
   husky@9.0.11: {}
 
-  i18next-http-backend@2.4.3:
+  i18next-http-backend@2.5.2:
     dependencies:
       cross-fetch: 4.0.0
     transitivePeerDependencies:
@@ -14269,6 +14274,8 @@ snapshots:
 
   ms@2.1.3: {}
 
+  mustache@4.2.0: {}
+
   mz@2.7.0:
     dependencies:
       any-promise: 1.3.0
@@ -14669,12 +14676,13 @@ snapshots:
     transitivePeerDependencies:
       - webpack
 
-  phaser3-rex-plugins@1.1.85:
+  phaser3-rex-plugins@1.80.6:
     dependencies:
       eventemitter3: 3.1.2
       i18next: 22.5.1
-      i18next-http-backend: 2.4.3
+      i18next-http-backend: 2.5.2
       js-yaml: 4.1.0
+      mustache: 4.2.0
       papaparse: 5.4.1
       webfontloader: 1.6.28
     transitivePeerDependencies:
