@@ -34,7 +34,7 @@ SOFTWARE.
  */
 /* eslint-enable */
 
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import {
 	castToBoolean,
 	DateTime,
@@ -56,7 +56,7 @@ import '../ui/blocks';
 
 /* eslint-disable max-len */
 const useFormRunner = (props: IRunnerUIProps) => {
-	const clientId = crypto.randomUUID();
+	const [clientId] = useState(crypto.randomUUID);
 
 	const [runner, cache, l10n, , doAction] = useRunnerController({
 		...props,
