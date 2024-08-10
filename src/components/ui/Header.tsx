@@ -1,8 +1,9 @@
-import { Project } from '@/types/payload-types';
+import type { Project } from '@/types/payload-types';
+import type { ReactNode } from 'react';
 
 interface IProps {
 	title: string;
-	description: string;
+	description: ReactNode;
 	devprops?: Project['devprops'];
 }
 
@@ -15,7 +16,7 @@ export default function ProjectHeader({ title, description, devprops }: IProps) 
 			className="text-skin-header-foreground dark:text-skin-header-foreground-dark"
 		>
 			<div
-				className="grid h-72 w-full place-items-center bg-skin-header bg-cover bg-center bg-no-repeat px-4 py-2 dark:bg-skin-header-dark md:pt-12"
+				className="grid min-h-72 w-full place-items-center bg-skin-header bg-cover bg-center bg-no-repeat px-4 py-2 dark:bg-skin-header-dark md:pt-12"
 				style={background ? {
 					backgroundImage: background ? `url(${background.value})` : undefined,
 					height: '16rem',

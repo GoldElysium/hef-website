@@ -18,6 +18,15 @@ interface IProps {
 export default async function RootLayout({ children, params: { id, lang } }: IProps) {
 	const form = await fetchForm(id, lang);
 
+	const descriptionSplit = (form?.description ?? '').split('\n');
+	const description = [];
+
+	for (let i = 0; i < descriptionSplit.length - 1; i++) {
+		description.push(descriptionSplit[i]);
+		description.push(<br />);
+	}
+	description.push(descriptionSplit[descriptionSplit.length - 1]);
+
 	return (
 		<body className={form ? skins[form.skin] ?? undefined : undefined}>
 			<DarkModeProvider>
@@ -31,7 +40,7 @@ export default async function RootLayout({ children, params: { id, lang } }: IPr
 				{form && (
 					<Header
 						title={form.name}
-						description={form.description}
+						description={description}
 						devprops={[]}
 					/>
 				)}
