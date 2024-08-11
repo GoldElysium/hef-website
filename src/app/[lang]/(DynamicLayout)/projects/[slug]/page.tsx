@@ -158,7 +158,7 @@ export default async function ProjectPage({ params: { slug, lang } }: IProps) {
 								</span>
 							</div>
 						</div>
-						<div className="description-body text-lg">
+						<div className="description-body">
 							<PayloadLexicalReactRenderer
 								content={project.description as PayloadLexicalReactRendererContent}
 							/>

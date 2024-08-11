@@ -94,6 +94,8 @@
   }
 
   .description-body {
+    @apply flex flex-col gap-4 text-lg;
+
     h1 {
       @apply my-8 text-center text-3xl font-semibold text-skin-text dark:text-skin-text-dark sm:text-5xl;
     }
