@@ -1,7 +1,6 @@
 'use client';
 
 import {
-// @ts-expect-error useZoomPanContext does not exist
 	ComposableMap, Geographies, Geography, Marker, ZoomableGroup, useZoomPanContext,
 } from 'react-simple-maps';
 // @ts-expect-error no types
