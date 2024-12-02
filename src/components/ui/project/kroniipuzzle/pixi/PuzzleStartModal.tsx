@@ -3,17 +3,17 @@ import {
 } from '@pixi/react';
 import { Graphics as PixiGraphics, TextStyle } from 'pixi.js';
 import React from 'react';
-import { ABOUT_TEXT } from '../puzzle/PuzzleConfig';
 import Button from './Button';
 
 interface ModalProps {
 	width: number;
 	height: number;
+	text: string;
 	closeModal: () => void;
 }
 
 export default function PuzzleStartModal({
-	width, height, closeModal,
+	width, height, text, closeModal,
 }: ModalProps) {
 	return (
 		<Container>
@@ -26,7 +26,7 @@ export default function PuzzleStartModal({
 				}}
 			/>
 			<Text
-				text={ABOUT_TEXT}
+				text={text}
 				style={{
 					fill: 'white',
 					fontSize: 20,

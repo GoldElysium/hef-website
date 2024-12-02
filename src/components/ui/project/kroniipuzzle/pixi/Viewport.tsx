@@ -72,7 +72,7 @@ const Viewport = PixiComponent('Viewport', {
 			forceHitArea,
 			// @ts-ignore
 			ticker: app.ticker,
-			events: app.renderer.events,
+			interaction: app.renderer.plugins.interaction,
 			passiveWheel: true,
 		});
 		if (x) viewport.x = x;

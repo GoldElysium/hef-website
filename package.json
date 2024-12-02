@@ -18,7 +18,7 @@
     ]
   },
   "engines": {
-    "node": ">=18.12.1 <21",
+    "node": "^18 || ^20 || ^22",
     "pnpm": ">=8"
   },
   "dependencies": {
@@ -87,9 +87,9 @@
     "phaser3-nineslice": "0.5.0",
     "phaser3-rex-plugins": "1.1.85",
     "pixi-scrollbox": "^2.3.1",
-    "pixi-tagged-text": "^3.15.2",
-    "pixi-viewport": "^5.1.0",
-    "pixi.js": "^7.4.2",
+    "pixi-tagged-text": "^3.15.1",
+    "pixi-viewport": "^5.0.3",
+    "pixi.js": "7.4.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-i18next": "14.1.0",

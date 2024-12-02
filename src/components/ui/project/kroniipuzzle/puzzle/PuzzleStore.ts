@@ -2,11 +2,10 @@
 import { createWithEqualityFn } from 'zustand/traditional';
 import { immer } from 'zustand/middleware/immer';
 import { persist } from 'zustand/middleware';
-import {
-	COL_COUNT, PIECE_COUNT, PIECE_SIZE, ROW_COUNT,
-} from './PuzzleConfig';
+import { WritableDraft } from 'immer';
+import { PUZZLE_WIDTH } from './PuzzleConfig';
 
-interface State {
+export interface State {
 	pieces: {
 		[key: string]: {
 			position: {
@@ -35,6 +34,8 @@ interface State {
 			randomIndex: number;
 		};
 	}
+	difficultyName: string | null;
+	difficulty: Difficulty | null;
 	correctCount: number;
 	audio: {
 		volume: number;
@@ -44,7 +45,17 @@ interface State {
 	firstLoad: boolean,
 }
 
-interface Actions {
+interface Difficulty {
+	cols: number;
+	rows: number;
+	marginDivider: number;
+}
+
+interface Difficulties {
+	[name: string]: Difficulty
+}
+
+export interface Actions {
 	updatePiecePosition: (key: string) => (newPosition: { x: number; y:number; }) => void;
 	updatePieceLocalPosition: (key: string, newPosition: { x: number; y:number; }) => void;
 	updatePieceGroupPosition: (key: string) => (newPosition: { x: number; y:number; }) => void;
@@ -53,20 +64,26 @@ interface Actions {
 	setCorrect: (key: string) => () => void;
 	setVolume: (volume: number) => void;
 	setMuted: (muted: boolean) => void;
+	setDifficulty: (name: string | null) => void;
 	reset: () => void;
 	setFirstLoad: (val: boolean) => void;
 }
 
-function flatIndexToSpiralCoordinates(index: number): [number, number] | null {
-	const centerRow = Math.ceil(ROW_COUNT / 3);
-	const centerCol = Math.ceil(COL_COUNT / 8);
+export type PuzzleStore = ReturnType<typeof createPuzzleStore>;
 
-	let x = centerCol;
+// eslint-disable-next-line max-len
+function flatIndexToSpiralCoordinates(index: number, cols: number, rows: number): [number, number] | null {
+	const centerRow = Math.ceil(rows / 3);
+
+	let x = Math.max(Math.ceil(cols / 8), 2.5);
 	let y = centerRow;
+
 	let dx = 1;
 	let dy = 0;
-	const initialSideLength = 10;
+
+	const initialSideLength = Math.floor(rows / 2);
 	let sideLength = initialSideLength;
+
 	let stepsInSide = 0;
 	let currentIndex = 0;
 
@@ -111,152 +128,149 @@ function flatIndexToSpiralCoordinates(index: number): [number, number] | null {
 	return null;
 }
 
-const usePuzzleStore = createWithEqualityFn(persist(
-	immer<State & Actions>((set) => {
-		const initialState: State = {
-			pieces: {},
-			pieceGroups: {},
-			correctCount: 0,
-			audio: {
-				volume: 0.05,
-				muted: false,
-			},
-			shouldLoadPositions: false,
-			firstLoad: true,
-		};
+function reset(state: WritableDraft<State & Actions>) {
+	if (!state.difficulty) return;
 
-		const randomIndexArray = Array.from({ length: PIECE_COUNT }, (_, index) => index)
-			.sort(() => Math.random() - 0.5);
+	state.pieces = {};
+	state.pieceGroups = {};
 
-		for (let r = 0; r < ROW_COUNT; r++) {
-			for (let c = 0; c < COL_COUNT; c++) {
-				const index = randomIndexArray[r * COL_COUNT + c];
-				const [cc, rr] = flatIndexToSpiralCoordinates(
-					index + (Math.floor(PIECE_COUNT * 0.35)) + 36,
-				) || [0, 0];
-				const x = cc * PIECE_SIZE * 1.75 - PIECE_SIZE * 2.5;
-				const y = rr * PIECE_SIZE * 1.75 - PIECE_SIZE * 2.5;
+	const pieceSize = PUZZLE_WIDTH / state.difficulty.cols;
+	const pieceCount = state.difficulty.cols * state.difficulty.rows;
 
-				initialState.pieces[`${r}-${c}`] = {
-					position: {
-						x,
-						y,
-					},
-					localPosition: {
-						x: 0,
-						y: 0,
-					},
-					pieceGroup: `${r}-${c}`,
-				};
-				initialState.pieceGroups[`${r}-${c}`] = {
-					position: {
-						x,
-						y,
-					},
-					targetPosition: {
-						x: c * PIECE_SIZE,
-						y: r * PIECE_SIZE,
-					},
-					pieces: [`${r}-${c}`],
-					correct: false,
-					randomIndex: randomIndexArray[r * COL_COUNT + c],
-				};
-			}
+	const randomIndexArray = Array
+		.from({ length: state.difficulty.cols * state.difficulty.rows }, (_, index) => index)
+		.sort(() => Math.random() - 0.5);
+
+	for (let r = 0; r < state.difficulty.rows; r++) {
+		for (let c = 0; c < state.difficulty.cols; c++) {
+			const index = randomIndexArray[r * state.difficulty.cols + c];
+			const [cc, rr] = flatIndexToSpiralCoordinates(
+				// eslint-disable-next-line max-len
+				index + (Math.floor(pieceCount * 0.35)) + state.difficulty.rows + state.difficulty.cols,
+				state.difficulty.cols,
+				state.difficulty.rows,
+			) || [0, 0];
+			const x = cc * pieceSize * 1.75 - pieceSize * 2.5;
+			const y = rr * pieceSize * 1.75 - pieceSize * 2.5;
+
+			state.pieces[`${r}-${c}`] = {
+				position: {
+					x,
+					y,
+				},
+				localPosition: {
+					x: 0,
+					y: 0,
+				},
+				pieceGroup: `${r}-${c}`,
+			};
+			state.pieceGroups[`${r}-${c}`] = {
+				position: {
+					x,
+					y,
+				},
+				targetPosition: {
+					x: c * pieceSize,
+					y: r * pieceSize,
+				},
+				pieces: [`${r}-${c}`],
+				correct: false,
+				randomIndex: randomIndexArray[r * state.difficulty.cols + c],
+			};
 		}
+	}
+}
 
-		return {
-			...initialState,
-			updatePiecePosition: (key) => (newPos) => set((state) => {
-				state.pieces[key].position = newPos;
-			}),
-			updatePieceLocalPosition: (key, newPos) => set((state) => {
-				state.pieces[key].localPosition = newPos;
-			}),
-			updatePieceGroupPosition: (key: string) => (newPos) => set((state) => {
-				const pieceGroup = state.pieceGroups[key];
-				pieceGroup.position = newPos;
-			}),
-			changePieceGroup: (key) => (newGroupKey, positionData) => set((state) => {
-				const oldGroupKey = state.pieces[key].pieceGroup;
-				const oldGroup = state.pieceGroups[oldGroupKey].pieces;
+export default function createPuzzleStore(projectId: string, devprops: { [key: string]: string }) {
+	const difficulties = JSON.parse(devprops.difficulties) as Difficulties;
 
-				// eslint-disable-next-line no-restricted-syntax
-				for (const pieceKey of oldGroup) {
-					state.pieces[pieceKey].pieceGroup = newGroupKey;
-					state.pieces[pieceKey].localPosition = positionData[pieceKey];
-				}
+	return createWithEqualityFn(persist(
+		immer<State & Actions>((set) => {
+			const initialState: State = {
+				pieces: {},
+				pieceGroups: {},
+				correctCount: 0,
+				difficultyName: null,
+				difficulty: null,
+				audio: {
+					volume: 0.05,
+					muted: false,
+				},
+				shouldLoadPositions: false,
+				firstLoad: true,
+			};
 
-				// this errors out sometimes. state.pieceGroups[newGroupKey] is undefined
-				try {
-					const { pieces } = state.pieceGroups[newGroupKey];
-					const oldPieces = state.pieceGroups[oldGroupKey].pieces;
-					// Merge everything into the other group and delete the legacy group
-					pieces.push(...oldPieces);
-				} catch (e: any) {
-					console.error(e);
-					return;
-				}
-				delete state.pieceGroups[oldGroupKey];
-			}),
-			setCorrect: (key) => () => set((state) => {
-				state.pieceGroups[key].correct = true;
-				state.correctCount += state.pieceGroups[key].pieces.length;
-			}),
-			setVolume: (volume) => set((state) => {
-				state.audio.volume = volume;
-			}),
-			setMuted: (muted) => set((state) => {
-				state.audio.muted = muted;
-			}),
-			reset: () => set((state) => {
-				const newRandomIndexArray = Array.from({ length: PIECE_COUNT }, (_, index) => index)
-					.sort(() => Math.random() - 0.5);
+			if (devprops.hasDifficulties !== 'true') {
+				const difficulty = difficulties.default;
+				initialState.difficultyName = 'default';
+				initialState.difficulty = difficulty;
 
-				for (let r = 0; r < ROW_COUNT; r++) {
-					for (let c = 0; c < COL_COUNT; c++) {
-						const index = newRandomIndexArray[r * COL_COUNT + c];
-						const [cc, rr] = flatIndexToSpiralCoordinates(
-							index + (Math.floor(PIECE_COUNT * 0.35)) + 36,
-						) || [0, 0];
-						const x = cc * PIECE_SIZE * 1.75 - PIECE_SIZE * 2.5;
-						const y = rr * PIECE_SIZE * 1.75 - PIECE_SIZE * 2.5;
+				reset(initialState as WritableDraft<State & Actions>);
+			}
 
-						state.pieces[`${r}-${c}`] = {
-							position: {
-								x,
-								y,
-							},
-							localPosition: {
-								x: 0,
-								y: 0,
-							},
-							pieceGroup: `${r}-${c}`,
-						};
-						state.pieceGroups[`${r}-${c}`] = {
-							position: {
-								x,
-								y,
-							},
-							targetPosition: {
-								x: c * PIECE_SIZE,
-								y: r * PIECE_SIZE,
-							},
-							pieces: [`${r}-${c}`],
-							correct: false,
-							randomIndex: randomIndexArray[r * COL_COUNT + c],
-						};
-						state.correctCount = 0;
+			return {
+				...initialState,
+				updatePiecePosition: (key) => (newPos) => set((state) => {
+					state.pieces[key].position = newPos;
+				}),
+				updatePieceLocalPosition: (key, newPos) => set((state) => {
+					state.pieces[key].localPosition = newPos;
+				}),
+				updatePieceGroupPosition: (key: string) => (newPos) => set((state) => {
+					const pieceGroup = state.pieceGroups[key];
+					pieceGroup.position = newPos;
+				}),
+				changePieceGroup: (key) => (newGroupKey, positionData) => set((state) => {
+					const oldGroupKey = state.pieces[key].pieceGroup;
+					const oldGroup = state.pieceGroups[oldGroupKey].pieces;
+
+					// eslint-disable-next-line no-restricted-syntax
+					for (const pieceKey of oldGroup) {
+						state.pieces[pieceKey].pieceGroup = newGroupKey;
+						state.pieces[pieceKey].localPosition = positionData[pieceKey];
 					}
-				}
-			}),
-			setFirstLoad: (val) => set((state) => {
-				state.firstLoad = val;
-			}),
-		} satisfies State & Actions;
-	}),
-	{
-		name: 'puzzle-storage',
-	},
-));
 
-export default usePuzzleStore;
+					// this errors out sometimes. state.pieceGroups[newGroupKey] is undefined
+					try {
+						const { pieces } = state.pieceGroups[newGroupKey];
+						const oldPieces = state.pieceGroups[oldGroupKey].pieces;
+						// Merge everything into the other group and delete the legacy group
+						pieces.push(...oldPieces);
+					} catch (e: any) {
+						console.error(e);
+						return;
+					}
+					delete state.pieceGroups[oldGroupKey];
+				}),
+				setCorrect: (key) => () => set((state) => {
+					state.pieceGroups[key].correct = true;
+					state.correctCount += state.pieceGroups[key].pieces.length;
+				}),
+				setVolume: (volume) => set((state) => {
+					state.audio.volume = volume;
+				}),
+				setMuted: (muted) => set((state) => {
+					state.audio.muted = muted;
+				}),
+				setDifficulty: (name: string | null) => set((state) => {
+					if (name === null) {
+						state.difficultyName = null;
+						state.difficulty = null;
+					} else if (difficulties[name]) {
+						state.difficultyName = name;
+						state.difficulty = difficulties[name];
+					}
+
+					reset(state);
+				}),
+				reset: () => set(reset),
+				setFirstLoad: (val) => set((state) => {
+					state.firstLoad = val;
+				}),
+			} satisfies State & Actions;
+		}),
+		{
+			name: `puzzle-storage-${projectId}`,
+		},
+	));
+}

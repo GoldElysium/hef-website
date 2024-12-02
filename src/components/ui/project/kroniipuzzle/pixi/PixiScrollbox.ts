@@ -128,19 +128,14 @@ export default class PixiScrollbox extends PIXI.Container implements Scrollbox {
 		// @ts-ignore
 		this.ease = typeof this.options.fadeScrollboxEase === 'function' ? this.options.fadeScrollboxEase : Penner[this.options.fadeScrollboxEase ?? 'easeInOutSine'];
 
-		if (!('events' in this.options.app.renderer)) {
-			// @ts-ignore
-			this.options.app.renderer.addSystem(PIXI.EventSystem, 'events');
-		}
-
 		this.content = super.addChild(new Viewport({
-			passiveWheel: true,
+			passiveWheel: false,
 			stopPropagation: this.options.stopPropagation,
 			screenWidth: this.options.boxWidth,
 			screenHeight: this.options.boxHeight,
 			// @ts-ignore
 			ticker: this.options.app.ticker,
-			events: this.options.app.renderer.events,
+			interaction: this.options.app.renderer.plugins.interaction,
 		}));
 		this.content
 			.decelerate()
@@ -162,6 +157,18 @@ export default class PixiScrollbox extends PIXI.Container implements Scrollbox {
 		this.on('pointerup', this.scrollbarUp, this);
 		this.on('pointercancel', this.scrollbarUp, this);
 		this.on('pointerupoutside', this.scrollbarUp, this);
+		/* this.on('wheel', (e) => {
+			const height = this.scrollHeight;
+			console.log('Scroll delta', e.deltaY);
+			this.scrollbarTop! += Math.round(e.deltaY / 50);
+			// eslint-disable-next-line no-mixed-operators
+			this.content.top = this.scrollbarTop! / this.boxHeight * height;
+			this.update();
+
+			if (this.options.stopPropagation) {
+				e.stopPropagation();
+			}
+		}, this); */
 		this._maskContent = super.addChild(new PIXI.Graphics());
 		this.update();
 

@@ -4,12 +4,13 @@ import {
 	Container, Graphics, Text, useApp,
 } from '@pixi/react';
 import React, {
-	useCallback, useEffect, useMemo, useRef, useState,
+	useCallback, useContext, useEffect, useMemo, useRef, useState,
 } from 'react';
 import * as PIXI from 'pixi.js';
 import { Graphics as PixiGraphics, Renderer, TextStyle } from 'pixi.js';
 import type { Viewport as PixiViewport } from 'pixi-viewport';
 import { Submission } from '@/types/payload-types';
+import PuzzleStoreContext from './puzzle/PuzzleStoreContext';
 import type { StageSize } from './PixiWrapper';
 import Viewport from './pixi/Viewport';
 import Sidebar from './pixi/Sidebar';
@@ -26,19 +27,22 @@ import Preview from './pixi/Preview';
 import SettingsModal from './pixi/Settings';
 import Cursor from './pixi/Cursor';
 import AnimatedGIF from './pixi/AnimatedGIF';
-import usePuzzleStore from './puzzle/PuzzleStore';
+import usePuzzleStore from './puzzle/PuzzleStoreConsumer';
 import PuzzleStartModal from './pixi/PuzzleStartModal';
 
 interface IProps {
 	stageSize: StageSize;
+	aboutText: string;
 	submissions: Submission[];
 	setShowAllSubmissions: (val: boolean) => void;
 }
 
 export default function PixiPuzzleContainer({
-	stageSize, submissions, setShowAllSubmissions,
+	stageSize, aboutText, submissions, setShowAllSubmissions,
 }: IProps) {
 	const app = useApp();
+
+	const puzzleStore = useContext(PuzzleStoreContext)!;
 
 	const [showPreview, setShowPreview] = useState(false);
 	const [showExitModal, setShowExitModal] = useState(false);
@@ -266,8 +270,9 @@ export default function PixiPuzzleContainer({
 					width={stageSize.width}
 					height={stageSize.height}
 					closeModal={() => {
-						usePuzzleStore.getState().setFirstLoad(false);
+						puzzleStore.getState().setFirstLoad(false);
 					}}
+					text={aboutText}
 				/>
 			)}
 
@@ -288,6 +293,7 @@ export default function PixiPuzzleContainer({
 					y={0}
 					width={stageSize.width}
 					height={stageSize.height}
+					aboutText={aboutText}
 					setShowSettingsModal={setShowSettingsModal}
 					setShowAllSubmissions={setShowAllSubmissions}
 				/>

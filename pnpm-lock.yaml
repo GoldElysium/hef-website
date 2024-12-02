@@ -204,13 +204,13 @@ importers:
         specifier: ^2.3.1
         version: 2.3.1(pixi-viewport@5.1.0(@pixi/display@7.4.2(@pixi/core@7.4.2))(@pixi/interaction@6.5.10(@pixi/core@7.4.2)(@pixi/display@7.4.2(@pixi/core@7.4.2))(@pixi/math@7.4.2)(@pixi/ticker@7.4.2)(@pixi/utils@7.4.2))(@pixi/math@7.4.2)(@pixi/ticker@7.4.2))(pixi.js@7.4.2)
       pixi-tagged-text:
-        specifier: ^3.15.2
+        specifier: ^3.15.1
         version: 3.15.2(pixi.js@7.4.2)
       pixi-viewport:
-        specifier: ^5.1.0
+        specifier: ^5.0.3
         version: 5.1.0(@pixi/display@7.4.2(@pixi/core@7.4.2))(@pixi/interaction@6.5.10(@pixi/core@7.4.2)(@pixi/display@7.4.2(@pixi/core@7.4.2))(@pixi/math@7.4.2)(@pixi/ticker@7.4.2)(@pixi/utils@7.4.2))(@pixi/math@7.4.2)(@pixi/ticker@7.4.2)
       pixi.js:
-        specifier: ^7.4.2
+        specifier: 7.4.2
         version: 7.4.2
       react:
         specifier: 18.2.0

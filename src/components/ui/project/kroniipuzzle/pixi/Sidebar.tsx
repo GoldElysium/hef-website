@@ -40,7 +40,7 @@ export default function Sidebar({
 	}, [width, height]);
 
 	return (
-		<Container x={x} y={y}>
+		<Container x={x ?? 0} y={y ?? 0}>
 			<Graphics
 				draw={drawColorForSidebar}
 			/>

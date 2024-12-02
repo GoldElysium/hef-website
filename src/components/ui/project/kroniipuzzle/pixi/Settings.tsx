@@ -1,30 +1,35 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
 	Container, Graphics, Sprite, Text, useApp,
 } from '@pixi/react';
 import { Graphics as PixiGraphics, TextStyle } from 'pixi.js';
+import usePuzzleStore from '@/components/ui/project/kroniipuzzle/puzzle/PuzzleStoreConsumer';
 import TaggedText from './TaggedText';
 import Button from './Button';
 import Scrollbox from './Scrollbox';
-import usePuzzleStore from '../puzzle/PuzzleStore';
-import { ABOUT_TEXT } from '../puzzle/PuzzleConfig';
+import PuzzleStoreContext from '../puzzle/PuzzleStoreContext';
 
 interface SettingsModalProps {
 	x: number;
 	y: number;
 	width: number;
 	height: number;
+	aboutText: string;
 	setShowSettingsModal: (val: boolean) => void;
 	setShowAllSubmissions: (val: boolean) => void;
 }
 
 export default function SettingsModal({
-	x, y, width, height, setShowSettingsModal, setShowAllSubmissions,
+	x, y, width, height, aboutText, setShowSettingsModal, setShowAllSubmissions,
 }: SettingsModalProps) {
 	const app = useApp();
 	const [message, setMessage] = useState<string | null>(null);
+
+	const puzzleStore = useContext(PuzzleStoreContext)!;
+	const difficultyName = usePuzzleStore((state) => state.difficultyName);
+	const setDifficulty = usePuzzleStore((state) => state.setDifficulty);
 
 	return (
 		<Container
@@ -57,7 +62,6 @@ export default function SettingsModal({
 						boxHeight={400}
 						app={app}
 						overflowY="scroll"
-						stopPropagation
 					>
 						<Text
 							text="About"
@@ -70,7 +74,7 @@ export default function SettingsModal({
 							anchor={[0.5, 0]}
 						/>
 						<TaggedText
-							text={ABOUT_TEXT}
+							text={aboutText}
 							styles={{
 								default: {
 									fill: 'black',
@@ -134,9 +138,10 @@ export default function SettingsModal({
 						color={0xAA2222}
 						label="Reset puzzle"
 						onClick={() => {
-							const puzzleState = usePuzzleStore.getState();
+							const puzzleState = puzzleStore.getState();
 							puzzleState.reset();
 							setMessage('Puzzle has been reset!');
+							// TODO: Don't reload, just trigger restart mechanism like difficulty change
 							window.location.reload();
 						}}
 					/>
@@ -149,13 +154,29 @@ export default function SettingsModal({
 						color={0xAA2222}
 						label="Full reset"
 						onClick={() => {
-							const puzzleState = usePuzzleStore.getState();
+							const puzzleState = puzzleStore.getState();
 							puzzleState.reset();
 							puzzleState.setFirstLoad(true);
+							puzzleState.setDifficulty(null);
 							setMessage('Puzzle has been reset!');
 							window.location.reload();
 						}}
 					/>
+					{difficultyName !== 'default' && (
+						<Button
+							x={250}
+							y={182}
+							width={200}
+							height={60}
+							radius={12}
+							color={0xAA2222}
+							label="Change difficulty"
+							onClick={() => {
+								setDifficulty(null);
+								setShowSettingsModal(false);
+							}}
+						/>
+					)}
 					<Button
 						x={225}
 						y={280}
@@ -196,7 +217,6 @@ export default function SettingsModal({
 						boxHeight={864}
 						app={app}
 						overflowY="scroll"
-						stopPropagation
 					>
 						<Text
 							text="Credits"

@@ -46,8 +46,9 @@ async function fetchSubmissionsWithImageProxy(project: { id: string, slug: strin
 	});
 }
 
-export default async function PixiSubmissionWrapper({ project }: IProps) {
-	const submissions = await fetchSubmissionsWithImageProxy(project);
+export default async function JigsawPuzzleSubmissionWrapper({ project }: IProps) {
+	// TODO: Remove hardcoded value
+	const submissions = await fetchSubmissionsWithImageProxy({ id: '64a5ceffc01281b22c17ebac', slug: 'puzzleronii' });
 
 	const PixiRejectWrapper = dynamic(() => import('./PixiRejectWrapper'), {
 		ssr: false,
