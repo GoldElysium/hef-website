@@ -88,7 +88,7 @@
     "phaser3-rex-plugins": "1.1.85",
     "pixi-scrollbox": "^2.3.1",
     "pixi-tagged-text": "^3.15.1",
-    "pixi-viewport": "^5.0.3",
+    "pixi-viewport": "^6.0.3",
     "pixi.js": "7.4.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",

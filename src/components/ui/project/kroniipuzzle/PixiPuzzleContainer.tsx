@@ -4,17 +4,19 @@ import {
 	Container, Graphics, Text, useApp,
 } from '@pixi/react';
 import React, {
+	Dispatch, SetStateAction,
 	useCallback, useContext, useEffect, useMemo, useRef, useState,
 } from 'react';
 import * as PIXI from 'pixi.js';
 import { Graphics as PixiGraphics, Renderer, TextStyle } from 'pixi.js';
 import type { Viewport as PixiViewport } from 'pixi-viewport';
 import { Submission } from '@/types/payload-types';
-import PuzzleStoreContext from './puzzle/PuzzleStoreContext';
+import ThemeContext from './providers/ThemeContext';
+import PuzzleStoreContext from './providers/PuzzleStoreContext';
 import type { StageSize } from './PixiWrapper';
 import Viewport from './pixi/Viewport';
 import Sidebar from './pixi/Sidebar';
-import Puzzle from './puzzle/Puzzle';
+import Puzzle, { BGMConfig } from './puzzle/Puzzle';
 import ViewportContext from './providers/ViewportContext';
 import PuzzleCompleteModal from './pixi/PuzzleCompleteModal';
 import PieceDisplay from './pixi/PieceDisplay';
@@ -24,21 +26,45 @@ import {
 } from './puzzle/PuzzleConfig';
 import Button from './pixi/Button';
 import Preview from './pixi/Preview';
-import SettingsModal from './pixi/Settings';
-import Cursor from './pixi/Cursor';
+import SettingsModal from './pixi/AboutModal';
+import Cursor, { CursorOffsets } from './pixi/Cursor';
 import AnimatedGIF from './pixi/AnimatedGIF';
-import usePuzzleStore from './puzzle/PuzzleStoreConsumer';
+import usePuzzleStore from './providers/PuzzleStoreConsumer';
 import PuzzleStartModal from './pixi/PuzzleStartModal';
+
+interface PopInGIF {
+	key: string;
+	width: number;
+	height: number;
+	x: 'l' | 'r' | number;
+	y: 't' | 'b';
+	intermittence: number;
+}
+
+type VictoryScreenConfig = {
+	type: 'kronii'
+} | {
+	type: 'video';
+	src: string;
+};
 
 interface IProps {
 	stageSize: StageSize;
 	aboutText: string;
+	credits: object;
+	puzzleImgUrl: string;
+	gifsConfig: PopInGIF[];
+	bgmConfig: BGMConfig;
+	victoryScreenConfig: VictoryScreenConfig;
+	cursorOffsets: CursorOffsets['offsets'];
 	submissions: Submission[];
-	setShowAllSubmissions: (val: boolean) => void;
+	setShowAllSubmissions: Dispatch<SetStateAction<boolean>>;
+	setShowVictoryVideo: Dispatch<SetStateAction<boolean>>;
 }
 
 export default function PixiPuzzleContainer({
-	stageSize, aboutText, submissions, setShowAllSubmissions,
+	// eslint-disable-next-line max-len
+	stageSize, aboutText, credits, puzzleImgUrl, gifsConfig, bgmConfig, victoryScreenConfig, cursorOffsets, submissions, setShowAllSubmissions, setShowVictoryVideo,
 }: IProps) {
 	const app = useApp();
 
@@ -51,9 +77,12 @@ export default function PixiPuzzleContainer({
 	const [disableDragging, setDisableDragging] = useState(false);
 	const [assetBundle, setAssetBundle] = useState<null | any>(null);
 	const [selectedPiece, setSelectedPiece] = useState<PieceInfo | undefined>(undefined);
+	const [resetTrigger, setResetTrigger] = useState(false);
 
 	const showPuzzleStartModal = usePuzzleStore((state) => state.firstLoad);
 	const viewportRef = useRef<PixiViewport | null>(null);
+
+	const { colors: themeColors, resolvedTheme } = useContext(ThemeContext);
 
 	const viewportContextMemo = useMemo(
 		() => (
@@ -87,47 +116,39 @@ export default function PixiPuzzleContainer({
 
 	const drawPuzzleContainer = useCallback((g: PixiGraphics) => {
 		g.clear();
-		g.beginFill(0x001E47);
+		g.beginFill(themeColors[resolvedTheme].background);
 		g.drawRect(SIDEBAR_WIDTH, 0, stageSize.width, stageSize.height);
 		g.endFill();
 		g.beginHole();
 		// eslint-disable-next-line max-len
 		g.drawRoundedRect(SIDEBAR_WIDTH, 16, stageSize.width - SIDEBAR_WIDTH - 16, stageSize.height - 32, 8);
 		g.endHole();
-	}, [stageSize]);
+	}, [stageSize.width, stageSize.height, resolvedTheme, themeColors]);
 
 	const gifs = useMemo(() => {
-		const sideKronii1Scale = 0.25;
-		const sideKronii2Scale = 0.25;
-		const sideKronii3Scale = 0.25;
-		const sideKronii4Scale = 0.25;
+		// eslint-disable-next-line max-len
+		const temp: { key: string, x: number, y: number, width: number, height: number, intermittence: number }[] = [];
 
-		return {
-			sideKronii1: {
-				x: window.innerWidth - (377 * sideKronii1Scale),
-				y: window.innerHeight - (768 * sideKronii1Scale),
-				width: (377 * sideKronii1Scale),
-				height: (768 * sideKronii1Scale),
-			},
-			sideKronii2: {
-				x: SIDEBAR_WIDTH,
-				y: window.innerHeight - (235 * sideKronii2Scale),
-				width: (506 * sideKronii2Scale),
-				height: (235 * sideKronii2Scale),
-			},
-			sideKronii3: {
-				x: SIDEBAR_WIDTH + ((window.innerWidth - SIDEBAR_WIDTH) * 0.1),
-				y: 0,
-				width: (694 * sideKronii3Scale),
-				height: (678 * sideKronii3Scale),
-			},
-			sideKronii4: {
-				x: SIDEBAR_WIDTH + ((window.innerWidth - SIDEBAR_WIDTH) * 0.7),
-				y: 0,
-				width: (808 * sideKronii4Scale),
-				height: (653 * sideKronii4Scale),
-			},
-		};
+		// eslint-disable-next-line no-restricted-syntax
+		for (const gif of gifsConfig) {
+			let x = 0;
+			if (typeof gif.x === 'number') x = SIDEBAR_WIDTH + ((window.innerWidth - SIDEBAR_WIDTH) * gif.x);
+			else if (gif.x === 'l') x = SIDEBAR_WIDTH;
+			else if (gif.x === 'r') x = window.innerWidth - gif.width;
+
+			const y = gif.y === 't' ? 0 : window.innerHeight - gif.height;
+
+			temp.push({
+				key: gif.key,
+				x,
+				y,
+				width: gif.width,
+				height: gif.height,
+				intermittence: gif.intermittence,
+			});
+		}
+
+		return temp;
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [window.innerWidth, window.innerHeight]);
 
@@ -147,7 +168,20 @@ export default function PixiPuzzleContainer({
 					y={(WORLD_HEIGHT / 2 + (PUZZLE_WIDTH * 1.2) / 4) - WORLD_WIDTH / 4}
 					width={PUZZLE_WIDTH}
 					height={PUZZLE_WIDTH / 2}
-					puzzleFinished={() => setShowPuzzleCompleteModal(true)}
+					resetTrigger={resetTrigger}
+					bgmConfig={bgmConfig}
+					puzzleFinished={() => {
+						switch (victoryScreenConfig.type) {
+							case 'kronii':
+								setShowPuzzleCompleteModal(true);
+								break;
+							case 'video':
+								setShowVictoryVideo(true);
+								break;
+							default:
+								break;
+						}
+					}}
 					onPieceSelected={(piece: PieceInfo) => {
 						if (piece.id !== selectedPiece?.id) {
 							setSelectedPiece(piece);
@@ -175,45 +209,23 @@ export default function PixiPuzzleContainer({
 				/>
 			</Sidebar>
 
-			{assetBundle && (
-				<>
-					<AnimatedGIF
-						x={gifs.sideKronii1.x}
-						y={gifs.sideKronii1.y}
-						gif={assetBundle.sideKronii1}
-						width={gifs.sideKronii1.width}
-						height={gifs.sideKronii1.height}
-						intermittance={144000}
-					/>
-					<AnimatedGIF
-						x={gifs.sideKronii2.x}
-						y={gifs.sideKronii2.y}
-						gif={assetBundle.sideKronii2}
-						width={gifs.sideKronii2.width}
-						height={gifs.sideKronii2.height}
-						intermittance={233000}
-					/>
-					<AnimatedGIF
-						x={gifs.sideKronii3.x}
-						y={gifs.sideKronii3.y}
-						gif={assetBundle.sideKronii3}
-						width={gifs.sideKronii3.width}
-						height={gifs.sideKronii3.height}
-						intermittance={377000}
-					/>
-					<AnimatedGIF
-						x={gifs.sideKronii4.x}
-						y={gifs.sideKronii4.y}
-						gif={assetBundle.sideKronii4}
-						width={gifs.sideKronii4.width}
-						height={gifs.sideKronii4.height}
-						intermittance={610000}
-					/>
-				</>
-			)}
+			{assetBundle && gifs.map((gif) => (
+				<AnimatedGIF
+					key={gif.key}
+					x={gif.x}
+					y={gif.y}
+					gif={assetBundle[gif.key]}
+					width={gif.width}
+					height={gif.height}
+					intermittence={gif.intermittence}
+				/>
+			))}
 
 			{showPreview && (
-				<Preview setShowPreview={setShowPreview} />
+				<Preview
+					puzzleImgUrl={puzzleImgUrl}
+					setShowPreview={setShowPreview}
+				/>
 			)}
 
 			{
@@ -294,12 +306,16 @@ export default function PixiPuzzleContainer({
 					width={stageSize.width}
 					height={stageSize.height}
 					aboutText={aboutText}
+					credits={credits as any}
+					setResetTrigger={setResetTrigger}
 					setShowSettingsModal={setShowSettingsModal}
 					setShowAllSubmissions={setShowAllSubmissions}
 				/>
 			)}
 
-			<Cursor />
+			<Cursor
+				offsets={cursorOffsets}
+			/>
 		</ViewportContext.Provider>
 	);
 }

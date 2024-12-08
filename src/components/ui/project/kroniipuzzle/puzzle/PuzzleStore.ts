@@ -49,6 +49,7 @@ interface Difficulty {
 	cols: number;
 	rows: number;
 	marginDivider: number;
+	initialX: number;
 }
 
 interface Difficulties {
@@ -72,10 +73,11 @@ export interface Actions {
 export type PuzzleStore = ReturnType<typeof createPuzzleStore>;
 
 // eslint-disable-next-line max-len
-function flatIndexToSpiralCoordinates(index: number, cols: number, rows: number): [number, number] | null {
+function flatIndexToSpiralCoordinates(index: number, cols: number, rows: number, initialX: number): [number, number] | null {
 	const centerRow = Math.ceil(rows / 3);
 
-	let x = Math.max(Math.ceil(cols / 8), 2.5);
+	// TODO: Make this dynamic
+	let x = initialX;
 	let y = centerRow;
 
 	let dx = 1;
@@ -131,6 +133,7 @@ function flatIndexToSpiralCoordinates(index: number, cols: number, rows: number)
 function reset(state: WritableDraft<State & Actions>) {
 	if (!state.difficulty) return;
 
+	state.correctCount = 0;
 	state.pieces = {};
 	state.pieceGroups = {};
 
@@ -149,6 +152,7 @@ function reset(state: WritableDraft<State & Actions>) {
 				index + (Math.floor(pieceCount * 0.35)) + state.difficulty.rows + state.difficulty.cols,
 				state.difficulty.cols,
 				state.difficulty.rows,
+				state.difficulty.initialX,
 			) || [0, 0];
 			const x = cc * pieceSize * 1.75 - pieceSize * 2.5;
 			const y = rr * pieceSize * 1.75 - pieceSize * 2.5;
@@ -237,6 +241,7 @@ export default function createPuzzleStore(projectId: string, devprops: { [key: s
 						// Merge everything into the other group and delete the legacy group
 						pieces.push(...oldPieces);
 					} catch (e: any) {
+						// eslint-disable-next-line no-console
 						console.error(e);
 						return;
 					}

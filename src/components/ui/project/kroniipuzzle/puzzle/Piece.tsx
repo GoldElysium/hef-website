@@ -6,10 +6,10 @@ import React, {
 import { Container, Sprite } from '@pixi/react';
 import { Container as PixiContainer, DisplayObject, Texture } from 'pixi.js';
 import { PUZZLE_WIDTH } from '@/components/ui/project/kroniipuzzle/puzzle/PuzzleConfig';
-import PuzzleStoreContext from './PuzzleStoreContext';
+import PuzzleStoreContext from '../providers/PuzzleStoreContext';
 import Message from './Message';
 import PieceInfo from './PieceInfo';
-import usePuzzleStore from './PuzzleStoreConsumer';
+import usePuzzleStore from '../providers/PuzzleStoreConsumer';
 
 interface PieceProps {
 	c: number;

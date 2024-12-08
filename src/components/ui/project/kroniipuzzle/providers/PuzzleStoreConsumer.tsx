@@ -2,7 +2,7 @@
 
 import { useContext } from 'react';
 import { useStoreWithEqualityFn } from 'zustand/traditional';
-import { State, Actions } from './PuzzleStore';
+import { State, Actions } from '../puzzle/PuzzleStore';
 import PuzzleStoreContext from './PuzzleStoreContext';
 
 export default function usePuzzleStore<T>(

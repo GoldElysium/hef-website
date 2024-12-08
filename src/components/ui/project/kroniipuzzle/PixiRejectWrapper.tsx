@@ -3,7 +3,7 @@
 import { Project, Submission } from '@/types/payload-types';
 import OS from 'phaser/src/device/OS';
 import { useRef } from 'react';
-import PuzzleStoreContext from './puzzle/PuzzleStoreContext';
+import PuzzleStoreContext from './providers/PuzzleStoreContext';
 import PixiWrapper from './PixiWrapper';
 import createPuzzleStore from './puzzle/PuzzleStore';
 

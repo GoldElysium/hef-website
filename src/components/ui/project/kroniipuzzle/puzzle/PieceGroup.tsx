@@ -6,8 +6,8 @@ import React, {
 	useContext, useEffect, useMemo, useRef, useState,
 } from 'react';
 import { Container as PixiContainer, FederatedPointerEvent } from 'pixi.js';
-import PuzzleStoreContext from './PuzzleStoreContext';
-import usePuzzleStore from './PuzzleStoreConsumer';
+import PuzzleStoreContext from '../providers/PuzzleStoreContext';
+import usePuzzleStore from '../providers/PuzzleStoreConsumer';
 import { PUZZLE_WIDTH } from './PuzzleConfig';
 import ViewportContext from '../providers/ViewportContext';
 import { PieceActions } from './Piece';

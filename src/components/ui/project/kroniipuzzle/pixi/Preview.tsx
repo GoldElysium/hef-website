@@ -3,10 +3,12 @@ import { Container as PixiContainer, FederatedPointerEvent } from 'pixi.js';
 import { Container, Graphics, Sprite } from '@pixi/react';
 
 interface Props {
+	puzzleImgUrl: string;
 	setShowPreview(value: boolean): void;
 }
 
 export default function PuzzlePreview({
+	puzzleImgUrl,
 	setShowPreview,
 }: Props) {
 	const [dragging, setDragging] = useState(false);
@@ -74,14 +76,14 @@ export default function PuzzlePreview({
 				}}
 			/>
 			<Sprite
-				image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/puzzle.webp"
+				image={puzzleImgUrl}
 				x={8}
 				y={41}
 				width={434}
 				height={217}
 			/>
 			<Sprite
-				image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/x-mark.svg"
+				image="https://cdn.holoen.fans/hefw/assets/jigsawpuzzle/x-mark.svg"
 				x={418}
 				y={8}
 				width={24}
@@ -92,13 +94,13 @@ export default function PuzzlePreview({
 			/>
 
 			<Sprite
-				image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/pop.svg"
+				image="https://cdn.holoen.fans/hefw/assets/jigsawpuzzle/pop.svg"
 				x={386}
 				y={8}
 				width={24}
 				height={24}
 				eventMode="static"
-				onclick={() => window.open('https://cdn.holoen.fans/hefw/assets/kroniipuzzle/puzzle.webp', '_blank', 'noopener')}
+				onclick={() => window.open(puzzleImgUrl, '_blank', 'noopener')}
 				cursor="pointer"
 			/>
 

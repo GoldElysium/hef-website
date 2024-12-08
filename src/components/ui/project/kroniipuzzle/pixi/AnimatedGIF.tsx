@@ -9,12 +9,12 @@ interface PixiComponentAnimatedGIFProps {
 	x?: number;
 	y?: number;
 	visible?: boolean;
-	intermittance?: number;
+	intermittence?: number;
 }
 
 const AnimatedGIF = PixiComponent('AnimatedGIF', {
 	create({
-		width, height, gif, x, y, visible, intermittance,
+		width, height, gif, x, y, visible, intermittence,
 	}: PixiComponentAnimatedGIFProps) {
 		const animatedGIF = gif;
 
@@ -22,9 +22,9 @@ const AnimatedGIF = PixiComponent('AnimatedGIF', {
 		if (y) animatedGIF.y = y;
 		if (width) animatedGIF.width = width;
 		if (height) animatedGIF.height = height;
-		if (visible) animatedGIF.visible = visible && !intermittance;
+		if (visible) animatedGIF.visible = visible && !intermittence;
 
-		if (intermittance) {
+		if (intermittence) {
 			animatedGIF.loop = false;
 
 			// note: this is to get rid of the "peeking" animations on initial run
@@ -33,7 +33,7 @@ const AnimatedGIF = PixiComponent('AnimatedGIF', {
 			setTimeout(() => {
 				animatedGIF.visible = true;
 				animatedGIF.play();
-			}, intermittance);
+			}, intermittence);
 
 			animatedGIF.onComplete = () => {
 				animatedGIF.visible = false;
@@ -41,7 +41,7 @@ const AnimatedGIF = PixiComponent('AnimatedGIF', {
 				setTimeout(() => {
 					animatedGIF.visible = true;
 					animatedGIF.play();
-				}, intermittance);
+				}, intermittence);
 			};
 		}
 

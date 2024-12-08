@@ -1,5 +1,5 @@
 import React, {
-	useCallback, useEffect, useRef, useState,
+	useCallback, useContext, useEffect, useRef, useState,
 } from 'react';
 import { TextStyle } from 'pixi.js';
 import type { Graphics as PixiGraphics } from '@pixi/graphics';
@@ -7,6 +7,7 @@ import {
 	Container, Graphics, Sprite, Text, useApp,
 } from '@pixi/react';
 import PixiTaggedText from 'pixi-tagged-text';
+import ThemeContext from '../providers/ThemeContext';
 import PieceInfo from '../puzzle/PieceInfo';
 import TaggedText from './TaggedText';
 import Scrollbox from './Scrollbox';
@@ -42,6 +43,8 @@ ${congratulations}${favoriteMoment}`;
 
 	const [spriteY, setSpriteY] = useState(height);
 
+	const { colors: themeColors, resolvedTheme } = useContext(ThemeContext);
+
 	useEffect(() => {
 		scrollboxRef.current?.update();
 
@@ -56,10 +59,10 @@ ${congratulations}${favoriteMoment}`;
 
 	const drawColorForPieceDisplay = useCallback((g: PixiGraphics) => {
 		g.clear();
-		g.beginFill(0x95AED0);
+		g.beginFill(themeColors[resolvedTheme].secondary);
 		g.drawRoundedRect(0, 0, width, height, 8);
 		g.endFill();
-	}, [width, height]);
+	}, [width, height, resolvedTheme, themeColors]);
 
 	return (
 		<Container
@@ -83,6 +86,7 @@ ${congratulations}${favoriteMoment}`;
 					<Text
 						text="No puzzle piece has been selected"
 						style={{
+							fill: themeColors[resolvedTheme].secondaryForeground,
 							align: 'center',
 							fontSize: 25,
 							fontWeight: 'bold',
@@ -103,6 +107,7 @@ ${congratulations}${favoriteMoment}`;
 					<Text
 						text="This puzzle piece has no message"
 						style={{
+							fill: themeColors[resolvedTheme].secondaryForeground,
 							align: 'center',
 							fontSize: 25,
 							fontWeight: 'bold',
@@ -125,7 +130,7 @@ ${congratulations}${favoriteMoment}`;
 						text={text}
 						styles={{
 							default: {
-								fill: 'black',
+								fill: themeColors[resolvedTheme].secondaryForeground,
 								fontSize: 20,
 								wordWrap: true,
 								wordWrapWidth: width - 32,
