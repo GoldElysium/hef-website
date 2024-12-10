@@ -55,6 +55,7 @@ export default function PixiWrapper({ project, submissions }: IProps) {
 	const puzzleStore = useContext(PuzzleStoreContext);
 	const { volume, muted } = usePuzzleStore((state) => state.audio);
 	const difficultyName = usePuzzleStore((state) => state.difficultyName);
+	const firstLoad = usePuzzleStore((state) => state.firstLoad);
 	const [
 		setVolume,
 		setMuted,
@@ -224,7 +225,7 @@ export default function PixiWrapper({ project, submissions }: IProps) {
 				/>
 			)}
 
-			{!difficultyName && (
+			{!difficultyName && !firstLoad && (
 				<div className="absolute left-0 z-20 grid min-h-screen w-full place-items-center bg-skin-background dark:bg-skin-background-dark">
 					<div className="mx-auto md:max-w-2xl">
 						<h1 className="relative mb-4 mt-8 flex items-center justify-center border-b-2 border-skin-text/30 pb-2 text-4xl font-bold text-skin-text dark:border-skin-text-dark/30 dark:text-skin-text-dark">
