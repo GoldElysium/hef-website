@@ -51,7 +51,7 @@ export default function PuzzleStartModal({
 			/>
 			<Button
 				x={width / 2 - 110}
-				y={height / 2 + 180}
+				y={height / 2 + 210}
 				width={220}
 				height={60}
 				radius={16}
