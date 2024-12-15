@@ -9,7 +9,7 @@ import React, {
 import * as PIXI from 'pixi.js';
 import OS from 'phaser/src/device/OS';
 import { SpeakerWaveIcon, SpeakerXMarkIcon } from '@heroicons/react/24/solid';
-import PuzzleStoreContext from '@/components/ui/project/kroniipuzzle/providers/PuzzleStoreContext';
+import PuzzleStoreContext from '@/components/ui/project/jigsawpuzzle/providers/PuzzleStoreContext';
 import { useTheme } from 'next-themes';
 import { MoonIcon, SunIcon } from '@heroicons/react/24/outline';
 import ReactPlayer from 'react-player/file';
@@ -127,7 +127,9 @@ export default function PixiWrapper({ project, submissions }: IProps) {
 		}
 	}, []);
 
-	const themeColors = useMemo(() => {
+	const themeColors = useMemo((): IThemeContext['colors'] => {
+		if (project.devprops.customTheme) return JSON.parse(project.devprops.customTheme);
+
 		const computedStyle = getComputedStyle(document.body);
 
 		return {
@@ -157,15 +159,8 @@ export default function PixiWrapper({ project, submissions }: IProps) {
 				heading: rgbToHex(computedStyle.getPropertyValue('--color-heading-dark')),
 				link: rgbToHex(computedStyle.getPropertyValue('--color-link-dark')),
 			},
-		} satisfies IThemeContext['colors'] as IThemeContext['colors'];
-	}, []);
-
-	const themeContextValue = useMemo(() => (
-		{
-			colors: themeColors,
-			resolvedTheme: (resolvedTheme ?? 'light') as 'light' | 'dark',
-		}
-	), [resolvedTheme, themeColors]);
+		} satisfies IThemeContext['colors'];
+	}, [project.devprops.customTheme]);
 
 	const puzzleConfig = useMemo(() => ({
 		aboutText: project.devprops.aboutText.replace(/\\n/g, '\n'),
@@ -175,7 +170,15 @@ export default function PixiWrapper({ project, submissions }: IProps) {
 		bgm: JSON.parse(project.devprops.bgm),
 		victoryScreen: project.devprops.victoryScreen ? JSON.parse(project.devprops.victoryScreen) : { type: 'kronii' },
 		cursorOffsets: JSON.parse(project.devprops.cursorOffsets),
+		allowThemeSwitching: project.devprops.allowThemeSwitching === 'true',
 	}), [project.devprops]);
+
+	const themeContextValue = useMemo(() => (
+		{
+			colors: themeColors,
+			resolvedTheme: (puzzleConfig.allowThemeSwitching ? (resolvedTheme ?? 'light') : 'dark') as 'light' | 'dark',
+		}
+	), [resolvedTheme, themeColors, puzzleConfig.allowThemeSwitching]);
 
 	if (!stageSize) return null;
 
@@ -320,19 +323,25 @@ export default function PixiWrapper({ project, submissions }: IProps) {
 				/>
 			</div>
 
-			<label
-				className="text-secondary-foreground swap swap-flip fixed bottom-24 left-6 z-50 grid size-16 place-items-center rounded-full bg-skin-secondary dark:bg-skin-secondary-dark dark:text-skin-secondary-foreground-dark"
-			>
-				<input
-					type="checkbox"
-					className="!bg-inherit text-skin-secondary-foreground dark:text-skin-secondary-foreground-dark"
-					checked={resolvedTheme === 'dark'}
-					onChange={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
-				/>
+			{puzzleConfig.allowThemeSwitching && (
+				<label
+					className="text-secondary-foreground swap swap-flip fixed bottom-24 left-6 z-50 grid size-16 place-items-center rounded-full bg-skin-secondary dark:bg-skin-secondary-dark dark:text-skin-secondary-foreground-dark"
+				>
+					<input
+						type="checkbox"
+						className="!bg-inherit text-skin-secondary-foreground dark:text-skin-secondary-foreground-dark"
+						checked={resolvedTheme === 'dark'}
+						onChange={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
+					/>
 
-				<SunIcon className="swap-off size-6 text-skin-secondary-foreground dark:text-skin-secondary-foreground-dark" />
-				<MoonIcon className="swap-on size-6 text-skin-secondary-foreground dark:text-skin-secondary-foreground-dark" />
-			</label>
+					<SunIcon
+						className="swap-off size-6 text-skin-secondary-foreground dark:text-skin-secondary-foreground-dark"
+					/>
+					<MoonIcon
+						className="swap-on size-6 text-skin-secondary-foreground dark:text-skin-secondary-foreground-dark"
+					/>
+				</label>
+			)}
 		</>
 	);
 }

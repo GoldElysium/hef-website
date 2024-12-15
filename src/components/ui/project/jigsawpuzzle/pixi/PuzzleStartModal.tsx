@@ -3,7 +3,7 @@ import {
 } from '@pixi/react';
 import { Graphics as PixiGraphics, TextStyle } from 'pixi.js';
 import React, { useCallback, useContext } from 'react';
-import ThemeContext from '@/components/ui/project/kroniipuzzle/providers/ThemeContext';
+import ThemeContext from '@/components/ui/project/jigsawpuzzle/providers/ThemeContext';
 import Button from './Button';
 
 interface ModalProps {

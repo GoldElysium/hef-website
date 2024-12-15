@@ -7,7 +7,7 @@ import {
 	Container, Graphics, Sprite, Text, useApp,
 } from '@pixi/react';
 import { Graphics as PixiGraphics, TextStyle } from 'pixi.js';
-import ThemeContext from '@/components/ui/project/kroniipuzzle/providers/ThemeContext';
+import ThemeContext from '@/components/ui/project/jigsawpuzzle/providers/ThemeContext';
 import usePuzzleStore from '../providers/PuzzleStoreConsumer';
 import TaggedText from './TaggedText';
 import Button from './Button';

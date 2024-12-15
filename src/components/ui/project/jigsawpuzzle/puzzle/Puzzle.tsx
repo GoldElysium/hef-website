@@ -9,6 +9,7 @@ import { Container, Graphics } from '@pixi/react';
 import { IMediaInstance, Sound } from '@pixi/sound';
 import { shallow } from 'zustand/shallow';
 import { Submission, SubmissionMedia } from '@/types/payload-types';
+import ThemeContext from '@/components/ui/project/jigsawpuzzle/providers/ThemeContext';
 import PuzzleStoreContext from '../providers/PuzzleStoreContext';
 import Piece, { PieceActions } from './Piece';
 import Message from './Message';
@@ -80,6 +81,8 @@ export default function Puzzle({
 	const correctCount = usePuzzleStore((state) => state.correctCount);
 	const pieceGroups = usePuzzleStore((state) => Object.keys(state.pieceGroups), shallow);
 
+	const { colors: themeColors } = useContext(ThemeContext);
+
 	useEffect(() => {
 		if (!difficulty) return;
 		if (correctCount >= difficulty.cols * difficulty.rows) {
@@ -91,10 +94,10 @@ export default function Puzzle({
 	const drawPuzzleBounds = useCallback((g: PIXI.Graphics) => {
 		const lineWidth = 8;
 		g.clear();
-		g.lineStyle(lineWidth, 0xffffff);
+		g.lineStyle(lineWidth, themeColors.light.headerForeground);
 
 		g.drawRect(-lineWidth / 2, -lineWidth / 2, width + lineWidth, height + lineWidth);
-	}, [height, width]);
+	}, [height, width, themeColors]);
 
 	useEffect(() => {
 		// Sound doubling bug when auto pause is disabled

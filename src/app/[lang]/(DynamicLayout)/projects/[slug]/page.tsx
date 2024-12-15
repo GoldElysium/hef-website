@@ -11,7 +11,7 @@ import { getImageUrl } from '@/components/ui/legacy/Image';
 import { Metadata } from 'next';
 import useTranslation from '@/lib/i18n/server';
 import { Language } from '@/lib/i18n/languages';
-import JigsawPuzzleSubmissionWrapper from '@/components/ui/project/kroniipuzzle/JigsawPuzzleSubmissionWrapper';
+import JigsawPuzzleSubmissionWrapper from '@/components/ui/project/jigsawpuzzle/JigsawPuzzleSubmissionWrapper';
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/20/solid';
 import KroniiMapSubmissionWrapper from '@/components/ui/project/kroniimap/KroniiMapSubmissionsWrapper';
 import KiaraBdaySubmissionWrapper from '@/components/ui/project/kiarabday/KiaraBdaySubmissionWrapper';

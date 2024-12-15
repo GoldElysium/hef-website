@@ -81,7 +81,7 @@ export default function Sidebar({
 								width={18}
 								height={18}
 								texture={assetBundle['back-arrow']}
-								tint={themeColors[resolvedTheme].secondaryForeground}
+								tint={themeColors[resolvedTheme].text}
 								x={0}
 								y={0}
 							/>
