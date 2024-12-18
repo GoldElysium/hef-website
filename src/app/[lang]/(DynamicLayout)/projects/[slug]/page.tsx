@@ -95,13 +95,7 @@ export default async function ProjectPage({ params: { slug, lang } }: IProps) {
 		);
 	}
 
-	if (project.flags.includes('kronii-puzzle')) {
-		return (
-			<JigsawPuzzleSubmissionWrapper project={project} />
-		);
-	}
-
-	if (project.flags.includes('jigsaw-puzzle') || project.flags.includes('kronii-puzzle')) {
+	if (project.flags.includes('jigsaw-puzzle')) {
 		return (
 			<JigsawPuzzleSubmissionWrapper project={project} />
 		);
