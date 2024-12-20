@@ -20,7 +20,7 @@ export interface Credits {
 	nodes: CreditNode[];
 }
 
-interface SettingsModalProps {
+interface AboutModalProps {
 	x: number;
 	y: number;
 	width: number;
@@ -32,7 +32,7 @@ interface SettingsModalProps {
 	setShowAllSubmissions: Dispatch<SetStateAction<boolean>>;
 }
 
-export default function SettingsModal({
+export default function AboutModal({
 	x,
 	y,
 	width,
@@ -42,7 +42,7 @@ export default function SettingsModal({
 	setResetTrigger,
 	setShowSettingsModal,
 	setShowAllSubmissions,
-}: SettingsModalProps) {
+}: AboutModalProps) {
 	const app = useApp();
 	const [message, setMessage] = useState<string | null>(null);
 

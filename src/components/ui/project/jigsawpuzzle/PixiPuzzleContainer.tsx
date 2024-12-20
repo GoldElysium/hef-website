@@ -26,7 +26,7 @@ import {
 } from './puzzle/PuzzleConfig';
 import Button from './pixi/Button';
 import Preview from './pixi/Preview';
-import SettingsModal from './pixi/AboutModal';
+import AboutModal from './pixi/AboutModal';
 import Cursor, { CursorOffsets } from './pixi/Cursor';
 import AnimatedGIF from './pixi/AnimatedGIF';
 import usePuzzleStore from './providers/PuzzleStoreConsumer';
@@ -302,7 +302,7 @@ export default function PixiPuzzleContainer({
 			)}
 
 			{showSettingsModal && (
-				<SettingsModal
+				<AboutModal
 					x={0}
 					y={0}
 					width={stageSize.width}

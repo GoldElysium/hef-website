@@ -69,8 +69,6 @@ export default function CreditsRenderer({ nodes, textColor, linkColor }: { nodes
 			case 'text': {
 				const textStyle: any = { fill: textColor };
 
-				/* if (node.fill) textStyle.fill = node.fill;
-				if (node.url) textStyle.fill = linkColor; */
 				if (node.fontSize) textStyle.fontSize = node.fontSize;
 				if (node.fontWeight) textStyle.fontWeight = node.fontWeight;
 
