@@ -305,6 +305,7 @@ export default function Puzzle({
 				/>
 			);
 		});
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [resetTrigger, puzzlePieces, pieceGroups, sounds?.tick, sounds?.tock]);
 
 	if (!assetBundle || !puzzlePieces) return null;
