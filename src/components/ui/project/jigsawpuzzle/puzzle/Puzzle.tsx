@@ -41,6 +41,7 @@ interface PuzzleProps {
 	y: number;
 	width: number;
 	height: number;
+	kroniiEnabled: boolean;
 	bgmConfig: BGMConfig;
 	resetTrigger: boolean;
 	puzzleFinished: () => void;
@@ -66,8 +67,8 @@ const getRandom = (arr: { name: string, weight: number }[]) => {
 };
 
 export default function Puzzle({
-	// @ts-ignore
-	x, y, width, height, bgmConfig, resetTrigger, puzzleFinished, onPieceSelected, submissions,
+	// eslint-disable-next-line max-len
+	x, y, width, height, kroniiEnabled, bgmConfig, resetTrigger, puzzleFinished, onPieceSelected, submissions,
 }: PuzzleProps) {
 	const [assetBundle, setAssetBundle] = useState<null | any>(null);
 	const [sounds, setSounds] = useState<null | Record<string, Sound>>(null);
@@ -266,7 +267,7 @@ export default function Puzzle({
 							congratulations: message.devprops?.find((prop) => prop.key === 'congratulations')?.value,
 							favoriteMoment: message.devprops?.find((prop) => prop.key === 'favoriteMoment')?.value,
 							// eslint-disable-next-line max-len
-							kronie: message.media && message.media.length > 0 ? (message.media[0].image as SubmissionMedia).url : undefined,
+							kronie: kroniiEnabled && message.media && message.media.length > 0 ? (message.media[0].image as SubmissionMedia).url : undefined,
 						} satisfies Message : undefined}
 						ref={pieceRef}
 					/>

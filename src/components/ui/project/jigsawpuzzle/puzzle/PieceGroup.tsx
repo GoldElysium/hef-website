@@ -26,7 +26,7 @@ export default function PieceGroup({
 	groupKey, pieces, initialX, initialY, playTick, playTock,
 }: PieceGroupProps) {
 	const [dragging, setDragging] = useState(false);
-	const [dragStartPosition, setDragStartPosition] = useState<{ x: number; y:number } | null>(null);
+	const [dragStartPosition, setDragStartPosition] = useState<{ x: number; y: number } | null>(null);
 	const [currentPosition, setCurrentPosition] = useState({ x: initialX, y: initialY });
 	const [lastUpdatedAt, setLastUpdatedAt] = useState(Date.now());
 	const [parent, setParent] = useState(null as any);

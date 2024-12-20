@@ -57,6 +57,7 @@ interface IProps {
 	bgmConfig: BGMConfig;
 	victoryScreenConfig: VictoryScreenConfig;
 	cursorOffsets: CursorOffsets['offsets'];
+	kroniiEnabled: boolean;
 	submissions: Submission[];
 	setShowAllSubmissions: Dispatch<SetStateAction<boolean>>;
 	setShowVictoryVideo: Dispatch<SetStateAction<boolean>>;
@@ -64,7 +65,7 @@ interface IProps {
 
 export default function PixiPuzzleContainer({
 	// eslint-disable-next-line max-len
-	stageSize, aboutText, credits, puzzleImgUrl, gifsConfig, bgmConfig, victoryScreenConfig, cursorOffsets, submissions, setShowAllSubmissions, setShowVictoryVideo,
+	stageSize, aboutText, credits, puzzleImgUrl, gifsConfig, bgmConfig, victoryScreenConfig, cursorOffsets, kroniiEnabled, submissions, setShowAllSubmissions, setShowVictoryVideo,
 }: IProps) {
 	const app = useApp();
 
@@ -168,6 +169,7 @@ export default function PixiPuzzleContainer({
 					y={(WORLD_HEIGHT / 2 + (PUZZLE_WIDTH * 1.2) / 4) - WORLD_WIDTH / 4}
 					width={PUZZLE_WIDTH}
 					height={PUZZLE_WIDTH / 2}
+					kroniiEnabled={kroniiEnabled}
 					resetTrigger={resetTrigger}
 					bgmConfig={bgmConfig}
 					puzzleFinished={() => {

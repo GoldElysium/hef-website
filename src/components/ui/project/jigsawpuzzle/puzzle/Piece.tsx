@@ -227,13 +227,17 @@ const Piece = React.forwardRef<PieceActions, PieceProps>(({
 	}
 
 	function checkIsSelectedPiece(pos: { x: number, y: number }): boolean {
+		console.log('Checking if selected piece');
 		if (!pieceContainerRef.current) return false;
 
 		const localPos = pieceContainerRef.current!.toLocal(pos);
 
+		console.log(`Message for ${r}-${c}`, message);
+		console.log('Local pos', localPos);
+
 		if (
-			(localPos.x >= -10 && localPos.x <= 85)
-			&& (localPos.y >= -10 && localPos.y <= 85)
+			(localPos.x >= -10 && localPos.x <= pieceSize)
+			&& (localPos.y >= -10 && localPos.y <= pieceSize)
 		) {
 			setSelectedPiece({
 				id: `${r}-${c}`,

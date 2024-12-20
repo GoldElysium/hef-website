@@ -30,8 +30,9 @@ async function fetchSubmissionsWithImageProxy(project: { id: string, slug: strin
 					...item.image as SubmissionMedia,
 					url: getImageUrl({
 						src: item.image!.url!,
-						width: 200,
-						height: 200,
+						width: item.image!.width! < 1024 ? item.image!.width! : 1024,
+						// eslint-disable-next-line max-len
+						height: item.image.width! < 1024 ? item.image!.height! : (item.image.height! / item.image.width!) * 1024,
 						quality: 80,
 						action: 'resize',
 					}),

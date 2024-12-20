@@ -171,6 +171,7 @@ export default function PixiWrapper({ project, submissions }: IProps) {
 		victoryScreen: project.devprops.victoryScreen ? JSON.parse(project.devprops.victoryScreen) : { type: 'kronii' },
 		cursorOffsets: JSON.parse(project.devprops.cursorOffsets),
 		allowThemeSwitching: project.devprops.allowThemeSwitching === 'true',
+		kroniiEnabled: project.devprops.kroniiEnabled === 'true',
 	}), [project.devprops]);
 
 	const themeContextValue = useMemo(() => (
@@ -288,6 +289,7 @@ export default function PixiWrapper({ project, submissions }: IProps) {
 							bgmConfig={puzzleConfig.bgm}
 							victoryScreenConfig={puzzleConfig.victoryScreen}
 							cursorOffsets={puzzleConfig.cursorOffsets}
+							kroniiEnabled={puzzleConfig.kroniiEnabled}
 							stageSize={stageSize}
 							submissions={submissions}
 							setShowAllSubmissions={setShowAllSubmissions}
