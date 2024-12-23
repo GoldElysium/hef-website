@@ -141,7 +141,7 @@
     "phaser3spectorjs": "^0.0.8",
     "postcss": "8.4.38",
     "storybook": "8.0.8",
-    "tailwindcss": "3.4.3",
+    "tailwindcss": "3.4.17",
     "typescript": "5.4.5"
   },
   "description": "HoloEN Fan website",
