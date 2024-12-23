@@ -128,17 +128,11 @@ export default class PixiScrollbox extends PIXI.Container implements Scrollbox {
 		// @ts-ignore
 		this.ease = typeof this.options.fadeScrollboxEase === 'function' ? this.options.fadeScrollboxEase : Penner[this.options.fadeScrollboxEase ?? 'easeInOutSine'];
 
-		if (!('events' in this.options.app.renderer)) {
-			// @ts-ignore
-			this.options.app.renderer.addSystem(PIXI.EventSystem, 'events');
-		}
-
 		this.content = super.addChild(new Viewport({
-			passiveWheel: true,
+			passiveWheel: false,
 			stopPropagation: this.options.stopPropagation,
 			screenWidth: this.options.boxWidth,
 			screenHeight: this.options.boxHeight,
-			// @ts-ignore
 			ticker: this.options.app.ticker,
 			events: this.options.app.renderer.events,
 		}));

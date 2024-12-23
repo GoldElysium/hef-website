@@ -1,6 +1,8 @@
 'use client';
 
-import React, { useCallback, useEffect, useState } from 'react';
+import React, {
+	useCallback, useContext, useEffect, useState,
+} from 'react';
 import {
 	Container, Graphics, Sprite, Text,
 } from '@pixi/react';
@@ -8,6 +10,7 @@ import * as PIXI from 'pixi.js';
 import { Graphics as PixiGraphics, TextStyle } from 'pixi.js';
 import Button from './Button';
 import { SIDEBAR_WIDTH } from '../puzzle/PuzzleConfig';
+import ThemeContext from '../providers/ThemeContext';
 
 interface SidebarProps {
 	x?: number;
@@ -25,6 +28,8 @@ export default function Sidebar({
 }: SidebarProps) {
 	const [assetBundle, setAssetBundle] = useState<null | any>(null);
 
+	const { colors: themeColors, resolvedTheme } = useContext(ThemeContext);
+
 	useEffect(() => {
 		PIXI.Assets.loadBundle('puzzle')
 			.then((loadedBundle) => {
@@ -34,13 +39,21 @@ export default function Sidebar({
 
 	const drawColorForSidebar = useCallback((g: PixiGraphics) => {
 		g.clear();
-		g.beginFill(0x001E47);
+		g.beginFill(themeColors[resolvedTheme].background);
 		g.drawRect(0, 0, width, height);
 		g.endFill();
-	}, [width, height]);
+	}, [themeColors, resolvedTheme, width, height]);
+
+	const drawExitButton = useCallback((g: PixiGraphics) => {
+		g.clear();
+		g.lineStyle(2, themeColors[resolvedTheme].text);
+		g.beginFill(themeColors[resolvedTheme].background);
+		g.drawRoundedRect(0, 0, 100, 40, 8);
+		g.endFill();
+	}, [resolvedTheme, themeColors]);
 
 	return (
-		<Container x={x} y={y}>
+		<Container x={x ?? 0} y={y ?? 0}>
 			<Graphics
 				draw={drawColorForSidebar}
 			/>
@@ -55,13 +68,7 @@ export default function Sidebar({
 				height={40}
 			>
 				<Graphics
-					draw={(g) => {
-						g.clear();
-						g.lineStyle(2, 0xffffff);
-						g.beginFill(0x001E47);
-						g.drawRoundedRect(0, 0, 100, 40, 8);
-						g.endFill();
-					}}
+					draw={drawExitButton}
 				/>
 				<Container
 					anchor={[0.5, 0.5]}
@@ -74,6 +81,7 @@ export default function Sidebar({
 								width={18}
 								height={18}
 								texture={assetBundle['back-arrow']}
+								tint={themeColors[resolvedTheme].text}
 								x={0}
 								y={0}
 							/>
@@ -84,7 +92,7 @@ export default function Sidebar({
 						y={0}
 						text="Exit"
 						style={{
-							fill: 'white',
+							fill: themeColors[resolvedTheme].text,
 							fontSize: 16,
 							fontWeight: '400',
 						} as TextStyle}
@@ -98,6 +106,8 @@ export default function Sidebar({
 				height={50}
 				label="Preview"
 				onClick={() => { setShowPreview(true); }}
+				color={themeColors[resolvedTheme].primary}
+				textColor={themeColors[resolvedTheme].primaryForeground}
 				radius={8}
 			/>
 
@@ -108,7 +118,8 @@ export default function Sidebar({
 				height={50}
 				label="About"
 				onClick={() => { setShowSettingsModal(true); }}
-				color={0x1c5393}
+				color={themeColors[resolvedTheme].secondary}
+				textColor={themeColors[resolvedTheme].secondaryForeground}
 				radius={8}
 			/>
 		</Container>

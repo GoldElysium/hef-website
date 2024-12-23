@@ -2,7 +2,10 @@
 
 import { Project, Submission } from '@/types/payload-types';
 import OS from 'phaser/src/device/OS';
+import { useRef } from 'react';
+import PuzzleStoreContext from './providers/PuzzleStoreContext';
 import PixiWrapper from './PixiWrapper';
+import createPuzzleStore from './puzzle/PuzzleStore';
 
 interface IProps {
 	project: Omit<Project, 'flags' | 'devprops'> & {
@@ -15,6 +18,8 @@ interface IProps {
 }
 
 export default function PixiRejectWrapper({ project, submissions }: IProps) {
+	const store = useRef(createPuzzleStore(project.id, project.devprops)).current;
+
 	// @ts-ignore
 	if ((OS.macOS && !window.chrome) || OS.iOS || OS.iPad) {
 		return (
@@ -26,6 +31,8 @@ export default function PixiRejectWrapper({ project, submissions }: IProps) {
 	}
 
 	return (
-		<PixiWrapper project={project} submissions={submissions} />
+		<PuzzleStoreContext.Provider value={store}>
+			<PixiWrapper project={project} submissions={submissions} />
+		</PuzzleStoreContext.Provider>
 	);
 }

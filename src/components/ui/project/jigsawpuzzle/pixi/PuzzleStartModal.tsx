@@ -2,19 +2,29 @@ import {
 	Container, Graphics, Sprite, Text,
 } from '@pixi/react';
 import { Graphics as PixiGraphics, TextStyle } from 'pixi.js';
-import React from 'react';
-import { ABOUT_TEXT } from '../puzzle/PuzzleConfig';
+import React, { useCallback, useContext } from 'react';
+import ThemeContext from '@/components/ui/project/jigsawpuzzle/providers/ThemeContext';
 import Button from './Button';
 
 interface ModalProps {
 	width: number;
 	height: number;
+	text: string;
 	closeModal: () => void;
 }
 
 export default function PuzzleStartModal({
-	width, height, closeModal,
+	width, height, text, closeModal,
 }: ModalProps) {
+	const { colors: themeColors, resolvedTheme } = useContext(ThemeContext);
+
+	const drawExitButton = useCallback((g: PixiGraphics) => {
+		g.clear();
+		g.beginFill(themeColors[resolvedTheme].secondary);
+		g.drawCircle(16, 16, 20);
+		g.endFill();
+	}, [resolvedTheme, themeColors]);
+
 	return (
 		<Container>
 			<Graphics
@@ -26,7 +36,7 @@ export default function PuzzleStartModal({
 				}}
 			/>
 			<Text
-				text={ABOUT_TEXT}
+				text={text}
 				style={{
 					fill: 'white',
 					fontSize: 20,
@@ -41,10 +51,12 @@ export default function PuzzleStartModal({
 			/>
 			<Button
 				x={width / 2 - 110}
-				y={height / 2 + 100}
+				y={height / 2 + 240}
 				width={220}
 				height={60}
 				radius={16}
+				color={themeColors[resolvedTheme].primary}
+				textColor={themeColors[resolvedTheme].primaryForeground}
 				label="Begin"
 				onClick={closeModal}
 			/>
@@ -57,16 +69,11 @@ export default function PuzzleStartModal({
 				cursor="pointer"
 			>
 				<Graphics
-					draw={(g) => {
-						g.clear();
-						g.beginFill(0xBDD1EC);
-						g.drawCircle(16, 16, 20);
-						g.endFill();
-					}}
+					draw={drawExitButton}
 				/>
 				<Sprite
-					image="https://cdn.holoen.fans/hefw/assets/kroniipuzzle/x-mark.svg"
-					tint={0x000000}
+					image="https://cdn.holoen.fans/hefw/assets/jigsawpuzzle/x-mark.svg"
+					tint={themeColors[resolvedTheme].secondaryForeground}
 					width={32}
 					height={32}
 				/>

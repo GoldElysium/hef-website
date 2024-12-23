@@ -11,7 +11,7 @@ import { getImageUrl } from '@/components/ui/legacy/Image';
 import { Metadata } from 'next';
 import useTranslation from '@/lib/i18n/server';
 import { Language } from '@/lib/i18n/languages';
-import PixiSubmissionWrapper from '@/components/ui/project/kroniipuzzle/PixiSubmissionWrapper';
+import JigsawPuzzleSubmissionWrapper from '@/components/ui/project/jigsawpuzzle/JigsawPuzzleSubmissionWrapper';
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/20/solid';
 import KroniiMapSubmissionWrapper from '@/components/ui/project/kroniimap/KroniiMapSubmissionsWrapper';
 import KiaraBdaySubmissionWrapper from '@/components/ui/project/kiarabday/KiaraBdaySubmissionWrapper';
@@ -83,37 +83,37 @@ export default async function ProjectPage({ params: { slug, lang } }: IProps) {
 
 	// const ref = useMemo(() => createRef<BlurBackground>(), []);
 
-	if (project.flags?.includes('experimental')) {
+	if (project.flags.includes('experimental')) {
 		return (
 			<ExperimentalProjectPage project={project} />
 		);
 	}
 
-	if (project.flags?.includes('guratanabata')) {
+	if (project.flags.includes('guratanabata')) {
 		return (
 			<PhaserSubmissionWrapper project={project} />
 		);
 	}
 
-	if (project.flags?.includes('kronii-puzzle')) {
+	if (project.flags.includes('jigsaw-puzzle')) {
 		return (
-			<PixiSubmissionWrapper project={project} />
+			<JigsawPuzzleSubmissionWrapper project={project} />
 		);
 	}
 
-	if (project.flags?.includes('kronii-map-bd-2024')) {
+	if (project.flags.includes('kronii-map-bd-2024')) {
 		return (
 			<KroniiMapSubmissionWrapper project={project} />
 		);
 	}
 
-	if (project.flags?.includes('kiara-bday-2024')) {
+	if (project.flags.includes('kiara-bday-2024')) {
 		return (
 			<KiaraBdaySubmissionWrapper lang={lang} project={project} />
 		);
 	}
 
-	if (project.flags?.includes('manga-reader')) {
+	if (project.flags.includes('manga-reader')) {
 		return (
 			<IrysMangaDataWrapper project={project} lang={lang} />
 		);

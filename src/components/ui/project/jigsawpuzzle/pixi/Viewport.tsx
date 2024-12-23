@@ -68,9 +68,7 @@ const Viewport = PixiComponent('Viewport', {
 			screenHeight: height,
 			worldWidth: worldWidth ?? width,
 			worldHeight: worldHeight ?? height,
-			// @ts-ignore
 			forceHitArea,
-			// @ts-ignore
 			ticker: app.ticker,
 			events: app.renderer.events,
 			passiveWheel: true,
@@ -84,13 +82,12 @@ const Viewport = PixiComponent('Viewport', {
 			.decelerate()
 			.wheel()
 			.bounce({
-				// @ts-ignore
 				bounceBox: {
 					x: -viewport.worldWidth,
 					width: viewport.worldWidth * 2,
 					y: -viewport.worldHeight,
 					height: viewport.worldHeight * 2,
-				},
+				} as Rectangle,
 			})
 			.clamp({
 				left: -(viewport.worldWidth / 2),

@@ -1,14 +1,15 @@
 'use client';
 
-import React, { useEffect, useImperativeHandle, useRef } from 'react';
+import React, {
+	useContext, useEffect, useImperativeHandle, useMemo, useRef,
+} from 'react';
 import { Container, Sprite } from '@pixi/react';
 import { Container as PixiContainer, DisplayObject, Texture } from 'pixi.js';
+import { PUZZLE_WIDTH } from '@/components/ui/project/jigsawpuzzle/puzzle/PuzzleConfig';
+import PuzzleStoreContext from '../providers/PuzzleStoreContext';
 import Message from './Message';
 import PieceInfo from './PieceInfo';
-import {
-	COL_COUNT, PIECE_MARGIN, PIECE_SIZE, ROW_COUNT,
-} from './PuzzleConfig';
-import usePuzzleStore from './PuzzleStore';
+import usePuzzleStore from '../providers/PuzzleStoreConsumer';
 
 interface PieceProps {
 	c: number;
@@ -46,40 +47,47 @@ const Piece = React.forwardRef<PieceActions, PieceProps>(({
 }, ref) => {
 	const pieceContainerRef = useRef<PixiContainer<DisplayObject> | null>(null);
 
+	const puzzleStore = useContext(PuzzleStoreContext)!;
+
 	/* eslint-disable @typescript-eslint/no-unused-vars */
 	// Use refs to not trigger re-renders every time these update
 	const thisPiece = usePuzzleStore((state) => state.pieces[`${r}-${c}`]);
-	const pieceLeft = useRef(c !== 0 && usePuzzleStore.getState().pieces[`${r}-${c - 1}`]);
-	const pieceTop = useRef(r !== 0 && usePuzzleStore.getState().pieces[`${r - 1}-${c}`]);
-	const pieceRight = useRef(c !== COL_COUNT - 1 && usePuzzleStore.getState().pieces[`${r}-${c + 1}`]);
-	const pieceBottom = useRef(r !== ROW_COUNT - 1 && usePuzzleStore.getState().pieces[`${r + 1}-${c}`]);
-	const [updatePiecePosition, updatePieceLocalPosition] = usePuzzleStore((state) => [state.updatePiecePosition(`${r}-${c}`), state.updatePieceLocalPosition]);
-	const pieceGroups = usePuzzleStore((state) => state.pieceGroups);
+	const difficulty = usePuzzleStore((state) => state.difficulty!);
+	const pieceLeft = useRef(c !== 0 && puzzleStore.getState().pieces[`${r}-${c - 1}`]);
+	const pieceTop = useRef(r !== 0 && puzzleStore.getState().pieces[`${r - 1}-${c}`]);
+	const pieceRight = useRef(c !== difficulty.cols - 1 && puzzleStore.getState().pieces[`${r}-${c + 1}`]);
+	const pieceBottom = useRef(r !== difficulty.rows - 1 && puzzleStore.getState().pieces[`${r + 1}-${c}`]);
+	const [updatePiecePosition, updatePieceLocalPosition] = puzzleStore((state) => [state.updatePiecePosition(`${r}-${c}`), state.updatePieceLocalPosition]);
+	const pieceGroups = puzzleStore((state) => state.pieceGroups);
+
+	const pieceSize = useMemo(() => PUZZLE_WIDTH / difficulty.cols, [difficulty.cols]);
+	// eslint-disable-next-line max-len
+	const pieceMargin = useMemo(() => pieceSize / difficulty.marginDivider, [pieceSize, difficulty.marginDivider]);
 
 	/* eslint-enable */
 
 	// Subscribe to all side pieces
 	/* eslint-disable react-hooks/rules-of-hooks,no-return-assign */
 	if (c !== 0) {
-		useEffect(() => usePuzzleStore.subscribe(
+		useEffect(() => puzzleStore.subscribe(
 			(state) => (pieceLeft.current = state.pieces[`${r}-${c - 1}`]),
 			// eslint-disable-next-line react-hooks/exhaustive-deps
 		), []);
 	}
 	if (r !== 0) {
-		useEffect(() => usePuzzleStore.subscribe(
+		useEffect(() => puzzleStore.subscribe(
 			(state) => (pieceTop.current = state.pieces[`${r - 1}-${c}`]),
 			// eslint-disable-next-line react-hooks/exhaustive-deps
 		), []);
 	}
-	if (c !== COL_COUNT - 1) {
-		useEffect(() => usePuzzleStore.subscribe(
+	if (c !== difficulty.cols - 1) {
+		useEffect(() => puzzleStore.subscribe(
 			(state) => (pieceRight.current = state.pieces[`${r}-${c + 1}`]),
 			// eslint-disable-next-line react-hooks/exhaustive-deps
 		), []);
 	}
-	if (r !== ROW_COUNT - 1) {
-		useEffect(() => usePuzzleStore.subscribe(
+	if (r !== difficulty.rows - 1) {
+		useEffect(() => puzzleStore.subscribe(
 			(state) => (pieceBottom.current = state.pieces[`${r + 1}-${c}`]),
 			// eslint-disable-next-line react-hooks/exhaustive-deps
 		), []);
@@ -107,24 +115,24 @@ const Piece = React.forwardRef<PieceActions, PieceProps>(({
 
 		switch (dir) {
 			case 'left':
-				yShift = PIECE_SIZE / 2;
-				xShiftTarget = PIECE_SIZE;
-				yShiftTarget = PIECE_SIZE / 2;
+				yShift = pieceSize / 2;
+				xShiftTarget = pieceSize;
+				yShiftTarget = pieceSize / 2;
 				break;
 			case 'right':
-				xShift = PIECE_SIZE;
-				yShift = PIECE_SIZE / 2;
-				yShiftTarget = PIECE_SIZE / 2;
+				xShift = pieceSize;
+				yShift = pieceSize / 2;
+				yShiftTarget = pieceSize / 2;
 				break;
 			case 'top':
-				xShift = PIECE_SIZE / 2;
-				xShiftTarget = PIECE_SIZE / 2;
-				yShiftTarget = PIECE_SIZE;
+				xShift = pieceSize / 2;
+				xShiftTarget = pieceSize / 2;
+				yShiftTarget = pieceSize;
 				break;
 			case 'bottom':
-				xShift = PIECE_SIZE / 2;
-				yShift = PIECE_SIZE;
-				xShiftTarget = PIECE_SIZE / 2;
+				xShift = pieceSize / 2;
+				yShift = pieceSize;
+				xShiftTarget = pieceSize / 2;
 				break;
 			default: break;
 		}
@@ -222,10 +230,9 @@ const Piece = React.forwardRef<PieceActions, PieceProps>(({
 		if (!pieceContainerRef.current) return false;
 
 		const localPos = pieceContainerRef.current!.toLocal(pos);
-
 		if (
-			(localPos.x >= -10 && localPos.x <= 85)
-			&& (localPos.y >= -10 && localPos.y <= 85)
+			(localPos.x >= -10 && localPos.x <= pieceSize)
+			&& (localPos.y >= -10 && localPos.y <= pieceSize)
 		) {
 			setSelectedPiece({
 				id: `${r}-${c}`,
@@ -252,10 +259,10 @@ const Piece = React.forwardRef<PieceActions, PieceProps>(({
 		>
 			<Sprite
 				texture={texture}
-				x={-PIECE_MARGIN}
-				y={-PIECE_MARGIN}
-				width={PIECE_SIZE + 2 * PIECE_MARGIN}
-				height={PIECE_SIZE + 2 * PIECE_MARGIN}
+				x={-pieceMargin}
+				y={-pieceMargin}
+				width={pieceSize + 2 * pieceMargin}
+				height={pieceSize + 2 * pieceMargin}
 			/>
 		</Container>
 	);

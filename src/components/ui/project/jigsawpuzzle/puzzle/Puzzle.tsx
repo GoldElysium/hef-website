@@ -2,41 +2,54 @@
 
 /* eslint-disable react/no-array-index-key */
 import React, {
-	ReactElement, useCallback, useEffect, useMemo, useRef, useState,
+	createRef, ReactElement, useCallback, useContext, useEffect, useMemo, useState,
 } from 'react';
 import * as PIXI from 'pixi.js';
 import { Container, Graphics } from '@pixi/react';
 import { IMediaInstance, Sound } from '@pixi/sound';
 import { shallow } from 'zustand/shallow';
 import { Submission, SubmissionMedia } from '@/types/payload-types';
+import ThemeContext from '@/components/ui/project/jigsawpuzzle/providers/ThemeContext';
+import PuzzleStoreContext from '../providers/PuzzleStoreContext';
 import Piece, { PieceActions } from './Piece';
 import Message from './Message';
 import PieceInfo from './PieceInfo';
-import { COL_COUNT, PIECE_COUNT, ROW_COUNT } from './PuzzleConfig';
-import usePuzzleStore from './PuzzleStore';
+import usePuzzleStore from '../providers/PuzzleStoreConsumer';
 import PieceGroup from './PieceGroup';
 
+type NextTrack = {
+	random: false;
+	name: string;
+} | {
+	random: true;
+	options: {
+		name: string;
+		weight: number;
+	}[];
+};
+
+export interface BGMConfig {
+	intro: string;
+	fallback: string;
+	url: string;
+	tracks: {
+		[key: string]: NextTrack;
+	}
+}
 interface PuzzleProps {
 	x: number;
 	y: number;
 	width: number;
 	height: number;
+	kroniiEnabled: boolean;
+	bgmConfig: BGMConfig;
+	resetTrigger: boolean;
 	puzzleFinished: () => void;
 	onPieceSelected: (piece: PieceInfo) => void;
 	submissions: Submission[];
 }
 
-const SOUNDS = {
-	intro: 'intro',
-	main1: 'main_01',
-	choir: 'choir',
-	main2: 'main_02',
-	solo: 'solo',
-};
-
-const getRandom = (
-	arr: { name: string, weight: number }[],
-) => {
+const getRandom = (arr: { name: string, weight: number }[]) => {
 	const totalWeight = arr.reduce((sum, item) => sum + item.weight, 0);
 	let randomNum = Math.random() * totalWeight;
 
@@ -54,8 +67,8 @@ const getRandom = (
 };
 
 export default function Puzzle({
-	// @ts-ignore
-	x, y, width, height, puzzleFinished, onPieceSelected, submissions,
+	// eslint-disable-next-line max-len
+	x, y, width, height, kroniiEnabled, bgmConfig, resetTrigger, puzzleFinished, onPieceSelected, submissions,
 }: PuzzleProps) {
 	const [assetBundle, setAssetBundle] = useState<null | any>(null);
 	const [sounds, setSounds] = useState<null | Record<string, Sound>>(null);
@@ -63,30 +76,29 @@ export default function Puzzle({
 
 	const { volume, muted } = usePuzzleStore((state) => state.audio);
 
-	const puzzlePiecesRefs: Record<string, React.MutableRefObject<PieceActions>> = {};
-
+	const puzzleStore = useContext(PuzzleStoreContext)!;
+	const difficulty = usePuzzleStore((state) => state.difficulty);
+	const difficultyName = usePuzzleStore((state) => state.difficultyName);
 	const correctCount = usePuzzleStore((state) => state.correctCount);
 	const pieceGroups = usePuzzleStore((state) => Object.keys(state.pieceGroups), shallow);
 
+	const { colors: themeColors } = useContext(ThemeContext);
+
 	useEffect(() => {
-		if (correctCount >= PIECE_COUNT) {
+		if (!difficulty) return;
+		if (correctCount >= difficulty.cols * difficulty.rows) {
 			puzzleFinished();
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [correctCount]);
+	}, [difficulty, correctCount]);
 
 	const drawPuzzleBounds = useCallback((g: PIXI.Graphics) => {
 		const lineWidth = 8;
 		g.clear();
-		g.lineStyle(lineWidth, 0xffffff);
+		g.lineStyle(lineWidth, themeColors.light.headerForeground);
 
-		g.drawRect(
-			-lineWidth / 2,
-			-lineWidth / 2,
-			width + lineWidth,
-			height + lineWidth,
-		);
-	}, [height, width]);
+		g.drawRect(-lineWidth / 2, -lineWidth / 2, width + lineWidth, height + lineWidth);
+	}, [height, width, themeColors]);
 
 	useEffect(() => {
 		// Sound doubling bug when auto pause is disabled
@@ -99,7 +111,7 @@ export default function Puzzle({
 	}, []);
 
 	useEffect(() => {
-		const bgmTrackNames = ['intro', 'main_01', 'main_02', 'choir', 'solo'];
+		const bgmTrackNames = Object.keys(bgmConfig.tracks);
 		const sfxTrackNames = ['tick', 'tock'];
 		const loadedSounds: Record<string, Sound> = {};
 
@@ -112,14 +124,12 @@ export default function Puzzle({
 		}
 
 		const defaultSettings = {
-			preload: true,
-			volume: 0.25,
-			singleInstance: true,
+			preload: true, volume: 0.25, singleInstance: true,
 		};
 
 		const loadBgmTrack = (name: string) => {
 			Sound.from({
-				url: `https://cdn.holoen.fans/hefw/assets/kroniipuzzle/bgm/time_loop_${name}.ogg`,
+				url: bgmConfig.url.replace('{name}', name),
 				loaded: (_, sound) => loadCallback(name, sound!),
 				...defaultSettings,
 			});
@@ -127,12 +137,10 @@ export default function Puzzle({
 
 		const loadSfxTrack = (name: string) => {
 			Sound.from({
-				url: `https://cdn.holoen.fans/hefw/assets/kroniipuzzle/sfx/${name}.wav`,
+				url: `https://cdn.holoen.fans/hefw/assets/jigsawpuzzle/sfx/${name}.wav`,
 				loaded: (_, sound) => loadCallback(name, sound!),
 				...{
-					preload: true,
-					volume: 0.25,
-					singleInstance: true,
+					preload: true, volume: 0.25, singleInstance: true,
 				},
 			});
 		};
@@ -170,11 +178,12 @@ export default function Puzzle({
 	useEffect(() => {
 		if (!sounds) return;
 
-		let sound = SOUNDS.intro;
+		let sound = bgmConfig.intro;
 
 		// eslint-disable-next-line max-len
-		const startVolume = usePuzzleStore.getState().audio.volume;
-		const introInstance = sounds.intro.play({ volume: muted ? 0 : startVolume }) as IMediaInstance;
+		const startVolume = puzzleStore.getState().audio.volume;
+		// eslint-disable-next-line max-len
+		const introInstance = sounds[bgmConfig.intro].play({ volume: muted ? 0 : startVolume }) as IMediaInstance;
 		if (muted) {
 			introInstance.set('paused', true);
 			introInstance.set('volume', startVolume);
@@ -182,38 +191,12 @@ export default function Puzzle({
 		setCurrentBgmInstance(introInstance);
 
 		function nextSound() {
-			switch (sound) {
-				case SOUNDS.intro:
-					sound = SOUNDS.main1;
-					break;
-				case SOUNDS.main1:
-					sound = getRandom([
-						{ name: SOUNDS.choir, weight: 1 },
-						{ name: SOUNDS.main2, weight: 2 },
-					]);
-					break;
-				case SOUNDS.choir:
-					sound = getRandom([
-						{ name: SOUNDS.choir, weight: 1 },
-						{ name: SOUNDS.main2, weight: 2 },
-					]);
-					break;
-				case SOUNDS.main2:
-					sound = getRandom([
-						{ name: SOUNDS.main1, weight: 2 },
-						{ name: SOUNDS.solo, weight: 1 },
-					]);
-					break;
-				case SOUNDS.solo:
-					sound = SOUNDS.main1;
-					break;
-				default:
-					// note: this should never happen
-					sound = SOUNDS.main1;
-					break;
-			}
+			const next = bgmConfig.tracks[sound];
 
-			const currentVolume = usePuzzleStore.getState().audio.volume;
+			sound = next.random ? getRandom(next.options) : next.name;
+			if (!sounds![sound]) sound = bgmConfig.fallback;
+
+			const currentVolume = puzzleStore.getState().audio.volume;
 			const instance = sounds![sound].play({ volume: currentVolume }) as IMediaInstance;
 
 			const timer = setInterval(() => {
@@ -247,21 +230,28 @@ export default function Puzzle({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [muted]);
 
-	for (let r = 0; r < ROW_COUNT; r++) {
-		for (let c = 0; c < COL_COUNT; c++) {
-			// eslint-disable-next-line react-hooks/rules-of-hooks
-			puzzlePiecesRefs[`${r}-${c}`] = useRef<PieceActions>() as any;
+	const puzzlePiecesRefs = useMemo(() => {
+		if (!difficulty) return null;
+
+		const refs: Record<string, React.MutableRefObject<PieceActions>> = {};
+
+		for (let r = 0; r < difficulty.rows; r++) {
+			for (let c = 0; c < difficulty.cols; c++) {
+				refs[`${r}-${c}`] = createRef<PieceActions>() as any;
+			}
 		}
-	}
+
+		return refs;
+	}, [difficulty]);
 
 	const puzzlePieces = useMemo(() => {
-		if (!assetBundle) return null;
+		if (!assetBundle || !difficulty || !difficultyName || !puzzlePiecesRefs) return null;
 
 		const temp: Record<string, { ref: React.MutableRefObject<any>, piece: ReactElement }> = {};
 
-		for (let r = 0; r < ROW_COUNT; r++) {
-			for (let c = 0; c < COL_COUNT; c++) {
-				const message = submissions[r * COL_COUNT + c];
+		for (let r = 0; r < difficulty.rows; r++) {
+			for (let c = 0; c < difficulty.cols; c++) {
+				const message = submissions[r * difficulty.cols + c];
 
 				const pieceRef = puzzlePiecesRefs[`${r}-${c}`];
 
@@ -270,14 +260,14 @@ export default function Puzzle({
 						key={`piece-${r}-${c}`}
 						c={c}
 						r={r}
-						texture={assetBundle.pieces.textures[`${r}-${c}`]}
+						texture={assetBundle[`pieces${difficultyName !== 'default' ? `-${difficultyName.toLowerCase()}` : ''}`].textures[`${r}-${c}`]}
 						setSelectedPiece={onPieceSelected}
 						message={message ? {
 							from: message.author,
 							congratulations: message.devprops?.find((prop) => prop.key === 'congratulations')?.value,
 							favoriteMoment: message.devprops?.find((prop) => prop.key === 'favoriteMoment')?.value,
-							kronie: message.media && message.media.length > 0
-								? (message.media[0].image as SubmissionMedia).url : undefined,
+							// eslint-disable-next-line max-len
+							kronie: kroniiEnabled && message.media && message.media.length > 0 ? (message.media[0].image as SubmissionMedia).url : undefined,
 						} satisfies Message : undefined}
 						ref={pieceRef}
 					/>
@@ -287,19 +277,18 @@ export default function Puzzle({
 					continue;
 				}
 				temp[`${r}-${c}`] = {
-					ref: pieceRef,
-					piece,
+					ref: pieceRef, piece,
 				};
 			}
 		}
 
 		return temp;
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [assetBundle]);
+	}, [assetBundle, difficulty, difficultyName, puzzlePiecesRefs]);
 
 	const groupElements = useMemo(() => {
 		if (!puzzlePieces) return null;
-		const groups = usePuzzleStore.getState().pieceGroups;
+		const groups = puzzleStore.getState().pieceGroups;
 
 		return pieceGroups.map((groupKey) => {
 			const { position } = groups[groupKey];
@@ -316,7 +305,8 @@ export default function Puzzle({
 				/>
 			);
 		});
-	}, [puzzlePieces, pieceGroups, sounds?.tick, sounds?.tock]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [resetTrigger, puzzlePieces, pieceGroups, sounds?.tick, sounds?.tock]);
 
 	if (!assetBundle || !puzzlePieces) return null;
 

@@ -9,12 +9,13 @@ interface ButtonProps {
 	height: number;
 	label: string;
 	color?: number;
+	textColor?: number | string;
 	radius?: number;
 	onClick?: () => void;
 }
 
 export default function Button({
-	x, y, width, height, label, onClick, color = 0x0869EC, radius = 0,
+	x, y, width, height, label, onClick, color = 0x0869EC, textColor = 'white', radius = 0,
 }: ButtonProps) {
 	const handleClick = () => {
 		if (onClick) {
@@ -43,7 +44,7 @@ export default function Button({
 			<Text
 				text={label}
 				style={{
-					fill: 'white',
+					fill: textColor,
 					fontSize: 18,
 					fontWeight: 'bold',
 				} as TextStyle}

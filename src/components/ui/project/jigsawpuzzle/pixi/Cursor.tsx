@@ -4,7 +4,20 @@ import { FederatedPointerEvent } from 'pixi.js';
 import { useApp } from '@pixi/react';
 import AnimatedGIF from './AnimatedGIF';
 
-export default function Cursor() {
+export interface CursorOffsets {
+	offsets: {
+		default: {
+			x: number;
+			y: number;
+		}
+		pointer: {
+			x: number;
+			y: number;
+		}
+	}
+}
+
+export default function Cursor({ offsets }: CursorOffsets) {
 	const app = useApp();
 
 	const [assetBundle, setAssetBundle] = useState<null | any>(null);
@@ -39,16 +52,16 @@ export default function Cursor() {
 		<>
 			<AnimatedGIF
 				gif={assetBundle['cursor-default']}
-				x={cursorLocation.x - 13}
-				y={cursorLocation.y - 7}
+				x={cursorLocation.x + offsets.default.x}
+				y={cursorLocation.y + offsets.default.y}
 				width={96}
 				height={86}
 				visible={currentCursor === 'default'}
 			/>
 			<AnimatedGIF
 				gif={assetBundle['cursor-pointer']}
-				x={cursorLocation.x - 17}
-				y={cursorLocation.y - 5}
+				x={cursorLocation.x + offsets.pointer.x}
+				y={cursorLocation.y + offsets.pointer.y}
 				width={96}
 				height={86}
 				visible={currentCursor === 'pointer'}

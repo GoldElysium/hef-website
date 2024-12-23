@@ -6,8 +6,9 @@ import React, {
 	useContext, useEffect, useMemo, useRef, useState,
 } from 'react';
 import { Container as PixiContainer, FederatedPointerEvent } from 'pixi.js';
-import usePuzzleStore from './PuzzleStore';
-import { PIECE_SIZE } from './PuzzleConfig';
+import PuzzleStoreContext from '../providers/PuzzleStoreContext';
+import usePuzzleStore from '../providers/PuzzleStoreConsumer';
+import { PUZZLE_WIDTH } from './PuzzleConfig';
 import ViewportContext from '../providers/ViewportContext';
 import { PieceActions } from './Piece';
 
@@ -25,10 +26,15 @@ export default function PieceGroup({
 	groupKey, pieces, initialX, initialY, playTick, playTock,
 }: PieceGroupProps) {
 	const [dragging, setDragging] = useState(false);
-	const [dragStartPosition, setDragStartPosition] = useState<{ x: number; y:number } | null>(null);
+	const [dragStartPosition, setDragStartPosition] = useState<{ x: number; y: number } | null>(null);
 	const [currentPosition, setCurrentPosition] = useState({ x: initialX, y: initialY });
 	const [lastUpdatedAt, setLastUpdatedAt] = useState(Date.now());
 	const [parent, setParent] = useState(null as any);
+
+	const puzzleStore = useContext(PuzzleStoreContext)!;
+
+	const difficulty = usePuzzleStore((state) => state.difficulty!);
+	const pieceSize = useMemo(() => PUZZLE_WIDTH / difficulty.cols, [difficulty.cols]);
 
 	const containerRef = useRef<PixiContainer>(null);
 
@@ -98,7 +104,7 @@ export default function PieceGroup({
 			groupKey: string;
 		} | undefined;
 		let nearPieceKey: string;
-		const statePieces = usePuzzleStore.getState().pieces;
+		const statePieces = puzzleStore.getState().pieces;
 
 		// eslint-disable-next-line no-restricted-syntax
 		for (const pieceKey of thisPieceGroup.pieces) {
@@ -125,16 +131,16 @@ export default function PieceGroup({
 		let wantedX = nearData.x;
 
 		if (nearData.side === 'left') {
-			wantedX += PIECE_SIZE;
+			wantedX += pieceSize;
 		} else if (nearData.side === 'right') {
-			wantedX -= PIECE_SIZE;
+			wantedX -= pieceSize;
 		}
 
 		let wantedY = nearData.y;
 		if (nearData.side === 'top') {
-			wantedY += PIECE_SIZE;
+			wantedY += pieceSize;
 		} else if (nearData.side === 'bottom') {
-			wantedY -= PIECE_SIZE;
+			wantedY -= pieceSize;
 		}
 
 		const deltaX = wantedX - nearPiece.localPosition.x;
