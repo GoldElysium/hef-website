@@ -1,4 +1,4 @@
-import type { TextStyle } from 'pixi.js';
+import { TextStyle } from 'pixi.js';
 
 interface ButtonProps {
 	x: number;
@@ -7,13 +7,25 @@ interface ButtonProps {
 	height: number;
 	label: string;
 	color?: number;
-	textColor?: number | string;
+	textStyle: TextStyle;
 	radius?: number;
 	onClick?: () => void;
 }
 
 export default function Button({
-	x, y, width, height, label, onClick, color = 0x0869EC, textColor = 'white', radius = 0,
+	x,
+	y,
+	width,
+	height,
+	label,
+	onClick,
+	color,
+	radius = 0,
+	textStyle = {
+		fill: 'white',
+		fontSize: 18,
+		fontWeight: 'bold',
+	} as TextStyle,
 }: ButtonProps) {
 	const handleClick = () => {
 		if (onClick) {
@@ -35,17 +47,13 @@ export default function Button({
 						g
 							.clear()
 							.roundRect(0, 0, width, height, radius)
-							.fill(color);
+							.fill(color ?? 0x0869EC);
 					}
 				}}
 			/>
 			<pixiText
 				text={label}
-				style={{
-					fill: textColor,
-					fontSize: 18,
-					fontWeight: 'bold',
-				} as TextStyle}
+				style={textStyle}
 				anchor={0.5}
 				x={width / 2}
 				y={height / 2}
