@@ -12,6 +12,7 @@ import Game from './scenes/Game';
 import Collectibles from './scenes/Collectibles';
 import Shop from './scenes/Shop';
 import FishData from './scenes/FishData';
+import Spam from './scenes/Spam';
 
 GraphicsContextSystem.defaultOptions.bezierSmoothness = 0.8;
 
@@ -58,6 +59,15 @@ export default function PixiWrapper() {
 						path="/game"
 						element={(
 							<Game
+								width={screenWidth}
+								height={screenHeight}
+							/>
+						)}
+					/>
+					<Route
+						path="/spam"
+						element={(
+							<Spam
 								width={screenWidth}
 								height={screenHeight}
 							/>

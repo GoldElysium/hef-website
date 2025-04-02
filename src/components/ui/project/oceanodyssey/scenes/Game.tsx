@@ -328,6 +328,13 @@ function Game({
 				textColor={0x466494}
 				onClick={() => navigate('/shop')}
 			/>
+			<InteractiveText
+				label="spam"
+				x={width - 200}
+				y={100}
+				textColor={0x466494}
+				onClick={() => navigate('/spam')}
+			/>
 
 			<pixiContainer>
 
