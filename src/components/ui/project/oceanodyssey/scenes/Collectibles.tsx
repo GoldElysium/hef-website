@@ -37,7 +37,7 @@ function Log({ leftRect, rightRect, startY }: LogProps) {
 
 		g.stroke(0xffffff);
 		g.rect(leftRect.y, startY, leftRect.width * 2, leftRect.height);
-		g.fill(0x000000, 0);
+		g.fill({ color: 0x000000, alpha: 0 });
 
 		g.rect(leftRect.x + leftRect.width, startY, 1, leftRect.height);
 		g.fill(0xFFFFFF);
