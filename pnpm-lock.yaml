@@ -54,8 +54,8 @@ importers:
         specifier: ^1.1.1
         version: 1.1.1(@pixi/core@7.4.2)(@pixi/display@7.4.2(@pixi/core@7.4.2))(@pixi/graphics@7.4.2(@pixi/core@7.4.2)(@pixi/display@7.4.2(@pixi/core@7.4.2))(@pixi/sprite@7.4.2(@pixi/core@7.4.2)(@pixi/display@7.4.2(@pixi/core@7.4.2))))
       '@pixi/react':
-        specifier: 8.0.0-beta.23
-        version: 8.0.0-beta.23(@types/react@19.0.8)(pixi.js@8.7.3)(react@19.0.0)
+        specifier: 8.0.1
+        version: 8.0.1(@types/react@19.0.8)(pixi.js@8.7.3)(react@19.0.0)
       '@pixi/sound':
         specifier: ^6.0.1
         version: 6.0.1(pixi.js@8.7.3)
@@ -1810,8 +1810,8 @@ packages:
   '@pixi/math@7.4.2':
     resolution: {integrity: sha512-7jHmCQoYk6e0rfSKjdNFOPl0wCcdgoraxgteXJTTHv3r0bMNx2pHD9FJ0VvocEUG7XHfj55O3+u7yItOAx0JaQ==}
 
-  '@pixi/react@8.0.0-beta.23':
-    resolution: {integrity: sha512-BK1UAr33oAKIxLV9ay3CkgsFxRDVyhKpc2pSKa6RZ/qj9j6xNpl2mu6CymEM2b3ks8rgoI/q01rQohr8456ViA==}
+  '@pixi/react@8.0.1':
+    resolution: {integrity: sha512-HN5PdmnB6dt2IB/lKN16PXcqRX4cWyJf62316qCp+hl6vSGpNqvd014NfwuqoIGOThNTm805UsmHfsiXRy1Cgw==}
     peerDependencies:
       pixi.js: ^8.2.6
       react: '>=19.0.0'
@@ -5001,10 +5001,10 @@ packages:
     resolution: {integrity: sha512-H0dkQoCa3b2VEeKQBOxFph+JAbcrQdE7KC0UkqwpLmv2EC4P41QXP+rqo9wYodACiG5/WM5s9oDApTU8utwj9g==}
     engines: {node: '>= 0.4'}
 
-  its-fine@1.2.5:
-    resolution: {integrity: sha512-fXtDA0X0t0eBYAGLVM5YsgJGsJ5jEmqZEPrGbzdf5awjv0xE7nqv3TVnvtUF060Tkes15DbDAKW/I48vsb6SyA==}
+  its-fine@2.0.0:
+    resolution: {integrity: sha512-KLViCmWx94zOvpLwSlsx6yOCeMhZYaxrJV87Po5k/FoZzcPSahvK5qJ7fYhS61sZi5ikmh2S3Hz55A2l3U69ng==}
     peerDependencies:
-      react: '>=18.0'
+      react: ^19.0.0
 
   jest-worker@27.5.1:
     resolution: {integrity: sha512-7vuh85V5cdDofPyxn58nrPjBktZo0u9x1g8WtjQol+jZDaE+fhN+cIvTj11GndBnMnyfrUOG1sZQxCdjKh+DKg==}
@@ -8721,9 +8721,9 @@ snapshots:
 
   '@pixi/math@7.4.2': {}
 
-  '@pixi/react@8.0.0-beta.23(@types/react@19.0.8)(pixi.js@8.7.3)(react@19.0.0)':
+  '@pixi/react@8.0.1(@types/react@19.0.8)(pixi.js@8.7.3)(react@19.0.0)':
     dependencies:
-      its-fine: 1.2.5(@types/react@19.0.8)(react@19.0.0)
+      its-fine: 2.0.0(@types/react@19.0.8)(react@19.0.0)
       pixi.js: 8.7.3
       react: 19.0.0
       react-reconciler: 0.31.0(react@19.0.0)
@@ -12508,7 +12508,7 @@ snapshots:
       has-symbols: 1.1.0
       set-function-name: 2.0.2
 
-  its-fine@1.2.5(@types/react@19.0.8)(react@19.0.0):
+  its-fine@2.0.0(@types/react@19.0.8)(react@19.0.0):
     dependencies:
       '@types/react-reconciler': 0.28.9(@types/react@19.0.8)
       react: 19.0.0
