@@ -37,7 +37,7 @@
     "@pixi/devtools": "^2.0.1",
     "@pixi/gif": "^3.0.1",
     "@pixi/graphics-smooth": "^1.1.1",
-    "@pixi/react": "8.0.0-beta.23",
+    "@pixi/react": "8.0.1",
     "@pixi/sound": "^6.0.1",
     "@pixi/text-html": "^7.4.2",
     "@radix-ui/react-dialog": "^1.1.5",
