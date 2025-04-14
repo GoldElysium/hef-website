@@ -1,4 +1,4 @@
-import { TextStyle } from 'pixi.js';
+import type { TextStyle } from 'pixi.js';
 
 interface ButtonProps {
 	x: number;

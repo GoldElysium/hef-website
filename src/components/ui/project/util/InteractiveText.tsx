@@ -1,5 +1,5 @@
 import Button from '@/components/ui/pixi/Button';
-import { TextStyle } from 'pixi.js';
+import type { TextStyle } from 'pixi.js';
 
 interface InteractiveTextProps {
 	label: string;
@@ -25,7 +25,6 @@ function InteractiveText({
 				fontWeight: 'bolder',
 				fill: textColor,
 				stroke: 'white',
-				strokeThickness: 8,
 			} as TextStyle}
 			x={x}
 			y={y}
