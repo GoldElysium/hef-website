@@ -3,9 +3,9 @@ import { useEffect, useRef, useState } from 'react';
 import { ScrollBox } from '@pixi/ui';
 import { extend } from '@pixi/react';
 import { Container, Text } from 'pixi.js';
-import { create } from 'zustand';
-import { createJSONStorage, persist } from 'zustand/middleware';
 import InteractiveText from '../../util/InteractiveText';
+import { FishData } from '../model/FishData';
+import useFishStore from '../store/FishStore';
 
 const loadCSV = async (url: string) => {
 	const response = await fetch(url);
@@ -81,7 +81,8 @@ function PixiScrollBox({ width, data }: PixiScrollBoxProps) {
 interface FishDataProps {
 	width: number;
 }
-function FishData({
+
+function FishDataScene({
 	width,
 }: FishDataProps) {
 	const navigate = useNavigate();
@@ -90,39 +91,7 @@ function FishData({
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<Error | unknown | null>(null);
 
-	interface FishData {
-		fishName: string;
-		scientificName: string;
-		type: string;
-		averageLenght: string;
-		averageWeight: string;
-		catchMethod: string;
-		catchQuote: string;
-		fishDescription: string;
-		habitat: string;
-		population: string;
-		pricePerPound: string;
-		gameRarity: string;
-	}
-	interface PersistentStore {
-		items: FishData[];
-		addItems: (item: Record<string, FishData>) => void;
-		resetItems: () => void;
-	}
-
-	const usePersistentStore = create<PersistentStore>(
-		persist(
-			(set) => ({
-				addItems: (newItems: Record<string, FishData>) => set({ items: newItems }),
-			}),
-			{
-				name: 'Kronii fishing game',
-				storage: createJSONStorage(() => localStorage),
-			},
-		) as any,
-	);
-
-	const { addItems } = usePersistentStore();
+	const { addFishes } = useFishStore();
 
 	useEffect(() => {
 		async function fetchData() {
@@ -155,7 +124,7 @@ function FishData({
 					fishes[fishObject['Fish Name']] = fishData;
 				});
 
-				addItems(fishes);
+				addFishes(fishes);
 			} catch (e: Error | unknown | null) {
 				setError(e);
 			} finally {
@@ -163,7 +132,7 @@ function FishData({
 			}
 		}
 		fetchData();
-	}, [addItems]);
+	}, [addFishes]);
 
 	const errorOrSuccess = error
 		? (
@@ -212,4 +181,4 @@ function FishData({
 	);
 }
 
-export default FishData;
+export default FishDataScene;

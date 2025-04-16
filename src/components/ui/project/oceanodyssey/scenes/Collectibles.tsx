@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
-import { Graphics } from 'pixi.js';
-import InteractiveText from '../../util/InteractiveText';
+import { useState } from 'react';
+import useFishStore from '../store/FishStore';
 
 interface Content {
 	name: string;
@@ -15,178 +15,138 @@ interface FishContent extends Content {
 	description: string;
 }
 
-interface FishsonaContent extends Content {
-	kind: 'Fishsona';
-	message: string | undefined;
-	kronieImageUrl: string;
-	signatureUrl: string | undefined;
+interface PageProps {
+	fish: FishContent;
 }
 
-interface LogProps {
-	leftRect: { x: number, y: number, width: number, height: number },
-	rightRect: { x: number, y: number, width: number, height: number },
-	startY: number;
-}
-
-function Log({ leftRect, rightRect, startY }: LogProps) {
-	const drawShape = (g: Graphics) => {
-		g.clear();
-
-		g.rect(leftRect.x, startY, leftRect.width * 2, leftRect.height);
-		g.fill(0x0A0AFF);
-
-		g.stroke(0xffffff);
-		g.rect(leftRect.y, startY, leftRect.width * 2, leftRect.height);
-		g.fill({ color: 0x000000, alpha: 0 });
-
-		g.rect(leftRect.x + leftRect.width, startY, 1, leftRect.height);
-		g.fill(0xFFFFFF);
-
-		g.rect(
-			leftRect.x * 1.3,
-			startY + leftRect.height * 0.15,
-			leftRect.width - (leftRect.x * 1.3 - leftRect.x) * 2,
-			leftRect.width * 0.4,
-		);
-		g.fill(0xFFFFFF);
-
-		g.rect(
-			rightRect.x + (leftRect.x * 1.3 - leftRect.x),
-			startY + leftRect.height * 0.15,
-			leftRect.width - (leftRect.x * 1.3 - leftRect.x) * 2,
-			rightRect.width * 0.4,
-		);
-		g.fill(0xFFFFFF);
-	};
-
-	return <pixiGraphics draw={drawShape} />;
+function Page({ fish }: PageProps) {
+	return (
+		<div
+			style={{
+				position: 'relative',
+				width: '50%',
+				aspectRatio: '2 / 3',
+				border: '0.125vw solid white',
+				backgroundColor: 'blue',
+				boxSizing: 'border-box',
+				display: 'flex',
+				flexDirection: 'column',
+				padding: '1vw',
+			}}
+		>
+			<h2 className="text-2xl">{fish.name}</h2>
+			<div />
+			<p className="text-1xl">{fish.description}</p>
+		</div>
+	);
 }
 
 interface CollectiblesProps {
-	width: number;
+	backgroundColor: string;
 }
 
 function Collectibles({
-	width,
+	backgroundColor,
 }: CollectiblesProps) {
 	const navigate = useNavigate();
 
-	const leftRightButtonsY = 150 + width * 0.6 * 0.75 * 0.5;
+	const [index, setIndex] = useState(0);
 
-	const dummyContents: (FishContent | FishsonaContent)[] = [
-		{
-			name: 'Salmon',
-			numCaught: 5,
-			price: 6,
-			pictureUrl: 'a.jpg',
-			description: 'Swims in water.',
-			kind: 'Fish',
-		},
-		{
-			name: 'Anonymous Kronie',
-			numCaught: 5,
-			price: 6,
-			pictureUrl: 'dummy-fishsona.jpg',
-			kronieImageUrl: 'b.jpg',
-			signatureUrl: 'c.jpg',
-			kind: 'Fishsona',
-		} as FishsonaContent,
-	];
+	const { fishes } = useFishStore();
 
-	const logWidth = width * 0.6;
-	const height = logWidth * 0.8;
-	const startY = 200;
-
-	const leftRect = {
-		x: logWidth * 0.2,
-		y: startY,
-		width: logWidth * 0.63,
-		height,
-	};
-
-	const rightRect = {
-		x: leftRect.x + leftRect.width,
-		y: leftRect.y,
-		width: leftRect.width,
-		height: leftRect.height,
-	};
+	const fishContents: FishContent[] = Object.values(fishes).map((fish) => ({
+		name: fish.fishName,
+		numCaught: 0,
+		price: Math.floor(Math.random() * (10 - 5 + 1)) + 5,
+		pictureUrl: 'a.jpg',
+		description: fish.fishDescription,
+		kind: 'Fish',
+	} as FishContent));
 
 	return (
-		<pixiContainer>
-			<pixiText
-				text="Log Book"
+		<div
+			style={{
+				position: 'fixed',
+				display: 'flex',
+				flexDirection: 'column',
+				gap: '1rem',
+				justifyContent: 'normal',
+				alignContent: 'center',
+				fontFamily: 'Arial, sans-serif',
+				top: 0,
+				left: 0,
+				width: '100vw',
+				height: '100vh',
+				backgroundColor,
+				padding: '10vw',
+			}}
+		>
+			<div>
+				<button
+					type="button"
+					onClick={() => navigate(-1)}
+					style={{
+						cursor: 'pointer',
+					}}
+				>
+					Back
+				</button>
+			</div>
+			<h1 className="text-center text-4xl font-bold">
+				Log Book
+			</h1>
+
+			<div
+				className="text-center font-bold"
 				style={{
-					fontFamily: 'Arial',
-					fontSize: 50,
-					align: 'center',
-					fill: 0xffffff,
+					position: 'relative',
+					display: 'flex',
+					flexDirection: 'row',
+					gap: '2rem',
 				}}
-				anchor={0.5}
-				x={width / 2}
-				y={150}
-			/>
-
-			<InteractiveText
-				label="back"
-				x={0}
-				y={0}
-				textColor={0x466494}
-				onClick={() => navigate(-1)}
-			/>
-
-			<InteractiveText
-				label="<"
-				x={width * 0.2 - 200}
-				y={leftRightButtonsY}
-				textColor={0xFFFFFF}
-				onClick={() => {}}
-			/>
-
-			<InteractiveText
-				label=">"
-				x={width * 0.6 + width * 0.2}
-				y={leftRightButtonsY}
-				textColor={0xFFFFFF}
-				onClick={() => {}}
-			/>
-
-			<Log
-				leftRect={leftRect}
-				rightRect={rightRect}
-				startY={startY}
-			/>
-
-			{dummyContents.map((x, i) => {
-				const rect = i % 2 === 0 ? leftRect : rightRect;
-				const text = (x as FishsonaContent).message ?? (x as FishContent).description;
-				return (
-					<pixiContainer
-						key={x.name}
-					>
-						<pixiText
-							text={x.name}
-							x={rect.x + rect.width * 0.5}
-							y={startY + leftRect.height * 0.075}
-							anchor={0.5}
-							style={{
-								fill: 'white',
-								fontSize: 18,
-							}}
-						/>
-						<pixiText
-							text={text}
-							x={rect.x + rect.width * 0.5}
-							y={startY + leftRect.height * 0.55}
-							anchor={1}
-							style={{
-								fill: 'white',
-								fontSize: 12,
-							}}
-						/>
-					</pixiContainer>
-				);
-			})}
-		</pixiContainer>
+			>
+				<button
+					type="button"
+					onClick={() => { setIndex(Math.max(0, index - 1)); }}
+					style={{
+						cursor: 'pointer',
+					}}
+				>
+					{'<'}
+				</button>
+				<div
+					style={{
+						position: 'relative',
+						display: 'flex',
+						flexDirection: 'row',
+						width: '70vw',
+						aspectRatio: '4 / 3',
+						border: '0.125vw solid white',
+						boxSizing: 'border-box',
+					}}
+				>
+					<Page
+						fish={fishContents[index]}
+					/>
+					{index + 1 < fishContents.length
+						? (
+							<Page
+								fish={fishContents[index + 1]}
+							/>
+						)
+						: null}
+				</div>
+				<button
+					type="button"
+					onClick={() => { setIndex(Math.min(fishContents.length - 1, index + 1)); }}
+					style={{
+						cursor: 'pointer',
+					}}
+				>
+					{'>'}
+				</button>
+			</div>
+		</div>
 	);
 }
 
