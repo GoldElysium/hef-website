@@ -24,10 +24,10 @@ interface PageProps {
 function Page({ fish }: PageProps) {
 	return (
 		<div
-			className="relative w-6/12 aspect-[1/sqrt(2)] bg-gray-600 flex flex-col p-6 border-2 border-white overflow-y-auto max-h-full"
+			className="relative w-6/12 aspect-[1/sqrt(2)] bg-gray-600 flex flex-col p-6 border-2 border-white overflow-y-auto min-h-full"
 		>
 			<h2 className="text-2xl">{fish.name}</h2>
-			<br className="my-1" />
+			<br className="my-1 w-full" />
 			<p className="text-1xl text-left">{fish.description}</p>
 		</div>
 	);
@@ -56,8 +56,7 @@ export default function Logbook() {
 
 	return (
 		<div
-			className="grid place-items-center font-[Arial] min-h-screen bg-skin-background-dark p-16"
-			style={{ }}
+			className="grid place-items-center font-[Arial] min-h-screen bg-skin-background-dark p-8"
 		>
 			<div>
 				<div>
@@ -79,7 +78,7 @@ export default function Logbook() {
 					<button
 						type="button"
 						onClick={() => {
-							setIndex(Math.max(0, index - 1));
+							setIndex(Math.max(0, index - 2));
 						}}
 						className="cursor-pointer p-4 bg-[#2E75B5] rounded-full"
 					>
@@ -87,7 +86,7 @@ export default function Logbook() {
 					</button>
 					<div className="grid place-items-center w-full">
 						<div
-							className="flex relative max-w-[96rem] aspect-[2/sqrt(2)]"
+							className="flex relative w-[70rem] aspect-[2/sqrt(2)]"
 						>
 							<Page
 								fish={fishContents[index]}
@@ -102,7 +101,7 @@ export default function Logbook() {
 					<button
 						type="button"
 						onClick={() => {
-							setIndex(Math.min(fishContents.length - 1, index + 1));
+							setIndex(Math.min(fishContents.length - 1, index + 2));
 						}}
 						className="cursor-pointer p-4 bg-[#2E75B5] rounded-full"
 					>

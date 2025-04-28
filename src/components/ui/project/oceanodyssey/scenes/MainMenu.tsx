@@ -1,7 +1,5 @@
 import { useNavigate } from 'react-router-dom';
 import { useRouter } from 'next/navigation';
-import Button from '@/components/ui/pixi/Button';
-import { useApplication } from '@pixi/react';
 import type { Project } from '@/types/payload-types';
 
 interface IProps {
@@ -23,8 +21,6 @@ interface MenuButton {
 export default function MainMenu({ project }: IProps) {
 	const navigate = useNavigate();
 	const nextRouter = useRouter();
-
-	const { app } = useApplication();
 
 	const centerButtons: MenuButton[] = [
 		{
@@ -60,68 +56,50 @@ export default function MainMenu({ project }: IProps) {
 	];
 
 	return (
-		<pixiContainer>
-			<pixiText
-				text={'Kronii\'s\nOcean Odyssey'}
-				style={{
-					fontFamily: 'Arial',
-					fontSize: 96,
-					fill: 0xffffff,
-				}}
-				anchor={0.5}
-				x={app.renderer.width * 0.2}
-				y={240}
-			/>
-			{centerButtons.map((button, index) => (
-				<Button
-					key={button.label}
-					label={button.label}
-					x={app.renderer.width * 0.15}
-					y={index * 120 + 480}
-					width={300}
-					height={96}
-					color={button.disabled ? 0x1A4368 : 0x2E75B5}
-					textStyle={{
-						fill: button.disabled ? 0xAAAAAA : 'white',
-						fontSize: 40,
-					}}
-					onClick={button.onClick}
-					disabled={button.disabled}
-				/>
-			))}
+		<div className="font-[Arial] max-w-4xl p-24 2xl:p-32 min-h-screen min-w-screen bg-[#414141]">
+			<div className="flex flex-col gap-4 w-4/12">
+				<h2 className="text-4xl 2xl:text-6xl text-white">
+					Kronii&apos;s
+					<br />
+					Ocean Odyssey
+				</h2>
+				<div className="flex flex-col gap-4 2xl:gap-8 mt-8 2xl:mt-32">
+					{centerButtons.map((button) => (
+						<button
+							type="button"
+							key={button.label}
+							onClick={button.onClick}
+							disabled={button.disabled}
+							className={`px-6 py-4 ${button.disabled ? 'cursor-not-allowed bg-[#1A4368]' : 'cursor-pointer bg-[#2E75B5]'} text-2xl`}
+						>
+							{button.label}
+						</button>
+					))}
+				</div>
+			</div>
 
-			<Button
-				x={app.renderer.width * 0.7}
-				y={app.renderer.height - 368}
-				width={300}
-				height={96}
-				label="How to play"
-				color={0x1A4368}
-				textStyle={{ fill: 0xAAAAAA, fontSize: 40 }}
-				disabled
-				onClick={() => {}}
-			/>
+			<div className="absolute flex flex-col right-32 bottom-16 gap-4 w-2/12">
+				<button
+					type="button"
+					disabled
+					className="px-6 py-2 cursor-not-allowed bg-[#1A4368] text-xl"
+				>
+					How to play
+				</button>
+				<button
+					type="button"
+					disabled
+					className="px-6 py-2 cursor-not-allowed bg-[#1A4368] text-xl"
+				>
+					Cheats
+				</button>
+			</div>
 
-			<Button
-				x={app.renderer.width * 0.7}
-				y={app.renderer.height - 240}
-				width={300}
-				height={96}
-				label="Cheats"
-				color={0x1A4368}
-				textStyle={{ fill: 0xAAAAAA, fontSize: 40 }}
-				disabled
-				onClick={() => {}}
-			/>
-
-			<pixiText
-				text={`Version: ${project.devprops.version}`}
-				style={{
-					fill: 'white',
-				}}
-				x={64}
-				y={app.renderer.height - 64}
-			/>
-		</pixiContainer>
+			<span className="absolute bottom-8 left-16 text-white">
+				Version:
+				{' '}
+				{project.devprops.version}
+			</span>
+		</div>
 	);
 }

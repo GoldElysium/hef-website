@@ -81,16 +81,9 @@ export default function PixiWrapper({ project }: IProps) {
 				<Route
 					path="/"
 					element={(
-						<Application
-							key="mainMenu"
-							backgroundColor={0x414141}
-							antialias
-							resizeTo={window}
-						>
-							<MainMenu
-								project={project}
-							/>
-						</Application>
+						<MainMenu
+							project={project}
+						/>
 					)}
 				/>
 				<Route
