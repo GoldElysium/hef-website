@@ -86,7 +86,7 @@ export default function Logbook() {
 					</button>
 					<div className="grid place-items-center w-full">
 						<div
-							className="flex relative w-[70rem] aspect-[2/sqrt(2)]"
+							className="flex relative w-[70rem] min-[160rem]:w-[96rem] aspect-[2/sqrt(2)]"
 						>
 							<Page
 								fish={fishContents[index]}
