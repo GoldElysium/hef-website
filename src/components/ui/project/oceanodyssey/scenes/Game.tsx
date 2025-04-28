@@ -1,12 +1,11 @@
 import { useNavigate } from 'react-router-dom';
-import { useExtend, useTick } from '@pixi/react';
-import {
-	Bounds, Container, Graphics, Rectangle,
-} from 'pixi.js';
+import { useTick } from '@pixi/react';
+import { Bounds, Graphics, Rectangle } from 'pixi.js';
 import {
 	forwardRef, useEffect, useRef, useState,
 } from 'react';
 import InteractiveText from '../../util/InteractiveText';
+import Inventory from '../components/Inventory';
 
 interface GameProps {
 	width: number;
@@ -21,8 +20,6 @@ interface GameBackgroundProps {
 }
 
 function GameBackground({ position, children }: GameBackgroundProps) {
-	useExtend({ Container });
-
 	return <pixiContainer x={position.x} y={position.y}>{children}</pixiContainer>;
 }
 
@@ -35,17 +32,15 @@ interface FishingSpotProps {
 // and it'll start appearing once the player gets close to the circle's position.
 // Added as a child of gameBackground container, so it will move along with it
 // For now, as an unwanted behaviour, it might be loaded and drawn at all times
-const FishingSpot = forwardRef<Graphics, FishingSpotProps>(
-	({ screenWidth, screenHeight }, ref) => {
-		const drawShape = (graphics: Graphics) => {
-			graphics.clear();
-			graphics.circle(0, 0, 50);
-			graphics.fill(0x000000);
-		};
+const FishingSpot = forwardRef<Graphics, FishingSpotProps>(({ screenWidth, screenHeight }, ref) => {
+	const drawShape = (graphics: Graphics) => {
+		graphics.clear();
+		graphics.circle(0, 0, 50);
+		graphics.fill(0x000000);
+	};
 
-		return <pixiGraphics x={screenWidth - 200} y={screenHeight / 2} ref={ref} draw={drawShape} />;
-	},
-);
+	return <pixiGraphics x={screenWidth - 200} y={screenHeight / 2} ref={ref} draw={drawShape} />;
+});
 
 FishingSpot.displayName = 'FishingSpot';
 
@@ -58,10 +53,7 @@ function PositionText({ text }: PositionTextProps) {
 		<pixiText
 			text={text}
 			style={{
-				fontFamily: 'Arial',
-				fontSize: 20,
-				fill: 0xffffff,
-				align: 'left',
+				fontFamily: 'Arial', fontSize: 20, fill: 0xffffff, align: 'left',
 			}}
 			anchor={0.5}
 			x={325}
@@ -105,10 +97,7 @@ function FishingText({ x }: FishingTextProps) {
 		<pixiText
 			text="Fish!"
 			style={{
-				fontFamily: 'Arial',
-				fontSize: 30,
-				fill: 0xffffff,
-				align: 'center',
+				fontFamily: 'Arial', fontSize: 30, fill: 0xffffff, align: 'center',
 			}}
 			anchor={0.5}
 			x={x}
@@ -117,46 +106,7 @@ function FishingText({ x }: FishingTextProps) {
 	);
 }
 
-interface InventoryBackgroundProps {
-	screenWidth: number;
-	screenHeight: number;
-}
-
-function InventoryBackground({ screenWidth, screenHeight }: InventoryBackgroundProps) {
-	const drawShape = (graphics: Graphics) => {
-		graphics.clear();
-		graphics.rect(0, 0, screenWidth * 0.15, screenHeight);
-		graphics.fill(0x0A0AFF);
-	};
-
-	return <pixiGraphics draw={drawShape} />;
-}
-
-interface InventoryContainerProps {
-	x: number;
-	screenWidth: number;
-	screenHeight: number;
-}
-
-// Container for the inventory HUD
-function InventoryContainer({ x, screenWidth, screenHeight }: InventoryContainerProps) {
-	return (
-		<pixiContainer
-			x={x}
-			y={0}
-		>
-			<InventoryBackground
-				screenWidth={screenWidth}
-				screenHeight={screenHeight}
-			/>
-		</pixiContainer>
-	);
-}
-
-function Game({
-	width,
-	height,
-}: GameProps) {
+export default function Game({ width, height }: GameProps) {
 	const navigate = useNavigate();
 
 	const kroniiBodyRef = useRef<Graphics | null>(null);
@@ -212,19 +162,23 @@ function Game({
 		const newFishingSpotBounds = fishingSpotBounds ?? new Rectangle();
 		// calculate distance from the player to the fishing spot
 		const distX = Math.abs(
-			playerBounds.x + playerBounds.width / 2
-      - newFishingSpotBounds.x - newFishingSpotBounds.width / 2,
+			playerBounds.x
+			+ playerBounds.width / 2
+			- newFishingSpotBounds.x
+			- newFishingSpotBounds.width / 2,
 		);
 		const distY = Math.abs(
-			playerBounds.y + playerBounds.height / 2
-      - newFishingSpotBounds.y - newFishingSpotBounds.height / 2,
+			playerBounds.y
+			+ playerBounds.height / 2
+			- newFishingSpotBounds.y
+			- newFishingSpotBounds.height / 2,
 		);
 		// Pythagoras theorem
 		const distance = Math.sqrt(distX * distX + distY * distY);
 		// We simulate that the kroniiBody has a "radius" and set the distance in which
 		// both figures touch
-		const contactDistance = (Math.min(playerBounds.width, playerBounds.height) / 2)
-      + newFishingSpotBounds.width / 2;
+		// eslint-disable-next-line max-len
+		const contactDistance = Math.min(playerBounds.width, playerBounds.height) / 2 + newFishingSpotBounds.width / 2;
 
 		return distance < contactDistance;
 	};
@@ -232,7 +186,7 @@ function Game({
 	const animateInventory = () => {
 		// TODO Fix cooldown and hiding animation
 		const elapsedTime = (Date.now() - startTime) / 1000; // time in seconds
-		const targetX = isInventoryVisible ? width * 0.85 : width;
+		const targetX = isInventoryVisible ? width * 0.80 : width;
 
 		if (elapsedTime < 0.5) {
 			setInventoryContainerX(width + (targetX - width) * (elapsedTime / 0.5));
@@ -265,8 +219,7 @@ function Game({
 		// Update the position based on the active keys
 		if (moveX !== 0 || moveY !== 0) {
 			setGameBackgroundPosition((prev) => ({
-				x: prev.x + moveX,
-				y: prev.y + moveY,
+				x: prev.x + moveX, y: prev.y + moveY,
 			}));
 		}
 
@@ -298,17 +251,14 @@ function Game({
 		}
 	});
 
-	useTick(isInventoryVisible ? animateInventory : () => {});
+	useTick(isInventoryVisible ? animateInventory : () => { });
 
 	return (
 		<>
 			<pixiText
 				text="Game"
 				style={{
-					fontFamily: 'Arial',
-					fontSize: 50,
-					align: 'center',
-					fill: 0xffffff,
+					fontFamily: 'Arial', fontSize: 50, align: 'center', fill: 0xffffff,
 				}}
 				anchor={0.5}
 				x={width / 2}
@@ -337,7 +287,6 @@ function Game({
 			/>
 
 			<pixiContainer>
-
 				<GameBackground
 					position={gameBackgroundPosition}
 				>
@@ -356,32 +305,22 @@ function Game({
 					ref={kroniiBodyRef}
 					position={playerPosition}
 				>
-					{
-						isFishingTextVisible
-							? (
-								<FishingText
-									x={40}
-								/>
-							)
-							: null
-					}
+					{isFishingTextVisible ? (
+						<FishingText
+							x={40}
+						/>
+					) : null}
 
 				</KroniiBody>
 
-				{
-					isInventoryVisible
-						? (
-							<InventoryContainer
-								x={inventoryContainerX}
-								screenWidth={width}
-								screenHeight={height}
-							/>
-						)
-						: null
-				}
+				{isInventoryVisible ? (
+					<Inventory
+						x={inventoryContainerX}
+						screenWidth={width}
+						screenHeight={height}
+					/>
+				) : null}
 			</pixiContainer>
 		</>
 	);
 }
-
-export default Game;

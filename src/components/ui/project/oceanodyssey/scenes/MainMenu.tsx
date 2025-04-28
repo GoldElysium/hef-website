@@ -1,91 +1,127 @@
 import { useNavigate } from 'react-router-dom';
-import InteractiveText from '../../util/InteractiveText';
-import { notYetImplemented } from '../../util/utils';
+import { useRouter } from 'next/navigation';
+import Button from '@/components/ui/pixi/Button';
+import { useApplication } from '@pixi/react';
+import type { Project } from '@/types/payload-types';
 
-interface MainMenuProps {
-	width: number;
+interface IProps {
+	project: Omit<Project, 'flags' | 'devprops'> & {
+		flags: string[];
+		devprops: {
+			[key: string]: string;
+		};
+	};
 }
 
-function MainMenu({
-	width,
-}: MainMenuProps) {
-	const navigate = useNavigate();
+interface MenuButton {
+	label: string;
+	onClick: () => void;
+	textColor?: number | string;
+	disabled?: boolean;
+}
 
-	const centerButtons = [
+export default function MainMenu({ project }: IProps) {
+	const navigate = useNavigate();
+	const nextRouter = useRouter();
+
+	const { app } = useApplication();
+
+	const centerButtons: MenuButton[] = [
 		{
 			label: 'Start',
-			textColor: 0x0011ff,
-			onClick: () => navigate('/game'),
+			onClick: () => {
+				navigate('/game');
+			},
+			disabled: true,
 		},
 		{
 			label: 'Settings',
-			textColor: 0x466494,
-			onClick: () => navigate('/settings'),
+			onClick: () => {
+				navigate('/settings');
+			},
+			disabled: true,
 		},
 		{
-			label: 'Collectibles',
-			textColor: 0x466494,
-			onClick: () => navigate('/collectibles'),
+			label: 'Logbook',
+			onClick: () => {
+				navigate('/logbook');
+			},
+		},
+		{
+			label: 'Credits',
+			onClick: () => {},
+			disabled: true,
 		},
 		{
 			label: 'Exit',
 			textColor: 0x466494,
-			onClick: () => {
-				// TODO exit the game instead of showing this alert
-				alert('Exiting the game... (function not added yet)');
-			},
-		},
-	];
-
-	const bottomButtons = [
-		{
-			label: 'Game info',
-			offset: 0.1,
-			onClick: notYetImplemented,
-		},
-		{
-			label: 'How to play',
-			offset: 0.7,
-			onClick: notYetImplemented,
+			onClick: () => nextRouter.back(),
 		},
 	];
 
 	return (
 		<pixiContainer>
 			<pixiText
-				text={'Kronii\'s Ocean Odyssey'}
+				text={'Kronii\'s\nOcean Odyssey'}
 				style={{
 					fontFamily: 'Arial',
-					fontSize: 50,
-					align: 'center',
+					fontSize: 96,
 					fill: 0xffffff,
 				}}
 				anchor={0.5}
-				x={width / 2}
-				y={150}
+				x={app.renderer.width * 0.2}
+				y={240}
 			/>
 			{centerButtons.map((button, index) => (
-				<InteractiveText
+				<Button
 					key={button.label}
 					label={button.label}
-					x={width / 2 - 100}
-					y={index * 100 + 240}
-					textColor={button.textColor}
+					x={app.renderer.width * 0.15}
+					y={index * 120 + 480}
+					width={300}
+					height={96}
+					color={button.disabled ? 0x1A4368 : 0x2E75B5}
+					textStyle={{
+						fill: button.disabled ? 0xAAAAAA : 'white',
+						fontSize: 40,
+					}}
 					onClick={button.onClick}
+					disabled={button.disabled}
 				/>
 			))}
-			{bottomButtons.map((button) => (
-				<InteractiveText
-					key={button.label}
-					label={button.label}
-					x={width * button.offset}
-					y={600}
-					textColor={0x466494}
-					onClick={button.onClick}
-				/>
-			))}
+
+			<Button
+				x={app.renderer.width * 0.7}
+				y={app.renderer.height - 368}
+				width={300}
+				height={96}
+				label="How to play"
+				color={0x1A4368}
+				textStyle={{ fill: 0xAAAAAA, fontSize: 40 }}
+				disabled
+				onClick={() => {}}
+			/>
+
+			<Button
+				x={app.renderer.width * 0.7}
+				y={app.renderer.height - 240}
+				width={300}
+				height={96}
+				label="Cheats"
+				color={0x1A4368}
+				textStyle={{ fill: 0xAAAAAA, fontSize: 40 }}
+				disabled
+				onClick={() => {}}
+			/>
+
+			<pixiText
+				text={`Version: ${project.devprops.version}`}
+				style={{
+					fill: 'white',
+				}}
+				x={64}
+				y={app.renderer.height - 64}
+			/>
 		</pixiContainer>
 	);
 }
-
-export default MainMenu;

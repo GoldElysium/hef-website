@@ -1,23 +1,36 @@
+/* eslint-disable no-param-reassign */
 import { create } from 'zustand';
-import { createJSONStorage, persist } from 'zustand/middleware';
+import { persist } from 'zustand/middleware';
+import { immer } from 'zustand/middleware/immer';
 import { FishData } from '../model/FishData';
 
-interface FishDataPersistentStore {
+export interface State {
 	fishes: FishData[];
-	addFishes: (item: Record<string, FishData>) => void;
+}
+
+export interface Actions {
+	setFishes: (newFishes: FishData[]) => void;
 	resetFishes: () => void;
 }
 
-const useFishStore = create<FishDataPersistentStore>(
+export type FishStore = ReturnType<typeof useFishStore>;
+
+// TODO: Most likely needs to be updated to use createWithEqualityFn (see jigsaw game and docs)
+const useFishStore = create(
 	persist(
-		(set) => ({
-			addFishes: (newFishes: Record<string, FishData>) => set({ fishes: newFishes }),
-		}),
+		immer<State & Actions>((set) => ({
+			fishes: [],
+			setFishes: (newFishes) => set((state) => {
+				state.fishes = newFishes;
+			}),
+			resetFishes: () => set((state) => {
+				state.fishes = [];
+			}),
+		} satisfies State & Actions)),
 		{
-			name: 'Kronii fishing game',
-			storage: createJSONStorage(() => localStorage),
+			name: 'ocean-odyssey',
 		},
-	) as any,
+	),
 );
 
 export default useFishStore;

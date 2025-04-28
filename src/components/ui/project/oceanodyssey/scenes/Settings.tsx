@@ -5,9 +5,7 @@ interface SettingsProps {
 	width: number;
 }
 
-function Settings({
-	width,
-}: SettingsProps) {
+export default function Settings({ width }: SettingsProps) {
 	const navigate = useNavigate();
 
 	return (
@@ -15,21 +13,11 @@ function Settings({
 			<pixiText
 				text="Settings"
 				style={{
-					fontFamily: 'Arial',
-					fontSize: 50,
-					align: 'center',
-					fill: 0xffffff,
+					fontFamily: 'Arial', fontSize: 50, align: 'center', fill: 0xffffff,
 				}}
 				anchor={0.5}
 				x={width / 2}
 				y={150}
-			/>
-			<InteractiveText
-				label="Fish Data"
-				x={width / 2 - 100}
-				y={340}
-				textColor={0x466494}
-				onClick={() => navigate('/fish-data')}
 			/>
 			<InteractiveText
 				label="back"
@@ -41,5 +29,3 @@ function Settings({
 		</pixiContainer>
 	);
 }
-
-export default Settings;

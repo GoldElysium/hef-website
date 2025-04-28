@@ -30,7 +30,6 @@ function InteractiveText({
 			y={y}
 			width={200}
 			height={60}
-			color={undefined}
 			onClick={onClick}
 		/>
 	);

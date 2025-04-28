@@ -1,10 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 import { useTick } from '@pixi/react';
 import { Graphics, Ticker } from 'pixi.js';
-import {
-	forwardRef, useEffect, useState,
-} from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 import InteractiveText from '../../util/InteractiveText';
+import Inventory from '../components/Inventory';
 
 interface SpamProps {
 	width: number;
@@ -15,24 +14,22 @@ interface KroniiBodyProps {
 	position: { x: number, y: number };
 }
 
-const KroniiBody = forwardRef<Graphics, KroniiBodyProps>(
-	({ position }, ref) => {
-		const drawShape = (graphics: Graphics) => {
-			graphics.clear();
-			graphics.rect(0, 0, 80, 160);
-			graphics.fill(0x0000ff);
-		};
+const KroniiBody = forwardRef<Graphics, KroniiBodyProps>(({ position }, ref) => {
+	const drawShape = (graphics: Graphics) => {
+		graphics.clear();
+		graphics.rect(0, 0, 80, 160);
+		graphics.fill(0x0000ff);
+	};
 
-		return (
-			<pixiGraphics
-				ref={ref}
-				x={position.x}
-				y={position.y}
-				draw={drawShape}
-			/>
-		);
-	},
-);
+	return (
+		<pixiGraphics
+			ref={ref}
+			x={position.x}
+			y={position.y}
+			draw={drawShape}
+		/>
+	);
+});
 KroniiBody.displayName = 'KroniiBody';
 
 interface BackpackProps {
@@ -40,63 +37,25 @@ interface BackpackProps {
 	onClick: () => void;
 }
 
-const Backpack = forwardRef<Graphics, BackpackProps>(
-	({ position, onClick }, ref) => {
-		const drawShape = (graphics: Graphics) => {
-			graphics.clear();
-			graphics.rect(0, 0, 60, 60);
-			graphics.fill(0x5c3e0e);
-		};
-
-		return (
-			<pixiGraphics
-				ref={ref}
-				x={position.x}
-				y={position.y}
-				draw={drawShape}
-				onClick={onClick}
-				interactive
-			/>
-		);
-	},
-);
-Backpack.displayName = 'KroniiBody';
-
-interface InventoryBackgroundProps {
-	screenWidth: number;
-	screenHeight: number;
-}
-
-function InventoryBackground({ screenWidth, screenHeight }: InventoryBackgroundProps) {
+const Backpack = forwardRef<Graphics, BackpackProps>(({ position, onClick }, ref) => {
 	const drawShape = (graphics: Graphics) => {
 		graphics.clear();
-		graphics.rect(0, 0, screenWidth * 0.15, screenHeight);
-		graphics.fill(0x0A0AFF);
+		graphics.rect(0, 0, 60, 60);
+		graphics.fill(0x5c3e0e);
 	};
 
-	return <pixiGraphics draw={drawShape} />;
-}
-
-interface InventoryContainerProps {
-	x: number;
-	screenWidth: number;
-	screenHeight: number;
-}
-
-// Container for the inventory HUD
-function InventoryContainer({ x, screenWidth, screenHeight }: InventoryContainerProps) {
 	return (
-		<pixiContainer
-			x={x}
-			y={0}
-		>
-			<InventoryBackground
-				screenWidth={screenWidth}
-				screenHeight={screenHeight}
-			/>
-		</pixiContainer>
+		<pixiGraphics
+			ref={ref}
+			x={position.x}
+			y={position.y}
+			draw={drawShape}
+			onClick={onClick}
+			interactive
+		/>
 	);
-}
+});
+Backpack.displayName = 'KroniiBody';
 
 interface FishingTextProps {
 	text: string;
@@ -107,9 +66,7 @@ function FishingText({ text }: FishingTextProps) {
 		<pixiText
 			text={text}
 			style={{
-				fontFamily: 'Arial',
-				fontSize: 24,
-				fill: 0xffffff,
+				fontFamily: 'Arial', fontSize: 24, fill: 0xffffff,
 			}}
 			anchor={0.5}
 			x={10}
@@ -177,18 +134,20 @@ function FishStatus({ playerFishingBarHeight, fishScapeBarHeight, fishingText }:
 	);
 }
 
-function Spam({ width, height }: SpamProps) {
+export default function Spam({ width, height }: SpamProps) {
 	const navigate = useNavigate();
 	const [isInventoryVisible, setIsInventoryVisible] = useState(false);
 	const [startTime, setStartTime] = useState(0);
 	const [animationCooldown, setAnimationCooldown] = useState(false);
 	const playerHeight = 160;
-	const [playerPosition, setPlayerPosition] = useState(
-		{ x: (width / 2) - playerHeight / 2, y: (height / 2) - 200 },
-	);
-	const [backpackPosition, setBackpackPosition] = useState(
-		{ x: (width / 2) + 100, y: (height / 2) - 100 },
-	);
+	const [playerPosition, setPlayerPosition] = useState({
+		x: (width / 2) - playerHeight / 2,
+		y: (height / 2) - 200,
+	});
+	const [backpackPosition, setBackpackPosition] = useState({
+		x: (width / 2) + 100,
+		y: (height / 2) - 100,
+	});
 	const [pressedKeys, setPressedKeys] = useState<Set<string>>(new Set());
 	const [inventoryContainerX, setInventoryContainerX] = useState(width);
 	const [isPlayerFishing, setIsPlayerFishing] = useState(false);
@@ -271,12 +230,10 @@ function Spam({ width, height }: SpamProps) {
 		// Update the position based on the active keys
 		if (moveX !== 0 || moveY !== 0) {
 			setPlayerPosition((prev) => ({
-				x: prev.x + moveX,
-				y: prev.y + moveY,
+				x: prev.x + moveX, y: prev.y + moveY,
 			}));
 			setBackpackPosition((prev) => ({
-				x: prev.x + moveX,
-				y: prev.y + moveY,
+				x: prev.x + moveX, y: prev.y + moveY,
 			}));
 		}
 	};
@@ -309,11 +266,7 @@ function Spam({ width, height }: SpamProps) {
 			return;
 		}
 
-		setFishingText(
-			newPlayerProgress >= 100
-				? 'Player wins. Press Q to restart'
-				: 'Fish scaped. Press Q to restart',
-		);
+		setFishingText(newPlayerProgress >= 100 ? 'Player wins. Press Q to restart' : 'Fish scaped. Press Q to restart');
 
 		setFishScapeBarHeight(5);
 		setPlayerProgress(0);
@@ -333,17 +286,15 @@ function Spam({ width, height }: SpamProps) {
 		fishing(ticker);
 	});
 
-	useTick(isInventoryVisible ? animateInventory : () => {});
+	useTick(isInventoryVisible ? animateInventory : () => {
+	});
 
 	return (
 		<>
 			<pixiText
 				text="Spam"
 				style={{
-					fontFamily: 'Arial',
-					fontSize: 50,
-					align: 'center',
-					fill: 0xffffff,
+					fontFamily: 'Arial', fontSize: 50, align: 'center', fill: 0xffffff,
 				}}
 				anchor={0.5}
 				x={width / 2}
@@ -372,20 +323,18 @@ function Spam({ width, height }: SpamProps) {
 
 				<Backpack
 					position={backpackPosition}
-					onClick={() => { setIsInventoryVisible(!isInventoryVisible); }}
+					onClick={() => {
+						setIsInventoryVisible(!isInventoryVisible);
+					}}
 				/>
 
-				{
-					isInventoryVisible
-						? (
-							<InventoryContainer
-								x={inventoryContainerX}
-								screenWidth={width}
-								screenHeight={height}
-							/>
-						)
-						: null
-				}
+				{isInventoryVisible ? (
+					<Inventory
+						x={inventoryContainerX}
+						screenWidth={width}
+						screenHeight={height}
+					/>
+				) : null}
 
 				<FishStatus
 					playerFishingBarHeight={playerFishingBarHeight}
@@ -397,5 +346,3 @@ function Spam({ width, height }: SpamProps) {
 		</>
 	);
 }
-
-export default Spam;

@@ -127,7 +127,7 @@ export default async function ProjectPage({ params }: IProps) {
 
 	if (project.flags.includes('kronii-fishing')) {
 		return (
-			<PixiClientWrapper />
+			<PixiClientWrapper project={project} />
 		);
 	}
 

@@ -6,13 +6,15 @@ import {
 } from 'pixi.js';
 import { useEffect, useState } from 'react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import type { Project } from '@/types/payload-types';
 import MainMenu from './scenes/MainMenu';
 import Settings from './scenes/Settings';
 import Game from './scenes/Game';
-import Collectibles from './scenes/Collectibles';
+import Logbook from './scenes/Logbook';
 import Shop from './scenes/Shop';
-import FishDataScene from './scenes/FishDataScene';
 import Spam from './scenes/Spam';
+import useFishStore from './store/FishStore';
+import { FishData } from './model/FishData';
 
 GraphicsContextSystem.defaultOptions.bezierSmoothness = 0.8;
 
@@ -23,11 +25,37 @@ extend({
 	Sprite,
 });
 
-export default function PixiWrapper() {
+interface IProps {
+	project: Omit<Project, 'flags' | 'devprops'> & {
+		flags: string[];
+		devprops: {
+			[key: string]: string;
+		};
+	};
+}
+
+export default function PixiWrapper({ project }: IProps) {
 	// TODO: Asset loading
 
 	const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 	const [screenHeight, setScreenHeight] = useState(window.innerHeight);
+	const [ready, setReady] = useState(false);
+
+	const fishStore = useFishStore();
+
+	useEffect(() => {
+		setReady(false);
+		(async () => {
+			const res = await fetch(project.devprops.fishDataUrl);
+
+			const parsedJson: FishData[] = await res.json();
+
+			fishStore.setFishes(parsedJson);
+
+			setReady(true);
+		})();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	useEffect(() => {
 		const handleResize = () => {
@@ -39,6 +67,14 @@ export default function PixiWrapper() {
 		return () => window.removeEventListener('resize', handleResize);
 	}, []);
 
+	if (!ready) {
+		return (
+			<div className="bg-skin-background-dark grid place-items-center text-skin-text-dark min-h-screen">
+				<h2 className="text-xl">Loading...</h2>
+			</div>
+		);
+	}
+
 	return (
 		<MemoryRouter initialEntries={['/']}>
 			<Routes>
@@ -46,12 +82,13 @@ export default function PixiWrapper() {
 					path="/"
 					element={(
 						<Application
-							backgroundColor={0x1099bb}
+							key="mainMenu"
+							backgroundColor={0x414141}
 							antialias
 							resizeTo={window}
 						>
 							<MainMenu
-								width={screenWidth}
+								project={project}
 							/>
 						</Application>
 					)}
@@ -101,25 +138,9 @@ export default function PixiWrapper() {
 					)}
 				/>
 				<Route
-					path="/collectibles"
+					path="/logbook"
 					element={(
-						<Collectibles
-							backgroundColor="#1099bb"
-						/>
-					)}
-				/>
-				<Route
-					path="/fish-data"
-					element={(
-						<Application
-							backgroundColor={0x1099bb}
-							antialias
-							resizeTo={window}
-						>
-							<FishDataScene
-								width={screenWidth}
-							/>
-						</Application>
+						<Logbook />
 					)}
 				/>
 				<Route

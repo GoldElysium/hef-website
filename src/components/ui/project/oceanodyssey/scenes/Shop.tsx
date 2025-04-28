@@ -5,9 +5,7 @@ interface ShopProps {
 	width: number;
 }
 
-function Shop({
-	width,
-}: ShopProps) {
+export default function Shop({ width }: ShopProps) {
 	const navigate = useNavigate();
 
 	return (
@@ -15,10 +13,7 @@ function Shop({
 			<pixiText
 				text="Shop"
 				style={{
-					fontFamily: 'Arial',
-					fontSize: 50,
-					align: 'center',
-					fill: 0xffffff,
+					fontFamily: 'Arial', fontSize: 50, align: 'center', fill: 0xffffff,
 				}}
 				anchor={0.5}
 				x={width / 2}
@@ -34,5 +29,3 @@ function Shop({
 		</pixiContainer>
 	);
 }
-
-export default Shop;

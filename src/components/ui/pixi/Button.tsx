@@ -1,4 +1,4 @@
-import type { TextStyle } from 'pixi.js';
+import type { TextStyle, TextStyleOptions } from 'pixi.js';
 
 interface ButtonProps {
 	x: number;
@@ -7,9 +7,10 @@ interface ButtonProps {
 	height: number;
 	label: string;
 	color?: number;
-	textStyle: TextStyle;
+	textStyle: TextStyle | TextStyleOptions;
 	radius?: number;
 	onClick?: () => void;
+	disabled?: boolean;
 }
 
 export default function Button({
@@ -26,6 +27,7 @@ export default function Button({
 		fontSize: 18,
 		fontWeight: 'bold',
 	} as TextStyle,
+	disabled,
 }: ButtonProps) {
 	const handleClick = () => {
 		if (onClick) {
@@ -36,10 +38,11 @@ export default function Button({
 	return (
 		<pixiContainer
 			eventMode={onClick ? 'static' : 'auto'}
-			onPointerDown={handleClick}
+			onPointerDown={disabled ? undefined : handleClick}
 			x={x}
 			y={y}
-			cursor={onClick ? 'pointer' : undefined}
+			// eslint-disable-next-line no-nested-ternary
+			cursor={disabled ? 'not-allowed' : (onClick ? 'pointer' : undefined)}
 		>
 			<pixiGraphics
 				draw={(g) => {
