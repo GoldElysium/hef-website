@@ -7,9 +7,10 @@ const nextConfig = {
     reactStrictMode: false,
     images: {
         loader: 'custom', loaderFile: './imageLoader.js', unoptimized: true,
-    }, webpack: {
+    },
+    webpack: {
         ignoreWarnings: [{module: /@opentelemetry\/instrumentation/, message: /Critical dependency/},]
-    }
+    },
 };
 
 // Injected content via Sentry wizard below
