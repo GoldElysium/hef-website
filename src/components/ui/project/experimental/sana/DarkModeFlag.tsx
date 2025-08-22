@@ -18,7 +18,8 @@ export default function DarkModeFlag({ project }: ProjectPageProps) {
 	useEffect(() => {
 		if (project.flags?.includes('alwaysDarkMode')) setTheme('dark');
 		if (project.flags?.includes('alwaysLightMode')) setTheme('light');
-	}, [project.flags, setTheme]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [project]);
 
 	return null;
 }

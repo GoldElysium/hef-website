@@ -1,0 +1,24 @@
+@font-face {
+    font-family: "Winner College";
+    src: url("https://cdn.holoen.fans/hefw/assets/kronii-anniversary-2025/winner-college.latin.woff2");
+}
+
+.marquee {
+    font-family: "Winner College", sans-serif;
+}
+
+.item {
+    animation-duration: 7s;
+    animation-iteration-count: infinite;
+    animation-name: marquee-content;
+    animation-timing-function: linear;
+}
+
+@keyframes marquee-content {
+    from {
+        transform: translateX(0%);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+}

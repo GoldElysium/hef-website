@@ -79,7 +79,7 @@ export default async function RootLayout({ params, children }: IProps) {
 						/>
 					)
 				}
-				<main>
+				<main className="bg-skin-background dark:bg-skin-background-dark scroll-smooth">
 					{children}
 				</main>
 				<Footer flags={project?.flags ?? []} />

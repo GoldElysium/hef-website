@@ -1,4 +1,4 @@
-import Submission from '@/components/ui/project/Submission';
+import OldSubmission from '@/components/ui/project/OldSubmission';
 import { Project } from '@/types/payload-types';
 import useTranslation from '@/lib/i18n/server';
 import { Language } from '@/lib/i18n/languages';
@@ -28,7 +28,7 @@ export default async function Submissions({ project, lang }: IProps) {
 						<div className="flex flex-wrap sm:w-11/12 md:w-10/12">
 							{submissions.map((submission, index) => (
 								<div className="w-1/2 min-w-80" key={submission.id}>
-									<Submission
+									<OldSubmission
 										submission={submission as any}
 										index={index}
 										key={submission.id}
@@ -71,7 +71,7 @@ export default async function Submissions({ project, lang }: IProps) {
 			<SubmissionsWithFilter
 				submissions={submissions.map((submission) => ({
 					data: submission,
-					el: <Submission
+					el: <OldSubmission
 						submission={submission as any}
 						key={submission.id}
 						lang={lang}
@@ -90,7 +90,7 @@ export default async function Submissions({ project, lang }: IProps) {
 						className={`h-full sm:w-11/12 md:w-10/12 ${project.flags.includes('sanaSendoff') ? 'w-full' : 'max-w-full'}`}
 					>
 						{submissions.map((submission, index) => (
-							<Submission
+							<OldSubmission
 								submission={submission as any}
 								index={index}
 								key={submission.id}
