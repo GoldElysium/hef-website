@@ -7,14 +7,14 @@ import DarkModeProvider from '@/components/contexts/DarkModeProvider';
 interface IProps {
 	children: React.ReactNode;
 	params: Promise<{
-		lang: Language;
+		lang: string;
 	}>
 }
 
 export default async function RootLayout({ params, children }: IProps) {
 	const {
 		lang,
-	} = await params;
+	} = await params as { lang: Language };
 
 	return (
 		<body>

@@ -20,15 +20,20 @@ export interface IForm {
 interface IProps {
 	params: Promise<{
 		id: string;
-		lang: Language;
-	}>;
+		lang: string;
+	}>
+}
+
+interface IParams {
+	id: string;
+	lang: Language;
 }
 
 export default async function FormPage({ params }: IProps) {
 	const {
 		id,
 		lang,
-	} = await params;
+	} = await params as IParams;
 
 	const form = await fetchForm(id, lang);
 
@@ -87,8 +92,8 @@ export default async function FormPage({ params }: IProps) {
 	);
 }
 
-export async function generateStaticParams({ params }: IProps) {
-	const { lang } = await params;
+export async function generateStaticParams({ params }: { params: { lang: string } }) {
+	const { lang } = params as { lang: Language };
 
 	let forms: Form[] = [];
 	let moreForms = true;

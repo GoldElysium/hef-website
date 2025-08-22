@@ -11,15 +11,20 @@ interface IProps {
 	children: React.ReactNode;
 	params: Promise<{
 		id: string;
-		lang: Language;
+		lang: string;
 	}>
+}
+
+interface IParams {
+	id: string;
+	lang: Language;
 }
 
 export default async function RootLayout({ params, children }: IProps) {
 	const {
 		id,
 		lang,
-	} = await params;
+	} = await params as IParams;
 
 	const form = await fetchForm(id, lang);
 

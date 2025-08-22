@@ -12,8 +12,13 @@ interface IProps {
 	children: React.ReactNode;
 	params: Promise<{
 		slug?: string;
-		lang: Language;
+		lang: string;
 	}>
+}
+
+interface IParams {
+	slug?: string;
+	lang: Language;
 }
 
 interface PropsProject {
@@ -52,7 +57,7 @@ export default async function RootLayout({ params, children }: IProps) {
 	const {
 		slug,
 		lang,
-	} = await params;
+	} = await params as IParams;
 
 	let project: PropsProject | null = null;
 

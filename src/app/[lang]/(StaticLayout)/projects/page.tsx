@@ -10,7 +10,7 @@ import type { JSX } from 'react';
 
 interface IProps {
 	params: Promise<{
-		lang: Language;
+		lang: string;
 	}>
 }
 
@@ -60,7 +60,7 @@ function formatProjects(projects: Project[], lang: Language): JSX.Element[] {
 export default async function Page({ params }: IProps) {
 	const {
 		lang,
-	} = await params;
+	} = await params as { lang: Language };
 
 	// eslint-disable-next-line react-hooks/rules-of-hooks
 	const { t } = await useTranslation(lang, 'projects', 'page');
@@ -95,7 +95,7 @@ export async function generateMetadata(props: IProps): Promise<Metadata> {
 
 	const {
 		lang,
-	} = params;
+	} = params as { lang: Language };
 
 	// eslint-disable-next-line react-hooks/rules-of-hooks
 	const { t } = await useTranslation(lang, 'projects', 'head');

@@ -28,8 +28,13 @@ import Kronii4thAnniversaryPage from '@/components/ui/project/kronii4thanniv/Kro
 interface IProps {
 	params: Promise<{
 		slug: string;
-		lang: Language;
+		lang: string;
 	}>
+}
+
+interface IParams {
+	slug: string;
+	lang: Language;
 }
 
 type ProjectData = Omit<Project, 'flags' | 'devprops'> & {
@@ -80,7 +85,7 @@ export default async function ProjectPage({ params }: IProps) {
 	const {
 		slug,
 		lang,
-	} = await params;
+	} = await params as IParams;
 
 	const project = await fetchProject(slug, lang);
 	if (project === null) {
@@ -227,8 +232,8 @@ export default async function ProjectPage({ params }: IProps) {
 	);
 }
 
-export async function generateStaticParams({ params }: IProps) {
-	const { lang } = await params;
+export async function generateStaticParams({ params }: { params: { lang: string } }) {
+	const { lang } = params as { lang: Language };
 
 	let projects: Project[] = [];
 	let moreProjects = true;

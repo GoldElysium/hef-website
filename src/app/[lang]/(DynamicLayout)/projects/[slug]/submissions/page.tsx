@@ -15,8 +15,13 @@ import ButtonLink from '@/components/ui/ButtonLink';
 interface IProps {
 	params: Promise<{
 		slug: string;
-		lang: Language;
+		lang: string;
 	}>
+}
+
+interface IParams {
+	slug: string;
+	lang: Language;
 }
 
 async function fetchProject(slug: string, lang: Language) {
@@ -133,7 +138,7 @@ export default async function SubmissionsPage({ params }: IProps) {
 	const {
 		slug,
 		lang,
-	} = await params;
+	} = await params as IParams;
 
 	const project = await fetchProject(slug, lang);
 	if (!project || !project.hasSubmissions) {
