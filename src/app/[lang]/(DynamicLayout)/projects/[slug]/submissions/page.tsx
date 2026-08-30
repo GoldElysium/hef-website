@@ -54,7 +54,7 @@ export function RandomSubmissions({ submissions }: { submissions: ISubmission[] 
 
 	return randomSubmissions.map((submission) => (
 		<div
-			className="rounded-md bg-skin-secondary px-8 py-4 dark:bg-skin-secondary-dark lg:max-w-[32%]"
+			className="w-full rounded-md bg-skin-secondary px-8 py-4 dark:bg-skin-secondary-dark lg:max-w-[32%]"
 			key={`rand-${submission.id}`}
 		>
 			<div className="flex">
@@ -73,19 +73,19 @@ export function RandomSubmissions({ submissions }: { submissions: ISubmission[] 
 						alt={`Profile picture of ${submission.author}`}
 					/>
 				)}
-				<h3 className="font-bold text-skin-heading dark:text-skin-heading-dark">{submission.author}</h3>
+				<h3 className="font-bold text-skin-secondary-heading dark:text-skin-secondary-heading-dark">{submission.author}</h3>
 				<div className="grow" />
 				<a
-					className="flex items-center gap-2 text-skin-link hover:font-bold dark:text-skin-link-dark"
+					className="flex items-center gap-2 text-skin-secondary-heading hover:font-bold dark:text-skin-secondary-heading-dark"
 					href={`#${submission.id}`}
 				>
 					<ChevronRightIcon width={16} height={16} />
 					Go to submission
 				</a>
 			</div>
-			<div className="flex">
+			<div className="mt-1 flex justify-between">
 				{submission.message && (
-					<p className="mx-4 mb-4 h-full w-auto overflow-auto whitespace-pre-line dark:text-gray-300">
+					<p className="mb-4 mr-4 w-auto whitespace-pre-line text-skin-secondary-foreground dark:text-skin-secondary-foreground-dark">
 						{submission.message}
 					</p>
 				)}
@@ -103,7 +103,7 @@ export function RandomSubmissions({ submissions }: { submissions: ISubmission[] 
 								/>
 							)}
 							{submission.media[0].type === 'image' && (
-								<div className="mb-2 mt-4 flex size-full max-h-[350px] justify-center">
+								<div className="mb-2 mt-4 flex max-h-[350px] w-full min-w-[30%] justify-center">
 									<Image
 										className="mb-4 max-w-10/12 object-contain"
 										src={submission.media[0].image.url!}
@@ -173,7 +173,7 @@ export default async function SubmissionsPage({ params: { slug, lang } }: IProps
 						<div className="grid grid-cols-1 grid-rows-[masonry] gap-8 lg:grid-cols-3" style={{ contentVisibility: 'auto' }}>
 							{submissions.map((submission) => (
 								<div
-									className="rounded-md bg-skin-secondary px-8 py-4 dark:bg-skin-secondary-dark"
+									className="min-h-fit break-inside-avoid rounded-md bg-skin-secondary px-8 py-4 dark:bg-skin-secondary-dark"
 									id={submission.id}
 									key={submission.id}
 								>
@@ -193,11 +193,11 @@ export default async function SubmissionsPage({ params: { slug, lang } }: IProps
 												alt={`Profile picture of ${submission.author}`}
 											/>
 										)}
-										<h3 className="font-bold text-skin-heading dark:text-skin-heading-dark">{submission.author}</h3>
+										<h3 className="font-bold text-skin-secondary-heading dark:text-skin-secondary-heading-dark">{submission.author}</h3>
 
 										<div className="grow" />
 										<a
-											className="flex items-center gap-2 text-skin-link dark:text-skin-link-dark"
+											className="flex items-center gap-2 font-bold text-skin-secondary-heading dark:text-skin-secondary-heading-dark"
 											href={`#${submission.id}`}
 										>
 											<LinkIcon width={16} height={16} />
@@ -218,7 +218,7 @@ export default async function SubmissionsPage({ params: { slug, lang } }: IProps
 													/>
 												)}
 												{submission.media[0].type === 'image' && (
-													<div className="mb-2 mt-4 flex size-full max-h-[750px] justify-center">
+													<div className="mb-2 mt-4 flex max-h-[60%] w-full justify-center">
 														<Image
 															className="mb-4 max-w-10/12 object-contain"
 															src={submission.media[0].image.url!}
@@ -286,7 +286,7 @@ export default async function SubmissionsPage({ params: { slug, lang } }: IProps
 										)
 									}
 									{submission.message && (
-										<p className="mx-4 mb-4 h-full w-auto overflow-auto whitespace-pre-line dark:text-gray-300">
+										<p className="mx-4 mb-4 w-auto whitespace-pre-line text-skin-secondary-foreground dark:text-skin-secondary-foreground-dark">
 											{submission.message}
 										</p>
 									)}

@@ -10,6 +10,7 @@ const themeColors = {
     "primary-foreground": withOpacity("--color-primary-foreground"),
     secondary: withOpacity("--color-secondary"),
     "secondary-foreground": withOpacity("--color-secondary-foreground"),
+    "secondary-heading": withOpacity("--color-secondary-heading"),
     accent: withOpacity("--color-accent"),
     text: withOpacity("--color-text"),
     header: withOpacity("--color-header"),
@@ -24,6 +25,7 @@ const themeColors = {
     "secondary-foreground-dark": withOpacity(
         "--color-secondary-foreground-dark"
     ),
+    "secondary-heading-dark": withOpacity("--color-secondary-heading-dark"),
     "accent-dark": withOpacity("--color-accent-dark"),
     "text-dark": withOpacity("--color-text-dark"),
     "header-dark": withOpacity("--color-header-dark"),
