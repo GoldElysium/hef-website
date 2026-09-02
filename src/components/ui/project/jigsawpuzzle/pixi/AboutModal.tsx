@@ -6,7 +6,6 @@ import React, {
 import {
 	Container, Graphics, Sprite, Text, useApp,
 } from '@pixi/react';
-import { Graphics as PixiGraphics, TextStyle } from 'pixi.js';
 import ThemeContext from '@/components/ui/project/jigsawpuzzle/providers/ThemeContext';
 import usePuzzleStore from '../providers/PuzzleStoreConsumer';
 import TaggedText from './TaggedText';
@@ -14,6 +13,7 @@ import Button from './Button';
 import Scrollbox from './Scrollbox';
 import PuzzleStoreContext from '../providers/PuzzleStoreContext';
 import CreditsRenderer, { CreditNode } from './CreditsRenderer';
+import type { GraphicsDraw } from './graphicsTypes';
 
 export interface Credits {
 	length: number;
@@ -52,28 +52,28 @@ export default function AboutModal({
 
 	const { colors: themeColors, resolvedTheme } = useContext(ThemeContext);
 
-	const drawBackground = useCallback((g: PixiGraphics) => {
+	const drawBackground = useCallback<GraphicsDraw>((g) => {
 		g.clear();
 		g.beginFill(themeColors[resolvedTheme].background);
 		g.drawRect(0, 0, width, height);
 		g.endFill();
 	}, [themeColors, resolvedTheme, width, height]);
 
-	const drawSettingsBox = useCallback((g: PixiGraphics) => {
+	const drawSettingsBox = useCallback<GraphicsDraw>((g) => {
 		g.clear();
 		g.beginFill(themeColors[resolvedTheme].secondary);
 		g.drawRoundedRect(0, 0, 700, 400, 8);
 		g.endFill();
 	}, [resolvedTheme, themeColors]);
 
-	const drawCreditsBox = useCallback((g: PixiGraphics) => {
+	const drawCreditsBox = useCallback<GraphicsDraw>((g) => {
 		g.clear();
 		g.beginFill(themeColors[resolvedTheme].secondary);
 		g.drawRoundedRect(0, 0, 700, 864, 8);
 		g.endFill();
 	}, [resolvedTheme, themeColors]);
 
-	const drawExitButton = useCallback((g: PixiGraphics) => {
+	const drawExitButton = useCallback<GraphicsDraw>((g) => {
 		g.clear();
 		g.beginFill(themeColors[resolvedTheme].secondary);
 		g.drawCircle(16, 16, 20);
@@ -108,7 +108,7 @@ export default function AboutModal({
 								fill: themeColors[resolvedTheme].secondaryForeground,
 								fontWeight: 'bold',
 								fontSize: 24,
-							} as TextStyle}
+							} as any}
 							x={350}
 							y={32}
 							anchor={[0.5, 0]}
@@ -160,7 +160,7 @@ export default function AboutModal({
 							fill: themeColors[resolvedTheme].secondaryForeground,
 							fontWeight: 'bold',
 							fontSize: 24,
-						} as TextStyle}
+						} as any}
 						x={350}
 						y={32}
 						anchor={[0.5, 0]}
@@ -229,7 +229,7 @@ export default function AboutModal({
 							style={{
 								fill: themeColors[resolvedTheme].secondaryForeground,
 								fontSize: 20,
-							} as TextStyle}
+							} as any}
 							x={350}
 							y={352}
 							anchor={[0.5, 0]}
@@ -257,7 +257,7 @@ export default function AboutModal({
 								fill: themeColors[resolvedTheme].secondaryForeground,
 								fontWeight: 'bold',
 								fontSize: 40,
-							} as TextStyle}
+							} as any}
 							x={350}
 							y={32}
 							anchor={[0.5, 0]}

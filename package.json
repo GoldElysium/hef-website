@@ -36,7 +36,7 @@
     "@mdi/react": "1.6.1",
     "@pixi/gif": "^2.1.1",
     "@pixi/graphics-smooth": "^1.1.1",
-    "@pixi/react": "7.1.1",
+    "@pixi/react": "7.1.2",
     "@pixi/sound": "^5.2.3",
     "@pixi/text-html": "^7.4.3",
     "@radix-ui/react-dialog": "^1.1.23",

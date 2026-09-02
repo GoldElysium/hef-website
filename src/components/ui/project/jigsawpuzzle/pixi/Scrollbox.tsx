@@ -44,7 +44,7 @@ const Scrollbox = PixiComponent('Scrollbox', {
 			scrollboxRef.current = scrollbox;
 		}
 
-		return scrollbox;
+		return scrollbox as any;
 	},
 	applyProps(scrollbox, _oldProps, _newProps) {
 		/* eslint-disable @typescript-eslint/naming-convention */
@@ -52,13 +52,13 @@ const Scrollbox = PixiComponent('Scrollbox', {
 			children: oldChildren,
 			scrollboxRef: _oldRef,
 			...oldProps
-		} = _oldProps;
+		} = _oldProps as PixiComponentScrollboxProps;
 		/* eslint-enable */
 		const {
 			children: newChildren,
 			scrollboxRef,
 			...newProps
-		} = _newProps;
+		} = _newProps as PixiComponentScrollboxProps;
 
 		Object.keys(newProps).forEach((p) => {
 			// @ts-ignore

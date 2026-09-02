@@ -1,7 +1,6 @@
 import {
 	Container, Graphics, Sprite, Text,
 } from '@pixi/react';
-import { TextStyle } from 'pixi.js';
 
 interface GenericCreditNode {
 	type: string;
@@ -75,7 +74,7 @@ export default function CreditsRenderer({ nodes, textColor, linkColor }: { nodes
 				return (
 					<Text
 						text={node.text}
-						style={textStyle as TextStyle}
+						style={textStyle}
 						x={node.x}
 						y={node.y}
 						anchor={[0.5, 0]}
@@ -118,7 +117,7 @@ export default function CreditsRenderer({ nodes, textColor, linkColor }: { nodes
 								fill: textColor,
 								fontWeight: 'bold',
 								fontSize: 16,
-							} as TextStyle}
+							} as any}
 							x={node.nameX ?? 52}
 							y={140}
 							anchor={[0.5, 0]}

@@ -8,7 +8,7 @@ import React, {
 	useCallback, useContext, useEffect, useMemo, useRef, useState,
 } from 'react';
 import * as PIXI from 'pixi.js';
-import { Graphics as PixiGraphics, Renderer, TextStyle } from 'pixi.js';
+import { Renderer } from 'pixi.js';
 import type { Viewport as PixiViewport } from 'pixi-viewport';
 import { Submission } from '@/types/payload-types';
 import ThemeContext from './providers/ThemeContext';
@@ -31,6 +31,7 @@ import Cursor, { CursorOffsets } from './pixi/Cursor';
 import AnimatedGIF from './pixi/AnimatedGIF';
 import usePuzzleStore from './providers/PuzzleStoreConsumer';
 import PuzzleStartModal from './pixi/PuzzleStartModal';
+import type { GraphicsDraw } from './pixi/graphicsTypes';
 
 interface PopInGIF {
 	key: string;
@@ -115,7 +116,7 @@ export default function PixiPuzzleContainer({
 			});
 	}, []);
 
-	const drawPuzzleContainer = useCallback((g: PixiGraphics) => {
+	const drawPuzzleContainer = useCallback<GraphicsDraw>((g) => {
 		g.clear();
 		g.beginFill(themeColors[resolvedTheme].background);
 		g.drawRect(SIDEBAR_WIDTH, 0, stageSize.width, stageSize.height);
@@ -230,54 +231,52 @@ export default function PixiPuzzleContainer({
 				/>
 			)}
 
-			{
-				showExitModal && (
-					<Container>
-						<Graphics
-							draw={(g: PixiGraphics) => {
-								g.clear();
-								g.beginFill(0x222222);
-								g.drawRect(0, 0, stageSize.width, stageSize.height);
-								g.endFill();
-							}}
-						/>
-						<Text
-							text="Are you sure you want to leave?"
-							style={{
-								fill: 'white',
-								fontSize: 32,
-								fontWeight: 'bold',
-								align: 'center',
-							} as TextStyle}
-							x={stageSize.width / 2}
-							y={stageSize.height / 2 - 50}
-							anchor={[0.5, 0.5]}
-							scale={1}
-						/>
-						<Button
-							x={stageSize.width / 2 - 145}
-							y={stageSize.height / 2}
-							width={120}
-							height={60}
-							label="Exit"
-							color={0xAA2222}
-							radius={8}
-							onClick={() => {
-								window.location.href = '/projects';
-							}}
-						/>
-						<Button
-							x={stageSize.width / 2 + 25}
-							y={stageSize.height / 2}
-							width={120}
-							height={60}
-							label="Cancel"
-							radius={8}
-							onClick={() => setShowExitModal(false)}
-						/>
-					</Container>
-				)
-			}
+			{showExitModal && (
+				<Container>
+					<Graphics
+						draw={(g) => {
+							g.clear();
+							g.beginFill(0x222222);
+							g.drawRect(0, 0, stageSize.width, stageSize.height);
+							g.endFill();
+						}}
+					/>
+					<Text
+						text="Are you sure you want to leave?"
+						style={{
+							fill: 'white',
+							fontSize: 32,
+							fontWeight: 'bold',
+							align: 'center',
+						} as any}
+						x={stageSize.width / 2}
+						y={stageSize.height / 2 - 50}
+						anchor={[0.5, 0.5]}
+						scale={1}
+					/>
+					<Button
+						x={stageSize.width / 2 - 145}
+						y={stageSize.height / 2}
+						width={120}
+						height={60}
+						label="Exit"
+						color={0xAA2222}
+						radius={8}
+						onClick={() => {
+							window.location.href = '/projects';
+						}}
+					/>
+					<Button
+						x={stageSize.width / 2 + 25}
+						y={stageSize.height / 2}
+						width={120}
+						height={60}
+						label="Cancel"
+						radius={8}
+						onClick={() => setShowExitModal(false)}
+					/>
+				</Container>
+			)}
 
 			{showPuzzleStartModal && (
 				<PuzzleStartModal

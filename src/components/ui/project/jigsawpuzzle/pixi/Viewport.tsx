@@ -103,7 +103,7 @@ const Viewport = PixiComponent('Viewport', {
 			viewportRef.current = viewport;
 		}
 
-		return viewport;
+		return viewport as any;
 	},
 	applyProps(viewport, _oldProps, _newProps) {
 		/* eslint-disable @typescript-eslint/naming-convention */
@@ -116,7 +116,7 @@ const Viewport = PixiComponent('Viewport', {
 			worldHeight: oldWorldHeight,
 			viewportRef: _oldRef,
 			...oldProps
-		} = _oldProps;
+		} = _oldProps as PixiComponentViewportProps;
 		/* eslint-enable */
 		const {
 			children: newChildren,
@@ -127,7 +127,7 @@ const Viewport = PixiComponent('Viewport', {
 			worldHeight,
 			viewportRef,
 			...newProps
-		} = _newProps;
+		} = _newProps as PixiComponentViewportProps;
 
 		if (
 			oldWidth !== width

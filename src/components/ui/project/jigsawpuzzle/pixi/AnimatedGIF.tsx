@@ -57,13 +57,13 @@ const AnimatedGIF = PixiComponent('AnimatedGIF', {
 			gif: _oldGif,
 			visible: _oldVisible,
 			...oldProps
-		} = _oldProps;
+		} = _oldProps as PixiComponentAnimatedGIFProps;
 		/* eslint-enable */
 		const {
 			gif,
 			visible,
 			...newProps
-		} = _newProps;
+		} = _newProps as PixiComponentAnimatedGIFProps;
 
 		// eslint-disable-next-line no-param-reassign
 		animatedGIF.visible = visible ?? true;

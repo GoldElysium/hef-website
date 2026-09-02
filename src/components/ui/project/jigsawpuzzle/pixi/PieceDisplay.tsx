@@ -1,8 +1,6 @@
 import React, {
 	useCallback, useContext, useEffect, useRef, useState,
 } from 'react';
-import { TextStyle } from 'pixi.js';
-import type { Graphics as PixiGraphics } from '@pixi/graphics';
 import {
 	Container, Graphics, Sprite, Text, useApp,
 } from '@pixi/react';
@@ -12,6 +10,7 @@ import PieceInfo from '../puzzle/PieceInfo';
 import TaggedText from './TaggedText';
 import Scrollbox from './Scrollbox';
 import PixiScrollbox from './PixiScrollbox';
+import type { GraphicsDraw } from './graphicsTypes';
 
 interface PieceDisplayProps {
 	x?: number;
@@ -57,7 +56,7 @@ ${congratulations}${favoriteMoment}`;
 		}
 	}, [pieceInfo]);
 
-	const drawColorForPieceDisplay = useCallback((g: PixiGraphics) => {
+	const drawColorForPieceDisplay = useCallback<GraphicsDraw>((g) => {
 		g.clear();
 		g.beginFill(themeColors[resolvedTheme].secondary);
 		g.drawRoundedRect(0, 0, width, height, 8);
@@ -92,7 +91,7 @@ ${congratulations}${favoriteMoment}`;
 							fontWeight: 'bold',
 							wordWrap: true,
 							wordWrapWidth: width - 32,
-						} as TextStyle}
+						} as any}
 						y={height / 2}
 						x={width / 2}
 						width={width - 32}
@@ -113,7 +112,7 @@ ${congratulations}${favoriteMoment}`;
 							fontWeight: 'bold',
 							wordWrap: true,
 							wordWrapWidth: width - 32,
-						} as TextStyle}
+						} as any}
 						y={height / 2}
 						x={width / 2}
 						width={width - 32}
@@ -150,7 +149,7 @@ ${congratulations}${favoriteMoment}`;
 						width={width - 32}
 						height={height - 16}
 						scale={{ x: 1, y: 1 }}
-						ref={taggedTextRef}
+						ref={taggedTextRef as any}
 					/>
 				)}
 				{pieceInfo?.message?.kronie

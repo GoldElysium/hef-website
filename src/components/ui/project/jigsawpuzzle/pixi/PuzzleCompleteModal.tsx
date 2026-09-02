@@ -3,7 +3,6 @@ import {
 	Container, Graphics, Sprite, Text,
 } from '@pixi/react';
 import * as PIXI from 'pixi.js';
-import { Graphics as PixiGraphics, TextStyle } from 'pixi.js';
 import AnimatedGIF from './AnimatedGIF';
 import Button from './Button';
 
@@ -51,7 +50,7 @@ export default function PuzzleCompleteModal({
 	return (
 		<Container x={x} y={y}>
 			<Graphics
-				draw={(g: PixiGraphics) => {
+				draw={(g) => {
 					g.clear();
 					g.beginFill(0x222222);
 					g.drawRect(0, 0, width, height);
@@ -64,7 +63,7 @@ export default function PuzzleCompleteModal({
 					fill: 'white',
 					fontSize: 40,
 					fontWeight: 'bold',
-				} as TextStyle}
+				} as any}
 				anchor={[0.5, 0.5]}
 				x={width / 2}
 				y={height / 2}
