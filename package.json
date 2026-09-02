@@ -21,6 +21,7 @@
     "node": "^22 || ^24",
     "pnpm": ">=11"
   },
+  "packageManager": "pnpm@11.24.0",
   "dependencies": {
     "@atelier-disko/payload-lexical-react-renderer": "^1.2.0",
     "@emotion/react": "11.11.4",
