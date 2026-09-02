@@ -141,7 +141,7 @@
     "lint-staged": "15.2.2",
     "phaser3spectorjs": "^0.0.8",
     "postcss": "8.4.38",
-    "storybook": "8.0.8",
+    "storybook": "8.6.15",
     "tailwindcss": "3.4.3",
     "typescript": "5.4.5"
   },
