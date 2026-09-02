@@ -16,6 +16,7 @@ import Message from './Message';
 import PieceInfo from './PieceInfo';
 import usePuzzleStore from '../providers/PuzzleStoreConsumer';
 import PieceGroup from './PieceGroup';
+import type { GraphicsDraw } from '../pixi/graphicsTypes';
 
 type NextTrack = {
 	random: false;
@@ -92,7 +93,7 @@ export default function Puzzle({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [difficulty, correctCount]);
 
-	const drawPuzzleBounds = useCallback((g: PIXI.Graphics) => {
+	const drawPuzzleBounds = useCallback<GraphicsDraw>((g) => {
 		const lineWidth = 8;
 		g.clear();
 		g.lineStyle(lineWidth, themeColors.light.headerForeground);

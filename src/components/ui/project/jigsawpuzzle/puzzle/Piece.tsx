@@ -255,10 +255,10 @@ const Piece = React.forwardRef<PieceActions, PieceProps>(({
 		<Container
 			x={thisPiece.localPosition.x}
 			y={thisPiece.localPosition.y}
-			ref={pieceContainerRef}
+			ref={pieceContainerRef as any}
 		>
 			<Sprite
-				texture={texture}
+				texture={texture as any}
 				x={-pieceMargin}
 				y={-pieceMargin}
 				width={pieceSize + 2 * pieceMargin}

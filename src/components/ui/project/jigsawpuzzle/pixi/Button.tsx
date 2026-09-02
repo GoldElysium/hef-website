@@ -1,6 +1,5 @@
 import React from 'react';
 import { Container, Graphics, Text } from '@pixi/react';
-import { TextStyle } from 'pixi.js';
 
 interface ButtonProps {
 	x: number;
@@ -47,7 +46,7 @@ export default function Button({
 					fill: textColor,
 					fontSize: 18,
 					fontWeight: 'bold',
-				} as TextStyle}
+				} as any}
 				anchor={[0.5, 0.5]}
 				x={width / 2}
 				y={height / 2}

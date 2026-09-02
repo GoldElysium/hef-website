@@ -64,7 +64,7 @@ export default function PuzzlePreview({
 			touchmove={handleDragEnd}
 			touchend={handleDragEnd}
 			touchendoutside={handleDragEnd}
-			ref={containerRef}
+			ref={containerRef as any}
 		>
 			<Graphics
 				draw={(g) => {

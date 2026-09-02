@@ -17,8 +17,8 @@ const SmoothGraphics = PixiComponent('SmoothGraphics', {
 		return graphics;
 	},
 	applyProps(graphics, _oldProps, _newProps) {
-		const { draw: oldDraw, ...oldProps } = _oldProps;
-		const { draw: newDraw, ...newProps } = _newProps;
+		const { draw: oldDraw, ...oldProps } = _oldProps as PixiComponentSmoothGraphicsProps;
+		const { draw: newDraw, ...newProps } = _newProps as PixiComponentSmoothGraphicsProps;
 
 		Object.keys(newProps).forEach((p) => {
 			// @ts-ignore

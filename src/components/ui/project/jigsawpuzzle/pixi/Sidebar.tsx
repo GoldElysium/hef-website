@@ -7,10 +7,10 @@ import {
 	Container, Graphics, Sprite, Text,
 } from '@pixi/react';
 import * as PIXI from 'pixi.js';
-import { Graphics as PixiGraphics, TextStyle } from 'pixi.js';
 import Button from './Button';
 import { SIDEBAR_WIDTH } from '../puzzle/PuzzleConfig';
 import ThemeContext from '../providers/ThemeContext';
+import type { GraphicsDraw } from './graphicsTypes';
 
 interface SidebarProps {
 	x?: number;
@@ -37,14 +37,14 @@ export default function Sidebar({
 			});
 	}, []);
 
-	const drawColorForSidebar = useCallback((g: PixiGraphics) => {
+	const drawColorForSidebar = useCallback<GraphicsDraw>((g) => {
 		g.clear();
 		g.beginFill(themeColors[resolvedTheme].background);
 		g.drawRect(0, 0, width, height);
 		g.endFill();
 	}, [themeColors, resolvedTheme, width, height]);
 
-	const drawExitButton = useCallback((g: PixiGraphics) => {
+	const drawExitButton = useCallback<GraphicsDraw>((g) => {
 		g.clear();
 		g.lineStyle(2, themeColors[resolvedTheme].text);
 		g.beginFill(themeColors[resolvedTheme].background);
@@ -95,7 +95,7 @@ export default function Sidebar({
 							fill: themeColors[resolvedTheme].text,
 							fontSize: 16,
 							fontWeight: '400',
-						} as TextStyle}
+						} as any}
 					/>
 				</Container>
 			</Container>

@@ -1,10 +1,10 @@
 import {
 	Container, Graphics, Sprite, Text,
 } from '@pixi/react';
-import { Graphics as PixiGraphics, TextStyle } from 'pixi.js';
 import React, { useCallback, useContext } from 'react';
 import ThemeContext from '@/components/ui/project/jigsawpuzzle/providers/ThemeContext';
 import Button from './Button';
+import type { GraphicsDraw } from './graphicsTypes';
 
 interface ModalProps {
 	width: number;
@@ -18,7 +18,7 @@ export default function PuzzleStartModal({
 }: ModalProps) {
 	const { colors: themeColors, resolvedTheme } = useContext(ThemeContext);
 
-	const drawExitButton = useCallback((g: PixiGraphics) => {
+	const drawExitButton = useCallback<GraphicsDraw>((g) => {
 		g.clear();
 		g.beginFill(themeColors[resolvedTheme].secondary);
 		g.drawCircle(16, 16, 20);
@@ -28,7 +28,7 @@ export default function PuzzleStartModal({
 	return (
 		<Container>
 			<Graphics
-				draw={(g: PixiGraphics) => {
+				draw={(g) => {
 					g.clear();
 					g.beginFill(0x222222);
 					g.drawRect(0, 0, width, height);
@@ -42,7 +42,7 @@ export default function PuzzleStartModal({
 					fontSize: 20,
 					wordWrap: true,
 					wordWrapWidth: Math.min(width * 0.6, 1000),
-				} as TextStyle}
+				} as any}
 				anchor={[0.5, 0.5]}
 				width={Math.min(width * 0.6, 1000)}
 				x={width / 2}

@@ -33,7 +33,7 @@ const TaggedText = PixiComponent('TaggedText', {
 			ref.current = taggedText;
 		}
 
-		return taggedText;
+		return taggedText as any;
 	},
 	applyProps(taggedText, _oldProps, _newProps) {
 		/* eslint-disable @typescript-eslint/naming-convention */
@@ -42,14 +42,14 @@ const TaggedText = PixiComponent('TaggedText', {
 			options: _oldOptions,
 			ref: _oldRef,
 			...oldProps
-		} = _oldProps;
+		} = _oldProps as PixiComponentTaggedTextProps;
 
 		const {
 			styles,
 			options: _options,
 			ref,
 			...newProps
-		} = _newProps;
+		} = _newProps as PixiComponentTaggedTextProps;
 		/* eslint-enable */
 
 		taggedText.setTagStyles(styles);
