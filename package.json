@@ -75,7 +75,7 @@
     "daisyui": "4.10.1",
     "date-fns": "3.6.0",
     "escape-html": "1.0.3",
-    "framer-motion": "^11.18.2",
+    "motion": "^11.18.2",
     "hamburger-react": "^2.5.2",
     "i18next": "^23.16.8",
     "i18next-resources-to-backend": "^1.2.3",
